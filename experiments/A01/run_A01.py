@@ -7,6 +7,7 @@ rapport_A01.md (= narratif_A01.md rédigé à la main, suivi des annexes chiffr�
 from __future__ import annotations
 
 import sys
+import time
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -219,7 +220,111 @@ def section_spearman(a) -> tuple[str, pd.DataFrame]:
     return txt, rho
 
 
+def section_relecture(a, f, idx, atr, prof) -> str:
+    """Contrôles de relecture du 2026-09-28 : tenue de l'extremum du segment, mécanisme du déclencheur,
+    divergence de cycle, répétitions, incertitude des médianes de profil."""
+    sig = f.signal.to_numpy().astype(int)
+    n = len(sig)
+    low, high, close = (f[c].to_numpy(dtype=float) for c in ("low", "high", "close"))
+    all_sig = np.flatnonzero(sig != 0)
+    mae, horizon = [], []
+    for t in idx:
+        k = np.searchsorted(all_sig, t + 1)
+        e = int(all_sig[k]) if k < len(all_sig) else n - 1
+        w = slice(t + 1, e + 1)
+        adv = close[t] - low[w].min() if sig[t] == 1 else high[w].max() - close[t]
+        mae.append(adv / atr[t])
+        horizon.append(e - t)
+    mae, horizon = np.array(mae), np.array(horizon)
+    broken = mae > a.obs_dist_seg_atr.to_numpy()
+    identity = np.array_equal(broken, a.post_lag_bars.to_numpy() < 0)
+    g = groups(a)
+    rows = [["Extremum du segment cassé avant le signal suivant (MAE > `obs_dist_seg_atr`)"]
+            + [pct(broken[m].mean()) for m in g.values()],
+            ["Horizon jusqu'au signal suivant (barres), P50 [P25 ; P75]"]
+            + [iqr(pd.Series(horizon[m]), 0) for m in g.values()],
+            ["MAE jusqu'au signal suivant (ATR), P50 [P25 ; P75]"]
+            + [iqr(pd.Series(mae[m]), 2) for m in g.values()]]
+    t1 = table(["Mesure"] + list(g), rows)
+
+    lo = a.post_lag_osc_bars.to_numpy()
+    c = a.post_x1_crossed_zero.to_numpy()
+    bins = [("x1 ne franchit pas zéro avant le signal suivant", ~c),
+            ("signal ≥ 3 barres avant x1 = 0", c & (lo <= -3)),
+            ("signal 1 à 2 barres avant x1 = 0", c & (lo >= -2) & (lo <= -1)),
+            ("signal à la barre où x1 = 0", c & (lo == 0)),
+            ("signal 1 à 2 barres après x1 = 0", c & (lo >= 1) & (lo <= 2)),
+            ("signal ≥ 3 barres après x1 = 0", c & (lo >= 3))]
+    t2 = table(["Position du signal par rapport au passage à zéro de x1"] + list(g),
+               [[lab] + [pct(v[m].mean()) for m in g.values()] for lab, v in bins])
+
+    div = (a.obs_dist_cycle_atr - a.obs_dist_seg_atr).to_numpy()
+    decel = (a.A_vol / a.peak_bps_vol).to_numpy()
+    rows3 = [["`cycle_seg_div_atr` = 0 (le segment porte l'extremum du cycle)"] + [pct((div[m] < 1e-12).mean()) for m in g.values()],
+             ["`cycle_seg_div_atr` si > 0 (ATR), P50 [P25 ; P75]"]
+             + [iqr(pd.Series(div[m & (div >= 1e-12)]), 2) for m in g.values()],
+             ["`decel_ratio` = `A_vol` / `peak_bps_vol`, P50 [P25 ; P75]"] + [iqr(pd.Series(decel[m]), 2) for m in g.values()]]
+    t3 = table(["Variable dérivée (causale)"] + list(g), rows3)
+
+    extra = pd.DataFrame({"cycle_seg_div_atr": div, "decel_ratio": decel,
+                          "obs_dist_seg_atr": a.obs_dist_seg_atr, "obs_lag_seg_bars": a.obs_lag_seg_bars,
+                          "x1_already_flipped_at_t": a.x1_already_flipped_at_t.astype(float), "nis_z_100": a.nis_z_100,
+                          "nis_z_100_seg_max": a.nis_z_100_seg_max, "A_vol": a.A_vol, "peak_bps_vol": a.peak_bps_vol,
+                          "log_R_rel": a.log_R_rel}).corr(method="spearman")
+    pairs = [("obs_dist_seg_atr", "obs_lag_seg_bars"), ("obs_dist_seg_atr", "nis_z_100"),
+             ("obs_dist_seg_atr", "x1_already_flipped_at_t"), ("obs_dist_seg_atr", "nis_z_100_seg_max"),
+             ("nis_z_100_seg_max", "log_R_rel"), ("nis_z_100_seg_max", "nis_z_100"),
+             ("obs_dist_seg_atr", "peak_bps_vol"), ("obs_dist_seg_atr", "A_vol"),
+             ("x1_already_flipped_at_t", "peak_bps_vol"), ("x1_already_flipped_at_t", "A_vol"),
+             ("cycle_seg_div_atr", "obs_dist_seg_atr"), ("decel_ratio", "x1_already_flipped_at_t"),
+             ("decel_ratio", "obs_dist_seg_atr")]
+    t4 = table(["Variable", "Variable", "ρ"], [[f"`{p}`", f"`{q}`", fr(extra.loc[p, q], 2)] for p, q in pairs])
+
+    rep = (a.run_rank > 1).to_numpy()
+    prev_ok = np.r_[False, (a.direction.to_numpy()[1:] == a.direction.to_numpy()[:-1])] & rep
+    j = np.flatnonzero(prev_ok)
+    slower_peak = (a.peak_bps_vol.to_numpy()[j] < a.peak_bps_vol.to_numpy()[j - 1]).mean()
+    slower_a = (a.A_vol.to_numpy()[j] < a.A_vol.to_numpy()[j - 1]).mean()
+    t5 = (f"Répétitions comparées au signal de même sens qui les précède ({n_fr(len(j))} paires) : pic de vitesse "
+          f"du segment plus faible (`peak_bps_vol`) dans {pct(slower_peak)} des cas, `A_vol` plus faible dans "
+          f"{pct(slower_a)} ; le segment porte l'extremum du cycle (plus bas plus bas / plus haut plus haut) dans "
+          f"{pct((div[rep] < 1e-12).mean())} des répétitions.")
+
+    rng = np.random.default_rng(20260928)
+    pg = profile_groups(a)
+    brow = []
+    for gname in ["Rang 1 Long", "Rang 1 Short", "Répétition Long", "Répétition Short"]:
+        cells = []
+        for tau in (12, 24, 48):
+            x = prof["price_atr"][pg[gname], np.flatnonzero(TAUS == tau)[0]]
+            x = x[~np.isnan(x)]
+            boot = np.median(rng.choice(x, size=(2000, len(x)), replace=True), axis=1)
+            lo_b, hi_b = np.percentile(boot, [2.5, 97.5])
+            cells.append(f"{fr(np.median(x), 2)} [{fr(lo_b, 2)} ; {fr(hi_b, 2)}]")
+        brow.append([gname] + cells)
+    t6 = table(["Groupe", "τ = +12", "τ = +24", "τ = +48"], brow)
+
+    return ("## H. Relecture du 2026-09-28\n\n"
+            f"Identité vérifiée sur les 7 296 signaux : `post_lag_bars` < 0 ⇔ l'excursion adverse jusqu'au signal "
+            f"suivant dépasse `obs_dist_seg_atr` : **{'vraie' if identity else 'FAUSSE'}**.\n\n" + t1
+            + "\n\n" + t2 + "\n\n" + t3 + "\n\n" + t4 + "\n\n" + t5
+            + "\n\nMédiane de l'excursion signée du close (ATR14(t)) et intervalle bootstrap à 95 % (2 000 tirages) :\n\n"
+            + t6)
+
+
 # ── Figures ─────────────────────────────────────────────────────────────────────
+def _save(fig, name: str) -> None:
+    """savefig avec nouvelles tentatives : sous Windows, un processus tiers peut verrouiller un PNG un court instant."""
+    for k in range(6):
+        try:
+            fig.savefig(FIG / name, dpi=150)
+            return
+        except OSError:
+            if k == 5:
+                raise
+            time.sleep(0.5)
+
+
 def _band(ax, P, color, label):
     q1, med, q3 = np.nanpercentile(P, [25, 50, 75], axis=0)
     ax.fill_between(TAUS, q1, q3, color=color, alpha=0.15, lw=0)
@@ -249,7 +354,7 @@ def figures(a, prof, rho) -> None:
     axes[0].set_ylabel("Excursion signée du close / ATR14(t)", fontsize=9)
     fig.suptitle("EXP-A01 — Trajectoire du prix autour du signal (médiane, bande P25-P75)", fontsize=11)
     fig.tight_layout()
-    fig.savefig(FIG / "fig1_profil_prix.png", dpi=150)
+    _save(fig, "fig1_profil_prix.png")
     plt.close(fig)
 
     fig, axes = plt.subplots(1, 3, figsize=(14, 4))
@@ -265,7 +370,7 @@ def figures(a, prof, rho) -> None:
     axes[0].legend(fontsize=8, frameon=False)
     fig.suptitle("EXP-A01 — État du filtre autour du signal (médiane, bande P25-P75)", fontsize=11)
     fig.tight_layout()
-    fig.savefig(FIG / "fig2_profil_filtre.png", dpi=150)
+    _save(fig, "fig2_profil_filtre.png")
     plt.close(fig)
 
     r1 = (a.run_rank == 1).to_numpy()
@@ -294,7 +399,7 @@ def figures(a, prof, rho) -> None:
     axes[2].legend(fontsize=8, frameon=False)
     fig.suptitle("EXP-A01 — Retard et mouvement consommé (densités)", fontsize=11)
     fig.tight_layout()
-    fig.savefig(FIG / "fig3_retard.png", dpi=150)
+    _save(fig, "fig3_retard.png")
     plt.close(fig)
 
     fig, ax = plt.subplots(figsize=(10, 8.5))
@@ -310,7 +415,7 @@ def figures(a, prof, rho) -> None:
     fig.colorbar(im, ax=ax, shrink=0.8, label="ρ de Spearman")
     ax.set_title("EXP-A01 — Corrélations de rang entre variables causales (7 296 signaux)", fontsize=10)
     fig.tight_layout()
-    fig.savefig(FIG / "fig4_spearman.png", dpi=150)
+    _save(fig, "fig4_spearman.png")
     plt.close(fig)
 
 
@@ -325,7 +430,7 @@ def main() -> None:
              section_retard_sens(atlas), section_groupes(atlas), section_annees(atlas)]
     txt_prof, pm = section_profils(atlas, prof)
     txt_sp, rho = section_spearman(atlas)
-    parts += [txt_prof, txt_sp]
+    parts += [txt_prof, txt_sp, section_relecture(atlas, f, idx, atr, prof)]
     pm.to_csv(HERE / "profils_medians.csv", index=False)
     rho.to_csv(HERE / "spearman_causales.csv")
     figures(atlas, prof, rho)
