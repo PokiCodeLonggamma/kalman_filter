@@ -61,3 +61,45 @@
 - **[OBS]** Les archives d'avril-mai reposent sur Pine V2 ou sur des variantes du moteur (`use_true_kalman`, règles de flip NewKalman) : chiffres non transposables, réservoir d'hypothèses (`RESEARCH_PHILOSOPHY.md` §4.5).
 - **Décision :** recadrage du 2026-09-27. Hypothèse directrice (`RESEARCH_PHILOSOPHY.md` §1), feuille de route A → D (`PROJECT_PLAN.md`), cadrage obligatoire (§4.6). La séquence EXP-001 (stop-and-reverse natif) / EXP-002 (signal contre hasard) est abandonnée.
 - **Ouvert :** hold-out final (ETH et XRP ont déjà été vus par le projet Kalman et les Labos 2-3), frais canoniques (5 ou 10 bps), sources de données SOL/SOXS/WTI.
+
+### [EXP-A01] — Anatomie et distribution du signal brut
+- **Date :** 2026-09-28
+- **Étape :** A Anatomie (descriptive)
+- **Actif & Période :** BTC/USD Bitstamp 30m, 2020-01-01 → 2025-12-31 (2026, ETH et XRP non lus)
+- **Modèle de frais :** sans objet (aucune transaction simulée)
+- **Livrables :** `experiments/A01/rapport_A01.md` ; atlas `experiments/A01/atlas_signaux.csv` (7 296 lignes, SHA-256 `e89d509c…0a3e246c`) ; figures `experiments/A01/figures/`.
+
+#### 0. Cadrage obligatoire
+- **QUESTION :** quand, à quelle distance de l'extremum de prix visé et dans quel état cinématique le signal v2.1 se déclenche-t-il ? Ces distributions sont-elles stables par année ?
+- **PERTINENCE POUR LE FILTRE AKF :** gain figé par le reset de P, normalisation par max|x1| sur 5 barres (aveugle à l'amplitude), déclencheur one-shot après au moins 6 barres en zone.
+- **CE QUE LE PROTOCOLE MESURE RÉELLEMENT :** distributions de 6 variables a posteriori et 19 variables causales sur 7 296 signaux, par sens, type et année ; profils de −48 à +48 barres ; corrélations de Spearman.
+- **CE QU'IL NE PERMET PAS DE CONCLURE :** ni rentabilité ni avantage d'excursion ; les variables `post_` ne sont jamais des filtres ; quantiles ≠ seuils ; corrélations ≠ causalité ; valable aux réglages par défaut, BTC 30m, 2020-2025.
+
+#### 1. Hypothèse & Motivation physique
+- Aucune hypothèse testée : cartographie de la géométrie naturelle du signal avant toute catégorisation (feuille de route A → D).
+
+#### 2. Règle testée (OFAT)
+- Aucune règle : moteur v2.1 par défaut, signal lu à la clôture de t. Contrôle : ancres de #KAKALMAN (7 296 signaux, 6 037 rangs 1) retrouvées exactement.
+
+#### 3. Résultats (descriptifs ; tableau des 8 métriques sans objet)
+| Mesure | Valeur |
+|---|---|
+| Cadence | 101,9 signaux/mois, dont 84,3 flips ; 17,3 % de répétitions de même sens |
+| Cycle | écart au précédent de même sens 26 barres [21 ; 34] ; de sens opposé 13 [10 ; 20] |
+| Signaux tardifs (extremum passé) | 63,2 % : 5 barres [4 ; 7] après l'extremum, 2,01 ATR [1,52 ; 2,64] déjà parcourus |
+| Signaux prématurés (extremum à venir) | 36,1 % : extremum 8 barres plus tard [5 ; 12], après 3,01 ATR [1,99 ; 4,67] de mouvement adverse |
+| Mouvement consommé, causal (`obs_dist_seg_atr`) | 1,77 ATR [1,26 ; 2,39] |
+| Retard du filtre / de l'oscillateur | 5 barres [3 ; 7] / −1 barre [−2 ; 0] ; x1 ne franchit pas zéro dans 13,6 % des cas |
+| Vitesse x1 au signal | médiane +0,002 ATR/barre ; déjà du sens du signal : 51,8 % |
+| `nis_z_100` | pic isolé à τ = 0 : 0,19 [−0,32 ; 1,20], contre −0,4 à ±3 barres |
+| Close après le signal (rangs 1) | médiane entre −0,05 et +0,04 ATR de +1 à +48 barres |
+| Stabilité 2020-2025 | géométrie stable en ATR ; ATR14 médian de 34 à 80 bps selon l'année |
+
+#### 4. Analyse causale & Physique du trade
+- [OBS] Le déclencheur tombe à ±1 barre du passage à zéro de la vitesse filtrée, environ 5 barres après l'extremum de prix. Deux populations : signaux tardifs (63 %) et prématurés (36 %). La barre de déclenchement est un choc d'innovation.
+- [HYP] Le retard vient du gain figé. La médiane plate du close ne dit rien de l'excursion ni des sous-familles : c'est la question de l'Étape B. La géométrie étant stationnaire en ATR, l'enveloppe devra s'exprimer en ATR14(t).
+
+#### 5. Décision
+- [ ] **REJETÉ**
+- [ ] **NON CONCLUANT**
+- [x] **À POURSUIVRE :** l'atlas et le jeu réduit de descripteurs causaux (rapport, §4) servent de base à l'Étape B. Aucune Étape B lancée.
