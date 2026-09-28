@@ -1,0 +1,61 @@
+table,,variante,configuration,H,n,esperance_bps,esperance_atr,long_bps,short_bps,esperance_bps_lo,esperance_bps_hi,timing_bps_lo,timing_bps_hi,n_signaux,accord
+resultats,0,échantillon entier,R1 hors Q4,6,1483,-0.807256,-0.0277755,-0.52803,-1.02634,-6.07295,4.08389,-6.11278,4.05066,,
+resultats,1,échantillon entier,R1 hors Q4,13,1398,-3.13158,-0.0704636,-4.77941,-1.86338,-11.641,5.51386,-12.5911,6.06058,,
+resultats,2,échantillon entier,R1 hors Q4,26,1175,-6.37954,-0.112826,-2.24779,-9.3872,-18.1572,4.32957,-18.4654,5.52915,,
+resultats,3,échantillon entier,R1 hors Q4,48,940,3.59265,0.0194026,21.8057,-10.5577,-14.3788,20.5057,-11.1735,21.3894,,
+resultats,4,échantillon entier,R2 hors Q4,6,1348,-3.67578,-0.114533,-3.23906,-4.17201,-9.57398,2.71994,-9.60335,2.72718,,
+resultats,5,échantillon entier,R2 hors Q4,13,1155,-0.841463,0.00821024,-1.08674,-0.554225,-10.5967,8.47836,-10.4391,8.61005,,
+resultats,6,échantillon entier,R2 hors Q4,26,1008,11.614,0.334408,13.6598,9.20583,-3.63015,26.2604,-3.85764,26.0211,,
+resultats,7,échantillon entier,R2 hors Q4,48,807,-3.74057,0.0321474,-4.32466,-3.04031,-20.9369,15.5309,-20.5488,15.765,,
+resultats,8,échantillon entier,↳ F2b · x1 déjà retourné hors Q4,6,679,-4.59077,-0.133889,-5.49933,-3.67414,-11.6585,3.52986,-11.6604,3.57249,,
+resultats,9,échantillon entier,↳ F2b · x1 déjà retourné hors Q4,13,637,0.984496,-0.0316976,0.85065,1.11961,-10.0665,12.5621,-10.053,12.5209,,
+resultats,10,échantillon entier,↳ F2b · x1 déjà retourné hors Q4,26,592,10.1693,0.372188,10.2085,10.1295,-3.70561,25.4699,-3.70806,25.3684,,
+resultats,11,échantillon entier,↳ F2b · x1 déjà retourné hors Q4,48,521,1.63952,0.197567,9.23227,-5.92415,-22.9958,24.4844,-23.7122,24.3249,,
+resultats,12,échantillon entier,↳ F3 · x1 déjà retourné hors Q4,6,669,-2.74711,-0.0948879,-1.18919,-4.74635,-12.0832,5.66437,-12.5601,5.76002,,
+resultats,13,échantillon entier,↳ F3 · x1 déjà retourné hors Q4,13,609,-2.66337,0.000470754,-1.25696,-4.5512,-14.9073,9.16609,-14.7322,8.61561,,
+resultats,14,échantillon entier,↳ F3 · x1 déjà retourné hors Q4,26,566,9.96783,0.138331,8.75136,11.6322,-10.6727,29.7467,-12.2856,30.8162,,
+resultats,15,échantillon entier,↳ F3 · x1 déjà retourné hors Q4,48,491,-1.02754,0.134066,-21.244,27.654,-26.1934,22.8367,-21.2518,26.5996,,
+resultats,16,glissante 500 signaux,R1 hors Q4,6,1483,-1.60668,-0.0392743,-1.5581,-1.64479,-6.95845,3.18737,-7.09864,3.30175,,
+resultats,17,glissante 500 signaux,R1 hors Q4,13,1398,-3.58621,-0.0754244,-5.54017,-2.08241,-12.2067,4.98666,-13.1402,5.19629,,
+resultats,18,glissante 500 signaux,R1 hors Q4,26,1174,-6.13801,-0.109096,-3.1656,-8.28233,-18.0334,4.88151,-19.0209,5.63462,,
+resultats,19,glissante 500 signaux,R1 hors Q4,48,942,4.42006,0.0321999,22.6797,-9.7131,-12.6905,21.489,-10.9861,23.3216,,
+resultats,20,glissante 500 signaux,R2 hors Q4,6,1347,-3.86931,-0.121614,-3.89307,-3.84251,-9.80502,2.81164,-9.89224,2.88016,,
+resultats,21,glissante 500 signaux,R2 hors Q4,13,1149,-1.19568,0.00756627,-2.2145,-0.0140696,-11.3501,8.69866,-11.1839,8.76371,,
+resultats,22,glissante 500 signaux,R2 hors Q4,26,1005,12.9481,0.357014,14.0308,11.6807,-1.79815,27.7399,-2.06521,27.327,,
+resultats,23,glissante 500 signaux,R2 hors Q4,48,806,-0.21839,0.101911,-4.07258,4.30067,-18.2957,19.3868,-17.8849,20.2345,,
+resultats,24,glissante 500 signaux,↳ F2b · x1 déjà retourné hors Q4,6,678,-5.10043,-0.158028,-6.70547,-3.50484,-12.0066,3.22069,-12.0088,3.0175,,
+resultats,25,glissante 500 signaux,↳ F2b · x1 déjà retourné hors Q4,13,633,-0.278613,-0.0452043,-0.69179,0.128087,-11.0413,11.4805,-11.1232,11.4865,,
+resultats,26,glissante 500 signaux,↳ F2b · x1 déjà retourné hors Q4,26,584,11.4826,0.371431,11.2812,11.6812,-3.405,28.9537,-3.59432,28.7206,,
+resultats,27,glissante 500 signaux,↳ F2b · x1 déjà retourné hors Q4,48,517,6.1758,0.254681,11.0681,1.45092,-19.2966,29.5979,-19.207,29.877,,
+resultats,28,glissante 500 signaux,↳ F3 · x1 déjà retourné hors Q4,6,669,-2.62162,-0.0847114,-1.3649,-4.23434,-12.1855,5.80839,-12.415,5.87589,,
+resultats,29,glissante 500 signaux,↳ F3 · x1 déjà retourné hors Q4,13,610,-2.81934,-0.00592174,-2.3977,-3.38692,-15.2717,9.18471,-15.2375,8.96686,,
+resultats,30,glissante 500 signaux,↳ F3 · x1 déjà retourné hors Q4,26,569,10.7751,0.139942,9.10939,13.075,-10.4356,31.119,-11.2449,32.3568,,
+resultats,31,glissante 500 signaux,↳ F3 · x1 déjà retourné hors Q4,48,492,-5.9957,-0.00527573,-25.005,20.3958,-29.5314,16.8895,-27.1062,20.1957,,
+resultats,32,expansive,R1 hors Q4,6,1488,-0.888352,-0.0289459,-0.829876,-0.934082,-6.16044,3.93437,-6.20956,4.00392,,
+resultats,33,expansive,R1 hors Q4,13,1403,-3.22993,-0.0724303,-5.18271,-1.73215,-11.6782,5.24105,-12.8473,5.61564,,
+resultats,34,expansive,R1 hors Q4,26,1178,-6.11304,-0.112255,-2.56549,-8.67516,-18.1223,4.59435,-18.3766,5.57642,,
+resultats,35,expansive,R1 hors Q4,48,944,6.12532,0.0479345,24.0639,-7.767,-10.9491,23.0433,-8.70804,24.3426,,
+resultats,36,expansive,R2 hors Q4,6,1299,-2.94241,-0.10618,-3.66887,-2.12943,-8.74727,3.41559,-8.75214,3.44234,,
+resultats,37,expansive,R2 hors Q4,13,1114,-1.50615,-0.0120959,-3.62573,0.932606,-11.4963,8.04463,-11.5074,8.46563,,
+resultats,38,expansive,R2 hors Q4,26,972,11.4448,0.320668,11.4419,11.4483,-3.96226,26.0734,-4.25461,26.3864,,
+resultats,39,expansive,R2 hors Q4,48,790,-0.494766,0.0525782,-5.3166,5.14837,-19.035,19.3059,-18.4409,19.4605,,
+resultats,40,expansive,↳ F2b · x1 déjà retourné hors Q4,6,646,-3.67327,-0.125999,-6.22408,-1.18487,-10.7905,4.58828,-10.7976,4.5707,,
+resultats,41,expansive,↳ F2b · x1 déjà retourné hors Q4,13,605,-0.259033,-0.0536536,-0.810001,0.275782,-11.2463,11.5536,-11.4429,11.5755,,
+resultats,42,expansive,↳ F2b · x1 déjà retourné hors Q4,26,563,12.6072,0.400513,15.2396,10.0027,-3.19629,29.6347,-3.0863,29.6052,,
+resultats,43,expansive,↳ F2b · x1 déjà retourné hors Q4,48,499,7.11843,0.235341,17.1659,-2.41885,-19.5019,31.9917,-18.9996,31.8369,,
+resultats,44,expansive,↳ F3 · x1 déjà retourné hors Q4,6,653,-2.21938,-0.0865741,-1.44786,-3.2094,-11.7063,6.1303,-12.3363,6.57551,,
+resultats,45,expansive,↳ F3 · x1 déjà retourné hors Q4,13,597,-3.07502,-0.0232432,-3.92762,-1.92369,-16.1597,8.85235,-15.6832,9.16736,,
+resultats,46,expansive,↳ F3 · x1 déjà retourné hors Q4,26,555,8.97552,0.0879874,4.48663,15.1333,-12.6672,29.2577,-13.0258,30.5943,,
+resultats,47,expansive,↳ F3 · x1 déjà retourné hors Q4,48,484,-2.13405,0.0708721,-26.3017,31.6049,-26.4682,21.0444,-21.7856,25.8582,,
+accord,0,échantillon entier,R1 hors Q4,,,,,,,,,,,1483,1
+accord,1,échantillon entier,R2 hors Q4,,,,,,,,,,,1348,1
+accord,2,échantillon entier,↳ F2b · x1 déjà retourné hors Q4,,,,,,,,,,,679,1
+accord,3,échantillon entier,↳ F3 · x1 déjà retourné hors Q4,,,,,,,,,,,669,1
+accord,4,glissante 500 signaux,R1 hors Q4,,,,,,,,,,,1483,0.99588
+accord,5,glissante 500 signaux,R2 hors Q4,,,,,,,,,,,1347,0.986315
+accord,6,glissante 500 signaux,↳ F2b · x1 déjà retourné hors Q4,,,,,,,,,,,678,0.991613
+accord,7,glissante 500 signaux,↳ F3 · x1 déjà retourné hors Q4,,,,,,,,,,,669,0.994703
+accord,8,expansive,R1 hors Q4,,,,,,,,,,,1488,0.99897
+accord,9,expansive,R2 hors Q4,,,,,,,,,,,1299,0.991613
+accord,10,expansive,↳ F2b · x1 déjà retourné hors Q4,,,,,,,,,,,646,0.993967
+accord,11,expansive,↳ F3 · x1 déjà retourné hors Q4,,,,,,,,,,,653,0.997646

@@ -211,6 +211,12 @@
   
   À 10 bps, aucune configuration n'a d'IC entièrement positif. Les drawdowns valorisés vont de 48 à 81 %, et l'écart entre moyenne arithmétique et PnL composé de 0,6 à 5 bps par trade.
 - [HYP] Pris dans son sens, sans stop, le signal ne dégage pas d'espérance nette solide. Son information la plus robuste est négative : R3 et `nis_z_100` Q4 marquent une continuation. R3 en continuation dépend du régime de volatilité ; R2 hors Q4 à H26 est cohérent avec B01 mais étroit en horizon ; R1 relève du test du stop.
+- **Relecture (2026-09-29)**, contrôles demandés par le porteur (rapport §5, annexes F à H) :
+  - **Séparation F2b / F3 dans R2 hors Q4.** F2b · x1 déjà retourné hors Q4 est positif à H13, H26 et H48, et tient 10 bps à H26 (+6,5 bps, +0,26 ATR). F3 · x1 déjà retourné hors Q4 est irrégulier : −47 bps par trade en 2024 à H26.
+  - **Contrôle A, éviction pure ou calendrier.** Le gain de F2b · x1 déjà retourné hors Q4 vient entièrement de l'éviction (purge a posteriori : +12,1 [−3,5 ; +27,9]). Celui de R2 en vient aux trois quarts. F3 · x1 déjà retourné doit un tiers de son PnL hors Q4 à 15 trades débloqués.
+  - **Contrôle B, seuils causaux** (fenêtre glissante de 500 signaux ou expansive) : 98,6 à 99,9 % des masques inchangés, écarts de résultat sous 2,5 bps. R1 hors Q4 reste sans avantage à H6.
+  - **Contrôle C, risque constant par trade.** Avec 1 ATR = 1 % du capital, 90 % des trades restent plafonnés à 1x : rien ne change. Avec 1 ATR = 0,25 % du capital, F2b · x1 déjà retourné hors Q4 à H26 fait +72 % pour un drawdown de −13 % (+42 % et −17 % à 10 bps). R3 en continuation retombe à +3 % à 10 bps.
+  - **Affichage** : la part des frais est « sans objet » si le PnL brut est ≤ 0.
 
 #### 5. Décision
 - [ ] **REJETÉ**
@@ -218,6 +224,7 @@
 - [x] **À POURSUIVRE :**
   - le découplage seul de la sortie, sur tous les signaux, n'est pas un correctif ;
   - l'éviction de `nis_z_100` Q4 est le filtre le plus régulier ;
-  - candidats pour C02 (stop seul, OFAT) : R1 avec un stop serré, R2 hors Q4 à H26 avec un stop large ou un break-even, éventuellement R3 en continuation à H26.
+  - décisions du porteur (2026-09-29) : la continuation est écartée définitivement comme mode d'entrée, R3 et `nis_z_100` Q4 ne servent plus que de filtres d'exclusion ; R2 hors Q4 n'est pas traité comme un bloc ;
+  - candidats pour C02 (stop seul, OFAT) : F2b · x1 déjà retourné hors Q4 à H26 (candidat principal, stop large ou break-even), F3 · x1 déjà retourné hors Q4 à part, R1 avec un stop serré.
 
-  Points à trancher avant C02 : choix de H par régime, dimensionnement, frais canoniques, validation hors échantillon. Aucune Étape C02 lancée.
+  Points à trancher avant C02 : choix de H par régime, dimensionnement (le risque constant par ATR est un candidat de convention), frais canoniques, validation hors échantillon. Aucune Étape C02 lancée.

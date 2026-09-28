@@ -7,8 +7,9 @@ import pandas as pd
 import pytest
 
 from config import DATA_RAW, ROOT
-from envelope import by_year, dev_signals, summarize, time_stop_trades
-from estimand.stoploss import simulate_strategy
+from envelope import (by_year, dev_signals, equity_curve_sized, risk_weights, summarize, summarize_sized,
+                      time_stop_trades)
+from estimand.stoploss import equity_curve, simulate_strategy
 
 T0 = pd.Timestamp("2021-01-01", tz="UTC")
 HOLDOUT = pd.Timestamp("2026-01-01", tz="UTC")
@@ -109,6 +110,21 @@ def test_decomposition_long_short_timing_et_annees():
     y = by_year(tr, b, _atr(len(b)), 0.0)
     assert y.annee.tolist() == [2021] and y.timing_bps.iat[0] == pytest.approx(750)
 
+
+
+def test_capital_a_risque_constant():
+    b = _marche(400, 13)
+    tr = time_stop_trades(b, [10, 60, 150, 300], [1, -1, 1, -1], horizon=26)
+    pd.testing.assert_series_equal(equity_curve_sized(b, tr, 5.0, 1.0), equity_curve(b, tr, 5.0))   # w = 1 : identique
+    net = tr.ret_gross_bps.to_numpy() - 5.0
+    assert equity_curve_sized(b, tr, 5.0, 0.5).iloc[-1] == pytest.approx(np.prod(1 + 0.5 * net / 1e4))
+    np.testing.assert_allclose(risk_weights([20.0, 50.0, 200.0], 25.0), [1.0, 0.5, 0.125])     # plafond à 1x
+    atr = pd.Series([20.0, 50.0, 100.0, 200.0], index=tr.signal_bar.to_numpy())
+    s = summarize_sized(tr, b, atr, 5.0, 25.0)
+    w = np.array([1.0, 0.5, 0.25, 0.125])
+    assert s["pnl_compose"] == pytest.approx(np.prod(1 + w * net / 1e4) - 1)
+    assert s["exposition_moyenne"] == pytest.approx(w.mean()) and s["part_plafonnee"] == 0.25
+    assert s["mdd_valorise"] <= s["mdd_sorties"] + 1e-12
 
 # ── Données réelles ─────────────────────────────────────────────────────────────
 @pytest.fixture(scope="module")

@@ -43,7 +43,8 @@
   - Sortie à l'open plutôt qu'au close de B01 : cela permet de réutiliser `apply_stop` tel quel en C02. L'écart open[b + 1] / close[b] est de 1,25 bps en médiane et de 13,9 bps au P99.
   - `summarize` (8 métriques et décomposition par sens), `mean_ci` (bootstrap de grappes mensuelles), `by_year`.
 - **Régimes :** recalculés depuis l'atlas. Les familles sont identiques à B01 et les effectifs à ceux du prompt : R1 1 935, R2 1 874, R3 2 347, `nis_z_100` Q4 1 824, etc.
-- **Tests :** 23 ajoutés (10 dans `tests/test_envelope.py`, 13 repris de #KAKALMAN). La suite complète passe : 173 réussis, 2 ignorés.
+- **Tests :** 26 ajoutés, dont 3 à la relecture (11 dans `tests/test_envelope.py`, 2 dans `tests/test_categorization.py`, 13 repris de #KAKALMAN). La suite complète passe : 176 réussis, 2 ignorés.
+- **Relecture du 2026-09-29 :** contrôles A, B et C (§5, annexes F à H). La part des frais s'affiche « sans objet » si le PnL brut est ≤ 0 et « > 1 000 % » s'il est quasi nul, avec le brut par trade à côté.
 
 ## 2. [OBS] Mesures
 
@@ -84,6 +85,9 @@ Les tableaux complets des 8 métriques, à 5 et 10 bps, sont dans les annexes B 
 | R1 → R1 hors Q4 | 6 | −1,5 | +0,0 [−5,3 ; +4,9] | +0,9 / −0,7 | −8 % | 2/6 |
 
 - **R2 hors Q4 n'est positif qu'à H26.** Il est à +0,3 à H13 et à −2,9 à H48.
+- **Relecture : R2 hors Q4 mêle deux familles de comportements différents.**
+  - F2b · x1 déjà retourné hors Q4 est positif à H13, H26 et H48 : +4,0, +11,5 et +3,4 bps ; +0,02, +0,39 et +0,22 ATR. À 10 bps, il ne tient qu'à H26 (+6,5 bps, +0,26 ATR, PF 1,09).
+  - F3 · x1 déjà retourné hors Q4 rompt la régularité. En 2024 il fait −47 bps par trade à H26 et −60 à H48 ; à H48, Long −14,0 et Short +26,3.
 - **Tous hors R3 et Q4 n'est positif qu'à H48** (+1,1 à H26). Le gain y est porté par les Long (dérive +15,6), avec 2021 et 2022 négatives.
 
 ### Palier 3B — Inversion en continuation
@@ -122,10 +126,68 @@ Les tableaux complets des 8 métriques, à 5 et 10 bps, sont dans les annexes B 
   - le filtrage cinématique ne change le signe que pour quelques paires (régime, H), à 5 bps, avec des IC larges ;
   - à 10 bps, aucune configuration n'a d'IC entièrement positif ;
   - la seule espérance à IC positif est R3 en continuation à H26 : c'est un meilleur de 64, porté par 2020-2021.
-- **Pour C02 (stop-loss seul, OFAT),** candidats selon ton plan : R1 (H6 ou H13) avec un stop structurel serré ; R2 hors Q4 (H26) avec un stop large ou un break-even différé ; éventuellement R3 en continuation (H26).
+- **Décisions du porteur (relecture du 2026-09-29) :**
+  - la continuation est écartée définitivement comme mode d'entrée : R3 et `nis_z_100` Q4 ne servent plus que de filtres d'exclusion. R3 en continuation tombe à environ +2,3 bps par trade sur 2022-2025 (−2,7 à 10 bps, −0,01 ATR à 10 bps sur toute la période) ; `nis_z_100` Q4 en continuation fait −23,0, −13,4 et −5,5 bps en 2022, 2024 et 2025 ;
+  - R2 hors Q4 n'est pas traité comme un bloc : F2b · x1 déjà retourné hors Q4 est le candidat principal de C02, F3 · x1 déjà retourné hors Q4 est traité à part.
+- **Pour C02 (stop-loss seul, OFAT),** candidats : F2b · x1 déjà retourné hors Q4 (H26) avec un stop large ou un break-even différé ; F3 · x1 déjà retourné hors Q4, à part ; R1 (H6 ou H13) avec un stop structurel serré.
 - **Points à trancher avant C02 :**
   1. le choix de H par régime : les pics sont isolés (R2 hors Q4 à H26, Tous hors R3 et Q4 à H48) ;
   2. le dimensionnement : le réinvestissement intégral donne des drawdowns de 48 à 81 % et un écart arithmétique / composé de 2 à 5 bps par trade ;
   3. les frais : à 10 bps, rien ne se distingue de 0 ; l'hypothèse de 5 bps devient décisive ;
   4. une validation hors échantillon, avant toute conclusion (Étape D).
+- **Aucune Étape C02 n'est lancée.**
+
+## 5. Contrôles complémentaires (relecture du 2026-09-29)
+
+Demandés par le porteur avant de cadrer C02 ; calculés sur les données de C01, sans C02. Détail : annexes F à H, `controle_A_C01.csv`, `controle_B_C01.csv`. Chiffres nets de 5 bps.
+
+### Contrôle A — Éviction pure ou déblocage séquentiel ? (H26)
+
+- **[CODE]** La course du contrôle est purgée a posteriori de ses trades `nis_z_100` Q4, sans rouvrir les signaux qu'ils masquaient. On la compare à la course hors Q4, qui rouvre ces signaux.
+
+| Groupe | Course du contrôle | Trades Q4 retirés | Purge a posteriori (éviction pure) | Course hors Q4 | Dont trades débloqués |
+|---|---|---|---|---|---|
+| R2 | +2,2 (1 353) | −22,0 (319) | +9,7 [−3,7 ; +23,1] (1 034) | +12,3 (1 080) | +54,7 (61) |
+| ↳ F2b · x1 déjà retourné | +6,9 (676) | −69,6 (43) | +12,1 [−3,5 ; +27,9] (633) | +11,5 (639) | −54,2 (6) |
+| ↳ F3 · x1 déjà retourné | +0,3 (902) | −10,3 (314) | +5,9 [−14,9 ; +24,9] (588) | +9,3 (601) | +122,8 (15) |
+
+- **[OBS] F2b · x1 déjà retourné : le gain vient entièrement de l'éviction.** Retirer ses 43 trades Q4 (−69,6 bps en moyenne) le porte de +6,9 à +12,1. Les 633 trades conservés sont tous repris par la course hors Q4, qui n'en débloque que 6.
+- **[OBS] R2 : environ trois quarts de l'amélioration viennent de l'éviction (+7,5 bps), un quart du calendrier (+2,6 bps).** Ce quart repose sur 61 trades débloqués à +54,7 bps en moyenne.
+- **[OBS] F3 · x1 déjà retourné : un tiers de son PnL hors Q4 vient de 15 trades débloqués** (+122,8 bps en moyenne, soit 2,5 % des trades). L'éviction pure ne donne que +5,9 [−14,9 ; +24,9].
+
+### Contrôle B — Seuils causaux
+
+- **[CODE]** Médiane de `leg_atr` et P75 de `nis_z_100` recalculés sur les seuls signaux précédents : fenêtre glissante de 500 signaux, ou fenêtre expansive. Les 500 premiers signaux (janvier à mai 2020) servent de période de chauffe. Les trois variantes sont comparées sur la même période. `R1` ne dépend pas de la médiane de `leg_atr` : seul son filtre Q4 change.
+- **[OBS] Les masques changent à peine** : 98,6 à 99,9 % des signaux restent classés de la même façon.
+
+| Configuration, horizon | Seuils de l'échantillon entier | Glissante 500 signaux | Expansive |
+|---|---|---|---|
+| F2b · x1 déjà retourné hors Q4, H26 | +10,2 [−3,7 ; +25,5] | +11,5 [−3,4 ; +29,0] | +12,6 [−3,2 ; +29,6] |
+| R2 hors Q4, H26 | +11,6 [−3,6 ; +26,3] | +12,9 [−1,8 ; +27,7] | +11,4 [−4,0 ; +26,1] |
+| F3 · x1 déjà retourné hors Q4, H26 | +10,0 [−10,7 ; +29,7] | +10,8 [−10,4 ; +31,1] | +9,0 [−12,7 ; +29,3] |
+| R1 hors Q4, H6 | −0,8 [−6,1 ; +4,1] | −1,6 [−7,0 ; +3,2] | −0,9 [−6,2 ; +3,9] |
+
+- **[OBS] Les résultats ne dépendent pas du calcul des quantiles sur 2020-2025 entier** : les écarts restent sous 2,5 bps. R1 hors Q4 n'a pas d'avantage à H6, quelle que soit la variante : il était à +0,0 sur toute la période et reste proche de −1 bps hors de la période de chauffe.
+
+### Contrôle C — Capital à risque constant par trade
+
+- **[CODE]** La taille de chaque position est choisie pour qu'un ATR14(t) représente une part fixe du capital, avec un levier plafonné à 1x. Les frais sont proportionnels au notionnel. Le capital est valorisé à chaque clôture de barre, comme `equity_curve`.
+- **[OBS] Ton exemple (1 ATR = 1 % du capital) ne change presque rien.** L'ATR14 médian vaut 50 bps, donc 90 % des trades restent au plafond de 1x (exposition moyenne 0,98). On retrouve à peu près le notionnel fixe. Le niveau 0,25 % (12 % de trades plafonnés, exposition moyenne 0,55) réalise l'alignement voulu sur l'espérance en ATR.
+
+| Configuration | Notionnel fixe 1x : PnL ; DD | Risque 0,25 % par ATR, 5 bps : PnL ; DD | Risque 0,25 %, 10 bps : PnL ; DD |
+|---|---|---|---|
+| F2b · x1 déjà retourné hors Q4, H26 | +78 % ; −45 % | +72 % ; −13 % | +42 % ; −17 % |
+| R2 hors Q4, H26 | +187 % ; −48 % | +122 % ; −20 % | +60 % ; −22 % |
+| R3 en continuation, H26 | +281 % ; −48 % | +60 % ; −34 % | +3 % ; −47 % |
+| Tous hors R3 et Q4, H48 | +192 % ; −81 % | +98 % ; −46 % | +29 % ; −49 % |
+| Ancre native | −98,7 % ; −99,6 % | −76 % ; −86 % | −96 % ; −97 % |
+
+- **[OBS] À risque constant, les drawdowns fondent là où l'espérance en ATR est positive.** F2b · x1 déjà retourné hors Q4 passe de −45 % à −13 %, pour un PnL presque inchangé.
+- **[OBS] R3 en continuation, pondéré par l'ATR, retombe à +3 % à 10 bps :** son gain venait des années les plus volatiles.
+
+### [HYP] et suite
+
+- **F2b · x1 déjà retourné hors Q4 à H26 résiste aux trois contrôles :** gain dû à l'éviction pure, seuils causaux, risque constant. Son IC reste pourtant large ([−3,5 ; +27,9] en éviction pure) et il perd à H6. Il a été retenu après lecture des résultats, sur 64 configurations puis une séparation F2b / F3 : c'est le meilleur candidat de C02, pas un résultat établi.
+- **F3 · x1 déjà retourné hors Q4 tient surtout par ses trades débloqués et par ses années 2020-2021 et 2025.** Son éviction pure n'est pas distinguable de 0.
+- **Le dimensionnement à risque constant** pourrait devenir la convention de capital de l'Étape C. C'est à valider, comme facteur distinct, avant ou après C02.
 - **Aucune Étape C02 n'est lancée.**

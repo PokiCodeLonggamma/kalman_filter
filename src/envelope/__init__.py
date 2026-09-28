@@ -7,7 +7,9 @@
 L'exécution d'un trade, la stratégie native (ancre P6.5d), le capital et le drawdown viennent de `estimand.stoploss`
 (#KAKALMAN, copie certifiée) ; les frais de `labeling.costs`. Rien n'y est réécrit.
 """
-from envelope.metrics import DEV_MONTHS, by_year, mean_ci, summarize, trade_frame
+from envelope.metrics import (DEV_MONTHS, by_year, equity_curve_sized, mean_ci, risk_weights, summarize,
+                              summarize_sized, trade_frame)
 from envelope.sequential import dev_signals, time_stop_trades
 
-__all__ = ["dev_signals", "time_stop_trades", "summarize", "mean_ci", "by_year", "trade_frame", "DEV_MONTHS"]
+__all__ = ["dev_signals", "time_stop_trades", "summarize", "mean_ci", "by_year", "trade_frame", "DEV_MONTHS",
+           "risk_weights", "equity_curve_sized", "summarize_sized"]

@@ -5,7 +5,8 @@ import pytest
 
 from anatomy.causal import atr_wilder, causal_table
 from categorization import (BARRIERS, HORIZONS, add_derived, assign_families, barrier_key, barrier_table,
-                            bin_descriptor, cluster_bootstrap, excursion_table, summarize, tail_sum, timing_drift)
+                            bin_descriptor, causal_threshold, cluster_bootstrap, excursion_table, summarize, tail_sum,
+                            timing_drift)
 from features import build_features
 
 # ── Série synthétique : signal en t = 2, entrée open[3] = 101 (écart avec close[2] = 100), ATR14(t) = 2 ──────
@@ -134,6 +135,23 @@ def test_bootstrap_tire_des_grappes_entieres():
     assert np.isin(np.round(3 * draws[:, 0]), np.arange(3, 28, 4)).all()
     assert np.array_equal(draws, cluster_bootstrap(stat, clusters, n_boot=200, seed=1))
 
+
+
+def test_seuil_causal_glissant_et_expansif():
+    x = np.random.default_rng(11).normal(size=1500)
+    roll, exp_ = causal_threshold(x, 0.75, window=500), causal_threshold(x, 0.5)
+    assert np.isnan(roll[:500]).all() and np.isnan(exp_[:500]).all() and not np.isnan(roll[500:]).any()
+    for i in (500, 777, 1499):
+        assert roll[i] == pytest.approx(np.quantile(x[i - 500:i], 0.75))            # les 500 signaux précédents
+        assert exp_[i] == pytest.approx(np.quantile(x[:i], 0.5))                     # tout le passé, sans x[i]
+
+
+def test_seuil_causal_invariant_par_troncature():
+    x = np.random.default_rng(12).normal(size=1200)
+    for w in (500, None):
+        full = causal_threshold(x, 0.5, window=w)
+        for k in (600, 901):
+            np.testing.assert_array_equal(causal_threshold(x[:k], 0.5, window=w), full[:k])
 
 # ── Données réelles ─────────────────────────────────────────────────────────────
 @pytest.mark.data

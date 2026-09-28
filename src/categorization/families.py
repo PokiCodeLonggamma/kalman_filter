@@ -104,6 +104,15 @@ def summarize(ex: pd.DataFrame, mask: np.ndarray) -> dict:
     return out
 
 
+def causal_threshold(x, q: float, window: int | None = None, burn_in: int = 500) -> np.ndarray:
+    """Seuil strictement causal pour chaque signal : quantile `q` des valeurs des signaux précédents seulement, sur les
+    `window` derniers (fenêtre glissante) ou sur tout le passé (`window=None`, fenêtre expansive). NaN tant que moins
+    de `burn_in` signaux précèdent. Interpolation linéaire, comme `pd.qcut`."""
+    s = pd.Series(np.asarray(x, dtype=float))
+    roll = s.rolling(window, min_periods=burn_in) if window else s.expanding(min_periods=burn_in)
+    return roll.quantile(q).shift(1).to_numpy()
+
+
 def timing_drift(ret, direction, stat: str = "median") -> tuple[float, float]:
     """Décomposition sans placebo d'un rendement orienté `ret` (> 0 : dans le sens du signal). Avec m_L et m_S sa médiane
     (`stat="median"`) ou sa moyenne (`stat="mean"`) après les Long et après les Short : timing = (m_L + m_S) / 2,

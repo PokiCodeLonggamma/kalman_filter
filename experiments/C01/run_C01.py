@@ -1,11 +1,13 @@
 """EXP-C01 — découplage de la sortie (horizon fixe) et isolation des régimes en exécution séquentielle (Étape C).
 
 Usage, depuis la racine du dépôt : python experiments/C01/run_C01.py
-Sorties dans experiments/C01/ : resultats_C01.csv, annuel_C01.csv, figures/*.png, rapport_C01.md (= narratif_C01.md
-rédigé à la main, suivi des annexes chiffrées générées ici).
+Sorties dans experiments/C01/ : resultats_C01.csv, annuel_C01.csv, controle_A_C01.csv, controle_B_C01.csv,
+figures/*.png, rapport_C01.md (= narratif_C01.md rédigé à la main, suivi des annexes chiffrées générées ici).
 
 Aucun stop, aucun take-profit : sortie à open[t + 1 + H] (H ∈ {6, 13, 26, 48}), une seule position à la fois, frais
 aller-retour de 5 et 10 bps. Contrôle bloquant : l'ancre native P6.5d doit être reproduite à l'identique.
+Contrôles de la relecture : A (éviction pure contre déblocage séquentiel), B (seuils causaux), C (capital à risque
+constant par trade).
 """
 from __future__ import annotations
 
@@ -25,8 +27,9 @@ import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 
 from anatomy import build_atlas, load_dev_bars  # noqa: E402
-from categorization import add_derived, assign_families, bin_descriptor  # noqa: E402
-from envelope import by_year, dev_signals, mean_ci, summarize, time_stop_trades  # noqa: E402
+from categorization import add_derived, assign_families, bin_descriptor, causal_threshold  # noqa: E402
+from envelope import (by_year, dev_signals, mean_ci, summarize, summarize_sized, time_stop_trades,  # noqa: E402
+                      trade_frame)
 from estimand import load_bars_dev  # noqa: E402
 from estimand.stoploss import simulate_strategy  # noqa: E402
 
@@ -36,6 +39,8 @@ FEES = (5.0, 10.0)
 YEARS = list(range(2020, 2026))
 REF_TRADES = ROOT / "experiments" / "p6_5" / "strategie_stop_trades.csv"
 ANCRE = "Ancre native P6.5d"
+RISKS = (100.0, 25.0)                  # contrôle C : 1 ATR14(t) = 1 % ou 0,25 % du capital, levier plafonné à 1x
+BURN_IN = 500                          # contrôle B : signaux précédents requis avant un seuil causal
 Q4 = "nis_z_100 Q4"
 EXPECTED = {"R1": 1935, "R2": 1874, "R3": 2347, Q4: 1824, "Tous hors R3": 4949, f"Tous hors {Q4}": 5472,
             "Tous hors R3 et hors Q4": 4066, "R1 hors Q4": 1592, "R2 hors Q4": 1452, "F2b·x1": 787, "F3·x1": 1087,
@@ -121,6 +126,14 @@ def check_anchor(bars, f) -> tuple[pd.DataFrame, dict]:
 
 
 # ── Calcul ──────────────────────────────────────────────────────────────────────
+def sized(tr, bars, atr_bps, fee) -> dict:
+    """Contrôle C : PnL composé et drawdowns à risque constant, pour chaque niveau de RISKS."""
+    out = {}
+    for rk in RISKS:
+        out.update({f"{k}_r{int(rk)}": v for k, v in summarize_sized(tr, bars, atr_bps, fee, rk).items()})
+    return out
+
+
 def run_all(bars, atlas, atr_bps, confs, anchor_tr, n_sig_all):
     t_all = atlas.bar_index.to_numpy()
     s_all = atlas.direction.to_numpy()
@@ -128,7 +141,7 @@ def run_all(bars, atlas, atr_bps, confs, anchor_tr, n_sig_all):
     for fee in FEES:
         m = summarize(anchor_tr, bars, atr_bps, fee, n_candidates=n_sig_all, n_open=1)
         res.append({"palier": "1", "configuration": ANCRE, "controle": "", "mode": 1, "H": "native",
-                    "frais_bps": fee, **m, **mean_ci(anchor_tr, bars, fee)})
+                    "frais_bps": fee, **m, **mean_ci(anchor_tr, bars, fee), **sized(anchor_tr, bars, atr_bps, fee)})
         ann += [{"configuration": ANCRE, "H": "native", "frais_bps": fee, **r}
                 for r in by_year(anchor_tr, bars, atr_bps, fee).to_dict("records")]
     trades[(ANCRE, "native")] = anchor_tr
@@ -139,7 +152,8 @@ def run_all(bars, atlas, atr_bps, confs, anchor_tr, n_sig_all):
             for fee in FEES:
                 m = summarize(tr, bars, atr_bps, fee, n_candidates=int(c["masque"].sum()))
                 res.append({"palier": c["palier"], "configuration": c["nom"], "controle": c["controle"],
-                            "mode": c["mode"], "H": H, "frais_bps": fee, **m, **mean_ci(tr, bars, fee)})
+                            "mode": c["mode"], "H": H, "frais_bps": fee, **m, **mean_ci(tr, bars, fee),
+                            **sized(tr, bars, atr_bps, fee)})
                 ann += [{"configuration": c["nom"], "H": H, "frais_bps": fee, **r}
                         for r in by_year(tr, bars, atr_bps, fee).to_dict("records")]
     res, ann = pd.DataFrame(res), pd.DataFrame(ann)
@@ -163,9 +177,79 @@ def exit_gap_bps(bars) -> dict:
             "max": float(g.max())}
 
 
+# ── Contrôles de la relecture (A, B) ────────────────────────────────────────────
+def _stats(tr, bars, atr_bps, fee=5.0) -> dict:
+    tf = trade_frame(tr, bars, atr_bps, fee)
+    out = {"n": len(tf), "esperance_bps": tf.net_bps.mean() if len(tf) else np.nan,
+           "esperance_atr": tf.net_atr.mean() if len(tf) else np.nan,
+           "long_bps": tf.net_bps[tf.side == 1].mean() if (tf.side == 1).any() else np.nan,
+           "short_bps": tf.net_bps[tf.side == -1].mean() if (tf.side == -1).any() else np.nan}
+    return {**out, **(mean_ci(tr, bars, fee) if len(tf) > 1 else {})}
+
+
+def control_a(bars, atlas, atr_bps, m, H=26) -> pd.DataFrame:
+    """Éviction pure : la course du contrôle, purgée a posteriori de ses trades nis_z_100 Q4 sans rouvrir les signaux
+    ignorés, contre la course hors Q4, qui débloque les signaux masqués par une position Q4 (effet de calendrier)."""
+    t_all, s_all = atlas.bar_index.to_numpy(), atlas.direction.to_numpy()
+    q4 = set(t_all[m[Q4]])
+    rows = []
+    for nom, ck, vk in [("R2", "R2", "R2 hors Q4"), ("↳ F2b · x1 déjà retourné", "F2b·x1", "F2b·x1 hors Q4"),
+                        ("↳ F3 · x1 déjà retourné", "F3·x1", "F3·x1 hors Q4")]:
+        ctrl = time_stop_trades(bars, t_all[m[ck]], s_all[m[ck]], H)
+        var = time_stop_trades(bars, t_all[m[vk]], s_all[m[vk]], H)
+        in_q4 = ctrl.signal_bar.isin(q4).to_numpy()
+        purge = ctrl[~in_q4].reset_index(drop=True)
+        common = purge.signal_bar.isin(set(var.signal_bar)).to_numpy()
+        new = ~var.signal_bar.isin(set(purge.signal_bar)).to_numpy()
+        for label, tr in [("1. course du contrôle", ctrl), ("2. dont trades nis_z_100 Q4", ctrl[in_q4]),
+                          ("3. contrôle purgé a posteriori (éviction pure)", purge),
+                          ("3b. dont trades absents de la course hors Q4", purge[~common]),
+                          ("4. course hors Q4", var), ("4a. dont trades communs avec 3", purge[common]),
+                          ("4b. dont trades débloqués (absents de 3)", var[new])]:
+            rows.append({"groupe": nom, "H": H, "ensemble": label, **_stats(tr.reset_index(drop=True), bars, atr_bps)})
+    return pd.DataFrame(rows)
+
+
+def control_b(bars, atlas, atr_bps) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Seuils causaux : médiane de leg_atr (coupure des familles) et P75 de nis_z_100 (Q4) calculés sur les seuls
+    signaux précédents, fenêtre glissante de 500 signaux ou expansive, comparés aux seuils de l'échantillon entier sur
+    la même période (après les 500 premiers signaux). Les seuils de retracement (0,50 et 0,85) sont fixes."""
+    d = add_derived(atlas)
+    x1 = d.x1_already_flipped_at_t.to_numpy(dtype=bool)
+    r, leg, nis = d.retrace_ratio.to_numpy(), d.leg_atr.to_numpy(), d.nis_z_100.to_numpy()
+    if not np.array_equal(bin_descriptor(d.nis_z_100, "nis_z_100")[0] == "Q4", nis > np.quantile(nis, 0.75)):
+        raise SystemExit("seuil Q4 de l'échantillon entier différent de B01 : arrêt")
+    n = len(d)
+    variants = {"échantillon entier": (np.full(n, np.median(leg)), np.full(n, np.quantile(nis, 0.75))),
+                "glissante 500 signaux": (causal_threshold(leg, 0.5, BURN_IN, BURN_IN),
+                                          causal_threshold(nis, 0.75, BURN_IN, BURN_IN)),
+                "expansive": (causal_threshold(leg, 0.5, None, BURN_IN), causal_threshold(nis, 0.75, None, BURN_IN))}
+    post = np.arange(n) >= BURN_IN
+
+    def masks(thr_leg, thr_nis):
+        big, q4 = leg >= thr_leg, nis > thr_nis
+        return {"R1 hors Q4": (r < 0.5) & ~x1 & ~q4, "R2 hors Q4": ~big & (r >= 0.5) & x1 & ~q4,
+                "↳ F2b · x1 déjà retourné hors Q4": ~big & (r >= 0.5) & (r < 0.85) & x1 & ~q4,
+                "↳ F3 · x1 déjà retourné hors Q4": ~big & (r >= 0.85) & x1 & ~q4}
+
+    ref = masks(*variants["échantillon entier"])
+    t_all, s_all = atlas.bar_index.to_numpy(), atlas.direction.to_numpy()
+    rows, accord = [], []
+    for vname, (tl, tn) in variants.items():
+        for cname, mask in masks(tl, tn).items():
+            mm = mask & post
+            accord.append({"variante": vname, "configuration": cname, "n_signaux": int(mm.sum()),
+                           "accord": float((mask[post] == ref[cname][post]).mean())})
+            for H in HORIZONS:
+                tr = time_stop_trades(bars, t_all[mm], s_all[mm], H)
+                rows.append({"variante": vname, "configuration": cname, "H": H, **_stats(tr, bars, atr_bps)})
+    return pd.DataFrame(rows), pd.DataFrame(accord)
+
+
 # ── Sections du rapport ─────────────────────────────────────────────────────────
 HEAD8 = ["Configuration", "PnL net : composé ; bps cumulés", "PF", "WR", "Espérance : bps [IC 95 %] ; ATR",
-         "Max DD : valorisé ; bps", "Trades : n ; ignorés ; /mois", "Durée méd. (barres)", "Part des frais"]
+         "Max DD : valorisé ; bps", "Trades : n ; ignorés ; /mois", "Durée méd. (barres)",
+         "Part des frais ; brut par trade (bps)"]
 HEADLS = ["Configuration", "Long : bps ; ATR", "Short : bps ; ATR", "Timing : bps [IC 95 %] ; ATR", "Dérive (bps)",
           "Écart à Tous, Long / Short (bps)", "Années PnL > 0", "Années timing > 0"]
 
@@ -175,7 +259,15 @@ def row8(r) -> list:
             f"{sg(r.esperance_bps, 1)} [{sg(r.esperance_bps_lo, 1)} ; {sg(r.esperance_bps_hi, 1)}] ; {sg(r.esperance_atr, 3)}",
             f"{pct(r.mdd_valorise)} ; {sg(r.mdd_bps, 0)}",
             f"{n_fr(r.n_trades)} ; {pct(r.part_ignores, 0)} ; {fr(r.trades_par_mois, 1)}", fr(r.duree_mediane, 0),
-            pct(r.part_frais, 0)]
+            frais_cell(r)]
+
+
+def frais_cell(r) -> str:
+    """Frais cumulés / PnL brut : sans objet si le brut est ≤ 0, borné à « > 1 000 % » quand le brut est quasi nul."""
+    brut = sg(r.brut_bps / r.n_trades, 1)
+    if r.brut_bps <= 0:
+        return f"sans objet (brut ≤ 0) ; {brut}"
+    return f"{'> 1 000 %' if r.part_frais > 10 else pct(r.part_frais, 0)} ; {brut}"
 
 
 def rowls(r) -> list:
@@ -261,6 +353,73 @@ def section_annees(ann) -> str:
     out.append("### Ancre native\n\n" + table(["Configuration"] + [str(y) for y in YEARS],
                                              [[ANCRE] + [f"{sg(a.esperance_bps.get(y), 1)} ({n_fr(a.n_trades.get(y, 0))})"
                                                          for y in YEARS]]))
+    return "\n\n".join(out)
+
+
+
+def _esp(r) -> str:
+    if not r.n:
+        return "—"
+    return f"{sg(r.esperance_bps, 1)} [{sg(r.esperance_bps_lo, 1)} ; {sg(r.esperance_bps_hi, 1)}] ; {sg(r.esperance_atr, 3)}"
+
+
+def section_controle_a(ca) -> str:
+    out = ["## F. Contrôle A — Éviction pure contre déblocage séquentiel (H = 26, 5 bps)",
+           "La course du contrôle est purgée a posteriori de ses trades `nis_z_100` Q4, sans rouvrir les signaux qu'ils "
+           "masquaient (ligne 3). La course hors Q4 (ligne 4) rouvre ces signaux : ses trades se partagent entre ceux "
+           "qu'elle a en commun avec 3 (4a) et ceux qu'elle débloque (4b). Éviction pure = 3 − 1 ; effet de calendrier "
+           "= 4 − 3."]
+    for g, sub in ca.groupby("groupe", sort=False):
+        rows = [[r.ensemble, n_fr(r.n), _esp(r), f"{sg(r.long_bps, 1)} / {sg(r.short_bps, 1)}"] for r in sub.itertuples()]
+        out.append(f"### {g}\n\n" + table(["Ensemble de trades", "n", "Espérance nette : bps [IC 95 %] ; ATR",
+                                             "Long / Short (bps)"], rows))
+    return "\n\n".join(out)
+
+
+def section_controle_b(cb, acc) -> str:
+    variants = list(dict.fromkeys(cb.variante))
+    out = ["## G. Contrôle B — Seuils causaux (5 bps)",
+           f"Médiane de `leg_atr` et P75 de `nis_z_100` calculés sur les seuls signaux précédents. Les {BURN_IN} "
+           "premiers signaux (janvier à mai 2020) n'ont pas de seuil causal : les trois variantes sont comparées sur "
+           "la même période, après eux. `R1` ne dépend pas de la médiane de `leg_atr` : seul son filtre Q4 change.",
+           "### Accord des masques avec les seuils de l'échantillon entier\n\n"
+           + table(["Configuration"] + variants,
+                   [[c] + [f"{n_fr(acc[(acc.variante == v) & (acc.configuration == c)].n_signaux.iloc[0])} signaux ; "
+                            f"{pct(acc[(acc.variante == v) & (acc.configuration == c)].accord.iloc[0])}"
+                            for v in variants] for c in dict.fromkeys(acc.configuration)])]
+    for c in dict.fromkeys(cb.configuration):
+        rows = []
+        for H in HORIZONS:
+            cells = [f"{_esp(r)} ({n_fr(r.n)})" for r in
+                     (cb[(cb.variante == v) & (cb.configuration == c) & (cb.H == H)].iloc[0] for v in variants)]
+            rows.append([f"H = {H}"] + cells)
+        out.append(f"### {c}\n\nEspérance nette : bps [IC 95 %] ; ATR (trades)\n\n" + table(["Horizon"] + variants, rows))
+    return "\n\n".join(out)
+
+
+def section_controle_c(res) -> str:
+    out = ["## H. Contrôle C — Capital à risque constant par trade",
+           "Taille de position telle qu'un ATR14(t) représente une part fixe du capital, levier plafonné à 1x ; frais "
+           "proportionnels au notionnel. Cellules : PnL composé ; max drawdown valorisé. Dernière colonne : exposition "
+           "moyenne et part des trades plafonnés, à H = 26 (ancre : sortie native)."]
+    names = [ANCRE] + [n for n in dict.fromkeys(res.configuration) if n != ANCRE]
+    for rk, fee in [(25, 5.0), (25, 10.0), (100, 5.0)]:
+        rows = []
+        for n in names:
+            sub = res[(res.configuration == n) & (res.frais_bps == fee)]
+            if n == ANCRE:
+                g = sub.iloc[0]
+                cells = [f"{pct(g[f'pnl_compose_r{rk}'], 0)} ; {pct(g[f'mdd_valorise_r{rk}'], 0)} (sortie native)",
+                         "", "", ""]
+            else:
+                cells = []
+                for H in HORIZONS:
+                    g = sub[sub.H.astype(str) == str(H)].iloc[0]
+                    cells.append(f"{pct(g[f'pnl_compose_r{rk}'], 0)} ; {pct(g[f'mdd_valorise_r{rk}'], 0)}")
+                g = sub[sub.H.astype(str) == "26"].iloc[0]
+            rows.append([n] + cells + [f"{fr(g[f'exposition_moyenne_r{rk}'], 2)} ; {pct(g[f'part_plafonnee_r{rk}'], 0)}"])
+        out.append(f"### 1 ATR = {fr(rk / 100, 2)} % du capital, {fr(fee, 0)} bps aller-retour\n\n"
+                   + table(["Configuration"] + [f"H = {H}" for H in HORIZONS] + ["Exposition ; plafonnés"], rows))
     return "\n\n".join(out)
 
 
@@ -402,8 +561,13 @@ def main() -> None:
     ann.to_csv(HERE / "annuel_C01.csv", index=False, float_format="%.6g")
     figures(bars, res, ann, trades)
     meta = {"ancre": meta_a, "gap": exit_gap_bps(bars)}
+    ca = control_a(bars, atlas, atr_bps, regime_masks(atlas))
+    cb, acc = control_b(bars, atlas, atr_bps)
+    ca.to_csv(HERE / "controle_A_C01.csv", index=False, float_format="%.6g")
+    pd.concat([cb, acc], keys=["resultats", "accord"], names=["table"]).to_csv(HERE / "controle_B_C01.csv",
+                                                                                float_format="%.6g")
     parts = [section_controles(meta), section_palier1(res), section_palier2(res), section_palier3(res),
-             section_annees(ann)]
+             section_annees(ann), section_controle_a(ca), section_controle_b(cb, acc), section_controle_c(res)]
     narr = HERE / "narratif_C01.md"
     head = narr.read_text(encoding="utf-8") if narr.exists() else "# EXP-C01\n\n*(narratif à rédiger)*\n"
     (HERE / "rapport_C01.md").write_text(
