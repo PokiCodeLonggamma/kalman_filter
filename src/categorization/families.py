@@ -102,3 +102,34 @@ def summarize(ex: pd.DataFrame, mask: np.ndarray) -> dict:
         out[f"amb_{key}"] = amb / tot if tot else np.nan
         out[f"timeout_{key}"] = to / tot if tot else np.nan
     return out
+
+
+def timing_drift(ret, direction, stat: str = "median") -> tuple[float, float]:
+    """Décomposition sans placebo d'un rendement orienté `ret` (> 0 : dans le sens du signal). Avec m_L et m_S sa médiane
+    (`stat="median"`) ou sa moyenne (`stat="mean"`) après les Long et après les Short : timing = (m_L + m_S) / 2,
+    dérive = (m_L − m_S) / 2. NaN ignorés ; (NaN, NaN) si un sens est vide."""
+    agg = {"median": np.nanmedian, "mean": np.nanmean}[stat]
+    ret, direction = np.asarray(ret, dtype=float), np.asarray(direction)
+    long_, short = ret[direction == 1], ret[direction == -1]
+    if np.isnan(long_).all() or np.isnan(short).all():
+        return np.nan, np.nan
+    m_l, m_s = agg(long_), agg(short)
+    return float((m_l + m_s) / 2), float((m_l - m_s) / 2)
+
+
+def tail_sum(v, q: float = 10) -> float:
+    """P(100 − q) + P(q), NaN ignorés : > 0 quand la queue droite s'étend plus loin que la queue gauche."""
+    v = np.asarray(v, dtype=float)
+    v = v[~np.isnan(v)]
+    return float(np.percentile(v, 100 - q) + np.percentile(v, q)) if len(v) else np.nan
+
+
+def cluster_bootstrap(stat, clusters, n_boot: int = 2000, seed: int = 0) -> np.ndarray:
+    """Tirages bootstrap de `stat(positions)`. Les grappes (ex. mois civils) sont tirées avec remise, chacune avec toutes
+    ses observations : la dépendance entre fenêtres qui se chevauchent dans une même grappe est conservée.
+    Renvoie un tableau (n_boot, k) quand `stat` renvoie k valeurs."""
+    clusters = np.asarray(clusters)
+    groups = [np.flatnonzero(clusters == c) for c in np.unique(clusters)]
+    rng = np.random.default_rng(seed)
+    return np.array([stat(np.concatenate([groups[i] for i in rng.integers(0, len(groups), len(groups))]))
+                     for _ in range(n_boot)])

@@ -4,7 +4,8 @@
 - **Actif et période :** BTC/USD Bitstamp 30 min, 2020-2025. Données tronquées au 2025-12-31 23:30 UTC ; 2026, ETH et XRP ne sont pas lus.
 - **Univers :** les 7 296 signaux d'A01, dont l'identité avec `atlas_signaux.csv` est contrôlée au lancement.
 - **Frais :** sans objet. Aucun PnL, aucun backtest de portefeuille, aucun seuil optimisé.
-- **Reproduire :** `python experiments/B01/run_B01.py` (≈ 15 s) ; tests : `python -m pytest tests`.
+- **Reproduire :** `python experiments/B01/run_B01.py` (≈ 1 min, dont le bootstrap de l'annexe I) ; tests : `python -m pytest tests`.
+- **Relecture du 2026-09-28 :** moyennes, queues et trois régimes (§5, annexe I). Elle corrige deux lectures des §3 et §4.
 
 ## 0. Cadrage (validé par le porteur)
 
@@ -14,7 +15,7 @@
   - MFE_H, \|MAE_H\|, Asym_H et rendement signé à H ∈ {6, 13, 26, 48} barres ;
   - premier passage sur des barrières symétriques de ±1,0, ±1,5 et ±2,0 ATR14(t) ;
   - le tout par quartiles univariés et par familles cinématiques, en Long et en Short.
-- **CE QU'IL NE PERMET PAS DE CONCLURE :** aucun PnL net, aucune optimisation de seuils (Étapes C et D).
+- **CE QU'IL NE PERMET PAS DE CONCLURE :** aucun PnL net, aucune optimisation de seuils (Étapes C et D). Les regroupements R1-R3 de la relecture ont été définis après lecture des résultats : leur tenue hors échantillon n'est pas établie.
 - **Principe structurant :** B01 ne suppose pas qu'une enveloppe unique convient à tous les signaux. Les familles restent séparées.
 
 ## 1. [CODE] Implémentation et contrôles
@@ -37,7 +38,7 @@
   - quartiles et partition des familles ;
   - causalité par troncature (20 coupes) de `retrace_ratio`, `cycle_seg_div_atr` et `decel_ratio`.
 
-  La suite complète passe : 147 réussis, 2 ignorés.
+  La suite complète passe : 150 réussis, 2 ignorés, dont les 3 tests ajoutés à la relecture (§5).
 - **Censures :** fenêtres incomplètes en fin 2025 : 1 à H = 26, 3 à H = 48. Aucune barrière censurée.
 - **Ambiguïtés et timeouts :**
   - barres ambiguës : 1,5 % à ±1,0 ATR, 0,7 % à ±1,5, 0,5 % à ±2,0 ;
@@ -48,7 +49,7 @@
 
 ## 2. [OBS] Mesures
 
-Détails dans les annexes A à H et les figures 1 à 4.
+Détails dans les annexes A à H et les figures 1 à 4 ; moyennes et queues dans l'annexe I et la figure 5 (§5).
 
 1. **Signal pris globalement : pas d'asymétrie d'excursion au-delà d'un très court terme.**
    - MFE ≈ \|MAE\| à tous les horizons : 2,12 contre 2,14 ATR à H = 26 ; 3,03 contre 3,04 à H = 48.
@@ -83,8 +84,8 @@ Détails dans les annexes A à H et les figures 1 à 4.
      - gain ±1,5 de 48,6 % [46,3 ; 50,9], supérieur à 50 % une seule année sur 6 ; part MFE > \|MAE\| à H = 26 de 48,4 % ;
      - pourtant, timing au close positif : +0,14 à H = 26, +0,13 à H = 48 ;
      - le parcours part donc plus souvent contre le signal, alors que le close penche ensuite dans son sens ;
-     - x1 encore opposé (n = 1 301) : neutre (49,4 %) ; x1 déjà retourné : continuation (point 2).
-   - **F3, sortie de range** (n = 1 315) : neutre, gain ±1,5 de 49,8 % (Long 48,2 %, Short 51,7 %). F3 pur (n = 767) : 49,0 %, timing au close de −0,29 à H = 26.
+     - x1 encore opposé (n = 1 301) : neutre aux barrières (gain ±1,5 de 49,4 %), mais timing médian au close de +0,25 ATR à H = 26 (§5) ; x1 déjà retourné : continuation (point 2).
+   - **F3, sortie de range** (n = 1 315) : neutre en médiane et aux barrières, gain ±1,5 de 49,8 % (Long 48,2 %, Short 51,7 %). F3 pur (n = 767) : 49,0 %, timing médian au close de −0,29 à H = 26. En moyenne, en revanche, timing de +0,30 ATR à H = 48 (§5).
    - **F4, climax** (n = 476) : Long défavorable (45,3 %, asymétrie −0,64 à H = 26), Short favorable (55,3 %, 5 années sur 6). Au close, timing −0,44 et −0,51 : les petits effectifs rendent la lecture fragile.
 5. **Profils d'horizon différents selon les familles** (figure 2) :
    - F5 est le plus favorable à 6 barres, puis s'atténue ;
@@ -99,21 +100,66 @@ Détails dans les annexes A à H et les figures 1 à 4.
 
 - **Un choc violent sur la barre de signal ou un mouvement déjà consommé signent une continuation.** Après une bougie de contre-tendance extrême (`nis_z_100` Q4) ou une grande distance déjà parcourue, le prix reprend le sens précédent. C'est cohérent avec A01, K2, et avec #KAKALMAN P6.5b (strate Q4 défavorable). C'est la signature la plus stable de B01.
 - **L'entrée « fraîche » (F5) porte une asymétrie de très court terme, dans les deux sens.** Elle convient au mieux à une enveloppe brève (horizon de quelques barres, barrières serrées). Son ampleur est de l'ordre des frictions.
-- **F1 part souvent contre le signal avant de pencher dans son sens.** C'est compatible avec l'hypothèse P1 (stop structurel large et temps de développement). La part favorable reste faible (+0,13 ATR) et la dérive y pèse (+0,21).
-- **La lecture « sortie de range » (F3) n'est pas soutenue sur 48 barres :** les excursions sont neutres et le close de F3 pur revient contre le signal à 26 barres.
+- **F1 mêle deux régimes** *(corrigé à la relecture, §5)*. Avec x1 encore opposé, le timing médian est positif (+0,25 ATR à H = 26) mais la queue gauche est lourde ; avec x1 déjà retourné, c'est une continuation. La lecture initiale (« stop structurel large et temps de développement » pour F1 entier) est retirée.
+- **La sortie de range se lit en moyenne, pas en médiane** *(corrigé à la relecture, §5)*. En médiane et aux barrières symétriques, F3 est neutre. Mais F2b et F3 avec x1 déjà retourné (R2) ont un timing moyen positif à 26-48 barres, porté par une queue droite. La lecture initiale (« non soutenue sur 48 barres ») reposait sur les seules médianes.
 - **`A_vol` Q1 et F2b décrivent une dérive conditionnelle du marché** (bêta de régime), pas le timing du signal. Ils peuvent servir de variables de contexte directionnel, avec la réserve d'un échantillon haussier (`RESEARCH_PHILOSOPHY.md` §4.2).
 - **Les familles n'ont pas le même profil d'horizon**, ce qui soutient le principe d'enveloppes propres à chaque mécanisme en C. Mais aucune famille n'est assez forte seule pour porter une règle.
 
 ## 4. [DECISION] Orientations (rien n'est lancé)
 
 - **Constat :** aucune famille ne justifie seule une règle de trading. Les effets ont la taille des frictions.
-- **Pistes pour l'Étape C,** à tester un facteur à la fois, nettes de frais, par sens, avec la décomposition timing / dérive comme contrôle :
-  1. exclure les signatures de continuation (`nis_z_100` Q4, `obs_dist_seg_atr` Q4, F1 avec x1 déjà retourné) sur une enveloppe simple ;
-  2. une enveloppe courte dédiée à F5 ;
-  3. un stop structurel large avec du temps pour F1.
+- **Pistes pour l'Étape C,** révisées à la relecture (§5). Chacune se teste un facteur à la fois, nette de frais, par sens, avec la décomposition timing / dérive comme contrôle :
+  1. **R3 et `nis_z_100` Q4 :** exclusion en mode retournement sur une enveloppe simple ; test dédié d'une entrée en continuation ;
+  2. **R1 (dont F5) :** stop structurel serré derrière l'extremum du segment, horizon borné ;
+  3. **R2 :** tenue de 26 à 48 barres, stop large ou break-even différé.
+- **Piste retirée :** « un stop structurel large avec du temps pour F1 ». F1 réunit R1 et une part de R3, dont les timings sont de signes opposés, et la piste ne reposait que sur des médianes.
 - **`A_vol` et `log_R_rel`** se lisent comme des variables de régime (dérive), pas de timing.
-- **À faire valider :** reporter dans `RESEARCH_INSIGHTS.md` les constats de B01 que tu retiens, en particulier la décomposition timing / dérive comme contrôle du bêta sans placebo.
+- **`RESEARCH_INSIGHTS.md` :** constats de B01 et de sa relecture reportés (I-M6, I-M7, §4).
 - **Aucune Étape C n'est lancée.**
+
+## 5. Relecture (2026-09-28) : médianes, moyennes et queues
+
+Revue indépendante transmise par le porteur. Chacun de ses chiffres a été recalculé sur `excursions_signaux.csv`. Résultats : annexe I, `tableau_regimes_B01.csv`, figure 5.
+
+- **[CODE]**
+  - Annexe H complétée par H = 6 et par F1 · x1 encore opposé.
+  - Annexe I : timing médian et moyen, avec IC 95 % par bootstrap de grappes mensuelles (2 000 tirages) et stabilité annuelle ; moyenne winsorisée ; écart de chaque sens à Tous ; asymétrie moyenne ; queues.
+  - Fonctions `timing_drift`, `tail_sum` et `cluster_bootstrap` dans `families.py`, avec 3 tests.
+  - Les sorties d'origine sont inchangées : même SHA-256 pour `excursions_signaux.csv`, mêmes tableaux, mêmes figures 1 à 4.
+- **[OBS] L'angle mort est réel.** B01 résumait chaque strate par des médianes et des barrières symétriques. Ces mesures décrivent le cas typique : elles ne voient pas une espérance portée par une queue.
+- **[OBS] Les chiffres de la relecture se retrouvent à ±0,01 ATR,** à quatre exceptions près :
+  - R1 : stop implicite de 1,08 ATR (et non 1,13). Hors `nis_z_100` Q4 : 0,96 (et non 1,04) ; timing médian à H48 de +0,13 (+0,22) ; P90 + P10 à H26 de −0,49 (−0,41).
+  - F1 · x1 déjà retourné : P90 + P10 à H26 vaut −0,28. Les −0,48 et −0,36 cités sont l'asymétrie moyenne et le timing moyen à H48.
+  - P90 de MFE et de \|MAE\| à H48 : 10,95 et 9,82 pour F3 · x1 déjà retourné (et non 10,78 et 9,61) ; 10,82 et 9,83 pour F2b · x1 déjà retourné (10,55 et 9,63).
+  - « Négatif 6 années sur 6 » vaut pour R3, pas pour `nis_z_100` Q4, dont le timing moyen à H48 est de −0,02 (positif 4 années sur 6).
+- **[OBS] Trois régimes** (annexe I.1 ; timing en ATR14(t), sans frais ni stop) :
+
+  | Régime | n (part) | Timing médian H6 / H26 / H48 | Timing moyen H26 [IC 95 %] | Timing moyen H48 [IC 95 %] | P90 + P10 H26, Long / Short |
+  |---|---|---|---|---|---|
+  | R1 = F1/F5 · x1 encore opposé | 1 935 (26,5 %) | +0,16 / +0,21 / +0,15 | −0,07 [−0,24 ; +0,10] | +0,07 [−0,14 ; +0,28] | −0,72 / −0,58 |
+  | R2 = F2b/F3 · x1 déjà retourné | 1 874 (25,7 %) | −0,05 / −0,07 / −0,04 | +0,17 [−0,01 ; +0,34] | +0,28 [+0,03 ; +0,50] | +0,80 / +0,87 |
+  | R3 = F1 · x1 déjà retourné, F2a, F4 | 2 347 (32,2 %) | −0,07 / −0,11 / −0,08 | −0,15 [−0,30 ; −0,01] | −0,29 [−0,48 ; −0,07] | −0,27 / −0,14 |
+  | Hors R1-R3 | 1 140 (15,6 %) | +0,01 / −0,01 / −0,03 | −0,01 | −0,03 | +0,36 / −0,15 |
+
+  - **R1 :** médiane positive à tous les horizons, IC hors de 0, 6 années sur 6 à H6. Moyenne ≈ 0 : la queue gauche compense.
+  - **R2 :** médiane ≈ 0 ; moyenne positive à 26-48 barres, 5 années sur 6 à H48. Asymétrie moyenne de +0,49 ATR à H48, contre +0,03 pour Tous.
+  - **R3 :** négatif en médiane comme en moyenne. Timing médian à H26 et timing moyen à H48 négatifs 6 années sur 6. Les deux sens font moins bien que Tous à H48 (Long −0,21, Short −0,35).
+- **[OBS] Ce que la vérification ajoute.**
+  - **Les moyennes ne tiennent pas à quelques chocs :** winsorisées aux P1 et P99, R2 garde +0,23 à H48 et R3 −0,28.
+  - **Leur précision reste faible :** l'IC de R2 touche 0 à H26, celui de F3 seul contient 0 à H48 ([−0,03 ; +0,61]).
+  - **R2 réunit deux effets d'un seul côté.** À H48, par rapport à tous les signaux du même sens : F3 · x1 déjà retourné fait +0,62 ATR en Short mais −0,11 en Long ; F2b · x1 déjà retourné fait +0,81 en Long mais −0,12 en Short. De même, F3 est positif en Long (+0,26) comme en Short (+0,33), mais ses Long ne font pas mieux que l'ensemble des Long (+0,04) : l'effet est côté Short.
+  - **L'effet moyen de R2 se construit avec l'horizon :** +0,03 à H6, +0,08 à H13, +0,17 à H26, +0,28 à H48.
+  - **Les queues de R2 sont plus larges des deux côtés en ATR(t)** : P10 de −6,82 et P90 de +7,65 à H48, contre −6,47 et +6,47 pour Tous. Après une compression, les mouvements suivants sont grands en unités d'ATR(t) ; l'asymétrie droite s'y ajoute.
+  - **R1 :** l'extremum du segment ne tient jusqu'au signal suivant que dans 46,9 % des cas (information, I-M1). Un stop placé à l'extremum serait touché environ une fois sur deux avant le signal suivant.
+- **[HYP] Lecture du porteur.**
+  - R1 est un retournement par décélération : gain typique régulier, pertes rares mais larges quand la tendance reprend.
+  - R2 est un breakout de compression : faux départs fréquents (médiane plate), espérance portée par la queue droite.
+  - R3 est un signal tardif, après une grande jambe ou sur une bougie de choc : la tendance précédente reprend.
+- **[HYP] Complément.** Le sens favorable propre à chaque sous-famille de R2 (Short pour F3, Long pour F2b) pourrait suivre la tendance de l'unité de temps supérieure. À caractériser.
+- **Ce que la relecture ne permet pas de conclure :**
+  - R1, R2 et R3 ont été définis après lecture des résultats de B01 : leur tenue hors échantillon n'est pas établie ;
+  - timing et queues sont mesurés sans frais ni stop. Ils ne disent pas quelle enveloppe coupe la queue gauche de R1 sans détruire sa médiane, ni laquelle laisse courir la queue droite de R2 ;
+  - les grappes mensuelles couvrent le chevauchement des fenêtres à l'intérieur d'un mois, pas la dépendance entre mois.
 
 ---
 
@@ -427,25 +473,145 @@ Condition : médiane de Asym_H < 0 pour au moins un horizon et taux de gain stri
 
 ΔL et ΔS : variation médiane du prix de open[t+1] à close[t+H] (ATR14(t), non orientée), après les signaux Long et après les signaux Short. Timing = (ΔL − ΔS) / 2 : part où le prix suit le sens du signal. Dérive = (ΔL + ΔS) / 2 : part commune aux deux sens (marché). Dernières colonnes : part MFE > \|MAE\|, Long et Short réunis, IC de Wilson à 95 %.
 
-| Strate | n Long | n Short | Timing H26 | Dérive H26 | Timing H48 | Dérive H48 | MFE>MAE H6 [IC] | MFE>MAE H26 [IC] |
+Moyennes, queues et intervalles de confiance du timing : annexe I.
+
+| Strate | n Long | n Short | Timing H6 | Dérive H6 | Timing H26 | Dérive H26 | Timing H48 | Dérive H48 | MFE>MAE H6 [IC] | MFE>MAE H26 [IC] |
+|---|---|---|---|---|---|---|---|---|---|---|
+| Tous | 3 628 | 3 668 | 0,02 | 0,04 | −0,02 | 0,08 | 0,01 | 0,21 | 51,4 % [50,3 % ; 52,6 %] | 49,7 % [48,5 % ; 50,8 %] |
+| F1 | 853 | 1 016 | 0,07 | 0,07 | 0,14 | 0,22 | 0,13 | 0,21 | 51,4 % [49,2 % ; 53,7 %] | 48,4 % [46,1 % ; 50,6 %] |
+| F1 · x1 encore opposé | 595 | 706 | 0,12 | 0,08 | 0,25 | 0,27 | 0,24 | 0,32 | 52,6 % [49,9 % ; 55,3 %] | 49,7 % [47,0 % ; 52,4 %] |
+| F1 · x1 déjà retourné | 258 | 310 | −0,03 | 0,06 | −0,15 | 0,05 | −0,08 | 0,06 | 48,8 % [44,7 % ; 52,9 %] | 45,2 % [41,2 % ; 49,4 %] |
+| F2a | 702 | 601 | −0,02 | 0,05 | −0,02 | 0,01 | 0,05 | 0,22 | 50,6 % [47,9 % ; 53,3 %] | 48,1 % [45,4 % ; 50,8 %] |
+| F2b | 794 | 798 | −0,00 | 0,03 | 0,02 | 0,16 | −0,01 | 0,35 | 51,8 % [49,3 % ; 54,2 %] | 51,8 % [49,3 % ; 54,2 %] |
+| F3 | 705 | 610 | −0,09 | 0,05 | −0,12 | 0,04 | 0,03 | −0,05 | 50,1 % [47,4 % ; 52,8 %] | 50,7 % [48,0 % ; 53,4 %] |
+| F3 pur | 373 | 394 | −0,11 | −0,03 | −0,29 | −0,06 | −0,04 | −0,02 | 50,5 % [46,9 % ; 54,0 %] | 49,7 % [46,2 % ; 53,3 %] |
+| F4 | 258 | 218 | −0,20 | −0,09 | −0,44 | −0,21 | −0,51 | −0,03 | 49,4 % [44,9 % ; 53,8 %] | 47,9 % [43,4 % ; 52,4 %] |
+| F5 | 316 | 425 | 0,23 | 0,09 | −0,04 | −0,08 | 0,06 | 0,19 | 56,0 % [52,4 % ; 59,5 %] | 50,3 % [46,7 % ; 53,9 %] |
+| Rang 1 | 3 018 | 3 019 | 0,00 | 0,04 | −0,05 | 0,09 | −0,03 | 0,21 | 51,3 % [50,0 % ; 52,5 %] | 49,5 % [48,2 % ; 50,7 %] |
+| Répétition | 610 | 649 | 0,04 | 0,02 | 0,10 | −0,02 | 0,17 | 0,14 | 52,3 % [49,6 % ; 55,1 %] | 50,6 % [47,8 % ; 53,4 %] |
+| Cycle : plus bas plus haut / plus haut plus bas | 542 | 459 | 0,03 | 0,07 | −0,04 | 0,01 | −0,18 | 0,28 | 50,2 % [47,2 % ; 53,3 %] | 53,1 % [50,0 % ; 56,2 %] |
+| A_vol Q1 | 909 | 915 | 0,01 | 0,01 | −0,10 | −0,13 | −0,01 | 0,03 | 52,9 % [50,6 % ; 55,2 %] | 49,8 % [47,5 % ; 52,1 %] |
+| A_vol Q4 | 896 | 928 | 0,00 | 0,03 | 0,03 | 0,17 | −0,03 | 0,36 | 48,9 % [46,6 % ; 51,2 %] | 49,4 % [47,1 % ; 51,7 %] |
+| nis_z_100 Q4 | 894 | 930 | −0,16 | 0,01 | −0,18 | 0,03 | −0,15 | 0,22 | 48,6 % [46,3 % ; 50,9 %] | 46,3 % [44,0 % ; 48,6 %] |
+| prev_seg_len Q4 | 732 | 792 | 0,01 | 0,06 | 0,02 | 0,17 | 0,17 | 0,25 | 49,9 % [47,4 % ; 52,4 %] | 46,8 % [44,3 % ; 49,3 %] |
+| saturation Q4 | 874 | 944 | −0,05 | −0,01 | −0,10 | 0,15 | −0,02 | 0,31 | 49,1 % [46,8 % ; 51,4 %] | 46,9 % [44,6 % ; 49,2 %] |
+| retrace_ratio Q1 | 773 | 1 051 | 0,13 | 0,07 | 0,01 | 0,13 | 0,05 | 0,18 | 52,6 % [50,3 % ; 54,9 %] | 47,4 % [45,1 % ; 49,7 %] |
+| leg_atr Q4 | 879 | 945 | 0,00 | 0,04 | 0,02 | 0,11 | 0,13 | 0,20 | 50,2 % [47,9 % ; 52,5 %] | 47,3 % [45,0 % ; 49,6 %] |
+| obs_dist_seg_atr Q4 | 958 | 866 | −0,11 | 0,01 | −0,17 | 0,08 | −0,13 | 0,19 | 49,1 % [46,8 % ; 51,4 %] | 47,2 % [44,9 % ; 49,5 %] |
+
+## I. Médianes, moyennes et queues : trois régimes (relecture)
+
+Regroupement proposé par le porteur à la relecture, après lecture des résultats (post hoc) :
+- **R1 = F1/F5 · x1 encore opposé** : essoufflement précoce ;
+- **R2 = F2b/F3 · x1 déjà retourné** : sortie de range avec bascule de vitesse ;
+- **R3 = F1 · x1 déjà retourné, F2a, F4** : continuation.
+
+Les lignes « ↳ » détaillent les sous-strates ; `nis_z_100` Q4 recoupe R1 et R2.
+
+Toutes les mesures portent sur ret_H, rendement orienté de open[t+1] à close[t+H] en ATR14(t), sans frais ni stop :
+- timing = (m_L + m_S) / 2 et dérive = (m_L − m_S) / 2, où m_L et m_S sont la médiane ou la moyenne de ret_H après les Long et après les Short (annexe H pour la médiane) ;
+- IC 95 % : bootstrap de grappes, 2 000 tirages de mois civils avec remise ; les fenêtres qui se chevauchent dans un même mois restent ensemble ;
+- (ans > 0) : nombre d'années 2020-2025 où la statistique annuelle est positive ;
+- moyenne winsorisée : timing moyen après écrêtage de la variation du prix aux P1 et P99 de tous les signaux ;
+- écart à Tous : moyenne de ret_H du groupe moins celle de tous les signaux du même sens ;
+- asymétrie moyenne : (moyenne Long + moyenne Short) / 2 de MFE_H − \|MAE_H\| ;
+- P90 + P10 de ret_H par sens : positif quand la queue droite s'étend plus loin que la gauche ; pour Tous, la dérive du BTC le rend positif en Long et négatif en Short ;
+- extremum tenu : information a posteriori (`RESEARCH_INSIGHTS.md` I-M1), part des signaux dont l'extremum du segment tient jusqu'au signal suivant.
+
+### I.1 Synthèse
+
+| Groupe | n (part) | Stop implicite P50 (ATR) | Info : extremum tenu | Timing médian H6 / H26 / H48 | Timing moyen H6 / H26 / H48 | P90 + P10 H26, Long / Short | P90 + P10 H48, Long / Short | Asym moyenne H48 |
 |---|---|---|---|---|---|---|---|---|
-| Tous | 3 628 | 3 668 | −0,02 | 0,08 | 0,01 | 0,21 | 51,4 % [50,3 % ; 52,6 %] | 49,7 % [48,5 % ; 50,8 %] |
-| F1 | 853 | 1 016 | 0,14 | 0,22 | 0,13 | 0,21 | 51,4 % [49,2 % ; 53,7 %] | 48,4 % [46,1 % ; 50,6 %] |
-| F1 · x1 déjà retourné | 258 | 310 | −0,15 | 0,05 | −0,08 | 0,06 | 48,8 % [44,7 % ; 52,9 %] | 45,2 % [41,2 % ; 49,4 %] |
-| F2a | 702 | 601 | −0,02 | 0,01 | 0,05 | 0,22 | 50,6 % [47,9 % ; 53,3 %] | 48,1 % [45,4 % ; 50,8 %] |
-| F2b | 794 | 798 | 0,02 | 0,16 | −0,01 | 0,35 | 51,8 % [49,3 % ; 54,2 %] | 51,8 % [49,3 % ; 54,2 %] |
-| F3 | 705 | 610 | −0,12 | 0,04 | 0,03 | −0,05 | 50,1 % [47,4 % ; 52,8 %] | 50,7 % [48,0 % ; 53,4 %] |
-| F3 pur | 373 | 394 | −0,29 | −0,06 | −0,04 | −0,02 | 50,5 % [46,9 % ; 54,0 %] | 49,7 % [46,2 % ; 53,3 %] |
-| F4 | 258 | 218 | −0,44 | −0,21 | −0,51 | −0,03 | 49,4 % [44,9 % ; 53,8 %] | 47,9 % [43,4 % ; 52,4 %] |
-| F5 | 316 | 425 | −0,04 | −0,08 | 0,06 | 0,19 | 56,0 % [52,4 % ; 59,5 %] | 50,3 % [46,7 % ; 53,9 %] |
-| Rang 1 | 3 018 | 3 019 | −0,05 | 0,09 | −0,03 | 0,21 | 51,3 % [50,0 % ; 52,5 %] | 49,5 % [48,2 % ; 50,7 %] |
-| Répétition | 610 | 649 | 0,10 | −0,02 | 0,17 | 0,14 | 52,3 % [49,6 % ; 55,1 %] | 50,6 % [47,8 % ; 53,4 %] |
-| Cycle : plus bas plus haut / plus haut plus bas | 542 | 459 | −0,04 | 0,01 | −0,18 | 0,28 | 50,2 % [47,2 % ; 53,3 %] | 53,1 % [50,0 % ; 56,2 %] |
-| A_vol Q1 | 909 | 915 | −0,10 | −0,13 | −0,01 | 0,03 | 52,9 % [50,6 % ; 55,2 %] | 49,8 % [47,5 % ; 52,1 %] |
-| A_vol Q4 | 896 | 928 | 0,03 | 0,17 | −0,03 | 0,36 | 48,9 % [46,6 % ; 51,2 %] | 49,4 % [47,1 % ; 51,7 %] |
-| nis_z_100 Q4 | 894 | 930 | −0,18 | 0,03 | −0,15 | 0,22 | 48,6 % [46,3 % ; 50,9 %] | 46,3 % [44,0 % ; 48,6 %] |
-| prev_seg_len Q4 | 732 | 792 | 0,02 | 0,17 | 0,17 | 0,25 | 49,9 % [47,4 % ; 52,4 %] | 46,8 % [44,3 % ; 49,3 %] |
-| saturation Q4 | 874 | 944 | −0,10 | 0,15 | −0,02 | 0,31 | 49,1 % [46,8 % ; 51,4 %] | 46,9 % [44,6 % ; 49,2 %] |
-| retrace_ratio Q1 | 773 | 1 051 | 0,01 | 0,13 | 0,05 | 0,18 | 52,6 % [50,3 % ; 54,9 %] | 47,4 % [45,1 % ; 49,7 %] |
-| leg_atr Q4 | 879 | 945 | 0,02 | 0,11 | 0,13 | 0,20 | 50,2 % [47,9 % ; 52,5 %] | 47,3 % [45,0 % ; 49,6 %] |
-| obs_dist_seg_atr Q4 | 958 | 866 | −0,17 | 0,08 | −0,13 | 0,19 | 49,1 % [46,8 % ; 51,4 %] | 47,2 % [44,9 % ; 49,5 %] |
+| Tous | 7 296 (100,0 %) | 1,77 | 63,9 % | +0,02 / −0,02 / +0,01 | +0,03 / −0,03 / −0,00 | +0,08 / −0,01 | +0,45 / −0,51 | +0,03 |
+| R1 = F1/F5 · x1 encore opposé | 1 935 (26,5 %) | 1,08 | 46,9 % | +0,16 / +0,21 / +0,15 | +0,08 / −0,07 / +0,07 | −0,72 / −0,58 | −0,00 / +0,40 | −0,05 |
+| R2 = F2b/F3 · x1 déjà retourné | 1 874 (25,7 %) | 1,92 | 68,3 % | −0,05 / −0,07 / −0,04 | +0,03 / +0,17 / +0,28 | +0,80 / +0,87 | +1,39 / +0,57 | +0,49 |
+| R3 = F1 · x1 déjà retourné, F2a, F4 | 2 347 (32,2 %) | 2,42 | 77,5 % | −0,07 / −0,11 / −0,08 | +0,00 / −0,15 / −0,29 | −0,27 / −0,14 | −0,18 / −1,79 | −0,27 |
+| Hors R1-R3 | 1 140 (15,6 %) | 1,44 | 57,8 % | +0,01 / −0,01 / −0,03 | −0,01 / −0,01 / −0,03 | +0,36 / −0,15 | +1,40 / −1,39 | −0,02 |
+
+### I.2 Horizon H = 6
+
+| Groupe | n Long / Short | Timing médian [IC 95 %] (ans > 0) | Timing moyen [IC 95 %] (ans > 0) | Moyenne winsorisée | Écart à Tous, Long / Short | Asym moyenne | P90 + P10, Long / Short | P10 / P90 |
+|---|---|---|---|---|---|---|---|---|
+| Tous | 3 628 / 3 668 | +0,02 [−0,02 ; +0,05] (4/6) | +0,03 [−0,02 ; +0,08] (4/6) | +0,02 | +0,00 / +0,00 | +0,06 | +0,06 / +0,03 | −1,82 / +1,88 |
+| R1 = F1/F5 · x1 encore opposé | 867 / 1 068 | +0,16 [+0,10 ; +0,22] (6/6) | +0,08 [+0,00 ; +0,17] (4/6) | +0,07 | +0,10 / +0,01 | +0,02 | +0,06 / −0,14 | −1,80 / +1,80 |
+| ↳ F1 · x1 encore opposé | 595 / 706 | +0,12 [+0,07 ; +0,19] (6/6) | +0,08 [−0,02 ; +0,19] (3/6) | +0,06 | +0,17 / −0,07 | +0,01 | +0,29 / −0,34 | −1,79 / +1,78 |
+| ↳ F5 · x1 encore opposé | 272 / 362 | +0,23 [+0,10 ; +0,32] (6/6) | +0,08 [−0,07 ; +0,22] (5/6) | +0,09 | −0,06 / +0,16 | +0,04 | −0,22 / +0,17 | −1,83 / +1,80 |
+| ↳ R1 hors nis_z_100 Q4 | 702 / 890 | +0,21 [+0,14 ; +0,28] (6/6) | +0,10 [+0,01 ; +0,20] (4/6) | +0,09 | +0,12 / +0,03 | +0,05 | +0,03 / −0,13 | −1,87 / +1,83 |
+| R2 = F2b/F3 · x1 déjà retourné | 960 / 914 | −0,05 [−0,14 ; +0,04] (2/6) | +0,03 [−0,06 ; +0,13] (3/6) | +0,00 | −0,06 / +0,07 | +0,14 | +0,01 / +0,11 | −2,01 / +2,08 |
+| ↳ F3 · x1 déjà retourné | 573 / 514 | −0,07 [−0,20 ; +0,06] (2/6) | +0,02 [−0,11 ; +0,15] (4/6) | −0,01 | −0,07 / +0,06 | +0,13 | +0,08 / +0,14 | −2,10 / +2,22 |
+| ↳ F2b · x1 déjà retourné | 387 / 400 | −0,02 [−0,12 ; +0,07] (3/6) | +0,05 [−0,09 ; +0,19] (4/6) | +0,02 | −0,06 / +0,09 | +0,15 | −0,05 / +0,16 | −1,88 / +1,93 |
+| ↳ R2 hors nis_z_100 Q4 | 768 / 684 | −0,03 [−0,12 ; +0,05] (3/6) | +0,05 [−0,07 ; +0,16] (3/6) | +0,01 | −0,01 / +0,06 | +0,15 | +0,02 / +0,08 | −1,94 / +2,00 |
+| R3 = F1 · x1 déjà retourné, F2a, F4 | 1 218 / 1 129 | −0,07 [−0,13 ; +0,01] (2/6) | +0,00 [−0,07 ; +0,07] (3/6) | +0,00 | −0,05 / −0,00 | +0,04 | +0,04 / +0,29 | −1,72 / +1,91 |
+| ↳ F1 · x1 déjà retourné | 258 / 310 | −0,03 [−0,16 ; +0,07] (1/6) | −0,04 [−0,19 ; +0,14] (1/6) | −0,08 | −0,07 / −0,06 | −0,05 | −0,20 / −0,16 | −1,78 / +1,63 |
+| ↳ F2a | 702 / 601 | −0,02 [−0,11 ; +0,06] (3/6) | −0,01 [−0,11 ; +0,10] (3/6) | +0,01 | −0,07 / −0,00 | +0,02 | −0,09 / +0,51 | −1,72 / +1,86 |
+| ↳ F4 | 258 / 218 | −0,20 [−0,34 ; −0,03] (1/6) | +0,08 [−0,08 ; +0,23] (4/6) | +0,07 | +0,01 / +0,09 | +0,19 | +1,10 / +0,53 | −1,61 / +2,37 |
+| Hors R1-R3 | 583 / 557 | +0,01 [−0,09 ; +0,08] (2/6) | −0,01 [−0,11 ; +0,10] (3/6) | +0,00 | +0,06 / −0,13 | +0,04 | +0,26 / −0,32 | −1,77 / +1,76 |
+| nis_z_100 Q4 | 894 / 930 | −0,16 [−0,22 ; −0,10] (0/6) | −0,07 [−0,15 ; +0,00] (1/6) | −0,07 | −0,19 / −0,01 | −0,03 | −0,13 / +0,31 | −1,87 / +1,98 |
+| F3 (famille entière) | 705 / 610 | −0,09 [−0,20 ; +0,03] (2/6) | −0,01 [−0,13 ; +0,12] (1/6) | −0,02 | −0,08 / +0,02 | +0,10 | +0,12 / +0,09 | −2,08 / +2,20 |
+| F3 pur | 373 / 394 | −0,11 [−0,24 ; +0,02] (3/6) | −0,05 [−0,22 ; +0,13] (2/6) | −0,07 | −0,19 / +0,04 | +0,07 | −0,17 / +0,17 | −2,17 / +2,20 |
+
+### I.3 Horizon H = 13
+
+| Groupe | n Long / Short | Timing médian [IC 95 %] (ans > 0) | Timing moyen [IC 95 %] (ans > 0) | Moyenne winsorisée | Écart à Tous, Long / Short | Asym moyenne | P90 + P10, Long / Short | P10 / P90 |
+|---|---|---|---|---|---|---|---|---|
+| Tous | 3 628 / 3 668 | −0,03 [−0,07 ; +0,02] (2/6) | +0,05 [−0,02 ; +0,12] (4/6) | +0,04 | +0,00 / +0,00 | +0,09 | +0,29 / +0,11 | −2,86 / +3,05 |
+| R1 = F1/F5 · x1 encore opposé | 867 / 1 068 | +0,10 [+0,01 ; +0,19] (5/6) | +0,04 [−0,10 ; +0,18] (5/6) | +0,03 | −0,04 / +0,02 | +0,01 | −0,16 / −0,15 | −2,81 / +2,70 |
+| ↳ F1 · x1 encore opposé | 595 / 706 | +0,08 [−0,02 ; +0,19] (5/6) | +0,07 [−0,09 ; +0,24] (4/6) | +0,05 | +0,06 / −0,02 | +0,01 | +0,20 / −0,45 | −2,81 / +2,72 |
+| ↳ F5 · x1 encore opposé | 272 / 362 | +0,12 [−0,04 ; +0,27] (5/6) | −0,03 [−0,27 ; +0,19] (2/6) | −0,02 | −0,28 / +0,12 | −0,01 | −0,63 / +0,15 | −2,72 / +2,61 |
+| ↳ R1 hors nis_z_100 Q4 | 702 / 890 | +0,12 [+0,01 ; +0,22] (6/6) | +0,06 [−0,10 ; +0,23] (4/6) | +0,05 | −0,05 / +0,07 | +0,04 | −0,16 / −0,11 | −2,81 / +2,74 |
+| R2 = F2b/F3 · x1 déjà retourné | 960 / 914 | −0,07 [−0,20 ; +0,02] (2/6) | +0,08 [−0,07 ; +0,22] (2/6) | +0,06 | −0,01 / +0,07 | +0,19 | +0,70 / +0,54 | −3,06 / +3,59 |
+| ↳ F3 · x1 déjà retourné | 573 / 514 | −0,12 [−0,28 ; +0,02] (1/6) | +0,04 [−0,15 ; +0,22] (3/6) | +0,03 | −0,06 / +0,05 | +0,20 | +0,67 / +0,71 | −3,24 / +3,92 |
+| ↳ F2b · x1 déjà retourné | 387 / 400 | −0,01 [−0,22 ; +0,11] (3/6) | +0,13 [−0,07 ; +0,32] (3/6) | +0,11 | +0,05 / +0,10 | +0,18 | +0,66 / +0,34 | −2,69 / +3,27 |
+| ↳ R2 hors nis_z_100 Q4 | 768 / 684 | −0,05 [−0,19 ; +0,06] (3/6) | +0,11 [−0,04 ; +0,26] (3/6) | +0,09 | +0,05 / +0,08 | +0,21 | +0,80 / +0,51 | −3,05 / +3,65 |
+| R3 = F1 · x1 déjà retourné, F2a, F4 | 1 218 / 1 129 | −0,09 [−0,17 ; −0,01] (2/6) | −0,00 [−0,09 ; +0,09] (2/6) | −0,01 | −0,03 / −0,07 | +0,04 | +0,00 / −0,12 | −2,82 / +2,79 |
+| ↳ F1 · x1 déjà retourné | 258 / 310 | −0,07 [−0,27 ; +0,07] (3/6) | −0,15 [−0,37 ; +0,09] (2/6) | −0,15 | −0,16 / −0,23 | −0,18 | −0,62 / −1,17 | −3,19 / +2,24 |
+| ↳ F2a | 702 / 601 | −0,04 [−0,15 ; +0,06] (3/6) | +0,04 [−0,08 ; +0,17] (2/6) | +0,05 | +0,01 / −0,02 | +0,07 | −0,01 / +0,21 | −2,77 / +2,79 |
+| ↳ F4 | 258 / 218 | −0,23 [−0,40 ; −0,03] (2/6) | +0,05 [−0,18 ; +0,29] (5/6) | +0,01 | −0,01 / +0,02 | +0,21 | +0,79 / +0,34 | −2,75 / +3,24 |
+| Hors R1-R3 | 583 / 557 | −0,01 [−0,13 ; +0,10] (3/6) | +0,11 [−0,06 ; +0,29] (3/6) | +0,09 | +0,15 / −0,02 | +0,18 | +0,75 / +0,19 | −2,65 / +3,13 |
+| nis_z_100 Q4 | 894 / 930 | −0,11 [−0,20 ; −0,02] (1/6) | −0,08 [−0,19 ; +0,04] (2/6) | −0,07 | −0,18 / −0,08 | −0,06 | −0,18 / +0,23 | −2,97 / +3,05 |
+| F3 (famille entière) | 705 / 610 | −0,11 [−0,27 ; +0,02] (2/6) | +0,01 [−0,17 ; +0,18] (3/6) | +0,01 | −0,07 / −0,01 | +0,15 | +0,46 / +0,41 | −3,21 / +3,62 |
+| F3 pur | 373 / 394 | −0,24 [−0,43 ; −0,04] (1/6) | −0,05 [−0,30 ; +0,18] (4/6) | −0,05 | −0,21 / +0,00 | +0,14 | +0,25 / +0,43 | −3,15 / +3,53 |
+
+### I.4 Horizon H = 26
+
+| Groupe | n Long / Short | Timing médian [IC 95 %] (ans > 0) | Timing moyen [IC 95 %] (ans > 0) | Moyenne winsorisée | Écart à Tous, Long / Short | Asym moyenne | P90 + P10, Long / Short | P10 / P90 |
+|---|---|---|---|---|---|---|---|---|
+| Tous | 3 628 / 3 668 | −0,02 [−0,07 ; +0,03] (2/6) | −0,03 [−0,10 ; +0,04] (3/6) | −0,04 | +0,00 / +0,00 | +0,00 | +0,08 / −0,01 | −4,48 / +4,51 |
+| R1 = F1/F5 · x1 encore opposé | 867 / 1 068 | +0,21 [+0,07 ; +0,32] (5/6) | −0,07 [−0,24 ; +0,10] (2/6) | −0,08 | −0,06 / −0,03 | −0,20 | −0,72 / −0,58 | −4,68 / +4,04 |
+| ↳ F1 · x1 encore opposé | 595 / 706 | +0,25 [+0,14 ; +0,39] (5/6) | −0,02 [−0,21 ; +0,19] (4/6) | −0,05 | +0,11 / −0,10 | −0,22 | −0,43 / −0,81 | −4,68 / +4,05 |
+| ↳ F5 · x1 encore opposé | 272 / 362 | −0,03 [−0,29 ; +0,23] (3/6) | −0,19 [−0,55 ; +0,16] (2/6) | −0,15 | −0,43 / +0,11 | −0,17 | −1,29 / −0,01 | −4,69 / +3,95 |
+| ↳ R1 hors nis_z_100 Q4 | 702 / 890 | +0,25 [+0,07 ; +0,39] (5/6) | +0,00 [−0,20 ; +0,21] (4/6) | −0,02 | −0,04 / +0,09 | −0,08 | −0,64 / −0,35 | −4,68 / +4,19 |
+| R2 = F2b/F3 · x1 déjà retourné | 960 / 914 | −0,07 [−0,20 ; +0,06] (3/6) | +0,17 [−0,01 ; +0,34] (4/6) | +0,16 | +0,22 / +0,17 | +0,31 | +0,80 / +0,87 | −4,55 / +5,41 |
+| ↳ F3 · x1 déjà retourné | 573 / 514 | −0,14 [−0,36 ; +0,05] (1/6) | +0,08 [−0,18 ; +0,33] (4/6) | +0,07 | +0,02 / +0,20 | +0,25 | +0,35 / +0,57 | −4,97 / +5,38 |
+| ↳ F2b · x1 déjà retourné | 387 / 400 | +0,04 [−0,13 ; +0,26] (3/6) | +0,30 [+0,04 ; +0,56] (5/6) | +0,29 | +0,51 / +0,13 | +0,41 | +1,45 / +0,72 | −4,36 / +5,39 |
+| ↳ R2 hors nis_z_100 Q4 | 768 / 684 | −0,07 [−0,20 ; +0,11] (2/6) | +0,28 [+0,07 ; +0,48] (4/6) | +0,26 | +0,43 / +0,19 | +0,42 | +1,54 / +0,84 | −4,38 / +5,68 |
+| R3 = F1 · x1 déjà retourné, F2a, F4 | 1 218 / 1 129 | −0,11 [−0,22 ; −0,02] (0/6) | −0,15 [−0,30 ; −0,01] (1/6) | −0,15 | −0,17 / −0,09 | −0,15 | −0,27 / −0,14 | −4,24 / +4,04 |
+| ↳ F1 · x1 déjà retourné | 258 / 310 | −0,15 [−0,41 ; +0,02] (1/6) | −0,18 [−0,50 ; +0,16] (2/6) | −0,24 | +0,01 / −0,32 | −0,31 | −0,17 / −0,36 | −4,11 / +3,83 |
+| ↳ F2a | 702 / 601 | −0,02 [−0,12 ; +0,11] (4/6) | −0,16 [−0,36 ; +0,04] (0/6) | −0,15 | −0,18 / −0,09 | −0,17 | −0,35 / −0,51 | −4,38 / +3,88 |
+| ↳ F4 | 258 / 218 | −0,44 [−0,59 ; −0,15] (1/6) | −0,05 [−0,40 ; +0,31] (3/6) | −0,02 | −0,31 / +0,27 | +0,13 | +0,47 / +1,27 | −3,70 / +4,78 |
+| Hors R1-R3 | 583 / 557 | −0,01 [−0,14 ; +0,13] (3/6) | −0,01 [−0,27 ; +0,24] (2/6) | −0,04 | +0,08 / −0,06 | +0,13 | +0,36 / −0,15 | −4,61 / +4,63 |
+| nis_z_100 Q4 | 894 / 930 | −0,18 [−0,30 ; −0,04] (2/6) | −0,25 [−0,39 ; −0,09] (1/6) | −0,24 | −0,35 / −0,09 | −0,29 | −0,65 / −0,06 | −4,48 / +4,20 |
+| F3 (famille entière) | 705 / 610 | −0,12 [−0,33 ; +0,06] (1/6) | +0,06 [−0,17 ; +0,28] (3/6) | +0,06 | −0,01 / +0,18 | +0,23 | +0,45 / +0,71 | −4,79 / +5,27 |
+| F3 pur | 373 / 394 | −0,29 [−0,49 ; −0,05] (1/6) | −0,08 [−0,38 ; +0,21] (3/6) | −0,09 | −0,22 / +0,11 | +0,12 | −0,25 / +0,56 | −5,03 / +5,19 |
+
+### I.5 Horizon H = 48
+
+| Groupe | n Long / Short | Timing médian [IC 95 %] (ans > 0) | Timing moyen [IC 95 %] (ans > 0) | Moyenne winsorisée | Écart à Tous, Long / Short | Asym moyenne | P90 + P10, Long / Short | P10 / P90 |
+|---|---|---|---|---|---|---|---|---|
+| Tous | 3 628 / 3 668 | +0,01 [−0,06 ; +0,08] (5/6) | −0,00 [−0,09 ; +0,08] (3/6) | −0,00 | +0,00 / +0,00 | +0,03 | +0,45 / −0,51 | −6,47 / +6,47 |
+| R1 = F1/F5 · x1 encore opposé | 867 / 1 068 | +0,15 [+0,03 ; +0,33] (5/6) | +0,07 [−0,14 ; +0,28] (4/6) | +0,09 | −0,06 / +0,21 | −0,05 | −0,00 / +0,40 | −5,97 / +6,27 |
+| ↳ F1 · x1 encore opposé | 595 / 706 | +0,24 [+0,03 ; +0,42] (6/6) | +0,04 [−0,24 ; +0,30] (2/6) | +0,06 | −0,01 / +0,09 | −0,09 | +0,31 / −0,06 | −6,28 / +6,42 |
+| ↳ F5 · x1 encore opposé | 272 / 362 | +0,09 [−0,14 ; +0,44] (5/6) | +0,13 [−0,32 ; +0,58] (4/6) | +0,12 | −0,17 / +0,43 | +0,02 | −0,19 / +1,27 | −5,47 / +6,00 |
+| ↳ R1 hors nis_z_100 Q4 | 702 / 890 | +0,13 [+0,00 ; +0,36] (6/6) | +0,11 [−0,14 ; +0,38] (4/6) | +0,12 | −0,03 / +0,27 | +0,04 | +0,11 / +0,45 | −6,11 / +6,45 |
+| R2 = F2b/F3 · x1 déjà retourné | 960 / 914 | −0,04 [−0,25 ; +0,16] (2/6) | +0,28 [+0,03 ; +0,50] (5/6) | +0,23 | +0,26 / +0,30 | +0,49 | +1,39 / +0,57 | −6,82 / +7,65 |
+| ↳ F3 · x1 déjà retourné | 573 / 514 | +0,04 [−0,21 ; +0,24] (3/6) | +0,25 [−0,06 ; +0,57] (4/6) | +0,23 | −0,11 / +0,62 | +0,44 | +0,06 / +1,48 | −7,02 / +7,67 |
+| ↳ F2b · x1 déjà retourné | 387 / 400 | −0,05 [−0,38 ; +0,32] (4/6) | +0,34 [−0,10 ; +0,79] (3/6) | +0,26 | +0,81 / −0,12 | +0,60 | +2,52 / −0,37 | −6,51 / +7,62 |
+| ↳ R2 hors nis_z_100 Q4 | 768 / 684 | −0,08 [−0,32 ; +0,22] (3/6) | +0,24 [−0,04 ; +0,52] (5/6) | +0,20 | +0,37 / +0,12 | +0,50 | +1,60 / +0,10 | −7,13 / +7,76 |
+| R3 = F1 · x1 déjà retourné, F2a, F4 | 1 218 / 1 129 | −0,08 [−0,25 ; +0,04] (1/6) | −0,29 [−0,48 ; −0,07] (0/6) | −0,28 | −0,21 / −0,35 | −0,27 | −0,18 / −1,79 | −6,42 / +5,53 |
+| ↳ F1 · x1 déjà retourné | 258 / 310 | −0,08 [−0,38 ; +0,26] (2/6) | −0,36 [−0,81 ; +0,07] (2/6) | −0,33 | −0,05 / −0,66 | −0,48 | −0,08 / −2,39 | −7,08 / +5,55 |
+| ↳ F2a | 702 / 601 | +0,05 [−0,13 ; +0,21] (3/6) | −0,22 [−0,49 ; +0,06] (2/6) | −0,22 | −0,10 / −0,34 | −0,22 | +0,02 / −2,17 | −6,52 / +5,55 |
+| ↳ F4 | 258 / 218 | −0,51 [−0,77 ; −0,22] (0/6) | −0,32 [−0,83 ; +0,18] (3/6) | −0,34 | −0,70 / +0,07 | −0,12 | −0,97 / −0,35 | −5,65 / +5,34 |
+| Hors R1-R3 | 583 / 557 | −0,03 [−0,28 ; +0,21] (3/6) | −0,03 [−0,45 ; +0,35] (3/6) | +0,01 | +0,11 / −0,17 | −0,02 | +1,40 / −1,39 | −6,97 / +6,67 |
+| nis_z_100 Q4 | 894 / 930 | −0,15 [−0,31 ; +0,04] (0/6) | −0,02 [−0,18 ; +0,16] (4/6) | −0,05 | −0,19 / +0,15 | −0,11 | −0,22 / +0,22 | −5,65 / +5,65 |
+| F3 (famille entière) | 705 / 610 | +0,03 [−0,21 ; +0,26] (3/6) | +0,30 [−0,03 ; +0,61] (4/6) | +0,27 | +0,04 / +0,55 | +0,46 | +0,64 / +1,25 | −6,88 / +7,58 |
+| F3 pur | 373 / 394 | −0,04 [−0,37 ; +0,27] (2/6) | +0,25 [−0,13 ; +0,63] (4/6) | +0,22 | +0,02 / +0,50 | +0,34 | +0,85 / +0,72 | −6,65 / +7,45 |

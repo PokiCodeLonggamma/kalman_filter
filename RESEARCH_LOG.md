@@ -111,13 +111,13 @@
 - **Étape :** B Catégorisation
 - **Actif & Période :** BTC/USD Bitstamp 30m, 2020-2025, les 7 296 signaux d'A01 (2026, ETH et XRP non lus)
 - **Modèle de frais :** sans objet (aucun PnL, aucune transaction simulée)
-- **Livrables :** `experiments/B01/rapport_B01.md` ; `excursions_signaux.csv` (7 296 lignes, SHA-256 `e1459a48…b4d28c`) ; `tableaux_univarie_B01.csv` ; `tableaux_familles_B01.csv` ; 4 figures.
+- **Livrables :** `experiments/B01/rapport_B01.md` ; `excursions_signaux.csv` (7 296 lignes, SHA-256 `e1459a48…b4d28c`) ; `tableaux_univarie_B01.csv` ; `tableaux_familles_B01.csv` ; `tableau_regimes_B01.csv` (relecture) ; 5 figures.
 
 #### 0. Cadrage obligatoire
 - **QUESTION :** quelles sous-familles causales présentent une asymétrie d'excursion favorable depuis open[t+1] (MFE_H > \|MAE_H\|, barrière favorable > 50 %) ? Lesquelles relèvent de l'essoufflement, de la sortie de range ou de la continuation ?
 - **PERTINENCE POUR LE FILTRE AKF :** le déclencheur unique mélange des états cinématiques opposés. B les sépare avant toute règle de gestion.
 - **CE QUE LE PROTOCOLE MESURE RÉELLEMENT :** excursions MFE, MAE, asymétrie et rendement à H ∈ {6, 13, 26, 48} ; premier passage sur des barrières de ±1,0, ±1,5 et ±2,0 ATR14(t) ; par quartiles univariés (15 descripteurs), par familles F1-F5 et par strates, en Long et en Short.
-- **CE QU'IL NE PERMET PAS DE CONCLURE :** aucun PnL net, aucune optimisation de seuils.
+- **CE QU'IL NE PERMET PAS DE CONCLURE :** aucun PnL net, aucune optimisation de seuils ; les regroupements R1-R3 de la relecture sont définis après lecture des résultats.
 
 #### 1. Hypothèse & Motivation physique
 - Les mécanismes captés par le déclencheur (essoufflement, sortie de range, climax, répétition) ont-ils des profils d'excursion distincts ? Hypothèse de travail du porteur (`RESEARCH_INSIGHTS.md` §3).
@@ -132,13 +132,27 @@
 | Continuation (anti-timing) | `nis_z_100` Q4 : 46,3 % [44,0 ; 48,6] à H26, timing −0,18 ATR, stable 6/6 ans ; `obs_dist_seg_atr` Q4 : 47,2 %, timing −0,17 ; F1 avec x1 déjà retourné : 45,2 % |
 | Favorable, court terme | F5 (entrée fraîche, n = 741) : 56,0 % [52,4 ; 59,5] à H6 dans les deux sens ; gain ±1,0 : 53,6 % ; éteint à H26 |
 | Favorable apparent = dérive | F2b Long 53,7 % [50,2 ; 57,1] (dérive +0,35) ; `A_vol` Q1 Short 53,7 % [50,4 ; 56,9] (dérive −0,13, Long 46,7 %) |
-| Familles du porteur | F1 : 48,6 %, parcours d'abord adverse, close +0,13 ; F3 : 49,8 %, neutre ; F4 : Long 45,3 % / Short 55,3 %, petits effectifs |
+| Familles du porteur | F1 : 48,6 %, parcours d'abord adverse, close +0,13 ; F3 : 49,8 %, neutre en médiane (timing moyen +0,30 à H48, côté Short) ; F4 : Long 45,3 % / Short 55,3 %, petits effectifs |
+| Relecture : trois régimes (timing au close, IC 95 % par grappes mensuelles) | R1 = F1/F5 · x1 encore opposé (n = 1 935) : médiane +0,16 [+0,10 ; +0,22] à H6, 6/6 ans ; moyenne ≈ 0 (queue gauche). R2 = F2b/F3 · x1 déjà retourné (n = 1 874) : médiane ≈ 0 ; moyenne +0,28 [+0,03 ; +0,50] à H48, 5/6 ans (queue droite). R3 = F1 · x1 déjà retourné, F2a, F4 (n = 2 347) : moyenne −0,29 [−0,48 ; −0,07] à H48, négative 6/6 ans |
 
 #### 4. Analyse causale & Physique du trade
 - [OBS] Le signal global n'a pas d'asymétrie d'excursion au-delà de 6 barres. Les effets par strate valent 2 à 6 points et 0,1 à 0,5 ATR, soit l'ordre des frictions (≈ 0,1-0,2 ATR). Les fenêtres se chevauchent, donc les IC sont optimistes.
-- [HYP] Un choc violent sur la barre de signal ou un mouvement déjà consommé signent une continuation. L'entrée fraîche (F5) porte un avantage de très court terme. F1 part d'abord contre le signal. F3 n'est pas soutenu comme breakout. `A_vol` et F2b sont de la dérive de régime. Les profils d'horizon différents soutiennent des enveloppes propres à chaque mécanisme.
+- [HYP] Un choc violent sur la barre de signal ou un mouvement déjà consommé signent une continuation. L'entrée fraîche (F5) porte un avantage de très court terme. `A_vol` et F2b sont de la dérive de régime. Les profils d'horizon différents soutiennent des enveloppes propres à chaque mécanisme.
+- **Relecture (2026-09-28)** après revue indépendante transmise par le porteur (rapport §5, annexe I). Le résumé par médianes et barrières symétriques ne voyait pas les espérances portées par une queue. Deux lectures sont corrigées :
+  - F3 « non soutenu comme breakout » : la sortie de range se lit en moyenne (R2), pas en médiane ;
+  - « stop large pour F1 » : F1 mêle R1 (timing médian positif) et une part de R3 (continuation).
+
+  Chiffres de la relecture retrouvés à ±0,01 ATR, sauf quatre écarts mineurs (rapport §5). La vérification ajoute trois réserves :
+  - les moyennes sont peu précises : l'IC de F3 seul contient 0 à H48 ;
+  - R2 réunit deux effets d'un seul côté (F3 · x1 déjà retourné côté Short, F2b · x1 déjà retourné côté Long) ;
+  - pour R1, l'extremum du segment ne tient que dans 46,9 % des cas jusqu'au signal suivant.
 
 #### 5. Décision
 - [ ] **REJETÉ**
 - [ ] **NON CONCLUANT**
-- [x] **À POURSUIVRE :** trois pistes pour l'Étape C, à tester un facteur à la fois et nettes de frais : exclure les signatures de continuation, une enveloppe courte pour F5, un stop structurel large pour F1. Aucune Étape C lancée.
+- [x] **À POURSUIVRE :** pistes pour l'Étape C, révisées à la relecture, à tester un facteur à la fois et nettes de frais :
+  - R3 et `nis_z_100` Q4 : exclusion en retournement, et test dédié en continuation ;
+  - R1 : stop structurel serré derrière l'extremum du segment, horizon borné ;
+  - R2 : tenue de 26 à 48 barres, stop large ou break-even différé.
+
+  La piste « stop structurel large pour F1 » est retirée. Aucune Étape C lancée.

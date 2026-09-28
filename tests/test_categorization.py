@@ -5,7 +5,7 @@ import pytest
 
 from anatomy.causal import atr_wilder, causal_table
 from categorization import (BARRIERS, HORIZONS, add_derived, assign_families, barrier_key, barrier_table,
-                            bin_descriptor, excursion_table, summarize)
+                            bin_descriptor, cluster_bootstrap, excursion_table, summarize, tail_sum, timing_drift)
 from features import build_features
 
 # ── Série synthétique : signal en t = 2, entrée open[3] = 101 (écart avec close[2] = 100), ATR14(t) = 2 ──────
@@ -98,6 +98,41 @@ def test_familles_partition_exclusive_et_exhaustive():
     d = pd.DataFrame({"retrace_ratio": [0.3, 0.6, 0.6, 0.9, 1.2, 0.3, 0.9],
                       "leg_atr":       [4.0, 4.0, 2.0, 2.0, 2.0, 2.0, 4.0]})
     assert list(assign_families(d, leg_p50=2.82)) == ["F1", "F2a", "F2b", "F3", "F3", "F5", "F4"]
+
+
+# ── Relecture : timing / dérive, queues, bootstrap de grappes ───────────────────
+def test_timing_derive_mediane_et_moyenne():
+    # Long : médiane 0, moyenne 1 (queue droite) ; Short : médiane 0, moyenne 0 (NaN ignoré)
+    ret = np.array([0.0, 0.0, 3.0, -1.0, 1.0, np.nan])
+    dirn = np.array([1, 1, 1, -1, -1, -1])
+    assert timing_drift(ret, dirn, "median") == (0.0, 0.0)
+    assert timing_drift(ret, dirn, "mean") == pytest.approx((0.5, 0.5))
+    # Même définition que l'annexe H : ΔL, ΔS = variation médiane du prix (non orientée) après les Long, les Short
+    ret2 = np.array([1.0, 2.0, 4.0, 0.5, -3.0, 2.0])
+    d_l, d_s = np.median(ret2[:3]), np.median(-ret2[3:])
+    assert timing_drift(ret2, dirn) == pytest.approx(((d_l - d_s) / 2, (d_l + d_s) / 2))
+    assert np.isnan(timing_drift(ret[:3], dirn[:3])[0])
+
+
+def test_somme_des_queues():
+    v = np.arange(-10.0, 11.0)
+    assert tail_sum(v) == pytest.approx(0.0)
+    assert tail_sum(np.r_[v, 50.0, 60.0, 70.0]) > 0 > tail_sum(np.r_[v, -50.0, -60.0, -70.0])
+    assert np.isnan(tail_sum([np.nan]))
+
+
+def test_bootstrap_tire_des_grappes_entieres():
+    clusters = np.array([0, 0, 1, 1, 2, 2])
+    values = np.array([1.0, 1.0, 5.0, 5.0, 9.0, 9.0])
+
+    def stat(ii):
+        return [values[ii].mean(), len(ii)]
+
+    draws = cluster_bootstrap(stat, clusters, n_boot=200, seed=1)
+    assert draws.shape == (200, 2) and set(draws[:, 1]) == {6}
+    # chaque tirage réunit 3 grappes entières : la somme vaut 3, 7, …, 27 (valeurs de grappe 1, 5 ou 9)
+    assert np.isin(np.round(3 * draws[:, 0]), np.arange(3, 28, 4)).all()
+    assert np.array_equal(draws, cluster_bootstrap(stat, clusters, n_boot=200, seed=1))
 
 
 # ── Données réelles ─────────────────────────────────────────────────────────────

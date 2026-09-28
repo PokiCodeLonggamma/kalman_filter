@@ -60,6 +60,26 @@ Elle se mesure séparément par sens et par type de signal (rang 1 ou répétiti
 - C'est notable sur un actif en hausse séculaire, où les rangs 1 Short ont une médiane négative à +12, +24 et +48 barres.
 - En revanche, la médiane des répétitions Short **ne se distingue pas de zéro**.
 
+### I-M6 — Lire le centre et les queues d'une distribution `[MÉTHODE]`
+*Porteur, relecture d'EXP-B01, 2026-09-28.*
+
+- Une médiane et un taux de barrière symétrique (1:1) décrivent le cas typique. Ils ne voient pas une espérance portée par une queue.
+- Un breakout peut avoir une médiane nulle (faux départs) et une moyenne positive (queue droite). Un retournement peut avoir une médiane positive et une moyenne nulle (queue gauche, sans stop). Ces deux profils orientent vers des enveloppes différentes (hypothèses du §4).
+- **Règle :** chaque strate se résume par sa médiane, sa moyenne et ses queues (P10, P90, P90 + P10), par sens.
+- Une moyenne en ATR se juge avec sa robustesse :
+  - IC par bootstrap de grappes mensuelles, car les fenêtres se chevauchent ;
+  - stabilité annuelle ;
+  - moyenne winsorisée aux P1 et P99.
+
+### I-M7 — Contrôle du bêta sans placebo : timing et dérive `[MÉTHODE]`
+*Source : EXP-B01, annexes H et I ; mesure reprise par le porteur à la relecture.*
+
+- m_L et m_S sont la médiane (ou la moyenne) du rendement orienté après les Long et après les Short.
+  - Timing = (m_L + m_S) / 2 : part où le prix suit le sens du signal.
+  - Dérive = (m_L − m_S) / 2 : part commune aux deux sens, donc le mouvement du marché.
+- **Limite :** la dérive ne s'annule que si les Long et les Short d'une strate voient le même marché. Un effet présent d'un seul côté se répartit à parts égales entre timing et dérive.
+- On lit donc aussi, pour chaque sens, l'écart à l'ensemble des signaux du même sens.
+
 ---
 
 ## 2. Cinématique du moteur v2.1
@@ -118,6 +138,7 @@ L'atlas A01 soutient cette lecture à travers le ratio de retracement `retrace_r
 - `[OBS]` Quand l'essoufflement n'est qu'une pause (42,8 % de cassures de l'extremum), le prix va au-delà de l'extremum de +1,28 ATR en médiane, +2,40 en moyenne et +5,86 au P90.
 - `[HYP]` Sans stop, le Pine V2 restait piégé à contre-tendance pendant cette reprise.
 - **Piste d'enveloppe pour l'Étape C, non validée :** un stop structurel placé juste derrière l'extremum du segment (environ 1,5 à 2 ATR). Il coûterait peu quand la tendance reprend, face au potentiel de retracement d'une jambe de 4,7 ATR.
+- **Mesuré par B01 :** voir R1 et R3 (§4). P1 mêle les deux, selon que x1 est encore opposé ou déjà retourné.
 
 ### P2 — Sortie de range, cassure de compression
 *`retrace_ratio` ≥ 0,85 et `leg_atr` < 2,8 : 1 304 signaux, 17,9 %.*
@@ -128,6 +149,7 @@ L'atlas A01 soutient cette lecture à travers le ratio de retracement `retrace_r
 - `[OBS]` Dans P2, l'extremum est cassé dans 26,9 % des cas.
 - `[HYP]` La normalisation sur 5 barres faisait saturer `trend_strength` sur du bruit plat (`RESEARCH_PHILOSOPHY.md` §4.4.2). Sur ce sous-ensemble, le déclencheur ne joue donc pas un retournement : il détecte la direction d'une sortie de range, malgré le nom du script.
 - **Piste d'enveloppe pour l'Étape C, non validée :** un breakout a besoin de temps pour se développer. Cela plaide pour une tenue au-delà du premier repli de l'oscillateur (~13 barres), avec break-even ou stop large, là où la sortie native coupait tôt.
+- **Mesuré par B01 :** voir R2 (§4).
 
 ### P3 — La zone bleue du Pine V2 : arrêt, puis confirmation
 - `[CODE]` Dans le Pine V2, la condition `is_neutral_g` (`trend_strength` dans [−30 ; +30]) reste vraie pendant toute la traversée de la zone bleue. En v2.1, le signal est one-shot, à la première barre neutre.
@@ -142,10 +164,73 @@ L'atlas A01 soutient cette lecture à travers le ratio de retracement `retrace_r
 
 ---
 
-## 4. Questions ouvertes pour EXP-B01
-*À mesurer sans a priori, avec la cible I-M2. Rien n'est lancé.*
+## 4. Trois régimes du déclencheur
+*EXP-B01 et sa relecture, 2026-09-28. Source : rapport B01, §5 et annexe I.*
 
-1. L'avantage d'excursion, MFE_H contre \|MAE_H\|, se concentre-t-il dans l'essoufflement ou le retournement d'une vraie tendance ? Descripteurs : `leg_atr` élevé, `retrace_ratio` bas ou modéré, `decel_ratio`.
-2. Se concentre-t-il dans les sorties de range ? Descripteurs : `leg_atr` et `A_vol` comprimés, `retrace_ratio` ≥ 0,85.
-3. Se concentre-t-il dans l'épuisement à deux jambes ou la divergence de cycle ? Descripteurs : `run_rank` > 1, `cycle_seg_div_atr` > 0.
-4. À l'inverse, quels signaux ont une excursion négative, c'est-à-dire continuent dans le sens de la tendance précédente ? Candidats : pauses en tendance, chocs extrêmes `nis_z_100` Q4.
+- Regroupement proposé par le porteur après lecture des résultats (post hoc).
+- Mesures sur le rendement orienté de open[t+1] à close[t+H], en ATR14(t), sans frais ni stop. Timing au sens de I-M7.
+- Entre crochets : IC 95 % par bootstrap de grappes mensuelles.
+
+### B0 — Pris globalement, le signal est symétrique
+- `[OBS]` MFE ≈ \|MAE\| à tous les horizons ; gain strict aux barrières ±1,5 ATR : 50,2 %.
+- `[OBS]` Timing ≈ 0 en médiane comme en moyenne, de H6 à H48. Seule ressort la dérive du BTC : +0,21 ATR à H48.
+
+### R1 — Essoufflement précoce : F1 ou F5, x1 encore opposé
+*1 935 signaux, 26,5 %. Extremum du segment à 1,08 ATR de l'entrée en médiane (F1 : 1,34 ; F5 : 0,76).*
+- `[OBS]` Avantage de médiane. Timing médian :
+  - +0,16 ATR [+0,10 ; +0,22] à H6, positif 6 années sur 6 ;
+  - +0,21 [+0,07 ; +0,32] à H26, 5 années sur 6 ;
+  - +0,15 à H48.
+- `[OBS]` Pas d'avantage de moyenne : −0,07 [−0,24 ; +0,10] à H26.
+- `[OBS]` La queue gauche est plus lourde que la droite. À H26, P90 + P10 = −0,72 ATR en Long et −0,58 en Short (P10 −4,68, P90 +4,04).
+- `[OBS]` L'extremum du segment ne tient jusqu'au signal suivant que dans 46,9 % des cas (information, I-M1).
+- `[HYP]` Retournement par décélération : gain typique régulier, pertes rares mais larges quand la tendance reprend.
+- **Piste C du porteur, non validée :** stop structurel serré derrière l'extremum du segment, horizon borné.
+  - Seule l'enveloppe dira si ce stop coupe la queue gauche sans détruire la médiane.
+  - Il serait touché environ une fois sur deux avant le signal suivant.
+
+### R2 — Sortie de range avec bascule de vitesse : F2b ou F3, x1 déjà retourné
+*1 874 signaux, 25,7 %.*
+- `[OBS]` Pas d'avantage de médiane : −0,05 à H6, −0,07 à H26, −0,04 à H48.
+- `[OBS]` L'avantage de moyenne se construit avec l'horizon :
+  - +0,03 à H6 ;
+  - +0,17 [−0,01 ; +0,34] à H26 ;
+  - +0,28 [+0,03 ; +0,50] à H48, positif 5 années sur 6 (2024 négative), +0,23 en moyenne winsorisée.
+- `[OBS]` Asymétrie moyenne MFE − \|MAE\| : +0,49 ATR à H48, contre +0,03 pour l'ensemble des signaux.
+- `[OBS]` La queue droite est plus longue des deux côtés : P90 + P10 = +0,80 en Long et +0,87 en Short à H26.
+- `[OBS]` Les deux queues sont aussi plus larges en ATR(t) que pour l'ensemble des signaux : P10 −6,82 et P90 +7,65 à H48, contre −6,47 et +6,47.
+- `[OBS]` Chaque sous-famille ne porte qu'un sens. À H48, écart à l'ensemble des signaux du même sens :
+  - F3 · x1 déjà retourné : +0,62 ATR en Short, −0,11 en Long ;
+  - F2b · x1 déjà retourné : +0,81 en Long, −0,12 en Short.
+- `[HYP]` Breakout de compression : faux départs fréquents, espérance portée par la queue droite.
+- `[HYP]` Le sens propre à chaque sous-famille pourrait suivre la tendance de l'unité de temps supérieure.
+- **Piste C du porteur, non validée :** tenue de 26 à 48 barres, stop large ou break-even différé.
+
+### R3 — Continuation : F1 avec x1 déjà retourné, F2a, F4
+*2 347 signaux, 32,2 %.*
+- `[OBS]` Anti-timing en médiane comme en moyenne :
+  - timing médian −0,11 [−0,22 ; −0,02] à H26, négatif 6 années sur 6 ;
+  - timing moyen −0,29 [−0,48 ; −0,07] à H48, négatif 6 années sur 6.
+- `[OBS]` Les deux sens font moins bien que l'ensemble des signaux à H48 : −0,21 ATR en Long, −0,35 en Short.
+- `[OBS]` `nis_z_100` Q4 (1 824 signaux, qui recoupent R1 et R2) : continuation nette jusqu'à H26 (timing moyen −0,25 [−0,39 ; −0,09]), effacée en moyenne à H48 (−0,02).
+- `[HYP]` Signal tardif, après une grande jambe ou sur une bougie de choc : la tendance précédente reprend.
+- **Piste C du porteur, non validée :** exclusion en mode retournement ; test dédié d'une entrée en continuation.
+
+### Hors R1-R3
+*1 140 signaux, 15,6 % : F2b ou F3 avec x1 encore opposé, F5 avec x1 déjà retourné.*
+- `[OBS]` Timing médian et moyen entre −0,03 et +0,11 ATR, IC contenant 0 à tous les horizons.
+
+### Limites
+- Les regroupements sont post hoc. Leur tenue hors échantillon (autre actif, nouveau hold-out) n'est pas établie.
+- Rien n'intègre ici les frais ni un stop. Les écarts mesurés (0,1 à 0,3 ATR) ont l'ordre de grandeur des frictions (0,1 à 0,2 ATR).
+- Les autres questions posées à B01 n'ont pas révélé d'avantage net : répétitions (`run_rank` > 1) et divergence de cycle (`cycle_seg_div_atr` > 0) donnent un gain strict ±1,5 de 50,0 % et 50,4 %.
+
+---
+
+## 5. Questions ouvertes
+*Rien n'est lancé.*
+
+1. R1 : un stop serré à l'extremum du segment améliore-t-il la distribution, ou coupe-t-il surtout des trajectoires qui auraient fini dans le sens du signal ? *(Étape C)*
+2. R2 : combien de temps laisser courir, et avec quel stop ? *(Étape C)*
+3. R2 : le sens favorable de F3 (Short) et de F2b (Long) dépend-il de la tendance de l'unité de temps supérieure ? *(caractérisation)*
+4. R3 et `nis_z_100` Q4 : faut-il seulement les exclure, ou les prendre en continuation ? *(Étape C)*

@@ -2,7 +2,8 @@
 
 Usage, depuis la racine du dépôt : python experiments/B01/run_B01.py
 Sorties dans experiments/B01/ : excursions_signaux.csv, tableaux_univarie_B01.csv, tableaux_familles_B01.csv,
-figures/*.png, rapport_B01.md (= narratif_B01.md rédigé à la main, suivi des annexes chiffrées générées ici).
+tableau_regimes_B01.csv (relecture), figures/*.png, rapport_B01.md (= narratif_B01.md rédigé à la main, suivi des
+annexes chiffrées générées ici).
 """
 from __future__ import annotations
 
@@ -23,7 +24,8 @@ import pandas as pd  # noqa: E402
 
 from anatomy import build_atlas, load_dev_bars  # noqa: E402
 from categorization import (BARRIERS, DESCRIPTORS, FAMILY_LABELS, HORIZONS, add_derived, assign_families,  # noqa: E402
-                            barrier_key, barrier_table, bin_descriptor, excursion_table, summarize)
+                            barrier_key, barrier_table, bin_descriptor, cluster_bootstrap, excursion_table, summarize,
+                            tail_sum, timing_drift)
 
 FIG = HERE / "figures"
 ATLAS_A01 = ROOT / "experiments" / "A01" / "atlas_signaux.csv"
@@ -35,6 +37,11 @@ FAM_ORDER = ["F1", "F2a", "F2b", "F3", "F3 pur", "F4", "F5"]
 FAM_COLORS = {"F1": "#1f5fa8", "F2a": "#6baed6", "F2b": "#8c6bb1", "F3": "#d9822b", "F3 pur": "#e6a15a",
               "F4": "#c0392b", "F5": "#7f7f7f", "Tous": "#222222"}
 C_LONG, C_SHORT = "#1f5fa8", "#d9822b"
+N_BOOT = 2000
+REG = {"R1": "R1 = F1/F5 · x1 encore opposé", "R2": "R2 = F2b/F3 · x1 déjà retourné",
+       "R3": "R3 = F1 · x1 déjà retourné, F2a, F4"}
+REG_COLORS = {"Tous": "#222222", REG["R1"]: "#1f5fa8", REG["R2"]: "#d9822b", REG["R3"]: "#c0392b",
+              "Hors R1-R3": "#7f7f7f"}
 
 
 # ── Mise en forme ───────────────────────────────────────────────────────────────
@@ -42,6 +49,10 @@ def fr(x, nd=2) -> str:
     if x is None or pd.isna(x):
         return "—"
     return f"{x:.{nd}f}".replace(".", ",").replace("-", "−")
+
+
+def sg(x, nd=2) -> str:
+    return "—" if x is None or pd.isna(x) else f"{x:+.{nd}f}".replace(".", ",").replace("-", "−")
 
 
 def pct(x, nd=1) -> str:
@@ -263,7 +274,8 @@ def section_directionnel(d, ex, st) -> str:
                      ("leg_atr", "Q4"), ("obs_dist_seg_atr", "Q4")]:
         lab, _, _ = bin_descriptor(d[name], name)
         extra[f"{name} {cl}"] = lab == cl
-    keys = (["Tous", "F1", "F1 · x1 déjà retourné", "F2a", "F2b", "F3", "F3 pur", "F4", "F5", "Rang 1", "Répétition",
+    keys = (["Tous", "F1", "F1 · x1 encore opposé", "F1 · x1 déjà retourné", "F2a", "F2b", "F3", "F3 pur", "F4", "F5",
+             "Rang 1", "Répétition",
              "Cycle : plus bas plus haut / plus haut plus bas", "A_vol Q1", "A_vol Q4"] + list(extra))
     masks = {**st, **extra}
     dirn = d.direction.to_numpy()
@@ -271,11 +283,8 @@ def section_directionnel(d, ex, st) -> str:
     for k in keys:
         m = masks[k]
         cells = [k, n_fr((m & (dirn == 1)).sum()), n_fr((m & (dirn == -1)).sum())]
-        for H in (26, 48):
-            r = ex[f"ret_{H}_atr"].to_numpy()
-            dl = np.nanmedian(r[m & (dirn == 1)])
-            ds = np.nanmedian(-r[m & (dirn == -1)])
-            cells += [fr((dl - ds) / 2, 2), fr((dl + ds) / 2, 2)]
+        for H in (6, 26, 48):
+            cells += [fr(v, 2) for v in timing_drift(ex[f"ret_{H}_atr"].to_numpy()[m], dirn[m])]
         s = summarize(ex, m)
         cells += [f"{pct(s['pct_mfe_gt_mae_6'])} [{pct(s['pct_mfe_gt_mae_6_lo'])} ; {pct(s['pct_mfe_gt_mae_6_hi'])}]",
                   f"{pct(s['pct_mfe_gt_mae_26'])} [{pct(s['pct_mfe_gt_mae_26_lo'])} ; {pct(s['pct_mfe_gt_mae_26_hi'])}]"]
@@ -284,8 +293,119 @@ def section_directionnel(d, ex, st) -> str:
             "de open[t+1] à close[t+H] (ATR14(t), non orientée), après les signaux Long et après les signaux Short. "
             "Timing = (ΔL − ΔS) / 2 : part où le prix suit le sens du signal. Dérive = (ΔL + ΔS) / 2 : part commune aux "
             "deux sens (marché). Dernières colonnes : part MFE > \\|MAE\\|, Long et Short réunis, IC de Wilson à 95 %.\n\n"
-            + table(["Strate", "n Long", "n Short", "Timing H26", "Dérive H26", "Timing H48", "Dérive H48",
-                     "MFE>MAE H6 [IC]", "MFE>MAE H26 [IC]"], rows))
+            + "Moyennes, queues et intervalles de confiance du timing : annexe I.\n\n"
+            + table(["Strate", "n Long", "n Short", "Timing H6", "Dérive H6", "Timing H26", "Dérive H26", "Timing H48",
+                     "Dérive H48", "MFE>MAE H6 [IC]", "MFE>MAE H26 [IC]"], rows))
+
+
+# ── Relecture : médianes, moyennes, queues et trois régimes ─────────────────────
+def regimes(d: pd.DataFrame, fam: np.ndarray) -> dict[str, np.ndarray]:
+    """Regroupement proposé par le porteur à la relecture, après lecture des résultats (post hoc) : R1 essoufflement
+    précoce, R2 sortie de range avec bascule de vitesse, R3 continuation. Les lignes « ↳ » détaillent les sous-strates."""
+    x1 = d.x1_already_flipped_at_t.to_numpy(dtype=bool)
+    nis4 = bin_descriptor(d.nis_z_100, "nis_z_100")[0] == "Q4"
+    r1 = np.isin(fam, ["F1", "F5"]) & ~x1
+    r2 = np.isin(fam, ["F2b", "F3"]) & x1
+    r3 = ((fam == "F1") & x1) | np.isin(fam, ["F2a", "F4"])
+    return {"Tous": np.ones(len(d), dtype=bool),
+            REG["R1"]: r1, "↳ F1 · x1 encore opposé": (fam == "F1") & ~x1,
+            "↳ F5 · x1 encore opposé": (fam == "F5") & ~x1, "↳ R1 hors nis_z_100 Q4": r1 & ~nis4,
+            REG["R2"]: r2, "↳ F3 · x1 déjà retourné": (fam == "F3") & x1,
+            "↳ F2b · x1 déjà retourné": (fam == "F2b") & x1, "↳ R2 hors nis_z_100 Q4": r2 & ~nis4,
+            REG["R3"]: r3, "↳ F1 · x1 déjà retourné": (fam == "F1") & x1, "↳ F2a": fam == "F2a", "↳ F4": fam == "F4",
+            "Hors R1-R3": ~(r1 | r2 | r3), "nis_z_100 Q4": nis4, "F3 (famille entière)": fam == "F3",
+            "F3 pur": (fam == "F3") & (d.retrace_ratio.to_numpy() >= 1.0)}
+
+
+def regime_table(d: pd.DataFrame, ex: pd.DataFrame, reg: dict[str, np.ndarray]) -> pd.DataFrame:
+    """Par groupe et par horizon, sur le rendement orienté ret_H (sans frais ni stop) : timing et dérive en médiane et en
+    moyenne, IC 95 % par bootstrap de grappes mensuelles, années > 0, moyenne winsorisée, écart de chaque sens à Tous,
+    asymétrie moyenne, queues P10 / P90."""
+    dirn, years = d.direction.to_numpy(), d.year.to_numpy()
+    ts = pd.to_datetime(d.timestamp, utc=True)
+    month = (ts.dt.year * 12 + ts.dt.month).to_numpy()
+    ret = {H: ex[f"ret_{H}_atr"].to_numpy() for H in HORIZONS}
+    asym = {H: ex[f"asym_{H}_atr"].to_numpy() for H in HORIZONS}
+    wins = {}
+    for H in HORIZONS:
+        chg = dirn * ret[H]                                  # variation non orientée du prix
+        wins[H] = dirn * np.clip(chg, *np.nanpercentile(chg, [1, 99]))
+    base = {H: (np.nanmean(ret[H][dirn == 1]), np.nanmean(ret[H][dirn == -1])) for H in HORIZONS}
+    held = (d.post_lag_bars >= 0).to_numpy()
+    rows = []
+    for name, m in reg.items():
+        idx = np.flatnonzero(m)
+
+        def stat(pos, idx=idx):
+            g = idx[pos]
+            return [timing_drift(ret[H][g], dirn[g], s)[0] for H in HORIZONS for s in ("median", "mean")]
+
+        lo, hi = np.nanpercentile(cluster_bootstrap(stat, month[idx], N_BOOT, seed=0), [2.5, 97.5], axis=0)
+        for j, H in enumerate(HORIZONS):
+            r, L, S = ret[H], m & (dirn == 1), m & (dirn == -1)
+            row = {"groupe": name, "H": H, "n": int(m.sum()), "n_long": int(L.sum()), "n_short": int(S.sum()),
+                   "part_univers": m.mean(), "stop_implicite_p50": float(np.median(d.obs_dist_seg_atr[m])),
+                   "info_extremum_tenu": held[m].mean()}
+            for k, (s, key) in enumerate((("median", "med"), ("mean", "moy"))):
+                row[f"timing_{key}"], row[f"derive_{key}"] = timing_drift(r[m], dirn[m], s)
+                row[f"timing_{key}_lo"], row[f"timing_{key}_hi"] = lo[2 * j + k], hi[2 * j + k]
+                row[f"annees_timing_{key}_pos"] = int(sum(
+                    timing_drift(r[m & (years == y)], dirn[m & (years == y)], s)[0] > 0 for y in YEARS))
+            row.update({"timing_moy_winsor": timing_drift(wins[H][m], dirn[m], "mean")[0],
+                        "ecart_tous_long": np.nanmean(r[L]) - base[H][0],
+                        "ecart_tous_short": np.nanmean(r[S]) - base[H][1],
+                        "asym_moy": timing_drift(asym[H][m], dirn[m], "mean")[0],
+                        "queue_long": tail_sum(r[L]), "queue_short": tail_sum(r[S]),
+                        "p10": float(np.nanpercentile(r[m], 10)), "p90": float(np.nanpercentile(r[m], 90))})
+            rows.append(row)
+    return pd.DataFrame(rows)
+
+
+def section_moyennes(rt: pd.DataFrame) -> str:
+    g = {(r.groupe, r.H): r for r in rt.itertuples()}
+    rows = []
+    for name in REG_COLORS:
+        r6, r26, r48 = g[(name, 6)], g[(name, 26)], g[(name, 48)]
+        rows.append([name, f"{n_fr(r6.n)} ({pct(r6.part_univers)})", fr(r6.stop_implicite_p50, 2),
+                     pct(r6.info_extremum_tenu), " / ".join(sg(x.timing_med) for x in (r6, r26, r48)),
+                     " / ".join(sg(x.timing_moy) for x in (r6, r26, r48)),
+                     f"{sg(r26.queue_long)} / {sg(r26.queue_short)}", f"{sg(r48.queue_long)} / {sg(r48.queue_short)}",
+                     sg(r48.asym_moy)])
+    synth = table(["Groupe", "n (part)", "Stop implicite P50 (ATR)", "Info : extremum tenu",
+                   "Timing médian H6 / H26 / H48", "Timing moyen H6 / H26 / H48", "P90 + P10 H26, Long / Short",
+                   "P90 + P10 H48, Long / Short", "Asym moyenne H48"], rows)
+    per_h = []
+    for j, H in enumerate(HORIZONS):
+        rows = [[r.groupe, f"{n_fr(r.n_long)} / {n_fr(r.n_short)}",
+                 f"{sg(r.timing_med)} [{sg(r.timing_med_lo)} ; {sg(r.timing_med_hi)}] ({r.annees_timing_med_pos}/6)",
+                 f"{sg(r.timing_moy)} [{sg(r.timing_moy_lo)} ; {sg(r.timing_moy_hi)}] ({r.annees_timing_moy_pos}/6)",
+                 sg(r.timing_moy_winsor), f"{sg(r.ecart_tous_long)} / {sg(r.ecart_tous_short)}", sg(r.asym_moy),
+                 f"{sg(r.queue_long)} / {sg(r.queue_short)}", f"{sg(r.p10)} / {sg(r.p90)}"]
+                for r in rt[rt.H == H].itertuples()]
+        per_h.append(f"### I.{j + 2} Horizon H = {H}\n\n" + table(
+            ["Groupe", "n Long / Short", "Timing médian [IC 95 %] (ans > 0)", "Timing moyen [IC 95 %] (ans > 0)",
+             "Moyenne winsorisée", "Écart à Tous, Long / Short", "Asym moyenne", "P90 + P10, Long / Short",
+             "P10 / P90"], rows))
+    intro = (
+        "Regroupement proposé par le porteur à la relecture, après lecture des résultats (post hoc) :\n"
+        f"- **{REG['R1']}** : essoufflement précoce ;\n- **{REG['R2']}** : sortie de range avec bascule de vitesse ;\n"
+        f"- **{REG['R3']}** : continuation.\n\nLes lignes « ↳ » détaillent les sous-strates ; `nis_z_100` Q4 recoupe R1 "
+        "et R2.\n\nToutes les mesures portent sur ret_H, rendement orienté de open[t+1] à close[t+H] en ATR14(t), sans "
+        "frais ni stop :\n"
+        "- timing = (m_L + m_S) / 2 et dérive = (m_L − m_S) / 2, où m_L et m_S sont la médiane ou la moyenne de ret_H "
+        "après les Long et après les Short (annexe H pour la médiane) ;\n"
+        f"- IC 95 % : bootstrap de grappes, {n_fr(N_BOOT)} tirages de mois civils avec remise ; les fenêtres qui se "
+        "chevauchent dans un même mois restent ensemble ;\n"
+        "- (ans > 0) : nombre d'années 2020-2025 où la statistique annuelle est positive ;\n"
+        "- moyenne winsorisée : timing moyen après écrêtage de la variation du prix aux P1 et P99 de tous les signaux ;\n"
+        "- écart à Tous : moyenne de ret_H du groupe moins celle de tous les signaux du même sens ;\n"
+        "- asymétrie moyenne : (moyenne Long + moyenne Short) / 2 de MFE_H − \\|MAE_H\\| ;\n"
+        "- P90 + P10 de ret_H par sens : positif quand la queue droite s'étend plus loin que la gauche ; pour Tous, la "
+        "dérive du BTC le rend positif en Long et négatif en Short ;\n"
+        "- extremum tenu : information a posteriori (`RESEARCH_INSIGHTS.md` I-M1), part des signaux dont l'extremum du "
+        "segment tient jusqu'au signal suivant.")
+    return ("## I. Médianes, moyennes et queues : trois régimes (relecture)\n\n" + intro + "\n\n### I.1 Synthèse\n\n"
+            + synth + "\n\n" + "\n\n".join(per_h))
 
 
 # ── Figures ─────────────────────────────────────────────────────────────────────
@@ -388,6 +508,28 @@ def figures(d, ex, uni, famt, st) -> None:
     plt.close(fig)
 
 
+def fig_regimes(rt: pd.DataFrame) -> None:
+    fig, axes = plt.subplots(1, 2, figsize=(12, 4.6), sharey=True)
+    for ax, (key, titre) in zip(axes, [("med", "Timing médian"), ("moy", "Timing moyen")]):
+        for name, col in REG_COLORS.items():
+            g = rt[rt.groupe == name].sort_values("H")
+            ax.plot(g.H, g[f"timing_{key}"], marker="o", ms=4, lw=1.6, color=col, ls="--" if name == "Tous" else "-",
+                    label=name)
+            ax.fill_between(g.H, g[f"timing_{key}_lo"], g[f"timing_{key}_hi"], color=col, alpha=0.10, lw=0)
+        ax.axhline(0, color="0.35", lw=0.8)
+        ax.set_xticks(HORIZONS)
+        ax.set_xlabel("Horizon H (barres de 30 min)", fontsize=9)
+        ax.set_title(f"{titre} (bande : IC 95 %, grappes mensuelles)", fontsize=10)
+        ax.grid(alpha=0.3, lw=0.5)
+        ax.tick_params(labelsize=8)
+    axes[0].set_ylabel("(m_L + m_S) / 2 de ret_H (ATR14(t))", fontsize=9)
+    axes[1].legend(fontsize=8, frameon=False, loc="lower left")
+    fig.suptitle("EXP-B01 — Timing au close par régime, médiane contre moyenne (sans frais ni stop)", fontsize=11)
+    fig.tight_layout()
+    _save(fig, "fig5_regimes_timing.png")
+    plt.close(fig)
+
+
 def main() -> None:
     df = load_dev_bars()
     atlas, f, idx, atr = build_atlas(df)
@@ -412,10 +554,14 @@ def main() -> None:
     neg = negative_scan(uni, famt)
     uni.to_csv(HERE / "tableaux_univarie_B01.csv", index=False)
     famt.to_csv(HERE / "tableaux_familles_B01.csv", index=False)
+    rt = regime_table(d, ex, regimes(d, fam))
+    rt.to_csv(HERE / "tableau_regimes_B01.csv", index=False)
     figures(d, ex, uni, famt, st)
+    fig_regimes(rt)
 
     parts = [section_univers(d, ex, leg_p50), section_reference(famt), section_ecarts(uni), section_detail(uni),
-             section_familles(famt), section_negatif(neg), section_annees(d, ex, st), section_directionnel(d, ex, st)]
+             section_familles(famt), section_negatif(neg), section_annees(d, ex, st), section_directionnel(d, ex, st),
+             section_moyennes(rt)]
     narr = HERE / "narratif_B01.md"
     head = narr.read_text(encoding="utf-8") if narr.exists() else "# EXP-B01\n\n*(narratif à rédiger)*\n"
     (HERE / "rapport_B01.md").write_text(
