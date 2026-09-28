@@ -1,0 +1,15 @@
+{
+  "source": "TradingView BITSTAMP:BTCUSD 30m, Data Window, AKF-TSO v2.1 defaults",
+  "bar_time_utc": "2026-09-15T14:00:00Z",
+  "bar_time_paris": "2026-09-15 16:00",
+  "replica_data_start": "2025-06-01",
+  "values": {
+    "kalman_x0": 76683,
+    "ts_plot": -76,
+    "R_used": 95,
+    "innovation": -458,
+    "nis": 1911,
+    "table_ts": -89
+  },
+  "tolerance": "arrondi d'affichage Data Window (entier)"
+}

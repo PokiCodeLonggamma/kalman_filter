@@ -1,0 +1,11 @@
+{
+ "source": "bitstamp",
+ "pair": "btcusd",
+ "step_s": 1800,
+ "extracted_at_utc": "2026-09-15T16:19:47.663752079+00:00",
+ "extracted_at_origin": "date de modification du CSV t\u00e9l\u00e9charg\u00e9 le 2026-09-15 (fichier d'origine, non copi\u00e9)",
+ "n_rows": 117585,
+ "first": "2020-01-01 00:00:00+00:00",
+ "last": "2026-09-15 16:00:00+00:00",
+ "sha256": "4a70ac3c9f999af06726bedf4fcbda20a9bcdb506114049e3d2874786ebc5d72"
+}

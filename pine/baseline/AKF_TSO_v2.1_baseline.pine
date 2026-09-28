@@ -1,0 +1,263 @@
+//@version=6
+strategy("AKF-TSO v2.1 Reversal", overlay=false, initial_capital=100000, pyramiding=0, process_orders_on_close=true)
+
+// ══ Settings ══
+measurement_noise = input.float(100.0, "Base Measurement Noise R0", minval=1.0, step=10.0)
+process_noise_1   = input.float(0.01, "Process Noise Q1", minval=0.0001, step=0.001)
+process_noise_2   = input.float(0.01, "Process Noise Q2", minval=0.0001, step=0.001)
+vol_gamma         = input.float(0.5, "Volatility Sensitivity gamma", minval=0.0, maxval=3.0, step=0.1, tooltip="Couplage de R a la volatilite realisee. 0=desactive")
+use_adaptive_qr   = input.bool(false, "Use Adaptive Q/R (Myers-Tapley)", tooltip="Estime Q et R dynamiquement depuis les residus")
+adaptive_window   = input.int(50, "Adaptive Noise Window", minval=10, maxval=500)
+R1                = input.int(3, "Osc Smoothness", minval=2)
+N2                = input.int(5, "Trend Lookback", minval=2)
+R2                = input.int(3, "Strength Smoothness", minval=2)
+vol_lookback      = input.int(20, "Volatility Lookback", minval=5)
+pos_col           = input.color( color.lime, "Trend Up", inline="style")
+neg_col           = input.color( color.red, "", inline="style")
+neu_col           = input.color( color.blue, "", inline="style")
+bg_col            = input.color( color.rgb(87, 130, 194, 90), "BG", inline="style2")
+
+// --- Tuning helpers ---
+debug_raw_kf    = input.bool(false, "Debug: raw Kalman (min smoothing)")
+use_estimated_R = input.bool(false, "Helper: estimate R from flat noise")
+noise_lkb       = input.int(50, "Noise lookback for R estimate", minval=10, maxval=500)
+Q_scale         = input.float(1.0, "Q scale (for Q sweep)", minval=0.1, maxval=10.0, step=0.1)
+
+// --- Paramètres de la logique de retournement ---
+up_th              = input.float(30.0, "Seuil zone verte",  minval=0.0, maxval=100.0)
+down_th            = input.float(-30.0,"Seuil zone rouge",  minval=-100.0, maxval=0.0)
+min_trend_bars     = input.int(6,      "Longueur min. segment tendance", minval=1, maxval=100)
+min_trend_strength = input.float(60.0, "Amplitude min. tendance (|TS|)",  minval=0.0, maxval=100.0)
+use_strength_cond  = input.bool(true,  "Exiger une amplitude min. de tendance")
+
+// ══ State variables ══
+var float filtered_src    = na
+var float trend_strength  = na
+var float last_innovation = na
+var float last_nis        = na
+var float R_used_global   = na
+
+// --- Variables de suivi de segment (Globales) ---
+var int   prev_seg_zone        = 0
+var int   prev_seg_len         = 0
+var float prev_seg_extreme_abs = 0.0
+
+var int   seg_zone             = 0
+var int   seg_len              = 0
+var float seg_extreme_abs      = 0.0
+
+// ══ Buffers ══
+var array<float> osc_buffer = array.new<float>()
+var array<float> residuals  = array.new<float>()
+var array<float> q_samples  = array.new<float>()
+
+// ══ KF Matrices — initialisées UNE seule fois avec var ══
+var matrix<float> F = matrix.new<float>(2, 2, 0.0)
+matrix.set(F, 0, 0, 1.0)
+matrix.set(F, 0, 1, 1.0)
+matrix.set(F, 1, 0, 0.0)
+matrix.set(F, 1, 1, 1.0)
+
+var matrix<float> P = matrix.new<float>(2, 2, 0.0)
+matrix.set(P, 0, 0, 1.0)
+matrix.set(P, 1, 1, 1.0)
+
+var matrix<float> Q = matrix.new<float>(2, 2, 0.0)
+matrix.set(Q, 0, 0, process_noise_1 * Q_scale)
+matrix.set(Q, 0, 1, process_noise_1 * process_noise_2 * Q_scale)
+matrix.set(Q, 1, 0, process_noise_2 * process_noise_1 * Q_scale)
+matrix.set(Q, 1, 1, process_noise_2 * Q_scale)
+
+var matrix<float> R = matrix.new<float>(1, 1, measurement_noise)
+
+var matrix<float> H = matrix.new<float>(1, 2, 0.0)
+matrix.set(H, 0, 0, 1.0)
+
+var matrix<float> I2 = matrix.new<float>(2, 2, 0.0)
+matrix.set(I2, 0, 0, 1.0)
+matrix.set(I2, 1, 1, 1.0)
+
+// ══ Précalculs globaux (résolution des alertes de cohérence de scope) ══
+realized_vol_g = ta.stdev(close, vol_lookback)
+avg_vol_g      = ta.sma(realized_vol_g, 100)
+noise_sma_g    = ta.sma(close, noise_lkb)
+noise_var_g    = ta.variance(close - noise_sma_g, noise_lkb)
+
+// Etat initial
+var array<float> X = array.from(0.0, 0.0)
+if barstate.isfirst
+    X := array.from(close, 0.0)
+
+if barstate.isconfirmed
+    // ── 1. Mise a jour adaptative de R selon la volatilite ──
+    float R_used = measurement_noise
+    if vol_gamma > 0.0 and bar_index > vol_lookback
+        if avg_vol_g > 0
+            float vol_ratio = realized_vol_g / avg_vol_g
+            R_used := measurement_noise * math.pow(vol_ratio, vol_gamma)
+
+    // ── 2. Estimation empirique de R à partir d'une zone "flat" ──
+    if use_estimated_R and bar_index > noise_lkb * 2
+        if noise_var_g > 0
+            R_used := noise_var_g
+
+    R_used_global := R_used
+    matrix.set(R, 0, 0, R_used)
+
+    // ── 3. Myers-Tapley : adaptation de Q et R depuis les residus ──
+    if use_adaptive_qr and bar_index > adaptive_window * 2 and array.size(residuals) >= adaptive_window
+        float sum_r = 0.0
+        float sum_q = 0.0
+        int n = math.min(array.size(residuals), adaptive_window)
+        for i = 0 to n - 1
+            float rv = array.get(residuals, array.size(residuals) - 1 - i)
+            float qv = array.get(q_samples,  array.size(q_samples)  - 1 - i)
+            sum_r += rv * rv
+            sum_q += qv * qv
+        float R_mt = math.max(sum_r / n, measurement_noise * 0.1)
+        float Q_mt = math.max(sum_q / n, process_noise_1 * 0.01)
+        matrix.set(R, 0, 0, R_mt * 0.3 + R_used * 0.7)
+        matrix.set(Q, 0, 0, Q_mt)
+        matrix.set(Q, 1, 1, Q_mt)
+
+    // ── 4. Prediction (Time update) ──
+    float x0_pred = matrix.get(F, 0, 0) * array.get(X, 0) + matrix.get(F, 0, 1) * array.get(X, 1)
+    float x1_pred = matrix.get(F, 1, 1) * array.get(X, 1)
+    matrix<float> P_pred = F.mult(P.mult(F.transpose())).sum(Q)
+
+    // ── 5. Stockage residu brut avant update ──
+    array.push(residuals, close - x0_pred)
+    if array.size(residuals) > adaptive_window * 2
+        array.shift(residuals)
+
+    // ── 6. Gain de Kalman ──
+    matrix<float> S = H.mult(P_pred.mult(H.transpose())).sum(R)
+    matrix<float> K = P_pred.mult(H.transpose().mult(S.inv()))
+
+    // ── 7. Mise a jour de l'etat ──
+    array<float> x_pred_arr = array.from(x0_pred, x1_pred)
+    float innov = close - array.get(H.mult(x_pred_arr), 0)
+
+    last_innovation := innov
+    float S_val = matrix.get(S, 0, 0)
+    last_nis := S_val > 0 ? (innov * innov) / S_val : na
+
+    matrix<float> diff = K.mult(innov)
+    float new_x0 = x0_pred + matrix.get(diff, 0, 0)
+    float new_x1 = x1_pred + matrix.get(diff, 1, 0)
+    X := array.from(new_x0, new_x1)
+
+    // ── 8. Forme de Joseph ──
+    matrix<float> IKH  = I2.sum(K.mult(H).mult(-1))
+    matrix<float> KRKT = K.mult(R.mult(K.transpose()))
+    P := IKH.mult(P_pred.mult(IKH.transpose())).sum(KRKT)
+
+    // ── 9. Stockage sample process noise ──
+    array.push(q_samples, new_x0 - x0_pred)
+    if array.size(q_samples) > adaptive_window * 2
+        array.shift(q_samples)
+
+    filtered_src := new_x0
+
+    // ── 10. Oscillateur & Normalisation ──
+    array.push(osc_buffer, new_x1)
+    if array.size(osc_buffer) > N2
+        array.shift(osc_buffer)
+
+    if array.size(osc_buffer) >= N2
+        float A = array.abs(osc_buffer).max()
+        A := A > 1e-10 ? A : 1.0
+
+        int R2_eff = debug_raw_kf ? 1 : R2
+        trend_strength := ta.wma(new_x1 / A * 100, R2_eff)
+
+    // ── 11. Suivi des zones et des segments (mis à jour à la clôture) ──
+    if not na(trend_strength)
+        bool is_up   = trend_strength >  up_th
+        bool is_down = trend_strength <  down_th
+        int zone = is_up ? 1 : is_down ? -1 : 0   // 1 = vert, -1 = rouge, 0 = bleu
+
+        if zone == seg_zone
+            seg_len += 1
+            seg_extreme_abs := math.max(seg_extreme_abs, math.abs(trend_strength))
+        else
+            // Archivage du segment précédent lors de la transition
+            prev_seg_zone        := seg_zone
+            prev_seg_len         := seg_len
+            prev_seg_extreme_abs := seg_extreme_abs
+
+            // Initialisation du nouveau segment
+            seg_zone        := zone
+            seg_len         := 1
+            seg_extreme_abs := math.abs(trend_strength)
+
+
+// ══ Gradient coloring ══
+var int num_segments = 10
+segment_width   = 100 / num_segments
+filled_segments = math.floor(math.abs(nz(trend_strength)) / segment_width)
+osc_color = neu_col
+if not na(trend_strength)
+    for i = 0 to num_segments - 1
+        if i < filled_segments
+            osc_color := color.new(trend_strength > 0 ? pos_col : neg_col, 80 - i * 10)
+        else
+            break
+
+
+// ══ Plots Visuels ══
+int R1_eff = debug_raw_kf ? 1 : R1
+oscPlot     = plot(ta.wma(trend_strength, R1_eff), color=osc_color, linewidth=3, title="KF Trend Strength")
+
+kalmanPlot  = plot(filtered_src, color=osc_color, linewidth=2, title="Kalman Filter", force_overlay=true)
+UpperBand   = hline(70,  "70")
+midline     = hline(0,   "0")
+LowerBand   = hline(-70, "-70")
+fill(UpperBand, LowerBand, color=bg_col)
+midLinePlot = plot(0, color=na, editable=false, display=display.none)
+fill(oscPlot, midLinePlot, 80, 30, top_color= color.new(color.green, 0), bottom_color= color.new(color.green, 100))
+fill(oscPlot, midLinePlot, -30, -80, top_color= color.new(color.red, 100), bottom_color= color.new(color.red, 0))
+
+
+// ══ Plots Diagnostics "Cachés" ══
+plot(R_used_global,   title="R_used (diag)", display=display.data_window)
+plot(last_innovation, title="KF Innovation", color= color.orange, display=display.data_window)
+plot(last_nis,        title="KF NIS",        color= color.fuchsia, display=display.data_window)
+
+
+// ══ Table ══
+if barstate.islast
+    int ts_current = math.round(nz(trend_strength))
+    var table tbl  = table.new(position.bottom_center, num_segments + 1, 1, border_color=chart.fg_color, border_width=1, frame_color=chart.fg_color, frame_width=1)
+    for i = 0 to num_segments - 1
+        seg_col = i < filled_segments ? color.new(trend_strength > 0 ? pos_col : neg_col, 70 - i * 10) : color.new(chart.fg_color, 100)
+        table.cell(tbl, i, 0, "", bgcolor=seg_col, width=1, height=2)
+    table.cell(tbl, num_segments, 0, str.tostring(ts_current) + " %", text_color=chart.fg_color)
+
+
+// ══ Détection de setup de retournement — aucune exécution ══
+
+// Transition unique (one-shot) : exacte première bougie du segment neutre
+bool entered_neutral_from_down = seg_zone == 0 and prev_seg_zone == -1 and seg_len == 1
+bool entered_neutral_from_up   = seg_zone == 0 and prev_seg_zone ==  1 and seg_len == 1
+
+// Validation des conditions de l'ancien segment de tendance (filtres originaux)
+bool big_prev_down = prev_seg_zone == -1 and prev_seg_len >= min_trend_bars and (not use_strength_cond or prev_seg_extreme_abs >= min_trend_strength)
+bool big_prev_up   = prev_seg_zone ==  1 and prev_seg_len >= min_trend_bars and (not use_strength_cond or prev_seg_extreme_abs >= min_trend_strength)
+
+// Setups de retournement cyclique pur
+bool long_setup  = entered_neutral_from_down and big_prev_down
+bool short_setup = entered_neutral_from_up   and big_prev_up
+
+// Signaux finaux sur clôture confirmée
+bool long_signal  = barstate.isconfirmed and long_setup
+bool short_signal = barstate.isconfirmed and short_setup
+
+
+// ══ Exécution des ordres — aucun calcul Kalman ══
+
+// Exécution bidirectionnelle déterministe avec reversement immédiat (pyramiding = 0)
+if long_signal
+    strategy.entry("Long", strategy.long)
+else if short_signal
+    strategy.entry("Short", strategy.short)

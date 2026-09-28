@@ -1,0 +1,14 @@
+[project]
+name = "kalmanfilter"
+version = "0.1.0"
+description = "AKF-TSO v2.1 : mécanique de trading autour du signal Kalman (moteur certifié repris de #KAKALMAN)"
+requires-python = ">=3.11"
+dependencies = ["numpy>=2.0", "pandas>=2.2", "matplotlib>=3.8"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src", "experiments/p0"]
+markers = ["data: nécessite data/raw/bitstamp_btcusd_30m.csv (ignoré si absent)"]
