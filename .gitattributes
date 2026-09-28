@@ -1,0 +1,8 @@
+# Fins de ligne normalisées (LF dans le dépôt)
+* text=auto
+
+# Fichiers certifiés par empreinte SHA-256 (baseline Pine, données, fixtures TradingView) :
+# aucune conversion de fin de ligne, sinon l'empreinte change au checkout sous Windows.
+*.pine -text
+*.csv -text
+tests/fixtures/** -text

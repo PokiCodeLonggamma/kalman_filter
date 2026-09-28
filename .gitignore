@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# Réglages locaux de Claude Code
+.claude/settings.local.json
+
+# Données de marché brutes : non publiées sur le dépôt public.
+# Provenance et empreinte SHA-256 restent versionnées dans les fichiers .meta.json.
+data/raw/*
+!data/raw/*.meta.json
+
+# Environnement et OS
+.env
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
