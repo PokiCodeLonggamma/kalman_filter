@@ -1,0 +1,16 @@
+# EXP-C01 — copie certifiée depuis #KAKALMAN (lecture seule), 2026-09-28
+# source = Projet Claude/#KAKALMAN/<chemin> ; destination = #KalmanFilter/<chemin> ; SHA-256 source puis destination
+
+src/estimand/stoploss.py	437160edac4e273c4dbf3fdd90fff65b13bdd7cc72351496b3feb4f4b6b05c98	437160edac4e273c4dbf3fdd90fff65b13bdd7cc72351496b3feb4f4b6b05c98	identique	autorisé
+src/estimand/bars.py	ea3438a63e538ccfa80e3859d8f710b09b6727d64926b558f68b08a79bce2963	ea3438a63e538ccfa80e3859d8f710b09b6727d64926b558f68b08a79bce2963	identique	autorisé
+src/estimand/excursions.py	61be3bdfcf43658665b02024b38860152e501557907f4c4d597a2d753460cafb	61be3bdfcf43658665b02024b38860152e501557907f4c4d597a2d753460cafb	identique	dépendance nécessaire : stoploss.py importe BPS
+src/labeling/costs.py	30947dc577b836b79fd5e21aff6e756a75df8089219e5267239548ddb883d420	30947dc577b836b79fd5e21aff6e756a75df8089219e5267239548ddb883d420	identique	autorisé
+experiments/p6_5/strategie_stop.py	e13cb5e4a3a19d3368b743f90db6d6e3dbf93e019667f45fd04ccb4a34e2e407	e13cb5e4a3a19d3368b743f90db6d6e3dbf93e019667f45fd04ccb4a34e2e407	identique	référence (non exécutable ici : payoff, strata, exit_rule, estimand_audit et dataset ML1 absents)
+experiments/p6_5/strategie_stop.json	3cd10d56da987e3eda4f20add6709bd069be68497010881c8ced470549eed0ee	3cd10d56da987e3eda4f20add6709bd069be68497010881c8ced470549eed0ee	identique	référence : métriques P6.5d
+experiments/p6_5/strategie_stop_trades.csv	1f7498f00ed74befcfd47b3e32ff391f7444dd131bf4f1fdf5c54804b7590b35	1f7498f00ed74befcfd47b3e32ff391f7444dd131bf4f1fdf5c54804b7590b35	identique	référence : trades P6.5d (sans stop, stop 2,5 %)
+experiments/p6_5/strategie_stop_equite.csv	dccdf181feecf855f74ace33423cbd4c09fdb6a7becec43e8dcbfe002765f4b9	dccdf181feecf855f74ace33423cbd4c09fdb6a7becec43e8dcbfe002765f4b9	identique	référence : capital journalier P6.5d
+experiments/p6_5/strategie_stop_evenements.csv	7f0a1680b77b3814baf244126589d0ba0726b6f28c8b1722bc50dca51e382e47	7f0a1680b77b3814baf244126589d0ba0726b6f28c8b1722bc50dca51e382e47	identique	référence : niveau trade par trade P6.5d
+
+# Tests : fonctions reprises à l'identique (fichiers d'origine non copiés, car ils importent des modules non copiés)
+tests/test_estimand_p65d.py	6f54bc44e972a1ddbbf0aefbfe8d6f78a9538f4d7f552199952aed5ce0bbb04c	—	extrait	11 tests de estimand.stoploss -> tests/test_kakalman_p65d.py (sans les 4 tests du script strategie_stop.py)
+tests/test_labeling.py	7ac1067543ca3d27075e65e61b5010698d31e74b91d865fdedb8e3928994ef15	—	extrait	2 tests purs de labeling.costs -> tests/test_kakalman_costs.py (les autres appellent label_events)

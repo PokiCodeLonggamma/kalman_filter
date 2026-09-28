@@ -7,3 +7,4 @@
 *.csv -text
 tests/fixtures/** -text
 experiments/p0/akf_replique_pine.py -text
+experiments/p6_5/** -text

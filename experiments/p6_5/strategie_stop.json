@@ -1,0 +1,771 @@
+{
+ "protocole": {
+  "decision": "D48",
+  "stop": 0.025,
+  "cout_bps": 5.0,
+  "strategie": "AKF-TSO v2.1 gelée, signaux bruts B-1.0, entrée open[b+1], sortie open[t_opp+1]",
+  "gestion": "sémantique Pine : retournement au signal opposé, pyramiding 0, à plat après un stop jusqu'au prochain signal de n'importe quel sens",
+  "conventions_stop": "high/low des barres détenues, barre d'entrée comprise ; stop avant le signal opposé de la même barre ; gap exécuté à l'ouverture"
+ },
+ "tracabilite": {
+  "commit": "0f53790",
+  "commit_preenregistrement": "0f53790",
+  "dataset_sha256": "b7aa10968fe4a1edabc6a07e9dea550ee7d60d8e64190a8f1f1dd9ae4b096645",
+  "barres_max": "2025-12-31 23:30:00+00:00",
+  "modules_ml_importes": [],
+  "reference_anterieure_v1_stop_2_5": "aucune dans le dépôt KAKALMAN ; reproductibilité vérifiée sur la cible B (sans stop)"
+ },
+ "evenements": {
+  "sans_stop": {
+   "n": 7296,
+   "brut": {
+    "n": 7296,
+    "moyenne": -0.976595,
+    "mediane": -4.443047,
+    "ecart_type": 186.243074,
+    "asymetrie": -0.389695,
+    "kurtosis_exces": 12.584546,
+    "part_positive": 0.470121,
+    "min": -1578.591359,
+    "max": 1970.440777,
+    "q01": -618.001466,
+    "q05": -257.297785,
+    "q10": -151.343958,
+    "q25": -55.225345,
+    "q50": -4.443047,
+    "q75": 54.599162,
+    "q90": 168.95804,
+    "q95": 269.035049,
+    "q99": 557.957106
+   },
+   "net": {
+    "n": 7296,
+    "moyenne": -5.976595,
+    "mediane": -9.443047,
+    "ecart_type": 186.243074,
+    "asymetrie": -0.389695,
+    "kurtosis_exces": 12.584546,
+    "part_positive": 0.43983,
+    "min": -1583.591359,
+    "max": 1965.440777,
+    "q01": -623.001466,
+    "q05": -262.297785,
+    "q10": -156.343958,
+    "q25": -60.225345,
+    "q50": -9.443047,
+    "q75": 49.599162,
+    "q90": 163.95804,
+    "q95": 264.035049,
+    "q99": 552.957106
+   },
+   "taux_de_reussite_brut": 0.470121,
+   "taux_de_reussite_net": 0.43983,
+   "gagnants_perdants_net": {
+    "n": 7296,
+    "part_gagnants": 0.43983,
+    "gain_moyen": 116.652355,
+    "gain_median": 62.605603,
+    "perte_moyenne": -102.261475,
+    "perte_mediane": -51.377404,
+    "ratio_gain_perte": 1.140726,
+    "esperance": -5.976595,
+    "esperance_decomposee": -5.976595
+   },
+   "queues_net": {
+    "n": 7296,
+    "moyenne": -5.976595,
+    "somme_pertes": 417942.64665,
+    "somme_gains": 374337.408058,
+    "part_pertes_pires_1pct": 0.154154,
+    "part_gains_meilleurs_1pct": 0.148206,
+    "moyenne_sans_pires_1pct": 2.882363,
+    "moyenne_sans_meilleurs_1pct": -13.71599,
+    "moyenne_pires_1pct": -894.825415,
+    "moyenne_meilleurs_1pct": 770.542711,
+    "part_pertes_pires_5pct": 0.424554,
+    "part_gains_meilleurs_5pct": 0.435357,
+    "moyenne_sans_pires_5pct": 19.306699,
+    "moyenne_sans_meilleurs_5pct": -29.800289,
+    "moyenne_pires_5pct": -487.470533,
+    "moyenne_meilleurs_5pct": 447.720777,
+    "part_pertes_pires_10pct": 0.59981,
+    "part_gains_meilleurs_10pct": 0.641226,
+    "moyenne_sans_pires_10pct": 31.533564,
+    "moyenne_sans_meilleurs_10pct": -43.191725,
+    "moyenne_pires_10pct": -343.876749,
+    "moyenne_meilleurs_10pct": 329.265871
+   },
+   "gagnants_perdants_brut": {
+    "n": 7296,
+    "part_gagnants": 0.470121,
+    "gain_moyen": 113.977796,
+    "gain_median": 60.934213,
+    "perte_moyenne": -102.966652,
+    "perte_mediane": -50.49921,
+    "ratio_gain_perte": 1.106939,
+    "esperance": -0.976595,
+    "esperance_decomposee": -0.976595
+   },
+   "queues_brut": {
+    "n": 7296,
+    "moyenne": -0.976595,
+    "somme_pertes": 398069.078238,
+    "somme_gains": 390943.839646,
+    "part_pertes_pires_1pct": 0.160946,
+    "part_gains_meilleurs_1pct": 0.142831,
+    "moyenne_sans_pires_1pct": 7.882363,
+    "moyenne_sans_meilleurs_1pct": -8.71599,
+    "moyenne_pires_1pct": -889.825415,
+    "moyenne_meilleurs_1pct": 775.542711,
+    "part_pertes_pires_5pct": 0.441178,
+    "part_gains_meilleurs_5pct": 0.421519,
+    "moyenne_sans_pires_5pct": 24.306699,
+    "moyenne_sans_meilleurs_5pct": -24.800289,
+    "moyenne_pires_5pct": -482.470533,
+    "moyenne_meilleurs_5pct": 452.720777,
+    "part_pertes_pires_10pct": 0.620599,
+    "part_gains_meilleurs_10pct": 0.623312,
+    "moyenne_sans_pires_10pct": 36.533564,
+    "moyenne_sans_meilleurs_10pct": -38.191725,
+    "moyenne_pires_10pct": -338.876749,
+    "moyenne_meilleurs_10pct": 334.265871
+   },
+   "somme_nette_bps": -43605.238592
+  },
+  "stop_2_5": {
+   "n": 7296,
+   "brut": {
+    "n": 7296,
+    "moyenne": 0.386348,
+    "mediane": -6.977521,
+    "ecart_type": 158.398262,
+    "asymetrie": 1.727847,
+    "kurtosis_exces": 10.033309,
+    "part_positive": 0.45614,
+    "min": -250.0,
+    "max": 1970.440777,
+    "q01": -250.0,
+    "q05": -250.0,
+    "q10": -250.0,
+    "q25": -62.927785,
+    "q50": -6.977521,
+    "q75": 50.641744,
+    "q90": 162.989506,
+    "q95": 263.7537,
+    "q99": 547.920208
+   },
+   "net": {
+    "n": 7296,
+    "moyenne": -4.613652,
+    "mediane": -11.977521,
+    "ecart_type": 158.398262,
+    "asymetrie": 1.727847,
+    "kurtosis_exces": 10.033309,
+    "part_positive": 0.426398,
+    "min": -255.0,
+    "max": 1965.440777,
+    "q01": -255.0,
+    "q05": -255.0,
+    "q10": -255.0,
+    "q25": -67.927785,
+    "q50": -11.977521,
+    "q75": 45.641744,
+    "q90": 157.989506,
+    "q95": 258.7537,
+    "q99": 542.920208
+   },
+   "taux_de_reussite_brut": 0.45614,
+   "taux_de_reussite_net": 0.426398,
+   "gagnants_perdants_net": {
+    "n": 7296,
+    "part_gagnants": 0.426398,
+    "gain_moyen": 115.565528,
+    "gain_median": 61.686693,
+    "perte_moyenne": -93.95115,
+    "perte_mediane": -54.11249,
+    "ratio_gain_perte": 1.23006,
+    "esperance": -4.613652,
+    "esperance_decomposee": -4.613652
+   },
+   "queues_net": {
+    "n": 7296,
+    "moyenne": -4.613652,
+    "somme_pertes": 393185.561358,
+    "somme_gains": 359524.357111,
+    "part_pertes_pires_1pct": 0.046696,
+    "part_gains_meilleurs_1pct": 0.152858,
+    "moyenne_sans_pires_1pct": -2.118107,
+    "moyenne_sans_meilleurs_1pct": -12.267087,
+    "moyenne_pires_1pct": -255.0,
+    "moyenne_meilleurs_1pct": 763.281035,
+    "part_pertes_pires_5pct": 0.236072,
+    "part_gains_meilleurs_5pct": 0.445921,
+    "moyenne_sans_pires_5pct": 8.53416,
+    "moyenne_sans_meilleurs_5pct": -27.983386,
+    "moyenne_pires_5pct": -255.0,
+    "moyenne_meilleurs_5pct": 440.438538,
+    "part_pertes_pires_10pct": 0.472792,
+    "part_gains_meilleurs_10pct": 0.653182,
+    "moyenne_sans_pires_10pct": 23.181635,
+    "moyenne_sans_meilleurs_10pct": -40.885664,
+    "moyenne_pires_10pct": -255.0,
+    "moyenne_meilleurs_10pct": 322.132989
+   },
+   "gagnants_perdants_brut": {
+    "n": 7296,
+    "part_gagnants": 0.45614,
+    "gain_moyen": 112.869722,
+    "gain_median": 60.143844,
+    "perte_moyenne": -93.954546,
+    "perte_mediane": -54.553576,
+    "ratio_gain_perte": 1.201323,
+    "esperance": 0.386348,
+    "esperance_decomposee": 0.386348
+   },
+   "queues_brut": {
+    "n": 7296,
+    "moyenne": 0.386348,
+    "somme_pertes": 372811.639739,
+    "somme_gains": 375630.435492,
+    "part_pertes_pires_1pct": 0.048282,
+    "part_gains_meilleurs_1pct": 0.147262,
+    "moyenne_sans_pires_1pct": 2.881893,
+    "moyenne_sans_meilleurs_1pct": -7.267087,
+    "moyenne_pires_1pct": -250.0,
+    "moyenne_meilleurs_1pct": 768.281035,
+    "part_pertes_pires_5pct": 0.244091,
+    "part_gains_meilleurs_5pct": 0.431647,
+    "moyenne_sans_pires_5pct": 13.53416,
+    "moyenne_sans_meilleurs_5pct": -22.983386,
+    "moyenne_pires_5pct": -250.0,
+    "moyenne_meilleurs_5pct": 445.438538,
+    "part_pertes_pires_10pct": 0.488853,
+    "part_gains_meilleurs_10pct": 0.634879,
+    "moyenne_sans_pires_10pct": 28.181635,
+    "moyenne_sans_meilleurs_10pct": -35.885664,
+    "moyenne_pires_10pct": -250.0,
+    "moyenne_meilleurs_10pct": 327.132989
+   },
+   "somme_nette_bps": -33661.204247
+  },
+  "part_stoppee": 0.114309,
+  "n_stoppes": 834,
+  "n_gaps": 0,
+  "rendement_stop_moyen_brut": -250.0,
+  "rendement_stop_min_brut": -250.0,
+  "stoppes_rendement_sans_stop_moyen": -261.923303,
+  "stoppes_part_finale_positive_sans_stop": 0.122302,
+  "stoppes_part_finale_sous_moins_250_sans_stop": 0.456835,
+  "ecart_moyen_apparie_brut": {
+   "estimation": 1.362943,
+   "ic95": [
+    -1.100697,
+    4.372279
+   ]
+  },
+  "moyenne_brute_ic95": {
+   "sans_stop": [
+    -6.651308,
+    4.557583
+   ],
+   "stop_2_5": [
+    -3.467237,
+    4.477086
+   ]
+  },
+  "par_annee": {
+   "2020": {
+    "n": 1189,
+    "sans_stop_moyen_brut": 10.26791,
+    "stop_moyen_brut": 7.001873,
+    "part_stoppee": 0.1127
+   },
+   "2021": {
+    "n": 1226,
+    "sans_stop_moyen_brut": -12.436386,
+    "stop_moyen_brut": -9.485392,
+    "part_stoppee": 0.219413
+   },
+   "2022": {
+    "n": 1235,
+    "sans_stop_moyen_brut": -10.465302,
+    "stop_moyen_brut": -5.94467,
+    "part_stoppee": 0.126316
+   },
+   "2023": {
+    "n": 1236,
+    "sans_stop_moyen_brut": -2.031838,
+    "stop_moyen_brut": -0.084602,
+    "part_stoppee": 0.062298
+   },
+   "2024": {
+    "n": 1193,
+    "sans_stop_moyen_brut": 1.929695,
+    "stop_moyen_brut": 5.888528,
+    "part_stoppee": 0.095557
+   },
+   "2025": {
+    "n": 1217,
+    "sans_stop_moyen_brut": 7.433935,
+    "stop_moyen_brut": 5.377059,
+    "part_stoppee": 0.069022
+   }
+  }
+ },
+ "strategie": {
+  "sans_stop": {
+   "n_trades": 6037,
+   "n_stops": 0,
+   "n_gaps": 0,
+   "part_long": 0.499917,
+   "n": 6037,
+   "brut": {
+    "n": 6037,
+    "moyenne": -0.339143,
+    "mediane": -4.683841,
+    "ecart_type": 189.783132,
+    "asymetrie": -0.322955,
+    "kurtosis_exces": 12.915791,
+    "part_positive": 0.468113,
+    "min": -1578.591359,
+    "max": 1970.440777,
+    "q01": -639.461392,
+    "q05": -256.771731,
+    "q10": -150.082769,
+    "q25": -55.615914,
+    "q50": -4.683841,
+    "q75": 55.313122,
+    "q90": 173.753775,
+    "q95": 274.762198,
+    "q99": 581.935392
+   },
+   "net": {
+    "n": 6037,
+    "moyenne": -5.339143,
+    "mediane": -9.683841,
+    "ecart_type": 189.783132,
+    "asymetrie": -0.322955,
+    "kurtosis_exces": 12.915791,
+    "part_positive": 0.437635,
+    "min": -1583.591359,
+    "max": 1965.440777,
+    "q01": -644.461392,
+    "q05": -261.771731,
+    "q10": -155.082769,
+    "q25": -60.615914,
+    "q50": -9.683841,
+    "q75": 50.313122,
+    "q90": 168.753775,
+    "q95": 269.762198,
+    "q99": 576.935392
+   },
+   "taux_de_reussite_brut": 0.468113,
+   "taux_de_reussite_net": 0.437635,
+   "gagnants_perdants_net": {
+    "n": 6037,
+    "part_gagnants": 0.437635,
+    "gain_moyen": 119.503238,
+    "gain_median": 64.105262,
+    "perte_moyenne": -102.491888,
+    "perte_mediane": -51.577852,
+    "ratio_gain_perte": 1.165978,
+    "esperance": -5.339143,
+    "esperance_decomposee": -5.339143
+   },
+   "queues_net": {
+    "n": 6037,
+    "moyenne": -5.339143,
+    "somme_pertes": 347959.960521,
+    "somme_gains": 315727.556066,
+    "part_pertes_pires_1pct": 0.157753,
+    "part_gains_meilleurs_1pct": 0.151731,
+    "moyenne_sans_pires_1pct": 3.791105,
+    "moyenne_sans_meilleurs_1pct": -13.40772,
+    "moyenne_pires_1pct": -914.863946,
+    "moyenne_meilleurs_1pct": 798.425624,
+    "part_pertes_pires_5pct": 0.425773,
+    "part_gains_meilleurs_5pct": 0.438415,
+    "moyenne_sans_pires_5pct": 20.209108,
+    "moyenne_sans_meilleurs_5pct": -29.751085,
+    "moyenne_pires_5pct": -492.19884,
+    "moyenne_meilleurs_5pct": 459.8665,
+    "part_pertes_pires_10pct": 0.599254,
+    "part_gains_meilleurs_10pct": 0.644918,
+    "moyenne_sans_pires_10pct": 32.440953,
+    "moyenne_sans_meilleurs_10pct": -43.402806,
+    "moyenne_pires_10pct": -345.798582,
+    "moyenne_meilleurs_10pct": 337.67569
+   },
+   "gagnants_perdants_brut": {
+    "n": 6037,
+    "part_gagnants": 0.468113,
+    "gain_moyen": 116.557304,
+    "gain_median": 61.423631,
+    "perte_moyenne": -103.219665,
+    "perte_mediane": -50.946715,
+    "ratio_gain_perte": 1.129216,
+    "esperance": -0.339143,
+    "esperance_decomposee": -0.339143
+   },
+   "queues_brut": {
+    "n": 6037,
+    "moyenne": -0.339143,
+    "somme_pertes": 331438.345423,
+    "somme_gains": 329390.940968,
+    "part_pertes_pires_1pct": 0.164712,
+    "part_gains_meilleurs_1pct": 0.146347,
+    "moyenne_sans_pires_1pct": 8.791105,
+    "moyenne_sans_meilleurs_1pct": -8.40772,
+    "moyenne_pires_1pct": -909.863946,
+    "moyenne_meilleurs_1pct": 803.425624,
+    "part_pertes_pires_5pct": 0.442456,
+    "part_gains_meilleurs_5pct": 0.424799,
+    "moyenne_sans_pires_5pct": 25.209108,
+    "moyenne_sans_meilleurs_5pct": -24.751085,
+    "moyenne_pires_5pct": -487.19884,
+    "moyenne_meilleurs_5pct": 464.8665,
+    "part_pertes_pires_10pct": 0.620029,
+    "part_gains_meilleurs_10pct": 0.62732,
+    "moyenne_sans_pires_10pct": 37.440953,
+    "moyenne_sans_meilleurs_10pct": -38.402806,
+    "moyenne_pires_10pct": -340.798582,
+    "moyenne_meilleurs_10pct": 342.67569
+   },
+   "somme_nette_bps": -32232.404455,
+   "capital": {
+    "net": {
+     "rendement_compose": -0.986701,
+     "moyenne_bps": -5.339143,
+     "taux_de_reussite": 0.437635,
+     "max_drawdown_valorise": {
+      "max_drawdown": -0.99601,
+      "debut_drawdown": "2020-05-12 07:30:00+00:00",
+      "creux": "2024-04-07 02:30:00+00:00",
+      "plus_longue_periode_sous_le_pic_jours": 2059.604167
+     },
+     "max_drawdown_aux_sorties": -0.995964
+    },
+    "brut": {
+     "rendement_compose": -0.727365,
+     "moyenne_bps": -0.339143,
+     "taux_de_reussite": 0.468113,
+     "max_drawdown_valorise": {
+      "max_drawdown": -0.974185,
+      "debut_drawdown": "2020-11-20 09:00:00+00:00",
+      "creux": "2024-03-19 01:30:00+00:00",
+      "plus_longue_periode_sous_le_pic_jours": 1867.541667
+     },
+     "max_drawdown_aux_sorties": -0.974046
+    }
+   },
+   "moyenne_nette_ic95": [
+    -10.949741,
+    -0.092818
+   ],
+   "exposition": 0.99999,
+   "periode_barres": 104610,
+   "duree_mediane_barres": 13.0,
+   "stoppes_rendement_sans_stop": null,
+   "par_annee": {
+    "2020": {
+     "n": 1000,
+     "rendement_compose_net": 0.532194,
+     "rendement_compose_brut": 1.525561,
+     "moyenne_nette": 6.317559
+    },
+    "2021": {
+     "n": 1000,
+     "rendement_compose_net": -0.889239,
+     "rendement_compose_brut": -0.817177,
+     "moyenne_nette": -18.614495
+    },
+    "2022": {
+     "n": 1015,
+     "rendement_compose_net": -0.794197,
+     "rendement_compose_brut": -0.657872,
+     "moyenne_nette": -13.564695
+    },
+    "2023": {
+     "n": 1040,
+     "rendement_compose_net": -0.479012,
+     "rendement_compose_brut": -0.123466,
+     "moyenne_nette": -5.256875
+    },
+    "2024": {
+     "n": 971,
+     "rendement_compose_net": -0.375299,
+     "rendement_compose_brut": 0.015328,
+     "moyenne_nette": -3.254482
+    },
+    "2025": {
+     "n": 1011,
+     "rendement_compose_net": 0.169934,
+     "rendement_compose_brut": 0.939223,
+     "moyenne_nette": 2.433184
+    }
+   },
+   "oos_2022_2025": {
+    "n": 4037,
+    "net": {
+     "rendement_compose": -0.921637,
+     "moyenne_bps": -4.938189,
+     "taux_de_reussite": 0.435967,
+     "max_drawdown_valorise": {
+      "max_drawdown": -0.952272,
+      "debut_drawdown": "2022-01-28 19:30:00+00:00",
+      "creux": "2024-04-07 02:30:00+00:00",
+      "plus_longue_periode_sous_le_pic_jours": 1433.104167
+     },
+     "max_drawdown_aux_sorties": -0.951863
+    },
+    "brut": {
+     "rendement_compose": -0.409538,
+     "moyenne_bps": 0.061811,
+     "taux_de_reussite": 0.472628,
+     "max_drawdown_valorise": {
+      "max_drawdown": -0.855659,
+      "debut_drawdown": "2022-01-28 19:30:00+00:00",
+      "creux": "2024-03-19 01:30:00+00:00",
+      "plus_longue_periode_sous_le_pic_jours": 1433.104167
+     },
+     "max_drawdown_aux_sorties": -0.85468
+    }
+   },
+   "trade_ouvert_fin_2025": {
+    "entry_bar": 105212,
+    "side": 1,
+    "signal_bar": 105211
+   }
+  },
+  "stop_2_5": {
+   "n_trades": 6589,
+   "n_stops": 780,
+   "n_gaps": 0,
+   "part_long": 0.500076,
+   "n": 6589,
+   "brut": {
+    "n": 6589,
+    "moyenne": -0.310369,
+    "mediane": -7.660177,
+    "ecart_type": 161.342469,
+    "asymetrie": 1.775683,
+    "kurtosis_exces": 10.171225,
+    "part_positive": 0.452269,
+    "min": -250.0,
+    "max": 1970.440777,
+    "q01": -250.0,
+    "q05": -250.0,
+    "q10": -250.0,
+    "q25": -65.358984,
+    "q50": -7.660177,
+    "q75": 50.472738,
+    "q90": 165.544382,
+    "q95": 267.458045,
+    "q99": 559.006196
+   },
+   "net": {
+    "n": 6589,
+    "moyenne": -5.310369,
+    "mediane": -12.660177,
+    "ecart_type": 161.342469,
+    "asymetrie": 1.775683,
+    "kurtosis_exces": 10.171225,
+    "part_positive": 0.422067,
+    "min": -255.0,
+    "max": 1965.440777,
+    "q01": -255.0,
+    "q05": -255.0,
+    "q10": -255.0,
+    "q25": -70.358984,
+    "q50": -12.660177,
+    "q75": 45.472738,
+    "q90": 160.544382,
+    "q95": 262.458045,
+    "q99": 554.006196
+   },
+   "taux_de_reussite_brut": 0.452269,
+   "taux_de_reussite_net": 0.422067,
+   "gagnants_perdants_net": {
+    "n": 6589,
+    "part_gagnants": 0.422067,
+    "gain_moyen": 118.295086,
+    "gain_median": 63.225366,
+    "perte_moyenne": -95.580004,
+    "perte_mediane": -56.12005,
+    "ratio_gain_perte": 1.237655,
+    "esperance": -5.310369,
+    "esperance_decomposee": -5.310369
+   },
+   "queues_net": {
+    "n": 6589,
+    "moyenne": -5.310369,
+    "somme_pertes": 363968.656954,
+    "somme_gains": 328978.63492,
+    "part_pertes_pires_1pct": 0.04554,
+    "part_gains_meilleurs_1pct": 0.154933,
+    "moyenne_sans_pires_1pct": -2.822658,
+    "moyenne_sans_meilleurs_1pct": -13.175913,
+    "moyenne_pires_1pct": -255.0,
+    "moyenne_meilleurs_1pct": 784.148172,
+    "part_pertes_pires_5pct": 0.230501,
+    "part_gains_meilleurs_5pct": 0.449844,
+    "moyenne_sans_pires_5pct": 7.812297,
+    "moyenne_sans_meilleurs_5pct": -29.229889,
+    "moyenne_pires_5pct": -255.0,
+    "moyenne_meilleurs_5pct": 449.814834,
+    "part_pertes_pires_10pct": 0.461001,
+    "part_gains_meilleurs_10pct": 0.657094,
+    "moyenne_sans_pires_10pct": 22.390824,
+    "moyenne_sans_meilleurs_10pct": -42.34699,
+    "moyenne_pires_10pct": -255.0,
+    "moyenne_meilleurs_10pct": 328.525794
+   },
+   "gagnants_perdants_brut": {
+    "n": 6589,
+    "part_gagnants": 0.452269,
+    "gain_moyen": 115.229029,
+    "gain_median": 60.704117,
+    "perte_moyenne": -95.712809,
+    "perte_mediane": -55.9581,
+    "ratio_gain_perte": 1.203904,
+    "esperance": -0.310369,
+    "esperance_decomposee": -0.310369
+   },
+   "queues_brut": {
+    "n": 6589,
+    "moyenne": -0.310369,
+    "somme_pertes": 345427.5279,
+    "somme_gains": 343382.505866,
+    "part_pertes_pires_1pct": 0.047043,
+    "part_gains_meilleurs_1pct": 0.14938,
+    "moyenne_sans_pires_1pct": 2.177342,
+    "moyenne_sans_meilleurs_1pct": -8.175913,
+    "moyenne_pires_1pct": -250.0,
+    "moyenne_meilleurs_1pct": 789.148172,
+    "part_pertes_pires_5pct": 0.238111,
+    "part_gains_meilleurs_5pct": 0.435765,
+    "moyenne_sans_pires_5pct": 12.812297,
+    "moyenne_sans_meilleurs_5pct": -24.229889,
+    "moyenne_pires_5pct": -250.0,
+    "moyenne_meilleurs_5pct": 454.814834,
+    "part_pertes_pires_10pct": 0.476221,
+    "part_gains_meilleurs_10pct": 0.639112,
+    "moyenne_sans_pires_10pct": 27.390824,
+    "moyenne_sans_meilleurs_10pct": -37.34699,
+    "moyenne_pires_10pct": -250.0,
+    "moyenne_meilleurs_10pct": 333.525794
+   },
+   "somme_nette_bps": -34990.022034,
+   "capital": {
+    "net": {
+     "rendement_compose": -0.987008,
+     "moyenne_bps": -5.310369,
+     "taux_de_reussite": 0.422067,
+     "max_drawdown_valorise": {
+      "max_drawdown": -0.994729,
+      "debut_drawdown": "2020-04-29 21:00:00+00:00",
+      "creux": "2025-10-11 17:30:00+00:00",
+      "plus_longue_periode_sous_le_pic_jours": 2072.041667
+     },
+     "max_drawdown_aux_sorties": -0.994601
+    },
+    "brut": {
+     "rendement_compose": -0.649058,
+     "moyenne_bps": -0.310369,
+     "taux_de_reussite": 0.452269,
+     "max_drawdown_valorise": {
+      "max_drawdown": -0.950818,
+      "debut_drawdown": "2020-04-29 21:00:00+00:00",
+      "creux": "2024-04-07 02:30:00+00:00",
+      "plus_longue_periode_sous_le_pic_jours": 2072.041667
+     },
+     "max_drawdown_aux_sorties": -0.949582
+    }
+   },
+   "moyenne_nette_ic95": [
+    -9.1781,
+    -1.456783
+   ],
+   "exposition": 0.925036,
+   "periode_barres": 104610,
+   "duree_mediane_barres": 12.0,
+   "stoppes_rendement_sans_stop": {
+    "n_sans_evenement": 0,
+    "moyen_brut": -259.991765,
+    "part_finale_positive": 0.120513,
+    "part_finale_sous_moins_250": 0.452564
+   },
+   "par_annee": {
+    "2020": {
+     "n": 1084,
+     "rendement_compose_net": 0.001033,
+     "rendement_compose_brut": 0.721131,
+     "moyenne_nette": 1.622857
+    },
+    "2021": {
+     "n": 1160,
+     "rendement_compose_net": -0.880098,
+     "rendement_compose_brut": -0.785628,
+     "moyenne_nette": -16.07656
+    },
+    "2022": {
+     "n": 1122,
+     "rendement_compose_net": -0.753625,
+     "rendement_compose_brut": -0.567975,
+     "moyenne_nette": -11.246827
+    },
+    "2023": {
+     "n": 1097,
+     "rendement_compose_net": -0.383186,
+     "rendement_compose_brut": 0.067646,
+     "moyenne_nette": -3.674778
+    },
+    "2024": {
+     "n": 1053,
+     "rendement_compose_net": -0.153436,
+     "rendement_compose_brut": 0.433237,
+     "moyenne_nette": -0.552087
+    },
+    "2025": {
+     "n": 1073,
+     "rendement_compose_net": -0.158603,
+     "rendement_compose_brut": 0.438792,
+     "moyenne_nette": -0.809757
+    }
+   },
+   "oos_2022_2025": {
+    "n": 4345,
+    "net": {
+     "rendement_compose": -0.891754,
+     "moyenne_bps": -4.165797,
+     "taux_de_reussite": 0.425086,
+     "max_drawdown_valorise": {
+      "max_drawdown": -0.918959,
+      "debut_drawdown": "2022-01-01 18:00:00+00:00",
+      "creux": "2025-10-11 17:30:00+00:00",
+      "plus_longue_periode_sous_le_pic_jours": 1460.166667
+     },
+     "max_drawdown_aux_sorties": -0.91812
+    },
+    "brut": {
+     "rendement_compose": -0.048842,
+     "moyenne_bps": 0.834203,
+     "taux_de_reussite": 0.46214,
+     "max_drawdown_valorise": {
+      "max_drawdown": -0.714657,
+      "debut_drawdown": "2022-01-28 19:30:00+00:00",
+      "creux": "2024-04-07 02:30:00+00:00",
+      "plus_longue_periode_sous_le_pic_jours": 1433.104167
+     },
+     "max_drawdown_aux_sorties": -0.711894
+    }
+   },
+   "trade_ouvert_fin_2025": {
+    "entry_bar": 105212,
+    "side": 1,
+    "signal_bar": 105211
+   }
+  }
+ },
+ "duree_s": 14.979269
+}
