@@ -156,3 +156,68 @@
   - R2 : tenue de 26 à 48 barres, stop large ou break-even différé.
 
   La piste « stop structurel large pour F1 » est retirée. Aucune Étape C lancée.
+
+### [EXP-C01] — Découplage de la sortie et isolation des régimes, en exécution séquentielle
+- **Date :** 2026-09-29
+- **Étape :** C Enveloppe (premier test)
+- **Actif & Période :** BTC/USD Bitstamp 30m, 2020-01 → 2025-12 (72 mois) ; 2026, ETH et XRP non lus
+- **Modèle de frais :** 5 et 10 bps aller-retour, déduits de chaque trade
+- **Livrables :**
+  - `experiments/C01/rapport_C01.md`, `resultats_C01.csv` (130 lignes), `annuel_C01.csv`, 4 figures ;
+  - `manifest_copie_C01_sha256.txt` (copie certifiée depuis #KAKALMAN) ;
+  - `src/envelope/`, `tests/test_envelope.py`.
+
+#### 0. Cadrage obligatoire
+- **QUESTION :** en séquentiel (une position à la fois), net de 5 et 10 bps : effet d'une sortie à horizon fixe H ∈ {6, 13, 26, 48} à la place de la sortie native ; puis, à H fixé, de la restriction aux régimes de B01, de l'éviction de `nis_z_100` Q4 et de l'inversion en continuation de R3 et de `nis_z_100` Q4.
+- **PERTINENCE POUR LE FILTRE AKF :** la sortie native coupe vers 13 barres et produit 84 retournements par mois. C01 isole le découplage de la sortie et le filtrage cinématique, avant tout stop.
+- **CE QUE LE PROTOCOLE MESURE RÉELLEMENT :** 8 métriques nettes, décomposition Long / Short / timing / dérive (bps et ATR14(t)), stabilité annuelle, IC 95 % par bootstrap de grappes mensuelles, sur les trades exécutés.
+- **CE QU'IL NE PERMET PAS DE CONCLURE :**
+  - l'effet d'un stop, d'un break-even ou d'un filtre de tendance ;
+  - une validation hors échantillon : régimes définis après B01, seuils calculés sur 2020-2025 ;
+  - la meilleure des 64 paires (régime, H) est un résultat optimiste.
+
+#### 1. Hypothèse & Motivation physique
+- La mécanique native perd-elle surtout par le turnover (frais) ou par l'absence de timing ? Les régimes de B01 (R1, R2, R3, `nis_z_100` Q4) se traduisent-ils en espérances nettes distinctes une fois exécutés un à un ?
+
+#### 2. Règle testée (OFAT)
+- **Entrée :** open[t + 1] si aucune position n'est ouverte ; signaux intermédiaires ignorés.
+- **Sortie :** open[t + 1 + H], sans stop ni take-profit ; ramenée à la dernière barre de 2025 au besoin.
+- **Contrôles :** trois paliers, un seul facteur par comparaison.
+  - Palier 1 : ancre native P6.5d, reproduite à l'identique.
+  - Palier 2 : Tous au même H.
+  - Palier 3 : le groupe du palier 2 (éviction de `nis_z_100` Q4, ou inversion du sens).
+
+#### 3. Résultats nets (5 bps ; IC 95 % par grappes mensuelles)
+| Métrique | Ancre native | Tous, H6 | R2 hors Q4, H26 | R3 en continuation, H26 |
+|---|---|---|---|---|
+| PnL Net Total | −98,7 % ; −32 232 bps | −95,7 % ; −26 967 bps | +187 % ; +13 309 bps | +281 % ; +17 236 bps |
+| Profit Factor | 0,907 | 0,899 | 1,18 | 1,15 |
+| Win Rate | 43,8 % | 46,9 % | 49,4 % | 51,6 % |
+| Espérance / trade | −5,3 bps [−10,8 ; +0,3] ; −0,08 ATR | −3,7 [−6,5 ; −0,9] ; −0,10 ATR | +12,3 [−0,8 ; +26,4] ; +0,35 ATR | +10,3 [+1,3 ; +19,8] ; +0,11 ATR |
+| Espérance à 10 bps | −10,3 | −8,7 | +7,3 [−5,8 ; +21,4] ; +0,22 ATR | +5,3 [−3,7 ; +14,8] ; −0,01 ATR |
+| Max Drawdown (valorisé) | −99,6 % | −97,8 % | −47,6 % | −47,6 % |
+| Nombre de trades | 6 037 (83,8/mois) | 7 296 (101,3/mois) | 1 080 (15,0/mois) | 1 674 (23,2/mois) |
+| Durée médiane | 13 barres | 6 barres | 26 barres | 26 barres |
+| Part des frais | 1 474 % | 383 % | 29 % | 33 % |
+
+#### 4. Analyse causale & Physique du trade
+- [OBS] **Palier 1.** La sortie à horizon fixe réduit le turnover, pas la perte. Espérance nette : −3,7, −4,3, −10,8 et −16,0 bps à H6, H13, H26 et H48, contre −5,3 pour l'ancre. L'espérance brute du flux complet ne dépasse jamais +1,3 bps ; elle devient négative dès H26, par le côté Short.
+- [OBS] **Palier 2.** R3 et `nis_z_100` Q4, dans le sens du signal, perdent avec des IC entièrement négatifs de H6 à H26 (jusqu'à −20 bps par trade). R1 est négatif sans stop à tous les horizons. R2 est proche de 0. Exclure `nis_z_100` Q4 donne +0,8 à +3,8 bps à H13-H48, avec des IC contenant 0.
+- [OBS] **Palier 3.** L'éviction de `nis_z_100` Q4 améliore 18 comparaisons sur 20. Quatre configurations sont positives à 5 bps :
+  - R2 hors Q4 à H26 (pic isolé : +0,3 à H13, −2,9 à H48) ;
+  - R3 en continuation à H26, seul IC entièrement positif des 64, porté par 2020-2021 (+28, +26, +7, 0, +11, −8 bps par an) ;
+  - `nis_z_100` Q4 en continuation à H26, négatif en 2024-2025 ;
+  - Tous hors R3 et Q4 à H48, porté par les Long.
+  
+  À 10 bps, aucune configuration n'a d'IC entièrement positif. Les drawdowns valorisés vont de 48 à 81 %, et l'écart entre moyenne arithmétique et PnL composé de 0,6 à 5 bps par trade.
+- [HYP] Pris dans son sens, sans stop, le signal ne dégage pas d'espérance nette solide. Son information la plus robuste est négative : R3 et `nis_z_100` Q4 marquent une continuation. R3 en continuation dépend du régime de volatilité ; R2 hors Q4 à H26 est cohérent avec B01 mais étroit en horizon ; R1 relève du test du stop.
+
+#### 5. Décision
+- [ ] **REJETÉ**
+- [ ] **NON CONCLUANT**
+- [x] **À POURSUIVRE :**
+  - le découplage seul de la sortie, sur tous les signaux, n'est pas un correctif ;
+  - l'éviction de `nis_z_100` Q4 est le filtre le plus régulier ;
+  - candidats pour C02 (stop seul, OFAT) : R1 avec un stop serré, R2 hors Q4 à H26 avec un stop large ou un break-even, éventuellement R3 en continuation à H26.
+
+  Points à trancher avant C02 : choix de H par régime, dimensionnement, frais canoniques, validation hors échantillon. Aucune Étape C02 lancée.
