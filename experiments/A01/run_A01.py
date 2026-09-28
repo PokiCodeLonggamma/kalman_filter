@@ -312,6 +312,60 @@ def section_relecture(a, f, idx, atr, prof) -> str:
             + t6)
 
 
+def section_complements(a, f, idx) -> str:
+    """Compléments du porteur (2026-09-28) : biais de la tenue de l'extremum comme cible, typologie par
+    `retrace_ratio`, extension au-delà de l'extremum cassé, sortie de la zone neutre."""
+    held = (a.post_lag_bars >= 0).to_numpy()
+    broken = ~held
+    retr = (a.obs_dist_seg_atr / a.leg_atr).to_numpy()
+    ext = (a.post_dist_atr - a.obs_dist_seg_atr).to_numpy()            # au-delà de l'extremum, si cassé
+    q = pd.qcut(a.obs_dist_seg_atr, 4, labels=["Q1", "Q2", "Q3", "Q4"]).to_numpy()
+    rows = []
+    for lab in ["Q1", "Q2", "Q3", "Q4"]:
+        m = q == lab
+        s = a.obs_dist_seg_atr[m]
+        rows.append([lab, f"[{fr(s.min(), 2)} ; {fr(s.max(), 2)}]", n_fr(m.sum()), fr(s.median(), 2),
+                     pct(np.median(retr[m])), pct(held[m].mean())])
+    t1 = table(["Quartile de `obs_dist_seg_atr`", "Bornes (ATR)", "Signaux", "`obs_dist_seg_atr` médian",
+                "`retrace_ratio` médian", "Extremum tenu jusqu'au signal suivant"], rows)
+
+    zone = f.zone.to_numpy(dtype=float)
+    sig = f.signal.to_numpy().astype(int)
+    n = len(zone)
+    bars_out, side_out = np.full(len(idx), np.nan), np.zeros(len(idx), dtype=int)
+    for i, t in enumerate(idx):
+        k = t + 1
+        while k < n and zone[k] == 0:
+            k += 1
+        if k < n:
+            bars_out[i], side_out[i] = k - t, int(np.sign(zone[k])) * sig[t]
+    leg = a.leg_atr.to_numpy()
+    p1, p2 = (retr < 0.5) & (leg >= 2.8), (retr >= 0.85) & (leg < 2.8)
+    fams = {"Tous": np.ones(len(a), dtype=bool), "P1 : `retrace_ratio` < 0,5 et `leg_atr` ≥ 2,8": p1,
+            "P2 : `retrace_ratio` ≥ 0,85 et `leg_atr` < 2,8": p2, "Ni P1 ni P2": ~(p1 | p2),
+            "`retrace_ratio` ≥ 1 (tous)": retr >= 1.0}
+    rows2 = []
+    for lab, m in fams.items():
+        b = m & broken
+        conf = m & (side_out == 1)
+        rows2.append([lab, f"{n_fr(m.sum())} ({pct(m.mean())})", fr(np.median(leg[m]), 2),
+                      fr(a.obs_dist_seg_atr[m].median(), 2), fr(a.A_vol[m].median(), 2), fr(a.nis_z_100[m].median(), 2),
+                      pct(a.x1_already_flipped_at_t[m].mean()), pct(broken[m].mean()),
+                      f"{fr(np.median(ext[b]), 2)} / {fr(np.mean(ext[b]), 2)} / {fr(np.percentile(ext[b], 90), 2)}",
+                      f"{pct(conf.sum() / m.sum())} ; {iqr(pd.Series(bars_out[conf]), 0)}"])
+    t2 = table(["Famille (seuils exploratoires du porteur)", "Signaux", "`leg_atr` P50", "`obs_dist_seg_atr` P50",
+                "`A_vol` P50", "`nis_z_100` P50", "x1 déjà retourné", "Extremum cassé",
+                "Extension si cassé : P50 / moyenne / P90 (ATR)",
+                "Sortie de zone neutre vers le sens du signal ; barres P50 [P25 ; P75]"], rows2)
+    back = side_out == -1
+    txt = (f"Sortie de la zone neutre après le signal : vers la zone du sens du signal dans {pct((side_out == 1).mean())} "
+           f"des cas, en {iqr(pd.Series(bars_out[side_out == 1]), 0)} barres ; retour vers la zone d'origine dans "
+           f"{pct(back.mean())} des cas, en {iqr(pd.Series(bars_out[back]), 0)} barres.")
+    return ("## I. Compléments du porteur (2026-09-28)\n\n`retrace_ratio` = `obs_dist_seg_atr` / `leg_atr`. "
+            "Extension si cassé = `post_dist_atr` − `obs_dist_seg_atr`. Seuils 0,5 / 0,85 / 2,8 : découpage "
+            "exploratoire, non optimisé et non validé.\n\n" + t1 + "\n\n" + t2 + "\n\n" + txt)
+
+
 # ── Figures ─────────────────────────────────────────────────────────────────────
 def _save(fig, name: str) -> None:
     """savefig avec nouvelles tentatives : sous Windows, un processus tiers peut verrouiller un PNG un court instant."""
@@ -430,7 +484,7 @@ def main() -> None:
              section_retard_sens(atlas), section_groupes(atlas), section_annees(atlas)]
     txt_prof, pm = section_profils(atlas, prof)
     txt_sp, rho = section_spearman(atlas)
-    parts += [txt_prof, txt_sp, section_relecture(atlas, f, idx, atr, prof)]
+    parts += [txt_prof, txt_sp, section_relecture(atlas, f, idx, atr, prof), section_complements(atlas, f, idx)]
     pm.to_csv(HERE / "profils_medians.csv", index=False)
     rho.to_csv(HERE / "spearman_causales.csv")
     figures(atlas, prof, rho)

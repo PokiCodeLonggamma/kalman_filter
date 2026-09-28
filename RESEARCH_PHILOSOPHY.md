@@ -105,7 +105,7 @@ Démarche : mesurer → caractériser → catégoriser → isoler → exploiter 
 
 ## 5. ÉTAT DES PREUVES (au 2026-09-27)
 
-À relire avant toute conclusion. Mis à jour après chaque expérience validée. Balises : `[CODE]` code, `[OBS]` mesuré et sourcé, `[HYP]` hypothèse.
+À relire avant toute conclusion. Mis à jour après chaque expérience validée. Les découvertes issues des expériences du projet (moteur, méthode, hypothèses ouvertes) sont consignées dans `RESEARCH_INSIGHTS.md`. Balises : `[CODE]` code, `[OBS]` mesuré et sourcé, `[HYP]` hypothèse.
 
 | Principe (§4) | Ce que disent les données disponibles | Statut |
 |---|---|---|

@@ -5,7 +5,7 @@
 - **Moteur :** `AKF_TSO_v2.1_baseline.pine` (SHA-256 `c70062b8…ecd30b317`), réplique certifiée `src/indicator/`, réglages par défaut.
 - **Frais :** sans objet (aucune transaction simulée, aucun PnL, pas de tableau des 8 métriques).
 - **Reproduire :** `python experiments/A01/run_A01.py` (≈ 30 s) ; tests : `python -m pytest tests`.
-- **Relecture du 2026-09-28.** Après une revue indépendante, trois lectures sont corrigées : la bimodalité du retard (§2.3), la description du déclencheur (§2.5) et la liste des descripteurs pour B (§4). Les chiffres de la première version sont inchangés. Contrôles détaillés : annexe H.
+- **Relecture du 2026-09-28.** Après une revue indépendante, trois lectures sont corrigées : la bimodalité du retard (§2.3), la description du déclencheur (§2.5) et la liste des descripteurs pour B (§4). Les chiffres de la première version sont inchangés. Contrôles détaillés : annexe H. Compléments du porteur (biais de la tenue de l'extremum, typologie par `retrace_ratio`, zone neutre) : annexe I et `RESEARCH_INSIGHTS.md`.
 
 ## 0. Cadrage
 
@@ -117,7 +117,7 @@ Les chiffres détaillés sont dans les annexes A à H ci-dessous et dans les fig
 - **Le déclencheur mêle deux mécanismes** : le retournement de la vitesse filtrée (x1 déjà du sens du signal : 51,8 %) et la décélération relative (48,2 %). Dans ce second groupe, 13,6 % des signaux n'ont aucun retournement de x1 avant le signal suivant : ce sont des pauses de tendance.
   - Le retard d'environ 5 barres entre l'extremum et le signal vient du gain figé.
   - Il est corrigé : « détecteur du passage à zéro à ±1 barre » était trop réducteur, puisque 35 % des signaux sortent de cette description.
-- **L'issue « extremum tenu » ou « extremum cassé » n'est pas observable à τ = 0.** C'est la cible naturelle de B : quelles signatures causales réduisent le taux de cassure (36,1 %) sans réduire la marge ?
+- **L'issue « extremum tenu » ou « extremum cassé » n'est pas observable à τ = 0, et ce n'est pas une cible pour B.** Son taux croît mécaniquement avec la distance déjà parcourue : 36,5 % en Q1, 85,3 % en Q4 (`RESEARCH_INSIGHTS.md`, I-M1). La cible de B est l'asymétrie d'excursion MFE_H / \|MAE_H\| depuis open[t+1] (I-M2).
   - Lecture pour C : un stop placé au-delà de l'extremum du segment tient jusqu'au signal suivant dans 63,9 % des cas. C'est un constat a posteriori, pas une règle.
 - **Le point d'entrée se dégrade avec le choc de la barre de signal, pas avec l'attente** (ρ = 0,63 contre 0,09).
   - Hypothèse à tester en B : un `nis_z_100` élevé à τ = 0 fait entrer après une bougie de rebond déjà consommée. C'est cohérent avec la strate `nis_z_100` Q4 défavorable de #KAKALMAN P6.5b.
@@ -144,7 +144,7 @@ Les chiffres détaillés sont dans les annexes A à H ci-dessous et dans les fig
 - **Variables écartées :**
   - `gap_prev_opp_bars`, redondante avec `gap_prev_any_bars` ;
   - `prev_seg_extreme_abs`, quasi constant.
-- **Unités et découpage :** mesurer les excursions de l'Étape B en ATR14(t), séparément pour Long / Short et rang 1 / répétition. La cible naturelle est la tenue de l'extremum du segment jusqu'au signal suivant, et les excursions à horizon fixe. La réserve 2026 reste fermée.
+- **Cible et découpage de B :** asymétrie d'excursion MFE_H / \|MAE_H\| depuis open[t+1], en ATR14(t). Horizons fixes H ∈ {6, 13, 26, 48} barres et barrières symétriques de ±1,5 et ±2,0 ATR (`RESEARCH_INSIGHTS.md`, I-M2). Mesure séparée pour Long / Short et rang 1 / répétition. La tenue de l'extremum n'est jamais une cible seule (I-M1). La réserve 2026 reste fermée.
 - **Aucune Étape B n'est lancée.**
 
 ---
@@ -408,3 +408,24 @@ Médiane de l'excursion signée du close (ATR14(t)) et intervalle bootstrap à 9
 | Rang 1 Short | −0,10 [−0,18 ; −0,03] | −0,13 [−0,26 ; −0,03] | −0,25 [−0,39 ; −0,08] |
 | Répétition Long | −0,00 [−0,20 ; 0,13] | 0,08 [−0,17 ; 0,25] | 0,31 [−0,08 ; 0,58] |
 | Répétition Short | 0,10 [−0,09 ; 0,23] | 0,11 [−0,02 ; 0,30] | 0,03 [−0,33 ; 0,40] |
+
+## I. Compléments du porteur (2026-09-28)
+
+`retrace_ratio` = `obs_dist_seg_atr` / `leg_atr`. Extension si cassé = `post_dist_atr` − `obs_dist_seg_atr`. Seuils 0,5 / 0,85 / 2,8 : découpage exploratoire, non optimisé et non validé.
+
+| Quartile de `obs_dist_seg_atr` | Bornes (ATR) | Signaux | `obs_dist_seg_atr` médian | `retrace_ratio` médian | Extremum tenu jusqu'au signal suivant |
+|---|---|---|---|---|---|
+| Q1 | [0,00 ; 1,26] | 1 824 | 0,92 | 35,3 % | 36,5 % |
+| Q2 | [1,26 ; 1,77] | 1 824 | 1,52 | 59,1 % | 61,4 % |
+| Q3 | [1,77 ; 2,39] | 1 824 | 2,04 | 71,9 % | 72,6 % |
+| Q4 | [2,39 ; 7,72] | 1 824 | 2,94 | 87,1 % | 85,3 % |
+
+| Famille (seuils exploratoires du porteur) | Signaux | `leg_atr` P50 | `obs_dist_seg_atr` P50 | `A_vol` P50 | `nis_z_100` P50 | x1 déjà retourné | Extremum cassé | Extension si cassé : P50 / moyenne / P90 (ATR) | Sortie de zone neutre vers le sens du signal ; barres P50 [P25 ; P75] |
+|---|---|---|---|---|---|---|---|---|---|
+| Tous | 7 296 (100,0 %) | 2,82 | 1,77 | 0,55 | 0,19 | 51,8 % | 36,1 % | 1,45 / 2,57 / 6,21 | 91,2 % ; 2 [1 ; 2] |
+| P1 : `retrace_ratio` < 0,5 et `leg_atr` ≥ 2,8 | 1 875 (25,7 %) | 4,73 | 1,47 | 0,60 | 0,29 | 30,3 % | 42,8 % | 1,28 / 2,40 / 5,86 | 90,5 % ; 2 [2 ; 3] |
+| P2 : `retrace_ratio` ≥ 0,85 et `leg_atr` < 2,8 | 1 304 (17,9 %) | 2,06 | 2,22 | 0,47 | 0,57 | 82,5 % | 26,9 % | 1,71 / 2,89 / 6,46 | 96,5 % ; 1 [1 ; 2] |
+| Ni P1 ni P2 | 4 117 (56,4 %) | 2,68 | 1,74 | 0,55 | 0,01 | 51,9 % | 35,9 % | 1,49 / 2,58 / 6,28 | 89,9 % ; 2 [1 ; 2] |
+| `retrace_ratio` ≥ 1 (tous) | 934 (12,8 %) | 2,11 | 2,64 | 0,47 | 1,34 | 89,3 % | 20,8 % | 1,65 / 2,89 / 6,62 | 98,7 % ; 1 [1 ; 2] |
+
+Sortie de la zone neutre après le signal : vers la zone du sens du signal dans 91,2 % des cas, en 2 [1 ; 2] barres ; retour vers la zone d'origine dans 8,8 % des cas, en 3 [2 ; 4] barres.

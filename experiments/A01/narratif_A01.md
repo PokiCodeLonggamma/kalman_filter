@@ -5,7 +5,7 @@
 - **Moteur :** `AKF_TSO_v2.1_baseline.pine` (SHA-256 `c70062b8…ecd30b317`), réplique certifiée `src/indicator/`, réglages par défaut.
 - **Frais :** sans objet (aucune transaction simulée, aucun PnL, pas de tableau des 8 métriques).
 - **Reproduire :** `python experiments/A01/run_A01.py` (≈ 30 s) ; tests : `python -m pytest tests`.
-- **Relecture du 2026-09-28.** Après une revue indépendante, trois lectures sont corrigées : la bimodalité du retard (§2.3), la description du déclencheur (§2.5) et la liste des descripteurs pour B (§4). Les chiffres de la première version sont inchangés. Contrôles détaillés : annexe H.
+- **Relecture du 2026-09-28.** Après une revue indépendante, trois lectures sont corrigées : la bimodalité du retard (§2.3), la description du déclencheur (§2.5) et la liste des descripteurs pour B (§4). Les chiffres de la première version sont inchangés. Contrôles détaillés : annexe H. Compléments du porteur (biais de la tenue de l'extremum, typologie par `retrace_ratio`, zone neutre) : annexe I et `RESEARCH_INSIGHTS.md`.
 
 ## 0. Cadrage
 
@@ -117,7 +117,7 @@ Les chiffres détaillés sont dans les annexes A à H ci-dessous et dans les fig
 - **Le déclencheur mêle deux mécanismes** : le retournement de la vitesse filtrée (x1 déjà du sens du signal : 51,8 %) et la décélération relative (48,2 %). Dans ce second groupe, 13,6 % des signaux n'ont aucun retournement de x1 avant le signal suivant : ce sont des pauses de tendance.
   - Le retard d'environ 5 barres entre l'extremum et le signal vient du gain figé.
   - Il est corrigé : « détecteur du passage à zéro à ±1 barre » était trop réducteur, puisque 35 % des signaux sortent de cette description.
-- **L'issue « extremum tenu » ou « extremum cassé » n'est pas observable à τ = 0.** C'est la cible naturelle de B : quelles signatures causales réduisent le taux de cassure (36,1 %) sans réduire la marge ?
+- **L'issue « extremum tenu » ou « extremum cassé » n'est pas observable à τ = 0, et ce n'est pas une cible pour B.** Son taux croît mécaniquement avec la distance déjà parcourue : 36,5 % en Q1, 85,3 % en Q4 (`RESEARCH_INSIGHTS.md`, I-M1). La cible de B est l'asymétrie d'excursion MFE_H / \|MAE_H\| depuis open[t+1] (I-M2).
   - Lecture pour C : un stop placé au-delà de l'extremum du segment tient jusqu'au signal suivant dans 63,9 % des cas. C'est un constat a posteriori, pas une règle.
 - **Le point d'entrée se dégrade avec le choc de la barre de signal, pas avec l'attente** (ρ = 0,63 contre 0,09).
   - Hypothèse à tester en B : un `nis_z_100` élevé à τ = 0 fait entrer après une bougie de rebond déjà consommée. C'est cohérent avec la strate `nis_z_100` Q4 défavorable de #KAKALMAN P6.5b.
@@ -144,5 +144,5 @@ Les chiffres détaillés sont dans les annexes A à H ci-dessous et dans les fig
 - **Variables écartées :**
   - `gap_prev_opp_bars`, redondante avec `gap_prev_any_bars` ;
   - `prev_seg_extreme_abs`, quasi constant.
-- **Unités et découpage :** mesurer les excursions de l'Étape B en ATR14(t), séparément pour Long / Short et rang 1 / répétition. La cible naturelle est la tenue de l'extremum du segment jusqu'au signal suivant, et les excursions à horizon fixe. La réserve 2026 reste fermée.
+- **Cible et découpage de B :** asymétrie d'excursion MFE_H / \|MAE_H\| depuis open[t+1], en ATR14(t). Horizons fixes H ∈ {6, 13, 26, 48} barres et barrières symétriques de ±1,5 et ±2,0 ATR (`RESEARCH_INSIGHTS.md`, I-M2). Mesure séparée pour Long / Short et rang 1 / répétition. La tenue de l'extremum n'est jamais une cible seule (I-M1). La réserve 2026 reste fermée.
 - **Aucune Étape B n'est lancée.**
