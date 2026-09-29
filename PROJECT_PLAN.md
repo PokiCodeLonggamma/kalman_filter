@@ -35,6 +35,13 @@ Chaque test est précédé du cadrage obligatoire (`RESEARCH_PHILOSOPHY.md` §4.
 | C | EXP-C04 | faite | Filtre de tendance macro (EMA 200, EMA 50, Kalman v2.1 sur 4 h), en veto des signaux contre-tendance. Rejeté : les trades contre-tendance ne sont pas toxiques et portent les grands retournements. RE-1 reste pur : c'est la stratégie cœur. Étapes annoncées par le porteur : C05 (sensibilité), puis D (portabilité multi-actifs). |
 | C | EXP-C05 | faite | Sensibilité des trois seuils de RE-1, un à la fois. Plateaux pour la frontière F2b / F3 (0,85 à 0,95) et la marge du stop de F3 (−0,25 à +0,25 ATR). L'exclusion de `nis_z_100` est une falaise côté permissif, signalée avant l'Étape D. RE-1 inchangé. |
 
+**Direction de l'Étape D (porteur, 2026-09-29).** RE-1 est fonctionnelle, relativement performante sans optimisation, et figée.
+- **D01, portabilité multi-actifs sans optimisation :** RE-1 figée sur d'autres actifs. Si elle tient, cela valide la stratégie elle-même.
+- **D02, optimisation (Optuna, walk-forward) :** mesure le gain de performance dû à l'optimisation, contre RE-1 figée.
+- Ensuite, la validation finale sur le hold-out (phase 7).
+
+La reprise se fait avec `passation.md`, qui donne l'état complet du projet.
+
 **Conventions de l'Étape C (décisions du porteur) :**
 - une position à la fois ;
 - frais de 5 et 10 bps ;
