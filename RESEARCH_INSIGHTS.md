@@ -105,6 +105,14 @@ Elle se mesure séparément par sens et par type de signal (rang 1 ou répétiti
 - On en retient la plage P2,5-P97,5 de l'écart et la part des chemins où la variante est moins profonde. Ce n'est pas un IC centré sur l'écart observé, qui peut sortir de la plage.
 - Un écart de 1 à 4 points de MDD entre deux règles voisines reste du bruit de chemin tant que la plage contient 0. Un MDD qui ne varie pas de façon monotone avec le paramètre signale le même bruit.
 
+### I-M11 — Une règle de gestion du risque se juge contre la simple réduction de taille `[MÉTHODE]`
+*Source : EXP-C03, analyse approfondie.*
+
+- Une règle qui baisse le MDD en baissant aussi le rendement peut n'être qu'un désendettement.
+- On la compare donc au contrôle réduit en taille jusqu'au même MDD valorisé. Si elle ne fait pas mieux en PnL annualisé à MDD égal, elle n'améliore pas l'efficience du capital, et la réduction de taille l'obtient sans paramètre supplémentaire.
+- Exemple : V3 à m = 2 fait +1,0 point par an de mieux sans glissement, mais −0,8 point avec 5 bps de glissement du break-even.
+- La durée sous le pic se lit à côté : un drawdown moins profond peut être plus long.
+
 ---
 
 ## 2. Cinématique du moteur v2.1
@@ -263,6 +271,13 @@ L'atlas A01 soutient cette lecture à travers le ratio de retracement `retrace_r
       - La baisse du drawdown (V3 à m = 2 : −13,5 → −11,7 %) n'est pas significative (I-M10).
     - `[OBS]` **Take-profit fixe.** Même la borne optimiste (TP pris dès que la MFE26 l'atteint) reste sous RE-1 : +0,200 à +0,347 ATR contre +0,369. Le décile supérieur apporte 0,92 ATR par trade, plus que l'espérance totale.
     - `[HYP]` Le break-even ne distingue pas le retest de l'échec : un trade activé sur deux repasse par l'entrée, et ceux qui repartent ensuite valent ceux qu'il sauve.
+    - `[OBS]` **Analyse approfondie (C03) : ni alpha, ni gain de risque démontré.**
+      - V3 à m = 2 baisse le MDD sur le chemin réel (6 lectures sur 6), mais seulement dans 82 à 92 % des chemins réordonnés, et le Calmar dans 65 à 82 %.
+      - Ses drawdowns sont plus longs (459 jours contre 390).
+      - Dès 5 bps de glissement du break-even, un RE-1 simplement réduit en taille fait mieux à MDD égal (I-M11).
+      - Le déficit de 2022 (−0,184 ATR) tient à deux gagnants F3 extrêmes coupés (+18,6 et +14,3 ATR dans RE-1) ; sans eux, +0,006.
+      - Sur F3, le SL-B plafonne déjà ce que le break-even pourrait sauver. Ses 10 plus grands gains sont des F2b.
+    - `[HYP]` Le break-even, à l'entrée + 5 bps, se trouve dans la zone de retest des breakouts. Son coût annuel dépend de la probabilité de couper l'un des rares gagnants extrêmes qui portent l'espérance.
   - `[HYP]` Le point d'entrée dans le range décide.
     - F2b entre au milieu : un repli de 1 à 3 ATR est un balayage de liquidité avant l'expansion.
     - F3 entre près de l'extrémité opposée : casser l'extremum invalide le breakout.
@@ -302,4 +317,4 @@ L'atlas A01 soutient cette lecture à travers le ratio de retracement `retrace_r
 5. ~~Après un stop, faut-il un cooldown jusqu'à t + 1 + H ou une réouverture immédiate ?~~ **Répondu (EXP-C02bis)** : le cooldown, jusqu'à H32 ; à H48, l'écart s'inverse.
 6. L'assemblage différencié de R2 tient-il avec des seuils causaux, puis hors échantillon ? **En partie répondu (EXP-C02bis)** : il tient avec des seuils causaux, en ATR. Hors échantillon : Étape D.
 7. ~~Faut-il un horizon propre à chaque sous-famille ?~~ **Tranché par le porteur (2026-09-29)** : non, H = 26 est commun. À H28, F2b monte à +0,569 ATR, mais F3 tombe à +0,148, le DD passe à −16,2 % et le Calmar à 0,92. Ce serait un paramètre libre choisi après lecture.
-8. ~~Un break-even ou un take-profit améliore-t-il RE-1 ?~~ **Répondu (EXP-C03)** : non. Le break-even est neutre pour m ≥ 2 et nuisible en dessous. Même la borne optimiste du take-profit reste sous RE-1.
+8. ~~Un break-even ou un take-profit améliore-t-il RE-1 ?~~ **Répondu (EXP-C03 et son analyse approfondie)** : non. Le break-even est neutre pour m ≥ 2 et nuisible en dessous. Comme outil de risque, il équivaut à une réduction de taille et ne résiste pas à 5 bps de glissement. Même la borne optimiste du take-profit reste sous RE-1.

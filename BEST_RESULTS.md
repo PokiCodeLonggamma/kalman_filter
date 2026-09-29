@@ -109,6 +109,12 @@ La relecture de C02 assemble 1 et 2 ; EXP-C02bis en fait la configuration de ré
 
 Le take-profit fixe est exclu : même sa borne optimiste reste sous RE-1 (+0,200 à +0,347 ATR contre +0,369). La décision du porteur est vérifiée.
 
+**Analyse approfondie (relecture du porteur) : décision 1, break-even rejeté et RE-1 intact.**
+- **Aucun gain de risque démontré pour V3 à m = 2.** Le MDD est meilleur dans 82 à 92 % des chemins réordonnés, le Calmar dans 65 à 82 %. Les drawdowns sont plus longs : 459 jours sous le pic contre 390.
+- **À MDD égal, ce n'est qu'un désendettement.** Un RE-1 réduit à 0,211 % par ATR fait +13,5 % par an, contre +14,5 % pour V3 sans glissement (I-M11).
+- **Il ne résiste pas à l'exécution.** Dès 5 bps de glissement du break-even, le Calmar tombe à 1,10, sous les 1,16 de RE-1 ; à MDD égal, V3 fait −0,8 point par an face à RE-1 réduit.
+- **2022 tient à deux trades.** Son déficit (−0,184 ATR) vient de deux gagnants F3 extrêmes coupés (+18,6 et +14,3 ATR dans RE-1) ; sans eux, l'année fait +0,006.
+
 ---
 
 ## Pistes écartées (à ne pas retester sans élément nouveau)
@@ -126,3 +132,4 @@ Le take-profit fixe est exclu : même sa borne optimiste reste sous RE-1 (+0,200
 | Take-profit fixe sur RE-1 (2 à 6 ATR) | même la borne optimiste (TP pris dès que la MFE26 l'atteint) reste sous RE-1 : +0,200 à +0,347 ATR contre +0,369 ; exclu (décision du porteur, vérifiée) | C03 |
 | Break-even différé sur RE-1, m ≤ 1,5 ATR | ampute la queue droite ; effet apparié jusqu'à −0,157 ATR par trade ; significatif pour F2b à H24 et H28 | C03 |
 | Break-even différé sur RE-1, m ≥ 2 ATR | effet apparié de −0,02 à +0,03 ATR par trade ; baisse du drawdown non significative ; non retenu (KISS) | C03 |
+| Break-even comme variante de gestion du risque (V3 ou V2, m = 2) | gain de MDD non démontré (82 à 92 % des chemins), Calmar fragile, drawdowns plus longs ; à MDD égal, équivaut à réduire la taille ; perdu dès 5 bps de glissement du break-even | C03, analyse approfondie |

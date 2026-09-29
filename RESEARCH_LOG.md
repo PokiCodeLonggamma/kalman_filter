@@ -503,3 +503,102 @@
   Points à trancher par le porteur :
   - la suite : le filtre macro (dernier facteur de l'Étape C) ou l'Étape D ;
   - l'hypothèse d'exécution : à 10 bps, l'IC de RE-1 contient 0.
+
+### [EXP-C03, analyse approfondie] — Break-even : alpha contre gestion du risque (relecture du porteur)
+- **Date :** 2026-09-29
+- **Étape :** C Enveloppe. Relecture de C03 intégrant l'analyse de Gemini ; aucune règle nouvelle, RE-1 inchangé.
+- **Actif & Période :** BTC/USD Bitstamp 30m, 2020-01 → 2025-12 ; 2026, ETH et XRP non lus.
+- **Modèle de frais :** 5 et 10 bps, présentés séparément ; capital à 0,25 % par ATR14(t). Stress : glissement du seul break-even de 0, 5 et 10 bps.
+- **Livrables :**
+  - code, en commit séparé (547af84) : `be_slippage_bps` dans `breakeven_trades` et un test (195 réussis) ;
+  - `experiments/C03/run_C03_approfondi.py`, `rapport_C03_approfondi.md` (sections A à I), `approfondi_C03.json`, `diagnostic_2022_C03.csv`, figures 5 à 8.
+
+#### 0. Cadrage obligatoire
+- **QUESTION :**
+  - A, alpha : le break-even améliore-t-il E[ATR] ?
+  - B, gestion du risque : garde-t-il une espérance comparable tout en réduisant de façon robuste le MDD, en améliorant le Calmar ou la robustesse aux frais ?
+  - Points spécifiques : V3 à m = 2, glissement du break-even, 2022, asymétrie F2b / F3.
+- **PERTINENCE POUR LE FILTRE AKF :** RE-1 est convexe. Son décile supérieur apporte 0,92 ATR par trade, pour une espérance de 0,369.
+- **CE QUE LE PROTOCOLE MESURE RÉELLEMENT :**
+  - l'effet apparié sur les 1 080 mêmes entrées, séparé de la performance absolue ;
+  - le risque de chemin sur 2 000 chemins réordonnés par mois ;
+  - un RE-1 réduit en taille jusqu'au même MDD ;
+  - le glissement du seul break-even ;
+  - un diagnostic trade par trade.
+- **CE QU'IL NE PERMET PAS DE CONCLURE :**
+  - une validation hors échantillon ;
+  - un m choisi a posteriori ;
+  - l'effet d'un glissement de tous les stops ;
+  - une théorie de 2022 (46 sorties au break-even).
+
+#### 1. Hypothèse & Motivation physique
+- Sans alpha, le break-even pourrait encore servir la gestion du risque : tronquer les perdants après +2 ATR réduit la variance et le drawdown.
+
+#### 2. Règle testée (OFAT)
+- **Aucune règle nouvelle.** Ce sont les variantes de C03 (V1, V2, V3 × m) sur les mêmes entrées.
+- **Un seul stress d'exécution :** le prix d'exécution du break-even de V3 à m = 2 est dégradé de 0, 5 ou 10 bps.
+- **Règle de décision fixée avant les tests F à H :**
+  - critère primaire (alpha) : effet apparié significativement positif pour entrer dans le baseline ;
+  - critère secondaire (risque) : S1, espérance comparable ; puis S2 et S3, MDD et Calmar meilleurs dans toutes les lectures et démontrés à 95 % sur les chemins ; ou S4, IC > 0 à 10 bps aux trois horizons et sous glissement.
+
+#### 3. Résultats nets (H26, 5 bps, cooldown ; PnL et drawdown à 0,25 % par ATR)
+| Métrique | RE-1 | V3 m = 2, sans glissement | V3 m = 2, glissement 5 bps | V3 m = 2, glissement 10 bps |
+|---|---|---|---|---|
+| PnL Net Total (bps, 1x) | +138 % (+13 320) | +126 % (+11 475) | +108 % (+10 135) | +91 % (+8 795) |
+| Profit Factor (1x) | 1,20 | 1,21 | 1,18 | 1,15 |
+| Win Rate | 44,3 % | 35,3 % | 33,3 % | 33,3 % |
+| Espérance ATR [IC] ; bps | +0,369 [+0,098 ; +0,645] ; +12,3 | +0,350 [+0,142 ; +0,570] ; +10,6 | +0,314 [+0,106 ; +0,534] ; +9,4 | +0,278 [+0,068 ; +0,501] ; +8,1 |
+| Effet apparié ATR [IC] | — | −0,018 [−0,131 ; +0,105] | −0,054 [−0,168 ; +0,066] | −0,090 [−0,204 ; +0,027] |
+| Max Drawdown ; Calmar | −13,5 % ; 1,16 | −11,7 % ; 1,25 | −11,8 % ; 1,10 | −12,0 % ; 0,95 |
+| Nombre de trades ; sortis au BE | 1 080 (15,0/mois) ; — | 1 080 ; 25 % | 1 080 ; 25 % | 1 080 ; 25 % |
+| Durée médiane | 26 | 26 | 26 | 26 |
+| Part des frais (1x) | 29 % | 32 % | 35 % | 38 % |
+
+À 10 bps, dans le même ordre :
+
+| 10 bps | Espérance ATR [IC] | MDD | Calmar |
+|---|---|---|---|
+| RE-1 | +0,233 [−0,041 ; +0,511] | −15,9 % | 0,60 |
+| V3 m = 2, sans glissement | +0,215 [+0,005 ; +0,437] | −13,4 % | 0,64 |
+| V3 m = 2, glissement 5 bps | +0,179 [−0,035 ; +0,403] | −14,7 % | 0,48 |
+| V3 m = 2, glissement 10 bps | +0,142 [−0,073 ; +0,370] | −16,1 % | 0,34 |
+
+#### 4. Analyse causale & Physique du trade
+- [CODE] **Contrôles.** Glissement nul identique à C03 ; effets additifs (V3 = V1 + V2, trade par trade) ; mécanique identique ; aucun `shift(-1)`. Tous les chiffres de la relecture sont confirmés aux arrondis près.
+  - Précision : les 89 % et 92 % de chemins portent sur le MDD aux sorties des chemins réordonnés, les −14,2 → −11,2 % sur le MDD valorisé du chemin réel.
+- [OBS] **Question A : aucun alpha.**
+  - Aucun effet significativement positif, à aucun seuil ni horizon.
+  - Effets significativement négatifs : V2 à m = 1 (H24, H28) et V3 à m = 1 (H24).
+  - À m = 2, par sous-famille : F2b −0,007 [−0,156 ; +0,167], F3 −0,031 [−0,192 ; +0,101].
+- [OBS] **Queue droite.** Gagnants de RE-1 à ≥ +3 ATR coupés par V3 : 39 % à m = 1, 17 % à m = 2, 5 % à m = 4 ; soit 39 %, 16 % et 4 % de leur contribution.
+- [OBS] **Risque de V3 à m = 2.**
+  - Sur le chemin réel, le MDD et le Calmar sont meilleurs dans les 6 lectures (3 horizons, 5 et 10 bps).
+  - Sur les chemins réordonnés, le MDD est meilleur dans 82 à 92 % des cas et le Calmar dans 65 à 82 % : aucune des deux améliorations n'est démontrée à 95 %.
+  - Les drawdowns sont moins profonds mais plus longs : 459 jours sous le pic contre 390.
+  - À MDD égal, un RE-1 simplement réduit en taille (0,211 % par ATR) fait +13,5 % par an, contre +14,5 % pour V3.
+- [OBS] **Frais.**
+  - À 10 bps, l'IC de V3 à m = 2 passe au-dessus de 0 parce qu'il se resserre (erreur type 0,138 → 0,112), alors que l'espérance baisse.
+  - P(E > 0) passe de 95,2 % à 97,7 %. Ce gain ne vaut qu'à H26 et disparaît avec 5 bps de glissement.
+- [OBS] **Glissement.**
+  - Le MDD reste plus bas à 5 bps de frais.
+  - Le Calmar tombe sous celui de RE-1 dès 5 bps de glissement : à MDD égal, V3 fait alors −0,8 point par an face à RE-1 réduit, et −2,7 points à 10 bps de glissement.
+  - Limite : seul le break-even glisse. V3 exécute 476 ordres stop contre 257 pour RE-1.
+- [OBS] **2022.**
+  - Effet −0,184 [−0,54 ; +0,13] : non distinct des autres années.
+  - Il tient entièrement à deux gagnants F3 extrêmes coupés, +18,6 et +14,3 ATR dans RE-1, après des reculs de 0,12 et 0,44 ATR sous l'entrée. Sans eux, 2022 fait +0,006.
+  - Le rapport sauvés / coupés, la MFE et la durée sont les mêmes que les autres années.
+- [OBS] **F2b / F3.**
+  - Sur F3, le SL-B plafonne déjà les pertes que le break-even pourrait sauver (−1,72 contre −2,30 ATR pour F2b).
+  - Les 10 plus grands gains du break-even sont des F2b ; ses 2 plus grands coûts, des F3.
+  - V2 à m = 2 équivaut à une réduction de taille (+0,3 point par an à MDD égal).
+- [HYP] **Une exposition structurelle, pas un régime.** Le break-even, à l'entrée + 5 bps, se trouve dans la zone de retest des breakouts. Son coût dépend de la probabilité de couper l'un des rares gagnants extrêmes, qui portent l'espérance de RE-1. Il réduit la variance, pas le risque par unité de rendement.
+
+#### 5. Décision
+- [x] **REJETÉ (décision 1) : break-even rejeté, RE-1 conservé intact.**
+  - Aucun alpha.
+  - Aucun critère de gestion du risque n'est satisfait (S2, S3, S4).
+  - À exécution réaliste, un RE-1 réduit en taille fait mieux, sans paramètre de plus.
+- [ ] **NON CONCLUANT**
+- [ ] **À POURSUIVRE**
+
+  À ne pas retester sans élément nouveau : le break-even à l'entrée, et un m choisi a posteriori pour le risque.
