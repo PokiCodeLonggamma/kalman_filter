@@ -382,10 +382,11 @@ def section_remarque(ix, meta) -> str:
 
 HEAD5 = ["Stop", "Stoppés : figé ; dyn.", "Effet pur, entrées figées : ATR [IC 95 %]", "Figé : espérance ATR [IC]",
          "Dyn. : PnL composé ; MDD valorisé", "Dyn. : PF 1x ; PF pondéré ; WR", "Dyn. : espérance bps [IC] ; ATR [IC]",
-         "Dyn. : timing ATR [IC]", "Dyn. : trades ; /mois ; débloqués", "Dyn. : durée méd.",
-         "Dyn. : part des frais ; brut/trade"]
+         "Dyn. : timing ATR [IC]", "Dyn. : Long ; Short (ATR)", "Dyn. : trades ; /mois ; débloqués",
+         "Dyn. : durée méd.", "Dyn. : part des frais ; brut/trade"]
 HEAD10 = ["Stop", "Figé : espérance ATR [IC]", "Dyn. : PnL composé ; MDD valorisé", "Dyn. : PF 1x ; PF pondéré ; WR",
-          "Dyn. : espérance bps [IC] ; ATR [IC]", "Dyn. : timing ATR [IC]", "Dyn. : part des frais ; brut/trade"]
+          "Dyn. : espérance bps [IC] ; ATR [IC]", "Dyn. : timing ATR [IC]", "Dyn. : Long ; Short (ATR)",
+          "Dyn. : part des frais ; brut/trade"]
 
 
 def _dyn_cells(r) -> list:
@@ -393,7 +394,8 @@ def _dyn_cells(r) -> list:
             f"{fr(r['pf'], 2)} ; {fr(r['pf_r25'], 2)} ; {pct(r['wr'], 0)}",
             f"{ci(r['esperance_bps'], r['esperance_bps_lo'], r['esperance_bps_hi'], 1)} ; "
             f"{ci(r['esperance_atr'], r['esperance_atr_lo'], r['esperance_atr_hi'], 3)}",
-            ci(r["timing_atr"], r["timing_atr_lo"], r["timing_atr_hi"], 3)]
+            ci(r["timing_atr"], r["timing_atr_lo"], r["timing_atr_hi"], 3),
+            f"{sg(r['long_atr'], 3)} ; {sg(r['short_atr'], 3)}"]
 
 
 def section_profils(ix) -> str:

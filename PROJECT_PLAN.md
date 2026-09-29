@@ -22,6 +22,25 @@ Démarche : **mesurer → caractériser → catégoriser → isoler → exploite
 
 Chaque test est précédé du cadrage obligatoire (`RESEARCH_PHILOSOPHY.md` §4.6).
 
+### Avancement (au 2026-09-29)
+
+| Étape | Expérience | Statut | Résultat principal |
+|---|---|---|---|
+| A | EXP-A01 | faite | Géométrie du signal stationnaire en ATR14(t) : l'enveloppe s'exprime en ATR. |
+| B | EXP-B01 et relecture | faite | Trois régimes : R1 essoufflement, R2 sortie de range, R3 continuation. |
+| C | EXP-C01 et relecture | faite | Sortie à horizon fixe ; R3 et `nis_z_100` Q4 exclus ; F2b · x1 hors Q4 à H26 candidat principal. |
+| C | EXP-C02 et relecture | faite | Stop différencié : F2b sans stop, F3 stop à l'extremum du segment ; R1 sans espérance nette. |
+| C | EXP-C02bis | à cadrer par le porteur | Moteur de régimes. Vetos d'entrée (R3, `nis_z_100` Q4 ; R1 proposé), routage F2b / F3, réentrée après un stop. |
+
+**Conventions de l'Étape C (décisions du porteur) :**
+- une position à la fois ;
+- frais de 5 et 10 bps ;
+- capital à 0,25 % par ATR14(t), notionnel 1x en référence ;
+- IC par grappes mensuelles, en bps et en ATR ;
+- hold-out scellé jusqu'à la fin de l'Étape D.
+
+Les meilleurs résultats de chaque étape sont regroupés dans `BEST_RESULTS.md`.
+
 ---
 
 ## PHASE 1 — AUDIT DE L'EXISTANT (« Phase 0 » dans les échanges — close le 2026-09-27)

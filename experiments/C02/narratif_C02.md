@@ -206,4 +206,74 @@ La réentrée après un stop est donc un facteur à part entière : elle aide R1
   4. Les frais canoniques : à 10 bps, seules les estimations centrales de F2b et R2 restent nettement positives.
   5. Le hold-out.
 
-  C02bis n'est pas lancé.
+  C02bis n'est pas lancé. Les orientations de la relecture du porteur sont au §5.4.
+
+## 5. Relecture du porteur (2026-09-29)
+
+Revue indépendante des 864 lignes de `resultats_C02.csv`, transmise par le porteur. Chaque chiffre a été recalculé avec le moteur du dépôt (script hors livrables).
+
+### 5.1 Vérifications
+
+| Affirmation de la revue | Recalcul | Verdict |
+|---|---|---|
+| F2b H26 sans stop : 53,7 % des trades ont une excursion adverse ≥ 2 ATR ; laissés courir, ils finissent à −1,38 ATR et 27,1 % positifs | 53,7 % ; −1,38 ATR brut (−1,52 net de 5 bps) ; 25 % positifs nets | retrouvé |
+| Stop de F2b à 2 ATR : −0,62 ATR par trade stoppé, −0,33 sur l'ensemble | −0,618 et −0,332 | retrouvé |
+| Drawdown de F2b avec un stop de 1 à 3 ATR : −15 à −22 % | −12 à −22 % (SL-A 1,5 : −12 %, contre −13 % sans stop) | nuancé : pas d'amélioration nette |
+| F3 H26 : les trades qui touchent l'extremum finissent à −2,17 ATR sans stop | 50 % des trades touchent ; −2,21 ATR brut (−2,36 net), 21 % positifs ; les autres finissent à +2,68 | retrouvé |
+| F5 : 5 bps = 0,135 ATR (ATR médian 45 bps) ; barrières ±1 à ±2 ATR : brut +0,067 à +0,116, net −0,068 à −0,019 ATR | identique au niveau signal (fenêtres chevauchantes) ; le PnL séquentiel (−8,5 à −0,5 %) n'est pas recalculé | retrouvé |
+| F3 : Long et Short positifs avec stop aux trois horizons | voir §5.2 | retrouvé (estimations centrales) |
+| R2 hors Q4 : +36 % à H13 (SL-A 1,5), +51 % à H48 (SL-A 5) | identique | retrouvé, avec réserve (§5.2) |
+| Assemblage R2 hors Q4 à H26, F2b sans stop + F3 SL-B à l'extremum : +0,370 ATR [+0,100 ; +0,648], +12,5 bps [+0,3 ; +24,5], +139 %, DD −12,1 %, 6/6 ans | +0,369 [+0,098 ; +0,645], +12,3 [+0,2 ; +24,4], +138 %, DD −13,5 % valorisé (−12,9 % aux sorties), 6/6 ans ; 1 080 trades (1 079 dans la revue) | retrouvé à 1 % près |
+
+### 5.2 Ce que le narratif n'avait pas dit
+
+- **Le stop rend F3 positif des deux côtés.** Long / Short en ATR, 5 bps, séquentiel dynamique :
+
+  | H | Sans stop | SL-B à l'extremum | Autre règle |
+  |---|---|---|---|
+  | 13 | +0,01 / −0,00 ; PnL −3 % (1x −24 %) | +0,07 / +0,13 ; +15 % | SL-A 1,5 : +0,08 / +0,12 ; +17 % |
+  | 26 | +0,27 / −0,02 ; +16 %, DD −34 % | +0,17 / +0,24 ; +36 %, DD −13 % (1x +72 %) | SL-A 2 : +0,15 / +0,24 ; +33 % |
+  | 48 | −0,05 / +0,56 ; +3 %, DD −47 % | +0,16 / +0,24 ; +15 %, DD −19 % | SL-A 5 : +0,38 / +0,53 ; +49 %, DD −20 % |
+
+  Ce sont des estimations centrales. L'IC 95 % de l'espérance de F3 avec stop contient toujours 0.
+- **R2 hors Q4 n'est pas un pic isolé à H26 une fois stoppé.**
+  - Sans stop, il fait +1 % à H13 et −5 % à H48.
+  - SL-A 1,5 à H13 : +36 %, DD −14 %, Long / Short +0,11 / +0,10 ATR.
+  - SL-A 5 à H48 : +51 %, +0,261 ATR, DD −26 %.
+
+  Réserve : la règle change avec l'horizon, choisie parmi 11. Avec une règle unique, SL-B à l'extremum, R2 hors Q4 reste positif aux trois horizons (+0,076, +0,166, +0,183 ATR), mais aucun IC n'exclut 0.
+- **La lecture « entrées figées » est une règle causale et exécutable.** C'est un cooldown : après un stop, la position reste à plat jusqu'à t + 1 + H, la sortie prévue à l'entrée.
+  - F3 H26, SL-B à l'extremum : +0,236 ATR, +41 %, DD −13 % en cooldown, contre +0,202 ATR et +36 % en réouverture immédiate.
+  - La réouverture reprend des trades débloqués à −0,89 ATR : ceux qui suivent l'échec du breakout.
+
+### 5.3 Assemblage différencié de R2 hors Q4 (vérification, hors protocole de C02bis)
+
+H26, une position à la fois. Chaque signal suit l'enveloppe de sa sous-famille, connue à t. Lecture cooldown.
+
+| Configuration | Frais | Trades | Espérance ATR [IC] | Espérance bps [IC] | Long / Short (ATR) | PnL ; DD valorisé à 0,25 %/ATR | PnL ; DD en 1x | Années > 0 |
+|---|---|---|---|---|---|---|---|---|
+| F2b seul, sans stop | 5 | 639 | +0,389 [+0,079 ; +0,700] | +11,5 [−2,9 ; +26,0] | +0,53 / +0,25 | +72 % ; −13 % | +78 % ; −45 % | 5/6 |
+| R2 hors Q4 uniforme, sans stop | 5 | 1 080 | +0,354 [+0,051 ; +0,643] | +12,3 [−1,5 ; +25,8] | +0,48 / +0,21 | +122 % ; −21 % | +187 % ; −48 % | 5/6 |
+| RE-1 : F2b sans stop, F3 SL-B à l'extremum | 5 | 1 080 | +0,369 [+0,098 ; +0,645] | +12,3 [+0,2 ; +24,4] | +0,46 / +0,27 | +138 % ; −13,5 % | +204 % ; −44 % | 6/6 |
+| RE-2 : F2b sans stop, F3 SL-A 2 ATR | 5 | 1 080 | +0,353 [+0,084 ; +0,625] | +11,7 [−0,4 ; +24,2] | +0,43 / +0,26 | +132 % ; −13,1 % | +185 % ; −42 % | 6/6 |
+| RE-1 | 10 | 1 080 | +0,233 [−0,041 ; +0,511] | +7,3 [−4,8 ; +19,4] | +0,32 / +0,13 | +72 % ; −15,9 % | +77 % ; −48 % | 5/6 |
+
+- **Années de RE-1, en ATR :** 2020 +0,51 ; 2021 +0,02 ; 2022 +0,30 ; 2023 +0,50 ; 2024 +0,33 ; 2025 +0,55.
+- **Réouverture immédiate, 5 bps :** RE-1 fait +0,338 ATR et +133 %.
+- **Le gain de RE-1 porte sur le drawdown, pas sur l'espérance.**
+  - Sur les mêmes entrées, l'effet apparié contre R2 uniforme vaut +0,015 ATR [−0,108 ; +0,141], soit +0,01 bps [−5,6 ; +5,7].
+  - L'amélioration tient au drawdown (−20,5 % → −13,5 %) et à la régularité (6 années positives sur 6).
+  - L'IC en bps n'exclut 0 que de 0,2 bps.
+  - La règle de F3 a été choisie après lecture de C02 : c'est un résultat dans l'échantillon, à confirmer en C02bis (plateau d'horizon, seuils causaux).
+
+### 5.4 Orientations de la revue (à acter dans le cadrage de C02bis)
+
+- **R1, F1, F5 : rejet définitif proposé.** Veto d'entrée si `x1_already_flipped_at_t` est faux, en plus des vetos R3 et `nis_z_100` Q4. Argument de la revue : même un take-profit symétrique ne compense pas le coût des frais en ATR sur F5 (0,135 ATR par trade).
+- **Moteur de régimes :** routage causal de R2 hors Q4. F2b sans stop, F3 stop à l'extremum (ou SL-A 2 ATR).
+- **Réentrée après un stop :** facteur à tester, cooldown jusqu'à t + 1 + H contre réouverture immédiate.
+- **Contrôles demandés :**
+  - plateau d'horizon autour de 26 barres (20, 24, 26, 28, 32 en plus de 13, 26, 48) ;
+  - seuils causaux (contrôle B de C01) ;
+  - frais de 5 et 10 bps ;
+  - capital à 0,25 % par ATR et en 1x.
+- **Hold-out** (BTC 2026, ETH, XRP) scellé jusqu'à la fin de l'Étape D.

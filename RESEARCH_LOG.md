@@ -300,6 +300,18 @@
   - F2b, entré au milieu du range, gagne après des excursions adverses de 1 à 3 ATR : le stop coupe ses gagnants.
   - F3, entré près de l'extrémité opposée, échoue franchement : le stop coupe l'échec.
   - L'avantage de R1 dans B01 était une médiane, pas une espérance.
+- **Relecture (2026-09-29)**, revue indépendante transmise par le porteur. Tous ses chiffres sont recalculés avec le moteur du dépôt et retrouvés à 1 % près (rapport §5).
+  - **F2b, balayage de liquidité.** 53,7 % des trades ont une excursion adverse ≥ 2 ATR. Laissés courir, ils finissent à −1,38 ATR brut, et 25 % finissent positifs. Un stop à 2 ATR coûte 0,62 ATR par trade stoppé.
+  - **F3, breakout invalidé.** Les 50 % de trades qui touchent l'extremum finissent à −2,21 ATR sans stop ; les autres à +2,68.
+  - **F3, Long et Short positifs avec stop aux trois horizons** (estimations centrales). À H26, avec SL-B : +0,17 / +0,24 ATR, contre +0,27 / −0,02 sans stop.
+  - **R2 hors Q4 stoppé n'est pas un pic isolé à H26.** Avec la même règle (SL-B), il fait +0,08, +0,17 et +0,18 ATR à H13, H26 et H48 ; aucun IC n'exclut 0.
+  - **La lecture « entrées figées » est une règle causale de cooldown** (à plat jusqu'à t + 1 + H après un stop). F3 H26 SL-B y fait +0,236 ATR et +41 %, contre +0,202 et +36 % en réouverture.
+  - **F5 :** 5 bps coûtent 0,135 ATR par trade. Des barrières symétriques de ±1 à ±2 ATR laissent l'espérance nette entre −0,07 et −0,02 ATR (niveau signal).
+  - **Assemblage R2 hors Q4 H26, F2b sans stop + F3 SL-B** (vérification, hors protocole) :
+    - 5 bps : +0,369 ATR [+0,098 ; +0,645], +12,3 bps [+0,2 ; +24,4], +138 %, drawdown −13,5 %, 6 années positives sur 6 ;
+    - 10 bps : +0,233 ATR [−0,041 ; +0,511], +72 %, 5 années sur 6.
+
+    Le gain sur R2 uniforme porte sur le drawdown (−20,5 % → −13,5 %), pas sur l'espérance : effet apparié +0,015 ATR [−0,108 ; +0,141]. Règle choisie dans l'échantillon, à confirmer en C02bis.
 
 #### 5. Décision
 - [ ] **REJETÉ**
@@ -309,5 +321,11 @@
   - F3 · x1 déjà retourné hors Q4 : SL-B à l'extremum ou SL-A 2 ATR, à H26 ;
   - R2 hors Q4, traité comme un bloc : sans objet ;
   - R1, F1, F5 : non concluant à rejeté (aucune espérance positive avec stop ; tout négatif à 10 bps).
+- **Orientations de la relecture, à acter dans le cadrage de C02bis :**
+  - rejet définitif de R1, F1 et F5 (veto d'entrée si x1 n'est pas retourné, en plus de R3 et `nis_z_100` Q4) ;
+  - routage causal de R2 hors Q4 : F2b sans stop, F3 stop à l'extremum ;
+  - réentrée après un stop comme facteur (cooldown jusqu'à t + 1 + H contre réouverture) ;
+  - plateau d'horizon autour de 26 barres et seuils causaux ;
+  - frais de 5 et 10 bps ; hold-out scellé jusqu'à la fin de l'Étape D.
 
-  Points à trancher avant C02bis : place de R1 dans le moteur de régimes, stop de catastrophe pour F2b, règle de réentrée après un stop, frais canoniques, hold-out. C02bis n'est pas lancé.
+  C02bis n'est pas lancé.
