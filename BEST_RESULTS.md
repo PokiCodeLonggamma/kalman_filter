@@ -115,6 +115,18 @@ Le take-profit fixe est exclu : même sa borne optimiste reste sous RE-1 (+0,200
 - **Il ne résiste pas à l'exécution.** Dès 5 bps de glissement du break-even, le Calmar tombe à 1,10, sous les 1,16 de RE-1 ; à MDD égal, V3 fait −0,8 point par an face à RE-1 réduit.
 - **2022 tient à deux trades.** Son déficit (−0,184 ATR) vient de deux gagnants F3 extrêmes coupés (+18,6 et +14,3 ATR dans RE-1) ; sans eux, l'année fait +0,006.
 
+### EXP-C04 — filtre de tendance macro sur RE-1 (5 bps, H26)
+1. **Les trades contre-tendance de RE-1 ne sont pas toxiques.** Ils valent +0,389 (EMA 200), +0,398 (EMA 50) et +0,426 ATR (Kalman 4 h), contre +0,32 à +0,35 pour les alignés. Aucun écart n'est significatif, et tous vont en faveur des contre-tendance.
+2. **Ils portent les grands retournements.**
+   - Selon la tendance, 33 à 48 % du décile supérieur de RE-1 est contre-tendance, dont 9 des 20 meilleurs trades pour le Kalman 4 h.
+   - F2b contre-tendance est le meilleur groupe (+0,52 à +0,58). Les Long contre la tendance 4 h font +0,64 ATR [+0,17 ; +1,08].
+3. **Le veto dégrade tout.**
+   - Espérance +0,369 → +0,22 à +0,26 ; PnL +138 % → +38 à +55 % ; Calmar 1,16 → 0,41 à 0,49.
+   - Même constat à 10 bps et à H24, H26 et H28.
+   - En séquentiel, les signaux ajoutés dans la fenêtre d'un trade vétoé perdent (−0,48 ATR pour l'EMA 200). **RE-1 reste pur.**
+
+L'Étape C a testé ses quatre facteurs : horizon, stop par sous-famille, break-even, filtre macro. RE-1, en tête de fichier, est la stratégie cœur.
+
 ---
 
 ## Pistes écartées (à ne pas retester sans élément nouveau)
@@ -133,3 +145,4 @@ Le take-profit fixe est exclu : même sa borne optimiste reste sous RE-1 (+0,200
 | Break-even différé sur RE-1, m ≤ 1,5 ATR | ampute la queue droite ; effet apparié jusqu'à −0,157 ATR par trade ; significatif pour F2b à H24 et H28 | C03 |
 | Break-even différé sur RE-1, m ≥ 2 ATR | effet apparié de −0,02 à +0,03 ATR par trade ; baisse du drawdown non significative ; non retenu (KISS) | C03 |
 | Break-even comme variante de gestion du risque (V3 ou V2, m = 2) | gain de MDD non démontré (82 à 92 % des chemins), Calmar fragile, drawdowns plus longs ; à MDD égal, équivaut à réduire la taille ; perdu dès 5 bps de glissement du break-even | C03, analyse approfondie |
+| Veto des signaux contre la tendance (EMA 200, EMA 50, Kalman v2.1 sur 4 h) | les trades contre-tendance valent autant ou plus que les alignés (+0,39 à +0,43 ATR) et portent jusqu'à 48 % du décile supérieur ; espérance +0,369 → +0,22 à +0,26 ; Calmar 1,16 → 0,41 à 0,49 ; pire à 10 bps et sur tout le plateau | C04 |

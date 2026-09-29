@@ -265,6 +265,13 @@ L'atlas A01 soutient cette lecture à travers le ratio de retracement `retrace_r
       Les signaux de même sens évincés ne perdaient pas (F3 +0,71 ; F2b −0,01). Dans le moteur, F2b passe de +0,389 à +0,459 ATR, et F3 de +0,236 à +0,267 avec stop (+0,144 → +0,235 sans stop). H26, 5 bps.
     - `[HYP]` Le contre-signal de l'autre sous-famille tombe pendant l'expansion du breakout en cours et se trompe de sens. Une position à la fois le filtre sans règle supplémentaire.
     - **Décision du porteur (2026-09-29) :** RE-1 validé comme configuration de référence de l'Étape C. H = 26 est commun aux deux sous-familles et verrouillé. Le take-profit fixe est exclu.
+    - `[OBS]` **Filtre de tendance macro (EXP-C04) : les trades contre-tendance ne sont pas toxiques.**
+      - Les trades de RE-1 contre la tendance, qu'elle soit mesurée par l'EMA 200, l'EMA 50 ou x1 d'un Kalman sur 4 h, valent autant que les alignés, voire plus : +0,39 à +0,43 ATR, contre +0,32 à +0,35.
+      - Ils portent jusqu'à 48 % du décile supérieur et 9 des 20 meilleurs trades.
+      - F2b contre-tendance est le meilleur groupe (+0,52 à +0,58). Les Long contre la tendance 4 h font +0,64.
+      - Le veto dégrade l'espérance (+0,369 → +0,22 à +0,26) et le Calmar (1,16 → 0,41 à 0,49). RE-1 reste pur.
+    - `[OBS]` **Les signaux qui tombent pendant la fenêtre d'un signal précédent perdent**, que ce signal ait été pris ou non : −0,48 ATR après un veto EMA 200. C'est le même phénomène que les réouvertures après stop de C02bis.
+    - `[HYP]` Le retournement de x1 dans R2 hors Q4 anticipe déjà le changement de régime. Une tendance plus lente n'arrive qu'après, et le veto retire les V de la queue droite.
     - `[OBS]` **Break-even différé (EXP-C03) : aucun seuil n'améliore l'espérance de RE-1.**
       - m ≤ 1,5 ATR la dégrade, surtout sur F2b ; m ≥ 2 est neutre (−0,02 à +0,03 ATR, IC ±0,1).
       - Sauvés et coupés s'équilibrent : pour V3 à m = 2, +0,270 contre −0,288 ATR par trade.
@@ -312,9 +319,10 @@ L'atlas A01 soutient cette lecture à travers le ratio de retracement `retrace_r
 
 1. ~~R1 : un stop serré à l'extremum du segment améliore-t-il la distribution, ou coupe-t-il surtout des trajectoires qui auraient fini dans le sens du signal ?~~ **Répondu (EXP-C02)** : il coupe surtout des trajectoires qui auraient fini dans le sens du signal ; aucune espérance positive.
 2. ~~R2 : combien de temps laisser courir, et avec quel stop ?~~ **Répondu (EXP-C01 à C02bis)** : H26, avec un plateau de H20 à H32 ; F2b sans stop, F3 stop à l'extremum. H = 26 est verrouillé par le porteur.
-3. R2 : le sens favorable de F3 (Short) et de F2b (Long) dépend-il de la tendance de l'unité de temps supérieure ? *(caractérisation)* Avec un stop à l'extremum, F3 devient positif des deux côtés (estimations centrales, IC contenant 0). `[HYP]` Son asymétrie tiendrait en partie à ses échecs non coupés.
+3. ~~R2 : le sens favorable de F3 (Short) et de F2b (Long) dépend-il de la tendance de l'unité de temps supérieure ?~~ **Répondu (EXP-C04)** : non. Dans RE-1, les trades contre la tendance (EMA 200, EMA 50, Kalman 4 h) valent autant que les alignés, voire plus. Avec un stop à l'extremum, F3 est positif des deux côtés (C02).
 4. ~~R3 et `nis_z_100` Q4 : faut-il seulement les exclure, ou les prendre en continuation ?~~ **Tranché par le porteur (EXP-C01)** : exclusion seulement.
 5. ~~Après un stop, faut-il un cooldown jusqu'à t + 1 + H ou une réouverture immédiate ?~~ **Répondu (EXP-C02bis)** : le cooldown, jusqu'à H32 ; à H48, l'écart s'inverse.
 6. L'assemblage différencié de R2 tient-il avec des seuils causaux, puis hors échantillon ? **En partie répondu (EXP-C02bis)** : il tient avec des seuils causaux, en ATR. Hors échantillon : Étape D.
 7. ~~Faut-il un horizon propre à chaque sous-famille ?~~ **Tranché par le porteur (2026-09-29)** : non, H = 26 est commun. À H28, F2b monte à +0,569 ATR, mais F3 tombe à +0,148, le DD passe à −16,2 % et le Calmar à 0,92. Ce serait un paramètre libre choisi après lecture.
 8. ~~Un break-even ou un take-profit améliore-t-il RE-1 ?~~ **Répondu (EXP-C03 et son analyse approfondie)** : non. Le break-even est neutre pour m ≥ 2 et nuisible en dessous. Comme outil de risque, il équivaut à une réduction de taille et ne résiste pas à 5 bps de glissement. Même la borne optimiste du take-profit reste sous RE-1.
+9. ~~Un filtre de tendance macro améliore-t-il RE-1 ?~~ **Répondu (EXP-C04)** : non. Les trades contre-tendance ne sont pas toxiques, et le veto retire des V de la queue droite. En séquentiel, il fait en plus entrer des signaux perdants.

@@ -602,3 +602,98 @@
 - [ ] **À POURSUIVRE**
 
   À ne pas retester sans élément nouveau : le break-even à l'entrée, et un m choisi a posteriori pour le risque.
+- **Décision du porteur (2026-09-29, cadrage de C04) :** C03 est close et le break-even définitivement rejeté. RE-1 reste le baseline absolu. Les 4 commits sont poussés (origin = 47a3262).
+
+### [EXP-C04] — Filtre de contexte macro : tendance et alignement
+- **Date :** 2026-09-29
+- **Étape :** C Enveloppe. Dernier facteur prévu, testé en OFAT sur RE-1.
+- **Actif & Période :** BTC/USD Bitstamp 30m, 2020-01 → 2025-12 ; 2026, ETH et XRP non lus.
+- **Modèle de frais :** 5 et 10 bps, séparés. Capital à 0,25 % par ATR14(t), 1x en référence.
+- **Livrables :**
+  - code, en commit séparé (eb8949f) : `src/context/trend.py` et 5 tests (200 réussis) ;
+  - `experiments/C04/rapport_C04.md`, `resultats_C04.csv` (42 lignes), `annuel_C04.csv`, `controles_C04.json`, 4 figures.
+
+#### 0. Cadrage obligatoire
+- **QUESTION :** un signal de RE-1 (F2b ou F3) a-t-il une espérance asymétrique selon qu'il est aligné ou opposé à la tendance de fond ? Un veto contre-tendance retire-t-il du bruit toxique, ou les grands retournements ?
+- **PERTINENCE POUR LE FILTRE AKF :** le déclencheur est un retournement de vitesse du Kalman. Une tendance plus lente pourrait séparer les vrais retournements des contre-mouvements. C'est le dernier point à trancher avant de figer la stratégie cœur.
+- **CE QUE LE PROTOCOLE MESURE RÉELLEMENT :**
+  - l'espérance des trades alignés et contre-tendance, et leur écart, avec IC sur les mêmes tirages ;
+  - la part de la queue droite concernée ;
+  - les 8 métriques en lecture séquentielle et figée ;
+  - la décomposition en trades vétoés, perdus et ajoutés ;
+  - le risque de chemin, la taille, le plateau, les années et l'asymétrie F2b / F3.
+- **CE QU'IL NE PERMET PAS DE CONCLURE :**
+  - une validation hors échantillon ;
+  - l'effet de tendances à d'autres échelles ou de filtres non directionnels ;
+  - un réglage des paramètres de tendance, exclu.
+
+#### 1. Hypothèse & Motivation physique
+- Un retournement de vitesse aligné sur la tendance lente serait plus fiable. Un signal contre-tendance serait un contre-mouvement voué à l'échec.
+
+#### 2. Règle testée (OFAT)
+- **Entrée :** celle de RE-1, avec un veto directionnel.
+  - Un Long n'est autorisé que si la tendance est haussière, un Short que si elle est baissière.
+  - Tendance à la clôture de la barre du signal :
+    - V1 : close > EMA 200 ;
+    - V2 : close > EMA 50 ;
+    - V3 : signe de x1 du filtre v2.1 sur des bougies 4 h closes, valide après 300 bougies.
+  - R0 = 1 000 sur 30 min a été écarté à la conception : ses régimes ne durent que 19 barres, contre 11 pour le filtre de base.
+- **Sortie :** celle de RE-1, inchangée.
+- **Contrôle :** RE-1, identique à C02bis trade par trade.
+- **Règle de décision fixée avant le calcul :**
+  - rejet si le filtre retire au moins proportionnellement le décile supérieur (R1), si l'espérance baisse (R2), ou s'il ne bat pas un RE-1 réduit en taille (R3) ;
+  - adoption si, à la fois : le bruit contre-tendance est significativement négatif (A1), la variante tient à 10 bps (A2), le Calmar est robuste et démontré (A3), et l'IC reste > 0 (A4).
+
+#### 3. Résultats nets (H26, 5 bps, lecture séquentielle ; PnL et drawdown à 0,25 % par ATR)
+| Métrique | RE-1 | V1 : EMA 200 | V2 : EMA 50 | V3 : Kalman 4 h |
+|---|---|---|---|---|
+| PnL Net Total (1x ; bps) | +138 % (+204 % ; +13 320) | +46 % (+45 % ; +5 196) | +55 % (+16 % ; +3 094) | +38 % (+59 % ; +6 311) |
+| Profit Factor (1x) | 1,20 | 1,12 | 1,06 | 1,14 |
+| Win Rate | 44,3 % | 40,9 % | 41,3 % | 42,5 % |
+| Espérance ATR [IC] ; bps | +0,369 [+0,098 ; +0,645] ; +12,3 | +0,216 [−0,099 ; +0,548] ; +7,5 | +0,260 [−0,036 ; +0,590] ; +4,0 | +0,237 [−0,045 ; +0,533] ; +9,5 |
+| Max Drawdown ; Calmar | −13,5 % ; 1,16 | −13,3 % ; 0,49 | −17,1 % ; 0,44 | −13,6 % ; 0,41 |
+| Nombre de trades | 1 080 (15,0/mois) | 696 (9,7/mois) | 774 (10,8/mois) | 663 (9,2/mois) |
+| Durée médiane | 26 | 26 | 26 | 26 |
+| Part des frais (1x) | 29 % | 40 % | 56 % | 34 % |
+
+À 10 bps :
+
+| 10 bps | RE-1 | V1 | V2 | V3 |
+|---|---|---|---|---|
+| Espérance ATR | +0,233 | +0,078 | +0,119 | +0,095 |
+| PnL | +72 % | +18 % | +22 % | +13 % |
+| Calmar | 0,60 | 0,17 | 0,19 | 0,13 |
+
+#### 4. Analyse causale & Physique du trade
+- [CODE] **Contrôles bloquants passés :** ancre P6.5d ; RE-1 = C02bis ; décomposition refermée. Tendances causales : bougie 4 h lue seulement une fois close, tests de troncature.
+- [OBS] **Les trades contre-tendance ne sont pas toxiques.**
+  - Espérance des trades contre-tendance, contre alignés :
+    - V1 : +0,389 contre +0,352 ;
+    - V2 : +0,398 contre +0,353 ;
+    - V3 : +0,426 contre +0,317.
+  - Aucun écart n'est significatif, et tous vont en faveur des contre-tendance.
+- [OBS] **Ils portent les grands retournements.**
+  - V3 retire 48 % du décile supérieur et 9 des 20 meilleurs trades.
+  - Les Long contre la tendance 4 h font +0,640 ATR [+0,171 ; +1,083].
+- [OBS] **F2b / F3.**
+  - F2b contre-tendance est le meilleur groupe : +0,52 (V1), +0,58 (V3).
+  - Pour F3, contre-tendance et aligné se valent. Le filtre prive surtout F2b de ses meilleurs trades.
+- [OBS] **En séquentiel, la position libérée prend des signaux perdants.** Ce sont les signaux qui tombent pendant la fenêtre d'un trade vétoé : −0,48 (V1), −0,38 (V2), −0,05 ATR (V3).
+- [OBS] **Risque, taille, plateau, années.**
+  - Calmar meilleur dans 5 à 8 % des chemins seulement.
+  - À MDD égal, face à RE-1 réduit : −8,9 à −10,8 points par an.
+  - Moins bon que RE-1 à H24, H26 et H28.
+  - V1 et V3 font passer 2022 en négatif.
+- [HYP] **Le retournement de x1 anticipe déjà le changement de régime.** La tendance lente arrive après, et le veto interdit précisément les trades où le Kalman voit le tournant avant elle.
+- [HYP] **Un signal consommé doit bloquer sa fenêtre**, même s'il n'est pas pris : c'est le même phénomène que le cooldown de C02bis.
+
+#### 5. Décision
+- [x] **REJETÉ pour V1, V2 et V3.**
+  - Aucun bruit contre-tendance à éliminer (A1 non satisfait).
+  - L'espérance est dégradée (R2) et le filtre ne fait pas mieux qu'une réduction de taille (R3).
+  - V3 retire en plus au moins sa part de la queue droite (R1).
+  - **RE-1 reste pur.**
+- [ ] **NON CONCLUANT**
+- [ ] **À POURSUIVRE**
+
+  L'Étape C a testé ses quatre facteurs : horizon, stop par sous-famille, break-even, filtre macro. RE-1 est la stratégie cœur. Le porteur annonce C05 (sensibilité), puis l'Étape D (portabilité multi-actifs).
