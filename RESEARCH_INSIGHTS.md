@@ -210,7 +210,7 @@ L'atlas A01 soutient cette lecture à travers le ratio de retracement `retrace_r
   - `[OBS]` Le stop coupe la queue gauche mais détruit la médiane. R1 H26, stop à l'extremum : P10 −4,7 → −1,6 ATR, médiane +0,09 → −0,81 ATR. Une partie des trajectoires coupées aurait fini dans le sens du signal.
   - `[OBS]` Aucune règle (SL-A de 1 à 5 ATR, SL-B) ne donne d'espérance positive. À 10 bps, tout est négatif.
   - `[OBS]` F5 : positif en bps à court terme, négatif en ATR. 5 bps y coûtent 0,135 ATR par trade.
-  - Relecture du porteur : rejet définitif proposé, avec un veto d'entrée si x1 n'est pas retourné. À acter dans le cadrage de C02bis.
+  - **Décision du porteur (2026-09-29) :** rejet définitif de R1, F1 et F5. `x1_already_flipped_at_t` vrai est un prérequis d'entrée du système, avec les vetos R3 et `nis_z_100` Q4.
 
 ### R2 — Sortie de range avec bascule de vitesse : F2b ou F3, x1 déjà retourné
 *1 874 signaux, 25,7 %.*
@@ -236,7 +236,11 @@ L'atlas A01 soutient cette lecture à travers le ratio de retracement `retrace_r
   - `[OBS]` **F3 · x1 déjà retourné, stop à l'extremum du segment.**
     - À H26 : drawdown −34 % → −13 %, 6 années positives sur 6, Long et Short positifs.
     - Sans stop, les trades qui touchent l'extremum finissent à −2,2 ATR.
-  - `[OBS]` **Assemblage à H26** (F2b sans stop, F3 stop à l'extremum) : +0,369 ATR [+0,098 ; +0,645], +138 %, drawdown −13,5 %, 6 années sur 6. Le gain sur R2 uniforme porte sur le drawdown, pas sur l'espérance.
+  - `[OBS]` **Moteur de régimes (EXP-C02bis)** : F2b sans stop, F3 stop à l'extremum, cooldown après stop, H26.
+    - +0,369 ATR [+0,098 ; +0,645], +138 %, drawdown −13,5 %, Calmar 1,16, 6 années positives sur 6.
+    - Même espérance que R2 uniforme : effet apparié +0,015 ATR [−0,108 ; +0,141]. Le gain porte sur le risque.
+    - Plateau : IC > 0 de H20 à H32. Le résultat tient avec des seuils causaux (en ATR).
+    - Le cooldown fait mieux que la réouverture jusqu'à H32. Un stop de catastrophe sur F2b coûte 0,08 ATR par trade.
   - `[HYP]` Le point d'entrée dans le range décide.
     - F2b entre au milieu : un repli de 1 à 3 ATR est un balayage de liquidité avant l'expansion.
     - F3 entre près de l'extrémité opposée : casser l'extremum invalide le breakout.
@@ -273,5 +277,6 @@ L'atlas A01 soutient cette lecture à travers le ratio de retracement `retrace_r
 2. R2 : combien de temps laisser courir, et avec quel stop ? **En partie répondu (EXP-C01, EXP-C02)** : H26 ; F2b sans stop, F3 stop à l'extremum. Reste à vérifier le plateau d'horizon autour de 26 barres *(C02bis)*.
 3. R2 : le sens favorable de F3 (Short) et de F2b (Long) dépend-il de la tendance de l'unité de temps supérieure ? *(caractérisation)* Avec un stop à l'extremum, F3 devient positif des deux côtés (estimations centrales, IC contenant 0). `[HYP]` Son asymétrie tiendrait en partie à ses échecs non coupés.
 4. ~~R3 et `nis_z_100` Q4 : faut-il seulement les exclure, ou les prendre en continuation ?~~ **Tranché par le porteur (EXP-C01)** : exclusion seulement.
-5. Après un stop, faut-il un cooldown jusqu'à t + 1 + H ou une réouverture immédiate ? *(C02bis)*
-6. L'assemblage différencié de R2 tient-il avec des seuils causaux, puis hors échantillon ? *(C02bis, puis Étape D)*
+5. ~~Après un stop, faut-il un cooldown jusqu'à t + 1 + H ou une réouverture immédiate ?~~ **Répondu (EXP-C02bis)** : le cooldown, jusqu'à H32 ; à H48, l'écart s'inverse.
+6. L'assemblage différencié de R2 tient-il avec des seuils causaux, puis hors échantillon ? **En partie répondu (EXP-C02bis)** : il tient avec des seuils causaux, en ATR. Hors échantillon : Étape D.
+7. Faut-il un horizon propre à chaque sous-famille ? F2b seul culmine à H28. *(à cadrer)*

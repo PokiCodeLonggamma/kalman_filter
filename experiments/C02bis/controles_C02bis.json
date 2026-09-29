@@ -1,0 +1,73 @@
+{
+ "ancre": {
+  "sans_stop": {
+   "n_trades": 6037,
+   "n_stops": 0
+  },
+  "stop_2_5": {
+   "n_trades": 6589,
+   "n_stops": 780
+  }
+ },
+ "accord": [
+  {
+   "variante": "échantillon entier, après 500",
+   "sous_ensemble": "R2",
+   "n_signaux": 1348,
+   "accord": 1.0
+  },
+  {
+   "variante": "échantillon entier, après 500",
+   "sous_ensemble": "F2b",
+   "n_signaux": 679,
+   "accord": 1.0
+  },
+  {
+   "variante": "échantillon entier, après 500",
+   "sous_ensemble": "F3",
+   "n_signaux": 669,
+   "accord": 1.0
+  },
+  {
+   "variante": "glissante 500 signaux",
+   "sous_ensemble": "R2",
+   "n_signaux": 1347,
+   "accord": 0.9863154796939376
+  },
+  {
+   "variante": "glissante 500 signaux",
+   "sous_ensemble": "F2b",
+   "n_signaux": 678,
+   "accord": 0.9916127133608005
+  },
+  {
+   "variante": "glissante 500 signaux",
+   "sous_ensemble": "F3",
+   "n_signaux": 669,
+   "accord": 0.9947027663331371
+  },
+  {
+   "variante": "expansive",
+   "sous_ensemble": "R2",
+   "n_signaux": 1299,
+   "accord": 0.9916127133608005
+  },
+  {
+   "variante": "expansive",
+   "sous_ensemble": "F2b",
+   "n_signaux": 646,
+   "accord": 0.9939670394349618
+  },
+  {
+   "variante": "expansive",
+   "sous_ensemble": "F3",
+   "n_signaux": 653,
+   "accord": 0.9976456739258387
+  }
+ ],
+ "c02": {
+  "lignes_comparees": 36,
+  "ecart_relatif_max": 4.494381145085929e-06
+ },
+ "duree_s": 102
+}

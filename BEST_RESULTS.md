@@ -13,10 +13,10 @@
 
 ---
 
-## Configuration candidate du moment
-*Issue de la relecture de C02 (rapport C02 §5.3) et vérifiée avec le moteur du dépôt. Elle reste à confirmer en EXP-C02bis : plateau d'horizon, seuils causaux, règle de réentrée.*
+## Configuration de référence du moteur (EXP-C02bis, RE-1)
+*Mesurée formellement en EXP-C02bis. Plateau d'horizon, seuils causaux et règle de réentrée sont vérifiés ; aucune validation hors échantillon.*
 
-- **Signaux :** R2 hors `nis_z_100` Q4.
+- **Signaux :** R2 hors `nis_z_100` Q4 (vetos d'entrée : x1 non retourné, R3, `nis_z_100` Q4).
 - **Sortie :** à H26, avec une enveloppe par sous-famille, connue à t :
   - F2b · x1 déjà retourné (retracement de 0,50 à 0,85) : sans stop ;
   - F3 · x1 déjà retourné (retracement ≥ 0,85) : stop à l'extremum du segment qualifiant.
@@ -34,11 +34,14 @@
 | Durée médiane | 26 barres (13 h) | idem |
 | Part des frais (1x) ; brut par trade | 29 % ; +17,3 bps | 58 % ; +17,3 bps |
 | Années positives | 6 sur 6 | 5 sur 6 (2021) |
+| Calmar (PnL annualisé / drawdown, 0,25 %/ATR) | 1,16 (+15,6 % par an) | 0,60 (+9,5 % par an) |
 
 **À garder en tête :**
-- Face à R2 hors Q4 sans stop, sur les mêmes entrées, l'espérance ne change pas : effet apparié +0,015 ATR [−0,108 ; +0,141]. Le gain porte sur le drawdown (−20,5 % → −13,5 %) et la régularité.
-- La règle de F3 a été choisie après lecture de C02.
-- À 10 bps, l'IC contient 0.
+- **Même espérance que R2 hors Q4 sans stop.** Sur les mêmes entrées, l'effet apparié vaut +0,015 ATR [−0,108 ; +0,141]. Le moteur gère le risque : drawdown −20,5 % → −13,5 %, Calmar 0,69 → 1,16, 2024 à +15 % au lieu de −3 %.
+- **Plateau :** l'IC en ATR est positif de H20 à H32 ; le PnL passe de +65 % (H20) à +138 % (H26) puis +89 % (H32). À H13 et H48, pas d'avantage.
+- **Seuils causaux :** +0,34 à +0,37 ATR avec IC > 0, 6 années sur 6, drawdown de −12 à −14 %.
+- **IC en bps fragile :** il ne reste positif qu'avec janvier-mai 2020.
+- La règle de F3 a été choisie après lecture de C02. À 10 bps, l'IC contient 0.
 
 ---
 
@@ -84,7 +87,12 @@
 2. **F2b : aucun stop.** Chaque stop coûte 0,15 à 0,38 ATR par trade ; l'effet apparié est négatif pour 10 règles sur 11. La moitié des trades passent par −2 ATR avant l'expansion.
 3. **R2 hors Q4, H26, SL-A 5 ATR.** C'est la seule configuration avec stop dont l'IC en ATR est positif : +0,286 [+0,019 ; +0,562], +93 %, drawdown −18 %.
 
-La relecture de C02 assemble 1 et 2 : c'est la configuration candidate du moment (en tête de fichier).
+La relecture de C02 assemble 1 et 2 ; EXP-C02bis en fait la configuration de référence (en tête de fichier).
+
+### EXP-C02bis — moteur de régimes (5 bps, séquentiel global, une position à la fois)
+1. **RE-1 en cooldown, H26** (F2b sans stop, F3 stop à l'extremum) : +0,369 ATR [+0,098 ; +0,645], +138 %, drawdown −13,5 %, Calmar 1,16, 6 années positives sur 6. Le détail est en tête de fichier.
+2. **Plateau d'horizon.** L'IC en ATR de RE-1 est positif de H20 à H32 (+0,21 à +0,37 ATR). Entre H24 et H28, l'espérance varie de moins de 0,05 ATR et le PnL va de +112 à +138 %.
+3. **Tenue avec des seuils causaux** (glissants ou expansifs) : +0,34 à +0,37 ATR avec IC > 0, +103 à +118 %, drawdown −12 à −14 %, 6 années sur 6.
 
 ---
 
@@ -95,5 +103,7 @@ La relecture de C02 assemble 1 et 2 : c'est la configuration candidate du moment
 | Stop-and-reverse natif | −98,7 % ; frais ≈ 30 200 bps pour un brut de −2 047 bps | Phase 0 |
 | Tous les signaux à horizon fixe | −3,7 à −16,0 bps par trade de H6 à H48 | C01 |
 | Entrée en continuation (R3, `nis_z_100` Q4) | +10,3 bps [+1,3 ; +19,8] à H26 seulement, porté par 2020-2021 ; écartée par le porteur | C01 |
-| R1, F1, F5 (x1 encore opposé) | aucune espérance nette positive, avec ou sans stop ; les frais coûtent 0,135 ATR par trade sur F5 ; rejet définitif proposé par la relecture | C02 |
+| R1, F1, F5 (x1 encore opposé) | aucune espérance nette positive, avec ou sans stop ; les frais coûtent 0,135 ATR par trade sur F5 ; rejet définitif (décision du porteur) : x1 retourné est un prérequis d'entrée | C02 |
 | Stop sur F2b | coupe les gagnants : −0,15 à −0,38 ATR par trade | C02 |
+| Stop de catastrophe à 5 ATR sur F2b dans le moteur (RE-3) | −0,08 ATR par trade, drawdown plus élevé, Calmar 0,77 contre 1,16 | C02bis |
+| Réouverture immédiate après un stop (H ≤ 32) | les trades débloqués font −0,15 à −1,38 ATR ; le cooldown fait mieux | C02bis |

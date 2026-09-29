@@ -321,11 +321,93 @@
   - F3 · x1 déjà retourné hors Q4 : SL-B à l'extremum ou SL-A 2 ATR, à H26 ;
   - R2 hors Q4, traité comme un bloc : sans objet ;
   - R1, F1, F5 : non concluant à rejeté (aucune espérance positive avec stop ; tout négatif à 10 bps).
-- **Orientations de la relecture, à acter dans le cadrage de C02bis :**
-  - rejet définitif de R1, F1 et F5 (veto d'entrée si x1 n'est pas retourné, en plus de R3 et `nis_z_100` Q4) ;
-  - routage causal de R2 hors Q4 : F2b sans stop, F3 stop à l'extremum ;
+- **Décisions du porteur (2026-09-29, cadrage de C02bis) :**
+  - rejet définitif de R1, F1 et F5 ; `x1_already_flipped_at_t` vrai devient un prérequis d'entrée, avec les vetos R3 et `nis_z_100` Q4 ;
+  - routage causal de R2 hors Q4 : F2b sans stop, F3 avec son propre stop ;
   - réentrée après un stop comme facteur (cooldown jusqu'à t + 1 + H contre réouverture) ;
   - plateau d'horizon autour de 26 barres et seuils causaux ;
   - frais de 5 et 10 bps ; hold-out scellé jusqu'à la fin de l'Étape D.
 
-  C02bis n'est pas lancé.
+### [EXP-C02bis] — Moteur de régimes sur R2 hors Q4 : une enveloppe par sous-famille
+- **Date :** 2026-09-29
+- **Étape :** C Enveloppe (assemblage après C02)
+- **Actif & Période :** BTC/USD Bitstamp 30m, 2020-01 → 2025-12 (72 mois) ; 2026, ETH et XRP non lus
+- **Modèle de frais :** 5 et 10 bps aller-retour. Capital à 0,25 % par ATR14(t), levier ≤ 1x ; 1x en référence.
+- **Livrables :**
+  - `experiments/C02bis/rapport_C02bis.md`, `resultats_C02bis.csv` (284 lignes), `annuel_C02bis.csv`, `controles_C02bis.json`, 4 figures ;
+  - `rule_levels`, `route_levels` et niveaux NaN (sans stop) dans `src/envelope/stops.py` ;
+  - 2 tests nouveaux.
+
+#### 0. Cadrage obligatoire
+- **QUESTION :** en séquentiel global (une position à la fois), le moteur de régimes différencié forme-t-il un assemblage causal cohérent ? Il route F2b vers une sortie à H sans stop et F3 vers un stop propre, avec cooldown après stop.
+  - Fait-il mieux que F2b seul et que R2 uniforme ?
+  - H = 26 est-il un plateau ?
+  - Le cooldown fait-il mieux que la réouverture ?
+  - Que coûte un stop de catastrophe sur F2b ?
+  - Tient-il avec des seuils causaux ?
+- **PERTINENCE POUR LE FILTRE AKF :** `retrace_ratio`, connu à t, sépare F2b et F3, qui répondent en sens contraire au stop (C02).
+- **CE QUE LE PROTOCOLE MESURE RÉELLEMENT :**
+  - les 8 métriques nettes, les IC 95 % en bps et en ATR, le Long / Short, la contribution par sous-famille, les années et le Calmar ;
+  - l'effet apparié face à R2 uniforme sur les mêmes entrées ;
+  - l'écart entre cooldown et réouverture, et les masques recalculés avec des seuils causaux.
+- **CE QU'IL NE PERMET PAS DE CONCLURE :**
+  - une validation hors échantillon : les règles de F2b et F3 ont été choisies après C02 ;
+  - un plateau au sens de l'Étape D ;
+  - l'effet d'un take-profit, d'un break-even ou d'un filtre macro ;
+  - un H propre à chaque sous-famille.
+
+#### 1. Hypothèse & Motivation physique
+- Router F2b et F3 selon leur réponse au stop doit garder la queue droite de F2b et couper les échecs de breakout de F3. Le cooldown doit éviter de reprendre le signal suivant dans une structure qui vient d'échouer.
+
+#### 2. Règle testée (OFAT)
+- **Entrée :** signaux de R2 hors `nis_z_100` Q4 (vetos : x1 non retourné, R3, Q4), une position à la fois pour tout le moteur.
+- **Sortie :** open[t + 1 + H], H ∈ {13, 20, 24, 26, 28, 32, 48}. Stop par sous-famille :
+  - RE-1 : F2b sans stop, F3 SL-B à l'extremum ;
+  - RE-2 : F2b sans stop, F3 SL-A 2 ATR ;
+  - RE-3 : F2b SL-A 5 ATR, F3 SL-B.
+
+  Après un stop, cooldown ou réouverture. RE-4 : C1, C2, RE-1 et RE-2 avec des seuils causaux.
+- **Contrôles :** C1 = F2b seul sans stop ; C2 = R2 hors Q4 uniforme sans stop. Tous deux sont identiques à C02 ; le moteur avec la même règle partout redonne la règle uniforme de C02 (36 lignes identiques).
+
+#### 3. Résultats nets (H26, 5 bps, lecture cooldown ; PnL et drawdown à 0,25 % par ATR)
+| Métrique | C1 : F2b seul | C2 : R2 uniforme | RE-1 | RE-2 | RE-3 |
+|---|---|---|---|---|---|
+| PnL Net Total | +72 % | +122 % | +138 % (1x +204 %) | +132 % | +96 % |
+| Profit Factor : 1x ; pondéré | 1,17 ; 1,28 | 1,18 ; 1,23 | 1,20 ; 1,28 | 1,19 ; 1,27 | 1,16 ; 1,22 |
+| Win Rate | 49,6 % | 49,4 % | 44,3 % | 43,9 % | 43,6 % |
+| Espérance ATR [IC] | +0,389 [+0,079 ; +0,700] | +0,354 [+0,051 ; +0,643] | +0,369 [+0,098 ; +0,645] | +0,353 [+0,084 ; +0,625] | +0,288 [+0,045 ; +0,545] |
+| Espérance bps [IC] | +11,5 [−2,9 ; +26,0] | +12,3 [−1,5 ; +25,8] | +12,3 [+0,2 ; +24,4] | +11,7 [−0,4 ; +24,2] | +10,1 [−1,3 ; +22,1] |
+| Espérance ATR à 10 bps | +0,255 | +0,218 | +0,233 [−0,041 ; +0,511] | +0,217 | +0,153 |
+| Max Drawdown valorisé ; Calmar | −13,2 % ; 0,72 | −20,5 % ; 0,69 | −13,5 % ; 1,16 | −13,1 % ; 1,14 | −15,4 % ; 0,77 |
+| Nombre de trades | 639 (8,9/mois) | 1 080 (15,0/mois) | 1 080 ; 24 % stoppés | 1 080 ; 25 % | 1 080 ; 33 % |
+| Durée médiane | 26 barres | 26 | 26 | 26 | 26 |
+| Part des frais (1x) | 30 % | 29 % | 29 % | 30 % | 33 % |
+
+#### 4. Analyse causale & Physique du trade
+- [OBS] **RE-1 a la même espérance que R2 uniforme.** Effet apparié : +0,015 ATR [−0,108 ; +0,141], et aucun horizon n'est significatif.
+  - Il réduit le risque : drawdown −20,5 % → −13,5 %, Calmar 0,69 → 1,16.
+  - Ses 6 années sont positives, 2024 comprise (+15 % contre −3 %).
+  - Long / Short +0,46 / +0,27 ATR.
+- [OBS] **Plateau.**
+  - L'IC en ATR de RE-1 est positif de H20 à H32.
+  - Entre H24 et H28, l'espérance varie de moins de 0,05 ATR et le PnL va de +112 à +138 %.
+  - À H13 et H48, aucune configuration n'a d'avantage.
+- [OBS] **Cooldown.** Il fait mieux que la réouverture jusqu'à H32 : les trades débloqués après un stop font −0,15 à −1,38 ATR. L'écart s'inverse à H48.
+- [OBS] **RE-3.** Le stop de catastrophe sur F2b coûte environ 0,08 ATR par trade (significatif à H20 et H24) et augmente le drawdown.
+- [OBS] **RE-4, seuils causaux.** RE-1 garde un IC positif en ATR (+0,34 à +0,37), 6 années positives sur 6 et un drawdown de −12 à −14 %. En revanche, son IC positif en bps disparaît dès qu'on retire janvier-mai 2020, même avec les seuils de l'échantillon entier.
+- [HYP] Le moteur gère le risque ; l'espérance vient de la sortie à 26 barres et de l'éviction de Q4. Le cooldown évite de reprendre le signal suivant dans un breakout qui vient d'échouer.
+
+#### 5. Décision
+- [ ] **REJETÉ**
+- [ ] **NON CONCLUANT**
+- [x] **À POURSUIVRE :**
+  - RE-1 en lecture cooldown, à H = 26, devient la configuration de référence ;
+  - RE-2 est une variante équivalente ;
+  - RE-3 est rejeté, et le cooldown retenu.
+
+  Points à trancher par le porteur :
+  - la suite de l'Étape C (break-even ou take-profit, mesurés d'abord sur les mêmes entrées ; filtre macro) ;
+  - un H propre à chaque sous-famille ;
+  - le passage à l'Étape D ;
+  - l'hypothèse d'exécution (à 10 bps, l'IC contient 0) ;
+  - le hold-out.

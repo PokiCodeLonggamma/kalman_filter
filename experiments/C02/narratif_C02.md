@@ -266,7 +266,7 @@ H26, une position à la fois. Chaque signal suit l'enveloppe de sa sous-famille,
   - L'IC en bps n'exclut 0 que de 0,2 bps.
   - La règle de F3 a été choisie après lecture de C02 : c'est un résultat dans l'échantillon, à confirmer en C02bis (plateau d'horizon, seuils causaux).
 
-### 5.4 Orientations de la revue (à acter dans le cadrage de C02bis)
+### 5.4 Orientations de la revue (actées par le porteur dans le cadrage de C02bis, 2026-09-29)
 
 - **R1, F1, F5 : rejet définitif proposé.** Veto d'entrée si `x1_already_flipped_at_t` est faux, en plus des vetos R3 et `nis_z_100` Q4. Argument de la revue : même un take-profit symétrique ne compense pas le coût des frais en ATR sur F5 (0,135 ATR par trade).
 - **Moteur de régimes :** routage causal de R2 hors Q4. F2b sans stop, F3 stop à l'extremum (ou SL-A 2 ATR).

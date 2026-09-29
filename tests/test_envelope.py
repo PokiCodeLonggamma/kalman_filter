@@ -11,7 +11,7 @@ import pytest
 from categorization import cluster_bootstrap, timing_drift
 from config import DATA_RAW, ROOT
 from envelope import (atr_stop_levels, by_year, dev_signals, effect_ci, equity_curve_sized, mean_ci, risk_weights,
-                      segment_extremum, stop_trades, structural_stop_levels, summarize, summarize_sized,
+                      route_levels, segment_extremum, stop_trades, structural_stop_levels, summarize, summarize_sized,
                       time_stop_trades)
 from estimand.stoploss import apply_stop, equity_curve, simulate_strategy
 
@@ -268,6 +268,43 @@ def test_effet_apparie_du_stop_sur_les_entrees_figees():
     assert eff["effet_bps_lo"] < eff["effet_bps"] < eff["effet_bps_hi"] and fig.stop.mean() > 0.2
     with pytest.raises(ValueError, match="entrées"):
         effect_ci(stop_trades(b, t, s, 26, lvl, dynamic=True), ctrl, b, atr)
+
+
+# ── EXP-C02bis : moteur de régimes ──────────────────────────────────────────────
+def test_niveau_nan_signifie_sans_stop_pour_ce_signal():
+    b = _marche(3000, 61)
+    rng = np.random.default_rng(62)
+    t = np.sort(rng.choice(np.arange(60, 2950), 400, replace=False))
+    s = rng.choice([-1, 1], 400)
+    lvl = atr_stop_levels(b, t, s, np.full(400, 1.0), k=1.0)
+    sans = rng.random(400) < 0.5
+    mix = np.where(sans, np.nan, lvl)
+    ctrl, full = stop_trades(b, t, s, 26), stop_trades(b, t, s, 26, lvl, dynamic=False)
+    fig = stop_trades(b, t, s, 26, mix, dynamic=False)                # cooldown : entrées de la course sans stop
+    k = np.isin(fig.signal_bar, t[sans])
+    pd.testing.assert_frame_equal(fig[k].reset_index(drop=True), ctrl[k].reset_index(drop=True))
+    pd.testing.assert_frame_equal(fig[~k].reset_index(drop=True), full[~k].reset_index(drop=True))
+    assert full.stop[~k].any()
+    dyn = stop_trades(b, t, s, 26, mix, dynamic=True)
+    kd = np.isin(dyn.signal_bar, t[sans])
+    assert not dyn.stop[kd].any() and ((dyn.exit_bar - dyn.entry_bar)[kd] == 26).all()
+    pd.testing.assert_frame_equal(stop_trades(b, t, s, 26, np.full(400, np.nan), dynamic=True), ctrl)
+
+
+def test_moteur_de_regimes_route_chaque_sous_famille():
+    b = _marche(3000, 63)
+    rng = np.random.default_rng(64)
+    t = np.sort(rng.choice(np.arange(60, 2950), 300, replace=False))
+    s, a, n = rng.choice([-1, 1], 300), rng.uniform(0.5, 2.0, 300), rng.integers(1, 40, 300)
+    fam = rng.choice(["F2b", "F3"], 300)
+    f3 = fam == "F3"
+    lv = route_levels(b, t, s, a, n, fam, {"F2b": None, "F3": ("SL-B", 0.0)})
+    assert np.isnan(lv[~f3]).all()
+    np.testing.assert_array_equal(lv[f3], structural_stop_levels(b, t[f3], s[f3], a[f3], n[f3], 0.0))
+    uni = route_levels(b, t, s, a, n, fam, {"F2b": ("SL-A", 2.0), "F3": ("SL-A", 2.0)})
+    np.testing.assert_array_equal(uni, atr_stop_levels(b, t, s, a, 2.0))    # même règle partout = règle uniforme
+    with pytest.raises(ValueError, match="sans enveloppe"):
+        route_levels(b, t, s, a, n, fam, {"F2b": None})
 
 # ── Données réelles ─────────────────────────────────────────────────────────────
 @pytest.fixture(scope="module")
