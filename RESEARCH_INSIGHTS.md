@@ -241,6 +241,13 @@ L'atlas A01 soutient cette lecture à travers le ratio de retracement `retrace_r
     - Même espérance que R2 uniforme : effet apparié +0,015 ATR [−0,108 ; +0,141]. Le gain porte sur le risque.
     - Plateau : IC > 0 de H20 à H32. Le résultat tient avec des seuils causaux (en ATR).
     - Le cooldown fait mieux que la réouverture jusqu'à H32. Un stop de catastrophe sur F2b coûte 0,08 ATR par trade.
+    - `[OBS]` **Filtrage mutuel sous pyramiding 0.** Un signal contraire à la position ouverte de l'autre sous-famille est ignoré. Joués seuls, ces signaux contraires perdaient :
+      - F3 contre un F2b ouvert : 59 trades, −1,22 ATR sans stop, −0,49 avec le stop ;
+      - F2b contre un F3 ouvert : 44 trades, −0,38 ATR.
+
+      Les signaux de même sens évincés ne perdaient pas (F3 +0,71 ; F2b −0,01). Dans le moteur, F2b passe de +0,389 à +0,459 ATR, et F3 de +0,236 à +0,267 avec stop (+0,144 → +0,235 sans stop). H26, 5 bps.
+    - `[HYP]` Le contre-signal de l'autre sous-famille tombe pendant l'expansion du breakout en cours et se trompe de sens. Une position à la fois le filtre sans règle supplémentaire.
+    - **Décision du porteur (2026-09-29) :** RE-1 validé comme configuration de référence de l'Étape C. H = 26 est commun aux deux sous-familles et verrouillé. Le take-profit fixe est exclu.
   - `[HYP]` Le point d'entrée dans le range décide.
     - F2b entre au milieu : un repli de 1 à 3 ATR est un balayage de liquidité avant l'expansion.
     - F3 entre près de l'extrémité opposée : casser l'extremum invalide le breakout.
@@ -274,9 +281,9 @@ L'atlas A01 soutient cette lecture à travers le ratio de retracement `retrace_r
 *Rien n'est lancé.*
 
 1. ~~R1 : un stop serré à l'extremum du segment améliore-t-il la distribution, ou coupe-t-il surtout des trajectoires qui auraient fini dans le sens du signal ?~~ **Répondu (EXP-C02)** : il coupe surtout des trajectoires qui auraient fini dans le sens du signal ; aucune espérance positive.
-2. R2 : combien de temps laisser courir, et avec quel stop ? **En partie répondu (EXP-C01, EXP-C02)** : H26 ; F2b sans stop, F3 stop à l'extremum. Reste à vérifier le plateau d'horizon autour de 26 barres *(C02bis)*.
+2. ~~R2 : combien de temps laisser courir, et avec quel stop ?~~ **Répondu (EXP-C01 à C02bis)** : H26, avec un plateau de H20 à H32 ; F2b sans stop, F3 stop à l'extremum. H = 26 est verrouillé par le porteur.
 3. R2 : le sens favorable de F3 (Short) et de F2b (Long) dépend-il de la tendance de l'unité de temps supérieure ? *(caractérisation)* Avec un stop à l'extremum, F3 devient positif des deux côtés (estimations centrales, IC contenant 0). `[HYP]` Son asymétrie tiendrait en partie à ses échecs non coupés.
 4. ~~R3 et `nis_z_100` Q4 : faut-il seulement les exclure, ou les prendre en continuation ?~~ **Tranché par le porteur (EXP-C01)** : exclusion seulement.
 5. ~~Après un stop, faut-il un cooldown jusqu'à t + 1 + H ou une réouverture immédiate ?~~ **Répondu (EXP-C02bis)** : le cooldown, jusqu'à H32 ; à H48, l'écart s'inverse.
 6. L'assemblage différencié de R2 tient-il avec des seuils causaux, puis hors échantillon ? **En partie répondu (EXP-C02bis)** : il tient avec des seuils causaux, en ATR. Hors échantillon : Étape D.
-7. Faut-il un horizon propre à chaque sous-famille ? F2b seul culmine à H28. *(à cadrer)*
+7. ~~Faut-il un horizon propre à chaque sous-famille ?~~ **Tranché par le porteur (2026-09-29)** : non, H = 26 est commun. À H28, F2b monte à +0,569 ATR, mais F3 tombe à +0,148, le DD passe à −16,2 % et le Calmar à 0,92. Ce serait un paramètre libre choisi après lecture.

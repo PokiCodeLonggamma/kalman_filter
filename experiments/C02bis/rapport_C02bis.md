@@ -144,8 +144,8 @@ RE-1, lecture cooldown, 5 bps :
   | Glissants (500) | +0,366 [+0,072 ; +0,672] | +12,3 [−0,6 ; +25,9] | +118 % ; −12,4 % | 6/6 | +0,225 ; +60 % |
   | Expansifs | +0,342 [+0,038 ; +0,645] | +11,0 [−2,2 ; +24,2] | +103 % ; −13,6 % | 6/6 | +0,202 ; +51 % |
 
-- **Ce qui tient avec des seuils causaux :** l'IC positif en ATR, les 6 années positives, un drawdown de −12 à −14 % et un Calmar de 0,92 à 1,12.
-- **Ce qui ne tient pas : l'IC positif en bps.** Il repasse sous 0 dès qu'on retire janvier-mai 2020, même avec les seuils de l'échantillon entier. Il dépendait donc de cette période, pas des seuils.
+- **Ce qui tient avec des seuils causaux :** l'IC positif en ATR, les 6 années positives, un drawdown de −12 à −14 % et un Calmar de 1,00 à 1,21 (annualisé sur 5,56 ans, voir §5).
+- **Ce qui ne tient pas : l'IC positif en bps.** Il repasse sous 0 dès qu'on retire le 13 janvier-9 juin 2020, même avec les seuils de l'échantillon entier. Il dépendait donc de cette période, pas des seuils.
 - La baisse du PnL (+138 % → +121 %) vient de ces mois retirés, pas des seuils.
 - RE-2 se comporte de même (+0,335 à +0,356 ATR, +103 à +120 %).
 - À H13 et H48, aucune variante n'a d'avantage.
@@ -175,6 +175,53 @@ RE-1, lecture cooldown, 5 bps :
   3. Le passage à l'Étape D (walk-forward sur RE-1).
   4. Le hold-out.
 
+## 5. Relecture du porteur (2026-09-29), vérifiée
+
+**Décisions actées par le porteur :**
+- RE-1 devient officiellement la configuration de référence de l'Étape C : H = 26, lecture cooldown jusqu'à t + 1 + H, F2b sans stop, F3 SL-B 0 (extremum du segment), pyramiding 0.
+- **H = 26 est verrouillé pour les deux sous-familles.** Aucun horizon propre à F2b ou F3. À H28, F2b monte, mais F3 baisse et le risque global se dégrade :
+
+  | RE-1, cooldown, 5 bps | H = 26 | H = 28 |
+  |---|---|---|
+  | F2b | +0,459 ATR | +0,569 ATR |
+  | F3 | +0,267 ATR | +0,148 ATR |
+  | DD | −13,5 % | −16,2 % |
+  | Calmar | 1,16 | 0,92 |
+
+  Le porteur avait écrit −16,0 % pour le DD. Deux horizons choisis après lecture seraient du cherry-picking dans l'échantillon, avec un paramètre libre de plus.
+- **Take-profit fixe exclu.** Il ampute la queue droite de RE-1 (vérification chiffrée en annexe H de C03).
+
+**Correction de l'annualisation (RE-4)** (`run_C02bis.py`, colonne `annees` du CSV) :
+- Les variantes à seuils causaux commencent au 501e signal : le **9 juin 2020 à 20 h 30 UTC**, et non le 18 mai comme l'indiquait la relecture. Leur période fait donc **5,56 ans**, non 6 (ni 5,62).
+- Le Calmar et la cadence mensuelle sont désormais calculés sur cette durée. Aucune autre valeur ne change.
+- Calmar de RE-1 à H26 :
+
+  | Seuils | Calmar | PnL annualisé | DD |
+  |---|---|---|---|
+  | Glissants 500 | 1,21 (au lieu de 1,12) | +15,1 % | −12,4 % |
+  | Échantillon entier, après l'amorce | 1,14 (au lieu de 1,05) | +15,4 % | −13,5 % |
+  | Expansifs | 1,00 (au lieu de 0,92) | +13,6 % | −13,6 % |
+
+  Le porteur avait estimé 1,20 et +14,9 % par an sur 5,62 ans.
+
+**Filtrage mutuel de F2b et F3 sous pyramiding 0** (annexe H) :
+- Chaque sous-famille est comparée seule, puis dans le moteur (H26, cooldown, 5 bps).
+
+| Sous-famille | Seule | Dans le moteur | Évincés : l'autre ouverte en sens opposé | Évincés : l'autre, même sens | Chaîne : ajoutés ; évincés |
+|---|---|---|---|---|---|
+| F2b sans stop | 639 ; +0,389 | 573 ; +0,459 | 44 ; −0,378 | 30 ; −0,012 | 10 à +0,961 ; 2 à +6,14 |
+| F3 sans stop (C2) | 601 ; +0,144 | 507 ; +0,235 | 59 ; −1,217 | 46 ; +0,708 | 13 à −0,491 ; 2 à −0,10 |
+| F3 SL-B 0 (RE-1) | 601 ; +0,236 | 507 ; +0,267 | 59 ; −0,493 | 46 ; +0,683 | 13 à −0,359 ; 2 à −0,10 |
+
+**Lecture :**
+- **Le filtrage joue dans les deux sens.** Un signal contraire à la position ouverte de l'autre sous-famille est ignoré, et ces signaux contraires perdaient quand on les jouait seuls :
+  - F3 contre un F2b ouvert : 59 trades, −1,22 ATR sans stop, −0,49 ATR avec le stop ;
+  - F2b contre un F3 ouvert : 44 trades, −0,38 ATR.
+- **Les signaux de même sens évincés ne perdaient pas.** Ceux de F3 étaient bons (+0,71) et ont été remplacés par le F2b déjà ouvert. Ceux de F2b étaient neutres (−0,01).
+- **Deux corrections à l'explication du porteur :**
+  - Les 59 F3 contraires (le porteur en comptait 61, à −1,32 ATR, valeur proche de celle à 10 bps : −1,37) expliquent la hausse de F3, pas celle de F2b. F2b monte grâce aux 44 F2b contraires évincés et à l'effet de chaîne (+0,96 ATR sur 10 trades ajoutés).
+  - La hausse de F3 de +0,144 à +0,267 cumule deux effets : le stop, qui fait passer F3 seul de +0,144 à +0,236 ; puis le filtrage, de +0,236 à +0,267. Sans stop, le filtrage seul fait passer F3 de +0,144 à +0,235.
+
 ---
 
 # Annexes chiffrées (générées par `run_C02bis.py`)
@@ -188,7 +235,7 @@ RE-1, lecture cooldown, 5 bps :
 | Univers | R2 hors Q4 = 1452 signaux : F2b · x1 déjà retourné 741, F3 · x1 déjà retourné 711 ; familles identiques à B01 |
 | Seuils causaux (RE-4) | échantillon entier, après 500 : R2 1 348 signaux, accord 100,0 %; glissante 500 signaux : R2 1 347 signaux, accord 98,6 %; expansive : R2 1 299 signaux, accord 99,2 % |
 | IC 95 % | grappes mensuelles d'entrée, 2 000 tirages ; effets appariés sur les mêmes entrées que C2 (lecture cooldown) |
-| Capital | 1 ATR14(t) = 0,25 % du capital, levier ≤ 1x ; notionnel 1x en référence ; Calmar = PnL annualisé / |MDD valorisé|, à 0,25 % par ATR |
+| Capital | 1 ATR14(t) = 0,25 % du capital, levier ≤ 1x ; notionnel 1x en référence ; Calmar = PnL annualisé / valeur absolue du MDD valorisé, à 0,25 % par ATR, annualisé sur la période où la variante peut trader (6 ans ; 5,56 ans pour les variantes RE-4, après l'amorce) |
 | Période | 2020-01 → 2025-12 (72 mois) ; aucune barre de 2026 lue |
 
 ## B. Tableau complet à H = 26
@@ -376,7 +423,7 @@ Cellule : espérance nette par trade en ATR14(t) (trades) ; dernière colonne : 
 
 ## G. RE-4 — Seuils causaux (contrôle B de C01)
 
-Médiane de `leg_atr` et P75 de `nis_z_100` calculés sur les seuls signaux précédents. Les 500 premiers signaux (janvier à mai 2020) sont exclus des trois variantes, comparées sur la même période.
+Médiane de `leg_atr` et P75 de `nis_z_100` calculés sur les seuls signaux précédents. Les 500 premiers signaux (13 janvier → 09/06/2020 20:30 UTC) sont exclus des trois variantes, comparées sur la même période : du 501e signal au 31/12/2025, soit 5,56 ans (annualisation du Calmar et cadence mensuelle ; 6 ans pour l'échantillon entier).
 
 ### Accord des masques avec les seuils de l'échantillon entier (après les 500 premiers signaux)
 
@@ -388,39 +435,59 @@ Médiane de `leg_atr` et P75 de `nis_z_100` calculés sur les seuls signaux pré
 
 ### H = 13
 
-Cellule, à 5 bps : espérance ATR [IC] ; PnL ; MDD ; années à PnL > 0. Puis, à 10 bps : espérance ATR ; PnL.
+Cellule, à 5 bps : espérance ATR [IC] ; PnL ; MDD ; PnL annualisé et Calmar ; années à PnL > 0. Puis, à 10 bps : espérance ATR ; PnL.
 
 | Configuration | échantillon entier, après 500 | glissante 500 signaux | expansive |
 |---|---|---|---|
-| C1 — F2b seul, sans stop | −0,032 [−0,267 ; +0,198] ; −6 % ; −20 % ; 2/6 ‖ 10 bps : −0,171 ; −23 % | −0,045 [−0,293 ; +0,189] ; −8 % ; −23 % ; 2/6 ‖ 10 bps : −0,187 ; −25 % | −0,054 [−0,294 ; +0,182] ; −9 % ; −21 % ; 2/6 ‖ 10 bps : −0,194 ; −25 % |
-| C2 — R2 hors Q4 uniforme, sans stop | +0,008 [−0,205 ; +0,201] ; −6 % ; −31 % ; 3/6 ‖ 10 bps : −0,132 ; −34 % | +0,008 [−0,219 ; +0,219] ; −6 % ; −33 % ; 3/6 ‖ 10 bps : −0,134 ; −34 % | −0,012 [−0,225 ; +0,184] ; −11 % ; −32 % ; 3/6 ‖ 10 bps : −0,154 ; −37 % |
-| RE-1 — F2b sans stop, F3 SL-B extremum (cooldown) | +0,047 [−0,142 ; +0,233] ; +8 % ; −19 % ; 3/6 ‖ 10 bps : −0,094 ; −24 % | +0,041 [−0,159 ; +0,239] ; +6 % ; −21 % ; 3/6 ‖ 10 bps : −0,101 ; −26 % | +0,026 [−0,169 ; +0,214] ; +2 % ; −20 % ; 3/6 ‖ 10 bps : −0,116 ; −28 % |
-| RE-1 — F2b sans stop, F3 SL-B extremum (réouverture) | +0,037 [−0,150 ; +0,224] ; +6 % ; −20 % ; 3/6 ‖ 10 bps : −0,103 ; −26 % | +0,032 [−0,167 ; +0,234] ; +4 % ; −21 % ; 3/6 ‖ 10 bps : −0,110 ; −27 % | +0,017 [−0,177 ; +0,211] ; +0 % ; −20 % ; 3/6 ‖ 10 bps : −0,125 ; −29 % |
-| RE-2 — F2b sans stop, F3 SL-A 2 ATR (cooldown) | +0,044 [−0,135 ; +0,226] ; +7 % ; −20 % ; 3/6 ‖ 10 bps : −0,096 ; −25 % | +0,040 [−0,151 ; +0,237] ; +6 % ; −22 % ; 3/6 ‖ 10 bps : −0,102 ; −26 % | +0,022 [−0,163 ; +0,208] ; +1 % ; −22 % ; 3/6 ‖ 10 bps : −0,120 ; −29 % |
-| RE-2 — F2b sans stop, F3 SL-A 2 ATR (réouverture) | +0,025 [−0,154 ; +0,208] ; +3 % ; −22 % ; 3/6 ‖ 10 bps : −0,115 ; −28 % | +0,032 [−0,158 ; +0,225] ; +4 % ; −24 % ; 3/6 ‖ 10 bps : −0,110 ; −27 % | +0,006 [−0,178 ; +0,195] ; −3 % ; −24 % ; 3/6 ‖ 10 bps : −0,136 ; −31 % |
+| C1 — F2b seul, sans stop | −0,032 [−0,267 ; +0,198] ; −6 % ; −20 % ; −1,1 % par an, Calmar −0,06 ; 2/6 ‖ 10 bps : −0,171 ; −23 % | −0,045 [−0,293 ; +0,189] ; −8 % ; −23 % ; −1,6 % par an, Calmar −0,07 ; 2/6 ‖ 10 bps : −0,187 ; −25 % | −0,054 [−0,294 ; +0,182] ; −9 % ; −21 % ; −1,7 % par an, Calmar −0,08 ; 2/6 ‖ 10 bps : −0,194 ; −25 % |
+| C2 — R2 hors Q4 uniforme, sans stop | +0,008 [−0,205 ; +0,201] ; −6 % ; −31 % ; −1,1 % par an, Calmar −0,04 ; 3/6 ‖ 10 bps : −0,132 ; −34 % | +0,008 [−0,219 ; +0,219] ; −6 % ; −33 % ; −1,2 % par an, Calmar −0,04 ; 3/6 ‖ 10 bps : −0,134 ; −34 % | −0,012 [−0,225 ; +0,184] ; −11 % ; −32 % ; −2,1 % par an, Calmar −0,07 ; 3/6 ‖ 10 bps : −0,154 ; −37 % |
+| RE-1 — F2b sans stop, F3 SL-B extremum (cooldown) | +0,047 [−0,142 ; +0,233] ; +8 % ; −19 % ; +1,4 % par an, Calmar 0,07 ; 3/6 ‖ 10 bps : −0,094 ; −24 % | +0,041 [−0,159 ; +0,239] ; +6 % ; −21 % ; +1,1 % par an, Calmar 0,05 ; 3/6 ‖ 10 bps : −0,101 ; −26 % | +0,026 [−0,169 ; +0,214] ; +2 % ; −20 % ; +0,3 % par an, Calmar 0,01 ; 3/6 ‖ 10 bps : −0,116 ; −28 % |
+| RE-1 — F2b sans stop, F3 SL-B extremum (réouverture) | +0,037 [−0,150 ; +0,224] ; +6 % ; −20 % ; +1,1 % par an, Calmar 0,06 ; 3/6 ‖ 10 bps : −0,103 ; −26 % | +0,032 [−0,167 ; +0,234] ; +4 % ; −21 % ; +0,8 % par an, Calmar 0,04 ; 3/6 ‖ 10 bps : −0,110 ; −27 % | +0,017 [−0,177 ; +0,211] ; +0 % ; −20 % ; +0,0 % par an, Calmar 0,00 ; 3/6 ‖ 10 bps : −0,125 ; −29 % |
+| RE-2 — F2b sans stop, F3 SL-A 2 ATR (cooldown) | +0,044 [−0,135 ; +0,226] ; +7 % ; −20 % ; +1,3 % par an, Calmar 0,06 ; 3/6 ‖ 10 bps : −0,096 ; −25 % | +0,040 [−0,151 ; +0,237] ; +6 % ; −22 % ; +1,0 % par an, Calmar 0,04 ; 3/6 ‖ 10 bps : −0,102 ; −26 % | +0,022 [−0,163 ; +0,208] ; +1 % ; −22 % ; +0,1 % par an, Calmar 0,00 ; 3/6 ‖ 10 bps : −0,120 ; −29 % |
+| RE-2 — F2b sans stop, F3 SL-A 2 ATR (réouverture) | +0,025 [−0,154 ; +0,208] ; +3 % ; −22 % ; +0,5 % par an, Calmar 0,02 ; 3/6 ‖ 10 bps : −0,115 ; −28 % | +0,032 [−0,158 ; +0,225] ; +4 % ; −24 % ; +0,8 % par an, Calmar 0,03 ; 3/6 ‖ 10 bps : −0,110 ; −27 % | +0,006 [−0,178 ; +0,195] ; −3 % ; −24 % ; −0,5 % par an, Calmar −0,02 ; 3/6 ‖ 10 bps : −0,136 ; −31 % |
 
 ### H = 26
 
-Cellule, à 5 bps : espérance ATR [IC] ; PnL ; MDD ; années à PnL > 0. Puis, à 10 bps : espérance ATR ; PnL.
+Cellule, à 5 bps : espérance ATR [IC] ; PnL ; MDD ; PnL annualisé et Calmar ; années à PnL > 0. Puis, à 10 bps : espérance ATR ; PnL.
 
 | Configuration | échantillon entier, après 500 | glissante 500 signaux | expansive |
 |---|---|---|---|
-| C1 — F2b seul, sans stop | +0,372 [+0,040 ; +0,716] ; +61 % ; −13 % ; 5/6 ‖ 10 bps : +0,234 ; +34 % | +0,371 [+0,043 ; +0,733] ; +58 % ; −14 % ; 5/6 ‖ 10 bps : +0,231 ; +32 % | +0,401 [+0,061 ; +0,767] ; +63 % ; −15 % ; 5/6 ‖ 10 bps : +0,260 ; +37 % |
-| C2 — R2 hors Q4 uniforme, sans stop | +0,334 [+0,004 ; +0,662] ; +99 % ; −20 % ; 5/6 ‖ 10 bps : +0,195 ; +46 % | +0,357 [+0,026 ; +0,694] ; +104 % ; −20 % ; 4/6 ‖ 10 bps : +0,216 ; +50 % | +0,321 [−0,015 ; +0,649] ; +87 % ; −18 % ; 5/6 ‖ 10 bps : +0,180 ; +39 % |
-| RE-1 — F2b sans stop, F3 SL-B extremum (cooldown) | +0,364 [+0,071 ; +0,654] ; +121 % ; −13 % ; 6/6 ‖ 10 bps : +0,225 ; +63 % | +0,366 [+0,072 ; +0,672] ; +118 % ; −12 % ; 6/6 ‖ 10 bps : +0,225 ; +60 % | +0,342 [+0,038 ; +0,645] ; +103 % ; −14 % ; 6/6 ‖ 10 bps : +0,202 ; +51 % |
-| RE-1 — F2b sans stop, F3 SL-B extremum (réouverture) | +0,330 [+0,031 ; +0,626] ; +116 % ; −14 % ; 6/6 ‖ 10 bps : +0,191 ; +57 % | +0,332 [+0,036 ; +0,642] ; +112 % ; −13 % ; 6/6 ‖ 10 bps : +0,191 ; +55 % | +0,304 [+0,002 ; +0,609] ; +96 % ; −13 % ; 6/6 ‖ 10 bps : +0,163 ; +44 % |
-| RE-2 — F2b sans stop, F3 SL-A 2 ATR (cooldown) | +0,356 [+0,070 ; +0,640] ; +120 % ; −13 % ; 6/6 ‖ 10 bps : +0,216 ; +61 % | +0,356 [+0,063 ; +0,655] ; +116 % ; −12 % ; 6/6 ‖ 10 bps : +0,215 ; +59 % | +0,335 [+0,043 ; +0,629] ; +103 % ; −13 % ; 6/6 ‖ 10 bps : +0,194 ; +50 % |
-| RE-2 — F2b sans stop, F3 SL-A 2 ATR (réouverture) | +0,326 [+0,034 ; +0,619] ; +116 % ; −13 % ; 6/6 ‖ 10 bps : +0,187 ; +58 % | +0,325 [+0,032 ; +0,635] ; +112 % ; −12 % ; 6/6 ‖ 10 bps : +0,184 ; +55 % | +0,297 [+0,002 ; +0,602] ; +96 % ; −13 % ; 6/6 ‖ 10 bps : +0,156 ; +44 % |
+| C1 — F2b seul, sans stop | +0,372 [+0,040 ; +0,716] ; +61 % ; −13 % ; +8,9 % par an, Calmar 0,68 ; 5/6 ‖ 10 bps : +0,234 ; +34 % | +0,371 [+0,043 ; +0,733] ; +58 % ; −14 % ; +8,6 % par an, Calmar 0,60 ; 5/6 ‖ 10 bps : +0,231 ; +32 % | +0,401 [+0,061 ; +0,767] ; +63 % ; −15 % ; +9,2 % par an, Calmar 0,62 ; 5/6 ‖ 10 bps : +0,260 ; +37 % |
+| C2 — R2 hors Q4 uniforme, sans stop | +0,334 [+0,004 ; +0,662] ; +99 % ; −20 % ; +13,2 % par an, Calmar 0,64 ; 5/6 ‖ 10 bps : +0,195 ; +46 % | +0,357 [+0,026 ; +0,694] ; +104 % ; −20 % ; +13,7 % par an, Calmar 0,67 ; 4/6 ‖ 10 bps : +0,216 ; +50 % | +0,321 [−0,015 ; +0,649] ; +87 % ; −18 % ; +11,9 % par an, Calmar 0,68 ; 5/6 ‖ 10 bps : +0,180 ; +39 % |
+| RE-1 — F2b sans stop, F3 SL-B extremum (cooldown) | +0,364 [+0,071 ; +0,654] ; +121 % ; −13 % ; +15,4 % par an, Calmar 1,14 ; 6/6 ‖ 10 bps : +0,225 ; +63 % | +0,366 [+0,072 ; +0,672] ; +118 % ; −12 % ; +15,1 % par an, Calmar 1,21 ; 6/6 ‖ 10 bps : +0,225 ; +60 % | +0,342 [+0,038 ; +0,645] ; +103 % ; −14 % ; +13,6 % par an, Calmar 1,00 ; 6/6 ‖ 10 bps : +0,202 ; +51 % |
+| RE-1 — F2b sans stop, F3 SL-B extremum (réouverture) | +0,330 [+0,031 ; +0,626] ; +116 % ; −14 % ; +14,8 % par an, Calmar 1,06 ; 6/6 ‖ 10 bps : +0,191 ; +57 % | +0,332 [+0,036 ; +0,642] ; +112 % ; −13 % ; +14,5 % par an, Calmar 1,15 ; 6/6 ‖ 10 bps : +0,191 ; +55 % | +0,304 [+0,002 ; +0,609] ; +96 % ; −13 % ; +12,9 % par an, Calmar 0,97 ; 6/6 ‖ 10 bps : +0,163 ; +44 % |
+| RE-2 — F2b sans stop, F3 SL-A 2 ATR (cooldown) | +0,356 [+0,070 ; +0,640] ; +120 % ; −13 % ; +15,2 % par an, Calmar 1,16 ; 6/6 ‖ 10 bps : +0,216 ; +61 % | +0,356 [+0,063 ; +0,655] ; +116 % ; −12 % ; +14,9 % par an, Calmar 1,20 ; 6/6 ‖ 10 bps : +0,215 ; +59 % | +0,335 [+0,043 ; +0,629] ; +103 % ; −13 % ; +13,6 % par an, Calmar 1,01 ; 6/6 ‖ 10 bps : +0,194 ; +50 % |
+| RE-2 — F2b sans stop, F3 SL-A 2 ATR (réouverture) | +0,326 [+0,034 ; +0,619] ; +116 % ; −13 % ; +14,9 % par an, Calmar 1,12 ; 6/6 ‖ 10 bps : +0,187 ; +58 % | +0,325 [+0,032 ; +0,635] ; +112 % ; −12 % ; +14,5 % par an, Calmar 1,17 ; 6/6 ‖ 10 bps : +0,184 ; +55 % | +0,297 [+0,002 ; +0,602] ; +96 % ; −13 % ; +12,9 % par an, Calmar 0,98 ; 6/6 ‖ 10 bps : +0,156 ; +44 % |
 
 ### H = 48
 
-Cellule, à 5 bps : espérance ATR [IC] ; PnL ; MDD ; années à PnL > 0. Puis, à 10 bps : espérance ATR ; PnL.
+Cellule, à 5 bps : espérance ATR [IC] ; PnL ; MDD ; PnL annualisé et Calmar ; années à PnL > 0. Puis, à 10 bps : espérance ATR ; PnL.
 
 | Configuration | échantillon entier, après 500 | glissante 500 signaux | expansive |
 |---|---|---|---|
-| C1 — F2b seul, sans stop | +0,198 [−0,364 ; +0,788] ; +13 % ; −31 % ; 3/6 ‖ 10 bps : +0,060 ; −4 % | +0,255 [−0,317 ; +0,863] ; +17 % ; −31 % ; 3/6 ‖ 10 bps : +0,114 ; +0 % | +0,235 [−0,326 ; +0,845] ; +16 % ; −31 % ; 3/6 ‖ 10 bps : +0,096 ; −0 % |
-| C2 — R2 hors Q4 uniforme, sans stop | +0,032 [−0,403 ; +0,480] ; −13 % ; −37 % ; 3/6 ‖ 10 bps : −0,106 ; −32 % | +0,102 [−0,326 ; +0,549] ; −3 % ; −35 % ; 3/6 ‖ 10 bps : −0,036 ; −24 % | +0,053 [−0,392 ; +0,500] ; −9 % ; −36 % ; 3/6 ‖ 10 bps : −0,087 ; −29 % |
-| RE-1 — F2b sans stop, F3 SL-B extremum (cooldown) | +0,170 [−0,217 ; +0,594] ; +13 % ; −30 % ; 4/6 ‖ 10 bps : +0,031 ; −11 % | +0,204 [−0,179 ; +0,625] ; +19 % ; −29 % ; 4/6 ‖ 10 bps : +0,066 ; −7 % | +0,161 [−0,235 ; +0,583] ; +10 % ; −31 % ; 4/6 ‖ 10 bps : +0,022 ; −13 % |
-| RE-1 — F2b sans stop, F3 SL-B extremum (réouverture) | +0,198 [−0,228 ; +0,644] ; +22 % ; −36 % ; 4/6 ‖ 10 bps : +0,059 ; −6 % | +0,218 [−0,212 ; +0,682] ; +25 % ; −37 % ; 4/6 ‖ 10 bps : +0,078 ; −4 % | +0,183 [−0,242 ; +0,637] ; +18 % ; −39 % ; 4/6 ‖ 10 bps : +0,043 ; −9 % |
-| RE-2 — F2b sans stop, F3 SL-A 2 ATR (cooldown) | +0,165 [−0,222 ; +0,582] ; +12 % ; −28 % ; 4/6 ‖ 10 bps : +0,027 ; −12 % | +0,201 [−0,182 ; +0,608] ; +18 % ; −28 % ; 4/6 ‖ 10 bps : +0,063 ; −8 % | +0,153 [−0,244 ; +0,564] ; +9 % ; −29 % ; 4/6 ‖ 10 bps : +0,014 ; −14 % |
-| RE-2 — F2b sans stop, F3 SL-A 2 ATR (réouverture) | +0,185 [−0,233 ; +0,626] ; +19 % ; −35 % ; 4/6 ‖ 10 bps : +0,046 ; −9 % | +0,201 [−0,219 ; +0,640] ; +20 % ; −37 % ; 4/6 ‖ 10 bps : +0,061 ; −8 % | +0,178 [−0,239 ; +0,619] ; +16 % ; −38 % ; 4/6 ‖ 10 bps : +0,038 ; −11 % |
+| C1 — F2b seul, sans stop | +0,198 [−0,364 ; +0,788] ; +13 % ; −31 % ; +2,2 % par an, Calmar 0,07 ; 3/6 ‖ 10 bps : +0,060 ; −4 % | +0,255 [−0,317 ; +0,863] ; +17 % ; −31 % ; +2,9 % par an, Calmar 0,09 ; 3/6 ‖ 10 bps : +0,114 ; +0 % | +0,235 [−0,326 ; +0,845] ; +16 % ; −31 % ; +2,8 % par an, Calmar 0,09 ; 3/6 ‖ 10 bps : +0,096 ; −0 % |
+| C2 — R2 hors Q4 uniforme, sans stop | +0,032 [−0,403 ; +0,480] ; −13 % ; −37 % ; −2,4 % par an, Calmar −0,06 ; 3/6 ‖ 10 bps : −0,106 ; −32 % | +0,102 [−0,326 ; +0,549] ; −3 % ; −35 % ; −0,6 % par an, Calmar −0,02 ; 3/6 ‖ 10 bps : −0,036 ; −24 % | +0,053 [−0,392 ; +0,500] ; −9 % ; −36 % ; −1,7 % par an, Calmar −0,05 ; 3/6 ‖ 10 bps : −0,087 ; −29 % |
+| RE-1 — F2b sans stop, F3 SL-B extremum (cooldown) | +0,170 [−0,217 ; +0,594] ; +13 % ; −30 % ; +2,3 % par an, Calmar 0,08 ; 4/6 ‖ 10 bps : +0,031 ; −11 % | +0,204 [−0,179 ; +0,625] ; +19 % ; −29 % ; +3,1 % par an, Calmar 0,11 ; 4/6 ‖ 10 bps : +0,066 ; −7 % | +0,161 [−0,235 ; +0,583] ; +10 % ; −31 % ; +1,8 % par an, Calmar 0,06 ; 4/6 ‖ 10 bps : +0,022 ; −13 % |
+| RE-1 — F2b sans stop, F3 SL-B extremum (réouverture) | +0,198 [−0,228 ; +0,644] ; +22 % ; −36 % ; +3,7 % par an, Calmar 0,10 ; 4/6 ‖ 10 bps : +0,059 ; −6 % | +0,218 [−0,212 ; +0,682] ; +25 % ; −37 % ; +4,0 % par an, Calmar 0,11 ; 4/6 ‖ 10 bps : +0,078 ; −4 % | +0,183 [−0,242 ; +0,637] ; +18 % ; −39 % ; +3,0 % par an, Calmar 0,08 ; 4/6 ‖ 10 bps : +0,043 ; −9 % |
+| RE-2 — F2b sans stop, F3 SL-A 2 ATR (cooldown) | +0,165 [−0,222 ; +0,582] ; +12 % ; −28 % ; +2,1 % par an, Calmar 0,07 ; 4/6 ‖ 10 bps : +0,027 ; −12 % | +0,201 [−0,182 ; +0,608] ; +18 % ; −28 % ; +3,0 % par an, Calmar 0,11 ; 4/6 ‖ 10 bps : +0,063 ; −8 % | +0,153 [−0,244 ; +0,564] ; +9 % ; −29 % ; +1,5 % par an, Calmar 0,05 ; 4/6 ‖ 10 bps : +0,014 ; −14 % |
+| RE-2 — F2b sans stop, F3 SL-A 2 ATR (réouverture) | +0,185 [−0,233 ; +0,626] ; +19 % ; −35 % ; +3,1 % par an, Calmar 0,09 ; 4/6 ‖ 10 bps : +0,046 ; −9 % | +0,201 [−0,219 ; +0,640] ; +20 % ; −37 % ; +3,3 % par an, Calmar 0,09 ; 4/6 ‖ 10 bps : +0,061 ; −8 % | +0,178 [−0,239 ; +0,619] ; +16 % ; −38 % ; +2,7 % par an, Calmar 0,07 ; 4/6 ‖ 10 bps : +0,038 ; −11 % |
+
+## H. Filtrage mutuel de F2b et F3 sous pyramiding 0 (H = 26, cooldown)
+
+Chaque sous-famille jouée seule, puis dans le moteur. Évincés : trades de la course seule absents du moteur, classés selon le trade du moteur ouvert à leur signal ; résultat de la course seule. Ajoutés : trades du moteur absents de la course seule (un trade évincé libère la place d'un signal suivant) ; résultat du moteur. Bilan refermé : seule − évincés + ajoutés = moteur.
+
+**5 bps — n ; espérance nette par trade (ATR)**
+
+| Sous-famille, stop | Seule | Évincés : l'autre sous-famille ouverte en sens opposé | Évincés : l'autre, même sens | Évincés : même sous-famille (chaîne) | Ajoutés (chaîne) | Dans le moteur |
+|---|---|---|---|---|---|---|
+| F2b, sans stop (moteur : C2 et RE-1) | 639 ; +0,389 | 44 ; −0,378 | 30 ; −0,012 | 2 ; +6,142 | 10 ; +0,961 | 573 ; +0,459 |
+| F3, sans stop (moteur : C2) | 601 ; +0,144 | 59 ; −1,217 | 46 ; +0,708 | 2 ; −0,099 | 13 ; −0,491 | 507 ; +0,235 |
+| F3, SL-B extremum (moteur : RE-1) | 601 ; +0,236 | 59 ; −0,493 | 46 ; +0,683 | 2 ; −0,099 | 13 ; −0,359 | 507 ; +0,267 |
+
+**10 bps — n ; espérance nette par trade (ATR)**
+
+| Sous-famille, stop | Seule | Évincés : l'autre sous-famille ouverte en sens opposé | Évincés : l'autre, même sens | Évincés : même sous-famille (chaîne) | Ajoutés (chaîne) | Dans le moteur |
+|---|---|---|---|---|---|---|
+| F2b, sans stop (moteur : C2 et RE-1) | 639 ; +0,255 | 44 ; −0,533 | 30 ; −0,147 | 2 ; +5,967 | 10 ; +0,825 | 573 ; +0,326 |
+| F3, sans stop (moteur : C2) | 601 ; +0,003 | 59 ; −1,366 | 46 ; +0,568 | 2 ; −0,646 | 13 ; −0,676 | 507 ; +0,096 |
+| F3, SL-B extremum (moteur : RE-1) | 601 ; +0,096 | 59 ; −0,643 | 46 ; +0,543 | 2 ; −0,646 | 13 ; −0,544 | 507 ; +0,127 |

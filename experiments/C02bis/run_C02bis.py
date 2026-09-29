@@ -14,6 +14,8 @@ Configurations : C1 (F2b seul, sans stop), C2 (R2 hors Q4 uniforme, sans stop), 
 l'extremum), RE-2 (F2b sans stop, F3 SL-A 2 ATR), RE-3 (F2b SL-A 5 ATR, F3 SL-B à l'extremum) ; H ∈ {13, 20, 24, 26,
 28, 32, 48}. RE-4 : C1, C2, RE-1 et RE-2 avec les seuils causaux du contrôle B de C01, à H ∈ {13, 26, 48}.
 Frais 5 et 10 bps ; capital à 0,25 % par ATR14(t) (1x en référence) ; IC 95 % par grappes mensuelles, 2 000 tirages.
+Relecture du porteur (2026-09-29) : annualisation (Calmar) et cadence mensuelle des variantes RE-4 sur leur propre
+période, du 501e signal (9 juin 2020) à fin 2025, et non sur 6 ans ; filtrage mutuel F2b / F3 (section H).
 """
 from __future__ import annotations
 
@@ -44,7 +46,8 @@ from estimand.stoploss import simulate_strategy  # noqa: E402
 FIG = HERE / "figures"
 FEES = (5.0, 10.0)
 YEARS = list(range(2020, 2026))
-N_YEARS = 6.0
+N_YEARS = 6.0                                             # 2020-01-01 → 2025-12-31, échantillon entier
+T0 = pd.Timestamp("2020-01-01", tz="UTC")
 RISK = 25.0
 N_BOOT = 2000
 BURN_IN = 500
@@ -192,15 +195,17 @@ class Engine:
         return stop_trades(self.bars, t, s, H, level, dynamic=dynamic), pd.Series(fam, index=t)
 
 
-def cagr(pnl) -> float:
-    return float((1.0 + pnl) ** (1.0 / N_YEARS) - 1.0)
+def cagr(pnl, n_years: float) -> float:
+    return float((1.0 + pnl) ** (1.0 / n_years) - 1.0)
 
 
-def metrics(tr, bars, atr_bps, fee, n_cand, fam: pd.Series) -> tuple[dict, pd.DataFrame]:
+def metrics(tr, bars, atr_bps, fee, n_cand, fam: pd.Series, n_years: float = N_YEARS) -> tuple[dict, pd.DataFrame]:
+    """`n_years` : durée de la période où la variante peut trader (annualisation et cadence mensuelle)."""
     m = summarize(tr, bars, atr_bps, fee, n_candidates=n_cand)
+    m["trades_par_mois"] = m["n_trades"] / (12.0 * n_years)
     m.update(mean_ci(tr, bars, fee, N_BOOT, atr_bps=atr_bps))
     m.update({f"{k}_r25": v for k, v in summarize_sized(tr, bars, atr_bps, fee, RISK).items()})
-    m["cagr_r25"] = cagr(m["pnl_compose_r25"])
+    m["cagr_r25"] = cagr(m["pnl_compose_r25"], n_years)
     m["calmar_r25"] = m["cagr_r25"] / abs(m["mdd_valorise_r25"]) if m["mdd_valorise_r25"] < 0 else np.nan
     m["part_stop"] = float(tr.stop.mean())
     tf = trade_frame(tr, bars, atr_bps, fee)
@@ -231,7 +236,8 @@ def decomposition(dyn, cd, atr_bps, fee) -> dict:
             "esperance_perdus_atr": esp(lost)}
 
 
-def run_grid(bars, atr_bps, eng: Engine, keys, horizons, variante: str) -> tuple[list, list, dict]:
+def run_grid(bars, atr_bps, eng: Engine, keys, horizons, variante: str,
+             n_years: float = N_YEARS) -> tuple[list, list, dict]:
     rows, ann, trades = [], [], {}
     for H in horizons:
         runs = {}
@@ -250,9 +256,9 @@ def run_grid(bars, atr_bps, eng: Engine, keys, horizons, variante: str) -> tuple
                     extra.update({f"{k}_vs_RE1": v for k, v in
                                   effect_ci(tr, runs[("RE-1", "cooldown")][0], bars, atr_bps, N_BOOT).items()})
             for fee in FEES:
-                m, y = metrics(tr, bars, atr_bps, fee, n_cand, fam)
+                m, y = metrics(tr, bars, atr_bps, fee, n_cand, fam, n_years)
                 row = {"variante_seuils": variante, "configuration": key, "nom": NOMS[key], "H": H, "mode": mode,
-                       "frais_bps": fee, **m, **extra}
+                       "frais_bps": fee, "annees": n_years, **m, **extra}
                 if mode == "réouverture":
                     row.update(decomposition(tr, runs[(key, "cooldown")][0], atr_bps, fee))
                 rows.append(row)
@@ -260,6 +266,45 @@ def run_grid(bars, atr_bps, eng: Engine, keys, horizons, variante: str) -> tuple
                         for r in y.to_dict("records")]
         print(f"  {variante}, H = {H} : fait")
     return rows, ann, trades
+
+
+def mutual_filter(eng: Engine, bars, atr_bps, H: int = 26) -> list[dict]:
+    """Filtrage mutuel de F2b et F3 sous pyramiding 0 (lecture cooldown) : trades de chaque sous-famille jouée seule
+    absents du moteur (évincés), classés selon le trade du moteur ouvert à leur signal (l'autre sous-famille en sens
+    opposé ou de même sens, ou la même sous-famille par effet de chaîne), et trades du moteur absents de la course
+    seule (ajoutés par chaîne). Résultats évincés : ceux de la course seule ; ajoutés : ceux du moteur."""
+    cases = [("F2b", "sans stop", None, "C2 et RE-1", {"F2b": None, "F3": ("SL-B", 0.0)}),
+             ("F3", "sans stop", None, "C2", {"F2b": None, "F3": None}),
+             ("F3", "SL-B extremum", ("SL-B", 0.0), "RE-1", {"F2b": None, "F3": ("SL-B", 0.0)})]
+    rows = []
+    for sub, stop, rule, moteur, regles in cases:
+        alone, _ = eng.run(sub, {sub: rule}, H, False)
+        eng_tr, fam = eng.run("R2", regles, H, False)
+        ef = fam.reindex(eng_tr.signal_bar.to_numpy()).to_numpy()
+        kept = eng_tr[ef == sub]
+        ev = alone[~alone.signal_bar.isin(set(kept.signal_bar))]
+        add = kept[~kept.signal_bar.isin(set(alone.signal_bar))]
+        j = np.searchsorted(eng_tr.signal_bar.to_numpy(), ev.signal_bar.to_numpy(), side="left") - 1
+        if (j < 0).any() or not (ev.signal_bar.to_numpy() < eng_tr.signal_bar.to_numpy()[j] + H).all():
+            raise SystemExit(f"filtrage mutuel {sub} : trade évincé sans trade bloquant : arrêt")
+        other = ef[j] != sub
+        same = eng_tr.side.to_numpy()[j] == ev.side.to_numpy()
+        groups = {"oppose": other & ~same, "meme_sens": other & same, "chaine": ~other}
+        for fee in FEES:
+            def natr(tr):
+                return (tr.ret_gross_bps.to_numpy() - fee) / atr_bps.reindex(tr.signal_bar.to_numpy()).to_numpy()
+            va, ve, vk, vd = natr(alone), natr(ev), natr(kept), natr(add)
+            row = {"sous_famille": sub, "stop": stop, "moteur": moteur, "H": H, "frais_bps": fee,
+                   "n_seule": len(alone), "esp_seule": float(va.mean()), "n_moteur": len(kept),
+                   "esp_moteur": float(vk.mean()), "n_ajoutes": len(add),
+                   "esp_ajoutes": float(vd.mean()) if len(add) else np.nan}
+            for g, sel in groups.items():
+                row[f"n_{g}"] = int(sel.sum())
+                row[f"esp_{g}"] = float(ve[sel].mean()) if sel.any() else np.nan
+            if not np.isclose(va.sum() - ve.sum() + vd.sum(), vk.sum(), rtol=1e-9, atol=1e-9):
+                raise SystemExit(f"filtrage mutuel {sub} : bilan non refermé : arrêt")
+            rows.append(row)
+    return rows
 
 
 def check_c02(res: pd.DataFrame, bars, atr_bps, eng: Engine) -> dict:
@@ -337,7 +382,8 @@ def section_controles(meta) -> str:
             ["IC 95 %", f"grappes mensuelles d'entrée, {n_fr(N_BOOT)} tirages ; effets appariés sur les mêmes entrées "
              "que C2 (lecture cooldown)"],
             ["Capital", "1 ATR14(t) = 0,25 % du capital, levier ≤ 1x ; notionnel 1x en référence ; Calmar = PnL "
-             "annualisé / |MDD valorisé|, à 0,25 % par ATR"],
+             "annualisé / valeur absolue du MDD valorisé, à 0,25 % par ATR, annualisé sur la période où la variante peut trader "
+             f"(6 ans ; {fr(meta['post_amorce']['annees'], 2)} ans pour les variantes RE-4, après l'amorce)"],
             ["Période", "2020-01 → 2025-12 (72 mois) ; aucune barre de 2026 lue"]]
     return "## A. Contrôles bloquants et conventions\n\n" + table(["Contrôle", "Résultat"], rows)
 
@@ -445,9 +491,13 @@ def section_annees(ann) -> str:
 
 def section_causal(ix, meta) -> str:
     acc = pd.DataFrame(meta["accord"])
+    pa = meta["post_amorce"]
+    debut = pd.Timestamp(pa["debut"])
     out = ["## G. RE-4 — Seuils causaux (contrôle B de C01)",
            f"Médiane de `leg_atr` et P75 de `nis_z_100` calculés sur les seuls signaux précédents. Les {BURN_IN} premiers "
-           "signaux (janvier à mai 2020) sont exclus des trois variantes, comparées sur la même période.",
+           f"signaux (13 janvier → {debut:%d/%m/%Y %H:%M} UTC) sont exclus des trois variantes, comparées sur la même "
+           f"période : du {BURN_IN + 1}e signal au 31/12/2025, soit {fr(pa['annees'], 2)} ans (annualisation du Calmar "
+           "et cadence mensuelle ; 6 ans pour l'échantillon entier).",
            "### Accord des masques avec les seuils de l'échantillon entier (après les 500 premiers signaux)\n\n"
            + table(["Sous-ensemble"] + list(VARIANTES),
                    [[k] + [f"{n_fr(acc[(acc.variante == v) & (acc.sous_ensemble == k)].n_signaux.iloc[0])} ; "
@@ -462,18 +512,41 @@ def section_causal(ix, meta) -> str:
                     r5, r10 = ix(key, H, mode, 5.0, v), ix(key, H, mode, 10.0, v)
                     cells.append(f"{ci(r5['esperance_atr'], r5['esperance_atr_lo'], r5['esperance_atr_hi'], 3)} ; "
                                  f"{spct(r5['pnl_compose_r25'])} ; {pct(r5['mdd_valorise_r25'], 0)} ; "
+                                 f"{spct(r5['cagr_r25'], 1)} par an, Calmar {fr(r5['calmar_r25'], 2)} ; "
                                  f"{int(r5['annees_pnl_r25_pos'])}/6 ‖ 10 bps : {sg(r10['esperance_atr'], 3)} ; "
                                  f"{spct(r10['pnl_compose_r25'])}")
                 rows.append([label(key, mode)] + cells)
-        out.append(f"### H = {H}\n\nCellule, à 5 bps : espérance ATR [IC] ; PnL ; MDD ; années à PnL > 0. Puis, à 10 "
-                   f"bps : espérance ATR ; PnL.\n\n" + table(["Configuration"] + list(VARIANTES), rows))
+        out.append(f"### H = {H}\n\nCellule, à 5 bps : espérance ATR [IC] ; PnL ; MDD ; PnL annualisé et Calmar ; années "
+                   f"à PnL > 0. Puis, à 10 bps : espérance ATR ; PnL.\n\n" + table(["Configuration"] + list(VARIANTES), rows))
+    return "\n\n".join(out)
+
+
+def section_filtrage(meta) -> str:
+    mf = pd.DataFrame(meta["filtrage_mutuel"])
+    out = ["## H. Filtrage mutuel de F2b et F3 sous pyramiding 0 (H = 26, cooldown)",
+           "Chaque sous-famille jouée seule, puis dans le moteur. Évincés : trades de la course seule absents du moteur, "
+           "classés selon le trade du moteur ouvert à leur signal ; résultat de la course seule. Ajoutés : trades du "
+           "moteur absents de la course seule (un trade évincé libère la place d'un signal suivant) ; résultat du moteur. "
+           "Bilan refermé : seule − évincés + ajoutés = moteur."]
+    for fee in FEES:
+        rows = []
+        for r in mf[mf.frais_bps == fee].itertuples():
+            autre = "F3" if r.sous_famille == "F2b" else "F2b"
+            rows.append([f"{r.sous_famille}, {r.stop} (moteur : {r.moteur})", f"{n_fr(r.n_seule)} ; {sg(r.esp_seule, 3)}",
+                         f"{n_fr(r.n_oppose)} ; {sg(r.esp_oppose, 3)}", f"{n_fr(r.n_meme_sens)} ; {sg(r.esp_meme_sens, 3)}",
+                         f"{n_fr(r.n_chaine)} ; {sg(r.esp_chaine, 3)}", f"{n_fr(r.n_ajoutes)} ; {sg(r.esp_ajoutes, 3)}",
+                         f"{n_fr(r.n_moteur)} ; {sg(r.esp_moteur, 3)}"])
+        out.append(f"**{fr(fee, 0)} bps — n ; espérance nette par trade (ATR)**\n\n"
+                   + table(["Sous-famille, stop", "Seule", "Évincés : l'autre sous-famille ouverte en sens opposé",
+                            "Évincés : l'autre, même sens", "Évincés : même sous-famille (chaîne)", "Ajoutés (chaîne)",
+                            "Dans le moteur"], rows))
     return "\n\n".join(out)
 
 
 def write_report(res, ann, meta) -> None:
     ix = Index(res)
     parts = [section_controles(meta), section_h(ix, 26), section_plateau(ix), section_modes(ix), section_effets(ix),
-             section_annees(ann), section_causal(ix, meta)]
+             section_annees(ann), section_causal(ix, meta), section_filtrage(meta)]
     narr = HERE / "narratif_C02bis.md"
     head = narr.read_text(encoding="utf-8") if narr.exists() else "# EXP-C02bis\n\n*(narratif à rédiger)*\n"
     (HERE / "rapport_C02bis.md").write_text(
@@ -621,12 +694,16 @@ def main() -> None:
                for k in ("R2", "F2b", "F3")):
         raise SystemExit("masques de l'échantillon entier après l'amorce différents des masques figés : arrêt")
     print(f"contrôles préalables passés ({time.time() - t0:.0f} s)")
+    debut = bars.time.iloc[int(atlas.bar_index.iloc[BURN_IN])]           # premier signal après l'amorce
+    n_post = N_YEARS - (debut - T0) / pd.Timedelta(days=365.25)
+    meta["post_amorce"] = {"debut": str(debut), "annees": n_post}
     rows, ann, trades = run_grid(bars, atr_bps, eng, [c["key"] for c in CONFIGS], HORIZONS, ENTIER)
     for v in VARIANTES:
-        r, a, _ = run_grid(bars, atr_bps, Engine(bars, atlas, atr, cmasks[v]), RE4_KEYS, H_MAIN, v)
+        r, a, _ = run_grid(bars, atr_bps, Engine(bars, atlas, atr, cmasks[v]), RE4_KEYS, H_MAIN, v, n_post)
         rows, ann = rows + r, ann + a
     res, ann = pd.DataFrame(rows), pd.DataFrame(ann)
     meta["c02"] = check_c02(res, bars, atr_bps, eng)
+    meta["filtrage_mutuel"] = mutual_filter(eng, bars, atr_bps)
     meta["duree_s"] = round(time.time() - t0)
     res.to_csv(HERE / "resultats_C02bis.csv", index=False, float_format="%.6g")
     ann.to_csv(HERE / "annuel_C02bis.csv", index=False, float_format="%.6g")

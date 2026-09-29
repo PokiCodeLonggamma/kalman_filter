@@ -394,7 +394,7 @@
   - À H13 et H48, aucune configuration n'a d'avantage.
 - [OBS] **Cooldown.** Il fait mieux que la réouverture jusqu'à H32 : les trades débloqués après un stop font −0,15 à −1,38 ATR. L'écart s'inverse à H48.
 - [OBS] **RE-3.** Le stop de catastrophe sur F2b coûte environ 0,08 ATR par trade (significatif à H20 et H24) et augmente le drawdown.
-- [OBS] **RE-4, seuils causaux.** RE-1 garde un IC positif en ATR (+0,34 à +0,37), 6 années positives sur 6 et un drawdown de −12 à −14 %. En revanche, son IC positif en bps disparaît dès qu'on retire janvier-mai 2020, même avec les seuils de l'échantillon entier.
+- [OBS] **RE-4, seuils causaux.** RE-1 garde un IC positif en ATR (+0,34 à +0,37), 6 années positives sur 6 et un drawdown de −12 à −14 %. En revanche, son IC positif en bps disparaît dès qu'on retire le 13 janvier-9 juin 2020, même avec les seuils de l'échantillon entier.
 - [HYP] Le moteur gère le risque ; l'espérance vient de la sortie à 26 barres et de l'éviction de Q4. Le cooldown évite de reprendre le signal suivant dans un breakout qui vient d'échouer.
 
 #### 5. Décision
@@ -411,3 +411,16 @@
   - le passage à l'Étape D ;
   - l'hypothèse d'exécution (à 10 bps, l'IC contient 0) ;
   - le hold-out.
+- **Relecture et décisions du porteur (2026-09-29, cadrage de C03), vérifiées :**
+  - **RE-1 validé officiellement** comme configuration de référence de l'Étape C : F2b sans stop, F3 SL-B 0, pyramiding 0, cooldown jusqu'à t + 1 + H.
+  - **H = 26, commun aux deux sous-familles, est verrouillé.** À H28, F2b monte (+0,569 ATR), mais F3 baisse (+0,148), le DD passe à −16,2 % (et non −16,0 %) et le Calmar à 0,92. Deux horizons choisis après lecture seraient du cherry-picking dans l'échantillon, avec un paramètre libre de plus.
+  - **Correction de l'annualisation des variantes RE-4.** Elles commencent au 501e signal, le 9 juin 2020 à 20 h 30 UTC, et non le 18 mai. Le Calmar et la cadence sont donc annualisés sur 5,56 ans, non 6 (ni 5,62). Calmar de RE-1 à H26 :
+    - seuils glissants : 1,21 (+15,1 % par an, DD −12,4 %) ; le porteur avait estimé 1,20 ;
+    - échantillon entier après l'amorce : 1,14 ;
+    - seuils expansifs : 1,00.
+  - **Filtrage mutuel sous pyramiding 0** (annexe H du rapport). Un signal contraire à la position ouverte de l'autre sous-famille est ignoré, et ces signaux perdaient quand on les jouait seuls :
+    - F3 contre un F2b ouvert : 59 trades, −1,22 ATR sans stop, −0,49 ATR avec SL-B ;
+    - F2b contre un F3 ouvert : 44 trades, −0,38 ATR.
+
+    F2b passe ainsi de +0,389 à +0,459, et F3 SL-B de +0,236 à +0,267 (+0,144 → +0,235 sans stop). La hausse de F3 de +0,144 à +0,267 citée par le porteur cumule le stop et le filtrage.
+  - **Take-profit fixe exclu**, ce qui est vérifié en EXP-C03 (annexe H). Le break-even différé est testé en EXP-C03.

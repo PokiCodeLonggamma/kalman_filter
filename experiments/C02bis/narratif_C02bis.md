@@ -144,8 +144,8 @@ RE-1, lecture cooldown, 5 bps :
   | Glissants (500) | +0,366 [+0,072 ; +0,672] | +12,3 [−0,6 ; +25,9] | +118 % ; −12,4 % | 6/6 | +0,225 ; +60 % |
   | Expansifs | +0,342 [+0,038 ; +0,645] | +11,0 [−2,2 ; +24,2] | +103 % ; −13,6 % | 6/6 | +0,202 ; +51 % |
 
-- **Ce qui tient avec des seuils causaux :** l'IC positif en ATR, les 6 années positives, un drawdown de −12 à −14 % et un Calmar de 0,92 à 1,12.
-- **Ce qui ne tient pas : l'IC positif en bps.** Il repasse sous 0 dès qu'on retire janvier-mai 2020, même avec les seuils de l'échantillon entier. Il dépendait donc de cette période, pas des seuils.
+- **Ce qui tient avec des seuils causaux :** l'IC positif en ATR, les 6 années positives, un drawdown de −12 à −14 % et un Calmar de 1,00 à 1,21 (annualisé sur 5,56 ans, voir §5).
+- **Ce qui ne tient pas : l'IC positif en bps.** Il repasse sous 0 dès qu'on retire le 13 janvier-9 juin 2020, même avec les seuils de l'échantillon entier. Il dépendait donc de cette période, pas des seuils.
 - La baisse du PnL (+138 % → +121 %) vient de ces mois retirés, pas des seuils.
 - RE-2 se comporte de même (+0,335 à +0,356 ATR, +103 à +120 %).
 - À H13 et H48, aucune variante n'a d'avantage.
@@ -174,3 +174,50 @@ RE-1, lecture cooldown, 5 bps :
   2. Un H propre à chaque sous-famille (F2b culmine à H28).
   3. Le passage à l'Étape D (walk-forward sur RE-1).
   4. Le hold-out.
+
+## 5. Relecture du porteur (2026-09-29), vérifiée
+
+**Décisions actées par le porteur :**
+- RE-1 devient officiellement la configuration de référence de l'Étape C : H = 26, lecture cooldown jusqu'à t + 1 + H, F2b sans stop, F3 SL-B 0 (extremum du segment), pyramiding 0.
+- **H = 26 est verrouillé pour les deux sous-familles.** Aucun horizon propre à F2b ou F3. À H28, F2b monte, mais F3 baisse et le risque global se dégrade :
+
+  | RE-1, cooldown, 5 bps | H = 26 | H = 28 |
+  |---|---|---|
+  | F2b | +0,459 ATR | +0,569 ATR |
+  | F3 | +0,267 ATR | +0,148 ATR |
+  | DD | −13,5 % | −16,2 % |
+  | Calmar | 1,16 | 0,92 |
+
+  Le porteur avait écrit −16,0 % pour le DD. Deux horizons choisis après lecture seraient du cherry-picking dans l'échantillon, avec un paramètre libre de plus.
+- **Take-profit fixe exclu.** Il ampute la queue droite de RE-1 (vérification chiffrée en annexe H de C03).
+
+**Correction de l'annualisation (RE-4)** (`run_C02bis.py`, colonne `annees` du CSV) :
+- Les variantes à seuils causaux commencent au 501e signal : le **9 juin 2020 à 20 h 30 UTC**, et non le 18 mai comme l'indiquait la relecture. Leur période fait donc **5,56 ans**, non 6 (ni 5,62).
+- Le Calmar et la cadence mensuelle sont désormais calculés sur cette durée. Aucune autre valeur ne change.
+- Calmar de RE-1 à H26 :
+
+  | Seuils | Calmar | PnL annualisé | DD |
+  |---|---|---|---|
+  | Glissants 500 | 1,21 (au lieu de 1,12) | +15,1 % | −12,4 % |
+  | Échantillon entier, après l'amorce | 1,14 (au lieu de 1,05) | +15,4 % | −13,5 % |
+  | Expansifs | 1,00 (au lieu de 0,92) | +13,6 % | −13,6 % |
+
+  Le porteur avait estimé 1,20 et +14,9 % par an sur 5,62 ans.
+
+**Filtrage mutuel de F2b et F3 sous pyramiding 0** (annexe H) :
+- Chaque sous-famille est comparée seule, puis dans le moteur (H26, cooldown, 5 bps).
+
+| Sous-famille | Seule | Dans le moteur | Évincés : l'autre ouverte en sens opposé | Évincés : l'autre, même sens | Chaîne : ajoutés ; évincés |
+|---|---|---|---|---|---|
+| F2b sans stop | 639 ; +0,389 | 573 ; +0,459 | 44 ; −0,378 | 30 ; −0,012 | 10 à +0,961 ; 2 à +6,14 |
+| F3 sans stop (C2) | 601 ; +0,144 | 507 ; +0,235 | 59 ; −1,217 | 46 ; +0,708 | 13 à −0,491 ; 2 à −0,10 |
+| F3 SL-B 0 (RE-1) | 601 ; +0,236 | 507 ; +0,267 | 59 ; −0,493 | 46 ; +0,683 | 13 à −0,359 ; 2 à −0,10 |
+
+**Lecture :**
+- **Le filtrage joue dans les deux sens.** Un signal contraire à la position ouverte de l'autre sous-famille est ignoré, et ces signaux contraires perdaient quand on les jouait seuls :
+  - F3 contre un F2b ouvert : 59 trades, −1,22 ATR sans stop, −0,49 ATR avec le stop ;
+  - F2b contre un F3 ouvert : 44 trades, −0,38 ATR.
+- **Les signaux de même sens évincés ne perdaient pas.** Ceux de F3 étaient bons (+0,71) et ont été remplacés par le F2b déjà ouvert. Ceux de F2b étaient neutres (−0,01).
+- **Deux corrections à l'explication du porteur :**
+  - Les 59 F3 contraires (le porteur en comptait 61, à −1,32 ATR, valeur proche de celle à 10 bps : −1,37) expliquent la hausse de F3, pas celle de F2b. F2b monte grâce aux 44 F2b contraires évincés et à l'effet de chaîne (+0,96 ATR sur 10 trades ajoutés).
+  - La hausse de F3 de +0,144 à +0,267 cumule deux effets : le stop, qui fait passer F3 seul de +0,144 à +0,236 ; puis le filtrage, de +0,236 à +0,267. Sans stop, le filtrage seul fait passer F3 de +0,144 à +0,235.

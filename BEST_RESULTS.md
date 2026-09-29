@@ -14,7 +14,7 @@
 ---
 
 ## Configuration de référence du moteur (EXP-C02bis, RE-1)
-*Mesurée formellement en EXP-C02bis. Plateau d'horizon, seuils causaux et règle de réentrée sont vérifiés ; aucune validation hors échantillon.*
+*Validée officiellement par le porteur le 2026-09-29 comme référence de l'Étape C. H = 26 est commun aux deux sous-familles et verrouillé. Plateau d'horizon, seuils causaux et règle de réentrée sont vérifiés ; aucune validation hors échantillon.*
 
 - **Signaux :** R2 hors `nis_z_100` Q4 (vetos d'entrée : x1 non retourné, R3, `nis_z_100` Q4).
 - **Sortie :** à H26, avec une enveloppe par sous-famille, connue à t :
@@ -39,8 +39,9 @@
 **À garder en tête :**
 - **Même espérance que R2 hors Q4 sans stop.** Sur les mêmes entrées, l'effet apparié vaut +0,015 ATR [−0,108 ; +0,141]. Le moteur gère le risque : drawdown −20,5 % → −13,5 %, Calmar 0,69 → 1,16, 2024 à +15 % au lieu de −3 %.
 - **Plateau :** l'IC en ATR est positif de H20 à H32 ; le PnL passe de +65 % (H20) à +138 % (H26) puis +89 % (H32). À H13 et H48, pas d'avantage.
-- **Seuils causaux :** +0,34 à +0,37 ATR avec IC > 0, 6 années sur 6, drawdown de −12 à −14 %.
-- **IC en bps fragile :** il ne reste positif qu'avec janvier-mai 2020.
+- **Seuils causaux :** +0,34 à +0,37 ATR avec IC > 0, 6 années sur 6, drawdown de −12 à −14 %. Calmar de 1,00 à 1,21, annualisé sur les 5,56 ans qui suivent l'amorce.
+- **IC en bps fragile :** il ne reste positif qu'avec la période du 13 janvier au 9 juin 2020.
+- **Filtrage mutuel :** une position à la fois écarte les contre-signaux de l'autre sous-famille, qui perdaient seuls (F3 contre un F2b ouvert : −1,22 ATR).
 - La règle de F3 a été choisie après lecture de C02. À 10 bps, l'IC contient 0.
 
 ---
@@ -92,7 +93,7 @@ La relecture de C02 assemble 1 et 2 ; EXP-C02bis en fait la configuration de ré
 ### EXP-C02bis — moteur de régimes (5 bps, séquentiel global, une position à la fois)
 1. **RE-1 en cooldown, H26** (F2b sans stop, F3 stop à l'extremum) : +0,369 ATR [+0,098 ; +0,645], +138 %, drawdown −13,5 %, Calmar 1,16, 6 années positives sur 6. Le détail est en tête de fichier.
 2. **Plateau d'horizon.** L'IC en ATR de RE-1 est positif de H20 à H32 (+0,21 à +0,37 ATR). Entre H24 et H28, l'espérance varie de moins de 0,05 ATR et le PnL va de +112 à +138 %.
-3. **Tenue avec des seuils causaux** (glissants ou expansifs) : +0,34 à +0,37 ATR avec IC > 0, +103 à +118 %, drawdown −12 à −14 %, 6 années sur 6.
+3. **Tenue avec des seuils causaux** (glissants ou expansifs) : +0,34 à +0,37 ATR avec IC > 0, +103 à +118 %, drawdown −12 à −14 %, Calmar 1,00 à 1,21 (sur 5,56 ans), 6 années sur 6.
 
 ---
 
@@ -107,3 +108,4 @@ La relecture de C02 assemble 1 et 2 ; EXP-C02bis en fait la configuration de ré
 | Stop sur F2b | coupe les gagnants : −0,15 à −0,38 ATR par trade | C02 |
 | Stop de catastrophe à 5 ATR sur F2b dans le moteur (RE-3) | −0,08 ATR par trade, drawdown plus élevé, Calmar 0,77 contre 1,16 | C02bis |
 | Réouverture immédiate après un stop (H ≤ 32) | les trades débloqués font −0,15 à −1,38 ATR ; le cooldown fait mieux | C02bis |
+| Horizon propre à chaque sous-famille (F2b à H28) | à H28 : F3 +0,148 ATR, DD −16,2 %, Calmar 0,92 ; paramètre libre choisi après lecture ; H = 26 verrouillé (décision du porteur) | C02bis |
