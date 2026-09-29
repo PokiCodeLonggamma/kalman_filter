@@ -1,0 +1,371 @@
+{
+ "ancre": {
+  "sans_stop": {
+   "n_trades": 6037,
+   "n_stops": 0
+  },
+  "stop_2_5": {
+   "n_trades": 6589,
+   "n_stops": 780
+  }
+ },
+ "univers": {
+  "n_atlas": 7296,
+  "n_base": 1874,
+  "n_R2": 1452,
+  "n_F2b": 741,
+  "n_F3": 711
+ },
+ "re1": {
+  "lignes_comparees": 2,
+  "ecart_relatif_max": 4.493512022106744e-06,
+  "n_trades": 1080
+ },
+ "bandes_retrace": [
+  {
+   "bande": "[0,50 ; 0,75[",
+   "n": 390,
+   "regime_re1": "sans stop",
+   "esp_sans_stop": 0.2198678331517244,
+   "esp_slb0": 0.06892030309362014,
+   "effet_stop": -0.15094753005810427,
+   "effet_stop_lo": -0.4852067910483575,
+   "effet_stop_hi": 0.20187714227439818,
+   "part_stoppee": 0.6564102564102564
+  },
+  {
+   "bande": "[0,75 ; 0,80[",
+   "n": 106,
+   "regime_re1": "sans stop",
+   "esp_sans_stop": 1.0267775181631618,
+   "esp_slb0": 0.4479509783088569,
+   "effet_stop": -0.5788265398543049,
+   "effet_stop_lo": -1.147452925511326,
+   "effet_stop_hi": -0.026029640382502797,
+   "part_stoppee": 0.5283018867924528
+  },
+  {
+   "bande": "[0,80 ; 0,85[",
+   "n": 77,
+   "regime_re1": "sans stop",
+   "esp_sans_stop": 0.8871864942339808,
+   "esp_slb0": 0.3574572210368361,
+   "effet_stop": -0.5297292731971446,
+   "effet_stop_lo": -1.2739118796097437,
+   "effet_stop_hi": 0.12941445186583864,
+   "part_stoppee": 0.5584415584415584
+  },
+  {
+   "bande": "[0,85 ; 0,90[",
+   "n": 87,
+   "regime_re1": "SL-B 0",
+   "esp_sans_stop": -0.10132718219140142,
+   "esp_slb0": -0.37607716161412613,
+   "effet_stop": -0.2747499794227247,
+   "effet_stop_lo": -0.814694033954245,
+   "effet_stop_hi": 0.28271838583426767,
+   "part_stoppee": 0.5517241379310345
+  },
+  {
+   "bande": "[0,90 ; 0,95[",
+   "n": 103,
+   "regime_re1": "SL-B 0",
+   "esp_sans_stop": 0.4482594275047567,
+   "esp_slb0": 0.39040695823711324,
+   "effet_stop": -0.05785246926764365,
+   "effet_stop_lo": -0.8074779738248405,
+   "effet_stop_hi": 0.6612056997408311,
+   "part_stoppee": 0.5242718446601942
+  },
+  {
+   "bande": "[0,95 ; ∞[",
+   "n": 317,
+   "regime_re1": "SL-B 0",
+   "esp_sans_stop": 0.2584424245582597,
+   "esp_slb0": 0.4028864338807934,
+   "effet_stop": 0.1444440093225337,
+   "effet_stop_lo": -0.14827987803424045,
+   "effet_stop_hi": 0.44715489295852767,
+   "part_stoppee": 0.4889589905362776
+  }
+ ],
+ "bandes_nis": [
+  {
+   "bande": "≤ P70",
+   "seuil_lo": null,
+   "seuil_hi": 0.9192068040966993,
+   "n": 1358,
+   "n_dans_re1": 1008,
+   "esp5": 0.16575225094974527,
+   "esp5_lo": -0.05199891250664942,
+   "esp5_hi": 0.3870261858710652,
+   "esp10": 0.022648038971747657,
+   "mediane5": -0.585966941481548,
+   "wr5": 0.42415316642120765,
+   "p90_5": 5.084028409683405,
+   "part_F3": 0.47201767304860087
+  },
+  {
+   "bande": "P70–P75",
+   "seuil_lo": 0.9192068040966993,
+   "seuil_hi": 1.2245041356145911,
+   "n": 94,
+   "n_dans_re1": 72,
+   "esp5": 0.529463101153629,
+   "esp5_lo": -0.26719938251401004,
+   "esp5_hi": 1.342380471308015,
+   "esp10": 0.4241057581649389,
+   "mediane5": -0.7019654621732582,
+   "wr5": 0.43617021276595747,
+   "p90_5": 6.391293781194629,
+   "part_F3": 0.7446808510638298
+  },
+  {
+   "bande": "P75–P80",
+   "seuil_lo": 1.2245041356145911,
+   "seuil_hi": 1.5992660188612187,
+   "n": 87,
+   "n_dans_re1": 0,
+   "esp5": -0.30007533006511783,
+   "esp5_lo": -0.7921286506361089,
+   "esp5_hi": 0.1999753674848886,
+   "esp10": -0.4077509418287219,
+   "mediane5": -0.587985134272413,
+   "wr5": 0.4482758620689655,
+   "p90_5": 3.1643031533357937,
+   "part_F3": 0.735632183908046
+  },
+  {
+   "bande": "P80–P85",
+   "seuil_lo": 1.5992660188612187,
+   "seuil_hi": 2.0572068985111858,
+   "n": 82,
+   "n_dans_re1": 0,
+   "esp5": -0.7443239071217534,
+   "esp5_lo": -1.5137113763989845,
+   "esp5_hi": 0.1242629584503499,
+   "esp10": -0.8488294823865751,
+   "mediane5": -1.9359884735550676,
+   "wr5": 0.2926829268292683,
+   "p90_5": 3.5020482332991154,
+   "part_F3": 0.8536585365853658
+  },
+  {
+   "bande": "P85–P90",
+   "seuil_lo": 2.0572068985111858,
+   "seuil_hi": 2.7485351661715294,
+   "n": 84,
+   "n_dans_re1": 0,
+   "esp5": 0.22305479488770286,
+   "esp5_lo": -0.6564969890709936,
+   "esp5_hi": 1.2054410639380946,
+   "esp10": 0.11713831275857586,
+   "mediane5": -0.41060635015005476,
+   "wr5": 0.47619047619047616,
+   "p90_5": 4.682058832019397,
+   "part_F3": 0.9523809523809523
+  },
+  {
+   "bande": "> P90",
+   "seuil_lo": 2.7485351661715294,
+   "seuil_hi": null,
+   "n": 169,
+   "n_dans_re1": 0,
+   "esp5": -0.4045564216116319,
+   "esp5_lo": -0.9296309521568238,
+   "esp5_hi": 0.16602367225353765,
+   "esp10": -0.4924743637642248,
+   "mediane5": -1.4675529992204046,
+   "wr5": 0.378698224852071,
+   "p90_5": 4.5953038765164465,
+   "part_F3": 0.9585798816568047
+  }
+ ],
+ "lecture": {
+  "5": {
+   "A": {
+    "voisins": {
+     "0,80": {
+      "valeur": 0.8,
+      "ecart": -0.03776773521868531,
+      "ecart_lo": -0.09114452451049508,
+      "ecart_hi": 0.009408122761713017,
+      "d1": false,
+      "d2": false,
+      "d3": false,
+      "net": false,
+      "meilleur": false
+     },
+     "0,90": {
+      "valeur": 0.9,
+      "ecart": 0.022132637231275044,
+      "ecart_lo": -0.022294870918246692,
+      "ecart_hi": 0.06797951858284251,
+      "d1": false,
+      "d2": false,
+      "d3": false,
+      "net": false,
+      "meilleur": false
+     }
+    },
+    "verdict": "plateau",
+    "rang_esperance": 3,
+    "rang_calmar": 3,
+    "n_points": 5
+   },
+   "B": {
+    "voisins": {
+     "−0,25": {
+      "valeur": -0.25,
+      "ecart": -0.008916722161325772,
+      "ecart_lo": -0.04956864780914812,
+      "ecart_hi": 0.026359892802726874,
+      "d1": false,
+      "d2": false,
+      "d3": false,
+      "net": false,
+      "meilleur": false
+     },
+     "+0,25": {
+      "valeur": 0.25,
+      "ecart": -0.013967421954796862,
+      "ecart_lo": -0.036038645784914614,
+      "ecart_hi": 0.013584381090967787,
+      "d1": false,
+      "d2": false,
+      "d3": false,
+      "net": false,
+      "meilleur": false
+     }
+    },
+    "verdict": "plateau",
+    "rang_esperance": 1,
+    "rang_calmar": 2,
+    "n_points": 4
+   },
+   "C": {
+    "voisins": {
+     "P70": {
+      "valeur": 0.7,
+      "ecart": -0.01899389833157933,
+      "ecart_lo": -0.08394224862973698,
+      "ecart_hi": 0.04665220899546391,
+      "d1": false,
+      "d2": false,
+      "d3": false,
+      "net": false,
+      "meilleur": false
+     },
+     "P80": {
+      "valeur": 0.8,
+      "ecart": -0.05862069255828295,
+      "ecart_lo": -0.11688875733365706,
+      "ecart_hi": -0.009173630216476646,
+      "d1": false,
+      "d2": false,
+      "d3": false,
+      "net": false,
+      "meilleur": false
+     }
+    },
+    "verdict": "plateau",
+    "rang_esperance": 1,
+    "rang_calmar": 1,
+    "n_points": 5
+   }
+  },
+  "10": {
+   "A": {
+    "voisins": {
+     "0,80": {
+      "valeur": 0.8,
+      "ecart": -0.03776773521868531,
+      "ecart_lo": -0.09114452451049508,
+      "ecart_hi": 0.009408122761713017,
+      "d1": false,
+      "d2": false,
+      "d3": false,
+      "net": false,
+      "meilleur": false
+     },
+     "0,90": {
+      "valeur": 0.9,
+      "ecart": 0.022132637231275044,
+      "ecart_lo": -0.022294870918246692,
+      "ecart_hi": 0.06797951858284251,
+      "d1": false,
+      "d2": false,
+      "d3": false,
+      "net": false,
+      "meilleur": false
+     }
+    },
+    "verdict": "plateau",
+    "rang_esperance": 3,
+    "rang_calmar": 3,
+    "n_points": 5
+   },
+   "B": {
+    "voisins": {
+     "−0,25": {
+      "valeur": -0.25,
+      "ecart": -0.008916722161325772,
+      "ecart_lo": -0.04956864780914812,
+      "ecart_hi": 0.026359892802726874,
+      "d1": false,
+      "d2": false,
+      "d3": false,
+      "net": false,
+      "meilleur": false
+     },
+     "+0,25": {
+      "valeur": 0.25,
+      "ecart": -0.013967421954796862,
+      "ecart_lo": -0.036038645784914614,
+      "ecart_hi": 0.013584381090967787,
+      "d1": false,
+      "d2": false,
+      "d3": false,
+      "net": false,
+      "meilleur": false
+     }
+    },
+    "verdict": "plateau",
+    "rang_esperance": 1,
+    "rang_calmar": 2,
+    "n_points": 4
+   },
+   "C": {
+    "voisins": {
+     "P70": {
+      "valeur": 0.7,
+      "ecart": -0.020795684168347955,
+      "ecart_lo": -0.08607069049529043,
+      "ecart_hi": 0.044782320336957164,
+      "d1": false,
+      "d2": false,
+      "d3": false,
+      "net": false,
+      "meilleur": false
+     },
+     "P80": {
+      "valeur": 0.8,
+      "ecart": -0.05712488274836092,
+      "ecart_lo": -0.11591891764864319,
+      "ecart_hi": -0.007762431550868268,
+      "d1": true,
+      "d2": false,
+      "d3": false,
+      "net": true,
+      "meilleur": false
+     }
+    },
+    "verdict": "falaise",
+    "rang_esperance": 1,
+    "rang_calmar": 1,
+    "n_points": 5
+   }
+  }
+ },
+ "duree_s": 54
+}

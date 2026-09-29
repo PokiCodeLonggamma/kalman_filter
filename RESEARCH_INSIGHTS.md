@@ -113,6 +113,16 @@ Elle se mesure séparément par sens et par type de signal (rang 1 ou répétiti
 - Exemple : V3 à m = 2 fait +1,0 point par an de mieux sans glissement, mais −0,8 point avec 5 bps de glissement du break-even.
 - La durée sous le pic se lit à côté : un drawdown moins profond peut être plus long.
 
+### I-M12 — La sensibilité d'un seuil se lit par bandes marginales `[MÉTHODE]`
+*Source : EXP-C05.*
+
+- Déplacer un seuil change la règle d'une bande de signaux seulement. À entrées égales, l'effet d'un point de grille est la somme des effets par bande.
+- La courbe de sensibilité s'explique donc par la table des bandes. Exemple, la frontière F2b / F3 : le stop coûte 0,53 à 0,58 ATR par trade sur les retracements de 0,75 à 0,85, et rien au-delà.
+- La lecture (plateau, falaise, crête) est fixée avant le calcul, sur les voisins immédiats. Ne pas l'imposer aux points extrêmes, qui décrivent seulement la pente.
+- Deux réserves :
+  - le rang du contrôle dans sa grille dit si le seuil a pu être calé sur la courbe ;
+  - un seuil choisi après lecture des mêmes données (exclusion de Q4 après C01) est attendu au sommet.
+
 ---
 
 ## 2. Cinématique du moteur v2.1
@@ -285,6 +295,13 @@ L'atlas A01 soutient cette lecture à travers le ratio de retracement `retrace_r
       - Le déficit de 2022 (−0,184 ATR) tient à deux gagnants F3 extrêmes coupés (+18,6 et +14,3 ATR dans RE-1) ; sans eux, +0,006.
       - Sur F3, le SL-B plafonne déjà ce que le break-even pourrait sauver. Ses 10 plus grands gains sont des F2b.
     - `[HYP]` Le break-even, à l'entrée + 5 bps, se trouve dans la zone de retest des breakouts. Son coût annuel dépend de la probabilité de couper l'un des rares gagnants extrêmes qui portent l'espérance.
+    - `[OBS]` **Sensibilité des trois seuils de RE-1 (EXP-C05), un seuil à la fois, H26, 5 bps.**
+      - **Frontière F2b / F3 :** plateau de 0,85 à 0,95 (espérance +0,369 à +0,396, MDD −13,4 à −14,2 %). À 0,75 : −0,095 ATR [−0,157 ; −0,030], MDD −19,2 %.
+      - **Mécanisme :** le stop à l'extremum coûte 0,53 à 0,58 ATR par trade sur les retracements de 0,75 à 0,85, qui font +0,9 à +1,0 ATR sans stop. Il ne devient neutre qu'à partir de 0,90, et n'est positif, sans être significatif, qu'au-delà de 0,95.
+      - **Marge du stop de F3 :** plateau de −0,25 à +0,25 ATR (effets de ±0,015 ATR). +0,50 coûte 0,036.
+      - **Exclusion de `nis_z_100` :** RE-1 est au sommet. Relâchée, −0,06 (P80) à −0,15 ATR (P90), significatif ; resserrée (P70), −0,02, non significatif. C'est une falaise d'un côté, signalée avant l'Étape D.
+      - Par signal joué seul, l'espérance passe de +0,53 (P70-P75) à −0,30 (P75-P80), avec des IC qui se recouvrent. La part de F3 monte de 74 à 96 % au-delà de P75.
+    - `[HYP]` Le retour à l'extremum n'invalide le breakout qu'après un retracement presque complet de la jambe précédente (≥ 0,90-0,95). En dessous, c'est un retest : c'est le mécanisme de F2b, qui s'étend jusqu'à 0,85.
   - `[HYP]` Le point d'entrée dans le range décide.
     - F2b entre au milieu : un repli de 1 à 3 ATR est un balayage de liquidité avant l'expansion.
     - F3 entre près de l'extrémité opposée : casser l'extremum invalide le breakout.
@@ -326,3 +343,5 @@ L'atlas A01 soutient cette lecture à travers le ratio de retracement `retrace_r
 7. ~~Faut-il un horizon propre à chaque sous-famille ?~~ **Tranché par le porteur (2026-09-29)** : non, H = 26 est commun. À H28, F2b monte à +0,569 ATR, mais F3 tombe à +0,148, le DD passe à −16,2 % et le Calmar à 0,92. Ce serait un paramètre libre choisi après lecture.
 8. ~~Un break-even ou un take-profit améliore-t-il RE-1 ?~~ **Répondu (EXP-C03 et son analyse approfondie)** : non. Le break-even est neutre pour m ≥ 2 et nuisible en dessous. Comme outil de risque, il équivaut à une réduction de taille et ne résiste pas à 5 bps de glissement. Même la borne optimiste du take-profit reste sous RE-1.
 9. ~~Un filtre de tendance macro améliore-t-il RE-1 ?~~ **Répondu (EXP-C04)** : non. Les trades contre-tendance ne sont pas toxiques, et le veto retire des V de la queue droite. En séquentiel, il fait en plus entrer des signaux perdants.
+10. ~~Les seuils durs de RE-1 reposent-ils sur des plateaux ?~~ **Répondu (EXP-C05)** : oui pour la frontière F2b / F3 (0,85 à 0,95) et pour la marge du stop de F3 (−0,25 à +0,25 ATR). L'exclusion de `nis_z_100` est une falaise côté permissif, signalée avant l'Étape D.
+11. La bascule d'espérance de `nis_z_100` au voisinage de P75 se retrouve-t-elle sur les autres actifs ? À contrôler par bandes dans l'Étape D, sans régler le seuil.

@@ -14,7 +14,7 @@
 ---
 
 ## Configuration de référence du moteur (EXP-C02bis, RE-1)
-*Validée officiellement par le porteur le 2026-09-29 comme référence de l'Étape C. H = 26 est commun aux deux sous-familles et verrouillé. Plateau d'horizon, seuils causaux et règle de réentrée sont vérifiés ; aucune validation hors échantillon.*
+*Validée officiellement par le porteur le 2026-09-29 comme référence de l'Étape C. H = 26 est commun aux deux sous-familles et verrouillé. Sont vérifiés : le plateau d'horizon, les seuils causaux, la règle de réentrée et la sensibilité des trois seuils (C05). Aucune validation hors échantillon.*
 
 - **Signaux :** R2 hors `nis_z_100` Q4 (vetos d'entrée : x1 non retourné, R3, `nis_z_100` Q4).
 - **Sortie :** à H26, avec une enveloppe par sous-famille, connue à t :
@@ -44,6 +44,9 @@
 - **Filtrage mutuel :** une position à la fois écarte les contre-signaux de l'autre sous-famille, qui perdaient seuls (F3 contre un F2b ouvert : −1,22 ATR).
 - La règle de F3 a été choisie après lecture de C02. À 10 bps, l'IC contient 0.
 - **Break-even et take-profit (EXP-C03) :** aucun ne l'améliore ; RE-1 reste intact.
+- **Sensibilité (EXP-C05) :**
+  - plateaux pour la frontière F2b / F3 (0,85 à 0,95) et pour la marge du stop de F3 (−0,25 à +0,25 ATR) ;
+  - seuil sensible : l'exclusion de `nis_z_100`, falaise côté permissif (P80 : −0,06 ATR par trade, significatif). Signalé avant l'Étape D.
 
 ---
 
@@ -125,7 +128,21 @@ Le take-profit fixe est exclu : même sa borne optimiste reste sous RE-1 (+0,200
    - Même constat à 10 bps et à H24, H26 et H28.
    - En séquentiel, les signaux ajoutés dans la fenêtre d'un trade vétoé perdent (−0,48 ATR pour l'EMA 200). **RE-1 reste pur.**
 
-L'Étape C a testé ses quatre facteurs : horizon, stop par sous-famille, break-even, filtre macro. RE-1, en tête de fichier, est la stratégie cœur.
+### EXP-C05 — sensibilité de RE-1 à ses trois seuils (5 bps, H26, un seuil à la fois)
+1. **Frontière F2b / F3 : plateau de 0,85 à 0,95, pente en dessous.**
+   - De 0,85 à 0,95 : espérance +0,369 à +0,396 ATR, MDD −13,4 à −14,2 %, Calmar 1,16 à 1,21. Effets appariés non significatifs.
+   - À 0,75 : −0,095 ATR par trade [−0,157 ; −0,030], MDD −19,2 %. Le stop à l'extremum coupe les meilleurs F2b, qui font +0,9 à +1,0 ATR sans stop pour un retracement de 0,75 à 0,85.
+   - RE-1 est 3e sur 5 : la frontière, fixée en B01, n'a pas été calée sur cette courbe.
+2. **Marge du stop de F3 : plateau de −0,25 à +0,25 ATR.**
+   - Effets appariés de −0,009 et −0,014 ATR, non significatifs.
+   - À +0,50 : −0,036, MDD −15,2 %, Calmar 0,91.
+   - δ = 0 était la valeur la plus serrée de C02 ; le côté plus serré est plat.
+3. **Exclusion de `nis_z_100` : RE-1 au sommet (1er sur 5), falaise côté permissif.**
+   - Écarts à RE-1 : P80 −0,059 [−0,117 ; −0,009], P85 −0,131, P90 −0,150 ATR ; Calmar 0,84, 0,59 et 0,56. Les signaux admis perdent (−0,29 à −0,53 ATR).
+   - P70 : −0,019, non significatif.
+   - Verdict de la règle fixée avant le calcul : plateau en limite à 5 bps, falaise à 10 bps. **Signalement formel avant l'Étape D.**
+
+L'Étape C a testé ses quatre facteurs (horizon, stop par sous-famille, break-even, filtre macro) et la sensibilité de ses seuils. RE-1, en tête de fichier, est la stratégie cœur, inchangée.
 
 ---
 
@@ -146,3 +163,5 @@ L'Étape C a testé ses quatre facteurs : horizon, stop par sous-famille, break-
 | Break-even différé sur RE-1, m ≥ 2 ATR | effet apparié de −0,02 à +0,03 ATR par trade ; baisse du drawdown non significative ; non retenu (KISS) | C03 |
 | Break-even comme variante de gestion du risque (V3 ou V2, m = 2) | gain de MDD non démontré (82 à 92 % des chemins), Calmar fragile, drawdowns plus longs ; à MDD égal, équivaut à réduire la taille ; perdu dès 5 bps de glissement du break-even | C03, analyse approfondie |
 | Veto des signaux contre la tendance (EMA 200, EMA 50, Kalman v2.1 sur 4 h) | les trades contre-tendance valent autant ou plus que les alignés (+0,39 à +0,43 ATR) et portent jusqu'à 48 % du décile supérieur ; espérance +0,369 → +0,22 à +0,26 ; Calmar 1,16 → 0,41 à 0,49 ; pire à 10 bps et sur tout le plateau | C04 |
+| Stop à l'extremum pour les retracements de 0,75 à 0,85 (frontière F2b / F3 abaissée) | coupe les meilleurs F2b (+0,9 à +1,0 ATR sans stop) ; frontière 0,75 : −0,095 ATR par trade [−0,157 ; −0,030], MDD −19,2 % | C05 |
+| Exclusion de `nis_z_100` relâchée (P80 à P90) | les signaux admis perdent (−0,29 à −0,53 ATR) ; −0,06 à −0,15 ATR par trade, significatif ; Calmar 0,84 → 0,56 | C05 |

@@ -697,3 +697,116 @@
 - [ ] **À POURSUIVRE**
 
   L'Étape C a testé ses quatre facteurs : horizon, stop par sous-famille, break-even, filtre macro. RE-1 est la stratégie cœur. Le porteur annonce C05 (sensibilité), puis l'Étape D (portabilité multi-actifs).
+- **Décision du porteur (2026-09-29, cadrage de C05) :** C04 est close, le filtre macro rejeté, RE-1 reste pur. Les 2 commits sont poussés (origin = 1dba30c).
+  - Deux formulations de la relecture sont nuancées ici, selon les mesures.
+  - « Les trades contre-tendance constituent l'alpha majeur de la queue droite » : ils portent une part de la queue droite proche de leur poids.
+    - Ils représentent 44 %, 35 % et 47 % des trades.
+    - Ils font 43 %, 33 % et 48 % du décile supérieur, et 41 %, 32 % et 46 % de sa contribution.
+    - Ils font 47 %, 35 % et 53 % des gains ≥ +3 ATR : un peu au-dessus de leur poids, surtout V3 (+5 points).
+  - Le rejet tient à ce qu'ils ne sont pas toxiques, pas à ce qu'ils domineraient la queue droite.
+  - « Le Kalman est en avance sur la tendance lente » : c'est l'hypothèse [HYP] de C04, compatible avec les mesures mais non démontrée.
+
+### [EXP-C05] — Sensibilité globale de la stratégie cœur (RE-1)
+- **Date :** 2026-09-29
+- **Étape :** C Enveloppe. Diagnostic de robustesse avant l'Étape D, sans règle nouvelle.
+- **Actif & Période :** BTC/USD Bitstamp 30m, 2020-01 → 2025-12 ; 2026, ETH et XRP non lus.
+- **Modèle de frais :** 5 et 10 bps, séparés. Capital à 0,25 % par ATR14(t), 1x en référence.
+- **Livrables :**
+  - `experiments/C05/run_C05.py` ; aucun module de `src/` n'est modifié ;
+  - `rapport_C05.md`, `resultats_C05.csv` (28 lignes), `annuel_C05.csv`, `controles_C05.json`, 4 figures.
+
+#### 0. Cadrage obligatoire
+- **QUESTION :** les trois seuils durs de RE-1 reposent-ils sur des plateaux ou sur des crêtes ?
+  - frontière F2b / F3 à 0,85 de `retrace_ratio` ;
+  - marge δ = 0 du stop de F3 ;
+  - exclusion de `nis_z_100` au-delà de P75.
+- **PERTINENCE POUR LE FILTRE AKF :** chaque seuil traduit une lecture physique du moteur (position dans le range, invalidation du breakout, choc d'innovation). Une crête signalerait un ajustement au bruit de BTC avant la portabilité.
+- **CE QUE LE PROTOCOLE MESURE RÉELLEMENT :**
+  - la sensibilité locale, un seuil à la fois, de l'espérance [IC], du PnL, du MDD et du Calmar, à 5 et 10 bps ;
+  - l'écart à RE-1 : apparié pour A et B (mêmes entrées), sur les mêmes mois tirés pour C ;
+  - les chemins réordonnés et l'équivalent en taille ;
+  - les mécanismes, par bandes de retracement et de `nis_z_100`.
+- **CE QU'IL NE PERMET PAS DE CONCLURE :**
+  - une validation hors échantillon ;
+  - les interactions entre seuils ;
+  - la sensibilité des seuils non testés : coupure de `leg_atr`, borne 0,50, veto R3 ;
+  - un meilleur réglage : aucun point n'est adopté.
+
+#### 1. Hypothèse & Motivation physique
+- Si les seuils traduisent des phénomènes physiques, la performance varie doucement autour d'eux. Si elle chute à un pas du seuil, celui-ci est calé sur le bruit.
+
+#### 2. Règle testée (OFAT)
+- **A :** frontière b ∈ {0,75 ; 0,80 ; 0,85 ; 0,90 ; 0,95}. F3 (SL-B 0) si `retrace_ratio` ≥ b, F2b sans stop sinon. Mêmes entrées que RE-1.
+- **B :** SL-B δ ∈ {−0,25 ; 0 ; +0,25 ; +0,50} ATR pour F3 (δ < 0 : plus serré). Mêmes entrées.
+- **C :** exclusion de `nis_z_100` au-delà de P70, P75, P80, P85 ou P90 (quantiles de l'atlas). Univers et chaîne recalculés.
+- **Contrôle :** RE-1, identique à C02bis trade par trade.
+- **Règle de lecture fixée avant le calcul :**
+  - on lit les voisins immédiats de RE-1 ;
+  - dégradation nette si (d1) écart ≤ −20 % de l'espérance de RE-1 avec IC < 0, (d2) espérance ou Calmar sous la moitié, ou (d3) MDD plus profond que 1,5 fois ;
+  - plateau si aucun voisin ne se dégrade nettement, falaise si un seul, crête si les deux ;
+  - falaise et crête sont signalées avant l'Étape D ; aucun voisin n'est adopté.
+
+#### 3. Résultats nets (H26, 5 bps ; PnL et MDD à 0,25 % par ATR)
+Huit métriques de RE-1 et de ses voisins immédiats :
+
+| Métrique | RE-1 | A 0,80 | A 0,90 | B −0,25 | B +0,25 | C P70 | C P80 |
+|---|---|---|---|---|---|---|---|
+| PnL Net Total (1x) | +138 % (+204 %) | +119 % (+168 %) | +147 % (+192 %) | +137 % (+207 %) | +131 % (+186 %) | +116 % (+148 %) | +113 % (+153 %) |
+| Profit Factor (1x) | 1,20 | 1,18 | 1,19 | 1,20 | 1,18 | 1,17 | 1,16 |
+| Win Rate | 44,3 % | 42,9 % | 45,5 % | 43,2 % | 45,1 % | 44,3 % | 43,9 % |
+| Espérance ATR ; bps | +0,369 ; +12,3 | +0,331 ; +11,1 | +0,391 ; +12,1 | +0,360 ; +12,4 | +0,355 ; +11,8 | +0,350 ; +10,8 | +0,310 ; +10,2 |
+| Max Drawdown ; Calmar | −13,5 % ; 1,16 | −14,1 % ; 0,99 | −13,4 % ; 1,21 | −13,0 % ; 1,19 | −14,0 % ; 1,07 | −17,8 % ; 0,77 | −15,9 % ; 0,84 |
+| Nombre de trades (/mois) | 1 080 (15,0) | 1 080 | 1 080 | 1 080 | 1 080 | 1 023 (14,2) | 1 139 (15,8) |
+| Durée médiane | 26 | 26 | 26 | 26 | 26 | 26 | 26 |
+| Part des frais (1x) | 29 % | 31 % | 29 % | 29 % | 30 % | 32 % | 33 % |
+
+Grilles complètes : espérance ATR ; MDD ; Calmar.
+
+| Grille | Point | 5 bps | 10 bps |
+|---|---|---|---|
+| A | 0,75 | +0,274 ; −19,2 % ; 0,58 | +0,138 ; −21,5 % ; 0,25 |
+| A | 0,80 | +0,331 ; −14,1 % ; 0,99 | +0,195 ; −16,6 % ; 0,48 |
+| A | **0,85 (RE-1)** | **+0,369 ; −13,5 % ; 1,16** | **+0,233 ; −15,9 % ; 0,60** |
+| A | 0,90 | +0,391 ; −13,4 % ; 1,21 | +0,255 ; −15,8 % ; 0,64 |
+| A | 0,95 | +0,396 ; −14,2 % ; 1,18 | +0,260 ; −16,6 % ; 0,64 |
+| B | −0,25 | +0,360 ; −13,0 % ; 1,19 | +0,224 ; −15,1 % ; 0,63 |
+| B | +0,25 | +0,355 ; −14,0 % ; 1,07 | +0,219 ; −16,4 % ; 0,54 |
+| B | +0,50 | +0,333 ; −15,2 % ; 0,91 | +0,197 ; −17,6 % ; 0,45 |
+| C | P70 | +0,350 ; −17,8 % ; 0,77 | +0,212 ; −20,0 % ; 0,40 |
+| C | P80 | +0,310 ; −15,9 % ; 0,84 | +0,176 ; −18,0 % ; 0,40 |
+| C | P85 | +0,238 ; −17,5 % ; 0,59 | +0,105 ; −20,1 % ; 0,20 |
+| C | P90 | +0,219 ; −17,7 % ; 0,56 | +0,087 ; −20,7 % ; 0,16 |
+
+#### 4. Analyse causale & Physique du trade
+- [CODE] **Contrôles bloquants passés :**
+  - ancre P6.5d ;
+  - p = 0,75 et la frontière 0,85 redonnent l'univers et les sous-familles de B01 ;
+  - RE-1 est identique à C02bis ;
+  - le point RE-1 de chaque grille redonne RE-1 ;
+  - A et B gardent les entrées de RE-1 ;
+  - la décomposition de C est refermée à 10⁻⁹ près.
+- [OBS] **A, plateau de 0,85 à 0,95, pente en dessous.**
+  - Effets appariés : +0,022 (0,90) et +0,028 (0,95), non significatifs ; −0,038 à 0,80, non significatif ; −0,095 [−0,157 ; −0,030] à 0,75.
+  - Par bande, le stop à l'extremum coûte 0,58 et 0,53 ATR par trade sur les retracements de 0,75 à 0,85, qui font +1,03 et +0,89 sans stop. Il n'est positif, sans être significatif, qu'au-delà de 0,95 (+0,14).
+  - RE-1 est 3e sur 5.
+- [OBS] **B, plateau de −0,25 à +0,25 ATR.**
+  - Effets de −0,009 et −0,014 ATR, non significatifs ; +0,50 coûte 0,036 (IC en limite de 0).
+  - Le plancher n'est jamais actif. δ = 0 était la valeur la plus serrée de C02 ; le côté plus serré est plat.
+- [OBS] **C, RE-1 au sommet (1er sur 5), falaise côté permissif.**
+  - Écarts sur les mêmes mois : P80 −0,059 [−0,117 ; −0,009] ; P85 −0,131 ; P90 −0,150, tous significatifs.
+  - Les signaux admis perdent : −0,31, −0,53 et −0,29 ATR.
+  - P70 : −0,019, non significatif. Les 72 trades retirés valaient +0,64 ATR. Son MDD de −17,8 % tient au chemin réel : P70 fait mieux dans 49 % des chemins réordonnés.
+  - Par signal joué seul : +0,53 (P70-P75) contre −0,30 (P75-P80), avec des IC qui se recouvrent.
+- [OBS] **Verdicts de la règle.** A et B : plateaux, à 5 et 10 bps. C : plateau en limite à 5 bps (−0,059 contre un seuil de −0,074), falaise à 10 bps (−0,057 contre −0,047).
+- [OBS] **Années :** 5 ou 6 années positives sur 6 pour tous les points de grille ; 2021 reste l'année faible.
+- [HYP] Le retour à l'extremum n'invalide le breakout qu'après un retracement presque complet de la jambe précédente ; en dessous, c'est un retest.
+- [HYP] L'information du stop est une zone de ±0,25 ATR autour de l'extremum, pas un point.
+- [HYP] Au-delà de P75, `nis_z_100` signale des déclenchements sur bougie de choc (K2), presque tous des F3 (74 à 96 %).
+
+#### 5. Décision
+- [ ] **REJETÉ**
+- [ ] **NON CONCLUANT**
+- [x] **À POURSUIVRE : RE-1 inchangé pour l'Étape D.**
+  - Aucun point de grille n'est adopté. Les voisins meilleurs (A 0,90 et 0,95, B −0,25) sont non significatifs.
+  - **Signalement formel :** l'exclusion de `nis_z_100` est une falaise côté permissif. C'est le seuil le plus sensible de RE-1, et le seul que la sélection de C01 a pu favoriser.
+  - Proposition pour l'Étape D : garder la règle P75 sur les signaux de chaque actif (ou sa version causale), et publier l'espérance par bande de `nis_z_100` pour vérifier que la bascule reste au voisinage de P75.
