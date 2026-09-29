@@ -1,7 +1,9 @@
 """EXP-C01 — enveloppe séquentielle : sortie à horizon fixe, pyramiding 0, frais, continuation, réserve 2026, causalité
 par troncature, métriques ; ancre P6.5d (sans stop et stop 2,5 %) reproduite sur BTC.
 EXP-C02 — stop-loss en prix : SL-A (k · ATR14(t)) et SL-B (extremum du segment qualifiant), mèche et gap, entrées
-figées contre séquentiel dynamique, causalité des niveaux, IC en bps et en ATR, effet apparié."""
+figées contre séquentiel dynamique, causalité des niveaux, IC en bps et en ATR, effet apparié.
+EXP-C03 — break-even différé : activation, niveau net, gap, priorité du stop initial, fenêtre d'activation, référence
+barre par barre, équivalence sans break-even, cooldown et réouverture, causalité par troncature."""
 import json
 
 import numpy as np
@@ -10,9 +12,9 @@ import pytest
 
 from categorization import cluster_bootstrap, timing_drift
 from config import DATA_RAW, ROOT
-from envelope import (atr_stop_levels, by_year, dev_signals, effect_ci, equity_curve_sized, mean_ci, risk_weights,
-                      route_levels, segment_extremum, stop_trades, structural_stop_levels, summarize, summarize_sized,
-                      time_stop_trades)
+from envelope import (atr_stop_levels, breakeven_trades, breakeven_trigger_levels, by_year, dev_signals, effect_ci,
+                      equity_curve_sized, mean_ci, risk_weights, route_levels, segment_extremum, stop_trades,
+                      structural_stop_levels, summarize, summarize_sized, time_stop_trades)
 from estimand.stoploss import apply_stop, equity_curve, simulate_strategy
 
 T0 = pd.Timestamp("2021-01-01", tz="UTC")
@@ -305,6 +307,146 @@ def test_moteur_de_regimes_route_chaque_sous_famille():
     np.testing.assert_array_equal(uni, atr_stop_levels(b, t, s, a, 2.0))    # même règle partout = règle uniforme
     with pytest.raises(ValueError, match="sans enveloppe"):
         route_levels(b, t, s, a, n, fam, {"F2b": None})
+
+
+# ── EXP-C03 : break-even différé ────────────────────────────────────────────────
+def _miroir(b):
+    """Symétrie de prix autour de 100 : un Short sur le miroir rejoue un Long sur l'original."""
+    return b.assign(open=200 - b.open, close=200 - b.close, high=200 - b.low, low=200 - b.high)
+
+
+def _be_plat():
+    b = _plat(30)
+    b.loc[5:9, ["open", "close"]] = 101.0                             # barres 5 à 9 : open 101, high 101,5, low 100,5
+    b.loc[5:9, "high"], b.loc[5:9, "low"] = 101.5, 100.5
+    b.loc[5, "high"] = 102.2                                          # seuil 100 + 2 · ATR atteint en barre 5
+    b.loc[8, "low"] = 99.9                                            # repli sous le break-even 100,05 en barre 8
+    return b
+
+
+def test_break_even_active_puis_touche_au_niveau_net_ou_en_gap():
+    cols = ["entry_bar", "exit_bar", "stop", "gap", "be_bar", "be_stop"]
+    for d, b in ((1, _be_plat()), (-1, _miroir(_be_plat()))):
+        trig = breakeven_trigger_levels(b, [2], [d], [1.0], m=2.0)
+        assert trig.tolist() == [100.0 + d * 2.0]                    # open[t + 1] + side · m · ATR14(t)
+        tr = breakeven_trades(b, [2], [d], horizon=8, trigger=trig)
+        assert tr[cols].values.tolist() == [[3, 8, True, False, 5, True]]   # actif dès la barre 6, touché en 8
+        np.testing.assert_allclose(tr.exit_price, [100.0 * (1 + d * 5e-4)])
+        np.testing.assert_allclose(tr.ret_gross_bps, [5.0])            # break-even net de 5 bps
+        sans = breakeven_trades(b, [2], [d], horizon=8, trigger=[np.nan])
+        assert sans[cols].values.tolist() == [[3, 11, False, False, -1, False]]
+        np.testing.assert_allclose(sans.ret_gross_bps, [0.0])          # sortie à open[t + 1 + H] = 100
+        g = b.copy()
+        g.loc[8, "low" if d == 1 else "high"] = 100.5 if d == 1 else 99.5   # plus de repli : retour à 100 en barre 10
+        tr = breakeven_trades(g, [2], [d], horizon=8, trigger=trig)
+        assert tr[cols].values.tolist() == [[3, 10, True, True, 5, True]]  # ouverture 100 au-delà du break-even
+        np.testing.assert_allclose(tr.ret_gross_bps, [0.0])
+
+
+def test_break_even_le_stop_initial_prime_sur_la_meme_barre():
+    cols = ["exit_bar", "stop", "gap", "be_bar", "be_stop"]
+    for d in (1, -1):
+        b = _plat()
+        b.loc[5, ["high", "low"]] = [101.6, 97.9]                     # seuil 101,5 et stop initial 98 sur la barre 5
+        b = b if d == 1 else _miroir(b)
+        lvl = atr_stop_levels(b, [2], [d], [1.0], k=2.0)
+        trig = breakeven_trigger_levels(b, [2], [d], [1.0], m=1.5)
+        tr = breakeven_trades(b, [2], [d], horizon=8, level=lvl, trigger=trig)
+        assert tr[cols].values.tolist() == [[5, True, False, -1, False]]
+        np.testing.assert_allclose(tr.ret_gross_bps, [-200.0])         # stop initial au niveau
+        b = _plat()
+        b.loc[4, "high"], b.loc[5, "low"] = 101.6, 97.9               # seuil en barre 4, repli en barre 5
+        b = b if d == 1 else _miroir(b)
+        tr = breakeven_trades(b, [2], [d], horizon=8, level=lvl, trigger=trig)
+        assert tr[cols].values.tolist() == [[5, True, True, 4, True]]  # break-even en place : sortie à open[5] = 100
+        np.testing.assert_allclose(tr.ret_gross_bps, [0.0])
+
+
+def test_break_even_fenetre_d_activation_t_plus_1_a_t_plus_h_moins_1():
+    b = _plat()
+    b.loc[8, "high"] = 103.0                                          # seuil atteint sur la dernière barre détenue t + H
+    tr = breakeven_trades(b, [2], [1], horizon=6, trigger=breakeven_trigger_levels(b, [2], [1], [1.0], 2.0))
+    assert tr[["exit_bar", "be_bar", "be_stop"]].values.tolist() == [[9, -1, False]]
+    b.loc[7, "high"] = 103.0                                          # sur t + H − 1 : actif pendant la barre t + H
+    tr = breakeven_trades(b, [2], [1], horizon=6, trigger=breakeven_trigger_levels(b, [2], [1], [1.0], 2.0))
+    assert tr[["exit_bar", "gap", "be_bar", "be_stop"]].values.tolist() == [[8, True, 7, True]]
+    with pytest.raises(ValueError, match="seuil"):
+        breakeven_trades(b, [2], [1], horizon=6, trigger=[99.0])
+
+
+def _be_reference(b, e, x, s, l0, a, l1):
+    """Barre par barre : stop en vigueur au début de la barre, puis activation si la barre n'a pas stoppé."""
+    op, hi, lo = (b[c].to_numpy() for c in ("open", "high", "low"))
+    actif, b_act = False, -1
+    for j in range(e, x):
+        lv = l1 if actif else l0
+        if not np.isnan(lv) and (lo[j] <= lv if s == 1 else hi[j] >= lv):
+            gap = j > e and (op[j] <= lv if s == 1 else op[j] >= lv)
+            return j, op[j] if gap else lv, True, gap, b_act, actif
+        if not actif and j <= x - 2 and not np.isnan(a) and (hi[j] >= a if s == 1 else lo[j] <= a):
+            actif, b_act = True, j
+    return x, op[x], False, False, b_act, False
+
+
+def test_break_even_vectoriel_egal_a_la_reference_barre_par_barre():
+    b = _marche(4000, 71)
+    rng = np.random.default_rng(72)
+    t = np.sort(rng.choice(np.arange(10, 3990), 500, replace=False))
+    s, atr = rng.choice([-1, 1], 500), rng.uniform(0.5, 2.0, 500)
+    lvl = np.where(rng.random(500) < 0.5, np.nan, atr_stop_levels(b, t, s, atr, 2.0))
+    m = np.where(rng.random(500) < 0.2, np.nan, rng.choice([1.0, 1.5, 2.0, 3.0], 500))
+    trig = breakeven_trigger_levels(b, t, s, atr, m)
+    for h, dyn in ((6, False), (26, False), (26, True)):
+        tr = breakeven_trades(b, t, s, h, lvl, trig, be_bps=5.0, dynamic=dyn)
+        i = np.searchsorted(t, tr.signal_bar.to_numpy())
+        for r, k in zip(tr.itertuples(index=False), i):
+            e, x = t[k] + 1, min(t[k] + 1 + h, len(b) - 1)
+            ref = _be_reference(b, e, x, s[k], lvl[k], trig[k], b.open.iloc[e] * (1 + s[k] * 5e-4))
+            assert (r.exit_bar, r.stop, r.gap, r.be_bar, r.be_stop) == (ref[0], ref[2], ref[3], ref[4], ref[5])
+            assert r.exit_price == pytest.approx(ref[1], rel=1e-12)
+        assert tr.be_stop.sum() > 20 and (tr.be_stop & tr.gap).any() and (tr.stop & ~tr.be_stop).any()
+
+
+def test_sans_break_even_redonne_stop_trades_et_cooldown_garde_les_entrees():
+    b = _marche(3000, 73)
+    rng = np.random.default_rng(74)
+    t = np.sort(rng.choice(np.arange(10, 2990), 400, replace=False))
+    s, atr = rng.choice([-1, 1], 400), rng.uniform(0.5, 2.0, 400)
+    lvl = np.where(rng.random(400) < 0.5, np.nan, atr_stop_levels(b, t, s, atr, 1.5))
+    for dyn in (True, False):
+        ref = stop_trades(b, t, s, 26, lvl, dyn)
+        for trig in (None, np.full(400, np.nan), breakeven_trigger_levels(b, t, s, np.full(400, 1e6), 1.0)):
+            tr = breakeven_trades(b, t, s, 26, lvl, trig, dynamic=dyn)
+            pd.testing.assert_frame_equal(tr[ref.columns], ref)
+            assert (tr.be_bar == -1).all() and not tr.be_stop.any()
+    be = breakeven_trades(b, t, s, 26, lvl, breakeven_trigger_levels(b, t, s, atr, 1.0), dynamic=False)
+    ctrl = stop_trades(b, t, s, 26, lvl, dynamic=False)
+    assert be.be_stop.sum() > 20
+    np.testing.assert_array_equal(be.signal_bar, ctrl.signal_bar)      # cooldown : entrées de la course sans BE
+
+
+def test_break_even_dynamique_libere_la_position_a_la_barre_du_break_even():
+    b = _be_plat()
+    trig = breakeven_trigger_levels(b, [2, 8], [1, 1], [1.0, 1.0], 2.0)
+    dyn = breakeven_trades(b, [2, 8], [1, 1], horizon=8, trigger=trig, dynamic=True)
+    cd = breakeven_trades(b, [2, 8], [1, 1], horizon=8, trigger=trig, dynamic=False)
+    assert dyn[["signal_bar", "entry_bar", "exit_bar"]].values.tolist() == [[2, 3, 8], [8, 9, 17]]
+    assert cd[["signal_bar", "entry_bar", "exit_bar"]].values.tolist() == [[2, 3, 8]]   # 8 < t + H : ignoré
+
+
+def test_break_even_causal_par_troncature():
+    b = _marche(3000, 75)
+    rng = np.random.default_rng(76)
+    t = np.sort(rng.choice(np.arange(10, 2900), 60, replace=False))
+    s, atr = rng.choice([-1, 1], 60), rng.uniform(0.5, 2.0, 60)
+    lvl, trig = atr_stop_levels(b, t, s, atr, 2.0), breakeven_trigger_levels(b, t, s, atr, 1.0)
+    full = breakeven_trades(b, t, s, 26, lvl, trig).set_index("signal_bar")
+    for ti in full.index:
+        k = int(np.searchsorted(t, ti))
+        cut = b.iloc[:ti + 1 + 26 + 1]                                # dernière barre lue : open[t + 1 + H]
+        one = breakeven_trades(cut, [ti], [s[k]], 26, [lvl[k]], [trig[k]]).set_index("signal_bar")
+        pd.testing.assert_frame_equal(one, full.loc[[ti]])
+    assert full.be_stop.any()
 
 # ── Données réelles ─────────────────────────────────────────────────────────────
 @pytest.fixture(scope="module")

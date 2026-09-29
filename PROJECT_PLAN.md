@@ -31,6 +31,7 @@ Chaque test est précédé du cadrage obligatoire (`RESEARCH_PHILOSOPHY.md` §4.
 | C | EXP-C01 et relecture | faite | Sortie à horizon fixe ; R3 et `nis_z_100` Q4 exclus ; F2b · x1 hors Q4 à H26 candidat principal. |
 | C | EXP-C02 et relecture | faite | Stop différencié : F2b sans stop, F3 stop à l'extremum du segment ; R1 sans espérance nette. |
 | C | EXP-C02bis et relecture | faite | Moteur de régimes (vetos : x1 non retourné, R3, `nis_z_100` Q4). RE-1 validé par le porteur comme référence de l'Étape C : F2b sans stop, F3 stop à l'extremum, cooldown, H = 26 commun et verrouillé. Même espérance que R2 uniforme, drawdown −20 % → −13 %, plateau H20-32. |
+| C | EXP-C03 | faite | Break-even différé sur RE-1 (F3, F2b ou les deux ; seuil de 1 à 4 ATR). Aucune valeur marginale, RE-1 conservé intact. Take-profit fixe exclu : même sa borne optimiste reste sous RE-1. |
 
 **Conventions de l'Étape C (décisions du porteur) :**
 - une position à la fois ;

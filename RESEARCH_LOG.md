@@ -424,3 +424,82 @@
 
     F2b passe ainsi de +0,389 à +0,459, et F3 SL-B de +0,236 à +0,267 (+0,144 → +0,235 sans stop). La hausse de F3 de +0,144 à +0,267 citée par le porteur cumule le stop et le filtrage.
   - **Take-profit fixe exclu**, ce qui est vérifié en EXP-C03 (annexe H). Le break-even différé est testé en EXP-C03.
+
+### [EXP-C03] — Break-even différé sur RE-1
+- **Date :** 2026-09-29
+- **Étape :** C Enveloppe (un facteur OFAT sur la configuration de référence)
+- **Actif & Période :** BTC/USD Bitstamp 30m, 2020-01 → 2025-12 (72 mois) ; 2026, ETH et XRP non lus
+- **Modèle de frais :** 5 et 10 bps aller-retour. Le break-even est à open[t + 1] ± 5 bps dans les deux cas. Capital à 0,25 % par ATR14(t), levier ≤ 1x ; 1x en référence.
+- **Livrables :**
+  - `experiments/C03/rapport_C03.md`, `resultats_C03.csv` (228 lignes), `annuel_C03.csv`, `controles_C03.json`, 4 figures ;
+  - `breakeven_trigger_levels` et `breakeven_trades` dans `src/envelope/stops.py` ;
+  - 7 tests nouveaux (suite : 194 réussis, 2 ignorés).
+
+#### 0. Cadrage obligatoire
+- **QUESTION :** remonter le stop au point d'entrée après une excursion favorable de +m · ATR14(t) économise-t-il plus sur les trades devenus perdants qu'il ne coûte sur les grands gagnants repassés par l'entrée ?
+  - Sur quel périmètre : F3, F2b ou les deux ?
+  - Pour quel m ∈ {1 ; 1,5 ; 2 ; 2,5 ; 3 ; 4} ?
+- **PERTINENCE POUR LE FILTRE AKF :** l'espérance de RE-1 vient de la queue droite des breakouts de compression. Le break-even est la seule protection de gain qui ne plafonne pas les gagnants ; le porteur a exclu le take-profit fixe.
+- **CE QUE LE PROTOCOLE MESURE RÉELLEMENT :**
+  - l'effet apparié BE − RE-1 sur les mêmes 1 080 entrées (cooldown), en ATR et en bps, avec IC ;
+  - les trades sauvés contre les trades coupés, la queue droite ;
+  - le drawdown, sur des chemins réordonnés par mois ;
+  - les 8 métriques à 5 et 10 bps, les années, le plateau H24-28 ;
+  - en annexe : la réouverture et la borne optimiste d'un take-profit fixe.
+- **CE QU'IL NE PERMET PAS DE CONCLURE :**
+  - une validation hors échantillon ;
+  - l'effet d'un break-even décalé, d'un trailing stop ou d'une sortie partielle ;
+  - le choix d'un m après lecture.
+
+#### 1. Hypothèse & Motivation physique
+- Sur RE-1, 24,9 % des trades atteignent +1,5 ATR de MFE26 puis finissent en perte nette, à −1,99 ATR en moyenne.
+- Un break-even différé pourrait récupérer ces pertes, à condition que les grands gagnants ne repassent pas eux aussi par l'entrée.
+
+#### 2. Règle testée (OFAT)
+- **Entrée :** celle de RE-1, inchangée. En lecture cooldown, les entrées sont les mêmes.
+- **Sortie :** celle de RE-1, plus un break-even.
+  - Seuil : open[t + 1] ± m · ATR14(t), lu sur les barres t + 1 … t + H − 1. Le stop initial prime sur la même barre.
+  - Stop remonté à open[t + 1] ± 5 bps, de b + 1 à t + H.
+  - Périmètres : V1 = F3, V2 = F2b, V3 = les deux.
+  - m ∈ {1 ; 1,5 ; 2 ; 2,5 ; 3 ; 4} ; H ∈ {24, 26, 28}.
+- **Contrôle :** RE-1 à H = 26 en cooldown, identique à C02bis trade par trade.
+
+#### 3. Résultats nets (H26, 5 bps, cooldown ; PnL et drawdown à 0,25 % par ATR)
+| Métrique | RE-1 | V1 (F3), m = 2 | V2 (F2b), m = 2 | V3, m = 1 | V3, m = 2 | V3, m = 4 |
+|---|---|---|---|---|---|---|
+| PnL Net Total | +138 % (1x +204 %) | +128 % | +136 % | +63 % | +126 % | +149 % |
+| Profit Factor (1x) | 1,20 | 1,18 | 1,22 | 1,17 | 1,21 | 1,21 |
+| Win Rate | 44,3 % | 40,6 % | 39,0 % | 22,6 % | 35,3 % | 42,5 % |
+| Espérance ATR [IC] ; bps | +0,369 [+0,098 ; +0,645] ; +12,3 | +0,354 ; +10,6 | +0,365 ; +12,4 | +0,212 ; +6,2 | +0,350 [+0,142 ; +0,570] ; +10,6 | +0,398 [+0,151 ; +0,649] ; +12,7 |
+| Effet apparié ATR [IC] | — | −0,015 [−0,089 ; +0,047] | −0,004 [−0,082 ; +0,089] | −0,157 [−0,318 ; +0,007] | −0,018 [−0,131 ; +0,105] | +0,030 [−0,035 ; +0,118] |
+| Max Drawdown ; Calmar | −13,5 % ; 1,16 | −13,1 % ; 1,13 | −12,9 % ; 1,19 | −15,5 % ; 0,55 | −11,7 % ; 1,25 | −14,5 % ; 1,13 |
+| Nombre de trades ; sortis au BE | 1 080 (15,0/mois) ; — | 1 080 ; 12 % | 1 080 ; 13 % | 1 080 ; 54 % | 1 080 ; 25 % | 1 080 ; 6 % |
+| Durée médiane | 26 | 26 | 26 | 12 | 26 | 26 |
+| Part des frais (1x) | 29 % | 32 % | 29 % | 45 % | 32 % | 28 % |
+
+#### 4. Analyse causale & Physique du trade
+- [OBS] **Aucun seuil n'améliore l'espérance.**
+  - m ≤ 1,5 : effet négatif sur F2b et sur les deux sous-familles ; significatif à H24 et H28 pour V2 à m = 1.
+  - m ≥ 2 : −0,021 à +0,030 ATR, IC d'environ ±0,1, aux trois horizons.
+  - V1 : proche de 0 partout.
+- [OBS] **Sauvés contre coupés (V3, m = 2).** 147 trades sauvés (+1,98 ATR chacun) contre 121 coupés (−2,57), soit +0,270 contre −0,288 ATR par trade. 36 coupés finissaient au-delà de +3 ATR ; ils coûtent à eux seuls 0,206 ATR par trade.
+- [OBS] **Queue droite.**
+  - RE-1 : P90 à +5,53 ATR ; le décile supérieur apporte 0,92 ATR par trade, plus que l'espérance totale.
+  - Le break-even l'ampute d'autant plus que m est bas : pour V3 à m = 1, le P90 tombe à +3,85.
+- [OBS] **Drawdown.**
+  - V3 à m = 2 le fait baisser aux trois horizons (−13,5 → −11,7 % à H26), mais sans significativité : +1,6 point [−2,1 ; +11,6] sur les chemins réordonnés, moins profond dans 89 % des chemins.
+  - Le MDD ne varie pas de façon monotone avec m.
+- [OBS] **Take-profit fixe : la décision du porteur est vérifiée.** Même la borne optimiste reste sous RE-1 : +0,200 à +0,347 ATR contre +0,369.
+- [OBS] **Réouverture.** Les trades débloqués perdent dans les 19 configurations ; le cooldown est confirmé.
+- [HYP] Le break-even ne distingue pas le retest de l'échec. Un trade activé sur deux repasse par l'entrée, et ceux qui repartent ensuite valent ceux qu'il sauve. La sortie à H26 et le cooldown font déjà l'essentiel de la gestion du risque.
+
+#### 5. Décision
+- [x] **REJETÉ pour m ≤ 1,5 :** le break-even ampute la queue droite et dégrade l'espérance.
+- [x] **NON CONCLUANT pour m ≥ 2 :** l'effet sur l'espérance est nul et la baisse du drawdown n'est pas significative.
+
+  Le break-even n'est donc pas retenu (critère du porteur), et RE-1 reste intact. L'exclusion du take-profit fixe est confirmée.
+- [ ] **À POURSUIVRE**
+
+  Points à trancher par le porteur :
+  - la suite : le filtre macro (dernier facteur de l'Étape C) ou l'Étape D ;
+  - l'hypothèse d'exécution : à 10 bps, l'IC de RE-1 contient 0.

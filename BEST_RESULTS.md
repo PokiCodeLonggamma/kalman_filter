@@ -43,6 +43,7 @@
 - **IC en bps fragile :** il ne reste positif qu'avec la période du 13 janvier au 9 juin 2020.
 - **Filtrage mutuel :** une position à la fois écarte les contre-signaux de l'autre sous-famille, qui perdaient seuls (F3 contre un F2b ouvert : −1,22 ATR).
 - La règle de F3 a été choisie après lecture de C02. À 10 bps, l'IC contient 0.
+- **Break-even et take-profit (EXP-C03) :** aucun ne l'améliore ; RE-1 reste intact.
 
 ---
 
@@ -95,6 +96,19 @@ La relecture de C02 assemble 1 et 2 ; EXP-C02bis en fait la configuration de ré
 2. **Plateau d'horizon.** L'IC en ATR de RE-1 est positif de H20 à H32 (+0,21 à +0,37 ATR). Entre H24 et H28, l'espérance varie de moins de 0,05 ATR et le PnL va de +112 à +138 %.
 3. **Tenue avec des seuils causaux** (glissants ou expansifs) : +0,34 à +0,37 ATR avec IC > 0, +103 à +118 %, drawdown −12 à −14 %, Calmar 1,00 à 1,21 (sur 5,56 ans), 6 années sur 6.
 
+### EXP-C03 — break-even différé sur RE-1 (5 bps, cooldown, mêmes entrées)
+1. **Aucune valeur marginale du break-even.**
+   - Pour m ≥ 2 ATR, l'effet apparié va de −0,021 à +0,030 ATR par trade (IC ±0,1), aux trois horizons H24, H26 et H28.
+   - Pour m ≤ 1,5, il est négatif : jusqu'à −0,157 ATR (V3 à m = 1), significatif pour F2b à H24 et H28.
+2. **Mécanique : sauvés et coupés s'équilibrent.**
+   - V3 à m = 2 : 147 trades sauvés (+1,98 ATR chacun) contre 121 coupés (−2,57), soit +0,270 contre −0,288 ATR par trade.
+   - Le décile supérieur de RE-1 apporte 0,92 ATR par trade, plus que l'espérance totale (+0,369).
+3. **Drawdown : une tendance, pas un résultat.**
+   - V3 à m = 2 : −11,7 % contre −13,5 % à H26, avec une baisse aux trois horizons.
+   - Écart non significatif : moins profond dans 89 % des chemins réordonnés, plage [−2,1 ; +11,6] points (I-M10). Coût : −0,018 ATR par trade. Non retenu.
+
+Le take-profit fixe est exclu : même sa borne optimiste reste sous RE-1 (+0,200 à +0,347 ATR contre +0,369). La décision du porteur est vérifiée.
+
 ---
 
 ## Pistes écartées (à ne pas retester sans élément nouveau)
@@ -109,3 +123,6 @@ La relecture de C02 assemble 1 et 2 ; EXP-C02bis en fait la configuration de ré
 | Stop de catastrophe à 5 ATR sur F2b dans le moteur (RE-3) | −0,08 ATR par trade, drawdown plus élevé, Calmar 0,77 contre 1,16 | C02bis |
 | Réouverture immédiate après un stop (H ≤ 32) | les trades débloqués font −0,15 à −1,38 ATR ; le cooldown fait mieux | C02bis |
 | Horizon propre à chaque sous-famille (F2b à H28) | à H28 : F3 +0,148 ATR, DD −16,2 %, Calmar 0,92 ; paramètre libre choisi après lecture ; H = 26 verrouillé (décision du porteur) | C02bis |
+| Take-profit fixe sur RE-1 (2 à 6 ATR) | même la borne optimiste (TP pris dès que la MFE26 l'atteint) reste sous RE-1 : +0,200 à +0,347 ATR contre +0,369 ; exclu (décision du porteur, vérifiée) | C03 |
+| Break-even différé sur RE-1, m ≤ 1,5 ATR | ampute la queue droite ; effet apparié jusqu'à −0,157 ATR par trade ; significatif pour F2b à H24 et H28 | C03 |
+| Break-even différé sur RE-1, m ≥ 2 ATR | effet apparié de −0,02 à +0,03 ATR par trade ; baisse du drawdown non significative ; non retenu (KISS) | C03 |

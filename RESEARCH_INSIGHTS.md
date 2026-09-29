@@ -98,6 +98,13 @@ Elle se mesure séparément par sens et par type de signal (rang 1 ou répétiti
 - En séquentiel, la règle change aussi les entrées : une position libérée plus tôt prend le signal suivant. Cet effet de réouverture se lit à part.
 - La lecture « entrées figées » est une règle exécutable : un cooldown qui garde la position à plat jusqu'à la sortie prévue t + 1 + H.
 
+### I-M10 — Le drawdown est une statistique de chemin `[MÉTHODE]`
+*Source : EXP-C03.*
+
+- Le MDD dépend de l'ordre des trades. Son effet apparié se lit sur des chemins réordonnés : les mois d'entrée sont tirés avec remise, avec les mêmes tirages que les IC.
+- On en retient la plage P2,5-P97,5 de l'écart et la part des chemins où la variante est moins profonde. Ce n'est pas un IC centré sur l'écart observé, qui peut sortir de la plage.
+- Un écart de 1 à 4 points de MDD entre deux règles voisines reste du bruit de chemin tant que la plage contient 0. Un MDD qui ne varie pas de façon monotone avec le paramètre signale le même bruit.
+
 ---
 
 ## 2. Cinématique du moteur v2.1
@@ -227,7 +234,9 @@ L'atlas A01 soutient cette lecture à travers le ratio de retracement `retrace_r
   - F2b · x1 déjà retourné : +0,81 en Long, −0,12 en Short.
 - `[HYP]` Breakout de compression : faux départs fréquents, espérance portée par la queue droite.
 - `[HYP]` Le sens propre à chaque sous-famille pourrait suivre la tendance de l'unité de temps supérieure.
-- **Piste C du porteur, non validée :** tenue de 26 à 48 barres, stop large ou break-even différé.
+- **Piste C du porteur :** tenue de 26 à 48 barres, stop large ou break-even différé.
+  - Retenus : la tenue à H26 et le stop différencié (C01 à C02bis).
+  - Break-even différé : sans valeur marginale (C03).
 - **Pistes testées (EXP-C01, EXP-C02), nettes de 5 bps, une position à la fois, hors `nis_z_100` Q4 :**
   - `[OBS]` **F2b · x1 déjà retourné, sortie à H26 sans stop.**
     - +0,389 ATR [+0,079 ; +0,700] par trade (+11,5 bps), inchangé après winsorisation.
@@ -248,6 +257,12 @@ L'atlas A01 soutient cette lecture à travers le ratio de retracement `retrace_r
       Les signaux de même sens évincés ne perdaient pas (F3 +0,71 ; F2b −0,01). Dans le moteur, F2b passe de +0,389 à +0,459 ATR, et F3 de +0,236 à +0,267 avec stop (+0,144 → +0,235 sans stop). H26, 5 bps.
     - `[HYP]` Le contre-signal de l'autre sous-famille tombe pendant l'expansion du breakout en cours et se trompe de sens. Une position à la fois le filtre sans règle supplémentaire.
     - **Décision du porteur (2026-09-29) :** RE-1 validé comme configuration de référence de l'Étape C. H = 26 est commun aux deux sous-familles et verrouillé. Le take-profit fixe est exclu.
+    - `[OBS]` **Break-even différé (EXP-C03) : aucun seuil n'améliore l'espérance de RE-1.**
+      - m ≤ 1,5 ATR la dégrade, surtout sur F2b ; m ≥ 2 est neutre (−0,02 à +0,03 ATR, IC ±0,1).
+      - Sauvés et coupés s'équilibrent : pour V3 à m = 2, +0,270 contre −0,288 ATR par trade.
+      - La baisse du drawdown (V3 à m = 2 : −13,5 → −11,7 %) n'est pas significative (I-M10).
+    - `[OBS]` **Take-profit fixe.** Même la borne optimiste (TP pris dès que la MFE26 l'atteint) reste sous RE-1 : +0,200 à +0,347 ATR contre +0,369. Le décile supérieur apporte 0,92 ATR par trade, plus que l'espérance totale.
+    - `[HYP]` Le break-even ne distingue pas le retest de l'échec : un trade activé sur deux repasse par l'entrée, et ceux qui repartent ensuite valent ceux qu'il sauve.
   - `[HYP]` Le point d'entrée dans le range décide.
     - F2b entre au milieu : un repli de 1 à 3 ATR est un balayage de liquidité avant l'expansion.
     - F3 entre près de l'extrémité opposée : casser l'extremum invalide le breakout.
@@ -287,3 +302,4 @@ L'atlas A01 soutient cette lecture à travers le ratio de retracement `retrace_r
 5. ~~Après un stop, faut-il un cooldown jusqu'à t + 1 + H ou une réouverture immédiate ?~~ **Répondu (EXP-C02bis)** : le cooldown, jusqu'à H32 ; à H48, l'écart s'inverse.
 6. L'assemblage différencié de R2 tient-il avec des seuils causaux, puis hors échantillon ? **En partie répondu (EXP-C02bis)** : il tient avec des seuils causaux, en ATR. Hors échantillon : Étape D.
 7. ~~Faut-il un horizon propre à chaque sous-famille ?~~ **Tranché par le porteur (2026-09-29)** : non, H = 26 est commun. À H28, F2b monte à +0,569 ATR, mais F3 tombe à +0,148, le DD passe à −16,2 % et le Calmar à 0,92. Ce serait un paramètre libre choisi après lecture.
+8. ~~Un break-even ou un take-profit améliore-t-il RE-1 ?~~ **Répondu (EXP-C03)** : non. Le break-even est neutre pour m ≥ 2 et nuisible en dessous. Même la borne optimiste du take-profit reste sous RE-1.
