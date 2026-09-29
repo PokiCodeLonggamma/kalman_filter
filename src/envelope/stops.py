@@ -175,12 +175,14 @@ def _first_hit(hit: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
 
 
 def breakeven_trades(bars: pd.DataFrame, signal_bar, side, horizon: int, level=None, trigger=None,
-                     be_bps: float = 5.0, dynamic: bool = False) -> pd.DataFrame:
+                     be_bps: float = 5.0, dynamic: bool = False, be_slippage_bps: float = 0.0) -> pd.DataFrame:
     """`stop_trades` avec break-even différé (règle en tête de module). `trigger` : seuil d'activation en prix, aligné
     sur `signal_bar` (`breakeven_trigger_levels` ; None ou NaN : sans break-even) ; `level` : stop initial (None ou
     NaN : sans stop) ; `be_bps` : niveau du break-even au-delà de open[t + 1], en bps. Colonnes de `stop_trades`, plus
     `be_bar` (barre d'activation, −1 sinon) et `be_stop` (sortie au break-even) ; `stop` vaut pour les deux stops.
-    Lecture cooldown par défaut (`dynamic=False`) : les entrées sont celles de la course sans break-even."""
+    Lecture cooldown par défaut (`dynamic=False`) : les entrées sont celles de la course sans break-even.
+    `be_slippage_bps` : glissement défavorable appliqué au seul prix d'exécution du break-even (niveau, ou ouverture en
+    gap), en bps de ce prix ; le stop initial et les sorties à horizon n'en subissent aucun (stress d'exécution)."""
     ok, t, s, e, x, dist = _candidates(bars, signal_bar, side, horizon, level, "breakeven_trades")
     if not len(t):
         return pd.DataFrame({c: pd.Series(dtype=float) for c in BE_COLUMNS})
@@ -221,7 +223,7 @@ def breakeven_trades(bars: pd.DataFrame, signal_bar, side, horizon: int, level=N
                 raise RuntimeError("breakeven_trades : stop initial touché sans le break-even plus serré")
             kb = start + j
             gap = a & np.where(sd == 1, op[kb] <= lv, op[kb] >= lv)
-            prix = np.where(gap, op[kb], lv)
+            prix = np.where(gap, op[kb], lv) * (1.0 - sd * float(be_slippage_bps) / BPS)
             hit_rows = ii[a]
             out.loc[hit_rows, "exit_bar"] = kb[a]
             out.loc[hit_rows, "exit_price"] = prix[a]

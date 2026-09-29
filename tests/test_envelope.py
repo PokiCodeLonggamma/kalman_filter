@@ -3,7 +3,8 @@ par troncature, métriques ; ancre P6.5d (sans stop et stop 2,5 %) reproduite su
 EXP-C02 — stop-loss en prix : SL-A (k · ATR14(t)) et SL-B (extremum du segment qualifiant), mèche et gap, entrées
 figées contre séquentiel dynamique, causalité des niveaux, IC en bps et en ATR, effet apparié.
 EXP-C03 — break-even différé : activation, niveau net, gap, priorité du stop initial, fenêtre d'activation, référence
-barre par barre, équivalence sans break-even, cooldown et réouverture, causalité par troncature."""
+barre par barre, équivalence sans break-even, cooldown et réouverture, causalité par troncature, glissement
+d'exécution du seul break-even."""
 import json
 
 import numpy as np
@@ -432,6 +433,29 @@ def test_break_even_dynamique_libere_la_position_a_la_barre_du_break_even():
     cd = breakeven_trades(b, [2, 8], [1, 1], horizon=8, trigger=trig, dynamic=False)
     assert dyn[["signal_bar", "entry_bar", "exit_bar"]].values.tolist() == [[2, 3, 8], [8, 9, 17]]
     assert cd[["signal_bar", "entry_bar", "exit_bar"]].values.tolist() == [[2, 3, 8]]   # 8 < t + H : ignoré
+
+
+def test_glissement_du_break_even_ne_touche_que_ses_sorties():
+    b = _marche(4000, 77)
+    rng = np.random.default_rng(78)
+    t = np.sort(rng.choice(np.arange(10, 3990), 500, replace=False))
+    s, atr = rng.choice([-1, 1], 500), rng.uniform(0.5, 2.0, 500)
+    lvl = np.where(rng.random(500) < 0.5, np.nan, atr_stop_levels(b, t, s, atr, 2.0))
+    trig = breakeven_trigger_levels(b, t, s, atr, 1.5)
+    for dyn in (False, True):
+        base = breakeven_trades(b, t, s, 26, lvl, trig, dynamic=dyn)
+        pd.testing.assert_frame_equal(breakeven_trades(b, t, s, 26, lvl, trig, dynamic=dyn, be_slippage_bps=0.0), base)
+        be = base.be_stop.to_numpy()
+        assert be.sum() > 20 and (base.stop & ~base.be_stop).any()
+        for slip in (5.0, 10.0):
+            tr = breakeven_trades(b, t, s, 26, lvl, trig, dynamic=dyn, be_slippage_bps=slip)
+            pd.testing.assert_frame_equal(tr.drop(columns=["exit_price", "ret_gross_bps"]),
+                                          base.drop(columns=["exit_price", "ret_gross_bps"]))   # mêmes barres, mêmes trades
+            pd.testing.assert_frame_equal(tr[~be], base[~be])            # stop initial et horizon : aucun glissement
+            r = base[be]
+            np.testing.assert_allclose(tr.exit_price[be], r.exit_price * (1 - r.side * slip / 1e4), rtol=1e-12)
+            np.testing.assert_allclose(tr.ret_gross_bps[be], r.ret_gross_bps - slip * r.exit_price / r.entry_price,
+                                       rtol=0, atol=1e-9)
 
 
 def test_break_even_causal_par_troncature():
