@@ -1,15 +1,19 @@
 """EXP-C01 — enveloppe séquentielle : sortie à horizon fixe, pyramiding 0, frais, continuation, réserve 2026, causalité
-par troncature, métriques ; ancre P6.5d (sans stop et stop 2,5 %) reproduite sur BTC."""
+par troncature, métriques ; ancre P6.5d (sans stop et stop 2,5 %) reproduite sur BTC.
+EXP-C02 — stop-loss en prix : SL-A (k · ATR14(t)) et SL-B (extremum du segment qualifiant), mèche et gap, entrées
+figées contre séquentiel dynamique, causalité des niveaux, IC en bps et en ATR, effet apparié."""
 import json
 
 import numpy as np
 import pandas as pd
 import pytest
 
+from categorization import cluster_bootstrap, timing_drift
 from config import DATA_RAW, ROOT
-from envelope import (by_year, dev_signals, equity_curve_sized, risk_weights, summarize, summarize_sized,
+from envelope import (atr_stop_levels, by_year, dev_signals, effect_ci, equity_curve_sized, mean_ci, risk_weights,
+                      segment_extremum, stop_trades, structural_stop_levels, summarize, summarize_sized,
                       time_stop_trades)
-from estimand.stoploss import equity_curve, simulate_strategy
+from estimand.stoploss import apply_stop, equity_curve, simulate_strategy
 
 T0 = pd.Timestamp("2021-01-01", tz="UTC")
 HOLDOUT = pd.Timestamp("2026-01-01", tz="UTC")
@@ -125,6 +129,145 @@ def test_capital_a_risque_constant():
     assert s["pnl_compose"] == pytest.approx(np.prod(1 + w * net / 1e4) - 1)
     assert s["exposition_moyenne"] == pytest.approx(w.mean()) and s["part_plafonnee"] == 0.25
     assert s["mdd_valorise"] <= s["mdd_sorties"] + 1e-12
+    assert s["pf"] == np.inf                                                         # 4 trades gagnants
+    tr2 = tr.assign(ret_gross_bps=tr.ret_gross_bps * np.array([1, -1, 1, -1]))       # PnL pondérés (EXP-C02)
+    s2, g2 = summarize_sized(tr2, b, atr, 5.0, 25.0), tr2.ret_gross_bps.to_numpy()
+    pw = w * (g2 - 5.0)                                                              # +787, −342, +29, −54 bps
+    assert s2["pf"] == pytest.approx(pw[pw > 0].sum() / -pw[pw < 0].sum())
+    assert s2["part_frais"] == pytest.approx((w * 5.0).sum() / abs((w * g2).sum()))
+
+
+# ── EXP-C02 : stop-loss en prix ─────────────────────────────────────────────────
+def _plat(n=30):
+    return _bars(np.full(n, 100.0))                                  # open = close = 100, high 100,5, low 99,5
+
+
+def test_stop_atr_meche_et_gap():
+    b = _plat()
+    b.loc[6, "low"] = 97.9                                           # mèche sous le stop 98, ouverture à 100
+    b.loc[13, ["open", "low"]] = [97.0, 96.5]                        # ouverture en gap sous le stop 98
+    lvl = atr_stop_levels(b, [2, 10], [1, 1], [1.0, 1.0], k=2.0)
+    assert lvl.tolist() == [98.0, 98.0]                               # open[t + 1] − 2 · ATR14(t)
+    tr = stop_trades(b, [2, 10], [1, 1], horizon=6, level=lvl)
+    assert tr[["entry_bar", "exit_bar", "stop", "gap"]].values.tolist() == [[3, 6, True, False], [11, 13, True, True]]
+    np.testing.assert_allclose(tr.exit_price, [98.0, 97.0])           # niveau du stop ; ouverture du gap
+    np.testing.assert_allclose(tr.ret_gross_bps, [-200.0, -300.0])
+    s = _plat()
+    s.loc[5, "high"] = 102.1                                          # Short : mèche au-dessus du stop 102
+    tr = stop_trades(s, [2], [-1], horizon=6, level=atr_stop_levels(s, [2], [-1], [1.0], k=2.0))
+    assert tr[["exit_bar", "stop", "gap"]].values.tolist() == [[5, True, False]]
+    np.testing.assert_allclose(tr.ret_gross_bps, [-200.0])
+    s.loc[3, "high"] = 102.1                                          # touché pendant la barre d'entrée elle-même
+    tr = stop_trades(s, [2], [-1], horizon=6, level=atr_stop_levels(s, [2], [-1], [1.0], k=2.0))
+    assert tr[["entry_bar", "exit_bar", "stop", "gap"]].values.tolist() == [[3, 3, True, False]]
+
+
+def test_stop_structurel_extremum_marge_et_plancher():
+    b = _plat()
+    b.loc[3, "low"], b.loc[4, "low"] = 94.0, 95.0                     # segment qualifiant [3, 5], signal en 6
+    assert segment_extremum(b, [6], [1], [3]).tolist() == [94.0]      # fenêtre [t − prev_seg_len, t], bornes incluses
+    assert segment_extremum(b, [6], [1], [2]).tolist() == [95.0]      # la barre t − prev_seg_len compte
+    lvl = structural_stop_levels(b, [6], [1], [2.0], [3], delta=0.5)
+    assert lvl.tolist() == [93.0]                                     # 94 − 0,5 · 2
+    b.loc[7, "open"] = 93.5                                           # entrée en gap sous l'extremum
+    assert structural_stop_levels(b, [6], [1], [2.0], [3], delta=0.0).tolist() == [93.0]   # plancher 93,5 − 0,25 · 2
+    b.loc[6, "low"] = 92.0                                            # la barre du signal compte aussi
+    assert segment_extremum(b, [6], [1], [3]).tolist() == [92.0]
+    s = _plat()
+    s.loc[3, "high"] = 106.0
+    assert structural_stop_levels(s, [6], [-1], [2.0], [3], delta=1.0).tolist() == [108.0]  # Short : 106 + 1 · 2
+    assert structural_stop_levels(s, [6], [-1], [2.0], [1], delta=0.0).tolist() == [100.5]  # plancher : 100 + 0,5
+
+
+def test_stop_vectoriel_egal_aux_appels_unitaires():
+    b = _marche(3000, 31)
+    rng = np.random.default_rng(32)
+    e = np.sort(rng.choice(np.arange(5, 2900), 200, replace=False))
+    x, s, d = e + rng.integers(1, 49, 200), rng.choice([-1, 1], 200), rng.uniform(0.002, 0.03, 200)
+    vec = apply_stop(b, e, x, s, d)
+    one = pd.concat([apply_stop(b, [ei], [xi], [si], float(di)) for ei, xi, si, di in zip(e, x, s, d)],
+                    ignore_index=True)
+    pd.testing.assert_frame_equal(vec, one)
+    assert vec.stop.any() and (~vec.stop).any() and vec.gap.any()
+
+
+def test_sans_stop_ou_stop_jamais_touche_redonne_time_stop_trades():
+    b = _marche(3000, 33)
+    rng = np.random.default_rng(34)
+    t = np.sort(rng.choice(np.arange(5, 2995), 500, replace=False))
+    s = rng.choice([-1, 1], 500)
+    loin = atr_stop_levels(b, t, s, np.full(500, 1e6), k=1.0)       # à 10⁶ unités de prix : jamais touché
+    for h in (6, 26):
+        ref = time_stop_trades(b, t, s, h)
+        for dyn in (True, False):
+            pd.testing.assert_frame_equal(stop_trades(b, t, s, h, None, dyn), ref)
+            pd.testing.assert_frame_equal(stop_trades(b, t, s, h, loin, dyn), ref)
+
+
+def test_liberation_anticipee_dynamique_contre_entrees_figees():
+    b = _plat(25)
+    b.loc[5, "low"] = 98.8                                            # stop à 99 du premier trade, touché en barre 5
+    t, s = [2, 4, 5, 7, 12], [1, 1, 1, 1, 1]
+    lvl = np.array([99.0, 50.0, 50.0, 50.0, 50.0])
+    dyn = stop_trades(b, t, s, horizon=8, level=lvl, dynamic=True)
+    fig = stop_trades(b, t, s, horizon=8, level=lvl, dynamic=False)
+    assert dyn[["signal_bar", "entry_bar", "exit_bar", "stop"]].values.tolist() == [[2, 3, 5, True], [5, 6, 14, False]]
+    assert fig[["signal_bar", "entry_bar", "exit_bar", "stop"]].values.tolist() == [[2, 3, 5, True], [12, 13, 21, False]]
+    # dynamique : le signal de la clôture de la barre du stop (5) entre ; 4 est ignoré (position encore ouverte)
+    # figé : les entrées de la course sans stop (2 puis 12), seule la sortie du premier trade change
+
+
+def test_niveau_de_stop_causal_par_troncature():
+    b = _marche(3000, 35)
+    rng = np.random.default_rng(36)
+    t = np.sort(rng.choice(np.arange(60, 2990), 40, replace=False))
+    s, a, n = rng.choice([-1, 1], 40), rng.uniform(0.5, 2.0, 40), rng.integers(1, 50, 40)
+    la, lb = atr_stop_levels(b, t, s, a, 2.5), structural_stop_levels(b, t, s, a, n, 0.25)
+    for i, ti in enumerate(t):
+        cut = b.iloc[:ti + 2]                                         # dernière barre lue : t + 1 (prix d'entrée)
+        assert atr_stop_levels(cut, [ti], [s[i]], [a[i]], 2.5)[0] == la[i]
+        assert structural_stop_levels(cut, [ti], [s[i]], [a[i]], [n[i]], 0.25)[0] == lb[i]
+
+
+def test_ic_en_bps_et_en_atr_egaux_au_bootstrap_de_grappes():
+    b = _marche(20000, 41)                                            # ≈ 14 mois de barres 30 min
+    rng = np.random.default_rng(42)
+    t = np.sort(rng.choice(np.arange(10, 19900), 1500, replace=False))
+    tr = time_stop_trades(b, t, rng.choice([-1, 1], 1500), 13)
+    atr = pd.Series(rng.uniform(20, 80, len(b)), index=np.arange(len(b)))
+    ci = mean_ci(tr, b, 5.0, n_boot=300, seed=3, atr_bps=atr)
+    assert set(ci) == {f"{m}_{u}_{k}" for m in ("esperance", "timing") for u in ("bps", "atr") for k in ("lo", "hi")}
+    net = tr.ret_gross_bps.to_numpy() - 5.0
+    na = net / atr.reindex(tr.signal_bar.to_numpy()).to_numpy()
+    sd = tr.side.to_numpy()
+    tt = b.time.iloc[tr.entry_bar.to_numpy()]
+    month = (tt.dt.year * 12 + tt.dt.month).to_numpy()
+
+    def stat(pos):                                                    # implémentation de C01, étendue à l'ATR
+        return [net[pos].mean(), timing_drift(net[pos], sd[pos], "mean")[0],
+                na[pos].mean(), timing_drift(na[pos], sd[pos], "mean")[0]]
+
+    lo, hi = np.nanpercentile(cluster_bootstrap(stat, month, 300, 3), [2.5, 97.5], axis=0)
+    keys = ["esperance_bps", "timing_bps", "esperance_atr", "timing_atr"]
+    np.testing.assert_allclose([ci[f"{k}_lo"] for k in keys], lo, rtol=0, atol=1e-9)
+    np.testing.assert_allclose([ci[f"{k}_hi"] for k in keys], hi, rtol=0, atol=1e-9)
+    assert mean_ci(tr, b, 5.0, n_boot=300, seed=3) == {k: v for k, v in ci.items() if "_bps_" in k}
+
+
+def test_effet_apparie_du_stop_sur_les_entrees_figees():
+    b = _marche(20000, 51)
+    rng = np.random.default_rng(52)
+    t = np.sort(rng.choice(np.arange(10, 19900), 800, replace=False))
+    s = rng.choice([-1, 1], 800)
+    lvl = atr_stop_levels(b, t, s, np.full(800, 1.0), k=1.0)
+    ctrl, fig = stop_trades(b, t, s, 26), stop_trades(b, t, s, 26, lvl, dynamic=False)
+    atr = pd.Series(50.0, index=np.arange(len(b)))
+    eff = effect_ci(fig, ctrl, b, atr, n_boot=200)
+    d = fig.ret_gross_bps.to_numpy() - ctrl.ret_gross_bps.to_numpy()
+    assert eff["effet_bps"] == pytest.approx(d.mean()) and eff["effet_atr"] == pytest.approx(d.mean() / 50)
+    assert eff["effet_bps_lo"] < eff["effet_bps"] < eff["effet_bps_hi"] and fig.stop.mean() > 0.2
+    with pytest.raises(ValueError, match="entrées"):
+        effect_ci(stop_trades(b, t, s, 26, lvl, dynamic=True), ctrl, b, atr)
 
 # ── Données réelles ─────────────────────────────────────────────────────────────
 @pytest.fixture(scope="module")
@@ -168,6 +311,24 @@ def test_ancre_p65d_reproduite(dev, variante, stop):
     g = js["gagnants_perdants_net"]
     pf = g["part_gagnants"] * g["gain_moyen"] / ((1 - g["part_gagnants"]) * -g["perte_moyenne"])
     assert m["pf"] == pytest.approx(pf, rel=1e-4)
+
+
+@pytest.mark.data
+def test_extremum_du_segment_sur_btc_est_celui_de_retrace_ratio(dev):
+    from anatomy import dev_universe
+    from anatomy.causal import atr_wilder, causal_table
+    bars, f, _ = dev
+    idx = dev_universe(f)
+    atr = atr_wilder(f.high, f.low, f.close)
+    ct = causal_table(f, idx, atr)
+    sig = f.signal.to_numpy()[idx].astype(int)
+    ext = segment_extremum(bars, idx, sig, ct.prev_seg_len.to_numpy())
+    dist = np.abs(bars.close.to_numpy()[idx] - ext) / atr[idx]
+    np.testing.assert_allclose(dist, ct.obs_dist_seg_atr.to_numpy(), rtol=0, atol=1e-9)
+    for d in (0.0, 1.0):
+        lvl = structural_stop_levels(bars, idx, sig, atr[idx], ct.prev_seg_len.to_numpy(), d)
+        p0 = bars.open.to_numpy()[idx + 1]
+        assert (sig * (p0 - lvl) >= 0.25 * atr[idx] - 1e-9).all()      # jamais à moins de 0,25 ATR de l'entrée
 
 
 @pytest.mark.data

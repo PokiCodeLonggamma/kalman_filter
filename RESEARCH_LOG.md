@@ -228,3 +228,86 @@
   - candidats pour C02 (stop seul, OFAT) : F2b · x1 déjà retourné hors Q4 à H26 (candidat principal, stop large ou break-even), F3 · x1 déjà retourné hors Q4 à part, R1 avec un stop serré.
 
   Points à trancher avant C02 : choix de H par régime, dimensionnement (le risque constant par ATR est un candidat de convention), frais canoniques, validation hors échantillon. Aucune Étape C02 lancée.
+
+### [EXP-C02] — Stop-loss en prix par sous-famille, en exécution séquentielle
+- **Date :** 2026-09-29
+- **Étape :** C Enveloppe (deuxième test ; OFAT : le stop seul)
+- **Actif & Période :** BTC/USD Bitstamp 30m, 2020-01 → 2025-12 (72 mois) ; 2026, ETH et XRP non lus
+- **Modèle de frais :** 5 et 10 bps aller-retour. Capital : 1 ATR14(t) = 0,25 % du capital, levier ≤ 1x (convention de l'Étape C, décision du porteur) ; notionnel 1x gardé dans le CSV.
+- **Livrables :**
+  - `experiments/C02/rapport_C02.md`, `resultats_C02.csv` (864 lignes), `annuel_C02.csv`, `controles_C02.json`, 4 figures ;
+  - `src/envelope/stops.py` ; IC en ATR et effet apparié dans `src/envelope/metrics.py` ;
+  - 9 tests nouveaux dans `tests/test_envelope.py`.
+
+#### 0. Cadrage obligatoire
+- **QUESTION :** à H fixé, un stop intrabarre en prix, SL-A (k · ATR14(t) de open[t + 1]) ou SL-B (extremum causal du segment qualifiant ± δ · ATR14(t)) :
+  - coupe-t-il la queue gauche de R1 hors Q4, F1 et F5 (H ∈ {6, 13, 26}) et redresse-t-il leur espérance ?
+  - protège-t-il F2b, F3 et R2 hors Q4 (H ∈ {13, 26, 48}) sans amputer la queue droite ?
+- **PERTINENCE POUR LE FILTRE AKF :** R1 a une lourde queue gauche sans stop ; F2b et F3 portent une queue droite mais n'entrent pas au même point du range.
+- **CE QUE LE PROTOCOLE MESURE RÉELLEMENT :** l'effet marginal du stop face au contrôle sans stop de C01, net de 5 et 10 bps. L'effet pur (entrées figées) est séparé de l'effet de réouverture (séquentiel dynamique). Les IC 95 % sont en bps et en ATR (bootstrap de grappes mensuelles, 2 000 tirages).
+- **CE QU'IL NE PERMET PAS DE CONCLURE :**
+  - l'effet d'un take-profit, d'un break-even, d'un filtre macro ou du multiplexage R1 + R2 ;
+  - une validation hors échantillon ;
+  - 198 paires par lecture : la meilleure est optimiste.
+
+#### 1. Hypothèse & Motivation physique
+- R1 : un stop près de l'extremum coupe-t-il les reprises de tendance ou les trajectoires qui auraient fini dans le sens du signal (`RESEARCH_INSIGHTS.md` §5 Q1) ?
+- F2b et F3 : un stop large protège-t-il le capital (trou d'air de F3 en 2024) sans couper les gagnants ?
+
+#### 2. Règle testée (OFAT)
+- **Entrée :** open[t + 1], une position à la fois ; sous-ensembles figés de B01 et C01.
+- **Sortie :** open[t + 1 + H], ou stop intrabarre plus tôt.
+  - SL-A : k ∈ {1 ; 1,5 ; 2 ; 2,5 ; 3 ; 4 ; 5}.
+  - SL-B : δ ∈ {0 ; 0,25 ; 0,5 ; 1}, plancher à 0,25 ATR de open[t + 1].
+  - Exécution certifiée `apply_stop` : barre d'entrée comprise, gap à l'ouverture.
+- **Contrôle :** la même configuration sans stop. Les 24 lignes communes avec C01 sont identiques ; l'ancre P6.5d est reproduite sans stop et avec stop à 2,5 %.
+- **Deux lectures :** entrées figées (effet pur) et séquentiel dynamique (le stop libère la position ; le signal de la clôture de la barre du stop est admissible).
+- **Écart au cadrage :** SL-B prend l'extremum sur [t − prev_seg_len, t], celui de `retrace_ratio`, et non [t − prev_seg_len + 1, t].
+  - Les deux fenêtres diffèrent pour 932 signaux sur 7 296 (25 % de R2 hors Q4), de 0,24 ATR en médiane.
+  - Avec la fenêtre littérale, les espérances bougent d'au plus 0,05 ATR ; les conclusions sont inchangées.
+
+#### 3. Résultats nets (5 bps, séquentiel dynamique ; PnL et drawdown à 0,25 % par ATR)
+| Métrique | F2b H26 sans stop | F2b H26 SL-A 5 | F3 H26 sans stop | F3 H26 SL-B extremum | R1 H13 SL-A 2 |
+|---|---|---|---|---|---|
+| PnL Net Total | +72 % (1x : +78 % ; +7 345 bps) | +38 % | +16 % | +36 % | +2 % |
+| Profit Factor : 1x ; pondéré | 1,17 ; 1,28 | 1,11 ; 1,16 | 1,13 ; 1,08 | 1,18 ; 1,19 | 1,02 ; 1,02 |
+| Win Rate | 49,6 % | 48,0 % | 47,4 % | 36,5 % | 45,6 % |
+| Espérance / trade : bps [IC] ; ATR [IC] | +11,5 [−2,9 ; +26,0] ; +0,389 [+0,079 ; +0,700] | +7,5 ; +0,244 [−0,063 ; +0,544] | +9,3 ; +0,144 [−0,293 ; +0,548] | +10,4 ; +0,202 [−0,106 ; +0,520] | +1,1 ; +0,013 [−0,102 ; +0,135] |
+| Espérance ATR à 10 bps | +0,255 [−0,056 ; +0,569] | +0,110 | +0,003 | +0,062 | −0,107 |
+| Max Drawdown valorisé | −13,2 % | −12,9 % | −33,7 % | −12,9 % | −21,5 % |
+| Nombre de trades | 639 (8,9/mois) | 640 ; 18 % stoppés | 601 (8,3/mois) | 620 ; 50 % stoppés | 1 513 (21,0/mois) ; 35 % stoppés |
+| Durée médiane | 26 barres | 26 | 26 | 26 | 13 |
+| Part des frais (1x) | 30 % | 40 % | 35 % | 32 % | 82 % |
+
+#### 4. Analyse causale & Physique du trade
+- [OBS] **Remarque du porteur vérifiée.** ATR14 médian des signaux : 80,3 bps en 2021, 33,6 en 2023. En ATR, deux contrôles sans stop ont un IC 95 % entièrement positif à 5 bps, timing compris : F2b · x1 hors Q4 H26 (+0,389 [+0,079 ; +0,700]) et R2 hors Q4 H26 (+0,354 [+0,051 ; +0,643]). À 10 bps, leurs IC contiennent 0. La moyenne de F2b résiste à la winsorisation P1/P99. F5, positif en bps à H6 et H13, est négatif en ATR.
+- [OBS] **R1, F1, F5.**
+  - 3 effets purs sur 99 ont un IC > 0 (+0,05 à +0,07 ATR, niveau du hasard) ; aucun stop ne donne d'IC > 0 en séquentiel.
+  - Les gains de F1 (jusqu'à +0,087 ATR) ne résistent pas à la winsorisation.
+  - Le stop coupe la queue gauche (R1 H26 : P10 −4,7 → −1,6 ATR) mais fait passer la médiane de +0,09 à −0,81 ATR : une partie des trajectoires coupées aurait fini dans le sens du signal.
+  - Le drawdown baisse (R1 H26 : −44 % → −26 %). À 10 bps, tout le groupe est négatif ; F5 H26 a un IC < 0 avec 7 règles sur 11.
+- [OBS] **F2b H26 : chaque stop dégrade.** L'effet pur a un IC < 0 pour 10 règles sur 11 (−0,22 à −0,38 ATR par trade) ; seul SL-A 5 fait −0,15 [−0,35 ; +0,04]. Le drawdown ne s'améliore pas, et les gains de 2023-2025 disparaissent.
+- [OBS] **F3 H26 : un stop large protège.** Avec SL-A 2 ATR ou SL-B à l'extremum :
+  - drawdown −34 % → −13 % ;
+  - PnL +16 % → +33 et +36 % ;
+  - 6 années positives sur 6 ;
+  - 2024 : −1,00 → +0,04 ATR par trade.
+
+  L'effet pur, +0,09 ATR, a un IC qui contient 0.
+- [OBS] **R2 hors Q4** mêle les deux réponses. À H26, 7 règles dégradent significativement ; SL-A 5 ATR garde +0,286 ATR [+0,019 ; +0,562].
+- [OBS] **Réouverture.** Les trades débloqués par un stop sont positifs pour R1 (jusqu'à +0,43 ATR) et négatifs pour F3 (−0,2 à −1,0 ATR). Les gaps sont négligeables (≤ 0,4 % des trades).
+- [HYP] Le point d'entrée dans le range décide de l'effet du stop.
+  - F2b, entré au milieu du range, gagne après des excursions adverses de 1 à 3 ATR : le stop coupe ses gagnants.
+  - F3, entré près de l'extrémité opposée, échoue franchement : le stop coupe l'échec.
+  - L'avantage de R1 dans B01 était une médiane, pas une espérance.
+
+#### 5. Décision
+- [ ] **REJETÉ**
+- [ ] **NON CONCLUANT**
+- [x] **À POURSUIVRE**, par sous-famille :
+  - F2b · x1 déjà retourné hors Q4 : sortie à H26 sans stop ; si un stop de catastrophe est exigé, SL-A 5 ATR est le moins coûteux ;
+  - F3 · x1 déjà retourné hors Q4 : SL-B à l'extremum ou SL-A 2 ATR, à H26 ;
+  - R2 hors Q4, traité comme un bloc : sans objet ;
+  - R1, F1, F5 : non concluant à rejeté (aucune espérance positive avec stop ; tout négatif à 10 bps).
+
+  Points à trancher avant C02bis : place de R1 dans le moteur de régimes, stop de catastrophe pour F2b, règle de réentrée après un stop, frais canoniques, hold-out. C02bis n'est pas lancé.
