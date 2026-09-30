@@ -2,7 +2,7 @@
 
 > Aide-mémoire : les deux ou trois résultats les plus utiles de chaque étape, avec leur statut. Le détail est dans `RESEARCH_LOG.md`, la lecture dans `RESEARCH_INSIGHTS.md`, les chiffres dans `experiments/<expérience>/`.
 >
-> Tout porte sur BTC/USD 30 min, 2020-2025, **dans l'échantillon**. Aucun résultat n'est validé hors échantillon : le hold-out (BTC 2026, ETH, XRP) reste scellé jusqu'à la fin de l'Étape D.
+> Tout porte sur BTC/USD 30 min, 2020-2025, **dans l'échantillon**, sauf l'Étape D (transfert à d'autres actifs). Aucun résultat n'est validé hors échantillon : le hold-out (BTC 2026, ETH, XRP) reste scellé jusqu'à la fin de l'Étape D.
 >
 > **Conventions :**
 > - PnL nets de frais ; une position à la fois ;
@@ -145,6 +145,32 @@ Le take-profit fixe est exclu : même sa borne optimiste reste sous RE-1 (+0,200
 L'Étape C a testé ses quatre facteurs (horizon, stop par sous-famille, break-even, filtre macro) et la sensibilité de ses seuils. RE-1, en tête de fichier, est la stratégie cœur, inchangée.
 
 ---
+
+## Étape D — Adaptation
+
+### EXP-D01 — portabilité de RE-1 figée, sans réglage (descriptive ; seuils numériques de BTC gelés)
+*Aucun critère de réussite ni classement (décision du porteur). WTI bloqué : couverture HistData arrêtée au 2023-12-01.*
+
+| | BTC 5 bps (référence) | SOL/USD 5 bps | CFD or 4 bps |
+|---|---|---|---|
+| Période | 2020-2025 | 2021-06-17 → 2025 | 2020-2025 |
+| Trades (par mois) | 1 080 (15,0) | 769 (14,1) | 651 (9,0) |
+| Espérance ATR [IC] | +0,369 [+0,098 ; +0,645] | +0,190 [−0,079 ; +0,484] | −0,019 [−0,362 ; +0,349] |
+| Espérance bps [IC] | +12,3 [+0,2 ; +24,4] | +19,2 [−3,6 ; +44,2] | +1,1 [−4,9 ; +7,5] |
+| PnL : 0,25 %/ATR ; 1x | +138 % ; +204 % | +39 % ; +173 % | +0,6 % ; +5,4 % |
+| MDD valorisé : 0,25 %/ATR ; 1x | −13,5 % ; −43,9 % | −13,1 % ; −42,3 % | −13,6 % ; −13,3 % |
+| Calmar : 0,25 %/ATR ; 1x | 1,16 ; 0,46 | 0,58 ; 0,59 | 0,01 ; 0,07 |
+| Brut ; frais (ATR par trade) | +0,50 ; 0,14 | +0,25 ; 0,06 | +0,24 ; 0,26 |
+| F2b ; F3 (ATR) | +0,459 ; +0,267 | +0,287 ; +0,076 | −0,304 ; +0,313 |
+| Années à espérance ATR > 0 | 6/6 | 5/5 | 2/6 |
+
+- **10 bps :** SOL +0,129 ATR [−0,140 ; +0,425] ; BTC +0,233 [−0,041 ; +0,511], soit +7,3 bps [−4,8 ; +19,4] (estimation positive, IC qui traverse zéro).
+- **La géométrie du déclencheur transfère.** `leg_atr`, `retrace_ratio` et `nis_z_100` ont les mêmes distributions sur les trois actifs : les seuils BTC retiennent les mêmes fractions de signaux.
+- **La rente dépend du marché.**
+  - Le brut vaut la moitié de celui de BTC sur SOL et sur l'or.
+  - Sur l'or, 4 bps coûtent 0,26 ATR par trade et annulent le brut.
+  - L'or inverse F2b et F3, et son partage Long/Short est de la dérive (timing −0,05).
+- **Constantes sur les trois actifs :** queue droite (le décile supérieur fait plus que le total) ; le stop de F3 réduit le drawdown sans effet sur l'espérance ; la haute volatilité est le régime faible (BTC, SOL).
 
 ## Pistes écartées (à ne pas retester sans élément nouveau)
 

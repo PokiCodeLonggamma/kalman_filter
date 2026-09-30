@@ -123,6 +123,19 @@ Elle se mesure séparément par sens et par type de signal (rang 1 ou répétiti
   - le rang du contrôle dans sa grille dit si le seuil a pu être calé sur la courbe ;
   - un seuil choisi après lecture des mêmes données (exclusion de Q4 après C01) est attendu au sommet.
 
+### I-M13 — Vérifier le fuseau et les séances d'une source par sa structure, pas par sa documentation `[MÉTHODE]`
+*Source : EXP-D01, audit des données.*
+
+- La FAQ de HistData annonce un EST fixe. La pause quotidienne des CFD (17:00-18:00 heure de New York) montre une horloge EET/EEST moins 7 h : UTC−4 de fin mars à fin octobre.
+- **Règle :** pour toute série en séances, lire la pause quotidienne et l'ouverture hebdomadaire en heure locale du marché, semaine par semaine, avant tout calcul. Chercher aussi les doublons exacts autour des changements d'heure (une heure par an chez HistData).
+- **Portée :** un décalage d'heures entières ne change ni les barres ni les trades de RE-1. Il change le calendrier : années, mois des grappes, rapprochement avec une référence externe.
+
+### I-M14 — Les frais se lisent en ATR, actif par actif `[MÉTHODE]` `[OBS]`
+*Source : EXP-D01.*
+
+- Un frais fixe en bps coûte fee / ATR14(t) par trade : 0,14 ATR sur BTC à 5 bps, 0,06 sur SOL à 5 bps, 0,26 sur l'or à 4 bps. Les bruts sont de +0,50, +0,25 et +0,24 ATR.
+- **Règle :** publier le brut et les frais en ATR à côté du net. Un actif calme à l'échelle des barres peut perdre un avantage brut réel ; l'écart se lit alors comme une question d'échelle de temps.
+
 ---
 
 ## 2. Cinématique du moteur v2.1
@@ -163,6 +176,17 @@ Elle se mesure séparément par sens et par type de signal (rang 1 ou répétiti
 - `[OBS]` Un signal de même sens revient toutes les 26 barres [21 ; 34], un signal de sens opposé toutes les 13 [10 ; 20]. La cadence est de 101,9 signaux par mois.
 - `[OBS]` En unités d'ATR, la géométrie du signal varie peu de 2020 à 2025. Seul le niveau de volatilité change : l'ATR14 médian va de 34 à 80 bps selon l'année.
 - `[HYP]` Une enveloppe exprimée en ATR14(t) devrait mieux se transférer entre régimes qu'une enveloppe en bps.
+
+### K7 — La géométrie du déclencheur est la même d'un actif à l'autre
+*Source : EXP-D01.*
+
+- `[OBS]` Sur BTC, SOL/USD et l'or :
+  - `leg_atr` P50 : 2,82 / 2,85 / 2,90 ;
+  - `retrace_ratio` P50 : 0,62 / 0,60 / 0,59 ;
+  - part de `nis_z_100` au-dessus de 1,2245 : 25,0 / 27,3 / 24,9 % ;
+  - x1 déjà retourné : 51,8 / 52,3 / 49,4 % ;
+  - alors que l'ATR14 médian vaut 50, 95 et 17 bps.
+- `[HYP]` La stationnarité en ATR de K6 vaut aussi entre actifs. Des seuils sans dimension sélectionnent la même population partout : le transfert (a) est cohérent avec le moteur. La rente, elle, varie d'un marché à l'autre.
 
 ---
 
@@ -339,9 +363,12 @@ L'atlas A01 soutient cette lecture à travers le ratio de retracement `retrace_r
 3. ~~R2 : le sens favorable de F3 (Short) et de F2b (Long) dépend-il de la tendance de l'unité de temps supérieure ?~~ **Répondu (EXP-C04)** : non. Dans RE-1, les trades contre la tendance (EMA 200, EMA 50, Kalman 4 h) valent autant que les alignés, voire plus. Avec un stop à l'extremum, F3 est positif des deux côtés (C02).
 4. ~~R3 et `nis_z_100` Q4 : faut-il seulement les exclure, ou les prendre en continuation ?~~ **Tranché par le porteur (EXP-C01)** : exclusion seulement.
 5. ~~Après un stop, faut-il un cooldown jusqu'à t + 1 + H ou une réouverture immédiate ?~~ **Répondu (EXP-C02bis)** : le cooldown, jusqu'à H32 ; à H48, l'écart s'inverse.
-6. L'assemblage différencié de R2 tient-il avec des seuils causaux, puis hors échantillon ? **En partie répondu (EXP-C02bis)** : il tient avec des seuils causaux, en ATR. Hors échantillon : Étape D.
+6. L'assemblage différencié de R2 tient-il avec des seuils causaux, puis hors échantillon ? **En partie répondu (EXP-C02bis, EXP-D01)** : il tient avec des seuils causaux, en ATR. Transféré tel quel (D01, descriptif) : sa population se retrouve sur SOL/USD et sur l'or ; l'espérance nette est positive sur SOL (IC contenant zéro) et nulle sur l'or. Hold-out : validation finale.
 7. ~~Faut-il un horizon propre à chaque sous-famille ?~~ **Tranché par le porteur (2026-09-29)** : non, H = 26 est commun. À H28, F2b monte à +0,569 ATR, mais F3 tombe à +0,148, le DD passe à −16,2 % et le Calmar à 0,92. Ce serait un paramètre libre choisi après lecture.
 8. ~~Un break-even ou un take-profit améliore-t-il RE-1 ?~~ **Répondu (EXP-C03 et son analyse approfondie)** : non. Le break-even est neutre pour m ≥ 2 et nuisible en dessous. Comme outil de risque, il équivaut à une réduction de taille et ne résiste pas à 5 bps de glissement. Même la borne optimiste du take-profit reste sous RE-1.
 9. ~~Un filtre de tendance macro améliore-t-il RE-1 ?~~ **Répondu (EXP-C04)** : non. Les trades contre-tendance ne sont pas toxiques, et le veto retire des V de la queue droite. En séquentiel, il fait en plus entrer des signaux perdants.
 10. ~~Les seuils durs de RE-1 reposent-ils sur des plateaux ?~~ **Répondu (EXP-C05)** : oui pour la frontière F2b / F3 (0,85 à 0,95) et pour la marge du stop de F3 (−0,25 à +0,25 ATR). L'exclusion de `nis_z_100` est une falaise côté permissif, signalée avant l'Étape D.
-11. La bascule d'espérance de `nis_z_100` au voisinage de P75 se retrouve-t-elle sur les autres actifs ? À contrôler par bandes dans l'Étape D, sans régler le seuil.
+11. ~~La bascule d'espérance de `nis_z_100` au voisinage de P75 se retrouve-t-elle sur les autres actifs ?~~ **Mesuré (EXP-D01, trades isolés)** : pas telle quelle. Sur SOL, la bande sous P70 est positive (IC > 0), mais la bande au-delà de P90 l'est aussi ; sur l'or, les bandes sont nulles ou négatives. Aucun réglage.
+12. Quelle échelle de temps rend le rapport frais / ATR compatible avec l'or (brut +0,24 ATR, frais 0,26 ATR à 30 min) ? Question de vitesse : H et R0 en D02, ou unité de temps des barres (hors périmètre de D02 tel qu'annoncé).
+13. L'inversion F2b / F3 de l'or (F2b Short −0,70, F3 Long +0,55) tient-elle à la hausse séculaire de 2020-2025 (dérive +0,38 ATR) ou à la microstructure d'un CFD ? Non testé.
+14. WTI : quelle source pour 2020-2025, et quel traitement des roulements (contrat du mois non ajusté chez HistData) ? Décision du porteur.

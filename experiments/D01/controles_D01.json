@@ -1,0 +1,54 @@
+{
+ "seuils_btc": {
+  "leg_atr_p50": 2.823322693433984,
+  "nis_z_100_p75": 1.2245041356145911
+ },
+ "actifs": {
+  "BTC": {
+   "statut": "mesuré",
+   "annees": 6.0,
+   "trades": 1080,
+   "candidats": 1452
+  },
+  "SOL": {
+   "statut": "mesuré",
+   "annees": 4.538900296600502,
+   "trades": 769,
+   "candidats": 1030
+  },
+  "XAU": {
+   "statut": "mesuré",
+   "annees": 5.997376226328998,
+   "trades": 651,
+   "candidats": 849
+  },
+  "WTI": {
+   "statut": "bloqué",
+   "motif": "couverture 2020-01-01 → 2023-12-01 : HistData ne publie pas WTIUSD pour 2024 et 2025, contre la condition « au moins 2020-2025 » du porteur. Par ailleurs, l'audit montre un CFD de contrat du mois non ajusté, roulé autour de l'échéance : la série porte chaque mois un saut égal à l'écart de calendrier (règle non publiée par la source). Série auditée, aucun backtest avant décision du porteur."
+  }
+ },
+ "btc": {
+  "ancre": {
+   "sans_stop": {
+    "n_trades": 6037,
+    "n_stops": 0
+   },
+   "stop_2_5": {
+    "n_trades": 6589,
+    "n_stops": 780
+   }
+  },
+  "trades": 1080,
+  "identiques_c02bis": true,
+  "metriques_comparees": 40,
+  "ecart_relatif_max": 4.493512022106744e-06
+ },
+ "quantiles_nis_btc": {
+  "P70": 0.9192068040966993,
+  "P75": 1.2245041356145911,
+  "P80": 1.5992660188612187,
+  "P85": 2.0572068985111858,
+  "P90": 2.7485351661715294
+ },
+ "duree_s": 32
+}

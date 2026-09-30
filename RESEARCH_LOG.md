@@ -810,3 +810,117 @@ Grilles complètes : espérance ATR ; MDD ; Calmar.
   - Aucun point de grille n'est adopté. Les voisins meilleurs (A 0,90 et 0,95, B −0,25) sont non significatifs.
   - **Signalement formel :** l'exclusion de `nis_z_100` est une falaise côté permissif. C'est le seuil le plus sensible de RE-1, et le seul que la sélection de C01 a pu favoriser.
   - Proposition pour l'Étape D : garder la règle P75 sur les signaux de chaque actif (ou sa version causale), et publier l'espérance par bande de `nis_z_100` pour vérifier que la bascule reste au voisinage de P75.
+
+### [EXP-D01] — Portabilité de RE-1 figée, sans réglage (SOL/USD, CFD or, CFD WTI)
+- **Date :** 2026-09-30
+- **Étape :** D Adaptation, D01. Expérience **descriptive** (décision du porteur) : aucun critère de réussite, aucun classement des actifs, aucune modification ni recalibration de RE-1.
+- **Actif & Période :**
+  - BTC/USD Bitstamp 2020-2025, en référence ;
+  - SOL/USD Coinbase, du 2021-06-17 au 2025-12-31 ;
+  - CFD or XAU/USD (HistData) 2020-2025 ;
+  - CFD WTI (HistData) audité, puis **bloqué** avant backtest ;
+  - 2026, ETH et XRP ni téléchargés ni lus.
+- **Modèle de frais :** SOL 5 et 10 bps ; XAU 4 bps ; BTC 5 et 10 bps. Ce sont des frais d'exécution ; aucun stress de glissement. Capital à 0,25 % par ATR14(t) et notionnel 1x.
+- **Livrables :**
+  - code, deux commits séparés : `src/marketdata/` et `experiments/D01/donnees_D01.py` (commit `1f57997`) ; `src/strategy/re1.py` (commit `2b5b32c`) ; 19 tests ;
+  - `experiments/D01/run_D01.py` (`--audit`, puis le run) ;
+  - `rapport_D01.md`, `resultats_D01.csv`, `annuel_D01.csv`, `audit_D01.json`, `diagnostics_D01.json`, `controles_D01.json`, 3 figures.
+
+#### 0. Cadrage obligatoire
+- **QUESTION :** que devient RE-1, transférée telle quelle (seuils numériques de BTC, H = 26 barres, moteur v2.1 par défaut), sur des marchés de structures différentes ?
+- **PERTINENCE POUR LE FILTRE AKF :**
+  - le déclencheur est invariant d'échelle et les descripteurs de RE-1 sont en ATR14(t) et en z-score ;
+  - le transfert teste si la cinématique R2 hors choc d'innovation existe ailleurs à paramètres identiques ;
+  - les CFD ajoutent des trous de séance.
+- **CE QUE LE PROTOCOLE MESURE RÉELLEMENT :**
+  - les 8 métriques nettes aux frais de l'actif ;
+  - l'espérance et le timing en ATR et en bps, avec IC par grappes mensuelles ;
+  - le capital à 0,25 %/ATR et à 1x ;
+  - Long/Short, F2b/F3, stops de F3, années, terciles de volatilité ;
+  - `nis_z_100` face au seuil BTC, et ses bandes (trades isolés) ;
+  - l'audit des données.
+- **CE QU'IL NE PERMET PAS DE CONCLURE :**
+  - pas de validation sur le hold-out ;
+  - pas de comparaison statistique ni de classement ;
+  - rien sur l'optimalité des seuils ni sur D02 ;
+  - coûts réels des CFD non modélisés ;
+  - sources et périodes différentes de BTC.
+
+#### 1. Hypothèse & Motivation physique
+- Si RE-1 capte une cinématique du moteur plutôt qu'une particularité de BTC 2020-2025, sa population et une partie de sa rente doivent se retrouver sur d'autres marchés, sans réglage.
+
+#### 2. Règle testée (OFAT)
+- **Règle :** RE-1 telle quelle, avec les seuils numériques de BTC gelés (option (a)) :
+  - médiane de `leg_atr` = 2,8233 ;
+  - P75 de `nis_z_100` = 1,2245 ;
+  - frontières de `retrace_ratio` 0,50 et 0,85.
+  - Les quantiles locaux sont publiés à titre descriptif seulement.
+- **Contrôle :** BTC par la même chaîne (`strategy.re1`), identique à C02bis trade par trade.
+- **Règle de lecture fixée avant le calcul :**
+  - D01 est descriptif ;
+  - seul motif de blocage : la validité technique ou la qualité des données ;
+  - l'actif bloqué est documenté, jamais remplacé ;
+  - régimes de volatilité, bandes de `nis_z_100` et effet du stop sont définis dans l'en-tête du script.
+
+#### 3. Résultats nets (H26)
+| Métrique | BTC 5 bps | SOL/USD 5 bps | SOL/USD 10 bps | CFD or 4 bps |
+|---|---|---|---|---|
+| PnL Net Total : 0,25 %/ATR ; 1x | +138 % ; +204 % | +39 % ; +173 % | +24 % ; +86 % | +0,6 % ; +5,4 % |
+| Profit Factor (1x ; pondéré) | 1,20 ; 1,28 | 1,17 ; 1,16 | 1,12 ; 1,10 | 1,04 ; 1,01 |
+| Win Rate | 44,3 % | 44,1 % | 43,4 % | 42,5 % |
+| Espérance ATR [IC] ; bps [IC] | +0,369 [+0,098 ; +0,645] ; +12,3 [+0,2 ; +24,4] | +0,190 [−0,079 ; +0,484] ; +19,2 [−3,6 ; +44,2] | +0,129 [−0,140 ; +0,425] ; +14,2 [−8,6 ; +39,2] | −0,019 [−0,362 ; +0,349] ; +1,1 [−4,9 ; +7,5] |
+| Max Drawdown : 0,25 %/ATR ; 1x | −13,5 % ; −43,9 % | −13,1 % ; −42,3 % | −15,2 % ; −44,4 % | −13,6 % ; −13,3 % |
+| Nombre de trades (/mois) | 1 080 (15,0) | 769 (14,1) | 769 (14,1) | 651 (9,0) |
+| Durée médiane | 26 barres (13 h) | 26 (13 h) | 26 (13 h) | 26 (13 h ; P90 20 h) |
+| Part des frais (1x) | 29 % | 21 % | 41 % | 79 % |
+
+- **Calmar :**
+  - à 0,25 %/ATR : 1,16 / 0,58 / 0,32 / 0,01 ;
+  - à 1x : 0,46 / 0,59 / 0,33 / 0,07.
+- **BTC à 10 bps :** +0,233 ATR [−0,041 ; +0,511], +7,3 bps [−4,8 ; +19,4]. L'estimation est positive et son IC traverse zéro.
+
+#### 4. Analyse causale & Physique du trade
+- [CODE] **Contrôles bloquants passés :**
+  - ancre P6.5d ;
+  - seuils gelés égaux aux statistiques de l'atlas BTC ;
+  - BTC par la chaîne D01 identique à C02bis : 1 080 trades, 40 métriques, écart relatif ≤ 4,5·10⁻⁶ ;
+  - intégrité des quatre séries.
+- [OBS] **Données :**
+  - **SOL/USD.** Coinbase, bougies de 15 min agrégées en 30 min. Coté depuis le 2021-06-17 ; aucune place en USD liquide ne couvre 2020. Binance SOL/USDT a été écarté par le porteur, Binance.US (trous) et Bitstamp (tardif) aussi.
+  - **XAU et WTI.** HistData, bid, courtier non divulgué. Dukascopy refuse les accès automatisés (« Bot blocked ») ; le blocage n'a pas été contourné.
+  - **Fuseau HistData corrigé.** La FAQ annonce un EST fixe, mais l'horloge suit l'heure d'été européenne. Contrôle : la pause tombe à 17:00-18:00 heure de New York dans 303 semaines sur 314.
+  - **Doublons HistData.** Une heure par an est répétée à l'identique ; ces doublons exacts sont supprimés.
+- [OBS] **WTI bloqué.**
+  - Couverture jusqu'au 2023-12-01 seulement, contre la consigne 2020-2025.
+  - CFD de contrat du mois non ajusté, roulé autour de l'échéance : écart au spot EIA médian −0,02 $, corrélation 0,978 hors avril 2020 ; le 20 avril 2020, CFD 20,27 $ contre spot −36,98 $.
+- [OBS] **La géométrie du déclencheur est la même sur les trois actifs,** alors que l'ATR14 médian vaut 50, 95 et 17 bps :
+  - `leg_atr` P50 2,82 / 2,85 / 2,90 ;
+  - `retrace_ratio` P50 0,62 / 0,60 / 0,59 ;
+  - part au-dessus du seuil `nis_z_100` 25,0 / 27,3 / 24,9 %.
+- [OBS] **SOL/USD : estimation positive, IC qui contient zéro.**
+  - F2b +0,287, F3 +0,076 ATR ; Long +0,25, Short +0,14 ;
+  - 5 années sur 5 positives en ATR ; 2025 fait +91 % à 1x ;
+  - moyenne winsorisée P1/P99 : +0,139.
+- [OBS] **CFD or : net nul.**
+  - Brut +0,239 ATR (+5,1 bps), frais 0,257 ATR : un actif trop calme à 30 min pour 4 bps.
+  - F2b −0,304 (F2b Short −0,704 [−1,402 ; −0,001]), F3 +0,313 (F3 Long +0,551).
+  - Timing −0,05, dérive +0,38 : la hausse séculaire de l'or.
+  - 2 années positives sur 6.
+  - Dimensionnement plafonné à 1x pour 89 % des trades (ATR < 25 bps).
+- [OBS] **Ce qui se retrouve partout :**
+  - la queue droite : médiane −0,4 à −0,9 ATR ; le décile supérieur apporte +0,77 à +0,92 ATR par trade ;
+  - le stop de F3 sert le risque, pas l'alpha : effet apparié ±0,03 non significatif, MDD réduit sur les trois actifs ;
+  - le tercile agité est le plus faible sur BTC et SOL.
+- [OBS] **La bascule de `nis_z_100` à P75 ne se reproduit pas telle quelle.** SOL : bande sous P70 positive (IC > 0) et bande au-delà de P90 positive. XAU : bandes nulles ou négatives.
+- [HYP] **La population transfère, la rente dépend du marché.** Le brut vaut la moitié de celui de BTC sur SOL et sur l'or ; sur l'or, le rapport frais / ATR l'annule. C'est une question de vitesse (H, R0 ou unité de temps), pas un verdict sur le signal.
+
+#### 5. Décision
+- [ ] **REJETÉ**
+- [ ] **NON CONCLUANT**
+- [x] **À POURSUIVRE (descriptif) : RE-1 inchangée.**
+  - Aucune recalibration n'est tirée de D01.
+  - À trancher par le porteur :
+    - le WTI : mesurer 2020-2023 sur HistData, fournir une autre source (OANDA, Dukascopy par AWS), ou retirer l'actif ;
+    - la validation de la source XAU ;
+    - le push.
+  - Réflexions pour D02 dans le rapport (§8) : aucune fonction objectif ni aucun domaine n'est défini.
