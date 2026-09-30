@@ -150,6 +150,7 @@ Elle se mesure séparément par sens et par type de signal (rang 1 ou répétiti
 - XLE, H = 65 : +0,155 ATR en séquentiel, +0,009 sur les mêmes entrées que H = 26 (effet −0,010 [−0,71 ; +0,75]). Les 31 trades sautés valaient −0,48 ATR. Or, H = 130 : −0,702 en séquentiel, −0,165 sur entrées figées (trades sautés +0,38).
 - **Règle :** publier l'effet apparié sur entrées figées à côté de toute variation de H (extension d'I-M9). Un optimiseur de H sur la course séquentielle ajuste aussi ce calendrier.
 - À dimensionnement égal (0,25 % par ATR14 de 30 min), le risque par trade croît avec H : MDD de l'or −13,6 % à H = 26, −41,6 % à H = 130. Comparer des H au Calmar suppose de fixer cette convention.
+- **Verrouillage découplé de la sortie (EXP-D01.6).** À sortie fixe (26 barres), faire varier le verrouillage (26 à 90) donne un zigzag sans tendance sur SPY et XLE : chaque valeur retire un paquet de trades différent, valant de −0,75 à +0,87 ATR. Les trades sautés ne se distinguent à t que par leur délai depuis le trade précédent. Le verrouillage est un sélecteur de calendrier, pas un paramètre à optimiser.
 
 ---
 
@@ -218,7 +219,15 @@ Elle se mesure séparément par sens et par type de signal (rang 1 ou répétiti
 - `[OBS]` Le brut par trade ne croît pas avec H. Or, sur les mêmes entrées : +0,24, +0,26, +0,32, +0,21, +0,09 ATR de 13 h à 68 h. Sur les trois actifs, l'effet apparié de H va de −0,55 à +0,08 ATR, tous les IC ∋ 0.
 - `[OBS]` Ce qui croît avec H : la dérive de l'actif, qui joue des deux côtés (or +0,38 → +0,81 ATR ; Short −0,43 → −1,54), le nombre de nuits et le risque par trade.
 - `[OBS]` En séance régulière, H = 13 barres = une séance : 91 % des trades traversent une nuit, comme à H = 26. Seul H = 6 réduit l'exposition (50 à 57 %). La composante en séance du brut est ≈ 0 sur SPY et négative sur XLE à tout H.
-- `[HYP]` Sur ces marchés, l'avantage manque en amont de la sortie. Une sortie en fin de séance retirerait les gaps (coût des stops percés : 0,05 à 0,22 ATR par trade sur SPY) sans créer d'espérance.
+- `[HYP]` Sur ces marchés, l'avantage manque en amont de la sortie. Une sortie en fin de séance retirerait les gaps (coût des stops percés : 0,05 à 0,22 ATR par trade sur SPY) sans créer d'espérance. **Mesuré en D01.6 (K10).**
+
+### K10 — En séance seule, le signal n'a pas de valeur nette sur les ETF ; la nuit joue en sens opposé
+*Source : EXP-D01.6 (SPY, XLE ; sortie forcée au close de la dernière barre de séance ; 4 bps).*
+
+- `[OBS]` Sur les entrées de RE-1, sortir avant la nuit donne un brut de +0,127 ATR sur SPY (IC [−0,12 ; +0,39]) et −0,089 sur XLE. Les frais (0,16 et 0,08 ATR) laissent un net de −0,04 et −0,17. Libérée à la clôture : −0,01 et −0,16. Aucun IC > 0.
+- `[OBS]` Effet apparié séance − RE-1 : SPY +0,12, XLE −0,19 ATR (IC ∋ 0). Nuits et séances suivantes pèsent sur SPY et portent XLE : pas de prime overnight générale.
+- `[OBS]` En séance, le MDD est divisé par deux environ et les IC sont deux fois plus étroits (durée médiane 2 à 3 h contre 48 h).
+- `[HYP]` Sur SPY, le brut en séance est du même ordre que les frais (point mort ≈ 4 bps) : la question y est le coût d'exécution, pas le signal seul.
 
 ---
 
@@ -404,4 +413,4 @@ L'atlas A01 soutient cette lecture à travers le ratio de retracement `retrace_r
 12. Quelle échelle de temps rend le rapport frais / ATR compatible avec l'or (brut +0,24 ATR, frais 0,26 ATR à 30 min) ? Question de vitesse : H et R0 en D02, ou unité de temps des barres (hors périmètre de D02 tel qu'annoncé). **Mesuré pour H (EXP-D01.5) :** allonger H ne dilue pas les frais, qui restent à 0,26 ATR par trade ; le brut ne croît pas (+0,24 → −0,45 ATR de H = 26 à 130). Restent R0 et l'unité de temps des barres.
 13. L'inversion F2b / F3 de l'or (F2b Short −0,70, F3 Long +0,55) tient-elle à la hausse séculaire de 2020-2025 (dérive +0,38 ATR) ou à la microstructure d'un CFD ? Non testé.
 14. ~~WTI : quelle source pour 2020-2025 ?~~ **Tranché par le porteur (2026-09-30)** : WTI retiré de D01, remplacé par l'ETF XLE (corrélation quotidienne 0,46 avec le spot WTI, 0,60 avec SPY).
-15. Sur une série en séances, H doit-il se compter en barres ou en temps, et faut-il sortir avant la nuit ? D01 bis montre des trades traversant deux nuits, les gaps pesant 35 à 47 % de leur amplitude. Question pour D02, à cadrer : H est l'un des deux paramètres autorisés. **Mesuré (EXP-D01.5) :** H = 13 traverse encore une nuit (91 % des trades) ; H = 6 réduit l'exposition de moitié, mais la composante en séance est ≈ 0 (SPY) ou négative (XLE) : sortir avant la nuit ne créerait pas d'espérance (K9).
+15. Sur une série en séances, H doit-il se compter en barres ou en temps, et faut-il sortir avant la nuit ? D01 bis montre des trades traversant deux nuits, les gaps pesant 35 à 47 % de leur amplitude. Question pour D02, à cadrer : H est l'un des deux paramètres autorisés. **Mesuré (EXP-D01.5) :** H = 13 traverse encore une nuit (91 % des trades) ; H = 6 réduit l'exposition de moitié, mais la composante en séance est ≈ 0 (SPY) ou négative (XLE) : sortir avant la nuit ne créerait pas d'espérance (K9). **Mesuré (EXP-D01.6) :** la sortie de fin de séance donne un net de −0,04 (SPY) et −0,17 ATR (XLE), sans IC > 0, avec un MDD divisé par deux (K10).

@@ -1,0 +1,28 @@
+{
+ "frais_bps": 4.0,
+ "verrouillages": [
+  26,
+  48,
+  65,
+  90
+ ],
+ "actifs": {
+  "XLE": {
+   "sha256": "1eb903a1edb1a9eca80a0cc6d4c7ad298eac15383837db1faec516b1af723fc9",
+   "trades_re1": 136,
+   "seances": 1508,
+   "dates_new_york": 1508,
+   "verrouillage_65_population_de_H65": true,
+   "aucune_nuit_detenue": true
+  },
+  "SPY": {
+   "sha256": "5bf52375c4b55b0f70c049eb570df096bbcedfca776c9c271a361c9ff7aa01de",
+   "trades_re1": 155,
+   "seances": 1508,
+   "dates_new_york": 1508,
+   "verrouillage_65_population_de_H65": true,
+   "aucune_nuit_detenue": true
+  }
+ },
+ "duree_s": 9
+}

@@ -1099,3 +1099,66 @@ Grilles complètes : espérance ATR ; MDD ; Calmar.
 - [ ] **NON CONCLUANT**
 - [x] **À POURSUIVRE (descriptif) : H seul ne restaure d'avantage établi sur aucun des trois marchés. RE-1 inchangée (H = 26), D01.5 clos.**
   - Reste au porteur : le cadrage de D02 (objectif, domaine, convention de risque selon H, traitement de l'effet de calendrier).
+
+### [EXP-D01.6] — Verrouillage et séance : profil des trades sautés, découplage sortie / cooldown, sortie de fin de séance (SPY, XLE)
+- **Date :** 2026-09-30
+- **Étape :** D Adaptation, exploration avant D02 (décision du porteur). Descriptif : RE-1 inchangée, aucun filtre ni paramètre retenu ; D02 non lancé.
+- **Actif & Période :** ETF SPY et XLE (Alpaca, séance régulière), 2020-2025, données de D01 (empreintes inchangées).
+- **Modèle de frais :** 4 bps. Capital à 0,25 % par ATR14(t) et notionnel 1x.
+- **Livrables :**
+  - `src/envelope/decouple.py` : `lock_trades`, `session_close_trades`, `session_last_bar` ; tests `tests/test_envelope_decouple.py` (9) ;
+  - `experiments/D01_6/run_D01_6.py`, `rapport_D01_6.md`, `resultats_D01_6.csv`, `profil_D01_6.json`, `diagnostics_D01_6.json`, `controles_D01_6.json`, figure.
+
+#### 0. Cadrage obligatoire
+- **QUESTION :** (1) les 31 trades de RE-1 sur XLE sautés par la course à H = 65 ont-ils une signature à t ? (2) un verrouillage plus long que la sortie (H_exit 26, H_cooldown 26 à 90) donne-t-il une espérance robuste ? (3) le signal a-t-il une valeur en séance seule ?
+- **PERTINENCE POUR LE FILTRE AKF :** dans RE-1, H fixe la sortie et le verrouillage ; les gaps sont des innovations d'une barre, qu'une sortie avant la nuit écarte.
+- **CE QUE LE PROTOCOLE MESURE RÉELLEMENT :** profil à t (variables du porteur, famille, trois variables de réplique) avec AUC [IC] ; valeur des groupes à 26 et 65 barres ; 8 métriques par verrouillage ; sortie forcée au close de la dernière barre de séance, sur les entrées de RE-1 (effet apparié) et libérée à la clôture.
+- **CE QU'IL NE PERMET PAS DE CONCLURE :** aucun filtre retenu (31 trades) ; pas de hold-out ; clôture au close de la dernière barre continue, pas à l'enchère.
+
+#### 1. Hypothèse & Motivation physique (porteur)
+- Le gain de XLE à H = 65 viendrait du verrouillage prolongé, pas de la sortie tardive.
+- Le moteur n'aurait pas d'avantage en séance et capterait une prime de risque overnight.
+
+#### 2. Règle testée
+- **Action 1 :** signature = AUC dont l'IC exclut 0,5 sur XLE, même sens sur SPY, et utile seulement si les trades sautés perdent à la sortie de RE-1.
+- **Actions 2 et 3 :** avantage = borne basse de l'IC 95 % > 0.
+- **Contrôles bloquants :** verrouillage 26 = RE-1 trade par trade ; verrouillage 65 = population de H = 65 ; entrées de RE-1 conservées ; aucune nuit détenue en séance ; une séance par date de New York.
+
+#### 3. Résultats nets (4 bps)
+| Actif · variante | PnL : 0,25 %/ATR ; 1x | PF (1x) | WR | Espérance ATR [IC] | Espérance bps [IC] | Brut ; frais (ATR) | MDD : 0,25 %/ATR ; 1x | Calmar : 0,25 %/ATR ; 1x | Trades (/mois) | Durée médiane : barres ; h | Part des frais (1x, brut en bps) |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| XLE · H_exit 26, H_cooldown 26 (RE-1) | +0 % ; +7 % | 1,09 | 44,9 % | +0,020 [−0,588 ; +0,674] | +7,4 [−28,7 ; +43,9] | +0,100 ; 0,081 | −19,5 % ; −36,4 % | 0,00 ; 0,03 | 136 (1,9) | 26 ; 48,0 h | 35 % |
+| XLE · H_exit 26, H_cooldown 48 | −4 % ; −1 % | 1,02 | 42,9 % | −0,130 [−0,829 ; +0,557] | +1,3 [−40,9 ; +43,4] | −0,048 ; 0,082 | −19,2 % ; −36,7 % | −0,04 ; −0,01 | 112 (1,6) | 26 ; 48,0 h | 76 % |
+| XLE · H_exit 26, H_cooldown 65 | −1 % ; +4 % | 1,08 | 45,7 % | −0,010 [−0,664 ; +0,683] | +6,2 [−33,0 ; +48,9] | +0,071 ; 0,080 | −14,3 % ; −29,6 % | −0,01 ; 0,02 | 105 (1,5) | 26 ; 48,0 h | 39 % |
+| XLE · H_exit 26, H_cooldown 90 | +2 % ; +9 % | 1,15 | 46,2 % | +0,123 [−0,639 ; +1,003] | +12,5 [−33,1 ; +65,0] | +0,203 ; 0,080 | −17,4 % ; −35,5 % | 0,02 ; 0,04 | 93 (1,3) | 26 ; 48,0 h | 24 % |
+| XLE · séance, entrées de RE-1 | −6 % ; −6 % | 0,86 | 41,2 % | −0,170 [−0,444 ; +0,107] | −4,3 [−20,9 ; +13,5] | −0,089 ; 0,081 | −10,2 % ; −19,1 % | −0,10 ; −0,06 | 136 (1,9) | 4 ; 2,0 h | brut ≤ 0 |
+| XLE · séance, libérée à la clôture | −6 % ; −6 % | 0,87 | 43,2 % | −0,162 [−0,417 ; +0,096] | −3,9 [−18,8 ; +12,4] | −0,082 ; 0,081 | −10,8 % ; −19,8 % | −0,10 ; −0,05 | 155 (2,2) | 4 ; 2,0 h | > 1 000 % |
+| SPY · H_exit 26, H_cooldown 26 (RE-1) | −4 % ; −8 % | 0,91 | 45,2 % | −0,158 [−0,736 ; +0,434] | −4,5 [−23,7 ; +14,9] | +0,004 ; 0,162 | −10,9 % ; −19,2 % | −0,07 ; −0,07 | 155 (2,2) | 26 ; 48,0 h | brut ≤ 0 |
+| SPY · H_exit 26, H_cooldown 48 | −2 % ; −5 % | 0,94 | 45,2 % | −0,017 [−0,638 ; +0,624] | −3,0 [−25,2 ; +20,5] | +0,144 ; 0,160 | −10,0 % ; −17,7 % | −0,04 ; −0,05 | 135 (1,9) | 26 ; 48,0 h | 410 % |
+| SPY · H_exit 26, H_cooldown 65 | −3 % ; −3 % | 0,96 | 44,3 % | −0,151 [−0,829 ; +0,584] | −2,1 [−24,4 ; +24,1] | +0,012 ; 0,162 | −10,3 % ; −13,5 % | −0,05 ; −0,04 | 115 (1,6) | 26 ; 48,0 h | 208 % |
+| SPY · H_exit 26, H_cooldown 90 | −7 % ; −8 % | 0,85 | 41,9 % | −0,313 [−1,013 ; +0,426] | −7,6 [−31,4 ; +18,3] | −0,149 ; 0,163 | −13,5 % ; −17,3 % | −0,10 ; −0,08 | 105 (1,5) | 26 ; 48,0 h | brut ≤ 0 |
+| SPY · séance, entrées de RE-1 | −1 % ; +4 % | 1,14 | 46,5 % | −0,036 [−0,286 ; +0,230] | +2,9 [−6,4 ; +12,7] | +0,127 ; 0,162 | −5,1 % ; −7,8 % | −0,02 ; 0,09 | 155 (2,2) | 6 ; 3,0 h | 58 % |
+| SPY · séance, libérée à la clôture | +0 % ; +5 % | 1,14 | 47,8 % | −0,008 [−0,248 ; +0,225] | +2,9 [−5,8 ; +11,8] | +0,157 ; 0,164 | −7,0 % ; −9,4 % | 0,00 ; 0,09 | 182 (2,5) | 5 ; 2,5 h | 58 % |
+
+- **Aucun IC à borne basse > 0** (actions 2 et 3).
+
+#### 4. Analyse causale & Physique du trade
+- [CODE] Contrôles bloquants passés ; `decouple.py` n'appelle que `_candidates`, `_sequential` et `apply_stop`, inchangés.
+- [OBS] **Action 1 (XLE).**
+  - Les 31 trades sautés valent **+0,118 ATR avec la sortie de RE-1** (médiane −0,97 ; −0,55 sans leurs 3 meilleurs) et −0,48 à 65 barres. Les 105 gardés : −0,010 à 26, +0,155 à 65.
+  - Seul trait distinctif : leur définition (27 à 64 barres après le trade précédent, contre 154 en médiane ; AUC 0,06 [0,02 ; 0,10]).
+  - Variables du porteur, AUC [IC] : `nis_z_100` 0,45 [0,34 ; 0,56], `retrace_ratio` 0,45 [0,34 ; 0,57], `leg_atr` 0,49 [0,38 ; 0,60], sens 0,57 [0,48 ; 0,65] ; heure et tercile d'ATR sans régularité.
+  - Réplication SPY (42 contre 113) : tendances inversées (Long, même sens, 14:00-15:00) ; `leg_atr` et résultat du trade précédent à 0,60 [0,499 ; 0,70], contre 0,49 et 0,45 sur XLE. Aucune signature.
+- [OBS] **Action 2.** Zigzag sans tendance (XLE +0,020, −0,130, −0,010, +0,123 ; SPY −0,158, −0,017, −0,151, −0,313). Chaque verrouillage retire un paquet de trades valant de −0,75 à +0,87 ATR à 26 barres. XLE verrouillage 65 avec sortie à 26 : −0,010 (le +0,155 de D01.5 demandait aussi la sortie à 65 barres).
+- [OBS] **Action 3.**
+  - SPY : brut en séance +0,13 à +0,16 ATR (IC ∋ 0), contre +0,004 pour RE-1 ; frais 0,16 ATR ; net −0,04 et −0,01. MDD −5 à −7 % contre −11 %.
+  - XLE : brut en séance −0,09 ; net −0,17 et −0,16.
+  - Effet apparié séance − RE-1 : SPY +0,122 [−0,45 ; +0,68], XLE −0,190 [−0,87 ; +0,44] (nuits et séances suivantes : −0,12 sur SPY, +0,19 sur XLE).
+- [HYP] Pas de répliques toxiques à filtrer dans RE-1 ; le verrouillage est un sélecteur de calendrier ; pas de valeur nette en séance à 4 bps (point mort ≈ 4 bps sur SPY) ; pas de prime overnight générale (la nuit aide XLE, pèse sur SPY).
+- **Écarts au prompt :** +0,009 ATR = espérance à 65 barres sur entrées figées, l'effet apparié est −0,010 ; −0,48 ATR = valeur des 31 trades à 65 barres, +0,118 à 26 ; « tout le brut vient des gaps » vaut pour XLE, pas pour SPY (gaps ≈ 0, séance +0,13).
+
+#### 5. Décision
+- [ ] **REJETÉ**
+- [ ] **NON CONCLUANT**
+- [x] **À POURSUIVRE (descriptif) : aucune signature, aucun verrouillage ni variante de séance à IC > 0. RE-1 inchangée, D01.6 clos.**
+  - Outils disponibles pour la suite : `lock_trades` et `session_close_trades`.

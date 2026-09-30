@@ -187,6 +187,16 @@ L'Étape C a testé ses quatre facteurs (horizon, stop par sous-famille, break-e
 - **Or :** frais fixes en ATR (0,26 par trade à tout H) ; le brut ne croît pas avec H ; la dérive croît des deux côtés.
 - **ETF :** H = 13 traverse encore une nuit (91 % des trades) ; H = 6 réduit les nuits de moitié, mais la composante en séance est ≈ 0 (SPY) ou négative (XLE).
 
+### EXP-D01.6 — verrouillage et séance sur SPY et XLE (4 bps, exploratoire, rien retenu)
+*Aucune variante n'a un IC à borne basse > 0. Meilleurs points ci-dessous, à titre descriptif.*
+
+| Variante | Espérance ATR [IC] | PnL : 0,25 %/ATR ; 1x | MDD : 0,25 %/ATR ; 1x | Lecture |
+|---|---|---|---|---|
+| SPY · séance, libérée à la clôture | −0,008 [−0,248 ; +0,225] | +0 % ; +5 % | −7,0 % ; −9,4 % | brut +0,157 ATR ≈ frais 0,164 ; risque divisé par deux |
+| XLE · H_exit 26, H_cooldown 90 | +0,123 [−0,639 ; +1,003] | +2 % ; +9 % | −17,4 % ; −35,5 % | zigzag selon le verrouillage (48 : −0,130) : calendrier |
+
+- Les 31 trades de XLE « sautés » à H = 65 gagnent +0,118 ATR avec la sortie de RE-1 : rien à filtrer.
+
 ## Pistes écartées (à ne pas retester sans élément nouveau)
 
 | Piste | Raison | Source |
