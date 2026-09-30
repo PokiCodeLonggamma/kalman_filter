@@ -1,6 +1,8 @@
 """EXP-D01 — acquisition des séries des actifs de transfert (décision du porteur, 2026-09-30).
 
-Usage, depuis la racine du dépôt : python experiments/D01/donnees_D01.py
+Usage, depuis la racine du dépôt : python experiments/D01/donnees_D01.py [--force] [--alpaca]
+Une série déjà construite (CSV et .meta.json présents) n'est pas reconstruite, sauf avec --force : les métas
+versionnés ne changent pas d'une exécution à l'autre.
 Écrit data/raw/<source>_<paire>_30m.csv (ignoré par git) et son .meta.json (versionné). La réserve 2026 n'est jamais
 téléchargée. Aucune série n'est substituée à une autre : un actif sans source conforme est déclaré bloqué.
 
@@ -15,11 +17,17 @@ téléchargée. Aucune série n'est substituée à une autre : un actif sans sou
   bucket AWS « Requester Pays » : blocage non contourné. Alpaca ne cote ni l'or au comptant ni le WTI (seulement des
   ETF, qui seraient des proxys) ; OANDA exige un compte. HistData ne publie WTIUSD que jusqu'au 2023-12-01 : le WTI
   est bloqué avant backtest (couverture inférieure à 2020-2025), décision au porteur.
+- D01 bis (porteur, 2026-09-30) : WTI retiré (HistData gardé pour mémoire) et remplacé par l'ETF XLE ; ETF SPY ajouté.
+  Source : API de données Alpaca (flux SIP, barres natives de 30 min, séance régulière 09:30-16:00 heure de New York,
+  ajustement fractionnements et dividendes ; série brute gardée pour l'audit des dividendes). Les clés du porteur sont
+  lues dans les variables d'environnement APCA_API_KEY_ID et APCA_API_SECRET_KEY au moment du téléchargement
+  (`--alpaca`) ; elles ne sont jamais écrites.
 - Référence externe de l'audit du WTI : prix spot WTI Cushing quotidien de l'EIA (FRED, DCOILWTICO). Elle ne sert à
   aucun calcul de stratégie.
 """
 from __future__ import annotations
 
+import json
 import sys
 from pathlib import Path
 
@@ -27,7 +35,8 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from marketdata import build_coinbase_csv, build_fred_csv, build_histdata_csv  # noqa: E402
+from marketdata import build_alpaca_csv, build_coinbase_csv, build_fred_csv, build_histdata_csv  # noqa: E402
+from marketdata.alpaca import refilter_csv  # noqa: E402
 
 RAW = ROOT / "data" / "raw"
 CACHE = RAW / "_cache"
@@ -100,22 +109,87 @@ WTI_META = {
               "du CFD non documentés par la source (audit)",
 }
 
+ETF_COMMUN = {
+    "continuite": "sans objet : titre coté, série unique",
+    "rolls": "sans objet",
+    "ajustements": "fractionnements et dividendes (adjustment=all d'Alpaca) ; série brute écrite à part (_brut)",
+    "prix": "transactions consolidées SIP (OHLC des transactions), et non bid/ask",
+    "timezone": "UTC (début de barre) ; séance lue en heure de New York",
+    "horaires": "séance régulière 09:30-16:00 heure de New York, jours ouvrés du NYSE ; pré- et post-marché écartés",
+    "construction_barres": "barres natives de 30 min d'Alpaca (flux SIP) filtrées sur la séance régulière : 13 barres "
+                           "par séance, 7 les jours de clôture anticipée",
+    "couverture_demandee": "2020-01-01 → 2025-12-31 ; 2026 non téléchargé",
+    "sources_ecartees": "Yahoo Finance (30 min limité aux 60 derniers jours)",
+}
+SPY_META = {
+    "actif": "SPY",
+    "instrument": "SPDR S&P 500 ETF Trust (NYSE Arca : SPY ; TradingView : AMEX:SPY)",
+    "nature": "ETF indiciel coté (actions américaines du S&P 500)",
+    "ticker": "SPY",
+    "decision": "porteur, 2026-09-30 : SPY ajouté à D01 (marché actions américain, gaps d'ouverture)",
+    **ETF_COMMUN,
+}
+XLE_META = {
+    "actif": "XLE",
+    "instrument": "Energy Select Sector SPDR Fund (NYSE Arca : XLE ; TradingView : AMEX:XLE)",
+    "nature": "ETF sectoriel coté (actions du secteur énergie du S&P 500) ; proxy de l'énergie choisi par le porteur "
+              "à la place du WTI, sans roulement de contrats ; correspondance avec le WTI documentée par l'audit",
+    "ticker": "XLE",
+    "decision": "porteur, 2026-09-30 : XLE remplace le WTI dans D01 (proxy énergie, série continue sans roll yield)",
+    **ETF_COMMUN,
+}
+ALPACA = "--alpaca" in sys.argv
+
 FRED_META = {
     "role": "référence externe de l'audit du CFD WTI (prix spot WTI Cushing de l'EIA, quotidien, en dollars par "
             "baril) ; aucun calcul de stratégie",
 }
 
 
+FORCE = "--force" in sys.argv
+
+
+def built(csv: Path) -> bool:
+    """Série déjà construite : ne pas la réécrire (l'heure d'extraction du méta changerait)."""
+    done = csv.exists() and csv.with_name(csv.stem + ".meta.json").exists() and not FORCE
+    if done:
+        print(f"{csv.name} : déjà construit (--force pour reconstruire)")
+    return done
+
+
 def main() -> None:
-    meta = build_coinbase_csv("SOL-USD", "2021-01", "2025-12", RAW / "coinbase_solusd_30m.csv", CACHE / "coinbase",
-                              SOL_META)
-    print(f"SOL : {meta['n_rows']} barres, {meta['first']} → {meta['last']}, SHA-256 {meta['sha256'][:12]}…")
+    if not built(RAW / "coinbase_solusd_30m.csv"):
+        meta = build_coinbase_csv("SOL-USD", "2021-01", "2025-12", RAW / "coinbase_solusd_30m.csv",
+                                  CACHE / "coinbase", SOL_META)
+        print(f"SOL : {meta['n_rows']} barres, {meta['first']} → {meta['last']}, SHA-256 {meta['sha256'][:12]}…")
     for pair, last, m in (("XAUUSD", 2025, XAU_META), ("WTIUSD", 2023, WTI_META)):
+        if built(RAW / f"histdata_{pair.lower()}_30m.csv"):
+            continue
         meta = build_histdata_csv(pair, 2020, last, RAW / f"histdata_{pair.lower()}_30m.csv", CACHE / "histdata", m)
         print(f"{m['actif']} : {meta['n_rows']} barres, {meta['first']} → {meta['last']}, "
               f"SHA-256 {meta['sha256'][:12]}…")
-    meta = build_fred_csv("DCOILWTICO", "2019-12-01", "2025-12-31", RAW / "fred_dcoilwtico.csv", FRED_META)
-    print(f"FRED DCOILWTICO : {meta['n_valeurs']} valeurs, {meta['first']} → {meta['last']}")
+    for sym, m in (("SPY", SPY_META), ("XLE", XLE_META)):
+        out = RAW / f"alpaca_{sym.lower()}_30m.csv"
+        if built(out):
+            meta = json.loads(out.with_name(out.stem + ".meta.json").read_text(encoding="utf-8"))
+            if "barres_cloture_anticipee_ecartees" not in meta:           # série écrite avant le filtre des 13:00
+                raw = refilter_csv(out.with_name(out.stem + "_brut.csv"))
+                meta = refilter_csv(out)
+                meta["serie_brute"] = {"fichier": out.stem + "_brut.csv", "sha256": raw["sha256"]}
+                out.with_name(out.stem + ".meta.json").write_text(json.dumps(meta, ensure_ascii=False, indent=1),
+                                                                  encoding="utf-8")
+                print(f"{sym} : clôtures anticipées du NYSE appliquées, {meta['barres_cloture_anticipee_ecartees']} "
+                      f"barres de post-marché écartées ; {meta['n_rows']} barres de séance")
+            continue
+        if not ALPACA:
+            print(f"{sym} : absent — lancer avec --alpaca, clés Alpaca dans APCA_API_KEY_ID et APCA_API_SECRET_KEY")
+            continue
+        meta = build_alpaca_csv(sym, "2020-01-01", "2025-12-31", out, m)
+        print(f"{sym} : {meta['n_rows']} barres de séance, {meta['first']} → {meta['last']}, "
+              f"{meta['barres_hors_seance_ecartees']} barres hors séance écartées, SHA-256 {meta['sha256'][:12]}…")
+    if not built(RAW / "fred_dcoilwtico.csv"):
+        meta = build_fred_csv("DCOILWTICO", "2019-12-01", "2025-12-31", RAW / "fred_dcoilwtico.csv", FRED_META)
+        print(f"FRED DCOILWTICO : {meta['n_valeurs']} valeurs, {meta['first']} → {meta['last']}")
 
 
 if __name__ == "__main__":

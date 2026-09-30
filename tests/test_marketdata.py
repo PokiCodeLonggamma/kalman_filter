@@ -199,3 +199,91 @@ def test_doublons_exacts_supprimes_et_doublons_contradictoires_refuses():
     m.loc[3, "close"] = 9.9
     with pytest.raises(ValueError, match="valeurs différentes"):
         drop_exact_duplicates(m, "test")
+
+
+# ── Alpaca : actions et ETF américains, séance régulière (SPY, XLE) ────────────
+class FakeAlpaca:
+    """API simulée : barres de 30 min d'un ensemble fixe, pages de `page` barres, jeton de page ; vérifie les en-têtes."""
+
+    def __init__(self, times, page: int = 3):
+        self.times, self.page, self.calls = list(times), page, []
+
+    def __call__(self, url: str, headers: dict):
+        from urllib.parse import parse_qs, urlparse
+        assert headers == {"APCA-API-KEY-ID": "id-test", "APCA-API-SECRET-KEY": "secret-test"}
+        q = parse_qs(urlparse(url).query)
+        self.calls.append(q)
+        a, b = pd.Timestamp(q["start"][0]), pd.Timestamp(q["end"][0])
+        sel = [t for t in self.times if a <= t <= b]
+        k = int(q.get("page_token", ["0"])[0])
+        adj = 1.0 if q["adjustment"][0] == "raw" else 0.99
+        rows = [{"t": t.strftime("%Y-%m-%dT%H:%M:%SZ"), "o": 100 * adj, "h": 101 * adj, "l": 99 * adj,
+                 "c": 100.5 * adj, "v": 1000, "n": 10, "vw": 100.2} for t in sel[k:k + self.page]]
+        nxt = str(k + self.page) if k + self.page < len(sel) else None
+        return {"bars": rows, "symbol": "SPY", "next_page_token": nxt}
+
+
+ENV_TEST = {"APCA_API_KEY_ID": "id-test", "APCA_API_SECRET_KEY": "secret-test"}
+
+
+def test_seance_reguliere_new_york_hiver_et_ete():
+    from marketdata import regular_session
+    t = pd.to_datetime(["2020-01-02 13:00", "2020-01-02 14:30", "2020-01-02 20:30", "2020-01-02 21:00",
+                        "2020-07-01 13:30", "2020-07-01 20:30"], utc=True)
+    df = pd.DataFrame({"time": t, "open": 1.0, "high": 1.0, "low": 1.0, "close": 1.0, "volume": 1.0})
+    rth, dropped = regular_session(df)
+    # hiver : 09:30-16:00 EST = 14:30-21:00 UTC ; été : 09:30-16:00 EDT = 13:30-20:00 UTC
+    assert rth.time.tolist() == list(pd.to_datetime(["2020-01-02 14:30", "2020-01-02 20:30", "2020-07-01 13:30"],
+                                                    utc=True))
+    assert dropped == 3
+
+
+def test_pages_alpaca_reunies_sans_perte_et_reserve_2026_refusee():
+    from marketdata import fetch_bars
+    times = list(pd.date_range("2020-01-02 14:30", periods=8, freq="30min", tz="UTC"))
+    fake = FakeAlpaca(times)
+    d = fetch_bars("SPY", "2020-01-02", "2020-01-02", "all", {"APCA-API-KEY-ID": "id-test",
+                                                             "APCA-API-SECRET-KEY": "secret-test"}, fake)
+    assert d.time.tolist() == times and len(fake.calls) == 3 and d.attrs["pages"] == 3
+    assert fake.calls[0]["feed"] == ["sip"] and fake.calls[0]["timeframe"] == ["30Min"]
+    with pytest.raises(ValueError, match="réserve 2026"):
+        fetch_bars("SPY", "2025-12-01", "2026-01-02", "all", {}, fake)
+
+
+def test_cles_lues_dans_l_environnement_jamais_ecrites(tmp_path):
+    from marketdata import build_alpaca_csv
+    from marketdata.alpaca import auth_headers
+    with pytest.raises(SystemExit, match="APCA_API_SECRET_KEY"):
+        auth_headers({"APCA_API_KEY_ID": "id-test"})
+    times = list(pd.date_range("2020-01-02 14:30", periods=13, freq="30min", tz="UTC")) + \
+        [pd.Timestamp("2020-01-02 22:00", tz="UTC")]                                  # post-marché : écartée
+    out = tmp_path / "raw" / "alpaca_spy_30m.csv"
+    meta = build_alpaca_csv("SPY", "2020-01-02", "2020-01-02", out, {"instrument": "SPY"}, auth_headers(ENV_TEST),
+                            FakeAlpaca(times, page=5))
+    assert meta["n_rows"] == 13 and meta["barres_hors_seance_ecartees"] == 1 and meta["adjustment"] == "all"
+    brut = out.with_name("alpaca_spy_30m_brut.csv")
+    assert brut.exists() and meta["serie_brute"]["fichier"] == brut.name
+    assert load_ohlc(out).close.iat[0] == pytest.approx(99.495) and load_ohlc(brut).close.iat[0] == 100.5
+    for f in tmp_path.rglob("*"):
+        if f.is_file():
+            assert "secret-test" not in f.read_text(encoding="utf-8") and "id-test" not in f.read_text(encoding="utf-8")
+
+
+def test_cloture_anticipee_du_nyse_a_13h():
+    from marketdata import regular_session
+    t = pd.to_datetime(["2024-11-29 17:30", "2024-11-29 18:00", "2024-11-29 18:30", "2024-11-27 20:30"], utc=True)
+    df = pd.DataFrame({"time": t, "open": 1.0, "high": 1.0, "low": 1.0, "close": 1.0, "volume": 1.0})
+    rth, dropped = regular_session(df)       # 29/11/2024 : clôture 13:00 EST = 18:00 UTC ; 27/11 : séance normale
+    assert rth.time.tolist() == list(pd.to_datetime(["2024-11-29 17:30", "2024-11-27 20:30"], utc=True)) and dropped == 2
+
+
+def test_refiltrage_d_une_serie_ecrite(tmp_path):
+    import json as _json
+    from marketdata.alpaca import _write, refilter_csv
+    t = pd.to_datetime(["2024-11-29 17:30", "2024-11-29 18:30"], utc=True)
+    out = tmp_path / "alpaca_spy_30m.csv"
+    _write(pd.DataFrame({"time": t, "open": 1.0, "high": 1.0, "low": 1.0, "close": 1.0, "volume": 1.0}), out,
+           {"barres_hors_seance_ecartees": 5})
+    meta = refilter_csv(out)
+    assert meta["n_rows"] == 1 and meta["barres_cloture_anticipee_ecartees"] == 1 and meta["barres_hors_seance_ecartees"] == 6
+    assert _json.loads(out.with_name("alpaca_spy_30m.meta.json").read_text(encoding="utf-8"))["sha256"] == meta["sha256"]
