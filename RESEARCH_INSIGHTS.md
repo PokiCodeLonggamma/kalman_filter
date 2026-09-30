@@ -136,6 +136,13 @@ Elle se mesure séparément par sens et par type de signal (rang 1 ou répétiti
 - Un frais fixe en bps coûte fee / ATR14(t) par trade : 0,14 ATR sur BTC à 5 bps, 0,06 sur SOL à 5 bps, 0,26 sur l'or à 4 bps. Les bruts sont de +0,50, +0,25 et +0,24 ATR.
 - **Règle :** publier le brut et les frais en ATR à côté du net. Un actif calme à l'échelle des barres peut perdre un avantage brut réel ; l'écart se lit alors comme une question d'échelle de temps.
 
+### I-M15 — Séries d'actions et d'ETF : calendrier, enchère, dividendes et fractionnements `[MÉTHODE]`
+*Source : EXP-D01 bis.*
+
+- **Clôtures anticipées.** Un filtre horaire fixe (09:30-16:00) garde le post-marché des séances fermées à 13:00. Il faut appliquer le calendrier de la place et le vérifier sur les données : le volume s'effondre après la clôture.
+- **Enchère de clôture.** Horodatée à 16:00:00, elle tombe hors de la dernière barre de séance : le close de cette barre est la dernière transaction continue.
+- **Série ajustée.** Mesurer sur la série ajustée des dividendes et des fractionnements, et garder la série brute pour les repérer. XLE a été fractionné 2 pour 1 le 2025-12-05 : −6 931 bps en série brute. Seuil de détection des dividendes au-dessus du bruit d'arrondi des prix ajustés (jusqu'à 5 bps sur un titre à 30-90 $).
+
 ---
 
 ## 2. Cinématique du moteur v2.1
@@ -187,6 +194,14 @@ Elle se mesure séparément par sens et par type de signal (rang 1 ou répétiti
   - x1 déjà retourné : 51,8 / 52,3 / 49,4 % ;
   - alors que l'ATR14 médian vaut 50, 95 et 17 bps.
 - `[HYP]` La stationnarité en ATR de K6 vaut aussi entre actifs. Des seuils sans dimension sélectionnent la même population partout : le transfert (a) est cohérent avec le moteur. La rente, elle, varie d'un marché à l'autre.
+
+### K8 — Gaps d'ouverture : le filtre d'innovation les écarte à l'entrée, pas en position
+*Source : EXP-D01 bis (SPY, XLE, séance régulière).*
+
+- `[OBS]` Le gap est une innovation pour le filtre. Sur la barre d'ouverture, `nis_z_100` vaut 1,40 et 1,59 en médiane, contre 0,14 ailleurs. Le seuil de RE-1 écarte 64 % et 74 % des signaux R2 nés d'un gap.
+- `[OBS]` H = 26 barres fait traverser deux nuits (48 h calendaires). Les gaps pèsent 35 à 47 % de l'amplitude des trades. Les stops percés à l'ouverture dépassent leur niveau de +1,0 à +2,6 ATR en moyenne.
+- `[OBS]` Les écarts de nuit allongent les jambes mesurées en ATR (`leg_atr` P50 3,1 à 3,2, contre 2,8 à 2,9 ailleurs).
+- `[HYP]` Sur une série en séances, un horizon compté en barres mêle la cinématique d'une séance et le risque de nuit.
 
 ---
 
@@ -371,4 +386,5 @@ L'atlas A01 soutient cette lecture à travers le ratio de retracement `retrace_r
 11. ~~La bascule d'espérance de `nis_z_100` au voisinage de P75 se retrouve-t-elle sur les autres actifs ?~~ **Mesuré (EXP-D01, trades isolés)** : pas telle quelle. Sur SOL, la bande sous P70 est positive (IC > 0), mais la bande au-delà de P90 l'est aussi ; sur l'or, les bandes sont nulles ou négatives. Aucun réglage.
 12. Quelle échelle de temps rend le rapport frais / ATR compatible avec l'or (brut +0,24 ATR, frais 0,26 ATR à 30 min) ? Question de vitesse : H et R0 en D02, ou unité de temps des barres (hors périmètre de D02 tel qu'annoncé).
 13. L'inversion F2b / F3 de l'or (F2b Short −0,70, F3 Long +0,55) tient-elle à la hausse séculaire de 2020-2025 (dérive +0,38 ATR) ou à la microstructure d'un CFD ? Non testé.
-14. WTI : quelle source pour 2020-2025, et quel traitement des roulements (contrat du mois non ajusté chez HistData) ? Décision du porteur.
+14. ~~WTI : quelle source pour 2020-2025 ?~~ **Tranché par le porteur (2026-09-30)** : WTI retiré de D01, remplacé par l'ETF XLE (corrélation quotidienne 0,46 avec le spot WTI, 0,60 avec SPY).
+15. Sur une série en séances, H doit-il se compter en barres ou en temps, et faut-il sortir avant la nuit ? D01 bis montre des trades traversant deux nuits, les gaps pesant 35 à 47 % de leur amplitude. Question pour D02, à cadrer : H est l'un des deux paramètres autorisés.

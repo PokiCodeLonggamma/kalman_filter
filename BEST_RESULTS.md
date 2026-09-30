@@ -148,29 +148,32 @@ L'Étape C a testé ses quatre facteurs (horizon, stop par sous-famille, break-e
 
 ## Étape D — Adaptation
 
-### EXP-D01 — portabilité de RE-1 figée, sans réglage (descriptive ; seuils numériques de BTC gelés)
-*Aucun critère de réussite ni classement (décision du porteur). WTI bloqué : couverture HistData arrêtée au 2023-12-01.*
+### EXP-D01 et D01 bis — portabilité de RE-1 figée, sans réglage (descriptive ; seuils numériques de BTC gelés)
+*Aucun critère de réussite ni classement (décision du porteur). WTI retiré par le porteur (données), remplacé par XLE.*
 
-| | BTC 5 bps (référence) | SOL/USD 5 bps | CFD or 4 bps |
-|---|---|---|---|
-| Période | 2020-2025 | 2021-06-17 → 2025 | 2020-2025 |
-| Trades (par mois) | 1 080 (15,0) | 769 (14,1) | 651 (9,0) |
-| Espérance ATR [IC] | +0,369 [+0,098 ; +0,645] | +0,190 [−0,079 ; +0,484] | −0,019 [−0,362 ; +0,349] |
-| Espérance bps [IC] | +12,3 [+0,2 ; +24,4] | +19,2 [−3,6 ; +44,2] | +1,1 [−4,9 ; +7,5] |
-| PnL : 0,25 %/ATR ; 1x | +138 % ; +204 % | +39 % ; +173 % | +0,6 % ; +5,4 % |
-| MDD valorisé : 0,25 %/ATR ; 1x | −13,5 % ; −43,9 % | −13,1 % ; −42,3 % | −13,6 % ; −13,3 % |
-| Calmar : 0,25 %/ATR ; 1x | 1,16 ; 0,46 | 0,58 ; 0,59 | 0,01 ; 0,07 |
-| Brut ; frais (ATR par trade) | +0,50 ; 0,14 | +0,25 ; 0,06 | +0,24 ; 0,26 |
-| F2b ; F3 (ATR) | +0,459 ; +0,267 | +0,287 ; +0,076 | −0,304 ; +0,313 |
-| Années à espérance ATR > 0 | 6/6 | 5/5 | 2/6 |
+| | BTC 5 bps (réf.) | SOL/USD 5 bps | CFD or 4 bps | SPY 4 bps | XLE 4 bps |
+|---|---|---|---|---|---|
+| Période | 2020-2025 | 2021-06-17 → 2025 | 2020-2025 | 2020-2025 (séance régulière) | 2020-2025 (séance régulière) |
+| Trades (par mois) | 1 080 (15,0) | 769 (14,1) | 651 (9,0) | 155 (2,2) | 136 (1,9) |
+| Espérance ATR [IC] | +0,369 [+0,098 ; +0,645] | +0,190 [−0,079 ; +0,484] | −0,019 [−0,362 ; +0,349] | −0,158 [−0,736 ; +0,434] | +0,020 [−0,588 ; +0,674] |
+| Espérance bps [IC] | +12,3 [+0,2 ; +24,4] | +19,2 [−3,6 ; +44,2] | +1,1 [−4,9 ; +7,5] | −4,5 [−23,7 ; +14,9] | +7,4 [−28,7 ; +43,9] |
+| PnL : 0,25 %/ATR ; 1x | +138 % ; +204 % | +39 % ; +173 % | +0,6 % ; +5,4 % | −4,2 % ; −7,9 % | +0,1 % ; +7,2 % |
+| MDD valorisé : 0,25 %/ATR ; 1x | −13,5 % ; −43,9 % | −13,1 % ; −42,3 % | −13,6 % ; −13,3 % | −10,9 % ; −19,2 % | −19,5 % ; −36,4 % |
+| Calmar : 0,25 %/ATR ; 1x | 1,16 ; 0,46 | 0,58 ; 0,59 | 0,01 ; 0,07 | −0,07 ; −0,07 | 0,00 ; 0,03 |
+| Brut ; frais (ATR par trade) | +0,50 ; 0,14 | +0,25 ; 0,06 | +0,24 ; 0,26 | 0,00 ; 0,16 | +0,10 ; 0,08 |
+| F2b ; F3 (ATR) | +0,459 ; +0,267 | +0,287 ; +0,076 | −0,304 ; +0,313 | +0,059 ; −0,367 | −0,186 ; +0,139 |
+| Années à espérance ATR > 0 | 6/6 | 5/5 | 2/6 | 2/6 | 3/6 |
 
 - **10 bps :** SOL +0,129 ATR [−0,140 ; +0,425] ; BTC +0,233 [−0,041 ; +0,511], soit +7,3 bps [−4,8 ; +19,4] (estimation positive, IC qui traverse zéro).
-- **La géométrie du déclencheur transfère.** `leg_atr`, `retrace_ratio` et `nis_z_100` ont les mêmes distributions sur les trois actifs : les seuils BTC retiennent les mêmes fractions de signaux.
-- **La rente dépend du marché.**
-  - Le brut vaut la moitié de celui de BTC sur SOL et sur l'or.
-  - Sur l'or, 4 bps coûtent 0,26 ATR par trade et annulent le brut.
-  - L'or inverse F2b et F3, et son partage Long/Short est de la dérive (timing −0,05).
-- **Constantes sur les trois actifs :** queue droite (le décile supérieur fait plus que le total) ; le stop de F3 réduit le drawdown sans effet sur l'espérance ; la haute volatilité est le régime faible (BTC, SOL).
+- **La population transfère, la rente dépend du marché.**
+  - Géométrie des signaux identique sur la crypto et l'or ; jambes plus longues sur les ETF (gaps).
+  - Brut divisé par deux sur SOL et l'or ; nul sur les ETF.
+  - Sur l'or, 4 bps coûtent 0,26 ATR par trade.
+- **Gaps d'ouverture (ETF) :**
+  - le filtre `nis_z_100` écarte 64 à 74 % des signaux nés d'un gap ;
+  - mais H = 26 barres fait traverser deux nuits : les gaps pèsent 35 à 47 % de l'amplitude des trades ;
+  - les stops percés à l'ouverture dépassent leur niveau de +1,0 à +2,6 ATR en moyenne.
+- **Constantes sur tous les actifs :** queue droite (le décile supérieur fait plus que le total) ; le stop de F3 réduit le drawdown.
 
 ## Pistes écartées (à ne pas retester sans élément nouveau)
 

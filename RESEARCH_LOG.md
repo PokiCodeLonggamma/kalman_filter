@@ -924,3 +924,90 @@ Grilles complètes : espérance ATR ; MDD ; Calmar.
     - la validation de la source XAU ;
     - le push.
   - Réflexions pour D02 dans le rapport (§8) : aucune fonction objectif ni aucun domaine n'est défini.
+
+### [EXP-D01 bis] — Portabilité de RE-1 figée : ETF SPY et XLE, gaps d'ouverture (WTI retiré)
+- **Date :** 2026-09-30
+- **Étape :** D Adaptation, D01 bis. Descriptif, mêmes règles que D01 (aucun critère de réussite, aucun classement, RE-1 inchangée).
+- **Décision du porteur :** le WTI est retiré (couverture HistData arrêtée au 2023-12-01 ; piste FXCM non aboutie, connexion au compte requise). Il est remplacé par l'ETF XLE, proxy de l'énergie sans roulement. L'ETF SPY est ajouté (marché actions, gaps d'ouverture).
+- **Actif & Période :** SPY et XLE, séance régulière 09:30-16:00 heure de New York, 2020-01-02 → 2025-12-31 ; 1 508 séances, 19 532 barres chacun.
+- **Modèle de frais :** 4 bps. Capital à 0,25 % par ATR14(t) et notionnel 1x.
+- **Données :**
+  - Alpaca, flux SIP, barres natives de 30 min ; séries ajustée (fractionnements et dividendes, mesurée) et brute (audit) ;
+  - téléchargement lancé par le porteur avec ses clés en variables d'environnement ; aucune clé écrite.
+- **Livrables :**
+  - `src/marketdata/alpaca.py` et ses tests ;
+  - `experiments/D01/run_D01.py` (analyse des gaps d'ouverture) ;
+  - `rapport_D01.md` mis à jour (§2.4, §4.3-4.4, §5, annexe L).
+
+#### 0. Cadrage obligatoire
+- **QUESTION :** que devient RE-1, telle quelle, sur un marché actions en séances, et comment absorbe-t-elle les gaps d'ouverture ?
+- **PERTINENCE POUR LE FILTRE AKF :**
+  - le gap est une innovation d'une barre pour le Kalman ;
+  - H = 26 compte des barres : sur une séance de 13 barres, il fait traverser deux nuits.
+- **CE QUE LE PROTOCOLE MESURE RÉELLEMENT :**
+  - les métriques de D01 ;
+  - la taille des gaps (en bps et en ATR) et leur part du vrai range ;
+  - les signaux sur barre d'ouverture et leur filtrage par `nis_z_100` ;
+  - le rendement brut des trades décomposé en gaps traversés et gain en séance ;
+  - les stops percés à l'ouverture ;
+  - l'espérance selon la barre du signal.
+- **CE QU'IL NE PERMET PAS DE CONCLURE :**
+  - environ 2 trades par mois, donc des IC de ±0,6 ATR ;
+  - XLE n'est pas le pétrole ;
+  - aucune conclusion sur un H « en heures » ni sur D02.
+
+#### 1. Hypothèse & Motivation physique
+- Si RE-1 capte une cinématique intraséance, les gaps d'ouverture devraient soit la brouiller (signaux nés du gap), soit peser sur les positions tenues d'une séance à l'autre.
+
+#### 2. Règle testée (OFAT)
+- **Règle :** RE-1 identique à BTC (option (a)).
+- **Contrôle :** BTC identique à C02bis (chaîne D01).
+- **Définitions des gaps :** fixées avant le calcul, en tête du script.
+
+#### 3. Résultats nets (H26, 4 bps)
+| Métrique | SPY | XLE |
+|---|---|---|
+| PnL Net Total : 0,25 %/ATR ; 1x | −4,2 % ; −7,9 % | +0,1 % ; +7,2 % |
+| Profit Factor (1x ; pondéré) | 0,91 ; 0,93 | 1,09 ; 1,01 |
+| Win Rate | 45,2 % | 44,9 % |
+| Espérance ATR [IC] ; bps [IC] | −0,158 [−0,736 ; +0,434] ; −4,5 [−23,7 ; +14,9] | +0,020 [−0,588 ; +0,674] ; +7,4 [−28,7 ; +43,9] |
+| Max Drawdown : 0,25 %/ATR ; 1x | −10,9 % ; −19,2 % | −19,5 % ; −36,4 % |
+| Nombre de trades (/mois) | 155 (2,2) | 136 (1,9) |
+| Durée médiane | 26 barres ; 48 h calendaires | 26 barres ; 48 h |
+| Part des frais (1x) | brut ≤ 0 (brut +0,00 ATR, frais 0,16 ATR) | 35 % (brut +0,10 ATR, frais 0,08 ATR) |
+
+- **Calmar** (0,25 %/ATR ; 1x) : SPY −0,07 ; −0,07. XLE 0,00 ; 0,03.
+- **Années à espérance ATR > 0 :** 2/6 (SPY), 3/6 (XLE).
+
+#### 4. Analyse causale & Physique du trade
+- [CODE] **Contrôles :**
+  - intégrité ;
+  - couverture 2020-2025 ;
+  - BTC identique à C02bis ;
+  - aucune clé dans les fichiers écrits.
+- [CODE] **Clôtures anticipées du NYSE.** Le filtre 09:30-16:00 gardait le post-marché des 12 séances fermées à 13:00. Le calendrier a été vérifié sur les volumes (12/12 pour XLE, 11/12 pour SPY, 12e vérifiée à la main) ; les barres sont refiltrées sans nouveau téléchargement.
+- [CODE] **Enchère de clôture.** Horodatée à 16:00, elle tombe dans la barre écartée.
+- [OBS] **Dividendes et fractionnement.** 24 dividendes par ETF (SPY −36 bps, XLE −106 bps en moyenne). XLE a été fractionné 2 pour 1 le 2025-12-05 (−6 931 bps en série brute). La série ajustée neutralise les deux.
+- [OBS] **Proxy XLE.** Corrélation quotidienne 0,46 avec le spot WTI (bêta 0,30) et 0,60 avec SPY (bêta 1,00).
+- [OBS] **Signaux.** `leg_atr` est plus long sur les ETF (P50 3,09 et 3,24) : le seuil BTC ne retient que 42 % et 38 % des signaux. Univers RE-1 : 191 et 159.
+- [OBS] **Gaps, données.**
+  - |gap| médian 33 et 57 bps, soit 1,2 et 1,1 ATR ; 57 % et 56 % des ouvertures dépassent 1 ATR ;
+  - la barre d'ouverture porte 17 % et 22 % du vrai range pour 7,7 % des barres.
+- [OBS] **Gaps, signaux.** `nis_z_100` vaut 1,40 et 1,59 en médiane sur la barre d'ouverture, contre 0,14 ailleurs. Le seuil BTC écarte 64 % et 74 % des signaux R2 nés d'un gap, contre 20 % et 16 % des autres.
+- [OBS] **Gaps, trades.**
+  - 92 % et 90 % des trades traversent au moins une nuit (2 en médiane).
+  - Brut : SPY 0,00 = gaps +0,03 + séance −0,03 ; XLE +0,09 = gaps +0,19 + séance −0,10 (IC ±0,4 à 0,6).
+  - Les gaps pèsent 35 à 47 % de l'amplitude des gagnants et des perdants.
+  - 8 stops sur 46 (SPY) et 11 sur 48 (XLE) sont percés à l'ouverture, avec un dépassement moyen de +2,6 et +1,0 ATR.
+- [OBS] **Sous-familles et sens.**
+  - SPY : F3 −0,37, F2b +0,06, Short −0,60 (dérive +0,35).
+  - XLE : F2b −0,19, F3 +0,14.
+  - Le stop de F3 améliore l'espérance sur les deux ETF (+0,46 et +0,40, non significatif).
+- [HYP] **H compte des barres.** Sur les ETF, la cinématique d'une séance est jugée deux séances plus tard. Le filtre d'innovation évite d'entrer sur le gap, mais la position subit des gaps non choisis.
+
+#### 5. Décision
+- [ ] **REJETÉ**
+- [ ] **NON CONCLUANT**
+- [x] **À POURSUIVRE (descriptif) : RE-1 inchangée, D01 clos.**
+  - Carte des faiblesses du modèle fixe : rapport frais / ATR (or), structure de séance (ETF), dérive (ventes en marché haussier), queue droite.
+  - Restent au porteur : la validation de la source XAU et le push.

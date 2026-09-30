@@ -26,6 +26,19 @@ Cadrage (décisions du porteur, 2026-09-30)
   coûts réels non modélisés (spread, financement et swaps des CFD) ; sources (Coinbase, HistData) et périodes
   (SOL depuis 2021-06-17) différentes de celles de BTC (Bitstamp, 2020-2025).
 
+EXP-D01 bis (porteur, 2026-09-30) : le WTI est retiré (audit gardé pour mémoire) et remplacé par l'ETF XLE,
+proxy de l'énergie sans roulement ; l'ETF SPY est ajouté (marché actions, séance 09:30-16:00 heure de New York, gaps
+d'ouverture). Source Alpaca (flux SIP, séance régulière, ajustement fractionnements et dividendes), frais 4 bps.
+Gaps d'ouverture (définitions fixées avant le calcul, séries en séances) :
+- barre d'ouverture = barre précédée d'un intervalle de plus de 30 min ; écart d'ouverture = log(open / close
+  précédent), en bps et en ATR14 de la barre précédente ; part du vrai range portée par les barres d'ouverture ;
+- signaux : part tombant sur une barre d'ouverture, `nis_z_100` à ces barres, part de R2 écartée par le seuil ;
+- trades de RE-1 : rendement brut (log, en ATR14(t)) décomposé en somme des écarts d'ouverture traversés entre
+  l'entrée et la sortie, et reste réalisé en séance ; stops exécutés à l'ouverture au-delà du niveau (dépassement en
+  ATR) ; espérance selon que le signal tombe sur une barre d'ouverture, sur la dernière barre de séance (entrée après
+  l'écart) ou ailleurs ;
+- ETF : écarts d'ouverture de la série brute moins ceux de la série ajustée = détachements de dividendes.
+
 Règle de lecture (fixée avant le calcul)
 - D01 est descriptif : aucun seuil de réussite ou d'échec sur une métrique de performance, aucun classement des actifs,
   aucune modification, optimisation ni recalibration de RE-1, aucun actif retiré sur sa performance.
@@ -99,17 +112,21 @@ BTC_DOC = {
 ASSETS = {
     "BTC": {"nom": "BTC/USD (Bitstamp, référence)", "csv": DATA_RAW, "fees": (5.0, 10.0)},
     "SOL": {"nom": "SOL/USD (Coinbase)", "csv": RAW / "coinbase_solusd_30m.csv", "fees": (5.0, 10.0)},
-    "XAU": {"nom": "CFD or XAU/USD (HistData)", "csv": RAW / "histdata_xauusd_30m.csv", "fees": (4.0,)},
+    "XAU": {"nom": "CFD or XAU/USD (HistData)", "csv": RAW / "histdata_xauusd_30m.csv", "fees": (4.0,),
+            "couverture": ("2020-01-03", "2025-12-30")},
+    "SPY": {"nom": "ETF SPY (Alpaca, séance régulière)", "csv": RAW / "alpaca_spy_30m.csv", "fees": (4.0,),
+            "couverture": ("2020-01-03", "2025-12-30")},
+    "XLE": {"nom": "ETF XLE (Alpaca, séance régulière)", "csv": RAW / "alpaca_xle_30m.csv", "fees": (4.0,),
+            "couverture": ("2020-01-03", "2025-12-30")},
     "WTI": {"nom": "CFD WTI (HistData)", "csv": RAW / "histdata_wtiusd_30m.csv", "fees": (4.0,),
-            "bloque": "couverture 2020-01-01 → 2023-12-01 : HistData ne publie pas WTIUSD pour 2024 et 2025, contre "
-                      "la condition « au moins 2020-2025 » du porteur. Par ailleurs, l'audit montre un CFD de contrat "
-                      "du mois non ajusté, roulé autour de l'échéance : la série porte chaque mois un saut égal à "
-                      "l'écart de calendrier (règle non publiée par la source). Série auditée, aucun backtest avant "
-                      "décision du porteur."},
+            "retire": "retiré de D01 par le porteur (2026-09-30) et remplacé par XLE : couverture HistData arrêtée au "
+                      "2023-12-01 et CFD de contrat du mois non ajusté (audit ci-dessous, pour mémoire). Aucun "
+                      "backtest."},
 }
 DOC_KEYS = ["instrument", "nature", "ticker", "continuite", "rolls", "ajustements", "prix", "timezone", "horaires",
             "construction_barres", "couverture_demandee", "limite", "sources_ecartees", "statut"]
 INTEGRITE = ("doublons", "desordre", "prix_non_positifs", "incoherences_ohlc")
+TROU_MAX_H = 120.0                     # plus long trou admis hors cotation continue : 5 jours (fêtes de fin d'année)
 
 
 # ── Outils ──────────────────────────────────────────────────────────────────────
@@ -183,6 +200,18 @@ def session_profile(t: pd.Series) -> dict:
         out[f"heures_utc_sans_barre_{name}"] = [int(h) for h in cnt.index[cnt == 0]]
     out["barres_le_samedi"] = int((t.dt.dayofweek == 5).sum())
     ny = t.dt.tz_convert("America/New_York")
+    tod = ny - ny.dt.normalize()
+    if bool(((tod >= pd.Timedelta(hours=9, minutes=30)) & (tod < pd.Timedelta(hours=16))).all()):
+        day = ny.dt.date
+        per = day.value_counts()
+        first = ny.groupby(day).min().dt.strftime("%H:%M")
+        last = ny.groupby(day).max().dt.strftime("%H:%M")
+        out["seance_reguliere"] = {"seances": int(len(per)), "barres_par_seance_P50": int(per.median()),
+                                   "seances_courtes": int((per < 13).sum()),
+                                   "premiere_barre_new_york": str(first.mode().iat[0]),
+                                   "derniere_barre_new_york": str(last.mode().iat[0]),
+                                   "seances_ouvrant_apres_0930": int((first != "09:30").sum())}
+        return out
     wd = ny[ny.dt.dayofweek <= 3]
     weeks = {}
     for wk, g in wd.groupby(wd.dt.tz_localize(None).dt.to_period("W-SUN")):
@@ -227,6 +256,98 @@ def signal_profile(p: dict) -> dict:
             "F3": int(m["F3"].sum()), "par_annee": yr}
 
 
+def session_first(bars: pd.DataFrame) -> np.ndarray:
+    """Barre d'ouverture : barre précédée d'un intervalle de plus de 30 min (nuit, pause, week-end, trou)."""
+    step = bars.time.diff().to_numpy()
+    return np.r_[False, step[1:] > np.timedelta64(30, "m")]
+
+
+def true_range(bars: pd.DataFrame) -> np.ndarray:
+    h, lo, c = (bars[k].to_numpy(dtype=float) for k in ("high", "low", "close"))
+    pc = np.r_[np.nan, c[:-1]]
+    return np.fmax(h - lo, np.fmax(np.abs(h - pc), np.abs(lo - pc)))
+
+
+def gaps_profile(key: str, p: dict) -> dict | None:
+    """Écarts d'ouverture de la série et leur place dans les signaux (aucun PnL) ; None pour une cotation continue."""
+    bars, atlas, m = p["bars"], p["atlas"], p["m"]
+    first = session_first(bars)
+    if first.mean() < 0.01:
+        return None
+    o, c = (bars[k].to_numpy(dtype=float) for k in ("open", "close"))
+    atr = np.asarray(p["atr"], dtype=float)
+    idx = np.flatnonzero(first)
+    g = np.log(o[idx] / c[idx - 1]) * BPS
+    ga = g / (atr[idx - 1] / c[idx - 1] * BPS)
+    tr = true_range(bars)
+    rel = tr[1:] / atr[:-1]
+    t = atlas.bar_index.to_numpy()
+    sf = first[t]
+    sl = first[np.minimum(t + 1, len(first) - 1)]
+    nis = add_derived(atlas).nis_z_100.to_numpy(dtype=float)
+    r2, excl = m["R2_avant_nis"], m["nis_exclus"]
+
+    def part(num, den):
+        return float(num.sum() / den.sum()) if den.sum() else None
+
+    out = {"seances": int(first.sum()), "part_barres_ouverture": float(first.mean()),
+           "ecart_abs_bps": q(np.abs(g), (50, 90, 99)), "ecart_abs_atr": q(np.abs(ga), (50, 90, 99)),
+           "ecart_moyen_bps": float(g.mean()), "part_ecarts_sup_1_atr": float((np.abs(ga) > 1).mean()),
+           "tr_en_atr_P50_ouverture": float(np.nanmedian(rel[first[1:]])),
+           "tr_en_atr_P50_autres": float(np.nanmedian(rel[~first[1:]])),
+           "part_tr_barres_ouverture": float(np.nansum(tr[first]) / np.nansum(tr)),
+           "part_signaux_barre_ouverture": float(sf.mean()), "part_signaux_derniere_barre": float(sl.mean()),
+           "nis_P50_ouverture": float(np.nanmedian(nis[sf])) if sf.any() else None,
+           "nis_P50_autres": float(np.nanmedian(nis[~sf])),
+           "part_nis_sup_seuil_ouverture": part(nis[sf] > NIS_Z100_P75_BTC, sf[sf]),
+           "part_nis_sup_seuil_autres": part(nis[~sf] > NIS_Z100_P75_BTC, sf[~sf] | True),
+           "part_R2_exclus_ouverture": part(excl & sf, r2 & sf), "part_R2_exclus_autres": part(excl & ~sf, r2 & ~sf),
+           "univers_RE1_sur_barre_ouverture": int((m["R2"] & sf).sum()), "univers_RE1": int(m["R2"].sum())}
+    raw_csv = ASSETS[key]["csv"].with_name(ASSETS[key]["csv"].stem + "_brut.csv")
+    if raw_csv.exists():
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            raw = load_asset(raw_csv)[1].set_index("time").reindex(bars.time)
+        ro, rc = raw.open.to_numpy(dtype=float), raw.close.to_numpy(dtype=float)
+        d = np.log(ro[idx] / rc[idx - 1]) * BPS - g
+        split = np.abs(d) > 2000.0                # fractionnement (2 pour 1 : log 0,5 = −6 931 bps)
+        ex = (np.abs(d) > 10.0) & ~split          # détachement ; sous 10 bps, arrondi des prix ajustés au cent
+        out["fractionnements"] = [{"date": str(bars.time.iat[i].date()), "ecart_brut_moins_ajuste_bps": float(v)}
+                                  for i, v in zip(idx[split], d[split])]
+        out["dividendes"] = {"ouvertures_brut_moins_ajuste_sup_10bp": int(ex.sum()),
+                             "ecart_moyen_bps": float(d[ex].mean()) if ex.any() else None,
+                             "bruit_arrondi_abs_bps_P99": float(np.percentile(np.abs(d[~ex & ~split]), 99)),
+                             "par_annee": {str(y): int(n) for y, n in
+                                           pd.Series(bars.time.iloc[idx[ex]].dt.year).value_counts().sort_index().items()}}
+    return out
+
+
+def daily_close(bars: pd.DataFrame) -> pd.Series:
+    ny = bars.time.dt.tz_convert("America/New_York")
+    return pd.Series(bars.close.to_numpy(), index=ny.dt.tz_localize(None).dt.normalize().to_numpy()).groupby(level=0).last()
+
+
+def proxy_correspondence(p: dict) -> dict:
+    """XLE contre le spot WTI de l'EIA et contre SPY : variations quotidiennes (clôture de séance), hors 17-22 avril
+    2020 (prix spot négatifs). Documentation du proxy choisi par le porteur, pas un critère."""
+    xle = daily_close(p["bars"]).rename("xle")
+    wti = pd.read_csv(RAW / "fred_dcoilwtico.csv", parse_dates=["date"]).dropna().set_index("date").valeur.rename("wti")
+    j = pd.concat([xle, wti], axis=1, join="inner").dropna().pct_change()
+    j = j.drop(pd.date_range("2020-04-17", "2020-04-22"), errors="ignore").dropna()
+    out = {"jours_communs_wti": int(len(j)), "pearson_wti": float(j.xle.corr(j.wti)),
+           "spearman_wti": float(j.xle.corr(j.wti, method="spearman")),
+           "beta_xle_sur_wti": float(j.cov().loc["xle", "wti"] / j.wti.var())}
+    spy_csv = ASSETS["SPY"]["csv"]
+    if spy_csv.exists():
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            spy = daily_close(load_asset(spy_csv)[1]).rename("spy")
+        k = pd.concat([xle, spy], axis=1, join="inner").dropna().pct_change().dropna()
+        out.update({"jours_communs_spy": int(len(k)), "pearson_spy": float(k.xle.corr(k.spy)),
+                    "beta_xle_sur_spy": float(k.cov().loc["xle", "spy"] / k.spy.var())})
+    return out
+
+
 TRANCHES = ["1-5", "6-10", "11-15", "16-20", "21-25", "26-31"]
 
 
@@ -262,16 +383,44 @@ def wti_vs_spot(bars: pd.DataFrame) -> dict:
                            for i, r in apr.iterrows()]}
 
 
+def coverage(key: str, a: dict) -> list[str]:
+    """Contrôle d'exploitabilité avant backtest (consigne du porteur pour les CFD) : première barre au plus tard le
+    3 janvier 2020, dernière au plus tôt le 30 décembre 2025, aucun trou de plus de 5 jours."""
+    lim = ASSETS[key].get("couverture")
+    if not lim:
+        return []
+    bad = []
+    if pd.Timestamp(a["premiere"]) > pd.Timestamp(lim[0], tz="UTC"):
+        bad.append(f"première barre {a['premiere'][:16]} postérieure au {lim[0]}")
+    if pd.Timestamp(a["derniere"]) < pd.Timestamp(lim[1], tz="UTC"):
+        bad.append(f"dernière barre {a['derniere'][:16]} antérieure au {lim[1]}")
+    longest = a["trous"]["plus_longs"][0]["duree_h"] if a["trous"]["plus_longs"] else 0.0
+    if longest > TROU_MAX_H:
+        bad.append(f"trou de {longest:.0f} h après {a['trous']['plus_longs'][0]['apres'][:16]}")
+    return bad
+
+
 def audit_asset(key: str) -> dict:
+    if not ASSETS[key]["csv"].exists():
+        return {"bloque": f"série absente ({ASSETS[key]['csv'].name}) : export à fournir"}
     p = prepare(key)
     a = audit_bars(p["df"])
     out = {"doc": asset_doc(key), "barres": a, "seances": session_profile(p["df"].time),
-           "integrite": [f"{k} = {a[k]}" for k in INTEGRITE if a[k]], "signaux": signal_profile(p),
-           "annees_echantillon": sample_years(p["bars"])}
+           "integrite": [f"{k} = {a[k]}" for k in INTEGRITE if a[k]], "couverture": coverage(key, a),
+           "signaux": signal_profile(p), "annees_echantillon": sample_years(p["bars"])}
+    gp = gaps_profile(key, p)
+    if gp:
+        out["gaps_ouverture"] = gp
     if key == "WTI":
         out["wti_contre_spot_eia"] = wti_vs_spot(p["bars"])
-    if ASSETS[key].get("bloque"):
-        out["bloque"] = ASSETS[key]["bloque"]
+    if key == "XLE":
+        out["correspondance_proxy"] = proxy_correspondence(p)
+    motifs = out["integrite"] + out["couverture"]
+    if motifs:
+        out["bloque"] = "série non exploitable : " + " ; ".join(motifs)
+    if ASSETS[key].get("retire"):
+        out["bloque"] = ASSETS[key]["retire"]
+        out["retire"] = True
     return out
 
 
@@ -345,7 +494,12 @@ def diagnostics(key: str, p: dict, tr: pd.DataFrame, fam: pd.Series, fee: float)
     f = fam.reindex(tr.signal_bar.to_numpy()).to_numpy()
     side = tr.side.to_numpy(dtype=np.int64)
     stop = tr.stop.to_numpy(dtype=bool)
-    out = {}
+    out = {"brut_frais_atr": {"brut_atr": float((tr.ret_gross_bps.to_numpy(dtype=float)
+                                                 / atr_bps.reindex(tr.signal_bar.to_numpy()).to_numpy()).mean()),
+                              "frais_atr": float((fee / atr_bps.reindex(tr.signal_bar.to_numpy()).to_numpy()).mean())}}
+    gt = gap_trades(p, tr, fam, v, months)
+    if gt:
+        out["gaps_ouverture"] = gt
     # distribution des trades
     lo, hi = np.percentile(v, [1, 99])
     k = max(1, int(round(0.1 * len(v))))
@@ -420,6 +574,51 @@ def diagnostics(key: str, p: dict, tr: pd.DataFrame, fam: pd.Series, fee: float)
     return out
 
 
+def gap_trades(p: dict, tr: pd.DataFrame, fam: pd.Series, v: np.ndarray, months) -> dict | None:
+    """Trades de RE-1 face aux écarts d'ouverture : rendement brut (log, ATR14(t)) = écarts d'ouverture traversés dans
+    ]entrée ; sortie] + reste réalisé en séance ; stops exécutés à l'ouverture au-delà du niveau ; espérance nette
+    selon la barre du signal. None pour une cotation continue."""
+    bars = p["bars"]
+    first = session_first(bars)
+    if first.mean() < 0.01:
+        return None
+    o, c = (bars[k].to_numpy(dtype=float) for k in ("open", "close"))
+    g = np.zeros(len(o))
+    idx = np.flatnonzero(first)
+    g[idx] = np.log(o[idx] / c[idx - 1])
+    cg, cf = np.cumsum(g), np.cumsum(first)
+    e, x = tr.entry_bar.to_numpy(), tr.exit_bar.to_numpy()
+    s = tr.side.to_numpy(dtype=np.int64)
+    t = tr.signal_bar.to_numpy()
+    atr_p = np.asarray(p["atr"], dtype=float)[t]
+    a = atr_p / tr.entry_price.to_numpy(dtype=float)                   # ATR14(t) en fraction du prix d'entrée
+    G = s * (cg[x] - cg[e]) / a
+    R = s * np.log(tr.exit_price.to_numpy(dtype=float) / tr.entry_price.to_numpy(dtype=float)) / a
+    intra = R - G
+    ng = cf[x] - cf[e]
+    seg = pd.Series(p["atlas"].prev_seg_len.to_numpy(), index=p["atlas"].bar_index.to_numpy()).reindex(t).to_numpy()
+    level = route_levels(bars, t, s, atr_p, seg, fam.reindex(t).to_numpy(), RULES, FLOOR)
+    stp, gp = tr.stop.to_numpy(dtype=bool), tr.gap.to_numpy(dtype=bool)
+    over = s * (level - tr.exit_price.to_numpy(dtype=float)) / atr_p
+    win = v > 0
+    sf, sl = first[t], first[np.minimum(t + 1, len(first) - 1)]
+
+    def ci3(vals, keep=None):
+        mm, lo, hi = boot_ci(vals, months, keep)
+        return {"moyenne": mm, "lo": lo, "hi": hi, "n": int(len(vals) if keep is None else np.sum(keep))}
+
+    return {"ecarts_traverses_par_trade": {"P50": float(np.median(ng)), "moyenne": float(ng.mean())},
+            "part_trades_traversant_un_ecart": float((ng > 0).mean()),
+            "brut_log_atr": ci3(R), "composante_ecarts_atr": ci3(G), "composante_seance_atr": ci3(intra),
+            "gagnants": {"ecarts": float(G[win].mean()), "seance": float(intra[win].mean())},
+            "perdants": {"ecarts": float(G[~win].mean()), "seance": float(intra[~win].mean())},
+            "stops": {"n": int(stp.sum()), "n_en_gap": int((stp & gp).sum()),
+                      "depassement_atr_moyen": float(over[stp & gp].mean()) if (stp & gp).any() else None,
+                      "depassement_atr_P90": float(np.percentile(over[stp & gp], 90)) if (stp & gp).any() else None},
+            "par_barre_de_signal": {"ouverture": ci3(v, sf), "derniere_barre": ci3(v, sl & ~sf),
+                                    "autres": ci3(v, ~sf & ~sl)}}
+
+
 BTC_NIS_Q: dict = {}
 
 
@@ -440,11 +639,8 @@ def run_main() -> None:
     rows, years, diags = [], [], {}
     for key, a in ASSETS.items():
         au = audit[key]
-        if a.get("bloque"):
-            ctrl["actifs"][key] = {"statut": "bloqué", "motif": a["bloque"]}
-            continue
-        if au["integrite"]:
-            ctrl["actifs"][key] = {"statut": "bloqué", "motif": "intégrité : " + " ; ".join(au["integrite"])}
+        if au.get("bloque"):
+            ctrl["actifs"][key] = {"statut": "retiré" if au.get("retire") else "bloqué", "motif": au["bloque"]}
             continue
         if au["doc"]["sha256"] != json.loads(meta_path(a["csv"]).read_text(encoding="utf-8"))["sha256"]:
             raise SystemExit(f"{key} : empreinte du CSV différente de l'audit : arrêt")
@@ -485,7 +681,8 @@ def run_main() -> None:
 
 
 # ── Figures ─────────────────────────────────────────────────────────────────────
-COLORS = {"BTC": "#7f7f7f", "SOL": "#9467bd", "XAU": "#d4a017", "WTI": "#1f1f1f"}
+COLORS = {"BTC": "#7f7f7f", "SOL": "#9467bd", "XAU": "#d4a017", "SPY": "#1f77b4", "XLE": "#2ca02c",
+          "WTI": "#1f1f1f"}
 
 
 def figures(preps: dict, res: pd.DataFrame) -> None:
@@ -538,7 +735,9 @@ def figures(preps: dict, res: pd.DataFrame) -> None:
 
 # ── Rapport ─────────────────────────────────────────────────────────────────────
 def frais_cell(r) -> str:
-    return f"{pct(r['part_frais'], 0)} ; {pct(r['part_frais_r25'], 0)}"
+    a = pct(r["part_frais"], 0) if r["brut_bps"] > 0 else "brut ≤ 0"
+    b = pct(r["part_frais_r25"], 0) if r["brut_bps_r25"] > 0 else "brut ≤ 0"
+    return f"{a} ; {b}"
 
 
 def row8(r) -> list:
@@ -593,6 +792,10 @@ def section_controles(ctrl: dict) -> str:
     return "\n".join(lines + [table(["Actif", "Statut", "Détail"], rows)])
 
 
+def audited(audit: dict) -> list[str]:
+    return [a for a in ASSETS if "barres" in audit.get(a, {})]
+
+
 def section_donnees(audit: dict) -> str:
     out = ["## B. Données : instruments et audit (étape 1, avant tout PnL)", ""]
     keys = ["instrument", "nature", "ticker", "continuite", "rolls", "ajustements", "prix", "timezone", "horaires",
@@ -601,13 +804,14 @@ def section_donnees(audit: dict) -> str:
             "rolls": "Roulements", "ajustements": "Ajustements", "prix": "Prix", "timezone": "Fuseau",
             "horaires": "Horaires", "construction_barres": "Construction des barres 30 min",
             "couverture_demandee": "Couverture", "limite": "Limite"}
-    rows = [[noms[k]] + [audit[a]["doc"].get(k, "—") for a in ASSETS] for k in keys]
+    aa = audited(audit)
+    rows = [[noms[k]] + [audit[a]["doc"].get(k, "—") for a in aa] for k in keys]
     rows.append(["Barres (première → dernière)"] + [
         f"{n_fr(audit[a]['barres']['n_barres'])} ({audit[a]['barres']['premiere'][:16]} → "
-        f"{audit[a]['barres']['derniere'][:16]})" for a in ASSETS])
-    out += [table(["Champ"] + [ASSETS[a]["nom"] for a in ASSETS], rows), ""]
+        f"{audit[a]['barres']['derniere'][:16]})" for a in aa])
+    out += [table(["Champ"] + [ASSETS[a]["nom"] for a in aa], rows), ""]
     rows = []
-    for a in ASSETS:
+    for a in aa:
         b, s = audit[a]["barres"], audit[a]["seances"]
         tr = b["trous"]
         cl = tr["classes"]
@@ -618,15 +822,20 @@ def section_donnees(audit: dict) -> str:
                      " ; ".join(audit[a]["integrite"]) or "aucune",
                      f"{n_fr(b['barres_plates'])} ; " + ("source sans volume" if b.get("barres_volume_nul") == b["n_barres"]
                                                             else n_fr(b.get("barres_volume_nul", 0))),
-                     (f"{s['pause_new_york']['pause_17h_exactement']} / {s['pause_new_york']['semaines']}"
-                      if "pause_new_york" in s else "sans objet (24/7)"),
+                     (f"pause 17:00-18:00 NY seule : {s['pause_new_york']['pause_17h_exactement']} semaines sur "
+                      f"{s['pause_new_york']['semaines']}" if "pause_new_york" in s else
+                      f"séance {s['seance_reguliere']['premiere_barre_new_york']}-"
+                      f"{s['seance_reguliere']['derniere_barre_new_york']} NY, "
+                      f"{s['seance_reguliere']['barres_par_seance_P50']} barres ; "
+                      f"{s['seance_reguliere']['seances_courtes']} séances courtes" if "seance_reguliere" in s
+                      else "cotation continue 24/7"),
                      fr(b["sauts"]["ecart_ouverture_bps"].get("P99.9", np.nan), 0) + " ; " +
                      fr(b["sauts"]["ecart_ouverture_apres_trou_bps"].get("P50", np.nan), 1)])
     out += [table(["Actif", "Barres / cotation 24/7", "Trous : n ; barres manquantes", "Trous ≤ 2 h ; ≤ 3 j ; > 3 j",
                    "Plus long trou (début)", "Défauts d'intégrité", "Barres plates ; volume nul",
-                   "Semaines à pause seule 17:00-18:00 New York", "Écart d'ouverture (bps) : P99,9 ; médiane après trou"],
+                   "Structure des séances", "Écart d'ouverture (bps) : P99,9 ; médiane après trou"],
                   rows), ""]
-    for a in ASSETS:
+    for a in aa:
         d = audit[a]["doc"]
         if d.get("doublons_exacts_supprimes"):
             dd = d["doublons_exacts_supprimes"]
@@ -651,16 +860,24 @@ def section_donnees(audit: dict) -> str:
                 f"Spearman {fr(c['spearman'], 3)}.",
                 f"- Échéance de juin 2021 (contrat de juillet, expiré le 22/06), CFD / spot : {juin}.",
                 f"- Avril 2020, CFD / spot : {avr}."]
+    x = audit.get("XLE", {}).get("correspondance_proxy")
+    if x:
+        line = (f"**XLE, proxy de l'énergie (décision du porteur)** : variations quotidiennes contre le spot WTI de l'EIA "
+                f"(hors 17-22 avril 2020) : Pearson {fr(x['pearson_wti'], 2)}, Spearman {fr(x['spearman_wti'], 2)}, "
+                f"bêta {fr(x['beta_xle_sur_wti'], 2)} ({n_fr(x['jours_communs_wti'])} jours)")
+        if "pearson_spy" in x:
+            line += f" ; contre SPY : Pearson {fr(x['pearson_spy'], 2)}, bêta {fr(x['beta_xle_sur_spy'], 2)}"
+        out += ["", line + "."]
     for a in ASSETS:
-        if audit[a].get("bloque"):
-            out += ["", f"**{a} bloqué** : {audit[a]['bloque']}"]
+        if audit.get(a, {}).get("bloque"):
+            out += ["", f"**{a} {'retiré' if audit[a].get('retire') else 'bloqué'}** : {audit[a]['bloque']}"]
     return "\n".join(out)
 
 
 def section_signaux(audit: dict) -> str:
     out = ["## C. Signaux : distributions face aux seuils BTC gelés (descriptif)", ""]
     rows = []
-    for a in ASSETS:
+    for a in audited(audit):
         s = audit[a]["signaux"]
         rows.append([a, f"{n_fr(s['n_signaux'])} ({fr(s['signaux_par_mois'], 1)})", pct(s["part_x1_retourne"], 1),
                      f"{fr(s['leg_atr']['P50'], 2)} [{fr(s['leg_atr']['P25'], 2)} ; {fr(s['leg_atr']['P75'], 2)}]",
@@ -675,7 +892,7 @@ def section_signaux(audit: dict) -> str:
                    "nis_z_100 P50 ; P75 local", f"nis_z_100 > {fr(NIS_Z100_P75_BTC, 4)} : tous ; dans R2",
                    "ATR14 bps P50 [P10 ; P90]"], rows), ""]
     rows = []
-    for a in ASSETS:
+    for a in audited(audit):
         s = audit[a]["signaux"]
         fa, rg = s["familles"], s["regimes"]
         rows.append([a, " ; ".join(f"{k} {n_fr(v)}" for k, v in fa.items()),
@@ -726,7 +943,8 @@ def section_diag(diags: dict, res: pd.DataFrame) -> str:
         rows.append([f"{a} {fee} bps", f"{sg(s['P10'], 2)} ; {sg(s['P25'], 2)} ; {sg(s['P50'], 2)} ; {sg(s['P75'], 2)} ; "
                      f"{sg(s['P90'], 2)}", f"{sg(s['moyenne'], 3)} ; {sg(s['moyenne_winsorisee_P1_P99'], 3)}",
                      f"{sg(s['apport_decile_superieur_par_trade'], 3)} ("
-                     + (pct(s['part_decile_superieur'], 0) if s['moyenne'] > 0 else "espérance totale ≤ 0") + ")",
+                     + (pct(s['part_decile_superieur'], 0) if s['moyenne'] > 0 and s['part_decile_superieur'] < 10
+                        else "espérance totale ≈ 0 ou négative") + ")",
                      f"{fr(h['mediane'], 1)} ; {fr(h['P90'], 1)} ; {pct(h['part_plus_de_24_h'], 0)}"])
     out += [table(["Actif", "P10 ; P25 ; P50 ; P75 ; P90", "Moyenne ; winsorisée P1/P99",
                    "Apport du décile supérieur par trade (part du total)",
@@ -755,6 +973,63 @@ def section_diag(diags: dict, res: pd.DataFrame) -> str:
     return "\n".join(out)
 
 
+def section_gaps(audit: dict, diags: dict) -> str:
+    out = ["## L. Gaps d'ouverture (séries en séances ; définitions fixées avant le calcul, en tête du script)", "",
+           "**Données et signaux** (sans PnL) :", ""]
+    rows = []
+    for a in audited(audit):
+        g = audit[a].get("gaps_ouverture")
+        if not g or audit[a].get("retire"):
+            continue
+        dv = g.get("dividendes")
+        rows.append([a, n_fr(g["seances"]),
+                     f"{fr(g['ecart_abs_bps']['P50'], 1)} ; {fr(g['ecart_abs_bps']['P90'], 1)} ; "
+                     f"{fr(g['ecart_abs_bps']['P99'], 1)}",
+                     f"{fr(g['ecart_abs_atr']['P50'], 2)} ; {fr(g['ecart_abs_atr']['P90'], 2)} ; "
+                     f"{pct(g['part_ecarts_sup_1_atr'], 0)}",
+                     f"{fr(g['tr_en_atr_P50_ouverture'], 2)} ; {fr(g['tr_en_atr_P50_autres'], 2)}",
+                     f"{pct(g['part_tr_barres_ouverture'], 0)} ({pct(g['part_barres_ouverture'], 1)} des barres)",
+                     f"{pct(g['part_signaux_barre_ouverture'], 1)} ; {pct(g['part_signaux_derniere_barre'], 1)}",
+                     f"{fr(g['nis_P50_ouverture'], 2)} ; {fr(g['nis_P50_autres'], 2)}",
+                     f"{pct(g['part_R2_exclus_ouverture'], 0)} ; {pct(g['part_R2_exclus_autres'], 0)}",
+                     (f"{dv['ouvertures_brut_moins_ajuste_sup_10bp']} ({sg(dv['ecart_moyen_bps'], 1)} bps ; bruit "
+                      f"P99 {fr(dv['bruit_arrondi_abs_bps_P99'], 1)} bps)"
+                      + "".join(f" ; fractionnement le {x['date']} ({sg(x['ecart_brut_moins_ajuste_bps'], 0)} bps)"
+                                for x in g.get("fractionnements", [])) if dv else "—")])
+    out += [table(["Actif", "Séances", "|Écart| bps : P50 ; P90 ; P99", "|Écart| ATR : P50 ; P90 ; > 1 ATR",
+                   "Vrai range en ATR (P50) : ouverture ; autres", "Part du vrai range à l'ouverture",
+                   "Signaux : sur barre d'ouverture ; sur dernière barre", "nis_z_100 P50 : ouverture ; autres",
+                   "R2 écartés par nis : ouverture ; autres", "Dividendes : ouvertures ajustées (écart moyen)"], rows),
+            "", "**Trades de RE-1** (rendement brut en log, ATR14(t) ; frais de lecture principale pour l'espérance "
+                "nette par barre de signal) :", ""]
+    rows, rows2 = [], []
+    for a, dd in diags.items():
+        fee = f"{ASSETS[a]['fees'][0]:g}"
+        g = dd[fee].get("gaps_ouverture")
+        if not g:
+            continue
+        b, ge, gs = g["brut_log_atr"], g["composante_ecarts_atr"], g["composante_seance_atr"]
+        rows.append([f"{a} {fee} bps", f"{fr(g['ecarts_traverses_par_trade']['P50'], 0)} ; "
+                     f"{pct(g['part_trades_traversant_un_ecart'], 0)}",
+                     ci(b["moyenne"], b["lo"], b["hi"], 3), ci(ge["moyenne"], ge["lo"], ge["hi"], 3),
+                     ci(gs["moyenne"], gs["lo"], gs["hi"], 3),
+                     f"{sg(g['gagnants']['ecarts'], 2)} ; {sg(g['gagnants']['seance'], 2)}",
+                     f"{sg(g['perdants']['ecarts'], 2)} ; {sg(g['perdants']['seance'], 2)}"])
+        st, pb = g["stops"], g["par_barre_de_signal"]
+        rows2.append([f"{a} {fee} bps", f"{n_fr(st['n_en_gap'])} / {n_fr(st['n'])}",
+                      f"{sg(st['depassement_atr_moyen'], 2)} ; {sg(st['depassement_atr_P90'], 2)}",
+                      f"{n_fr(pb['ouverture']['n'])} : {ci(pb['ouverture']['moyenne'], pb['ouverture']['lo'], pb['ouverture']['hi'], 3)}",
+                      f"{n_fr(pb['derniere_barre']['n'])} : {ci(pb['derniere_barre']['moyenne'], pb['derniere_barre']['lo'], pb['derniere_barre']['hi'], 3)}",
+                      f"{n_fr(pb['autres']['n'])} : {ci(pb['autres']['moyenne'], pb['autres']['lo'], pb['autres']['hi'], 3)}"])
+    out += [table(["Actif", "Écarts traversés par trade (P50) ; trades concernés", "Brut (log) ATR [IC]",
+                   "dont écarts d'ouverture [IC]", "dont séance [IC]", "Gagnants : écarts ; séance",
+                   "Perdants : écarts ; séance"], rows), "",
+            table(["Actif", "Stops exécutés en gap / stops", "Dépassement du niveau (ATR) : moyenne ; P90",
+                   "Signal sur barre d'ouverture : n : espérance nette ATR [IC]",
+                   "Signal sur dernière barre (entrée après l'écart)", "Autres signaux"], rows2)]
+    return "\n".join(out)
+
+
 def section_annees(ann: pd.DataFrame) -> str:
     out = ["## K. Stabilité annuelle (année d'entrée)", ""]
     rows = []
@@ -780,6 +1055,7 @@ def write_report() -> None:
         diags = json.loads((HERE / "diagnostics_D01.json").read_text(encoding="utf-8"))
         parts += [section_controles(ctrl), "", section_donnees(audit), "", section_signaux(audit), "",
                   section_metriques(res), "", section_diag(diags, res), "", section_annees(ann), "",
+                  section_gaps(audit, diags), "",
                   "Figures : `figures/capital_D01.png`, `figures/nis_D01.png`, `figures/annees_D01.png`."]
     else:
         parts += [section_donnees(audit), "", section_signaux(audit)]
@@ -795,11 +1071,14 @@ def main() -> None:
         res = run_audit()
         write_report()
         for k in ASSETS:
+            if "barres" not in res[k]:
+                print(f"{k} : {res[k]['bloque']}")
+                continue
             s = res[k]["signaux"]
             print(f"{k} : {res[k]['barres']['n_barres']} barres ; intégrité {res[k]['integrite'] or 'OK'} ; "
-                  f"{s['n_signaux']} signaux ; univers RE-1 {s['univers_RE1']} ; "
-                  f"nis > seuil BTC {100 * s['part_nis_au_dessus_seuil_btc']:.1f} %"
-                  + (" ; BLOQUÉ" if res[k].get("bloque") else ""))
+                  f"couverture {res[k]['couverture'] or 'OK'} ; {s['n_signaux']} signaux ; univers RE-1 "
+                  f"{s['univers_RE1']} ; nis > seuil BTC {100 * s['part_nis_au_dessus_seuil_btc']:.1f} %"
+                  + (" ; RETIRÉ" if res[k].get("retire") else " ; BLOQUÉ" if res[k].get("bloque") else ""))
         print(f"audit en {res['duree_s']} s → audit_D01.json")
         return
     run_main()

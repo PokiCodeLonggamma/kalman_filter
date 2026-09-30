@@ -22,9 +22,21 @@
    "trades": 651,
    "candidats": 849
   },
+  "SPY": {
+   "statut": "mesuré",
+   "annees": 5.995608031028976,
+   "trades": 155,
+   "candidats": 191
+  },
+  "XLE": {
+   "statut": "mesuré",
+   "annees": 5.995608031028976,
+   "trades": 136,
+   "candidats": 159
+  },
   "WTI": {
-   "statut": "bloqué",
-   "motif": "couverture 2020-01-01 → 2023-12-01 : HistData ne publie pas WTIUSD pour 2024 et 2025, contre la condition « au moins 2020-2025 » du porteur. Par ailleurs, l'audit montre un CFD de contrat du mois non ajusté, roulé autour de l'échéance : la série porte chaque mois un saut égal à l'écart de calendrier (règle non publiée par la source). Série auditée, aucun backtest avant décision du porteur."
+   "statut": "retiré",
+   "motif": "retiré de D01 par le porteur (2026-09-30) et remplacé par XLE : couverture HistData arrêtée au 2023-12-01 et CFD de contrat du mois non ajusté (audit ci-dessous, pour mémoire). Aucun backtest."
   }
  },
  "btc": {
@@ -50,5 +62,5 @@
   "P85": 2.0572068985111858,
   "P90": 2.7485351661715294
  },
- "duree_s": 32
+ "duree_s": 36
 }
