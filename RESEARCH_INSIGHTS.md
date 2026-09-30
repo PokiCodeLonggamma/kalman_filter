@@ -143,6 +143,14 @@ Elle se mesure séparément par sens et par type de signal (rang 1 ou répétiti
 - **Enchère de clôture.** Horodatée à 16:00:00, elle tombe hors de la dernière barre de séance : le close de cette barre est la dernière transaction continue.
 - **Série ajustée.** Mesurer sur la série ajustée des dividendes et des fractionnements, et garder la série brute pour les repérer. XLE a été fractionné 2 pour 1 le 2025-12-05 : −6 931 bps en série brute. Seuil de détection des dividendes au-dessus du bruit d'arrondi des prix ajustés (jusqu'à 5 bps sur un titre à 30-90 $).
 
+### I-M16 — Une variation de H se lit sur entrées figées : la course séquentielle y ajoute un effet de calendrier `[MÉTHODE]` `[OBS]`
+*Source : EXP-D01.5.*
+
+- En séquentiel (une position à la fois), allonger H fait sauter les signaux qui arrivent pendant la position. Le résultat mêle donc l'effet de la sortie et le choix des trades gardés.
+- XLE, H = 65 : +0,155 ATR en séquentiel, +0,009 sur les mêmes entrées que H = 26 (effet −0,010 [−0,71 ; +0,75]). Les 31 trades sautés valaient −0,48 ATR. Or, H = 130 : −0,702 en séquentiel, −0,165 sur entrées figées (trades sautés +0,38).
+- **Règle :** publier l'effet apparié sur entrées figées à côté de toute variation de H (extension d'I-M9). Un optimiseur de H sur la course séquentielle ajuste aussi ce calendrier.
+- À dimensionnement égal (0,25 % par ATR14 de 30 min), le risque par trade croît avec H : MDD de l'or −13,6 % à H = 26, −41,6 % à H = 130. Comparer des H au Calmar suppose de fixer cette convention.
+
 ---
 
 ## 2. Cinématique du moteur v2.1
@@ -202,6 +210,15 @@ Elle se mesure séparément par sens et par type de signal (rang 1 ou répétiti
 - `[OBS]` H = 26 barres fait traverser deux nuits (48 h calendaires). Les gaps pèsent 35 à 47 % de l'amplitude des trades. Les stops percés à l'ouverture dépassent leur niveau de +1,0 à +2,6 ATR en moyenne.
 - `[OBS]` Les écarts de nuit allongent les jambes mesurées en ATR (`leg_atr` P50 3,1 à 3,2, contre 2,8 à 2,9 ailleurs).
 - `[HYP]` Sur une série en séances, un horizon compté en barres mêle la cinématique d'une séance et le risque de nuit.
+
+### K9 — H déplace l'exposition, pas l'avantage
+*Source : EXP-D01.5 (or H 26-130 ; SPY et XLE H 6-130 ; 4 bps).*
+
+- `[OBS]` Les frais en ATR ne dépendent pas de H : fee / ATR14(t) de l'entrée, 0,26 par trade sur l'or à tout H.
+- `[OBS]` Le brut par trade ne croît pas avec H. Or, sur les mêmes entrées : +0,24, +0,26, +0,32, +0,21, +0,09 ATR de 13 h à 68 h. Sur les trois actifs, l'effet apparié de H va de −0,55 à +0,08 ATR, tous les IC ∋ 0.
+- `[OBS]` Ce qui croît avec H : la dérive de l'actif, qui joue des deux côtés (or +0,38 → +0,81 ATR ; Short −0,43 → −1,54), le nombre de nuits et le risque par trade.
+- `[OBS]` En séance régulière, H = 13 barres = une séance : 91 % des trades traversent une nuit, comme à H = 26. Seul H = 6 réduit l'exposition (50 à 57 %). La composante en séance du brut est ≈ 0 sur SPY et négative sur XLE à tout H.
+- `[HYP]` Sur ces marchés, l'avantage manque en amont de la sortie. Une sortie en fin de séance retirerait les gaps (coût des stops percés : 0,05 à 0,22 ATR par trade sur SPY) sans créer d'espérance.
 
 ---
 
@@ -384,7 +401,7 @@ L'atlas A01 soutient cette lecture à travers le ratio de retracement `retrace_r
 9. ~~Un filtre de tendance macro améliore-t-il RE-1 ?~~ **Répondu (EXP-C04)** : non. Les trades contre-tendance ne sont pas toxiques, et le veto retire des V de la queue droite. En séquentiel, il fait en plus entrer des signaux perdants.
 10. ~~Les seuils durs de RE-1 reposent-ils sur des plateaux ?~~ **Répondu (EXP-C05)** : oui pour la frontière F2b / F3 (0,85 à 0,95) et pour la marge du stop de F3 (−0,25 à +0,25 ATR). L'exclusion de `nis_z_100` est une falaise côté permissif, signalée avant l'Étape D.
 11. ~~La bascule d'espérance de `nis_z_100` au voisinage de P75 se retrouve-t-elle sur les autres actifs ?~~ **Mesuré (EXP-D01, trades isolés)** : pas telle quelle. Sur SOL, la bande sous P70 est positive (IC > 0), mais la bande au-delà de P90 l'est aussi ; sur l'or, les bandes sont nulles ou négatives. Aucun réglage.
-12. Quelle échelle de temps rend le rapport frais / ATR compatible avec l'or (brut +0,24 ATR, frais 0,26 ATR à 30 min) ? Question de vitesse : H et R0 en D02, ou unité de temps des barres (hors périmètre de D02 tel qu'annoncé).
+12. Quelle échelle de temps rend le rapport frais / ATR compatible avec l'or (brut +0,24 ATR, frais 0,26 ATR à 30 min) ? Question de vitesse : H et R0 en D02, ou unité de temps des barres (hors périmètre de D02 tel qu'annoncé). **Mesuré pour H (EXP-D01.5) :** allonger H ne dilue pas les frais, qui restent à 0,26 ATR par trade ; le brut ne croît pas (+0,24 → −0,45 ATR de H = 26 à 130). Restent R0 et l'unité de temps des barres.
 13. L'inversion F2b / F3 de l'or (F2b Short −0,70, F3 Long +0,55) tient-elle à la hausse séculaire de 2020-2025 (dérive +0,38 ATR) ou à la microstructure d'un CFD ? Non testé.
 14. ~~WTI : quelle source pour 2020-2025 ?~~ **Tranché par le porteur (2026-09-30)** : WTI retiré de D01, remplacé par l'ETF XLE (corrélation quotidienne 0,46 avec le spot WTI, 0,60 avec SPY).
-15. Sur une série en séances, H doit-il se compter en barres ou en temps, et faut-il sortir avant la nuit ? D01 bis montre des trades traversant deux nuits, les gaps pesant 35 à 47 % de leur amplitude. Question pour D02, à cadrer : H est l'un des deux paramètres autorisés.
+15. Sur une série en séances, H doit-il se compter en barres ou en temps, et faut-il sortir avant la nuit ? D01 bis montre des trades traversant deux nuits, les gaps pesant 35 à 47 % de leur amplitude. Question pour D02, à cadrer : H est l'un des deux paramètres autorisés. **Mesuré (EXP-D01.5) :** H = 13 traverse encore une nuit (91 % des trades) ; H = 6 réduit l'exposition de moitié, mais la composante en séance est ≈ 0 (SPY) ou négative (XLE) : sortir avant la nuit ne créerait pas d'espérance (K9).

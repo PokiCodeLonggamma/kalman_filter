@@ -1,0 +1,62 @@
+{
+ "frais_bps": 4.0,
+ "grilles": {
+  "XAU": [
+   26,
+   48,
+   72,
+   96,
+   130
+  ],
+  "SPY": [
+   6,
+   13,
+   26,
+   65,
+   130
+  ],
+  "XLE": [
+   6,
+   13,
+   26,
+   65,
+   130
+  ]
+ },
+ "actifs": {
+  "XAU": {
+   "sha256": "fedf245a789ba532b23c24e4639d3a21e979c11109817e2cfe7f4e03954d832d",
+   "candidats": 849,
+   "annees": 5.997376226328998,
+   "rendement_actif_echantillon": 1.8417903945648781,
+   "h26_identique_d01": {
+    "metriques_comparees": 23,
+    "ecart_relatif_max": 4.5116186481475515e-06,
+    "gaps_compares": 4
+   }
+  },
+  "SPY": {
+   "sha256": "5bf52375c4b55b0f70c049eb570df096bbcedfca776c9c271a361c9ff7aa01de",
+   "candidats": 191,
+   "annees": 5.995608031028976,
+   "rendement_actif_echantillon": 1.2974156959961962,
+   "h26_identique_d01": {
+    "metriques_comparees": 23,
+    "ecart_relatif_max": 3.922176695203239e-06,
+    "gaps_compares": 4
+   }
+  },
+  "XLE": {
+   "sha256": "1eb903a1edb1a9eca80a0cc6d4c7ad298eac15383837db1faec516b1af723fc9",
+   "candidats": 159,
+   "annees": 5.995608031028976,
+   "rendement_actif_echantillon": 0.9044309296264119,
+   "h26_identique_d01": {
+    "metriques_comparees": 23,
+    "ecart_relatif_max": 3.0566503575532427e-06,
+    "gaps_compares": 4
+   }
+  }
+ },
+ "duree_s": 16
+}

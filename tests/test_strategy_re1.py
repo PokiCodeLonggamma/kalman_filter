@@ -140,6 +140,30 @@ def test_re1_causal_par_troncature(btc):
     assert len(early) > 500 and trunc.iloc[:len(early)].reset_index(drop=True).equals(early)
 
 
+@pytest.mark.data
+def test_re1_a_un_autre_horizon_structure_et_causalite(btc):
+    """EXP-D01.5 : à H = 6 et H = 130, une position à la fois (signal suivant ≥ signal + H), entrée à open[t + 1],
+    sortie à H barres hors stop ; à H = 130, trades clos avant une coupe identiques sans les barres postérieures."""
+    from anatomy import build_atlas
+    df, bars, atlas, atr = btc
+    _, m = frozen_masks(atlas)
+    last = len(bars) - 1
+    for h in (6, 130):
+        tr, _ = run_re1(bars, atlas, atr, m, horizon=h)
+        t = tr.signal_bar.to_numpy()
+        free = ~tr.stop.to_numpy(dtype=bool) & (tr.exit_bar.to_numpy() < last)
+        assert (np.diff(t) >= h).all() and (tr.entry_bar.to_numpy() == t + 1).all()
+        assert free.sum() > 100 and ((tr.exit_bar - tr.entry_bar).to_numpy()[free] == h).all()
+    full, _ = run_re1(bars, atlas, atr, m, horizon=130)
+    cut = int(np.searchsorted(bars.time, pd.Timestamp("2023-06-30", tz="UTC")))
+    df_c, bars_c = df.iloc[:cut].reset_index(drop=True), bars.iloc[:cut].reset_index(drop=True)
+    atlas_c, _, _, atr_c = build_atlas(df_c)
+    _, m_c = frozen_masks(atlas_c)
+    trunc, _ = run_re1(bars_c, atlas_c, atr_c, m_c, horizon=130)
+    early = full[full.exit_bar < cut - 500].reset_index(drop=True)
+    assert len(early) > 200 and trunc.iloc[:len(early)].reset_index(drop=True).equals(early)
+
+
 def test_aucun_decalage_vers_le_futur_dans_les_nouveaux_modules():
     for p in list((ROOT / "src" / "strategy").glob("*.py")) + list((ROOT / "src" / "marketdata").glob("*.py")):
         assert "shift(-" not in Path(p).read_text(encoding="utf-8"), p.name

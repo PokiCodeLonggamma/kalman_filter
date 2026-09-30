@@ -175,6 +175,18 @@ L'Étape C a testé ses quatre facteurs (horizon, stop par sous-famille, break-e
   - les stops percés à l'ouverture dépassent leur niveau de +1,0 à +2,6 ATR en moyenne.
 - **Constantes sur tous les actifs :** queue droite (le décile supérieur fait plus que le total) ; le stop de F3 réduit le drawdown.
 
+### EXP-D01.5 — sensibilité de RE-1 à H seul (4 bps, descriptive, aucun H retenu)
+*Grilles du porteur : or H ∈ {26, 48, 72, 96, 130} ; SPY et XLE H ∈ {6, 13, 26, 65, 130}. Aucune des 15 configurations n'a un IC à borne basse > 0.*
+
+| Meilleur point de chaque grille (ATR) | Espérance ATR [IC] | PnL : 0,25 %/ATR ; 1x | MDD : 0,25 %/ATR ; 1x | Effet apparié contre H = 26 | Lecture |
+|---|---|---|---|---|---|
+| Or, H = 26 (RE-1) | −0,019 [−0,362 ; +0,349] | +1 % ; +5 % | −13,6 % ; −13,3 % | — | au-delà, décroissant jusqu'à −0,702 (H = 130) |
+| SPY, H = 26 (RE-1) | −0,158 [−0,736 ; +0,434] | −4 % ; −8 % | −10,9 % ; −19,2 % | — | plat de 6 à 26 (−0,16 à −0,19), puis −0,76 et −0,38 |
+| XLE, H = 65 | +0,155 [−0,788 ; +1,130] | +3 % ; +20 % | −10,9 % ; −26,3 % | −0,010 [−0,71 ; +0,75] | pic isolé (H = 130 : −1,573), gain dû à la population |
+
+- **Or :** frais fixes en ATR (0,26 par trade à tout H) ; le brut ne croît pas avec H ; la dérive croît des deux côtés.
+- **ETF :** H = 13 traverse encore une nuit (91 % des trades) ; H = 6 réduit les nuits de moitié, mais la composante en séance est ≈ 0 (SPY) ou négative (XLE).
+
 ## Pistes écartées (à ne pas retester sans élément nouveau)
 
 | Piste | Raison | Source |

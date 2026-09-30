@@ -1011,3 +1011,91 @@ Grilles complètes : espérance ATR ; MDD ; Calmar.
 - [x] **À POURSUIVRE (descriptif) : RE-1 inchangée, D01 clos.**
   - Carte des faiblesses du modèle fixe : rapport frais / ATR (or), structure de séance (ETF), dérive (ventes en marché haussier), queue droite.
   - Restent au porteur : la validation de la source XAU et le push.
+
+### [EXP-D01.5] — Sensibilité de RE-1 à l'horizon H seul (or, SPY, XLE)
+- **Date :** 2026-09-30
+- **Étape :** D Adaptation, étape intermédiaire avant D02 (décision du porteur). Descriptif : RE-1 inchangée, aucun H retenu ni figé ; ni Optuna ni VectorBT.
+- **Actif & Période :** données de D01, empreintes inchangées. CFD or XAU/USD (HistData), 2020-2025. ETF SPY et XLE (Alpaca, séance régulière), 2020-2025.
+- **Grilles du porteur (OFAT sur H, en barres de 30 min) :** XAU {26, 48, 72, 96, 130} ; SPY et XLE {6, 13, 26, 65, 130}.
+- **Modèle de frais :** 4 bps. Capital à 0,25 % par ATR14(t) et notionnel 1x.
+- **Livrables :**
+  - `experiments/D01_5/run_D01_5.py` (réutilise `strategy.run_re1(horizon=H)`, `prepare` et `gap_trades` de D01) ;
+  - `rapport_D01_5.md`, `resultats_D01_5.csv`, `annuel_D01_5.csv`, `diagnostics_D01_5.json`, `controles_D01_5.json`, figures ;
+  - test `test_re1_a_un_autre_horizon_structure_et_causalite` (H = 6 et H = 130 sur BTC).
+
+#### 0. Cadrage obligatoire
+- **QUESTION :** une translation de H seul corrige-t-elle les faiblesses de D01 ? Or : brut +0,24 ATR contre 0,26 ATR de frais à H = 26. SPY et XLE : H = 26 traverse deux nuits.
+- **PERTINENCE POUR LE FILTRE AKF :** H est le seul paramètre de RE-1 lié au temps. Il décide quand le jugement cinématique fait à t est encaissé, donc combien de frais, de dérive et de nuits entrent dans chaque trade.
+- **CE QUE LE PROTOCOLE MESURE RÉELLEMENT :**
+  - la course séquentielle à chaque H (la population de trades change avec H) ;
+  - l'effet apparié de H sur les entrées figées de RE-1 à H = 26 ;
+  - timing et dérive ;
+  - l'exposition aux gaps et les stops percés.
+- **CE QU'IL NE PERMET PAS DE CONCLURE :**
+  - aucun H n'est validé : le meilleur des cinq, choisi après coup, surestime l'espérance (objet du WFO de D02) ;
+  - pas de hold-out ; pas de coûts de portage.
+
+#### 1. Hypothèse & Motivation physique (porteur)
+- **Or :** un H plus long fait croître l'excursion brute et dilue le coût fixe des frais.
+- **ETF :** H ≤ 13 limite l'exposition aux nuits ; H ≥ 65 dilue le bruit des gaps dans la tendance.
+
+#### 2. Règle testée (OFAT)
+- **Facteur :** H seul ; tout le reste est RE-1.
+- **Règle de lecture (fixée avant le calcul) :**
+  - avantage = borne basse de l'IC 95 % > 0, en ATR et en bps ;
+  - forme de la courbe entière, pas meilleure valeur ;
+  - effet apparié et timing/dérive pour chaque H.
+- **Contrôles bloquants :** empreintes = audit D01 ; H = 26 redonne D01 (23 métriques par actif, écart ≤ 5·10⁻⁶, et les mesures de gaps) ; entrées figées à H = 26 = RE-1 trade par trade ; structure des trades à chaque H.
+
+#### 3. Résultats nets (4 bps)
+| Actif, H | PnL : 0,25 %/ATR ; 1x | PF (1x) | WR | Espérance ATR [IC] | bps | Brut ; frais (ATR) | MDD : 0,25 %/ATR ; 1x | Calmar : 0,25 %/ATR ; 1x | Trades (/mois) | Durée : barres ; h | Part des frais (1x, brut en bps) |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| XAU 26 (RE-1) | +1 % ; +5 % | 1,04 | 42,5 % | −0,019 [−0,362 ; +0,349] | +1,1 | +0,239 ; 0,257 | −13,6 % ; −13,3 % | 0,01 ; 0,07 | 651 (9,0) | 26 ; 13 | 79 % |
+| XAU 48 | −7 % ; −3 % | 0,99 | 42,3 % | −0,120 [−0,623 ; +0,400] | −0,2 | +0,138 ; 0,257 | −18,8 % ; −19,8 % | −0,07 ; −0,03 | 515 (7,2) | 48 ; 25 | 106 % |
+| XAU 72 | −7 % ; −4 % | 0,99 | 37,2 % | −0,071 [−0,661 ; +0,552] | −0,3 | +0,184 ; 0,255 | −22,9 % ; −24,8 % | −0,05 ; −0,03 | 441 (6,1) | 72 ; 37 | 107 % |
+| XAU 96 | −9 % ; −4 % | 0,99 | 38,3 % | −0,185 [−0,890 ; +0,548] | −0,3 | +0,071 ; 0,256 | −30,6 % ; −31,6 % | −0,05 ; −0,02 | 386 (5,4) | 96 ; 50 | 108 % |
+| XAU 130 | −30 % ; −31 % | 0,81 | 34,3 % | −0,702 [−1,620 ; +0,255] | −10,5 | −0,446 ; 0,255 | −41,6 % ; −42,8 % | −0,14 ; −0,14 | 327 (4,5) | 130 ; 68 | brut ≤ 0 |
+| SPY 6 | −6 % ; −5 % | 0,91 | 46,6 % | −0,161 [−0,526 ; +0,202] | −2,5 | +0,004 ; 0,165 | −12,9 % ; −15,1 % | −0,08 ; −0,06 | 191 (2,7) | 6 ; 3 | 260 % |
+| SPY 13 | −6 % ; −3 % | 0,96 | 47,9 % | −0,189 [−0,667 ; +0,292] | −1,4 | −0,026 ; 0,163 | −12,5 % ; −18,9 % | −0,08 ; −0,03 | 169 (2,3) | 13 ; 24 | 154 % |
+| SPY 26 (RE-1) | −4 % ; −8 % | 0,91 | 45,2 % | −0,158 [−0,736 ; +0,434] | −4,5 | +0,004 ; 0,162 | −10,9 % ; −19,2 % | −0,07 ; −0,07 | 155 (2,2) | 26 ; 48 | brut ≤ 0 |
+| SPY 65 | −19 % ; −37 % | 0,57 | 29,6 % | −0,756 [−1,663 ; +0,148] | −38,3 | −0,594 ; 0,162 | −25,9 % ; −43,9 % | −0,14 ; −0,17 | 115 (1,6) | 65 ; 168 | brut ≤ 0 |
+| SPY 130 | −10 % ; −22 % | 0,73 | 28,4 % | −0,378 [−1,858 ; +1,241] | −25,0 | −0,218 ; 0,160 | −15,3 % ; −29,0 % | −0,11 ; −0,14 | 88 (1,2) | 130 ; 336 | brut ≤ 0 |
+| XLE 6 | −10 % ; −9 % | 0,91 | 44,0 % | −0,252 [−0,638 ; +0,133] | −4,8 | −0,172 ; 0,080 | −18,2 % ; −32,6 % | −0,09 ; −0,05 | 159 (2,2) | 6 ; 20 | brut ≤ 0 |
+| XLE 13 | −3 % ; +11 % | 1,13 | 46,6 % | −0,083 [−0,548 ; +0,430] | +8,8 | −0,003 ; 0,081 | −18,1 % ; −31,4 % | −0,03 ; 0,06 | 148 (2,1) | 13 ; 24 | 31 % |
+| XLE 26 (RE-1) | +0 % ; +7 % | 1,09 | 44,9 % | +0,020 [−0,588 ; +0,674] | +7,4 | +0,100 ; 0,081 | −19,5 % ; −36,4 % | 0,00 ; 0,03 | 136 (1,9) | 26 ; 48 | 35 % |
+| XLE 65 | +3 % ; +20 % | 1,22 | 35,2 % | +0,155 [−0,788 ; +1,130] | +24,9 | +0,235 ; 0,080 | −10,9 % ; −26,3 % | 0,05 ; 0,12 | 105 (1,5) | 65 ; 168 | 14 % |
+| XLE 130 | −29 % ; −50 % | 0,64 | 25,3 % | −1,573 [−3,508 ; +0,197] | −71,2 | −1,493 ; 0,081 | −35,6 % ; −64,0 % | −0,16 ; −0,17 | 83 (1,2) | 126 ; 335 | brut ≤ 0 |
+
+- **Aucun IC à borne basse > 0** sur les 15 configurations, ni en ATR ni en bps. Seul IC qui exclut 0 : SPY H = 65, −38,3 bps [−76,2 ; −2,8] (négatif).
+- **Entrées figées de H = 26 (effet de H, ATR) :** de −0,555 (SPY 65) à +0,083 (XAU 72), tous les IC ∋ 0.
+
+#### 4. Analyse causale & Physique du trade
+- [CODE] Contrôles bloquants passés ; H = 26 redonne D01 à l'identique.
+- [OBS] **Or.**
+  - Frais fixes : 0,26 ATR par trade à tout H (4 bps / ATR14(t) de l'entrée).
+  - Le brut ne croît pas : +0,24 → −0,45 ATR en séquentiel. Sur les mêmes entrées : +0,24, +0,26, +0,32, +0,21, +0,09.
+  - La dérive croît (+0,38 → +0,81 ATR) des deux côtés : Long +0,33 → +0,62 (H = 72), Short −0,43 → −1,54 ; timing net −0,05 → −0,73.
+  - MDD ×3 (−13,6 % → −41,6 % à 0,25 %/ATR).
+  - Gaps négligeables : 2 stops percés à chaque H (les mêmes), coût ≤ 0,005 ATR par trade.
+  - H = 26 est le meilleur point de la grille.
+- [OBS] **SPY.**
+  - H = 13 ne réduit pas les nuits : 91 % des trades en traversent une (13 barres = une séance), contre 92 % à H = 26.
+  - H = 6 les réduit (50 %) et divise par trois le coût des stops percés (0,047 contre 0,133 ATR par trade). Mais le brut reste nul (+0,004) : la composante en séance vaut ≈ 0 à tout H ≤ 26.
+  - H ≥ 65 : stops percés maintenus (8 à 10), coût 0,175 à 0,221 ATR par trade ; la dérive (+0,98 à +1,86) écrase les Short (−2,00 à −2,62) ; timing à H = 65 −1,02 [−2,01 ; −0,01].
+- [OBS] **XLE.**
+  - Pic isolé : −0,25 (H = 6) → +0,16 (H = 65) → −1,57 (H = 130 : Short −3,68, F2b −4,44 sur 30 trades).
+  - H = 65 sur les mêmes entrées que H = 26 : +0,009 ATR (effet −0,010 [−0,71 ; +0,75]). Les 31 trades que la course à 65 saute valaient −0,48 ATR : le gain vient de la population (calendrier), pas de la sortie.
+  - H = 65 : 3 années positives sur 6, 2025 à −2,47 ATR.
+  - Brut porté par les nuits (gaps +0,12 à +0,37 ATR à H = 13-65), composante en séance négative à chaque H.
+- [HYP] **H déplace l'exposition (dérive, nuits, risque par trade), pas l'avantage.** Une sortie en fin de séance sur les ETF retirerait les gaps sans créer d'espérance (séance ≈ 0 sur SPY, < 0 sur XLE).
+- [HYP] **Pour D02 :**
+  - la course séquentielle ajoute un effet de calendrier à l'effet de la sortie ; un optimiseur de H l'ajustera aussi ;
+  - à 0,25 %/ATR14 de 30 min, le risque par trade croît avec H ; comparer des H au Calmar suppose une convention ;
+  - sur XAU, SPY et XLE, un WFO mesurerait d'abord le biais de sélection de l'optimiseur (témoin possible).
+- **Écarts au prompt :** « slippage de +2,6 ATR » = dépassement moyen de 8 stops percés sur 46 sur SPY, soit 0,133 ATR par trade ; brut de l'or « positif » = +0,239 ATR, IC [−0,105 ; +0,605].
+
+#### 5. Décision
+- [ ] **REJETÉ**
+- [ ] **NON CONCLUANT**
+- [x] **À POURSUIVRE (descriptif) : H seul ne restaure d'avantage établi sur aucun des trois marchés. RE-1 inchangée (H = 26), D01.5 clos.**
+  - Reste au porteur : le cadrage de D02 (objectif, domaine, convention de risque selon H, traitement de l'effet de calendrier).
