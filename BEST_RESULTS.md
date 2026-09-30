@@ -197,6 +197,18 @@ L'Étape C a testé ses quatre facteurs (horizon, stop par sous-famille, break-e
 
 - Les 31 trades de XLE « sautés » à H = 65 gagnent +0,118 ATR avec la sortie de RE-1 : rien à filtrer.
 
+### EXP-D01.7 (en cours) — portabilité zero-shot sur marchés 24/5
+*GBPJPY mesuré ; NQ, RTY, CL, HG en attente d'accès aux données.*
+
+| | BTC 5 bps (réf.) | GBPJPY brut | GBPJPY 4 bps |
+|---|---|---|---|
+| Espérance ATR [IC] | +0,369 [+0,098 ; +0,645] | −0,035 [−0,284 ; +0,221] | −0,443 [−0,697 ; −0,180] |
+| PnL : 0,25 %/ATR ; 1x | +138 % ; +204 % | −4 % ; −5 % | −27 % ; −27 % |
+| MDD : 0,25 %/ATR ; 1x | −13,5 % ; −43,9 % | −8,7 % ; −8,8 % | −27,2 % ; −27,9 % |
+| Frais en ATR ; trades (/mois) | 0,14 ; 1 080 (15,0) | 0 ; 687 (9,5) | 0,41 ; 687 (9,5) |
+
+- GBPJPY : brut nul dans les deux sens ; le 0,25 %/ATR est plafonné à 1x pour 98 % des trades (ATR de 30 min ≈ 11 bps).
+
 ## Pistes écartées (à ne pas retester sans élément nouveau)
 
 | Piste | Raison | Source |

@@ -1,0 +1,860 @@
+{
+ "BTC": {
+  "doc": {
+   "instrument": "BTC/USD, carnet spot de Bitstamp (TradingView : BITSTAMP:BTCUSD)",
+   "nature": "spot crypto, cotation en dollars américains",
+   "ticker": "btcusd (Bitstamp)",
+   "continuite": "sans objet : instrument spot, série unique",
+   "rolls": "sans objet",
+   "ajustements": "aucun",
+   "timezone": "UTC",
+   "horaires": "cotation continue 24/7",
+   "construction_barres": "bougies 30 min natives de l'API OHLC publique de Bitstamp (step 1800)",
+   "couverture_demandee": "2020-01-01 → 2025-12-31 (lecture tronquée avant 2026)",
+   "source": "bitstamp",
+   "sha256": "4a70ac3c9f999af06726bedf4fcbda20a9bcdb506114049e3d2874786ebc5d72",
+   "premiere_barre": "2020-01-01 00:00:00+00:00",
+   "derniere_barre": "2026-09-15 16:00:00+00:00",
+   "barres": 117585
+  },
+  "barres": {
+   "n_barres": 105216,
+   "premiere": "2020-01-01 00:00:00+00:00",
+   "derniere": "2025-12-31 23:30:00+00:00",
+   "doublons": 0,
+   "desordre": 0,
+   "part_barres_24_7": 1.0,
+   "barres_par_annee": {
+    "2020": 17568,
+    "2021": 17520,
+    "2022": 17520,
+    "2023": 17520,
+    "2024": 17568,
+    "2025": 17520
+   },
+   "prix_non_positifs": 0,
+   "incoherences_ohlc": 0,
+   "barres_plates": 40,
+   "barres_volume_nul": 39,
+   "trous": {
+    "n": 0,
+    "barres_manquantes": 0,
+    "classes": {
+     "<= 2 h": {
+      "n": 0,
+      "barres_manquantes": 0
+     },
+     "<= 3 jours": {
+      "n": 0,
+      "barres_manquantes": 0
+     },
+     "> 3 jours": {
+      "n": 0,
+      "barres_manquantes": 0
+     }
+    },
+    "plus_longs": []
+   },
+   "barres_par_heure_utc": {
+    "0": 4384,
+    "1": 4384,
+    "2": 4384,
+    "3": 4384,
+    "4": 4384,
+    "5": 4384,
+    "6": 4384,
+    "7": 4384,
+    "8": 4384,
+    "9": 4384,
+    "10": 4384,
+    "11": 4384,
+    "12": 4384,
+    "13": 4384,
+    "14": 4384,
+    "15": 4384,
+    "16": 4384,
+    "17": 4384,
+    "18": 4384,
+    "19": 4384,
+    "20": 4384,
+    "21": 4384,
+    "22": 4384,
+    "23": 4384
+   },
+   "barres_par_jour": {
+    "0": 15024,
+    "1": 15024,
+    "2": 15072,
+    "3": 15024,
+    "4": 15024,
+    "5": 15024,
+    "6": 15024
+   },
+   "sauts": {
+    "ecart_ouverture_bps": {
+     "P50": 1.2465439934137215,
+     "P90": 6.219622391854242,
+     "P99": 13.902511714165787,
+     "P99.9": 23.750489574232102,
+     "P100": 150.6592602489809
+    },
+    "ecart_ouverture_apres_trou_bps": {},
+    "rendement_close_bps": {
+     "P50": 17.606627635432144,
+     "P90": 64.65458931791909,
+     "P99": 180.29017272906393,
+     "P99.9": 372.9627137851078,
+     "P100": 1278.907072156357
+    },
+    "plus_grands_ecarts_ouverture": [
+     {
+      "time": "2022-05-11 09:00:00+00:00",
+      "bps": 150.6592602489809
+     },
+     {
+      "time": "2020-03-13 10:00:00+00:00",
+      "bps": 72.6957363116935
+     },
+     {
+      "time": "2021-01-10 20:30:00+00:00",
+      "bps": 71.9463407995209
+     },
+     {
+      "time": "2020-08-10 10:30:00+00:00",
+      "bps": 69.79555112270633
+     },
+     {
+      "time": "2024-12-07 04:30:00+00:00",
+      "bps": 59.28387061417541
+     },
+     {
+      "time": "2020-03-13 15:30:00+00:00",
+      "bps": 52.64849429837707
+     },
+     {
+      "time": "2022-09-21 18:00:00+00:00",
+      "bps": 52.599757122972335
+     },
+     {
+      "time": "2020-03-17 01:30:00+00:00",
+      "bps": 47.34838400424825
+     },
+     {
+      "time": "2020-03-13 23:30:00+00:00",
+      "bps": 45.49734873563836
+     },
+     {
+      "time": "2020-03-16 13:00:00+00:00",
+      "bps": 45.475618248720366
+     }
+    ],
+    "plus_grands_rendements": [
+     {
+      "time": "2020-03-12 10:30:00+00:00",
+      "bps": 1278.907072156357
+     },
+     {
+      "time": "2020-03-13 02:30:00+00:00",
+      "bps": 1274.6663392900996
+     },
+     {
+      "time": "2020-03-12 23:00:00+00:00",
+      "bps": 1274.3341684214813
+     },
+     {
+      "time": "2021-01-29 08:30:00+00:00",
+      "bps": 1237.9102816741367
+     },
+     {
+      "time": "2021-05-19 12:30:00+00:00",
+      "bps": 1222.6329784680847
+     },
+     {
+      "time": "2020-03-13 01:30:00+00:00",
+      "bps": 1157.2016360598182
+     },
+     {
+      "time": "2020-05-10 00:00:00+00:00",
+      "bps": 1110.897161118232
+     },
+     {
+      "time": "2020-03-15 22:00:00+00:00",
+      "bps": 982.5607228794598
+     },
+     {
+      "time": "2021-02-08 12:30:00+00:00",
+      "bps": 979.8042872509138
+     },
+     {
+      "time": "2020-03-13 03:00:00+00:00",
+      "bps": 944.5919064698016
+     }
+    ]
+   }
+  },
+  "seances": {
+   "heures_utc_sans_barre_janvier": [],
+   "heures_utc_sans_barre_juillet": [],
+   "barres_le_samedi": 15024
+  },
+  "integrite": [],
+  "couverture": [],
+  "signaux": {
+   "n_signaux": 7296,
+   "signaux_par_mois": 101.31118186570356,
+   "part_flips": 0.8274396929824561,
+   "part_x1_retourne": 0.5182291666666666,
+   "leg_atr": {
+    "P10": 1.785750588768534,
+    "P25": 2.1719882845361496,
+    "P50": 2.823322693433984,
+    "P75": 3.9435427989350993,
+    "P90": 5.576355689855416
+   },
+   "retrace_ratio": {
+    "P10": 0.2452571576349883,
+    "P25": 0.4050979395731313,
+    "P50": 0.620580362092755,
+    "P75": 0.8448275862068966,
+    "P90": 1.0601165061233206
+   },
+   "nis_z_100": {
+    "P10": -0.5355714198186152,
+    "P25": -0.3236351093417501,
+    "P50": 0.18779952947933826,
+    "P75": 1.2245041356145911,
+    "P90": 2.7485351661715294
+   },
+   "atr14_bps": {
+    "P10": 23.32239571243253,
+    "P25": 34.027715596240675,
+    "P50": 49.70284228602721,
+    "P75": 70.52150170069572,
+    "P90": 99.4290750257973
+   },
+   "prev_seg_len": {
+    "P10": 7.0,
+    "P25": 8.0,
+    "P50": 10.0,
+    "P75": 13.0,
+    "P90": 17.0
+   },
+   "mediane_locale_leg_atr": 2.823322693433984,
+   "p75_local_nis_z_100": 1.2245041356145911,
+   "part_leg_sous_seuil_btc": 0.5,
+   "part_nis_au_dessus_seuil_btc": 0.25,
+   "part_nis_au_dessus_seuil_btc_dans_R2": 0.22518676627534684,
+   "nis_nan": 0,
+   "familles": {
+    "F1": 1869,
+    "F2a": 1303,
+    "F2b": 1592,
+    "F3": 1315,
+    "F4": 476,
+    "F5": 741
+   },
+   "regimes": {
+    "R1": 1935,
+    "R2_avant_nis": 1874,
+    "R3": 2347,
+    "hors_regimes": 1140
+   },
+   "nis_exclus": 422,
+   "univers_RE1": 1452,
+   "F2b": 741,
+   "F3": 711,
+   "par_annee": [
+    {
+     "annee": 2020,
+     "signaux": 1189,
+     "atr14_bps_median": 57.27712948056486,
+     "part_nis_au_dessus_seuil_btc": 0.24222035323801513,
+     "univers_RE1": 256
+    },
+    {
+     "annee": 2021,
+     "signaux": 1226,
+     "atr14_bps_median": 80.34242969962565,
+     "part_nis_au_dessus_seuil_btc": 0.27732463295269166,
+     "univers_RE1": 251
+    },
+    {
+     "annee": 2022,
+     "signaux": 1235,
+     "atr14_bps_median": 54.80207380322631,
+     "part_nis_au_dessus_seuil_btc": 0.23481781376518218,
+     "univers_RE1": 233
+    },
+    {
+     "annee": 2023,
+     "signaux": 1236,
+     "atr14_bps_median": 33.55760862961755,
+     "part_nis_au_dessus_seuil_btc": 0.24514563106796117,
+     "univers_RE1": 259
+    },
+    {
+     "annee": 2024,
+     "signaux": 1193,
+     "atr14_bps_median": 45.91098248384979,
+     "part_nis_au_dessus_seuil_btc": 0.24056999161777032,
+     "univers_RE1": 231
+    },
+    {
+     "annee": 2025,
+     "signaux": 1217,
+     "atr14_bps_median": 36.764470488323276,
+     "part_nis_au_dessus_seuil_btc": 0.25965488907148726,
+     "univers_RE1": 222
+    }
+   ]
+  },
+  "annees_echantillon": 6.0,
+  "nom": "BTC/USD (Bitstamp, référence RE-1)"
+ },
+ "GBPJPY": {
+  "doc": {
+   "instrument": "GBP/JPY au comptant (TradingView : FX:GBPJPY, OANDA:GBPJPY)",
+   "nature": "cotation OTC au comptant d'un courtier forex, compilée par HistData.com",
+   "ticker": "GBPJPY (HistData.com, ASCII M1)",
+   "continuite": "sans objet : cotation au comptant, sans échéance",
+   "rolls": "sans objet ; le coût de portage (swap) n'est pas dans les prix",
+   "ajustements": "aucun",
+   "prix": "bid (FAQ HistData : barres construites sur le bid des ticks)",
+   "timezone": "étiquettes HistData converties en UTC : la FAQ annonce un EST fixe, mais l'horloge suit l'heure d'été européenne (serveur EET/EEST moins 7 h : UTC−5 en hiver européen, UTC−4 de fin mars à fin octobre) ; établi par l'audit D01 (pause quotidienne à 17:00-18:00 heure de New York toute l'année après conversion)",
+   "horaires": "marché des changes OTC, du dimanche 17:00 au vendredi 17:00 heure de New York, sans pause quotidienne annoncée ; vérifiés par l'audit",
+   "construction_barres": "agrégation exacte des bougies d'une minute en barres de 30 min alignées sur :00 et :30 UTC ; time = ouverture de la barre ; volume absent de la source (écrit nul) ; une barre sans minute cotée est un trou, jamais comblé",
+   "couverture_demandee": "années 2020 à 2025 ; 2026 non téléchargé",
+   "limite": "fournisseur amont (courtier) non divulgué par HistData",
+   "sources_ecartees": "Dukascopy (2026-10-01 : HTTP 429 dès la deuxième requête sur datafeed.dukascopy.com, export massif réservé au bucket AWS « Requester Pays » cfg-public-proper-wallaby, identifiants AWS obligatoires : action du porteur requise, non contourné) ; OANDA (compte requis) ; Yahoo (intrajournalier limité aux 60 derniers jours)",
+   "source": "histdata.com",
+   "sha256": "f0cb7f99566f31d9ff74b26318f55556ee867b90208f80568c74bb06c3a135c8",
+   "premiere_barre": "2020-01-01 22:00:00+00:00",
+   "derniere_barre": "2025-12-31 21:30:00+00:00",
+   "barres": 73055,
+   "n_barres_moins_de_30_minutes": 2157,
+   "minutes_sources": 2182056,
+   "doublons_exacts_supprimes": {
+    "minutes": 360,
+    "dates": [
+     "2020-10-26",
+     "2021-11-01",
+     "2022-10-31",
+     "2023-10-30",
+     "2024-10-28",
+     "2025-10-27"
+    ]
+   }
+  },
+  "barres": {
+   "n_barres": 73055,
+   "premiere": "2020-01-01 22:00:00+00:00",
+   "derniere": "2025-12-31 21:30:00+00:00",
+   "doublons": 0,
+   "desordre": 0,
+   "part_barres_24_7": 0.6946504640194736,
+   "barres_par_annee": {
+    "2020": 12459,
+    "2021": 12437,
+    "2022": 12473,
+    "2023": 10785,
+    "2024": 12475,
+    "2025": 12426
+   },
+   "prix_non_positifs": 0,
+   "incoherences_ohlc": 0,
+   "barres_plates": 2,
+   "barres_volume_nul": 73055,
+   "trous": {
+    "n": 1004,
+    "barres_manquantes": 32113,
+    "classes": {
+     "<= 2 h": {
+      "n": 678,
+      "barres_manquantes": 1542
+     },
+     "<= 3 jours": {
+      "n": 326,
+      "barres_manquantes": 30571
+     },
+     "> 3 jours": {
+      "n": 0,
+      "barres_manquantes": 0
+     }
+    },
+    "plus_longs": [
+     {
+      "apres": "2020-12-31 21:30:00+00:00",
+      "reprise": "2021-01-03 22:00:00+00:00",
+      "duree_h": 72.0
+     },
+     {
+      "apres": "2023-12-29 21:30:00+00:00",
+      "reprise": "2024-01-01 22:00:00+00:00",
+      "duree_h": 72.0
+     },
+     {
+      "apres": "2023-04-06 23:30:00+00:00",
+      "reprise": "2023-04-09 22:00:00+00:00",
+      "duree_h": 70.0
+     },
+     {
+      "apres": "2020-12-25 07:00:00+00:00",
+      "reprise": "2020-12-27 22:00:00+00:00",
+      "duree_h": 62.5
+     },
+     {
+      "apres": "2024-10-25 15:30:00+00:00",
+      "reprise": "2024-10-27 21:00:00+00:00",
+      "duree_h": 53.0
+     },
+     {
+      "apres": "2023-03-31 18:30:00+00:00",
+      "reprise": "2023-04-02 23:00:00+00:00",
+      "duree_h": 52.0
+     },
+     {
+      "apres": "2023-04-28 18:30:00+00:00",
+      "reprise": "2023-04-30 22:00:00+00:00",
+      "duree_h": 51.0
+     },
+     {
+      "apres": "2023-07-07 19:30:00+00:00",
+      "reprise": "2023-07-09 23:00:00+00:00",
+      "duree_h": 51.0
+     },
+     {
+      "apres": "2025-02-21 21:30:00+00:00",
+      "reprise": "2025-02-24 01:00:00+00:00",
+      "duree_h": 51.0
+     },
+     {
+      "apres": "2023-12-22 21:30:00+00:00",
+      "reprise": "2023-12-25 00:30:00+00:00",
+      "duree_h": 50.5
+     }
+    ]
+   },
+   "barres_par_heure_utc": {
+    "0": 3119,
+    "1": 3122,
+    "2": 3120,
+    "3": 3122,
+    "4": 3120,
+    "5": 3118,
+    "6": 3118,
+    "7": 3117,
+    "8": 3108,
+    "9": 3096,
+    "10": 3015,
+    "11": 2976,
+    "12": 3002,
+    "13": 2994,
+    "14": 2998,
+    "15": 2992,
+    "16": 2994,
+    "17": 2994,
+    "18": 2992,
+    "19": 2982,
+    "20": 2994,
+    "21": 2981,
+    "22": 2992,
+    "23": 2989
+   },
+   "barres_par_jour": {
+    "0": 14530,
+    "1": 14689,
+    "2": 14626,
+    "3": 14662,
+    "4": 12991,
+    "6": 1557
+   },
+   "sauts": {
+    "ecart_ouverture_bps": {
+     "P50": 0.07046918383264031,
+     "P90": 0.29685658569125206,
+     "P99": 8.434206739153435,
+     "P99.9": 28.8181772413728,
+     "P100": 159.39495303038484
+    },
+    "ecart_ouverture_apres_trou_bps": {
+     "P50": 7.685623233505605,
+     "P90": 24.75286401079276,
+     "P99": 72.24600977296637,
+     "P99.9": 106.56029736394476,
+     "P100": 159.39495303038484
+    },
+    "rendement_close_bps": {
+     "P50": 4.031392891990537,
+     "P90": 13.456391491323743,
+     "P99": 32.446093429476115,
+     "P99.9": 64.60606661298928,
+     "P100": 357.4506557172093
+    },
+    "plus_grands_ecarts_ouverture": [
+     {
+      "time": "2025-04-06 21:00:00+00:00",
+      "bps": 159.39495303038484
+     },
+     {
+      "time": "2020-03-18 21:00:00+00:00",
+      "bps": 107.09928515608209
+     },
+     {
+      "time": "2025-02-02 22:00:00+00:00",
+      "bps": 106.56811497183416
+     },
+     {
+      "time": "2020-12-13 22:00:00+00:00",
+      "bps": 103.96224567530145
+     },
+     {
+      "time": "2025-10-05 21:00:00+00:00",
+      "bps": 99.28460046810174
+     },
+     {
+      "time": "2023-03-15 19:00:00+00:00",
+      "bps": 87.54850025837592
+     },
+     {
+      "time": "2022-10-23 21:00:00+00:00",
+      "bps": 83.1585751884891
+     },
+     {
+      "time": "2023-03-15 11:00:00+00:00",
+      "bps": 81.84185744766336
+     },
+     {
+      "time": "2023-02-05 22:00:00+00:00",
+      "bps": 81.76165984694016
+     },
+     {
+      "time": "2020-03-08 21:00:00+00:00",
+      "bps": 80.43085689548202
+     }
+    ],
+    "plus_grands_rendements": [
+     {
+      "time": "2022-09-26 00:30:00+00:00",
+      "bps": 357.4506557172093
+     },
+     {
+      "time": "2022-12-20 03:00:00+00:00",
+      "bps": 250.86405070425036
+     },
+     {
+      "time": "2020-03-09 01:30:00+00:00",
+      "bps": 170.56401628154566
+     },
+     {
+      "time": "2020-03-18 16:30:00+00:00",
+      "bps": 165.60095282425718
+     },
+     {
+      "time": "2024-09-27 06:00:00+00:00",
+      "bps": 161.94435662794442
+     },
+     {
+      "time": "2022-09-22 08:00:00+00:00",
+      "bps": 152.87601544192174
+     },
+     {
+      "time": "2023-01-18 02:30:00+00:00",
+      "bps": 149.18421848880595
+     },
+     {
+      "time": "2025-04-06 21:00:00+00:00",
+      "bps": 140.70220749414187
+     },
+     {
+      "time": "2024-07-11 12:30:00+00:00",
+      "bps": 135.3806046470029
+     },
+     {
+      "time": "2024-08-07 01:30:00+00:00",
+      "bps": 133.97784518691242
+     }
+    ]
+   }
+  },
+  "seances": {
+   "heures_utc_sans_barre_janvier": [],
+   "heures_utc_sans_barre_juillet": [],
+   "barres_le_samedi": 0
+  },
+  "integrite": [],
+  "couverture": [],
+  "signaux": {
+   "n_signaux": 4959,
+   "signaux_par_mois": 68.8913727690245,
+   "part_flips": 0.8175035289372857,
+   "part_x1_retourne": 0.5146198830409356,
+   "leg_atr": {
+    "P10": 1.8118745524729325,
+    "P25": 2.2270466367693436,
+    "P50": 2.8632437320484754,
+    "P75": 3.887598973815999,
+    "P90": 5.3213611453888365
+   },
+   "retrace_ratio": {
+    "P10": 0.19187940276438487,
+    "P25": 0.35891729591032306,
+    "P50": 0.6000000000000355,
+    "P75": 0.8532030866251836,
+    "P90": 1.0738704122728397
+   },
+   "nis_z_100": {
+    "P10": -0.5462178265062005,
+    "P25": -0.2720944114896801,
+    "P50": 0.30257477911528974,
+    "P75": 1.397630913723495,
+    "P90": 2.867345359733229
+   },
+   "atr14_bps": {
+    "P10": 7.395432269486059,
+    "P25": 8.808363832568574,
+    "P50": 11.084762387377502,
+    "P75": 14.192745690322273,
+    "P90": 18.33947528571926
+   },
+   "prev_seg_len": {
+    "P10": 7.0,
+    "P25": 8.0,
+    "P50": 10.0,
+    "P75": 13.0,
+    "P90": 17.0
+   },
+   "mediane_locale_leg_atr": 2.8632437320484754,
+   "p75_local_nis_z_100": 1.397630913723495,
+   "part_leg_sous_seuil_btc": 0.4867916918733616,
+   "part_nis_au_dessus_seuil_btc": 0.27828191167574107,
+   "part_nis_au_dessus_seuil_btc_dans_R2": 0.2775,
+   "nis_nan": 0,
+   "familles": {
+    "F1": 1391,
+    "F2a": 772,
+    "F2b": 997,
+    "F3": 869,
+    "F4": 382,
+    "F5": 548
+   },
+   "regimes": {
+    "R1": 1407,
+    "R2_avant_nis": 1200,
+    "R3": 1603,
+    "hors_regimes": 749
+   },
+   "nis_exclus": 333,
+   "univers_RE1": 867,
+   "F2b": 449,
+   "F3": 418,
+   "par_annee": [
+    {
+     "annee": 2020,
+     "signaux": 794,
+     "atr14_bps_median": 12.250051860125055,
+     "part_nis_au_dessus_seuil_btc": 0.2947103274559194,
+     "univers_RE1": 130
+    },
+    {
+     "annee": 2021,
+     "signaux": 853,
+     "atr14_bps_median": 8.901822422225335,
+     "part_nis_au_dessus_seuil_btc": 0.2567409144196952,
+     "univers_RE1": 157
+    },
+    {
+     "annee": 2022,
+     "signaux": 869,
+     "atr14_bps_median": 14.079982681807534,
+     "part_nis_au_dessus_seuil_btc": 0.2911392405063291,
+     "univers_RE1": 151
+    },
+    {
+     "annee": 2023,
+     "signaux": 725,
+     "atr14_bps_median": 11.408169327897555,
+     "part_nis_au_dessus_seuil_btc": 0.2717241379310345,
+     "univers_RE1": 118
+    },
+    {
+     "annee": 2024,
+     "signaux": 859,
+     "atr14_bps_median": 10.69075697802475,
+     "part_nis_au_dessus_seuil_btc": 0.2840512223515716,
+     "univers_RE1": 156
+    },
+    {
+     "annee": 2025,
+     "signaux": 859,
+     "atr14_bps_median": 10.150005762534736,
+     "part_nis_au_dessus_seuil_btc": 0.2712456344586729,
+     "univers_RE1": 155
+    }
+   ]
+  },
+  "annees_echantillon": 5.997490303445129,
+  "gaps_ouverture": {
+   "seances": 1004,
+   "part_barres_ouverture": 0.013743070289507905,
+   "ecart_abs_bps": {
+    "P50": 7.685623233505605,
+    "P90": 24.75286401079276,
+    "P99": 72.24600977296637
+   },
+   "ecart_abs_atr": {
+    "P50": 0.5690582190324898,
+    "P90": 1.8089521207979735,
+    "P99": 4.454316112783058
+   },
+   "ecart_moyen_bps": -2.23689199523415,
+   "part_ecarts_sup_1_atr": 0.29382470119521914,
+   "tr_en_atr_P50_ouverture": 1.138577604221763,
+   "tr_en_atr_P50_autres": 0.8759776937029463,
+   "part_tr_barres_ouverture": 0.021124967435601053,
+   "part_signaux_barre_ouverture": 0.011695906432748537,
+   "part_signaux_derniere_barre": 0.014317402702157693,
+   "nis_P50_ouverture": 0.6943611622753884,
+   "nis_P50_autres": 0.29944628616463437,
+   "part_nis_sup_seuil_ouverture": 0.41379310344827586,
+   "part_nis_sup_seuil_autres": 0.27667822893287086,
+   "part_R2_exclus_ouverture": 0.375,
+   "part_R2_exclus_autres": 0.27684563758389263,
+   "univers_RE1_sur_barre_ouverture": 5,
+   "univers_RE1": 867
+  },
+  "semaine": {
+   "reprises": 314,
+   "ouverture_new_york": {
+    "dim 17:00": 288,
+    "dim 18:00": 14,
+    "dim 17:30": 4,
+    "dim 19:00": 3,
+    "dim 18:30": 1,
+    "dim 19:30": 1
+   },
+   "fin_new_york": {
+    "ven 17:00": 299,
+    "ven 16:00": 8,
+    "ven 15:00": 2,
+    "ven 02:30": 1,
+    "jeu 17:00": 1,
+    "jeu 20:00": 1
+   },
+   "interruptions_en_semaine": 690,
+   "interruptions_barres_manquantes": 1758,
+   "interruptions_par_annee": {
+    "2020": 2,
+    "2021": 2,
+    "2022": 3,
+    "2023": 673,
+    "2024": 4,
+    "2025": 6
+   },
+   "interruptions_heure_new_york": {
+    "20": 55,
+    "19": 55,
+    "9": 55,
+    "15": 52,
+    "7": 51,
+    "11": 51
+   },
+   "interruptions_duree_h": {
+    "P50": 1.5,
+    "P90": 2.5,
+    "P100": 20.5
+   }
+  },
+  "recoupement_fed": {
+   "par_decalage_demi_heures": {
+    "-4": {
+     "jours": 1444,
+     "corr_variations": 0.8671698163099111,
+     "ecart_median_bps": -2.729080536270634,
+     "ecart_abs_median_bps": 12.314385541306038,
+     "ecart_abs_P95_bps": 44.37868596653227
+    },
+    "-3": {
+     "jours": 1444,
+     "corr_variations": 0.9151309906890042,
+     "ecart_median_bps": -3.024853624867263,
+     "ecart_abs_median_bps": 9.581923753396726,
+     "ecart_abs_P95_bps": 38.33076861009648
+    },
+    "-2": {
+     "jours": 1444,
+     "corr_variations": 0.95290067935411,
+     "ecart_median_bps": -2.2745664619394645,
+     "ecart_abs_median_bps": 7.457668500941983,
+     "ecart_abs_P95_bps": 29.014536882081707
+    },
+    "-1": {
+     "jours": 1438,
+     "corr_variations": 0.9782505250251438,
+     "ecart_median_bps": -1.9449906723550958,
+     "ecart_abs_median_bps": 4.889858971711125,
+     "ecart_abs_P95_bps": 19.885049413370425
+    },
+    "0": {
+     "jours": 1438,
+     "corr_variations": 0.9997085793016611,
+     "ecart_median_bps": -1.2318393943810957,
+     "ecart_abs_median_bps": 1.273285175501515,
+     "ecart_abs_P95_bps": 2.9834820708372063
+    },
+    "1": {
+     "jours": 1444,
+     "corr_variations": 0.984360451758021,
+     "ecart_median_bps": -1.1127879745476132,
+     "ecart_abs_median_bps": 4.363558114929833,
+     "ecart_abs_P95_bps": 16.87704892483238
+    },
+    "2": {
+     "jours": 1444,
+     "corr_variations": 0.9689063103769472,
+     "ecart_median_bps": -1.3087137554051997,
+     "ecart_abs_median_bps": 5.569583075746287,
+     "ecart_abs_P95_bps": 22.057085790898086
+    },
+    "3": {
+     "jours": 1438,
+     "corr_variations": 0.9471456239592533,
+     "ecart_median_bps": -0.8408249362318321,
+     "ecart_abs_median_bps": 6.842560696037059,
+     "ecart_abs_P95_bps": 26.4788091244733
+    },
+    "4": {
+     "jours": 1438,
+     "corr_variations": 0.9365232165036196,
+     "ecart_median_bps": -0.5662644599752076,
+     "ecart_abs_median_bps": 7.349092282890046,
+     "ecart_abs_P95_bps": 30.718647595005056
+    }
+   },
+   "meilleur_decalage_demi_heures": 0,
+   "valide": true,
+   "critere": {
+    "corr_min": 0.95,
+    "decalage_max": 1,
+    "ecart_median_max_bps": 10.0
+   }
+  },
+  "nom": "GBP/JPY au comptant (HistData, bid)"
+ },
+ "NQ": {
+  "bloque": "en attente du porteur : QuantConnect exige un compte, et ses données ne sont utilisables que dans son cloud (aucun export ; Object Store sans téléchargement ; téléchargement local sous licence payante, réservé à LEAN et non convertible) ; aucune série téléchargée, aucun backtest",
+  "nom": "E-mini Nasdaq-100, future continu"
+ },
+ "RTY": {
+  "bloque": "en attente du porteur : QuantConnect exige un compte, et ses données ne sont utilisables que dans son cloud (aucun export ; Object Store sans téléchargement ; téléchargement local sous licence payante, réservé à LEAN et non convertible) ; aucune série téléchargée, aucun backtest",
+  "nom": "E-mini Russell 2000, future continu"
+ },
+ "CL": {
+  "bloque": "en attente du porteur : QuantConnect exige un compte, et ses données ne sont utilisables que dans son cloud (aucun export ; Object Store sans téléchargement ; téléchargement local sous licence payante, réservé à LEAN et non convertible) ; aucune série téléchargée, aucun backtest",
+  "nom": "WTI Crude Oil, future continu"
+ },
+ "HG": {
+  "bloque": "en attente du porteur : QuantConnect exige un compte, et ses données ne sont utilisables que dans son cloud (aucun export ; Object Store sans téléchargement ; téléchargement local sous licence payante, réservé à LEAN et non convertible) ; aucune série téléchargée, aucun backtest",
+  "nom": "Copper, future continu"
+ },
+ "duree_s": 19
+}

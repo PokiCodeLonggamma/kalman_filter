@@ -1,0 +1,88 @@
+{
+ "actifs": {
+  "BTC": {
+   "statut": "mesuré",
+   "annees": 6.0,
+   "trades": 1080,
+   "candidats": 1452,
+   "sha256": "4a70ac3c9f999af06726bedf4fcbda20a9bcdb506114049e3d2874786ebc5d72"
+  },
+  "GBPJPY": {
+   "statut": "mesuré",
+   "annees": 5.997490303445129,
+   "trades": 687,
+   "candidats": 867,
+   "sha256": "f0cb7f99566f31d9ff74b26318f55556ee867b90208f80568c74bb06c3a135c8"
+  },
+  "NQ": {
+   "statut": "bloqué",
+   "motif": "en attente du porteur : QuantConnect exige un compte, et ses données ne sont utilisables que dans son cloud (aucun export ; Object Store sans téléchargement ; téléchargement local sous licence payante, réservé à LEAN et non convertible) ; aucune série téléchargée, aucun backtest"
+  },
+  "RTY": {
+   "statut": "bloqué",
+   "motif": "en attente du porteur : QuantConnect exige un compte, et ses données ne sont utilisables que dans son cloud (aucun export ; Object Store sans téléchargement ; téléchargement local sous licence payante, réservé à LEAN et non convertible) ; aucune série téléchargée, aucun backtest"
+  },
+  "CL": {
+   "statut": "bloqué",
+   "motif": "en attente du porteur : QuantConnect exige un compte, et ses données ne sont utilisables que dans son cloud (aucun export ; Object Store sans téléchargement ; téléchargement local sous licence payante, réservé à LEAN et non convertible) ; aucune série téléchargée, aucun backtest"
+  },
+  "HG": {
+   "statut": "bloqué",
+   "motif": "en attente du porteur : QuantConnect exige un compte, et ses données ne sont utilisables que dans son cloud (aucun export ; Object Store sans téléchargement ; téléchargement local sous licence payante, réservé à LEAN et non convertible) ; aucune série téléchargée, aucun backtest"
+  }
+ },
+ "btc": {
+  "ancre": {
+   "sans_stop": {
+    "n_trades": 6037,
+    "n_stops": 0
+   },
+   "stop_2_5": {
+    "n_trades": 6589,
+    "n_stops": 780
+   }
+  },
+  "trades": 1080,
+  "identiques_c02bis": true,
+  "metriques_comparees": 40,
+  "ecart_relatif_max": 4.493512022106744e-06
+ },
+ "invariance_echelle": {
+  "0.37": {
+   "signaux_identiques": true,
+   "descripteur_le_plus_sensible": "nis_z_100",
+   "ecart_relatif_max": 2.967902717041888e-05,
+   "signaux_changeant_de_famille": 1,
+   "changements": [
+    "F2b → F5 (retrace_ratio 0.500000000000)"
+   ],
+   "trades_communs": 1080,
+   "trades_seulement_origine": 0,
+   "trades_seulement_echelle": 0,
+   "esperance_atr_5bps": [
+    0.36861892137841606,
+    0.3686189213784193
+   ]
+  },
+  "2.9": {
+   "signaux_identiques": true,
+   "descripteur_le_plus_sensible": "nis_z_100",
+   "ecart_relatif_max": 2.4547316774988982e-05,
+   "signaux_changeant_de_famille": 4,
+   "changements": [
+    "F2b → F5 (retrace_ratio 0.500000000000)",
+    "F2b → F5 (retrace_ratio 0.500000000000)",
+    "F2b → F5 (retrace_ratio 0.500000000000)",
+    "F2b → F5 (retrace_ratio 0.500000000000)"
+   ],
+   "trades_communs": 1079,
+   "trades_seulement_origine": 1,
+   "trades_seulement_echelle": 0,
+   "esperance_atr_5bps": [
+    0.36861892137841606,
+    0.36763358991058315
+   ]
+  }
+ },
+ "duree_s": 38
+}

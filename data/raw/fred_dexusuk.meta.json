@@ -1,0 +1,17 @@
+{
+ "source": "FRED (Federal Reserve Bank of St. Louis)",
+ "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DEXUSUK",
+ "serie": "DEXUSUK",
+ "periode": [
+  "2019-12-01",
+  "2025-12-31"
+ ],
+ "extracted_at_utc": "2026-09-30T22:50:57.638846+00:00",
+ "n_rows": 1588,
+ "n_valeurs": 1520,
+ "first": "2019-12-02",
+ "last": "2025-12-31",
+ "sha256": "ee0151852659060235f355505985a505e48c98d7c0d391fe551e90146a4f8813",
+ "role": "référence externe de l'audit de GBPJPY : taux de change de midi à New York de la Réserve fédérale (H.10) ; GBPJPY de référence = DEXUSUK × DEXJPUS ; aucun calcul de stratégie",
+ "unite": "dollars américains pour une livre sterling"
+}

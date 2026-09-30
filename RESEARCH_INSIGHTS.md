@@ -135,6 +135,7 @@ Elle se mesure séparément par sens et par type de signal (rang 1 ou répétiti
 
 - Un frais fixe en bps coûte fee / ATR14(t) par trade : 0,14 ATR sur BTC à 5 bps, 0,06 sur SOL à 5 bps, 0,26 sur l'or à 4 bps. Les bruts sont de +0,50, +0,25 et +0,24 ATR.
 - **Règle :** publier le brut et les frais en ATR à côté du net. Un actif calme à l'échelle des barres peut perdre un avantage brut réel ; l'écart se lit alors comme une question d'échelle de temps.
+- **EXP-D01.7 :** sur GBPJPY (ATR de 30 min ≈ 11 bps), 4 bps coûtent 0,41 ATR par trade. Le dimensionnement à 0,25 %/ATR y demanderait environ 2,3 fois de levier : le plafond de 1x mord sur 98 % des trades, et les métriques « 0,25 %/ATR » valent alors le 1x. Vérifier la part plafonnée avant de lire une métrique dimensionnée.
 
 ### I-M15 — Séries d'actions et d'ETF : calendrier, enchère, dividendes et fractionnements `[MÉTHODE]`
 *Source : EXP-D01 bis.*
@@ -142,6 +143,14 @@ Elle se mesure séparément par sens et par type de signal (rang 1 ou répétiti
 - **Clôtures anticipées.** Un filtre horaire fixe (09:30-16:00) garde le post-marché des séances fermées à 13:00. Il faut appliquer le calendrier de la place et le vérifier sur les données : le volume s'effondre après la clôture.
 - **Enchère de clôture.** Horodatée à 16:00:00, elle tombe hors de la dernière barre de séance : le close de cette barre est la dernière transaction continue.
 - **Série ajustée.** Mesurer sur la série ajustée des dividendes et des fractionnements, et garder la série brute pour les repérer. XLE a été fractionné 2 pour 1 le 2025-12-05 : −6 931 bps en série brute. Seuil de détection des dividendes au-dessus du bruit d'arrondi des prix ajustés (jusqu'à 5 bps sur un titre à 30-90 $).
+
+### I-M17 — Le moteur est invariant d'échelle à la précision machine : un rétro-ajustement par ratio n'apporte pas d'information future `[MÉTHODE]` `[OBS]`
+*Source : EXP-D01.7 (contrôle sur BTC multiplié par 0,37 et 2,9).*
+
+- Les signaux sont identiques et les descripteurs identiques à 3·10⁻⁵ près en relatif (`nis_z_100` ; médiane 10⁻¹⁰).
+- Seuls basculent les signaux dont `retrace_ratio` vaut exactement 0,50, la borne de F2b (passage en F5). RE-1 à ×2,9 : 1 trade de moins sur 1 080, espérance +0,3686 → +0,3676 ATR.
+- **Règle :** une série continue rétro-ajustée par ratio (futures) est utilisable. Le facteur commun à une fenêtre dépend des roulements postérieurs, mais il ne change que ces égalités au seuil.
+- Un rétro-ajustement par différence (BACKWARDS_PANAMA) ne serait pas couvert : il change les rendements relatifs.
 
 ### I-M16 — Une variation de H se lit sur entrées figées : la course séquentielle y ajoute un effet de calendrier `[MÉTHODE]` `[OBS]`
 *Source : EXP-D01.5.*
@@ -203,6 +212,13 @@ Elle se mesure séparément par sens et par type de signal (rang 1 ou répétiti
   - x1 déjà retourné : 51,8 / 52,3 / 49,4 % ;
   - alors que l'ATR14 médian vaut 50, 95 et 17 bps.
 - `[HYP]` La stationnarité en ATR de K6 vaut aussi entre actifs. Des seuils sans dimension sélectionnent la même population partout : le transfert (a) est cohérent avec le moteur. La rente, elle, varie d'un marché à l'autre.
+
+### K7 bis — GBPJPY : la géométrie se transpose, le brut non
+*Source : EXP-D01.7.*
+
+- `[OBS]` La médiane locale de `leg_atr` vaut 2,86 (BTC 2,82) et le P75 local de `nis_z_100` 1,40 (BTC 1,22). La géométrie du déclencheur se transpose, comme en D01.
+- `[OBS]` Le brut de RE-1 est nul (−0,035 ATR [−0,284 ; +0,221]) : symétrique, sans dérive, à toutes les sessions et dans tous les terciles de volatilité. Le profil de queue reste celui de BTC (médiane −1,42 ATR, décile supérieur +0,75 ATR par trade), sans la moyenne positive.
+- `[HYP]` Même cinématique détectée, mais sans suite exploitable à 13 h sur une paire de change calme.
 
 ### K8 — Gaps d'ouverture : le filtre d'innovation les écarte à l'entrée, pas en position
 *Source : EXP-D01 bis (SPY, XLE, séance régulière).*

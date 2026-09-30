@@ -1162,3 +1162,59 @@ Grilles complètes : espérance ATR ; MDD ; Calmar.
 - [ ] **NON CONCLUANT**
 - [x] **À POURSUIVRE (descriptif) : aucune signature, aucun verrouillage ni variante de séance à IC > 0. RE-1 inchangée, D01.6 clos.**
   - Outils disponibles pour la suite : `lock_trades` et `session_close_trades`.
+
+### [EXP-D01.7, partie 1] — Portabilité de RE-1 figée sur des marchés 24/5 : GBPJPY mesuré, futures en attente d'accès
+- **Date :** 2026-10-01
+- **Étape :** D, test de portabilité zero-shot (décision du porteur). RE-1 strictement gelée ; aucune modification sur la base des résultats.
+- **Actif & Période :** GBPJPY au comptant 2020-2025 ; BTC 2020-2025 en référence. NQ, RTY, CL, HG bloqués avant téléchargement.
+- **Modèle de frais (hypothèses fixées avant) :** BTC 0, 5 et 10 bps ; GBPJPY 0, 2 et 4 bps (principal 4 bps).
+- **Livrables :** `experiments/D01_7/donnees_D01_7.py`, `run_D01_7.py`, `rapport_D01_7.md`, `narratif_D01_7.md`, `resultats_D01_7.csv`, `annuel_D01_7.csv`, `audit_D01_7.json`, `diagnostics_D01_7.json`, `controles_D01_7.json`, figure ; métas des séries versionnés.
+
+#### 0. Cadrage obligatoire
+- **QUESTION :** RE-1 conserve-t-elle son comportement hors crypto, sur des marchés à cotation quasi continue 24/5 ?
+- **PERTINENCE POUR LE FILTRE AKF :** géométrie transposée en D01, rente dépendante de la structure ; le 24/5 retire la nuit des ETF mais garde week-end, pause CME et roulements.
+- **CE QUE LE PROTOCOLE MESURE RÉELLEMENT :** audit des données avant backtest, puis 8 métriques en brut et nettes de coûts déclarés, Long/Short, F2b/F3, volatilité, sessions, interruptions, concentration, queues.
+- **CE QU'IL NE PERMET PAS DE CONCLURE :** pas de hors échantillon, pas de classement, coûts réels non mesurés.
+
+#### 1. Hypothèse & Motivation physique
+- Si la cinématique captée par RE-1 est générique, elle devrait produire un brut positif sur des marchés continus liquides, les frais restant à évaluer en ATR.
+
+#### 2. Règle testée
+- **Règle :** RE-1 identique à C02bis, seuils BTC gelés.
+- **Contrôles bloquants :** ancre P6.5d ; parité C02bis (1 080 trades, 40 métriques) ; audit sans défaut d'intégrité ni de couverture ; recoupement de GBPJPY avec H.10 (critère fixé avant : corrélation ≥ 0,95 au décalage 0, meilleur décalage à ± 30 min, écart médian ≤ 10 bps) ; invariance d'échelle du moteur (prérequis des futures rétro-ajustés).
+
+#### 3. Résultats nets (GBPJPY)
+| Métrique | BTC 5 bps (réf.) | GBPJPY brut | GBPJPY 2 bps | GBPJPY 4 bps |
+|---|---|---|---|---|
+| PnL Net Total : 0,25 %/ATR ; 1x | +138 % ; +204 % | −4 % ; −5 % | −16 % ; −17 % | −27 % ; −27 % |
+| Profit Factor (1x) | 1,20 | 0,96 | 0,84 | 0,74 |
+| Win Rate | 44,3 % | 42,1 % | 40,5 % | 38,0 % |
+| Espérance ATR [IC] ; bps | +0,369 [+0,098 ; +0,645] ; +12,3 | −0,035 [−0,284 ; +0,221] ; −0,6 | −0,239 [−0,490 ; +0,018] ; −2,6 | −0,443 [−0,697 ; −0,180] ; −4,6 |
+| Max Drawdown : 0,25 %/ATR ; 1x | −13,5 % ; −43,9 % | −8,7 % ; −8,8 % | −16,8 % ; −17,5 % | −27,2 % ; −27,9 % |
+| Nombre de trades (/mois) | 1 080 (15,0) | 687 (9,5) | idem | idem |
+| Durée médiane | 26 barres ; 13 h | 26 barres ; 13 h | idem | idem |
+| Part des frais (1x) ; frais en ATR | 29 % ; 0,14 | — ; 0 | brut ≤ 0 ; 0,20 | brut ≤ 0 ; 0,41 |
+
+- **Calmar** (0,25 %/ATR ; 1x) : GBPJPY 4 bps −0,19 ; −0,19. **Long / Short** (brut) −0,014 / −0,058. **F2b / F3** (brut) −0,129 / +0,066. **Années > 0 :** 0/6 à 4 bps, 3/6 en brut.
+
+#### 4. Analyse causale & Physique du trade
+- [CODE] **Accès aux données.**
+  - Dukascopy : HTTP 429 dès la deuxième requête ; l'historique en vrac est réservé à un bucket AWS « Requester Pays » (identifiants AWS obligatoires). Non contourné ; source de repli HistData déclarée.
+  - QuantConnect : compte requis ; données utilisables seulement dans son cloud (Object Store sans téléchargement ; licence locale payante réservée à LEAN, non convertible). Futures bloqués, décision au porteur.
+- [OBS] **Audit de GBPJPY.**
+  - 73 055 barres, intégrité et couverture conformes ; reprise le dimanche à 17:00 et fin le vendredi à 17:00 heure de New York.
+  - Recoupement H.10 : corrélation 0,9997 au décalage 0 (pic net), écart médian −1,2 bps.
+  - **Défaut :** 673 des 690 trous de semaine tombent en 2023 (≈ 1 758 barres, 14 % de l'année) ; aucun seuil fixé avant, actif non bloqué ; 2023 n'est pas un cas à part (−0,30 ATR à 4 bps).
+- [OBS] **Invariance d'échelle.** À ×0,37 et ×2,9, les signaux sont identiques et les descripteurs identiques à 3·10⁻⁵ près. Seuls basculent les signaux à `retrace_ratio` = 0,50 exactement (F2b → F5). RE-1 à ×2,9 : 1 trade de moins sur 1 080, espérance +0,3686 → +0,3676.
+- [OBS] **GBPJPY.**
+  - Brut nul, symétrique, sans dérive.
+  - ATR de 30 min 10 à 11 bps : les frais coûtent 0,41 ATR à 4 bps. Le 0,25 %/ATR est plafonné à 1x pour 98 % des trades.
+  - 53 % des signaux en session asiatique ; toutes les sessions ≤ 0 à 4 bps.
+  - Interruptions sans effet (9,5 % des trades, composante +0,013 ATR).
+  - Médiane −1,42 ATR ; décile supérieur +0,75 ATR par trade.
+- [HYP] Pas de mouvement exploitable par RE-1 sur GBPJPY à 30 min : différence de nature avec BTC, pas seulement de coût.
+
+#### 5. Décision
+- [ ] **REJETÉ**
+- [ ] **NON CONCLUANT**
+- [x] **EN COURS (descriptif) : GBPJPY mesuré (brut nul) ; NQ, RTY, CL, HG en attente de l'accès aux données choisi par le porteur. RE-1 inchangée.**

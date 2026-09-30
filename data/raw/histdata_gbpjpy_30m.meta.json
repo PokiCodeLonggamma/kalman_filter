@@ -1,0 +1,98 @@
+{
+ "source": "histdata.com",
+ "url_page": "https://www.histdata.com/download-free-forex-historical-data/?/ascii/1-minute-bar-quotes/gbpjpy/<année>",
+ "pair": "gbpjpy",
+ "granularite_source": "M1 (bougies d'une minute, bid)",
+ "step_s": 1800,
+ "extracted_at_utc": "2026-09-30T22:50:57.358671+00:00",
+ "extracted_at_origin": "heure du téléchargement (années civiles complètes, antérieures à 2026)",
+ "n_rows": 73055,
+ "first": "2020-01-01 22:00:00+00:00",
+ "last": "2025-12-31 21:30:00+00:00",
+ "minutes_sources": 2182056,
+ "n_barres_moins_de_30_minutes": 2157,
+ "sha256": "f0cb7f99566f31d9ff74b26318f55556ee867b90208f80568c74bb06c3a135c8",
+ "archives": [
+  {
+   "archive": "HISTDATA_COM_ASCII_GBPJPY_M12020.zip",
+   "sha256": "a182803b0f578e5631bb2b4a42e0ecc263ee8505588a0abe36deae1d87501c68",
+   "minutes": 372649,
+   "doublons_exacts_supprimes": {
+    "n": 60,
+    "dates": [
+     "2020-10-26"
+    ]
+   }
+  },
+  {
+   "archive": "HISTDATA_COM_ASCII_GBPJPY_M12021.zip",
+   "sha256": "d7fd9ac2e5f6cef855f1b0c887f06bfdf5e360670281e828b0446a6fc98d055e",
+   "minutes": 371509,
+   "doublons_exacts_supprimes": {
+    "n": 60,
+    "dates": [
+     "2021-11-01"
+    ]
+   }
+  },
+  {
+   "archive": "HISTDATA_COM_ASCII_GBPJPY_M12022.zip",
+   "sha256": "dabe6e55d8c886a430a3e656272001581fa93dfc2d29cb379ec5fdabbf8f30cb",
+   "minutes": 372229,
+   "doublons_exacts_supprimes": {
+    "n": 60,
+    "dates": [
+     "2022-10-31"
+    ]
+   }
+  },
+  {
+   "archive": "HISTDATA_COM_ASCII_GBPJPY_M12023.zip",
+   "sha256": "9e50431f9d3f7302256d8c3af7cf4b03f8db49d4b53e33ef380aa3b0c8809367",
+   "minutes": 322071,
+   "doublons_exacts_supprimes": {
+    "n": 60,
+    "dates": [
+     "2023-10-30"
+    ]
+   }
+  },
+  {
+   "archive": "HISTDATA_COM_ASCII_GBPJPY_M12024.zip",
+   "sha256": "1665a25f48715a205853815da41b2709042a3bafb1105fd2d9de529486cb8304",
+   "minutes": 372582,
+   "doublons_exacts_supprimes": {
+    "n": 60,
+    "dates": [
+     "2024-10-28"
+    ]
+   }
+  },
+  {
+   "archive": "HISTDATA_COM_ASCII_GBPJPY_M12025.zip",
+   "sha256": "0476dd243e2c4d7ca90b1e4f7230a1c598122191c0135f6b5f2752e9e9181940",
+   "minutes": 371016,
+   "doublons_exacts_supprimes": {
+    "n": 60,
+    "dates": [
+     "2025-10-27"
+    ]
+   }
+  }
+ ],
+ "prix": "bid (FAQ HistData : barres construites sur le bid des ticks)",
+ "timezone": "étiquettes HistData converties en UTC : la FAQ annonce un EST fixe, mais l'horloge suit l'heure d'été européenne (serveur EET/EEST moins 7 h : UTC−5 en hiver européen, UTC−4 de fin mars à fin octobre) ; établi par l'audit D01 (pause quotidienne à 17:00-18:00 heure de New York toute l'année après conversion)",
+ "horaires": "marché des changes OTC, du dimanche 17:00 au vendredi 17:00 heure de New York, sans pause quotidienne annoncée ; vérifiés par l'audit",
+ "construction_barres": "agrégation exacte des bougies d'une minute en barres de 30 min alignées sur :00 et :30 UTC ; time = ouverture de la barre ; volume absent de la source (écrit nul) ; une barre sans minute cotée est un trou, jamais comblé",
+ "couverture_demandee": "années 2020 à 2025 ; 2026 non téléchargé",
+ "sources_ecartees": "Dukascopy (2026-10-01 : HTTP 429 dès la deuxième requête sur datafeed.dukascopy.com, export massif réservé au bucket AWS « Requester Pays » cfg-public-proper-wallaby, identifiants AWS obligatoires : action du porteur requise, non contourné) ; OANDA (compte requis) ; Yahoo (intrajournalier limité aux 60 derniers jours)",
+ "limite": "fournisseur amont (courtier) non divulgué par HistData",
+ "actif": "GBPJPY",
+ "instrument": "GBP/JPY au comptant (TradingView : FX:GBPJPY, OANDA:GBPJPY)",
+ "nature": "cotation OTC au comptant d'un courtier forex, compilée par HistData.com",
+ "ticker": "GBPJPY (HistData.com, ASCII M1)",
+ "continuite": "sans objet : cotation au comptant, sans échéance",
+ "rolls": "sans objet ; le coût de portage (swap) n'est pas dans les prix",
+ "ajustements": "aucun",
+ "decision": "porteur, 2026-10-01 : Dukascopy ou une autre source gratuite fiable ; HistData déclarée, validée par recoupement avec les taux H.10 de la Réserve fédérale avant tout backtest"
+}
