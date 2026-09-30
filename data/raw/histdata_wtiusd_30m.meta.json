@@ -1,0 +1,77 @@
+{
+ "source": "histdata.com",
+ "url_page": "https://www.histdata.com/download-free-forex-historical-data/?/ascii/1-minute-bar-quotes/wtiusd/<année>",
+ "pair": "wtiusd",
+ "granularite_source": "M1 (bougies d'une minute, bid)",
+ "step_s": 1800,
+ "extracted_at_utc": "2026-09-30T16:23:49.612204+00:00",
+ "extracted_at_origin": "heure du téléchargement (années civiles complètes, antérieures à 2026)",
+ "n_rows": 44836,
+ "first": "2020-01-01 23:00:00+00:00",
+ "last": "2023-12-01 21:30:00+00:00",
+ "minutes_sources": 1323574,
+ "n_barres_moins_de_30_minutes": 6526,
+ "sha256": "e614f9ab112ec848c5b2e679757e5f4c5899b7b0105fbd3058d1c8aa0f743b7b",
+ "archives": [
+  {
+   "archive": "HISTDATA_COM_ASCII_WTIUSD_M12020.zip",
+   "sha256": "04c20df0d0a21e92af77574521d15925ef67504313725a5b43bf7ae3674a39f7",
+   "minutes": 342633,
+   "doublons_exacts_supprimes": {
+    "n": 59,
+    "dates": [
+     "2020-10-26"
+    ]
+   }
+  },
+  {
+   "archive": "HISTDATA_COM_ASCII_WTIUSD_M12021.zip",
+   "sha256": "d808a19ff0129ced92ca0de1d6c67dc073f271abee520338a7956ef39814e29d",
+   "minutes": 346791,
+   "doublons_exacts_supprimes": {
+    "n": 60,
+    "dates": [
+     "2021-11-01"
+    ]
+   }
+  },
+  {
+   "archive": "HISTDATA_COM_ASCII_WTIUSD_M12022.zip",
+   "sha256": "876d8e31b1334a5c32d490af8773cdf33c83cade33ff477d46348f3d25553468",
+   "minutes": 354164,
+   "doublons_exacts_supprimes": {
+    "n": 60,
+    "dates": [
+     "2022-10-31"
+    ]
+   }
+  },
+  {
+   "archive": "HISTDATA_COM_ASCII_WTIUSD_M12023.zip",
+   "sha256": "0e76bb3ed8c7f0c8f6e511ef7b4d8de1cef6604c123b843c76c079fcca9c45fd",
+   "minutes": 279986,
+   "doublons_exacts_supprimes": {
+    "n": 60,
+    "dates": [
+     "2023-10-30"
+    ]
+   }
+  }
+ ],
+ "actif": "WTI",
+ "instrument": "CFD sur le pétrole brut WTI, WTI/USD (TradingView : USOIL, p. ex. TVC:USOIL, OANDA:WTICOUSD)",
+ "nature": "CFD d'un courtier sur le contrat à terme NYMEX WTI (CL), compilé par HistData.com",
+ "ticker": "WTIUSD (HistData.com, ASCII M1)",
+ "continuite": "non publiée par la source ; caractérisée par l'audit (écart au spot WTI Cushing quotidien de l'EIA, FRED DCOILWTICO)",
+ "rolls": "non publiés par la source ; sauts de roulement recherchés par l'audit",
+ "ajustements": "aucun appliqué",
+ "decision": "porteur, 2026-09-30 : CFD sur le pétrole brut WTI (nom TradingView), source libre",
+ "prix": "bid (FAQ HistData : barres construites sur le bid des ticks)",
+ "timezone": "étiquettes HistData converties en UTC : la FAQ annonce un EST fixe, mais l'horloge suit l'heure d'été européenne (serveur EET/EEST moins 7 h : UTC−5 en hiver européen, UTC−4 de fin mars à fin octobre) ; établi par l'audit D01 (pause quotidienne à 17:00-18:00 heure de New York toute l'année après conversion)",
+ "horaires": "marché OTC 24 h sur 24, 5 jours sur 7, pause quotidienne d'une heure calée sur New York ; vérifiés par l'audit",
+ "construction_barres": "agrégation exacte des bougies d'une minute en barres de 30 min alignées sur :00 et :30 UTC ; time = ouverture de la barre ; volume absent de la source (écrit nul) ; une barre sans minute cotée est un trou, jamais comblé",
+ "couverture_demandee": "années 2020 à 2025 ; HistData ne publie WTIUSD que jusqu'au 2023-12-01 (aucun fichier pour 2024 et 2025 : jeton de téléchargement vide) ; couverture obtenue 2020-01 → 2023-12-01",
+ "sources_ecartees": "Dukascopy (accès automatisés refusés, HTTP 429 « Bot blocked » ; export massif réservé à un bucket AWS « Requester Pays ») ; Alpaca (ETF seulement : proxys) ; OANDA (compte requis)",
+ "limite": "fournisseur amont (courtier) non divulgué par HistData",
+ "statut": "BLOQUÉ avant backtest : couverture 2020-2023 inférieure à la condition 2020-2025 du porteur ; roulements du CFD non documentés par la source (audit)"
+}

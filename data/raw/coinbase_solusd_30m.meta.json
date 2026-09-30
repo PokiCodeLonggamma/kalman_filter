@@ -1,0 +1,330 @@
+{
+ "source": "coinbase",
+ "url": "https://api.exchange.coinbase.com/products/SOL-USD/candles",
+ "product": "SOL-USD",
+ "pair": "solusd",
+ "granularite_source_s": 900,
+ "step_s": 1800,
+ "extracted_at_utc": "2026-09-30T16:23:30.713470+00:00",
+ "extracted_at_origin": "heure du téléchargement (mois civils complets, antérieurs à 2026)",
+ "n_rows": 79577,
+ "first": "2021-06-17 16:00:00+00:00",
+ "last": "2025-12-31 23:30:00+00:00",
+ "n_barres_un_seul_quart_d_heure": 11,
+ "sha256": "e52874d28b5567d6010dd6de2f2c6485619bd49537d1a95844c360e860ca2950",
+ "fichiers_15m": [
+  {
+   "mois": "2021-01",
+   "bougies_15m": 0,
+   "sha256": "97c3b5b43aeb4385c5c7d4884d742dfeb3fb8b5c8768b55f8f1810a8285618cb"
+  },
+  {
+   "mois": "2021-02",
+   "bougies_15m": 0,
+   "sha256": "97c3b5b43aeb4385c5c7d4884d742dfeb3fb8b5c8768b55f8f1810a8285618cb"
+  },
+  {
+   "mois": "2021-03",
+   "bougies_15m": 0,
+   "sha256": "97c3b5b43aeb4385c5c7d4884d742dfeb3fb8b5c8768b55f8f1810a8285618cb"
+  },
+  {
+   "mois": "2021-04",
+   "bougies_15m": 0,
+   "sha256": "97c3b5b43aeb4385c5c7d4884d742dfeb3fb8b5c8768b55f8f1810a8285618cb"
+  },
+  {
+   "mois": "2021-05",
+   "bougies_15m": 0,
+   "sha256": "97c3b5b43aeb4385c5c7d4884d742dfeb3fb8b5c8768b55f8f1810a8285618cb"
+  },
+  {
+   "mois": "2021-06",
+   "bougies_15m": 1280,
+   "sha256": "9f92219fccaf576df7ff3d4ce20f92896183f46fc44aac8a3f7c4811e4033a6b"
+  },
+  {
+   "mois": "2021-07",
+   "bougies_15m": 2976,
+   "sha256": "32da9eafb1e615dc5253fa7674ec0022746c1935f99da7aa5e6af4fab1535743"
+  },
+  {
+   "mois": "2021-08",
+   "bougies_15m": 2976,
+   "sha256": "08d94990180ee315066b648f7973b8312fdb6646bb5412118d97fb49df889f0b"
+  },
+  {
+   "mois": "2021-09",
+   "bougies_15m": 2880,
+   "sha256": "1d2ff58df5218cfc98337f281c44b7f41df4e6161f75a59291ea4f300f561aca"
+  },
+  {
+   "mois": "2021-10",
+   "bougies_15m": 2976,
+   "sha256": "02a041bf9b2acd798221b8c435dbfdd3f27fa9ee0b24b01738bf5ab51723fdbe"
+  },
+  {
+   "mois": "2021-11",
+   "bougies_15m": 2878,
+   "sha256": "80f296a248f817960e3fe60bb916828805a08a0322704c80166d8f3ff28e5526"
+  },
+  {
+   "mois": "2021-12",
+   "bougies_15m": 2976,
+   "sha256": "e4db97006471cb2555529870bd00bfc5a5fdf6c1abf23948c87f7902d43f6830"
+  },
+  {
+   "mois": "2022-01",
+   "bougies_15m": 2976,
+   "sha256": "3aa8b92ce53c413e72ec2658bb9dcff7a8f8e7e8027309d82e5e635295725e38"
+  },
+  {
+   "mois": "2022-02",
+   "bougies_15m": 2688,
+   "sha256": "a67de5bee0e80f16db656f380dd393680aaa627615b241508bcdfdbeefe48fa8"
+  },
+  {
+   "mois": "2022-03",
+   "bougies_15m": 2976,
+   "sha256": "0c8a8b24a154e68d005670f0bbe6e380f28eb8bc36949bccb9f3ca90e6a31542"
+  },
+  {
+   "mois": "2022-04",
+   "bougies_15m": 2880,
+   "sha256": "aa8f4c326335ff978da085e609ff71776eab30de652f22836d763a075c74c199"
+  },
+  {
+   "mois": "2022-05",
+   "bougies_15m": 2976,
+   "sha256": "9b79980a283dcead797611de6b4022becec232be91ceeea72f8c44c93238f6e2"
+  },
+  {
+   "mois": "2022-06",
+   "bougies_15m": 2880,
+   "sha256": "7459f1a3ec5590851e742419f546c75935d106f3efe150ab6abb3e8eb9908763"
+  },
+  {
+   "mois": "2022-07",
+   "bougies_15m": 2976,
+   "sha256": "3a17bf6bcbbcdd3ba2c05639c79db0dd831b2b07ce309cfed7ae1269fdd6020f"
+  },
+  {
+   "mois": "2022-08",
+   "bougies_15m": 2976,
+   "sha256": "ca0f9e2600be34c6618eb634ff36aa66653d38f5d06ee860344ca69438ab67c5"
+  },
+  {
+   "mois": "2022-09",
+   "bougies_15m": 2880,
+   "sha256": "a65e61b9cc0666c558113c0685b48f61141aaa9b29ab7c5d22fc05f3e1af9ce2"
+  },
+  {
+   "mois": "2022-10",
+   "bougies_15m": 2976,
+   "sha256": "41face9c85da4f887e6c46fee94d32cbf5c2da8b358c771c028c53d1090abb96"
+  },
+  {
+   "mois": "2022-11",
+   "bougies_15m": 2880,
+   "sha256": "695c413927d140c2c8e884f6e3686a737d8b03289f2e55c14f6095b872102718"
+  },
+  {
+   "mois": "2022-12",
+   "bougies_15m": 2976,
+   "sha256": "7965514041edb936e55fab7b25865955ce1ab08b0ec21dd4af06575fe6fc759c"
+  },
+  {
+   "mois": "2023-01",
+   "bougies_15m": 2976,
+   "sha256": "dddf8bf1b0c72a33663f8288d8febd1c3a0bb2fb5d97aadf2e636b3e09e66660"
+  },
+  {
+   "mois": "2023-02",
+   "bougies_15m": 2688,
+   "sha256": "2f08cffb303c4b03eb17fa2a743a784097c8eaee0f5238e55d4f6a53cd3c244d"
+  },
+  {
+   "mois": "2023-03",
+   "bougies_15m": 2956,
+   "sha256": "c57e7792415936450caa249abef17036f1428bc75083b73f852420ade42776c0"
+  },
+  {
+   "mois": "2023-04",
+   "bougies_15m": 2880,
+   "sha256": "a675b2aeee5cb661f927f04f7c99fbab22b374cb53ebde29217e6687cd61341e"
+  },
+  {
+   "mois": "2023-05",
+   "bougies_15m": 2974,
+   "sha256": "d45654814262bba7d5d6f97ed94afef050acc6c5304f05176ec60c3dde591058"
+  },
+  {
+   "mois": "2023-06",
+   "bougies_15m": 2880,
+   "sha256": "ef30e5d656360c4837ffb5871dd12a6bf6406a19b3dec885c19579499f796950"
+  },
+  {
+   "mois": "2023-07",
+   "bougies_15m": 2976,
+   "sha256": "8da35396d18b4fda1f51e8bd67bd6180dff998b5e85b03e29bef999a250e2c25"
+  },
+  {
+   "mois": "2023-08",
+   "bougies_15m": 2976,
+   "sha256": "fb25d52ee7b2da84767e4a989785a3bab552c63e09f959b32d770ba49524dcc8"
+  },
+  {
+   "mois": "2023-09",
+   "bougies_15m": 2880,
+   "sha256": "8e41b8d6cb5bc9299cd8f0a6efdbcc4a1e05b740f498a354d6219e0980253167"
+  },
+  {
+   "mois": "2023-10",
+   "bougies_15m": 2976,
+   "sha256": "34985711af2ccf819e262b760fd3206c09e437b232fb8c7a3f4c6afe7934370b"
+  },
+  {
+   "mois": "2023-11",
+   "bougies_15m": 2880,
+   "sha256": "dfef7724968c0edcdbdd4edbb07df5d028a0e29b309e6bb73c4ed4a642c40f2f"
+  },
+  {
+   "mois": "2023-12",
+   "bougies_15m": 2976,
+   "sha256": "bf055db7398f6615d48a5dbc52f184bf3e1f1f7d0743d5773226b5ad6b93ec83"
+  },
+  {
+   "mois": "2024-01",
+   "bougies_15m": 2976,
+   "sha256": "bdef158d853c34046a5187e6a10bd004f05a7670dd97928781a8fe6b4497f3db"
+  },
+  {
+   "mois": "2024-02",
+   "bougies_15m": 2783,
+   "sha256": "63c35014ff88fd90dd0b6d162ad7fc48df7f62a073301ff78cb0a16ded7e655e"
+  },
+  {
+   "mois": "2024-03",
+   "bougies_15m": 2976,
+   "sha256": "c7b98ccab03948dff38c9621d4049a0fe5da1937b001198107a531c584620b5d"
+  },
+  {
+   "mois": "2024-04",
+   "bougies_15m": 2880,
+   "sha256": "cf11974ef2b355fd6df75fe3dc007531787de6eeca3b37fe0f97742c37074cc3"
+  },
+  {
+   "mois": "2024-05",
+   "bougies_15m": 2972,
+   "sha256": "95685bff1f90540a65c1905263a51cb202aa5aff9ad3a7ad90efd27a5939452a"
+  },
+  {
+   "mois": "2024-06",
+   "bougies_15m": 2880,
+   "sha256": "37af81697295fed4b97791b9d06fa8f57902f50b34c65bcac5639b041ce80540"
+  },
+  {
+   "mois": "2024-07",
+   "bougies_15m": 2976,
+   "sha256": "c70964a51171e36121607a24fc2515047f71da4feebeb52c0a29ffc73b762098"
+  },
+  {
+   "mois": "2024-08",
+   "bougies_15m": 2976,
+   "sha256": "89ecae95df090bec8a2bb02637273c626b1016c1ea3ed68530e119549454bd36"
+  },
+  {
+   "mois": "2024-09",
+   "bougies_15m": 2880,
+   "sha256": "6b93146836fe1e45cf8491c52c973c5761da9b6de79dd28e10b3f28f584eaa2e"
+  },
+  {
+   "mois": "2024-10",
+   "bougies_15m": 2972,
+   "sha256": "7a9a188e01dfdef139fd6787f63ce93a113fef1b659ff8f08730230552a89e3e"
+  },
+  {
+   "mois": "2024-11",
+   "bougies_15m": 2880,
+   "sha256": "2d6d34dc61d9474163b0959fd702a4b8041e235decd8cd69cd877a93b966547c"
+  },
+  {
+   "mois": "2024-12",
+   "bougies_15m": 2975,
+   "sha256": "3c572a5878e555a8545a81619565da6b7fbebda53bb3c6a3377c89bc163b203f"
+  },
+  {
+   "mois": "2025-01",
+   "bougies_15m": 2976,
+   "sha256": "91bbd42c4f0033ba1dfb429f1045e2a4e7aa28ff00eee952e7ed71d5d0589ad2"
+  },
+  {
+   "mois": "2025-02",
+   "bougies_15m": 2688,
+   "sha256": "4699d2c1788038bde4c18b8d462367be0ed5fc1abec7b8ce15b92561fc9cde13"
+  },
+  {
+   "mois": "2025-03",
+   "bougies_15m": 2976,
+   "sha256": "07db6bfd8096fc47b8957c3b81fcf1a93fa6e41f1d65b47dcb03576a69fed030"
+  },
+  {
+   "mois": "2025-04",
+   "bougies_15m": 2880,
+   "sha256": "ba78dc97a761178e64f0a6009e8cb93466ee02fe480d1df9a9c70c030ec93369"
+  },
+  {
+   "mois": "2025-05",
+   "bougies_15m": 2976,
+   "sha256": "6ad927e1ddc86539f75a18d06e8a83585e8acdbdaf64475bb7015a2a37061e3c"
+  },
+  {
+   "mois": "2025-06",
+   "bougies_15m": 2880,
+   "sha256": "ce2309374ab92c4e111759441c2ba3ce7f05c1cc5d3b7701a0f8027815ec4416"
+  },
+  {
+   "mois": "2025-07",
+   "bougies_15m": 2976,
+   "sha256": "36b743b9b0a174128b107c3c1185066aa0d0ca0d4e2bc3e16b3f9226f6ccad19"
+  },
+  {
+   "mois": "2025-08",
+   "bougies_15m": 2976,
+   "sha256": "4ac425671bb8fc6551f23b151a313d5ee203d0fc3a569e3de7cd7dbe34a21a74"
+  },
+  {
+   "mois": "2025-09",
+   "bougies_15m": 2880,
+   "sha256": "6b0975d56bce1784930467ac64bf557e13ce94576bbef7bda180d46e363e5607"
+  },
+  {
+   "mois": "2025-10",
+   "bougies_15m": 2953,
+   "sha256": "c3a96d2620d335da01592cffde01d446349e6f6a008b579d1fa69927170778b4"
+  },
+  {
+   "mois": "2025-11",
+   "bougies_15m": 2880,
+   "sha256": "493efc9a2e5b6f623f92fbf3384b62dddc26b0857963db831a46ead583210942"
+  },
+  {
+   "mois": "2025-12",
+   "bougies_15m": 2976,
+   "sha256": "f67818e54d5b9bad131a009d3f5114a52ea17a662ffe5d2771351efd02fac230"
+  }
+ ],
+ "actif": "SOL",
+ "instrument": "SOL/USD, carnet spot de Coinbase Exchange (TradingView : COINBASE:SOLUSD)",
+ "nature": "spot crypto, cotation en dollars américains",
+ "ticker": "SOL-USD (Coinbase Exchange)",
+ "continuite": "sans objet : instrument spot, série unique",
+ "rolls": "sans objet",
+ "ajustements": "aucun",
+ "timezone": "UTC (début des bougies Coinbase)",
+ "horaires": "cotation continue 24/7 ; les interruptions sont des maintenances ou incidents de la plateforme",
+ "construction_barres": "agrégation exacte des bougies natives de 15 min (granularité 900 s) en barres de 30 min alignées sur :00 et :30 UTC : open de la première, plus haut, plus bas, close de la dernière, somme des volumes (en SOL) ; time = ouverture de la barre ; une barre sans transaction est un trou, jamais comblé",
+ "couverture_demandee": "2021-01 → 2025-12 ; SOL-USD est coté sur Coinbase depuis le 2021-06-17 ; 2026 non téléchargé",
+ "sources_ecartees": "Binance SOL/USDT (cotation en USDT, écartée par le porteur) ; Binance.US SOLUSD (trou de mi-2023 à février 2025, puis quasi aucune transaction) ; Bitstamp SOL/USD (coté depuis 2022-2023 seulement) ; Alpaca (provenance des données de 2021-2022 non documentée)",
+ "decision": "porteur, 2026-09-30 : SOL/USD et non SOL/USDT ; source libre"
+}
