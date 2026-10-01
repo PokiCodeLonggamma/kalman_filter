@@ -7,7 +7,8 @@
 > `RESEARCH_LOG.md` pour l'historique et les décisions, `BEST_RESULTS.md` pour les chiffres, `RESEARCH_INSIGHTS.md`
 > pour les enseignements.
 >
-> **Statut :** document soumis à la relecture du porteur. **Aucun calcul D02 n'est lancé.**
+> **Statut :** validé par le porteur le 2026-10-01. **Aucun calcul D02 n'est lancé** : la nouvelle session attend le
+> cadrage de D02 par le porteur.
 
 ## Sommaire
 0. En une minute
@@ -720,8 +721,8 @@ d'extraction, couverture, construction. Tous les chargements tronquent avant le 
 |---|---|
 | Dossier local | `C:\Users\poek9\Projet Claude\#KalmanFilter` (le `#` impose des guillemets) |
 | GitHub | https://github.com/PokiCodeLonggamma/kalman_filter, **public**, branche `main` |
-| `origin/main` | `1243da3` (D01.7, partie 2), poussé avec l'accord du porteur |
-| Commits locaux non poussés | ce `passation.md` et les mises à jour de clôture de D01 (à pousser après relecture du porteur) |
+| `origin/main` | le commit qui contient cette passation, validée par le porteur et poussée le 2026-10-01 (vérifier par `git log -2`) ; avant elle : `1243da3` (D01.7, partie 2) |
+| Commits locaux non poussés | aucun au moment de la validation |
 | Identité git | `PokiCodeLonggamma <250868839+PokiCodeLonggamma@users.noreply.github.com>` |
 | Tests | 244 réussis, 2 ignorés |
 | Système | Windows 11, Git Bash et PowerShell, application Claude Code de bureau, navigateur intégré |
@@ -751,7 +752,7 @@ d'extraction, couverture, construction. Tous les chargements tronquent avant le 
 
 ## 15. Prochaines étapes concrètes et premier message attendu
 
-1. **Le porteur relit et valide ce `passation.md`.** Push sur son accord.
+1. **Fait (2026-10-01) :** passation relue et validée par le porteur, puis poussée.
 2. **Nouvelle session :** lire ce document, puis :
    - `CLAUDE.md`, `RESEARCH_PHILOSOPHY.md`, `PROJECT_PLAN.md` ;
    - `BEST_RESULTS.md`, `RESEARCH_INSIGHTS.md` ;
