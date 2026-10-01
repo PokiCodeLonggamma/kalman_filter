@@ -1,0 +1,56 @@
+{
+ "seuils_gele": {
+  "leg_atr_p50": 2.823322693433984,
+  "nis_z_100_p75": 1.2245041356145911
+ },
+ "btc_2020_2025": {
+  "ancre": {
+   "sans_stop": {
+    "n_trades": 6037,
+    "n_stops": 0
+   },
+   "stop_2_5": {
+    "n_trades": 6589,
+    "n_stops": 780
+   }
+  },
+  "trades": 1080,
+  "identiques_c02bis": true,
+  "metriques_comparees": 40,
+  "ecart_relatif_max": 4.493512022106744e-06
+ },
+ "lectures": {
+  "BTC 2013-2019": {
+   "barres_lues": 122688,
+   "barres_panne_retirees": 215,
+   "premiere": "2013-01-01 00:00:00+00:00",
+   "derniere": "2019-12-31 23:30:00+00:00",
+   "barres": 122473,
+   "annees": 6.997946611909651,
+   "trades": 1357,
+   "candidats": 1835,
+   "trades_clos_en_fin_de_periode": 0
+  },
+  "XAU 2009-2019": {
+   "barres_lues": 129314,
+   "premiere": "2009-03-15 22:00:00+00:00",
+   "derniere": "2019-12-31 21:30:00+00:00",
+   "barres": 129314,
+   "annees": 10.795345653661876,
+   "trades": 1253,
+   "candidats": 1589,
+   "trades_clos_en_fin_de_periode": 0
+  },
+  "BTC brut": {
+   "barres_lues": 122688,
+   "premiere": "2013-01-01 00:00:00+00:00",
+   "derniere": "2019-12-31 23:30:00+00:00",
+   "barres": 122688,
+   "annees": 6.997946611909651,
+   "trades": 1357,
+   "candidats": 1834,
+   "trades_clos_en_fin_de_periode": 0
+  }
+ },
+ "duree_s": 48
+}

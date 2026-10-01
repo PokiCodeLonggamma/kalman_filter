@@ -439,8 +439,11 @@ d'extraction, couverture, construction. Tous les chargements tronquent avant le 
 | Série (fichier) | Source | Nature | Usage |
 |---|---|---|---|
 | `bitstamp_btcusd_30m.csv` | Bitstamp, API publique | BTC/USD spot 30 min (fichier jusqu'au 2026-09-15, tronqué) | Construction de RE-1 (A → C), référence |
+| `bitstamp_btcusd_30m_2013_2025.csv` | Bitstamp, API publique (`src/marketdata/bitstamp.py`) | BTC/USD spot 30 min 2013-2025 ; identique à la série ci-dessus sur 2020-2025 ; panne du 5 au 9 janvier 2015 (barres plates) | D02.0 (rétro-test 2013-2019), D02 |
 | `coinbase_solusd_30m.csv` | Coinbase, bougies de 15 min agrégées | SOL/USD dès 2021-06-17 | D01 |
+| `coinbase_avaxusd_30m.csv` | Coinbase, bougies de 15 min agrégées | AVAX/USD dès 2021-09-30 | Univers de D02 (porteur) |
 | `histdata_xauusd_30m.csv` | HistData M1 (bid) | CFD or ; horloge EET/EEST − 7 h corrigée | D01, D01.5 |
+| `histdata_xauusd_30m_2009_2025.csv` | HistData M1 (bid) | CFD or 2009-03-15 → 2025 ; identique à la série de D01 sur 2020-2025 ; pause de 17:00 New York en partie cotée en 2009-2018 | D02.0, D02 |
 | `histdata_wtiusd_30m.csv` | HistData M1 | CFD WTI, contrat du mois, arrêté au 2023-12-01 | Retiré (audit seul) |
 | `alpaca_spy_30m.csv`, `alpaca_xle_30m.csv` (+ `_brut`) | Alpaca SIP, téléchargés par le porteur | ETF en séance régulière, séries ajustée et brute | D01 bis, D01.5, D01.6 |
 | `histdata_gbpjpy_30m.csv` | HistData M1 (bid) | GBPJPY ; trous en 2023 (14 %) | D01.7, partie 1 |
@@ -647,7 +650,8 @@ d'extraction, couverture, construction. Tous les chargements tronquent avant le 
      - ou un critère de plateau : centre d'une zone stable plutôt que maximum ;
      - et la règle de choix du point, par exemple le centre d'un plateau dont les voisins restent au-dessus de X.
   4. **Univers :**
-     - quels actifs ? BTC et SOL au minimum ; or, US30, GER40, US100, GDX… selon le porteur ;
+     - quels actifs ? BTC et SOL au minimum ; **AVAX ajouté par le porteur (2026-10-01)** ; LINK et LTC non ajoutés ;
+       or, US30, GER40, US100, GDX… selon le porteur ;
      - un jeu de paramètres par actif, ou commun à plusieurs actifs (paramètres poolés) ?
   5. **Coûts :** ceux de D01 et D01.7 par actif (crypto 5 et 10 bps, or 4, coût principal des CFD et ETF). Faut-il
      d'abord mesurer le coût réel chez Saxo ?
@@ -662,7 +666,9 @@ d'extraction, couverture, construction. Tous les chargements tronquent avant le 
 
 ### 13.3 Protocole WFO / OOS / hold-out (proposition)
 
-- **Données :** 2020-2025 uniquement. 2026 et ETH/XRP restent scellés.
+- **Données :** depuis D02.0, historiques longs disponibles : BTC 2013-2025, or 2009-2025, AVAX depuis le 2021-09-30
+  (SOL depuis le 2021-06-17). Le porteur veut le plus de données possible pour le walk-forward. La référence figée
+  dépend de la période (D02.0 : BTC 2013-2019 −0,045 ATR, or 2009-2019 +0,011). 2026 et ETH/XRP restent scellés.
 - **Découpage, à trancher :** fenêtres glissantes, par exemple 24 mois d'apprentissage et 6 mois de test, au pas de 6
   mois. Cela donne 8 tests hors échantillon couvrant 2022-2025 ; une variante ancrée est possible.
   - Le warm-up du moteur (300 barres et 300 bougies de 1 h) est pris dans les données qui précèdent chaque test : c'est
@@ -722,9 +728,9 @@ d'extraction, couverture, construction. Tous les chargements tronquent avant le 
 | Dossier local | `C:\Users\poek9\Projet Claude\#KalmanFilter` (le `#` impose des guillemets) |
 | GitHub | https://github.com/PokiCodeLonggamma/kalman_filter, **public**, branche `main` |
 | `origin/main` | le commit qui contient cette passation, validée par le porteur et poussée le 2026-10-01 (vérifier par `git log -2`) ; avant elle : `1243da3` (D01.7, partie 2) |
-| Commits locaux non poussés | aucun au moment de la validation |
+| Commits locaux non poussés | aucun au moment de la validation ; ensuite, D02.0 : `7dca1f8` (données, poussé), puis le commit du rétro-test (voir `git log`) |
 | Identité git | `PokiCodeLonggamma <250868839+PokiCodeLonggamma@users.noreply.github.com>` |
-| Tests | 244 réussis, 2 ignorés |
+| Tests | 249 réussis, 2 ignorés (244 à la validation, +5 en D02.0) |
 | Système | Windows 11, Git Bash et PowerShell, application Claude Code de bureau, navigateur intégré |
 | Python | 3.11 ; numpy, pandas, matplotlib (`pyproject.toml`) |
 | Mémoire de l'assistant | `C:\Users\poek9\.claude\projects\C--Users-poek9-Projet-Claude--KalmanFilter\memory\` |
@@ -747,19 +753,21 @@ d'extraction, couverture, construction. Tous les chargements tronquent avant le 
 | D01.5 | `5b156d0` |
 | D01.6 | `3ad0f1b` |
 | D01.7 | `39988a3` (partie 1), `454566c` (audit GitHub), `9c208a0`, `49433e8`, `78f51f7`, `8557219` (Saxo), `e8bcc24` (raccords), `343112c` (univers), `1243da3` (partie 2) |
+| D02.0 | `7dca1f8` (historiques longs et audit), puis le rétro-test de RE-1 figée |
 
 ---
 
 ## 15. Prochaines étapes concrètes et premier message attendu
 
-1. **Fait (2026-10-01) :** passation relue et validée par le porteur, puis poussée.
+1. **Fait (2026-10-01) :** passation relue et validée par le porteur, puis poussée. Ensuite, sur décision du porteur : EXP-D02.0,
+   historiques longs (BTC 2013, or 2009, AVAX) et rétro-test de RE-1 figée (`experiments/D02_0/narratif_D02_0.md`).
 2. **Nouvelle session :** lire ce document, puis :
    - `CLAUDE.md`, `RESEARCH_PHILOSOPHY.md`, `PROJECT_PLAN.md` ;
    - `BEST_RESULTS.md`, `RESEARCH_INSIGHTS.md` ;
    - les dernières entrées de `RESEARCH_LOG.md` ;
    - `src/strategy/re1.py` ;
    - `experiments/D01_7/narratif_D01_7.md`.
-3. **Vérifier l'état :** `git status`, `git log --oneline -5`, `python -m pytest -q` (attendu : 244 réussis, 2 ignorés).
+3. **Vérifier l'état :** `git status`, `git log --oneline -5`, `python -m pytest -q` (attendu : 249 réussis, 2 ignorés).
 4. **Rendre au porteur un compte rendu court**, balisé :
    - compréhension du projet et de RE-1 ;
    - règles ;

@@ -225,6 +225,22 @@ de Japan 225. Coûts validés avant le calcul. Aucun IC à borne basse positive.
 - **ETF :** frais faibles, mais environ 140 trades et un brut venu des gaps de nuit (GDX +0,41 contre +0,02 en séance).
 - **GBPJPY Saxo** confirme la partie 1 (HistData) : brut nul.
 
+### EXP-D02.0 — rétro-test de RE-1 figée sur des périodes jamais vues (BTC 2013-2019, or 2009-2019)
+*Descriptive, préalable de D02. Données validées par le porteur ; panne de Bitstamp de janvier 2015 non négociable
+(sensibilité sur la série brute : −0,047 contre −0,045). Aucun IC à borne basse positive.*
+
+| Lecture (coût) | Espérance ATR [IC] | Brut ATR ; frais ATR | PnL : 0,25 %/ATR ; 1x | MDD : 0,25 %/ATR ; 1x | Trades | Années > 0 |
+|---|---|---|---|---|---|---|
+| BTC 2013-2019 (5) | −0,045 [−0,244 ; +0,157] | +0,06 ; 0,10 | −20 % ; −63 % | −48,5 % ; −91,6 % | 1 357 | 4/7 |
+| BTC 2014-2019 (5) | −0,065 [−0,278 ; +0,152] | +0,04 ; 0,11 | −22 % ; −43 % | −47,4 % ; −84,5 % | 1 180 | 3/6 |
+| Or 2009-2019 (4) | +0,011 [−0,246 ; +0,258] | +0,30 ; 0,29 | −3 % ; −5 % | −29,1 % ; −29,3 % | 1 253 | 7/11 |
+| BTC 2020-2025 (5, réf.) | +0,369 [+0,098 ; +0,645] | +0,50 ; 0,14 | +138 % ; +204 % | −13,5 % ; −43,9 % | 1 080 | 6/6 |
+
+- **BTC :** le brut manque (+0,06 ATR contre +0,50) ; 2014 (−0,740) et 2015 (−0,272) portent l'écart ; timing −0,061
+  contre +0,362 ; F2b −0,224 contre +0,459.
+- **Or :** brut positif sur 17 ans (+0,30 en 2009-2019, IC > 0 en log ; +0,24 en 2020-2025), absorbé par les frais à
+  4 bps ; 2009-2015 positifs chaque année, 2016-2019 négatifs.
+
 ## Pistes écartées (à ne pas retester sans élément nouveau)
 
 | Piste | Raison | Source |

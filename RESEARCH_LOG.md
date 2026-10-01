@@ -1373,3 +1373,99 @@ Grilles complètes : espérance ATR ; MDD ; Calmar.
   - or −0,019 ATR [−0,362 ; +0,349] à 4 bps (brut +0,24, frais 0,26) ;
   - D01.7 : aucun IC > 0 au coût principal.
 
+### [EXP-D02.0, données] — Historiques longs BTC 2013, or 2009, AVAX ; univers de D02 (2026-10-01)
+- **Décisions du porteur :**
+  - rétro-test de RE-1 figée sur BTC 2013-2019 et l'or 2009-2019 avant tout walk-forward ;
+  - coûts actuels gardés sur les années anciennes (convention) ;
+  - SOL/USD Coinbase conservé ; **AVAX/USD ajouté à l'univers de D02** ; LINK et LTC non ajoutés ; ETH et XRP strictement
+    réservés au hold-out ;
+  - BTC retéléchargé par notre script plutôt que copié de NewKalman (provenance documentée) ;
+  - panne de Bitstamp de janvier 2015 : données brutes intactes, période non négociable dans le backtest principal,
+    sensibilité sur la série brute.
+- **Données, audit validé par le porteur** (`experiments/D02_0/audit_donnees_D02_0.md`) :
+  - BTC/USD Bitstamp 2013-2025 : 227 904 barres, aucun trou ; 105 216 barres identiques sur 105 216 à la série du dépôt
+    sur 2020-2025 ; 8,0 % de barres plates en 2013 ; panne du 2015-01-05 09:30 au 2015-01-09 20:30 (107,5 h plates) ;
+  - or HistData 2009-03-15 → 2025 : 198 695 barres, identique à la série de D01 sur 2020-2025, 97,8 à 99,1 % du calendrier
+    23/5 par an (2023 : 86 %) ; horloge validée sur 2009-2018 sans la pause, partiellement cotée ces années-là (ouverture
+    du dimanche à 18:00 et dernière barre du vendredi à 16:30 New York, pic des annonces de 08:30) ;
+  - AVAX/USD Coinbase 2021-09-30 → 2025 : 74 530 barres, 5 trous (24 barres) ;
+  - aucun recoupement externe gratuit de l'or : FRED a retiré les cours LBMA, Stooq impose une vérification anti-robot
+    (non contournée).
+- **Code :** `src/marketdata/bitstamp.py` (+5 tests, 249 au total), `experiments/D02_0/donnees_D02_0.py`,
+  `audit_donnees_D02_0.py` ; commit 7dca1f8, poussé avec l'accord du porteur.
+
+### [EXP-D02.0] — Rétro-test de RE-1 figée : BTC/USD 2013-2019 et CFD or 2009-2019
+- **Date :** 2026-10-01
+- **Étape :** D, préalable de D02 (aucune optimisation). RE-1 strictement gelée ; aucune modification sur la base des
+  résultats.
+- **Actifs & Période :** BTC/USD Bitstamp 2013-01-01 → 2019-12-31 (panne de janvier 2015 retirée de la série vue par RE-1,
+  sensibilité sur la série brute) ; CFD or HistData 2009-03-15 → 2019-12-31 ; aucune barre de 2020 ni de 2026 lue.
+  Références 2020-2025 : BTC (C02bis, D01) et or (D01).
+- **Frais :** BTC 5 bps (lecture principale) et 10 bps ; or 4 bps ; coûts actuels sur les années anciennes (convention du
+  porteur).
+- **Livrables :** `experiments/D02_0/run_D02_0.py`, `narratif_D02_0.md`, `rapport_D02_0.md`, `resultats_D02_0.csv`,
+  `annuel_D02_0.csv`, `diagnostics_D02_0.json`, `controles_D02_0.json`, `figures/D02_0.png`.
+
+#### 0. Cadrage obligatoire
+- **QUESTION :** RE-1 figée garde-t-elle une espérance nette sur des périodes qu'elle n'a jamais vues ?
+- **PERTINENCE POUR LE FILTRE AKF :** seuils et géométrie R2 viennent de BTC 2020-2025 ; des régimes plus anciens testent
+  leur stabilité dans le temps, sans adaptation ; c'est la référence figée du walk-forward de D02.
+- **CE QUE LE PROTOCOLE MESURE RÉELLEMENT :** 8 métriques nettes à 0,25 %/ATR et à 1x, espérance avec IC par grappes
+  mensuelles, années, Long/Short, F2b/F3, populations face aux seuils gelés, frais en ATR ; panne de 2015, marché étroit
+  de 2013, lecture hors 2013.
+- **CE QU'IL NE PERMET PAS DE CONCLURE :** rien sur 2026 ; coûts anciens sous-estimés par convention ; aucun critère de
+  réussite ni comparaison statistique avec 2020-2025 ; aucune modification de RE-1.
+
+#### 1. Hypothèse & Motivation physique
+- Si la cinématique captée par RE-1 sur BTC 2020-2025 est structurelle, elle doit produire un brut positif sur des
+  périodes antérieures, à seuils identiques.
+
+#### 2. Règle testée
+- **Règle :** RE-1 identique à C02bis, seuils BTC 2020-2025 gelés.
+- **Contrôles bloquants :** 1 080 trades de C02bis reproduits sur BTC 2020-2025 (40 métriques, écart ≤ 4,5·10⁻⁶) ;
+  empreintes des CSV égales à l'audit validé ; barres de la panne vérifiées identiques à la suite plate de l'audit avant
+  leur retrait.
+- **Écart au cadrage, sans effet :** un trade ouvert en fin de période est clos à la dernière barre (convention de C02bis),
+  et non écarté comme annoncé ; aucun trade concerné.
+
+#### 3. Résultats nets
+| Lecture (coût) | PnL net : 0,25 %/ATR ; 1x ; bps cumulés (1x) | PF (1x) | WR | Espérance ATR [IC] ; bps | MDD : 0,25 %/ATR ; 1x | Trades (/mois) | Durée médiane | Part des frais (1x) ; brut ATR ; frais ATR |
+|---|---|---|---|---|---|---|---|---|
+| BTC 2013-2019 (5) | −20 % ; −63 % ; −3 298 | 0,97 | 42,3 % | −0,045 [−0,244 ; +0,157] ; −2,4 | −48,5 % ; −91,6 % | 1 357 (16,2) | 26 barres ; 13 h | 195 % ; +0,056 ; 0,101 |
+| BTC 2013-2019 (10) | −42 % ; −81 % ; −10 083 | 0,92 | 41,0 % | −0,146 [−0,346 ; +0,057] ; −7,4 | −56,7 % ; −94,2 % | 1 357 (16,2) | 13 h | 389 % |
+| BTC 2014-2019 (5) | −22 % ; −43 % ; −2 190 | 0,98 | 42,5 % | −0,065 [−0,278 ; +0,152] ; −1,9 | −47,4 % ; −84,5 % | 1 180 (16,4) | 13 h | 159 % ; +0,040 ; 0,105 |
+| BTC brut, panne gardée (5) | −20 % ; −64 % ; −3 437 | 0,97 | 42,2 % | −0,047 [−0,247 ; +0,156] ; −2,5 | −48,8 % ; −91,7 % | 1 357 (16,2) | 13 h | 203 % |
+| Or 2009-2019 (4) | −3 % ; −5 % ; −272 | 0,99 | 41,7 % | +0,011 [−0,246 ; +0,258] ; −0,2 | −29,1 % ; −29,3 % | 1 253 (9,7) | 26 barres ; 13 h | 106 % ; +0,304 ; 0,293 |
+| BTC 2020-2025 (5, réf.) | +138 % ; +204 % ; +13 320 | 1,20 | 44,3 % | +0,369 [+0,098 ; +0,645] ; +12,3 | −13,5 % ; −43,9 % | 1 080 (15,0) | 13 h | 29 % ; +0,504 ; 0,136 |
+| Or 2020-2025 (4, réf.) | +1 % ; +5 % ; +697 | 1,04 | 42,5 % | −0,019 [−0,362 ; +0,349] ; +1,1 | −13,6 % ; −13,3 % | 651 (9,0) | 13 h | 79 % ; +0,239 ; 0,257 |
+
+- **Années à espérance positive :** BTC 4/7 (2014 −0,740, 2015 −0,272, 2016 −0,002 ; 2017 +0,469) ; or 7/11 (2009-2015
+  toutes positives, 2016-2019 toutes négatives).
+
+#### 4. Analyse causale & Physique du trade
+- [OBS] **BTC : le brut manque, pas le coût.** Brut +0,056 ATR contre +0,504 en 2020-2025 ; frais 0,10 ATR (ATR de 30 min
+  plus large : P50 63,5 bps contre 49,7).
+- [OBS] **BTC : le timing disparaît** (−0,061 [−0,259 ; +0,141] contre +0,362) ; Long +0,128, Short −0,249 ; F2b −0,224
+  (765 trades) contre +0,459, F3 +0,185 ; stop de F3 sans effet significatif (−0,128 [−0,368 ; +0,095]).
+- [OBS] **BTC : populations proches des seuils gelés** (101 signaux par mois ; médiane locale de `leg_atr` 2,59 ; P75 local
+  de `nis_z_100` 1,135). Bande > P90 de `nis_z_100` (écartée par le veto, trades isolés) : +0,60 [+0,20 ; +1,03] sur 256
+  trades, contre −0,40 en 2020-2025.
+- [OBS] **Panne de 2015 sans effet :** aucun trade créé sur les barres plates ni à cheval ; un seul trade diffère
+  (2015-01-11 : +0,58 contre −1,93 ATR) ; −0,045 contre −0,047. Marché étroit de 2013 : un seul trade touché ; hors 2013,
+  −0,065.
+- [OBS] **Or :** brut +0,304 ATR (log +0,305 [+0,053 ; +0,551]), réalisé en séance, absorbé par 0,293 ATR de frais ;
+  2009-2015 brut +0,30 à +0,85 (ATR 13,5-19 bps), 2016-2019 brut −0,57 à +0,05 et frais 0,36-0,37 ATR (ATR vers 11 bps) ;
+  F2b/F3 de signes opposés à ceux de 2020-2025.
+- [HYP] **Sur BTC, l'avantage de RE-1 n'est pas stationnaire :** sélection en échantillon pendant la construction
+  (A01 → C05) ou changement de régime (marché spot étroit avant 2017) ; non séparables ici. 2026 reste le seul hors
+  échantillon vierge de BTC.
+- [HYP] **Sur l'or, un brut de +0,25 à +0,30 ATR persiste sur 17 ans** ; le net dépend du rapport brut / frais en ATR (K11)
+  et du régime.
+- [HYP] **Pour D02 :** la référence figée dépend de la période ; le walk-forward devra montrer un gain sur ces périodes
+  aussi ; l'inversion de la bande > P90 désigne les seuils de population comme lieu de la non-stationnarité.
+
+#### 5. Décision
+- [ ] **REJETÉ**
+- [ ] **NON CONCLUANT**
+- [x] **TERMINÉ (descriptif) : BTC 2013-2019 sans espérance nette (estimation négative, IC contenant 0) ; or 2009-2019 net nul, brut positif. Panne de 2015 sans effet. RE-1 inchangée. Univers de D02 : AVAX ajouté.**
+

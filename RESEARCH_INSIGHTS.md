@@ -263,6 +263,21 @@ porteur).*
 - `[HYP]` Une même cinématique produit une rente là où le mouvement qui suit, en ATR, dépasse nettement le coût en ATR.
   Sur des marchés calmes à 30 min, le levier est le coût d'exécution ; ce n'est pas le signal.
 
+### K12 — Hors de sa période de construction, RE-1 perd son avantage sur BTC ; sur l'or, le brut persiste mais les frais l'absorbent
+*Source : EXP-D02.0 (rétro-test de RE-1 figée : BTC/USD Bitstamp 2013-2019, CFD or HistData 2009-2019).*
+
+- `[OBS]` BTC 2013-2019 : −0,045 ATR [−0,244 ; +0,157] à 5 bps, contre +0,369 [+0,098 ; +0,645] en 2020-2025. Le brut
+  tombe de +0,50 à +0,06 ATR ; les frais (0,10 ATR) ne sont pas en cause.
+- `[OBS]` Le timing (moyenne des deux sens) passe de +0,362 à −0,061, F2b de +0,459 à −0,224 ; 2014-2015 portent l'écart,
+  2017 est positive (+0,469).
+- `[OBS]` Les populations bougent peu (médiane de `leg_atr` 2,59 contre 2,82 ; P75 de `nis_z_100` 1,14 contre 1,22), mais
+  la bande > P90 de `nis_z_100`, écartée par le veto, gagne en trades isolés (+0,60 [+0,20 ; +1,03]) quand elle perdait
+  en 2020-2025 (−0,40).
+- `[OBS]` Or : brut +0,30 ATR sur 2009-2019 (IC > 0 en log) et +0,24 sur 2020-2025, absorbé par 0,26 à 0,29 ATR de frais à
+  4 bps ; 2009-2015 positifs chaque année (ATR de 13,5 à 19 bps), 2016-2019 négatifs.
+- `[HYP]` L'avantage de RE-1 sur BTC dépend de la période : sélection en échantillon pendant la construction (A01 → C05),
+  ou changement de régime ; le rétro-test ne sépare pas les deux. D02 devra mesurer son gain sur ces périodes aussi.
+
 ---
 
 ## 3. Trois phénomènes captés par le déclencheur
