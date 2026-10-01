@@ -1,0 +1,122 @@
+{
+ "source": "bitstamp",
+ "url": "https://www.bitstamp.net/api/v2/ohlc/btcusd/",
+ "pair": "btcusd",
+ "step_s": 1800,
+ "extracted_at_utc": "2026-10-01T03:51:10.390647+00:00",
+ "extracted_at_origin": "heure du téléchargement (années civiles complètes, antérieures à 2026)",
+ "n_rows": 227904,
+ "first": "2013-01-01 00:00:00+00:00",
+ "last": "2025-12-31 23:30:00+00:00",
+ "barres_volume_nul_par_an": {
+  "2013": 610,
+  "2014": 9,
+  "2015": 215,
+  "2016": 0,
+  "2017": 0,
+  "2018": 0,
+  "2019": 1,
+  "2020": 11,
+  "2021": 4,
+  "2022": 7,
+  "2023": 5,
+  "2024": 9,
+  "2025": 3
+ },
+ "barres_plates_par_an": {
+  "2013": 1402,
+  "2014": 12,
+  "2015": 227,
+  "2016": 20,
+  "2017": 1,
+  "2018": 0,
+  "2019": 1,
+  "2020": 11,
+  "2021": 4,
+  "2022": 7,
+  "2023": 6,
+  "2024": 9,
+  "2025": 3
+ },
+ "sha256": "fa38b1796e9ee0db9e484bf723bb28d0b96219dc4795bcd6b4b5dd145478e1da",
+ "fichiers_annuels": [
+  {
+   "annee": 2013,
+   "barres": 17520,
+   "sha256": "bbdad8b34c9209d26140ff7122875840b8604e13ed813ec4eee076a7e6d2d837"
+  },
+  {
+   "annee": 2014,
+   "barres": 17520,
+   "sha256": "a823fecb75ab4a78311e8f38a8e27eb08d5be97f56766e6b5eaca2ea8260b352"
+  },
+  {
+   "annee": 2015,
+   "barres": 17520,
+   "sha256": "558b1abb46aa95a3c11efa9397e387f559d2d2a45d94a5974c07c3551a11a45d"
+  },
+  {
+   "annee": 2016,
+   "barres": 17568,
+   "sha256": "00274057eae1ecbb96fea12b03493dc20512382fbdab835627283aa9293ba62a"
+  },
+  {
+   "annee": 2017,
+   "barres": 17520,
+   "sha256": "7c6847d2ecc00a833de9511a322b512c6cd054e5b82280a129376227402f9bf0"
+  },
+  {
+   "annee": 2018,
+   "barres": 17520,
+   "sha256": "c488555f2e8f750e4f1c080b08fdd302bef50fb748a3bb6d4816f8a8d404ee2b"
+  },
+  {
+   "annee": 2019,
+   "barres": 17520,
+   "sha256": "03296a250c5ba3d9ba9a61d7e2a2f995cfef9c3194d08e0585f42b49ff35668c"
+  },
+  {
+   "annee": 2020,
+   "barres": 17568,
+   "sha256": "0c27b3fdc70a98615777340a122d7132e502a75f8ccf3b689bd5098bf858c4d5"
+  },
+  {
+   "annee": 2021,
+   "barres": 17520,
+   "sha256": "ec9c71c44f48eac61768b85a07693a8df0b7865af33baa467842d9b441306b09"
+  },
+  {
+   "annee": 2022,
+   "barres": 17520,
+   "sha256": "9cc96173fc387644cfe00084944c8ba913eb90a96a4d3e2fc8d7661b3d353105"
+  },
+  {
+   "annee": 2023,
+   "barres": 17520,
+   "sha256": "e4f64c4ee4b1ddfa7ea8fb45677c71b7eab1c75cc3f6bcd38f31c1335fd244f7"
+  },
+  {
+   "annee": 2024,
+   "barres": 17568,
+   "sha256": "7d982e5e03789e49f76d8b5e024f28d5e6ccc2fb7318a767429304c9c96ee37a"
+  },
+  {
+   "annee": 2025,
+   "barres": 17520,
+   "sha256": "11886c255622889b2ee6379c78749270929cbde89db8e8885f76ec02afad56a8"
+  }
+ ],
+ "actif": "BTC",
+ "instrument": "BTC/USD, carnet spot de Bitstamp (TradingView : BITSTAMP:BTCUSD)",
+ "nature": "spot crypto, cotation en dollars américains",
+ "ticker": "btcusd (Bitstamp)",
+ "continuite": "sans objet : instrument spot, série unique",
+ "rolls": "sans objet",
+ "ajustements": "aucun",
+ "timezone": "UTC (ouverture des barres Bitstamp)",
+ "horaires": "cotation continue 24/7 ; les interruptions sont des maintenances ou incidents de la plateforme",
+ "construction_barres": "barres natives de 30 min de l'API OHLC publique de Bitstamp (step 1800), telles que servies ; une barre sans transaction est servie plate au dernier prix, volume nul, et gardée",
+ "couverture_demandee": "2013-01-01 → 2025-12-31 ; 2026 non téléchargé",
+ "sources_ecartees": "copie du fichier de NewKalman (même carnet, construction non documentée ; décision du porteur) ; Bitstamp 2012 (79 % des barres de mars 2012 sans transaction)",
+ "decision": "porteur, 2026-10-01 : historique long de BTC/USD, d'abord pour le rétro-test de RE-1 figée (2013-2019), puis pour D02 ; retéléchargé par notre script"
+}

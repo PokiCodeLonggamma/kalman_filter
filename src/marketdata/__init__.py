@@ -1,6 +1,7 @@
 """EXP-D01 — acquisition et audit des séries de marché des actifs de transfert (hors BTC Bitstamp).
 
-- `coinbase` : bougies publiques de 15 min de Coinbase Exchange (sans clé) : SOL/USD ;
+- `coinbase` : bougies publiques de 15 min de Coinbase Exchange (sans clé) : SOL/USD, AVAX/USD (D02.0) ;
+- `bitstamp` : barres natives de 30 min de Bitstamp (sans clé) : BTC/USD depuis 2013 (D02.0 ; import direct) ;
 - `histdata` : bougies d'une minute de HistData.com (gratuites, bid ; horloge EET/EEST − 7 h convertie en UTC) : CFD or ;
 - `bars` : agrégation exacte de sous-barres en barres de 30 min alignées sur :00 et :30 UTC ;
 - `alpaca` : barres de 30 min d'actions et d'ETF américains (API Alpaca v2, flux SIP), séance régulière : SPY, XLE ;
