@@ -102,3 +102,42 @@ Les huit séries couvrent toute la période (2020 à 2025 ; environ 10 200 à 11
 - Les sept autres demandent un **ajustement des roulements par ratio**, à construire nous-mêmes à partir des dates d'échéance et de l'écart au roulement.
 - Le WTI demande en plus une décision sur avril 2020 : démarrer en mai 2020, ou exclure l'actif.
 - Aucun backtest avant validation de ces choix.
+
+## 9. Annexe (2026-10-01) : instants de raccord mesurés, puis abandon des continus
+
+Le porteur a d'abord retenu les CFD seuls (futures écartés), demandé de traiter les raccords des séries « cont », puis
+abandonné toutes les séries continues pour D01.7. L'univers est redéfini : US100 CFD, GBPJPY, Germany 40, Japan 225,
+EU Stocks 50, US 30 et XAGUSD (voir audit_univers_D01_7.md). Aucun ajustement n'a été appliqué. Ces constats, mesurés
+avant l'abandon, corrigent et précisent le §7.
+
+- **Le CFD « cont » et le future c1 raccordent au même instant.**
+  - Écart médian entre le mid du CFD et le dernier prix du c1 : 0,0 bp.
+  - Jours où la médiane de cet écart dépasse 15 bps en valeur absolue : 1 sur environ 1 550 pour le WTI, aucun pour le
+    cuivre et l'US2000.
+  - Le c1 n'apporte donc aucun prix de l'ancien contrat au moment du raccord.
+- **WTI : raccord le dernier jour de cotation (LTD) du contrat, vers 11:00 heure de New York, au milieu d'une barre.**
+  - Le LTD est le 3e jour ouvré avant le 25 du mois précédent.
+  - Le volume du c1 est multiplié par 200 à 230 dans la barre de 11:00 (2023-09-20 et 2024-02-20).
+  - La barre CFD de 10:31 à 11:01 mêle donc deux contrats. Exemple du 2024-02-20 : corps de −236 bps, dont environ
+    −190 bps de changement de contrat, mesurés contre le dernier prix du c1 une minute plus tôt.
+  - Même règle en avril 2020 : le CFD est resté sur le contrat de mai jusqu'au LTD (2020-04-21), et sa barre de 10:31 passe
+    de 2,49 à 14,70 (contrat de juin).
+  - Les deux barres à −0,01 du 2020-04-20 sont donc le contrat de mai. Le plancher d'affichage de Saxo est −0,01 ; le
+    contrat a réglé à −37,63.
+  - C'est cohérent avec la publication Saxo du 2023-12-19 citée par le porteur : CLc1 reste sur janvier jusqu'au raccord
+    du jour d'échéance.
+  - Pendant la séance de nuit du LTD, des sauts erratiques apparaissent : c'est le contrat sortant, devenu illiquide.
+- **Cuivre : raccord à la réouverture de 18:01, 2 à 4 jours ouvrés avant le premier jour de notification du COMEX.**
+  - Seulement vers les échéances de mars, mai, juillet, septembre et décembre.
+  - Sauts de +41 à +171 bps de 2023 à 2025, par exemple +136 le 2024-08-26 et +171 le 2025-11-24.
+  - Le décalage varie : 2 jours en 2020 et 2023, 3 à 4 jours en 2024-2025. Aucune règle fixe.
+- **US2000 : raccord à la réouverture de 21:01, après la clôture du mardi de la semaine d'échéance.**
+  - Échéance : 3e vendredi de mars, juin, septembre et décembre.
+  - Sauts de +71 à +136 bps sur 10 des 12 trimestres de 2023-2025 (portage). En 2020-2022, les sauts sont faibles (taux
+    bas).
+- **NQc1, en contrôle :** il raccorde, lui, le 3e vendredi en séance. L'écart avec le CFD sur l'indice passe d'environ
+  5-14 bps à 103-127 bps le 2024-12-20 et le 2025-03-21. Le §7 reste exact pour NQ ; « à leur échéance » ne vaut pas pour
+  les trois CFD continus.
+- **Conséquence technique, sans suite pour D01.7 :**
+  - Les raccords du cuivre et de l'US2000 tombent entre deux barres : un ajustement par ratio y serait propre.
+  - Celui du WTI tombe dans une barre de 30 min : on ne peut pas l'ajuster sans supprimer ou reconstruire cette barre.
