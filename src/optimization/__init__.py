@@ -10,18 +10,23 @@
 - `windows` : semestres calendaires, IS = 4 semestres précédents, réserve 2026 exclue.
 - `universe` : table des signaux d'un atlas (un par R0), seuils de population par fenêtre, candidats de RE-1.
 - `objective` : métriques d'IS (espérance en ATR, PnL et MDD valorisé à 0,25 %/ATR, Calmar) du dépôt.
-- `selection` : règle de choix du porteur (admissibilité, score de voisinage, repli sur RE-1).
+- `selection` : règle de choix du porteur (centre de la plus grande zone connexe à Calmar > 0, repli sur RE-1).
 - `walkforward` : grille, évaluation d'un IS, branches, calendriers des 10 séries, course hors échantillon.
+- `compare` : écarts appariés par mois (IC 95 %), chemins réordonnés, entrées figées (I-M16).
 """
+from optimization.compare import (SeriesStats, frozen_entries, mdd_exits, month_draws, month_index,
+                                  paired_comparison, series_stats)
 from optimization.engine import prepare_inputs, run_trades, simulate
 from optimization.objective import is_metrics
-from optimization.selection import neighbour_mean, select
+from optimization.selection import neighbour_mean, plateau_zones, select, select_plateau
 from optimization.universe import SignalTable, candidates, signal_table, window_thresholds
 from optimization.walkforward import (GRID, GRID_F, GRID_H, GRID_R0, RE1_INDEX, RE1_POINT, VARIANTS, AssetData,
                                       Params, branch_choice, evaluate_is, oos_candidates, run_oos, variant_schedule)
 from optimization.windows import Window, bar_span, in_period, walk_forward_windows
 
-__all__ = ["run_trades", "simulate", "prepare_inputs", "is_metrics", "neighbour_mean", "select", "SignalTable",
-           "signal_table", "window_thresholds", "candidates", "GRID", "GRID_R0", "GRID_H", "GRID_F", "RE1_POINT",
-           "RE1_INDEX", "VARIANTS", "AssetData", "Params", "evaluate_is", "branch_choice", "variant_schedule",
-           "oos_candidates", "run_oos", "Window", "walk_forward_windows", "bar_span", "in_period"]
+__all__ = ["run_trades", "simulate", "prepare_inputs", "is_metrics", "neighbour_mean", "select", "select_plateau",
+           "plateau_zones", "SignalTable", "signal_table", "window_thresholds", "candidates", "GRID", "GRID_R0",
+           "GRID_H", "GRID_F", "RE1_POINT", "RE1_INDEX", "VARIANTS", "AssetData", "Params", "evaluate_is",
+           "branch_choice", "variant_schedule", "oos_candidates", "run_oos", "Window", "walk_forward_windows",
+           "bar_span", "in_period", "SeriesStats", "series_stats", "paired_comparison", "month_index", "month_draws",
+           "mdd_exits", "frozen_entries"]

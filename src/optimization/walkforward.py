@@ -6,7 +6,8 @@ WFO, séries hors échantillon (protocole du porteur, 2026-10-01).
 - Évaluation d'un IS (`evaluate_is`) : pour chaque R0, seuils de population réestimés sur les signaux de l'IS ;
   candidats de l'IS ; trades clos au plus tard à l'ouverture de la dernière barre de l'IS (aucune barre postérieure) ;
   métriques de `objective.is_metrics` au coût de l'actif, annualisées sur la durée de l'IS.
-- Choix (`branch_choice`) : règle de `selection.select` sur la grille de la branche, référence RE-1.
+- Choix (`branch_choice`) : règle retenue par le porteur, `selection.select_plateau` (centre de la plus grande zone
+  connexe à Calmar net > 0) sur la grille de la branche, référence RE-1.
 - Calendriers (`variant_schedule`) : RE-1 gelée et Contrôle aux paramètres de RE-1 (seuils BTC gelés ou réestimés) ;
   Statique = choix de l'IS du premier semestre, gardé sur tout l'OOS ; WFO = choix de chaque IS.
 - Hors échantillon (`oos_candidates`, `run_oos`) : candidats de chaque semestre aux paramètres et aux seuils de ce
@@ -23,7 +24,7 @@ import pandas as pd
 from estimand.bars import check_no_holdout
 from optimization.engine import prepare_inputs, run_trades, simulate
 from optimization.objective import is_metrics
-from optimization.selection import select
+from optimization.selection import select_plateau
 from optimization.universe import candidates, window_thresholds
 from optimization.windows import Window, bar_span
 from strategy import LEG_ATR_P50_BTC, NIS_Z100_P75_BTC, RISK_BPS
@@ -112,10 +113,10 @@ def _view(branch: str):
     return views[branch]
 
 
-def branch_choice(ev: dict, branch: str, edge: str = "voisins_existants") -> tuple[Params, dict]:
+def branch_choice(ev: dict, branch: str) -> tuple[Params, dict]:
     """Configuration choisie sur la grille d'une branche (« H », « R0 », « frontiere », « conjointe »)."""
     sl, ref, axis = _view(branch)
-    idx, info = select(ev["esperance_atr"][sl], ev["calmar_r25"][sl], ev["mdd_r25"][sl], ref, edge)
+    idx, info = select_plateau(ev["esperance_atr"][sl], ev["calmar_r25"][sl], ev["mdd_r25"][sl], ref)
     full = list(RE1_INDEX)
     if axis is None:
         full = list(idx)
@@ -124,15 +125,15 @@ def branch_choice(ev: dict, branch: str, edge: str = "voisins_existants") -> tup
     return Params(GRID_R0[full[0]], GRID_H[full[1]], GRID_F[full[2]]), dict(info, index=tuple(full))
 
 
-def variant_schedule(evs: list[dict], name: str, edge: str = "voisins_existants") -> tuple[list[Params], str]:
+def variant_schedule(evs: list[dict], name: str) -> tuple[list[Params], str]:
     """(paramètres de chaque semestre, politique de seuils) d'une des 10 séries comparées."""
     branch, mode, thresholds = VARIANTS[name]
     n = len(evs)
     if branch == "re1":
         return [Params(*RE1_POINT)] * n, thresholds
     if mode == "statique":
-        return [branch_choice(evs[0], branch, edge)[0]] * n, thresholds
-    return [branch_choice(ev, branch, edge)[0] for ev in evs], thresholds
+        return [branch_choice(evs[0], branch)[0]] * n, thresholds
+    return [branch_choice(ev, branch)[0] for ev in evs], thresholds
 
 
 def oos_candidates(data: AssetData, windows: list[Window], schedule: list[Params], thresholds: str):

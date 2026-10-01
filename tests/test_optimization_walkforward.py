@@ -1,5 +1,5 @@
 """EXP-D02 — orchestration du walk-forward (`optimization.walkforward`) : grille du protocole, évaluation d'un IS sans
-aucune donnée postérieure, branches OFAT = axes de la grille conjointe, calendriers Statique / WFO, candidats hors
+aucune donnée postérieure, branches OFAT = axes de la grille conjointe (règle de la zone connexe), calendriers Statique / WFO, candidats hors
 échantillon aux paramètres et seuils de leur semestre, position à cheval sur deux semestres, 10 séries comparées."""
 from pathlib import Path
 
@@ -93,15 +93,15 @@ def test_branches_ofat_sont_les_axes_de_la_grille_conjointe():
     i0, j0, k0 = RE1_INDEX
     p, _ = branch_choice(ev, "H")
     assert (p.r0, p.frontier) == (100.0, 0.85)
-    from optimization.selection import select
-    j, _ = select(ev["esperance_atr"][i0, :, k0], ev["calmar_r25"][i0, :, k0], ev["mdd_r25"][i0, :, k0], (j0,))
+    from optimization.selection import select_plateau
+    j, _ = select_plateau(ev["esperance_atr"][i0, :, k0], ev["calmar_r25"][i0, :, k0], ev["mdd_r25"][i0, :, k0], (j0,))
     assert p.h == GRID_H[j[0]]
     p, _ = branch_choice(ev, "R0")
     assert (p.h, p.frontier) == (26, 0.85)
     p, _ = branch_choice(ev, "frontiere")
     assert (p.r0, p.h) == (100.0, 26)
     p, _ = branch_choice(ev, "conjointe")
-    idx, _ = select(ev["esperance_atr"], ev["calmar_r25"], ev["mdd_r25"], RE1_INDEX)
+    idx, _ = select_plateau(ev["esperance_atr"], ev["calmar_r25"], ev["mdd_r25"], RE1_INDEX)
     assert (p.r0, p.h, p.frontier) == (GRID_R0[idx[0]], GRID_H[idx[1]], GRID_F[idx[2]])
 
 
