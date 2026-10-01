@@ -525,7 +525,7 @@ d'extraction, couverture, construction. Tous les chargements tronquent avant le 
 
 **Commandes :**
 - Depuis la racine : `PYTHONIOENCODING=utf-8 python experiments/<ID>/run_<ID>.py`.
-- Tests : `python -m pytest -q` → **244 réussis, 2 ignorés** au 2026-10-01 (environ 2 min).
+- Tests : `python -m pytest -q` → **302 réussis, 2 ignorés** au 2026-10-01, après D02 (environ 2 min).
 
 ---
 
@@ -738,10 +738,10 @@ d'extraction, couverture, construction. Tous les chargements tronquent avant le 
 |---|---|
 | Dossier local | `C:\Users\poek9\Projet Claude\#KalmanFilter` (le `#` impose des guillemets) |
 | GitHub | https://github.com/PokiCodeLonggamma/kalman_filter, **public**, branche `main` |
-| `origin/main` | le commit qui contient cette passation, validée par le porteur et poussée le 2026-10-01 (vérifier par `git log -2`) ; avant elle : `1243da3` (D01.7, partie 2) |
-| Commits locaux non poussés | aucun au moment de la validation ; ensuite, D02.0 : `7dca1f8` (données, poussé), puis le commit du rétro-test (voir `git log`) |
+| `origin/main` | `b1d75fb` (Gate 0 de D02), poussé le 2026-10-01 avec l'accord du porteur ; vérifier par `git log --oneline -5` |
+| Commits locaux non poussés | D02 : `457a1ed` (règle de la zone connexe, statistiques appariées) et le commit de la grille et de son rapport (voir `git log`) ; push sur accord du porteur |
 | Identité git | `PokiCodeLonggamma <250868839+PokiCodeLonggamma@users.noreply.github.com>` |
-| Tests | 249 réussis, 2 ignorés (244 à la validation, +5 en D02.0) |
+| Tests | 302 réussis, 2 ignorés (244 à la validation, +5 en D02.0, +53 en D02) |
 | Système | Windows 11, Git Bash et PowerShell, application Claude Code de bureau, navigateur intégré |
 | Python | 3.11 ; numpy, pandas, matplotlib (`pyproject.toml`) |
 | Mémoire de l'assistant | `C:\Users\poek9\.claude\projects\C--Users-poek9-Projet-Claude--KalmanFilter\memory\` |
@@ -764,7 +764,8 @@ d'extraction, couverture, construction. Tous les chargements tronquent avant le 
 | D01.5 | `5b156d0` |
 | D01.6 | `3ad0f1b` |
 | D01.7 | `39988a3` (partie 1), `454566c` (audit GitHub), `9c208a0`, `49433e8`, `78f51f7`, `8557219` (Saxo), `e8bcc24` (raccords), `343112c` (univers), `1243da3` (partie 2) |
-| D02.0 | `7dca1f8` (historiques longs et audit), puis le rétro-test de RE-1 figée |
+| D02.0 | `7dca1f8` (historiques longs et audit), `7ae6a8e` (rétro-test de RE-1 figée) |
+| D02 | `e2728f8` (protocole), `698d688` (`src/optimization`), `b1d75fb` (Gate 0), `457a1ed` (règle de choix, statistiques), puis la grille et son rapport |
 
 ---
 
@@ -772,13 +773,15 @@ d'extraction, couverture, construction. Tous les chargements tronquent avant le 
 
 1. **Fait (2026-10-01) :** passation relue et validée par le porteur, puis poussée. Ensuite, sur décision du porteur : EXP-D02.0,
    historiques longs (BTC 2013, or 2009, AVAX) et rétro-test de RE-1 figée (`experiments/D02_0/narratif_D02_0.md`).
+   Puis EXP-D02 (walk-forward, `experiments/D02/rapport_D02.md`) : aucune valeur ajoutée démontrée du recalibrage ;
+   RE-1 inchangée ; suite à décider par le porteur.
 2. **Nouvelle session :** lire ce document, puis :
    - `CLAUDE.md`, `RESEARCH_PHILOSOPHY.md`, `PROJECT_PLAN.md` ;
    - `BEST_RESULTS.md`, `RESEARCH_INSIGHTS.md` ;
    - les dernières entrées de `RESEARCH_LOG.md` ;
    - `src/strategy/re1.py` ;
    - `experiments/D01_7/narratif_D01_7.md`.
-3. **Vérifier l'état :** `git status`, `git log --oneline -5`, `python -m pytest -q` (attendu : 249 réussis, 2 ignorés).
+3. **Vérifier l'état :** `git status`, `git log --oneline -5`, `python -m pytest -q` (attendu : 302 réussis, 2 ignorés).
 4. **Rendre au porteur un compte rendu court**, balisé :
    - compréhension du projet et de RE-1 ;
    - règles ;

@@ -160,6 +160,14 @@ Elle se mesure séparément par sens et par type de signal (rang 1 ou répétiti
 - **Règle :** publier l'effet apparié sur entrées figées à côté de toute variation de H (extension d'I-M9). Un optimiseur de H sur la course séquentielle ajuste aussi ce calendrier.
 - À dimensionnement égal (0,25 % par ATR14 de 30 min), le risque par trade croît avec H : MDD de l'or −13,6 % à H = 26, −41,6 % à H = 130. Comparer des H au Calmar suppose de fixer cette convention.
 - **Verrouillage découplé de la sortie (EXP-D01.6).** À sortie fixe (26 barres), faire varier le verrouillage (26 à 90) donne un zigzag sans tendance sur SPY et XLE : chaque valeur retire un paquet de trades différent, valant de −0,75 à +0,87 ATR. Les trades sautés ne se distinguent à t que par leur délai depuis le trade précédent. Le verrouillage est un sélecteur de calendrier, pas un paramètre à optimiser.
+- **Recalibrage de H (EXP-D02).** Sur BTC 2015-2025, H réoptimisé chaque semestre perd −0,174 ATR [−0,276 ; −0,074] face à H = 26 en séquentiel, mais −0,008 [−0,121 ; +0,116] sur les entrées figées du Contrôle : la perte est un effet de calendrier, pas de sortie.
+
+### I-M18 — Un choix « au centre du plateau » dépend de la géométrie de la grille `[MÉTHODE]` `[OBS]`
+*Source : EXP-D02 (règle du porteur : centre de la plus grande zone connexe à Calmar net > 0).*
+
+- En trois dimensions (R0 sur 5 rangs, H sur 28 pas, frontière sur 5 pas), les zones retenues couvrent souvent une grande part de la grille : de 107 à 559 cases sur 700 sur BTC (médiane 280). Leur centre retombe alors près du centre de la grille (H de 30 à 44 sur BTC), quel que soit le marché.
+- Sur un axe entièrement positif, le centre est le milieu de l'axe : la frontière tombe sur 0,85, milieu de 0,75-0,95, par construction.
+- **Règle :** publier la taille des zones avec le choix, et lire ce choix au regard des bornes de la grille. Un choix au centre d'une très grande zone ne mesure pas le marché ; il reflète les bornes posées.
 
 ---
 
@@ -277,6 +285,22 @@ porteur).*
   4 bps ; 2009-2015 positifs chaque année (ATR de 13,5 à 19 bps), 2016-2019 négatifs.
 - `[HYP]` L'avantage de RE-1 sur BTC dépend de la période : sélection en échantillon pendant la construction (A01 → C05),
   ou changement de régime ; le rétro-test ne sépare pas les deux. D02 devra mesurer son gain sur ces périodes aussi.
+
+### K13 — Sur BTC, chaque calibration vaut pour son époque ; le walk-forward semestriel ne suit pas le basculement
+*Source : EXP-D02 (walk-forward de H, R0 et de la frontière, IS de 24 mois, OOS de 6 mois, 5 bps).*
+
+- `[OBS]` Espérance moyenne par trade (ATR) sur 2015-2019 puis 2020-2025 :
+  - RE-1 gelée, construite sur 2020-2025 : +0,064 puis +0,357 ;
+  - Statique-R0 (R0 = 200, choisi sur 2013-2014) : +0,301 puis −0,191 ;
+  - Statique-conjointe (R0 = 200, H = 36, choisie sur 2013-2014) : +0,337 puis −0,077.
+- `[OBS]` WFO-R0 passe de R0 = 200 à 50 en 2017, puis à 100 dès le S2 2018 : +0,205 sur 2015-2019, +0,355 ensuite
+  (mêmes trades que le Contrôle). Il manque 2019 (−0,074, contre +0,692 à R0 = 200). Face à RE-1 gelée sur 2015-2025 :
+  +0,074 ATR [−0,067 ; +0,225] ; lu dès 2016 : +0,004.
+- `[OBS]` Sur 92 comparaisons au coût principal (BTC, SOL, AVAX, or), aucune variante ne surpasse RE-1 gelée et 8 écarts
+  d'espérance sont significativement négatifs en ATR, contre 1 positif.
+- `[HYP]` La cinématique que RE-1 exploite change de réglage optimal entre les deux époques de BTC (marché spot étroit,
+  puis marché à dérivés et ETF). Un recalibrage sur 24 mois réagit trop tard, ou par hasard ; la valeur ajoutée du
+  walk-forward n'est pas démontrée avec ce protocole.
 
 ---
 
@@ -459,7 +483,7 @@ L'atlas A01 soutient cette lecture à travers le ratio de retracement `retrace_r
 9. ~~Un filtre de tendance macro améliore-t-il RE-1 ?~~ **Répondu (EXP-C04)** : non. Les trades contre-tendance ne sont pas toxiques, et le veto retire des V de la queue droite. En séquentiel, il fait en plus entrer des signaux perdants.
 10. ~~Les seuils durs de RE-1 reposent-ils sur des plateaux ?~~ **Répondu (EXP-C05)** : oui pour la frontière F2b / F3 (0,85 à 0,95) et pour la marge du stop de F3 (−0,25 à +0,25 ATR). L'exclusion de `nis_z_100` est une falaise côté permissif, signalée avant l'Étape D.
 11. ~~La bascule d'espérance de `nis_z_100` au voisinage de P75 se retrouve-t-elle sur les autres actifs ?~~ **Mesuré (EXP-D01, trades isolés)** : pas telle quelle. Sur SOL, la bande sous P70 est positive (IC > 0), mais la bande au-delà de P90 l'est aussi ; sur l'or, les bandes sont nulles ou négatives. Aucun réglage.
-12. Quelle échelle de temps rend le rapport frais / ATR compatible avec l'or (brut +0,24 ATR, frais 0,26 ATR à 30 min) ? Question de vitesse : H et R0 en D02, ou unité de temps des barres (hors périmètre de D02 tel qu'annoncé). **Mesuré pour H (EXP-D01.5) :** allonger H ne dilue pas les frais, qui restent à 0,26 ATR par trade ; le brut ne croît pas (+0,24 → −0,45 ATR de H = 26 à 130). Restent R0 et l'unité de temps des barres.
+12. Quelle échelle de temps rend le rapport frais / ATR compatible avec l'or (brut +0,24 ATR, frais 0,26 ATR à 30 min) ? Question de vitesse : H et R0 en D02, ou unité de temps des barres (hors périmètre de D02 tel qu'annoncé). **Mesuré pour H (EXP-D01.5) :** allonger H ne dilue pas les frais, qui restent à 0,26 ATR par trade ; le brut ne croît pas (+0,24 → −0,45 ATR de H = 26 à 130). **Mesuré pour R0, H et la frontière en walk-forward (EXP-D02) :** sur 2011-2025, toutes les séries perdent à 4 bps (−0,045 à −0,196 ATR), et R0 recalibré fait pire que le Contrôle (−0,150 [−0,294 ; −0,021]). Reste l'unité de temps des barres.
 13. L'inversion F2b / F3 de l'or (F2b Short −0,70, F3 Long +0,55) tient-elle à la hausse séculaire de 2020-2025 (dérive +0,38 ATR) ou à la microstructure d'un CFD ? Non testé.
 14. ~~WTI : quelle source pour 2020-2025 ?~~ **Tranché par le porteur (2026-09-30)** : WTI retiré de D01, remplacé par l'ETF XLE (corrélation quotidienne 0,46 avec le spot WTI, 0,60 avec SPY).
 15. Sur une série en séances, H doit-il se compter en barres ou en temps, et faut-il sortir avant la nuit ? D01 bis montre des trades traversant deux nuits, les gaps pesant 35 à 47 % de leur amplitude. Question pour D02, à cadrer : H est l'un des deux paramètres autorisés. **Mesuré (EXP-D01.5) :** H = 13 traverse encore une nuit (91 % des trades) ; H = 6 réduit l'exposition de moitié, mais la composante en séance est ≈ 0 (SPY) ou négative (XLE) : sortir avant la nuit ne créerait pas d'espérance (K9). **Mesuré (EXP-D01.6) :** la sortie de fin de séance donne un net de −0,04 (SPY) et −0,17 ATR (XLE), sans IC > 0, avec un MDD divisé par deux (K10).

@@ -1,0 +1,220 @@
+{
+ "BTC": {
+  "nom": "BTC/USD Bitstamp 2013-2025, panne de janvier 2015 retirée",
+  "info": {
+   "barres_lues": 227904,
+   "panne_barres_retirees": 215,
+   "signaux_R0_10": 12588,
+   "signaux_R0_50": 16355,
+   "signaux_R0_100": 15819,
+   "signaux_R0_200": 14424,
+   "signaux_R0_500": 12380,
+   "barres": 227689,
+   "premiere": "2013-01-01 00:00:00+00:00",
+   "derniere": "2025-12-31 23:30:00+00:00",
+   "atlas_s": {
+    "10": 13.3,
+    "50": 14.0,
+    "100": 14.8,
+    "200": 14.0,
+    "500": 12.9
+   },
+   "grille_s": 1.3,
+   "evaluations": 15400
+  },
+  "semestres": 22,
+  "premier_oos": "2015-01-01",
+  "entrees_figees_H": {
+   "Statique-H": {
+    "effet_bps": 0.0,
+    "effet_bps_lo": 0.0,
+    "effet_bps_hi": 0.0,
+    "effet_atr": 0.0,
+    "effet_atr_lo": 0.0,
+    "effet_atr_hi": 0.0,
+    "trades": 1909,
+    "h_moyen": 26.0,
+    "part_h_26": 1.0
+   },
+   "WFO-H": {
+    "effet_bps": -0.15885567071626291,
+    "effet_bps_lo": -4.982165157386318,
+    "effet_bps_hi": 5.079703676692593,
+    "effet_atr": -0.008439104035825285,
+    "effet_atr_lo": -0.12089206755578957,
+    "effet_atr_hi": 0.11639707645839097,
+    "trades": 1909,
+    "h_moyen": 29.75484546883185,
+    "part_h_26": 0.19748559455212153
+   }
+  }
+ },
+ "SOL": {
+  "nom": "SOL/USD Coinbase, dès le 2021-06-17",
+  "info": {
+   "barres_lues": 79577,
+   "signaux_R0_10": 4596,
+   "signaux_R0_50": 5537,
+   "signaux_R0_100": 5385,
+   "signaux_R0_200": 4977,
+   "signaux_R0_500": 4283,
+   "barres": 79577,
+   "premiere": "2021-06-17 16:00:00+00:00",
+   "derniere": "2025-12-31 23:30:00+00:00",
+   "atlas_s": {
+    "10": 4.4,
+    "50": 4.4,
+    "100": 4.4,
+    "200": 4.3,
+    "500": 4.3
+   },
+   "grille_s": 0.3,
+   "evaluations": 3500
+  },
+  "semestres": 5,
+  "premier_oos": "2023-07-01",
+  "entrees_figees_H": {
+   "Statique-H": {
+    "effet_bps": 0.0,
+    "effet_bps_lo": 0.0,
+    "effet_bps_hi": 0.0,
+    "effet_atr": 0.0,
+    "effet_atr_lo": 0.0,
+    "effet_atr_hi": 0.0,
+    "trades": 419,
+    "h_moyen": 26.0,
+    "part_h_26": 1.0
+   },
+   "WFO-H": {
+    "effet_bps": -11.87955593158938,
+    "effet_bps_lo": -26.356316396641386,
+    "effet_bps_hi": 2.3416148344834307,
+    "effet_atr": -0.10397731364068845,
+    "effet_atr_lo": -0.25319133398381155,
+    "effet_atr_hi": 0.04153887186256489,
+    "trades": 419,
+    "h_moyen": 19.87112171837709,
+    "part_h_26": 0.19331742243436753
+   }
+  }
+ },
+ "AVAX": {
+  "nom": "AVAX/USD Coinbase, dès le 2021-09-30",
+  "info": {
+   "barres_lues": 74530,
+   "signaux_R0_10": 4181,
+   "signaux_R0_50": 5231,
+   "signaux_R0_100": 5061,
+   "signaux_R0_200": 4658,
+   "signaux_R0_500": 3993,
+   "barres": 74530,
+   "premiere": "2021-09-30 19:00:00+00:00",
+   "derniere": "2025-12-31 23:30:00+00:00",
+   "atlas_s": {
+    "10": 4.1,
+    "50": 4.3,
+    "100": 4.0,
+    "200": 4.0,
+    "500": 4.0
+   },
+   "grille_s": 0.3,
+   "evaluations": 2800
+  },
+  "semestres": 4,
+  "premier_oos": "2024-01-01",
+  "entrees_figees_H": {
+   "Statique-H": {
+    "effet_bps": 2.459562603387548,
+    "effet_bps_lo": -6.629925380569866,
+    "effet_bps_hi": 10.71000535942815,
+    "effet_atr": 0.02221923679583882,
+    "effet_atr_lo": -0.09201434871330963,
+    "effet_atr_hi": 0.12063759200543346,
+    "trades": 354,
+    "h_moyen": 24.0,
+    "part_h_26": 0.0
+   },
+   "WFO-H": {
+    "effet_bps": -1.1684754082069884,
+    "effet_bps_lo": -15.876813045334183,
+    "effet_bps_hi": 11.28735760996244,
+    "effet_atr": -0.021565694578081593,
+    "effet_atr_lo": -0.19264511768839265,
+    "effet_atr_hi": 0.12599236779019493,
+    "trades": 354,
+    "h_moyen": 19.768361581920903,
+    "part_h_26": 0.23163841807909605
+   }
+  }
+ },
+ "XAU": {
+  "nom": "CFD or XAU/USD HistData, dès 2009-03-15",
+  "info": {
+   "barres_lues": 198695,
+   "signaux_R0_10": 11133,
+   "signaux_R0_50": 13940,
+   "signaux_R0_100": 13426,
+   "signaux_R0_200": 12436,
+   "signaux_R0_500": 10723,
+   "barres": 198695,
+   "premiere": "2009-03-15 22:00:00+00:00",
+   "derniere": "2025-12-31 21:30:00+00:00",
+   "atlas_s": {
+    "10": 11.0,
+    "50": 11.1,
+    "100": 11.2,
+    "200": 11.2,
+    "500": 10.8
+   },
+   "grille_s": 1.4,
+   "evaluations": 20300
+  },
+  "semestres": 29,
+  "premier_oos": "2011-07-01",
+  "entrees_figees_H": {
+   "Statique-H": {
+    "effet_bps": -1.1883918347793394,
+    "effet_bps_lo": -2.6831817940230316,
+    "effet_bps_hi": 0.2532690836783083,
+    "effet_atr": -0.06039479755425331,
+    "effet_atr_lo": -0.157569447481665,
+    "effet_atr_hi": 0.03477706979454315,
+    "trades": 1656,
+    "h_moyen": 34.0,
+    "part_h_26": 0.0
+   },
+   "WFO-H": {
+    "effet_bps": -0.9843631629069292,
+    "effet_bps_lo": -2.828234920818665,
+    "effet_bps_hi": 0.7663525019361187,
+    "effet_atr": -0.049056887533798575,
+    "effet_atr_lo": -0.16672578622776013,
+    "effet_atr_hi": 0.06852556801311921,
+    "trades": 1656,
+    "h_moyen": 33.04589371980676,
+    "part_h_26": 0.34782608695652173
+   }
+  }
+ },
+ "BTC brut": {
+  "info": {
+   "barres_lues": 227904,
+   "signaux_R0_10": 12588,
+   "signaux_R0_50": 16356,
+   "signaux_R0_100": 15821,
+   "signaux_R0_200": 14426,
+   "signaux_R0_500": 12380,
+   "barres": 227904,
+   "premiere": "2013-01-01 00:00:00+00:00",
+   "derniere": "2025-12-31 23:30:00+00:00",
+   "atlas_s": {
+    "10": 12.5,
+    "50": 13.0,
+    "100": 14.1,
+    "200": 14.0,
+    "500": 13.6
+   }
+  },
+  "semestres": 22
+ }
+}

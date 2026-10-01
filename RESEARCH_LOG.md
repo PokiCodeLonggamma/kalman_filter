@@ -1594,3 +1594,54 @@ reproduction de résultats publiés et parité du noyau, sans aucune performance
 - Push autorisé pour `e2728f8`, `698d688` et le commit de Gate 0 ; second GO donné pour les 20 atlas, les 42 000
   évaluations d'IS, les séries hors échantillon et le rapport de D02.
 
+#### Résultats de la grille (2026-10-01, `run_D02.py --grille`, 319 s ; `rapport_D02.md`)
+*42 000 évaluations d'IS (règle de la zone connexe), 40 séries hors échantillon, 146 comparaisons appariées publiées
+(92 au coût principal). Contrôles bloquants de Gate 0 repassés en tête. Commit du code : `457a1ed`.*
+
+| Actif · série (coût) | PnL : 0,25 %/ATR ; 1x ; bps (1x) | PF (1x) | WR | Espérance ATR [IC] ; bps | MDD : 0,25 %/ATR ; 1x | Trades (/mois) | Durée médiane | Part des frais (1x) ; brut ; frais (ATR) |
+|---|---|---|---|---|---|---|---|---|
+| BTC · RE-1 gelée (5) | +159 % ; +396 % ; +21 149 | 1,15 | 43,9 % | +0,218 [+0,032 ; +0,401] ; +10,2 | −28,4 % ; −53,0 % | 2 075 (15,7) | 13 h | 33 % ; +0,34 ; 0,12 |
+| BTC · Contrôle (5) | +114 % ; +221 % ; +16 162 | 1,12 | 43,0 % | +0,194 [+0,000 ; +0,399] ; +8,5 | −27,9 % ; −48,4 % | 1 909 (14,5) | 13 h | 37 % ; +0,32 ; 0,13 |
+| BTC · WFO-R0 (5) | +214 % ; +478 % ; +22 133 | 1,18 | 43,6 % | +0,291 [+0,088 ; +0,499] ; +12,1 | −15,8 % ; −40,6 % | 1 836 (13,9) | 13 h | 29 % ; +0,42 ; 0,13 |
+| BTC · WFO-H (5) | −2 % ; −20 % ; +2 260 | 1,02 | 42,4 % | +0,019 [−0,202 ; +0,244] ; +1,2 | −46,0 % ; −69,8 % | 1 847 (14,0) | 13 h | 80 % ; +0,14 ; 0,13 |
+| BTC · WFO-conjointe (5) | +11 % ; −39 % ; +191 | 1,00 | 41,2 % | +0,049 [−0,190 ; +0,284] ; +0,1 | −34,0 % ; −60,9 % | 1 591 (12,1) | 16 h | 98 % ; +0,17 ; 0,12 |
+| SOL · RE-1 gelée (5) | +27 % ; +114 % ; +9 443 | 1,25 | 45,2 % | +0,252 [−0,191 ; +0,712] ; +23,3 | −13,1 % ; −42,3 % | 405 (13,5) | 13 h | 18 % ; +0,32 ; 0,07 |
+| SOL · WFO-conjointe (5) | +26 % ; +78 % ; +7 539 | 1,20 | 48,2 % | +0,261 [−0,199 ; +0,731] ; +19,7 | −19,1 % ; −59,1 % | 382 (12,7) | 13 h | 20 % ; +0,33 ; 0,07 |
+| AVAX · RE-1 gelée (5) | +5 % ; −17 % ; −536 | 0,99 | 42,6 % | +0,074 [−0,301 ; +0,431] ; −1,6 | −16,5 % ; −52,9 % | 329 (13,7) | 13 h | 148 % ; +0,14 ; 0,06 |
+| AVAX · WFO-conjointe (5) | −18 % ; −48 % ; −5 166 | 0,87 | 39,4 % | −0,238 [−0,615 ; +0,163] ; −16,0 | −23,3 % ; −61,2 % | 322 (13,4) | 15 h | brut ≤ 0 ; −0,17 ; 0,06 |
+| XAU · RE-1 gelée (4) | −10 % ; −7 % ; −388 | 0,99 | 41,4 % | −0,045 [−0,273 ; +0,177] ; −0,2 | −31,9 % ; −32,1 % | 1 637 (9,4) | 13 h | 106 % ; +0,24 ; 0,29 |
+| XAU · WFO-conjointe (4) | −14 % ; −15 % ; −1 151 | 0,97 | 40,9 % | −0,067 [−0,377 ; +0,232] ; −0,9 | −24,6 % ; −24,7 % | 1 322 (7,6) | 20 h | 128 % ; +0,22 ; 0,29 |
+
+- [OBS] **Aucune variante ne surpasse RE-1 gelée, sur aucun actif ; aucun WFO n'est retenu face à son Statique.**
+  Sur 92 comparaisons au coût principal : aucun gain d'espérance tangible en ATR et en bps à la fois ; un seul gain
+  de rendement tangible (WFO-R0 contre Statique-R0 sur BTC, +9,8 %/an [+0,4 ; +19,5]).
+- [OBS] **Le recalibrage dégrade plus souvent qu'il n'améliore :** 8 écarts d'espérance significativement négatifs en ATR,
+  contre 1 positif. WFO-H sur BTC fait −0,174 ATR [−0,276 ; −0,074] face à Statique-H ; WFO-R0 sur l'or fait −0,150
+  [−0,294 ; −0,021] face au Contrôle.
+- [OBS] **BTC, WFO-R0 :** +0,291 ATR [+0,088 ; +0,499], MDD −15,8 % (0,25 %/ATR), Calmar 0,69, 10 années sur 11. L'écart
+  à RE-1 gelée (+0,218) n'est pas significatif : +0,074 [−0,067 ; +0,225]. R0 choisi : 200 jusqu'au S1 2017, puis 50,
+  puis 100 dès le S2 2018 (mêmes trades que le Contrôle ensuite). Le gain tient à 2015 (+0,535 contre −0,272) et à
+  2018 ; lu dès 2016, +0,004 [−0,114 ; +0,134].
+- [OBS] **BTC par période :** RE-1 gelée +0,064 ATR en 2015-2019 et +0,357 en 2020-2025 ; Statique-R0 (R0 = 200, tiré de
+  2013-2014) +0,301 puis −0,191 ; Statique-conjointe (200, 36, 0,85) +0,337 puis −0,077. Chaque calibration vaut pour
+  son époque.
+- [OBS] **H :** choix instable (12 à 50 barres). Sur les entrées figées du Contrôle, l'horizon choisi ne change rien
+  (−0,008 ATR [−0,121 ; +0,116]) : la perte de WFO-H vient du calendrier des trades (I-M16).
+- [OBS] **Frontière :** inerte, 0,85 dans 21 semestres sur 22 sur BTC. **Seuils réestimés seuls (Contrôle) :** sans effet
+  mesurable (BTC −0,024 [−0,093 ; +0,049]).
+- [OBS] **Conjointe :** R0 change souvent ; H de 30 à 44 sur BTC. Les zones retenues couvrent 107 à 559 cases sur 700
+  (médiane 280) : le centre de la zone retombe près du centre de la grille.
+- [OBS] **Or :** toutes les séries perdent (−0,045 à −0,196 ATR ; brut +0,09 à +0,24 pour 0,29 ATR de frais). **SOL,
+  AVAX :** IC de ±0,4 à ±0,7 ATR, rien de distinct de RE-1 gelée.
+- [OBS] **Stress :** à 10 bps, aucune série de BTC n'a d'IC > 0 (RE-1 gelée +0,093 [−0,094 ; +0,277], WFO-R0 +0,165
+  [−0,043 ; +0,373]) ; à 6 bps, l'or perd partout (−0,19 à −0,34). **Panne de 2015 :** sans effet (≤ 0,002 ATR).
+- [HYP] Sur BTC, les réglages valent pour une époque ; un recalibrage semestriel sur 24 mois ne suit pas le basculement
+  de façon fiable (WFO-R0 l'a suivi en 2017-2018, a manqué 2019).
+- [HYP] Recalibrer H ne fait que déplacer le calendrier des trades ; la règle de la zone et de son centre, sur une grille
+  où H compte 28 pas contre 5, ramène le choix vers le centre de la grille (effet géométrique).
+
+#### Décision
+- [ ] **REJETÉ**
+- [x] **NON CONCLUANT au sens du protocole : aucune valeur ajoutée démontrée du walk-forward, par actif comme
+  conjointement. RE-1 inchangée.** La suite (hold-out, autre cadrage) est à décider par le porteur.
+

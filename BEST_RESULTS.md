@@ -241,6 +241,28 @@ de Japan 225. Coûts validés avant le calcul. Aucun IC à borne basse positive.
 - **Or :** brut positif sur 17 ans (+0,30 en 2009-2019, IC > 0 en log ; +0,24 en 2020-2025), absorbé par les frais à
   4 bps ; 2009-2015 positifs chaque année, 2016-2019 négatifs.
 
+### EXP-D02 — walk-forward de H, R0 et de la frontière (protocole du porteur ; hors échantillon, coût principal)
+*IS de 24 mois, OOS de 6 mois, seuils réestimés sur chaque IS, choix au centre de la plus grande zone connexe à Calmar
+net > 0 ; 10 séries par actif, capital continu. Verdict du protocole : aucune variante ne surpasse RE-1 gelée, aucun
+WFO n'est retenu face à son Statique ; RE-1 inchangée.*
+
+| Série (coût) | Espérance ATR [IC] | Brut ; frais (ATR) | PnL : 0,25 %/ATR ; 1x | MDD : 0,25 %/ATR ; 1x | Calmar | Trades |
+|---|---|---|---|---|---|---|
+| BTC 2015-2025 · RE-1 gelée (5) | +0,218 [+0,032 ; +0,401] | +0,34 ; 0,12 | +159 % ; +396 % | −28,4 % ; −53,0 % | 0,32 | 2 075 |
+| BTC 2015-2025 · WFO-R0 (5) | +0,291 [+0,088 ; +0,499] | +0,42 ; 0,13 | +214 % ; +478 % | −15,8 % ; −40,6 % | 0,69 | 1 836 |
+| BTC 2015-2025 · WFO-conjointe (5) | +0,049 [−0,190 ; +0,284] | +0,17 ; 0,12 | +11 % ; −39 % | −34,0 % ; −60,9 % | 0,03 | 1 591 |
+| SOL S2 2023-2025 · RE-1 gelée (5) | +0,252 [−0,191 ; +0,712] | +0,32 ; 0,07 | +27 % ; +114 % | −13,1 % ; −42,3 % | 0,76 | 405 |
+| AVAX 2024-2025 · RE-1 gelée (5) | +0,074 [−0,301 ; +0,431] | +0,14 ; 0,06 | +5 % ; −17 % | −16,5 % ; −52,9 % | 0,15 | 329 |
+| Or S2 2011-2025 · RE-1 gelée (4) | −0,045 [−0,273 ; +0,177] | +0,24 ; 0,29 | −10 % ; −7 % | −31,9 % ; −32,1 % | −0,02 | 1 637 |
+
+- **BTC, WFO-R0 contre RE-1 gelée :** +0,074 ATR [−0,067 ; +0,225], non significatif ; lu dès 2016, +0,004. Le gain
+  tient à 2015 et 2018 (R0 = 200 puis 50 avant de revenir à 100 dès le S2 2018).
+- **BTC, chaque calibration vaut pour son époque :** RE-1 gelée +0,064 ATR en 2015-2019 et +0,357 en 2020-2025 ;
+  Statique-R0 (R0 = 200 tiré de 2013-2014) +0,301 puis −0,191.
+- **Recalibrer H dégrade :** WFO-H −0,174 ATR [−0,276 ; −0,074] face à Statique-H sur BTC ; sur entrées figées, l'effet
+  de l'horizon est nul (calendrier, I-M16).
+- **10 bps :** plus aucun IC > 0 sur BTC (RE-1 gelée +0,093, WFO-R0 +0,165).
+
 ## Pistes écartées (à ne pas retester sans élément nouveau)
 
 | Piste | Raison | Source |

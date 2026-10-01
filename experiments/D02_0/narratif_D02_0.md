@@ -108,7 +108,8 @@ Références 2020-2025 : BTC +0,514, +0,024, +0,305, +0,504, +0,334, +0,550 (6/6
 - `[HYP]` **Sur BTC, l'avantage de RE-1 n'est pas stationnaire dans le temps.** Deux explications, que ce test ne sépare
   pas : (a) RE-1 a été construite sur 2020-2025 au fil d'une quinzaine d'expériences (A01 → C05), et une part de son
   espérance en échantillon peut tenir à ces choix ; (b) un changement de régime du marché (BTC 2013-2019 : marché spot
-  étroit, ère Mt. Gox, avant les dérivés et les ETF). 2026, scellé, reste le seul hors échantillon vierge de BTC.
+  étroit, ère Mt. Gox, avant les dérivés et les ETF). 2026, scellé, reste le seul hors échantillon de BTC, mais il
+  n'est pas vierge : d'anciens projets l'ont vu (`passation.md` §2.1 ; correction du 2026-10-01).
 - `[HYP]` **Sur l'or, le brut de +0,25 à +0,30 ATR persiste sur 17 ans** ; la rentabilité nette dépend du rapport brut /
   frais en ATR (K11) et du régime (2009-2015 contre 2016-2025).
 - `[HYP]` **Pour D02 :** la référence figée dépend de la période. Ces périodes antérieures entrent dans le jeu de données
