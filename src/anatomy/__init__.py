@@ -17,6 +17,7 @@ from anatomy.causal import ATR_LEN, atr_wilder, causal_table
 from anatomy.posterior import TAUS, event_profiles, posterior_table
 from config import WARMUP_BARS
 from features import _run_rank, build_features
+from indicator import KalmanParams
 from utils.data_loader import load_ohlc
 
 __all__ = ["DEV_END", "ID_COLUMNS", "load_dev_bars", "dev_universe", "build_atlas", "event_profiles", "TAUS"]
@@ -52,9 +53,11 @@ def dev_universe(f: pd.DataFrame) -> np.ndarray:
     return np.asarray(keep, dtype=int)
 
 
-def build_atlas(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame, np.ndarray, np.ndarray]:
-    """Atlas des signaux : identification, variables a posteriori (`post_`), variables causales."""
-    f = build_features(df)
+def build_atlas(df: pd.DataFrame, kalman: KalmanParams = KalmanParams()
+                ) -> tuple[pd.DataFrame, pd.DataFrame, np.ndarray, np.ndarray]:
+    """Atlas des signaux : identification, variables a posteriori (`post_`), variables causales. `kalman` : réglages
+    du moteur certifié (EXP-D02 : R0 seul varie), transmis tels quels à `features.build_features`."""
+    f = build_features(df, kalman)
     atr = atr_wilder(f.high, f.low, f.close, ATR_LEN)
     idx = dev_universe(f)
     sig = f.signal.to_numpy().astype(int)

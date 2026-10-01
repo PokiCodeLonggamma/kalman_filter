@@ -3,7 +3,7 @@ name = "kalmanfilter"
 version = "0.1.0"
 description = "AKF-TSO v2.1 : mécanique de trading autour du signal Kalman (moteur certifié repris de #KAKALMAN)"
 requires-python = ">=3.11"
-dependencies = ["numpy>=2.0", "pandas>=2.2", "matplotlib>=3.8"]
+dependencies = ["numpy>=2.0", "pandas>=2.2", "matplotlib>=3.8", "numba>=0.60"]
 
 [project.optional-dependencies]
 dev = ["pytest>=8"]

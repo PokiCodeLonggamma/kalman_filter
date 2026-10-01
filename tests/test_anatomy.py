@@ -169,3 +169,17 @@ def test_coherence_des_retards(atlas_dev):
     c = a.post_x1_crossed_zero
     assert (a.post_lag_filter_bars[c] + a.post_lag_osc_bars[c] == a.post_lag_bars[c]).all()
     assert a.loc[~c, ["post_lag_filter_bars", "post_lag_osc_bars"]].isna().all().all()
+
+
+@pytest.mark.data
+def test_build_atlas_transmet_les_parametres_du_kalman():
+    """EXP-D02 : R0 se règle par `KalmanParams` (moteur certifié intouché) ; par défaut, l'atlas est inchangé."""
+    if not DATA_RAW.exists():
+        pytest.skip("data/raw/bitstamp_btcusd_30m.csv absent (hors dépôt)")
+    from indicator import KalmanParams
+    df = load_dev_bars().iloc[:12000].reset_index(drop=True)
+    ref = build_atlas(df)[0]
+    assert build_atlas(df, kalman=KalmanParams())[0].equals(ref)
+    assert build_atlas(df, kalman=KalmanParams(R0=100.0))[0].equals(ref)
+    reactive = build_atlas(df, kalman=KalmanParams(R0=10.0))[0]
+    assert not reactive.bar_index.equals(ref.bar_index)   # R0 transmis : les signaux changent (sens non monotone)
