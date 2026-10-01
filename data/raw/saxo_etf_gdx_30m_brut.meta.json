@@ -1,0 +1,20 @@
+{
+ "source": "saxo-openapi",
+ "environnement": "LIVE",
+ "actif": "ETF_GDX",
+ "uic": 35663,
+ "asset_type": "CfdOnEtf",
+ "symbol": "GDX:arcx",
+ "description": "VanEck Vectors Gold Miners ETF",
+ "exchange_id": "NYSE_ARCA",
+ "first_sample_time": "2006-05-31 13:50:00+00:00",
+ "horizon_min": 30,
+ "couverture_demandee": "2020-01-01 00:00 → 2025-12-31 23:30 UTC ; 2026 jamais demandé",
+ "methode": "/chart/v3/charts, pages UpTo de 1 200 barres depuis le 2025-12-31 23:30 UTC vers le passé",
+ "rolls": "sans objet : CFD sur l'indice au comptant, FX au comptant ou CFD sur ETF (aucune échéance) ; contrôle dans l'audit",
+ "role": "série brute Saxo, intacte",
+ "n_rows": 19532,
+ "first": "2020-01-02T14:30:00Z",
+ "last": "2025-12-31T20:30:00Z",
+ "sha256": "2cbaab0fe9c1ce6e9609dcf67757b80737747a95a423a8a1a27992ab2b22e577"
+}

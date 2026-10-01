@@ -1,0 +1,20 @@
+{
+ "source": "saxo-openapi",
+ "environnement": "LIVE",
+ "actif": "US30",
+ "uic": 4911,
+ "asset_type": "CfdOnIndex",
+ "symbol": "US30.I",
+ "description": "US 30 Wall Street",
+ "exchange_id": "NYSE",
+ "first_sample_time": "2003-10-31 02:15:00+00:00",
+ "horizon_min": 30,
+ "couverture_demandee": "2020-01-01 00:00 → 2025-12-31 23:30 UTC ; 2026 jamais demandé",
+ "methode": "/chart/v3/charts, pages UpTo de 1 200 barres depuis le 2025-12-31 23:30 UTC vers le passé",
+ "rolls": "sans objet : CFD sur l'indice au comptant ou FX au comptant (aucune échéance) ; contrôle dans l'audit",
+ "role": "série brute Saxo, intacte",
+ "n_rows": 69729,
+ "first": "2020-01-01T23:00:00Z",
+ "last": "2025-12-31T21:30:00Z",
+ "sha256": "8ff2aacc79329fa591c41b7653e96ceb0a1bbd55a099262b2da0a93cde36c1e7"
+}

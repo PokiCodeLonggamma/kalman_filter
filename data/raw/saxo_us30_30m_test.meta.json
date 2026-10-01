@@ -1,0 +1,18 @@
+{
+ "source": "saxo-openapi",
+ "environnement": "LIVE",
+ "uic": 4911,
+ "asset_type": "CfdOnIndex",
+ "horizon_min": 30,
+ "mode": "From",
+ "time": "2020-01-02 00:00:00+00:00",
+ "count": 1200,
+ "symbol": "US30.I",
+ "description": "US 30 Wall Street",
+ "role": "bloc de test D01.7 (aucun backtest)",
+ "environnement_saxo": "live",
+ "n_rows": 1200,
+ "first": "2020-01-02T00:00:00Z",
+ "last": "2020-02-10T08:30:00Z",
+ "sha256": "3fd99b108224150136842f68b0a487c5f5b362a042ca50a57fbc84566a82ce41"
+}

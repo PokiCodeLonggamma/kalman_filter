@@ -1,0 +1,20 @@
+{
+ "source": "saxo-openapi",
+ "environnement": "LIVE",
+ "actif": "HK50",
+ "uic": 47624,
+ "asset_type": "CfdOnIndex",
+ "symbol": "HK50.I",
+ "description": "Hong Kong 50",
+ "exchange_id": "HKEX",
+ "first_sample_time": "2010-07-05 02:16:00+00:00",
+ "horizon_min": 30,
+ "couverture_demandee": "2020-01-01 00:00 → 2025-12-31 23:30 UTC ; 2026 jamais demandé",
+ "methode": "/chart/v3/charts, pages UpTo de 1 200 barres depuis le 2025-12-31 23:30 UTC vers le passé",
+ "rolls": "sans objet : CFD sur l'indice au comptant, FX au comptant ou CFD sur ETF (aucune échéance) ; contrôle dans l'audit",
+ "role": "série brute Saxo, intacte",
+ "n_rows": 47025,
+ "first": "2020-01-02T01:00:00Z",
+ "last": "2025-12-31T03:30:00Z",
+ "sha256": "85d60906ff2e3d70b7149e064f277a2723762d1b31b451efae0a25ae7565446f"
+}

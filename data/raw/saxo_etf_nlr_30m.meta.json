@@ -1,0 +1,29 @@
+{
+ "source": "saxo-openapi",
+ "environnement": "LIVE",
+ "actif": "ETF_NLR",
+ "uic": 35666,
+ "asset_type": "CfdOnEtf",
+ "symbol": "NLR:arcx",
+ "description": "VanEck Uranium and Nuclear ETF",
+ "exchange_id": "NYSE_ARCA",
+ "first_sample_time": "2007-09-03 14:54:00+00:00",
+ "horizon_min": 30,
+ "couverture_demandee": "2020-01-01 00:00 → 2025-12-31 23:30 UTC ; 2026 jamais demandé",
+ "methode": "/chart/v3/charts, pages UpTo de 1 200 barres depuis le 2025-12-31 23:30 UTC vers le passé",
+ "rolls": "sans objet : CFD sur l'indice au comptant, FX au comptant ou CFD sur ETF (aucune échéance) ; contrôle dans l'audit",
+ "prix": "dernier prix traité OHLC (Open, High, Low, Close) et volume",
+ "timezone": "UTC (début de barre)",
+ "n_rows": 12146,
+ "first": "2020-01-02 14:30:00+00:00",
+ "last": "2025-12-31 20:30:00+00:00",
+ "lignes_ohlc_manquantes_ecartees": 0,
+ "extracted_at_utc": "2026-10-01T02:10:50.026473+00:00",
+ "extracted_at_origin": "heure du téléchargement (barres antérieures à 2026)",
+ "serie_brute": {
+  "fichier": "saxo_etf_nlr_30m_brut.csv",
+  "sha256": "d43f02f587f32702b0aa564847aafa42318754efda10a9340812adf2018ca1bf"
+ },
+ "sha256": "0f37a080b449c2fab570e9b1d4275abfb25dc6465591533f23b90fd6646d2eaa",
+ "note": "retenu par erreur pour URA au 2e passage (motif « uranium » trop large) ; renommé et conservé comme actif supplémentaire déclaré (VanEck Uranium and Nuclear ETF)"
+}

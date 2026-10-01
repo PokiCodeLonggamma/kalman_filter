@@ -1,0 +1,18 @@
+{
+ "source": "saxo-openapi",
+ "environnement": "LIVE",
+ "uic": 8177,
+ "asset_type": "FxSpot",
+ "horizon_min": 30,
+ "mode": "From",
+ "time": "2020-01-02 00:00:00+00:00",
+ "count": 1200,
+ "symbol": "XAGUSD",
+ "description": "Silver/US Dollar",
+ "role": "bloc de test D01.7 (aucun backtest)",
+ "environnement_saxo": "live",
+ "n_rows": 1200,
+ "first": "2020-01-02T00:00:00Z",
+ "last": "2020-02-07T05:30:00Z",
+ "sha256": "a2e9a9ff77c2eada081b1dc44c3d5966afb0ab13a9f0eb35f5042fe40b954307"
+}

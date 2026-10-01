@@ -1,0 +1,18 @@
+{
+ "source": "saxo-openapi",
+ "environnement": "LIVE",
+ "uic": 15709451,
+ "asset_type": "CfdOnEtf",
+ "horizon_min": 30,
+ "mode": "From",
+ "time": "2020-01-02 00:00:00+00:00",
+ "count": 1200,
+ "symbol": "SMH:xnas",
+ "description": "VanEck Vectors Semiconductor ETF",
+ "role": "bloc de test D01.7 (aucun backtest)",
+ "environnement_saxo": "live",
+ "n_rows": 1200,
+ "first": "2020-01-02T14:30:00Z",
+ "last": "2020-05-14T15:30:00Z",
+ "sha256": "3349fbf9aab662650721b099bfa31d9b24e20676c6811696a0da4a755cbaf5e1"
+}

@@ -1,0 +1,18 @@
+{
+ "source": "saxo-openapi",
+ "environnement": "LIVE",
+ "uic": 47624,
+ "asset_type": "CfdOnIndex",
+ "horizon_min": 30,
+ "mode": "From",
+ "time": "2020-01-02 00:00:00+00:00",
+ "count": 1200,
+ "symbol": "HK50.I",
+ "description": "Hong Kong 50",
+ "role": "bloc de test D01.7 (aucun backtest)",
+ "environnement_saxo": "live",
+ "n_rows": 1200,
+ "first": "2020-01-02T01:00:00Z",
+ "last": "2020-02-26T15:00:00Z",
+ "sha256": "8df0fe44831d771fc6198eebc0ba19f1a2e058b91179e6d36620b1e95df272cc"
+}

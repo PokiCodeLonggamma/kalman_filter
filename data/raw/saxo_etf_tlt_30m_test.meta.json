@@ -1,0 +1,18 @@
+{
+ "source": "saxo-openapi",
+ "environnement": "LIVE",
+ "uic": 3441903,
+ "asset_type": "CfdOnEtf",
+ "horizon_min": 30,
+ "mode": "From",
+ "time": "2020-01-02 00:00:00+00:00",
+ "count": 1200,
+ "symbol": "TLT:xnas",
+ "description": "iShares 20+ Year Treasury Bond  ETF",
+ "role": "bloc de test D01.7 (aucun backtest)",
+ "environnement_saxo": "live",
+ "n_rows": 1200,
+ "first": "2020-01-02T14:30:00Z",
+ "last": "2020-05-14T15:30:00Z",
+ "sha256": "cb492c8dfb5223665d35d64a927ce25e1d1fc6e4cb4f74593c1cce27ad686792"
+}

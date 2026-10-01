@@ -1,0 +1,28 @@
+{
+ "source": "saxo-openapi",
+ "environnement": "LIVE",
+ "actif": "GER40",
+ "uic": 4910,
+ "asset_type": "CfdOnIndex",
+ "symbol": "GER40.I",
+ "description": "Germany 40",
+ "exchange_id": "FSE",
+ "first_sample_time": "2003-10-31 08:00:00+00:00",
+ "horizon_min": 30,
+ "couverture_demandee": "2020-01-01 00:00 → 2025-12-31 23:30 UTC ; 2026 jamais demandé",
+ "methode": "/chart/v3/charts, pages UpTo de 1 200 barres depuis le 2025-12-31 23:30 UTC vers le passé",
+ "rolls": "sans objet : CFD sur l'indice au comptant ou FX au comptant (aucune échéance) ; contrôle dans l'audit",
+ "prix": "bid OHLC (CloseBid, etc.) ; volume absent (écrit nul)",
+ "timezone": "UTC (début de barre)",
+ "n_rows": 62430,
+ "first": "2020-01-02 00:00:00+00:00",
+ "last": "2025-12-30 20:30:00+00:00",
+ "lignes_ohlc_manquantes_ecartees": 0,
+ "extracted_at_utc": "2026-10-01T01:51:54.161422+00:00",
+ "extracted_at_origin": "heure du téléchargement (barres antérieures à 2026)",
+ "serie_brute": {
+  "fichier": "saxo_ger40_30m_brut.csv",
+  "sha256": "1479c577510d34848406c6707f6029b5e3486035f67aade57c8997ef8ddbebb7"
+ },
+ "sha256": "e963ef8ad8698296b013ccf4a9421997229e467d24db5ecd8d3082d613e354de"
+}

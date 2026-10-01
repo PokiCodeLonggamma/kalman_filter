@@ -1,0 +1,20 @@
+{
+ "source": "saxo-openapi",
+ "environnement": "LIVE",
+ "actif": "XAGUSD",
+ "uic": 8177,
+ "asset_type": "FxSpot",
+ "symbol": "XAGUSD",
+ "description": "Silver/US Dollar",
+ "exchange_id": "SBFX",
+ "first_sample_time": "2004-03-16 09:04:00+00:00",
+ "horizon_min": 30,
+ "couverture_demandee": "2020-01-01 00:00 → 2025-12-31 23:30 UTC ; 2026 jamais demandé",
+ "methode": "/chart/v3/charts, pages UpTo de 1 200 barres depuis le 2025-12-31 23:30 UTC vers le passé",
+ "rolls": "sans objet : CFD sur l'indice au comptant ou FX au comptant (aucune échéance) ; contrôle dans l'audit",
+ "role": "série brute Saxo, intacte",
+ "n_rows": 70962,
+ "first": "2020-01-01T23:00:00Z",
+ "last": "2025-12-31T21:30:00Z",
+ "sha256": "8240f7f1928f1a8b4e82596103e365d59c474fe87f7c46c92dbf9b85250ff372"
+}

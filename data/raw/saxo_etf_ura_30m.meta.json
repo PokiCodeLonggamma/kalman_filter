@@ -1,0 +1,28 @@
+{
+ "source": "saxo-openapi",
+ "environnement": "LIVE",
+ "actif": "ETF_URA",
+ "uic": 49142,
+ "asset_type": "CfdOnEtf",
+ "symbol": "URA:arcx",
+ "description": "Global X Uranium ETF",
+ "exchange_id": "NYSE_ARCA",
+ "first_sample_time": "2010-11-05 15:43:00+00:00",
+ "horizon_min": 30,
+ "couverture_demandee": "2020-01-01 00:00 → 2025-12-31 23:30 UTC ; 2026 jamais demandé",
+ "methode": "/chart/v3/charts, pages UpTo de 1 200 barres depuis le 2025-12-31 23:30 UTC vers le passé",
+ "rolls": "sans objet : CFD sur l'indice au comptant, FX au comptant ou CFD sur ETF (aucune échéance) ; contrôle dans l'audit",
+ "prix": "dernier prix traité OHLC (Open, High, Low, Close) et volume",
+ "timezone": "UTC (début de barre)",
+ "n_rows": 19479,
+ "first": "2020-01-02 14:30:00+00:00",
+ "last": "2025-12-31 20:30:00+00:00",
+ "lignes_ohlc_manquantes_ecartees": 0,
+ "extracted_at_utc": "2026-10-01T02:17:37.140241+00:00",
+ "extracted_at_origin": "heure du téléchargement (barres antérieures à 2026)",
+ "serie_brute": {
+  "fichier": "saxo_etf_ura_30m_brut.csv",
+  "sha256": "65183562dbb856b5cf1f428c4da5fd1917de2f8a12eabbb31da4a3aeaf53403d"
+ },
+ "sha256": "df63955f53ec520fdea0557fb8bcd7745b31e86aaeb5402055754f4f105b79e3"
+}

@@ -1,0 +1,28 @@
+{
+ "source": "saxo-openapi",
+ "environnement": "LIVE",
+ "actif": "US30",
+ "uic": 4911,
+ "asset_type": "CfdOnIndex",
+ "symbol": "US30.I",
+ "description": "US 30 Wall Street",
+ "exchange_id": "NYSE",
+ "first_sample_time": "2003-10-31 02:15:00+00:00",
+ "horizon_min": 30,
+ "couverture_demandee": "2020-01-01 00:00 → 2025-12-31 23:30 UTC ; 2026 jamais demandé",
+ "methode": "/chart/v3/charts, pages UpTo de 1 200 barres depuis le 2025-12-31 23:30 UTC vers le passé",
+ "rolls": "sans objet : CFD sur l'indice au comptant ou FX au comptant (aucune échéance) ; contrôle dans l'audit",
+ "prix": "bid OHLC (CloseBid, etc.) ; volume absent (écrit nul)",
+ "timezone": "UTC (début de barre)",
+ "n_rows": 69729,
+ "first": "2020-01-01 23:00:00+00:00",
+ "last": "2025-12-31 21:30:00+00:00",
+ "lignes_ohlc_manquantes_ecartees": 0,
+ "extracted_at_utc": "2026-10-01T01:52:49.371732+00:00",
+ "extracted_at_origin": "heure du téléchargement (barres antérieures à 2026)",
+ "serie_brute": {
+  "fichier": "saxo_us30_30m_brut.csv",
+  "sha256": "8ff2aacc79329fa591c41b7653e96ceb0a1bbd55a099262b2da0a93cde36c1e7"
+ },
+ "sha256": "4d416befe63b5c21c0003652ffde7c45bdeffff7a4bb6e41de3006cc37e3eff6"
+}

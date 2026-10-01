@@ -1,0 +1,20 @@
+{
+ "source": "saxo-openapi",
+ "environnement": "LIVE",
+ "actif": "ETF_TLT",
+ "uic": 3441903,
+ "asset_type": "CfdOnEtf",
+ "symbol": "TLT:xnas",
+ "description": "iShares 20+ Year Treasury Bond  ETF",
+ "exchange_id": "NASDAQ",
+ "first_sample_time": "2016-02-02 14:32:00+00:00",
+ "horizon_min": 30,
+ "couverture_demandee": "2020-01-01 00:00 → 2025-12-31 23:30 UTC ; 2026 jamais demandé",
+ "methode": "/chart/v3/charts, pages UpTo de 1 200 barres depuis le 2025-12-31 23:30 UTC vers le passé",
+ "rolls": "sans objet : CFD sur l'indice au comptant, FX au comptant ou CFD sur ETF (aucune échéance) ; contrôle dans l'audit",
+ "role": "série brute Saxo, intacte",
+ "n_rows": 19532,
+ "first": "2020-01-02T14:30:00Z",
+ "last": "2025-12-31T20:30:00Z",
+ "sha256": "14c189d91a4481686c20f9dc1f2616f7a7caeeb459eb3e2cf97651d8c73c580d"
+}

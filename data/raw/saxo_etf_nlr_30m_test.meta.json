@@ -1,0 +1,19 @@
+{
+ "source": "saxo-openapi",
+ "environnement": "LIVE",
+ "uic": 35666,
+ "asset_type": "CfdOnEtf",
+ "horizon_min": 30,
+ "mode": "From",
+ "time": "2020-01-02 00:00:00+00:00",
+ "count": 1200,
+ "symbol": "NLR:arcx",
+ "description": "VanEck Uranium and Nuclear ETF",
+ "role": "bloc de test D01.7 (aucun backtest)",
+ "environnement_saxo": "live",
+ "n_rows": 1200,
+ "first": "2020-01-02T14:30:00Z",
+ "last": "2021-08-24T14:30:00Z",
+ "sha256": "e9be484e51b69041850a17fd185d41a8b28525136a6c0dcd5f3071d0b5d2a66e",
+ "note": "retenu par erreur pour URA au 2e passage (motif « uranium » trop large) ; renommé et conservé comme actif supplémentaire déclaré (VanEck Uranium and Nuclear ETF)"
+}

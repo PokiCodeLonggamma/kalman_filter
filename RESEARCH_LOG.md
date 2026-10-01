@@ -1218,3 +1218,40 @@ Grilles complètes : espérance ATR ; MDD ; Calmar.
 - [ ] **REJETÉ**
 - [ ] **NON CONCLUANT**
 - [x] **EN COURS (descriptif) : GBPJPY mesuré (brut nul) ; NQ, RTY, CL, HG en attente de l'accès aux données choisi par le porteur. RE-1 inchangée.**
+
+### [EXP-D01.7, données] — Source Saxo, abandon des séries continues, univers redéfini (aucun backtest)
+- **Date :** 2026-10-01
+- **Étape :** D, préparation des données de D01.7, sur décisions du porteur. RE-1 gelée ; aucun backtest.
+- **Livrables :**
+  - code : `src/marketdata/saxo.py` et ses tests, `experiments/D01_7/saxo_probe_D01_7.py`, `saxo_univers_D01_7.py` ;
+  - audits : `audit_repo_D01_7.md` (FAIL), `audit_saxo_D01_7.md` (annexe 9 comprise), `audit_univers_D01_7.md` ;
+  - rapports bruts : `saxo_probe_D01_7.json`, `saxo_univers_D01_7.json`, `univers_D01_7.json` ;
+  - métas des séries versionnés.
+
+#### Constats
+- [CODE] **Accès à Saxo OpenAPI LIVE :** flux PKCE, clé dans une variable d'environnement, jeton en mémoire du processus
+  seulement. La réserve 2026 est vérifiée avant et après chaque requête.
+- [OBS] **Sources écartées :** le dépôt axb0306/cme-futures-ohlc (aucune donnée de 30 min sur 2020-2025) et QuantConnect
+  (aucun export autorisé).
+- [OBS] **Les séries continues de Saxo sont brutes, non ajustées.** Le future c1 et le CFD « cont » changent de contrat
+  au même instant :
+  - WTI : le dernier jour de cotation, vers 11:00 heure de New York, au milieu d'une barre ;
+  - cuivre : à la réouverture, 2 à 4 jours ouvrés avant le premier jour de notification ;
+  - US2000 : le mardi de la semaine d'échéance ;
+  - NQ : le 3e vendredi.
+  - Décision du porteur : abandon des futures et des CFD continus pour D01.7.
+- [OBS] **Univers redéfini par le porteur :**
+  - US100, US30, GER40, EU50, HK50, XAGUSD et GBPJPY. HK50 remplace Japan 225, absent des CfdOnIndex pour ce compte.
+  - En option, 5 CFD sur ETF : TLT, USO, SMH, URA, GDX.
+  - Toutes les séries couvrent 2020-2025, sans défaut d'intégrité.
+  - Les CFD sur indice ne montrent aucun changement de contrat caché.
+  - Écarts acheteur-vendeur médians de 0,9 à 6,6 bps.
+  - Les ETF ne cotent qu'en séance américaine, sans heures étendues, et leur historique est ajusté des splits.
+- [OBS] **GBPJPY :** la série Saxo concorde avec HistData (corrélation des rendements de 30 min de 0,993) et comble
+  2023.
+- [CODE] **Erreur de sélection corrigée :** NLR avait été retenu à la place d'URA. Le ticker demandé doit désormais
+  correspondre exactement.
+
+#### Décision
+- [x] **Données validées pour le backtest de D01.7**, sous trois choix du porteur : la source de GBPJPY, les coûts
+  aller-retour, et l'entrée ou non des ETF dans D01.7. Aucun backtest lancé.

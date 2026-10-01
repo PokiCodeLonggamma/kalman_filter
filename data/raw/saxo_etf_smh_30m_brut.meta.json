@@ -1,0 +1,20 @@
+{
+ "source": "saxo-openapi",
+ "environnement": "LIVE",
+ "actif": "ETF_SMH",
+ "uic": 15709451,
+ "asset_type": "CfdOnEtf",
+ "symbol": "SMH:xnas",
+ "description": "VanEck Vectors Semiconductor ETF",
+ "exchange_id": "NASDAQ",
+ "first_sample_time": "2019-12-11 14:30:00+00:00",
+ "horizon_min": 30,
+ "couverture_demandee": "2020-01-01 00:00 → 2025-12-31 23:30 UTC ; 2026 jamais demandé",
+ "methode": "/chart/v3/charts, pages UpTo de 1 200 barres depuis le 2025-12-31 23:30 UTC vers le passé",
+ "rolls": "sans objet : CFD sur l'indice au comptant, FX au comptant ou CFD sur ETF (aucune échéance) ; contrôle dans l'audit",
+ "role": "série brute Saxo, intacte",
+ "n_rows": 19532,
+ "first": "2020-01-02T14:30:00Z",
+ "last": "2025-12-31T20:30:00Z",
+ "sha256": "ac78f45577d551d314b2112799cf35549d774d88556899b856c85cd1302f342d"
+}

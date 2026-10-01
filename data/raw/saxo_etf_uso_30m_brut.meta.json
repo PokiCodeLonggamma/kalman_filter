@@ -1,0 +1,20 @@
+{
+ "source": "saxo-openapi",
+ "environnement": "LIVE",
+ "actif": "ETF_USO",
+ "uic": 35959,
+ "asset_type": "CfdOnEtf",
+ "symbol": "USO:arcx",
+ "description": "United States Oil ETF (PTP)",
+ "exchange_id": "NYSE_ARCA",
+ "first_sample_time": "2008-11-25 15:30:00+00:00",
+ "horizon_min": 30,
+ "couverture_demandee": "2020-01-01 00:00 → 2025-12-31 23:30 UTC ; 2026 jamais demandé",
+ "methode": "/chart/v3/charts, pages UpTo de 1 200 barres depuis le 2025-12-31 23:30 UTC vers le passé",
+ "rolls": "sans objet : CFD sur l'indice au comptant, FX au comptant ou CFD sur ETF (aucune échéance) ; contrôle dans l'audit",
+ "role": "série brute Saxo, intacte",
+ "n_rows": 19531,
+ "first": "2020-01-02T14:30:00Z",
+ "last": "2025-12-31T20:30:00Z",
+ "sha256": "ca88e08a1a0fa6399a6ae39fae5580f6734e9722a62da528d30dfe1cdf5d0751"
+}

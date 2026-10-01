@@ -1,0 +1,18 @@
+{
+ "source": "saxo-openapi",
+ "environnement": "LIVE",
+ "uic": 49142,
+ "asset_type": "CfdOnEtf",
+ "horizon_min": 30,
+ "mode": "From",
+ "time": "2020-01-02 00:00:00+00:00",
+ "count": 1200,
+ "symbol": "URA:arcx",
+ "description": "Global X Uranium ETF",
+ "role": "bloc de test D01.7 (aucun backtest)",
+ "environnement_saxo": "live",
+ "n_rows": 1200,
+ "first": "2020-01-02T14:30:00Z",
+ "last": "2020-05-15T15:30:00Z",
+ "sha256": "4a6159ee6f4f4e2248b0941dd161a7ce53d226c33420aea118d2072295d06682"
+}

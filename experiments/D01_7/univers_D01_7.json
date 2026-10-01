@@ -1,0 +1,1359 @@
+{
+ "US100": {
+  "symbol": "USNAS100.I",
+  "uic": 4912,
+  "asset_type": "CfdOnIndex",
+  "description": "US Tech 100 NAS",
+  "first_sample_time": "2003-10-30 23:55:00+00:00",
+  "sha256": "39c28eaa597c43e808060629be9d4db69dd88827089fc192d1a511242f1b52d3",
+  "prix": "bid OHLC",
+  "premiere": "2020-01-01 23:00:00+00:00",
+  "derniere": "2025-12-31 21:30:00+00:00",
+  "barres": 69805,
+  "barres_par_annee": {
+   "2020": 11284,
+   "2021": 11340,
+   "2022": 11804,
+   "2023": 11783,
+   "2024": 11837,
+   "2025": 11757
+  },
+  "doublons": 0,
+  "desordre": 0,
+  "incoherences_ohlc": 0,
+  "prix_non_positifs": 0,
+  "pas_30_min": 0.9775,
+  "reprises_quotidiennes_ny": {
+   "18:00": 1233,
+   "04:00": 2,
+   "09:30": 2,
+   "09:00": 2
+  },
+  "duree_pause_quotidienne_min": {
+   "90": 791,
+   "150": 406,
+   "330": 38
+  },
+  "reprises_hebdo_ny": {
+   "Sun 18:00": 309,
+   "Mon 18:00": 4,
+   "Wed 18:00": 2
+  },
+  "plus_long_trou_h": 77.0,
+  "premiere_barre_du_jour_ny_mode": "00:00",
+  "derniere_barre_du_jour_ny_mode": "23:30",
+  "saut_en_seance_bps": {
+   "P50": 0.1,
+   "P99": 0.6,
+   "max": 212.8
+  },
+  "saut_a_la_reprise_bps": {
+   "P50": 4.41,
+   "P99": 148.6
+  },
+  "plus_grands_sauts": [
+   {
+    "time_ny": "2020-03-22 Sun 18:00",
+    "bps": -417.0,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-03-15 Sun 18:00",
+    "bps": -379.4,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-03-08 Sun 18:00",
+    "bps": -294.2,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2025-04-06 Sun 18:00",
+    "bps": -223.8,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2025-04-13 Sun 18:00",
+    "bps": 215.3,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-03-29 Sun 18:00",
+    "bps": -213.0,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2022-05-04 Wed 15:00",
+    "bps": 212.8,
+    "type": "séance"
+   },
+   {
+    "time_ny": "2020-03-16 Mon 09:30",
+    "bps": -211.3,
+    "type": "reprise"
+   }
+  ],
+  "ecart_bid_ask_bps": {
+   "P50": 0.93,
+   "P90": 1.47,
+   "negatifs": 0
+  },
+  "controle_raccord": {
+   "echeances": "3e vendredi trimestriel (CME)",
+   "regle": "sauts en séance > 5.0 bps (10 × la médiane, au moins 5)",
+   "jours_echeance_couverts": 24,
+   "sauts_jours_echeance": 1,
+   "sauts_autres_jours": 87,
+   "sauts_par_jour": {
+    "echeance": 0.042,
+    "autres": 0.047
+   },
+   "max_saut_jour_echeance_bps": 8.6
+  }
+ },
+ "GER40": {
+  "symbol": "GER40.I",
+  "uic": 4910,
+  "asset_type": "CfdOnIndex",
+  "description": "Germany 40",
+  "first_sample_time": "2003-10-31 08:00:00+00:00",
+  "sha256": "e963ef8ad8698296b013ccf4a9421997229e467d24db5ecd8d3082d613e354de",
+  "prix": "bid OHLC",
+  "premiere": "2020-01-02 00:00:00+00:00",
+  "derniere": "2025-12-30 20:30:00+00:00",
+  "barres": 62430,
+  "barres_par_annee": {
+   "2020": 10392,
+   "2021": 10444,
+   "2022": 10485,
+   "2023": 10406,
+   "2024": 10372,
+   "2025": 10331
+  },
+  "doublons": 0,
+  "desordre": 0,
+  "incoherences_ohlc": 0,
+  "prix_non_positifs": 0,
+  "pas_30_min": 0.9754,
+  "reprises_quotidiennes_ny": {
+   "20:00": 798,
+   "19:00": 412,
+   "08:00": 1,
+   "00:00": 1
+  },
+  "duree_pause_quotidienne_min": {
+   "270": 715,
+   "210": 495,
+   "300": 1
+  },
+  "reprises_hebdo_ny": {
+   "Sun 20:00": 197,
+   "Sun 19:00": 106,
+   "Mon 20:00": 7
+  },
+  "plus_long_trou_h": 123.5,
+  "premiere_barre_du_jour_ny_mode": "00:00",
+  "derniere_barre_du_jour_ny_mode": "23:30",
+  "saut_en_seance_bps": {
+   "P50": 0.37,
+   "P99": 1.5,
+   "max": 115.9
+  },
+  "saut_a_la_reprise_bps": {
+   "P50": 10.57,
+   "P99": 151.4
+  },
+  "plus_grands_sauts": [
+   {
+    "time_ny": "2020-03-15 Sun 20:00",
+    "bps": -694.9,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-03-08 Sun 20:00",
+    "bps": -438.7,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-03-22 Sun 20:00",
+    "bps": -437.8,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-05-03 Sun 20:00",
+    "bps": -387.6,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2022-02-27 Sun 19:00",
+    "bps": -340.6,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2025-04-06 Sun 20:00",
+    "bps": -273.2,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2022-03-06 Sun 19:00",
+    "bps": -231.4,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-04-16 Thu 20:00",
+    "bps": 217.7,
+    "type": "reprise"
+   }
+  ],
+  "ecart_bid_ask_bps": {
+   "P50": 2.2,
+   "P90": 3.67,
+   "negatifs": 0
+  },
+  "controle_raccord": {
+   "echeances": "3e vendredi trimestriel (Eurex)",
+   "regle": "sauts en séance > 5.0 bps (10 × la médiane, au moins 5)",
+   "jours_echeance_couverts": 24,
+   "sauts_jours_echeance": 3,
+   "sauts_autres_jours": 142,
+   "sauts_par_jour": {
+    "echeance": 0.125,
+    "autres": 0.078
+   },
+   "max_saut_jour_echeance_bps": 28.8
+  }
+ },
+ "HK50": {
+  "symbol": "HK50.I",
+  "uic": 47624,
+  "asset_type": "CfdOnIndex",
+  "description": "Hong Kong 50",
+  "first_sample_time": "2010-07-05 02:16:00+00:00",
+  "sha256": "40639ef711764bc960e8371e6d354069a953f6da3e23d3d70c9929751a8e922a",
+  "prix": "bid OHLC",
+  "premiere": "2020-01-02 01:00:00+00:00",
+  "derniere": "2025-12-31 03:30:00+00:00",
+  "barres": 47025,
+  "barres_par_annee": {
+   "2020": 7848,
+   "2021": 7825,
+   "2022": 7824,
+   "2023": 7751,
+   "2024": 7781,
+   "2025": 7996
+  },
+  "doublons": 0,
+  "desordre": 0,
+  "incoherences_ohlc": 0,
+  "prix_non_positifs": 0,
+  "pas_30_min": 0.9078,
+  "reprises_quotidiennes_ny": {
+   "01:00": 957,
+   "05:00": 915,
+   "21:00": 732,
+   "00:00": 503
+  },
+  "duree_pause_quotidienne_min": {
+   "90": 1461,
+   "60": 1399,
+   "390": 1107
+  },
+  "reprises_hebdo_ny": {
+   "Sun 21:00": 184,
+   "Sun 20:00": 100,
+   "Mon 21:00": 17
+  },
+  "plus_long_trou_h": 141.5,
+  "premiere_barre_du_jour_ny_mode": "01:00",
+  "derniere_barre_du_jour_ny_mode": "23:30",
+  "saut_en_seance_bps": {
+   "P50": 0.43,
+   "P99": 1.3,
+   "max": 40.6
+  },
+  "saut_a_la_reprise_bps": {
+   "P50": 5.88,
+   "P99": 134.5
+  },
+  "plus_grands_sauts": [
+   {
+    "time_ny": "2025-04-06 Sun 21:00",
+    "bps": -745.3,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-05-03 Sun 21:00",
+    "bps": -367.0,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-03-22 Sun 21:00",
+    "bps": -336.3,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-01-28 Tue 20:00",
+    "bps": -314.0,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-03-15 Sun 21:00",
+    "bps": -296.9,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-03-16 Mon 21:00",
+    "bps": 294.0,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-03-23 Mon 21:00",
+    "bps": 282.4,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-05-28 Thu 21:00",
+    "bps": -262.1,
+    "type": "reprise"
+   }
+  ],
+  "ecart_bid_ask_bps": {
+   "P50": 6.12,
+   "P90": 7.86,
+   "negatifs": 0
+  },
+  "controle_raccord": {
+   "echeances": "avant-dernier jour ouvré de chaque mois (HKEX, fêtes de HK non modélisées)",
+   "regle": "sauts en séance > 5.0 bps (10 × la médiane, au moins 5)",
+   "jours_echeance_couverts": 71,
+   "sauts_jours_echeance": 2,
+   "sauts_autres_jours": 40,
+   "sauts_par_jour": {
+    "echeance": 0.028,
+    "autres": 0.023
+   },
+   "max_saut_jour_echeance_bps": 31.4
+  }
+ },
+ "EU50": {
+  "symbol": "EU50.I",
+  "uic": 16753,
+  "asset_type": "CfdOnIndex",
+  "description": "EU Stocks 50",
+  "first_sample_time": "2005-08-22 12:02:00+00:00",
+  "sha256": "23382e43c5321a557fcbe0738d5a88d8a67db0baa81b61bde11646a31e5531b1",
+  "prix": "bid OHLC",
+  "premiere": "2020-01-02 00:00:00+00:00",
+  "derniere": "2025-12-30 20:30:00+00:00",
+  "barres": 62370,
+  "barres_par_annee": {
+   "2020": 10384,
+   "2021": 10444,
+   "2022": 10468,
+   "2023": 10389,
+   "2024": 10358,
+   "2025": 10327
+  },
+  "doublons": 0,
+  "desordre": 0,
+  "incoherences_ohlc": 0,
+  "prix_non_positifs": 0,
+  "pas_30_min": 0.9747,
+  "reprises_quotidiennes_ny": {
+   "20:00": 799,
+   "19:00": 412,
+   "00:00": 6,
+   "23:00": 6
+  },
+  "duree_pause_quotidienne_min": {
+   "270": 715,
+   "210": 495,
+   "60": 41
+  },
+  "reprises_hebdo_ny": {
+   "Sun 20:00": 197,
+   "Sun 19:00": 105,
+   "Mon 20:00": 7
+  },
+  "plus_long_trou_h": 123.5,
+  "premiere_barre_du_jour_ny_mode": "00:00",
+  "derniere_barre_du_jour_ny_mode": "23:30",
+  "saut_en_seance_bps": {
+   "P50": 0.61,
+   "P99": 3.6,
+   "max": 77.1
+  },
+  "saut_a_la_reprise_bps": {
+   "P50": 10.64,
+   "P99": 156.3
+  },
+  "plus_grands_sauts": [
+   {
+    "time_ny": "2020-03-15 Sun 20:00",
+    "bps": -751.9,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-03-22 Sun 20:00",
+    "bps": -474.3,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-03-08 Sun 20:00",
+    "bps": -423.6,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-05-03 Sun 20:00",
+    "bps": -331.5,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2022-02-27 Sun 19:00",
+    "bps": -329.6,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2025-04-02 Wed 20:00",
+    "bps": -221.0,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-03-09 Mon 20:00",
+    "bps": 213.4,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-03-16 Mon 20:00",
+    "bps": 195.2,
+    "type": "reprise"
+   }
+  ],
+  "ecart_bid_ask_bps": {
+   "P50": 4.8,
+   "P90": 6.11,
+   "negatifs": 0
+  },
+  "controle_raccord": {
+   "echeances": "3e vendredi trimestriel (Eurex)",
+   "regle": "sauts en séance > 6.1 bps (10 × la médiane, au moins 5)",
+   "jours_echeance_couverts": 24,
+   "sauts_jours_echeance": 4,
+   "sauts_autres_jours": 81,
+   "sauts_par_jour": {
+    "echeance": 0.167,
+    "autres": 0.044
+   },
+   "max_saut_jour_echeance_bps": 77.1
+  }
+ },
+ "US30": {
+  "symbol": "US30.I",
+  "uic": 4911,
+  "asset_type": "CfdOnIndex",
+  "description": "US 30 Wall Street",
+  "first_sample_time": "2003-10-31 02:15:00+00:00",
+  "sha256": "4d416befe63b5c21c0003652ffde7c45bdeffff7a4bb6e41de3006cc37e3eff6",
+  "prix": "bid OHLC",
+  "premiere": "2020-01-01 23:00:00+00:00",
+  "derniere": "2025-12-31 21:30:00+00:00",
+  "barres": 69729,
+  "barres_par_annee": {
+   "2020": 11266,
+   "2021": 11310,
+   "2022": 11777,
+   "2023": 11783,
+   "2024": 11837,
+   "2025": 11756
+  },
+  "doublons": 0,
+  "desordre": 0,
+  "incoherences_ohlc": 0,
+  "prix_non_positifs": 0,
+  "pas_30_min": 0.9775,
+  "reprises_quotidiennes_ny": {
+   "18:00": 1214,
+   "20:00": 15,
+   "19:00": 6,
+   "09:00": 3
+  },
+  "duree_pause_quotidienne_min": {
+   "90": 786,
+   "150": 393,
+   "330": 37
+  },
+  "reprises_hebdo_ny": {
+   "Sun 18:00": 304,
+   "Mon 18:00": 4,
+   "Sun 20:00": 3
+  },
+  "plus_long_trou_h": 77.0,
+  "premiere_barre_du_jour_ny_mode": "00:00",
+  "derniere_barre_du_jour_ny_mode": "23:30",
+  "saut_en_seance_bps": {
+   "P50": 0.21,
+   "P99": 0.5,
+   "max": 400.8
+  },
+  "saut_a_la_reprise_bps": {
+   "P50": 3.95,
+   "P99": 113.0
+  },
+  "plus_grands_sauts": [
+   {
+    "time_ny": "2020-03-22 Sun 18:00",
+    "bps": -448.5,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-03-16 Mon 09:30",
+    "bps": -400.8,
+    "type": "séance"
+   },
+   {
+    "time_ny": "2020-03-15 Sun 18:00",
+    "bps": -395.5,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-03-08 Sun 18:00",
+    "bps": -303.3,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-04-16 Thu 18:00",
+    "bps": 294.5,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-03-29 Sun 18:00",
+    "bps": -259.8,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-03-09 Mon 09:30",
+    "bps": -219.1,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-03-19 Thu 18:00",
+    "bps": -208.2,
+    "type": "reprise"
+   }
+  ],
+  "ecart_bid_ask_bps": {
+   "P50": 1.42,
+   "P90": 1.91,
+   "negatifs": 0
+  },
+  "controle_raccord": {
+   "echeances": "3e vendredi trimestriel (CBOT)",
+   "regle": "sauts en séance > 5.0 bps (10 × la médiane, au moins 5)",
+   "jours_echeance_couverts": 24,
+   "sauts_jours_echeance": 1,
+   "sauts_autres_jours": 69,
+   "sauts_par_jour": {
+    "echeance": 0.042,
+    "autres": 0.037
+   },
+   "max_saut_jour_echeance_bps": 12.9
+  }
+ },
+ "XAGUSD": {
+  "symbol": "XAGUSD",
+  "uic": 8177,
+  "asset_type": "FxSpot",
+  "description": "Silver/US Dollar",
+  "first_sample_time": "2004-03-16 09:04:00+00:00",
+  "sha256": "040ae90bb33b8d1054f508640663b388b337ad7a30f251bb97f3a8bd04610b0e",
+  "prix": "bid OHLC",
+  "premiere": "2020-01-01 23:00:00+00:00",
+  "derniere": "2025-12-31 21:30:00+00:00",
+  "barres": 70962,
+  "barres_par_annee": {
+   "2020": 11854,
+   "2021": 11814,
+   "2022": 11826,
+   "2023": 11780,
+   "2024": 11869,
+   "2025": 11819
+  },
+  "doublons": 0,
+  "desordre": 0,
+  "incoherences_ohlc": 0,
+  "prix_non_positifs": 0,
+  "pas_30_min": 0.9782,
+  "reprises_quotidiennes_ny": {
+   "18:00": 1232,
+   "19:00": 1
+  },
+  "duree_pause_quotidienne_min": {
+   "90": 1194,
+   "240": 27,
+   "330": 11
+  },
+  "reprises_hebdo_ny": {
+   "Sun 18:00": 307,
+   "Mon 18:00": 4,
+   "Sun 18:30": 2
+  },
+  "plus_long_trou_h": 76.5,
+  "premiere_barre_du_jour_ny_mode": "00:00",
+  "derniere_barre_du_jour_ny_mode": "23:30",
+  "saut_en_seance_bps": {
+   "P50": 0.11,
+   "P99": 2.1,
+   "max": 238.9
+  },
+  "saut_a_la_reprise_bps": {
+   "P50": 5.37,
+   "P99": 105.2
+  },
+  "plus_grands_sauts": [
+   {
+    "time_ny": "2021-01-31 Sun 18:00",
+    "bps": 522.3,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2025-12-28 Sun 19:30",
+    "bps": -238.9,
+    "type": "séance"
+   },
+   {
+    "time_ny": "2025-12-28 Sun 18:00",
+    "bps": 236.2,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2025-12-25 Thu 18:00",
+    "bps": 234.6,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-03-15 Sun 18:00",
+    "bps": 200.9,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2024-10-13 Sun 18:00",
+    "bps": -197.3,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2025-04-06 Sun 18:00",
+    "bps": -193.2,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2023-10-22 Sun 18:00",
+    "bps": -158.3,
+    "type": "reprise"
+   }
+  ],
+  "ecart_bid_ask_bps": {
+   "P50": 6.64,
+   "P90": 10.07,
+   "negatifs": 0
+  }
+ },
+ "GBPJPY": {
+  "symbol": "GBPJPY",
+  "uic": 26,
+  "asset_type": "FxSpot",
+  "description": "British Pound/Japanese Yen",
+  "first_sample_time": "2002-09-25 02:40:00+00:00",
+  "sha256": "3436db95c520333878133c19ff0a038caaba33d9848484db9a03f81ce06b7f01",
+  "prix": "bid OHLC",
+  "premiere": "2020-01-01 18:00:00+00:00",
+  "derniere": "2025-12-31 21:30:00+00:00",
+  "barres": 76607,
+  "barres_par_annee": {
+   "2020": 12799,
+   "2021": 12765,
+   "2022": 12763,
+   "2023": 12730,
+   "2024": 12806,
+   "2025": 12744
+  },
+  "doublons": 0,
+  "desordre": 0,
+  "incoherences_ohlc": 0,
+  "prix_non_positifs": 0,
+  "pas_30_min": 0.9955,
+  "reprises_quotidiennes_ny": {
+   "16:30": 8,
+   "15:00": 7,
+   "15:30": 3,
+   "13:00": 3
+  },
+  "duree_pause_quotidienne_min": {
+   "60": 16,
+   "90": 5,
+   "630": 2
+  },
+  "reprises_hebdo_ny": {
+   "Sun 15:00": 152,
+   "Sun 13:00": 96,
+   "Sun 14:00": 48
+  },
+  "plus_long_trou_h": 69.5,
+  "premiere_barre_du_jour_ny_mode": "00:00",
+  "derniere_barre_du_jour_ny_mode": "23:30",
+  "saut_en_seance_bps": {
+   "P50": 0.06,
+   "P99": 6.2,
+   "max": 125.6
+  },
+  "saut_a_la_reprise_bps": {
+   "P50": 21.06,
+   "P99": 79.3
+  },
+  "plus_grands_sauts": [
+   {
+    "time_ny": "2020-03-18 Wed 17:00",
+    "bps": -125.6,
+    "type": "séance"
+   },
+   {
+    "time_ny": "2020-03-01 Sun 13:00",
+    "bps": -95.6,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-03-08 Sun 14:00",
+    "bps": -84.6,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-03-15 Sun 14:00",
+    "bps": -80.2,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2022-02-27 Sun 13:00",
+    "bps": -80.2,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2025-10-05 Sun 14:00",
+    "bps": 78.0,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2023-09-10 Sun 15:00",
+    "bps": -77.9,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2022-06-12 Sun 15:00",
+    "bps": -72.8,
+    "type": "reprise"
+   }
+  ],
+  "ecart_bid_ask_bps": {
+   "P50": 2.52,
+   "P90": 3.98,
+   "negatifs": 0
+  },
+  "comparaison_histdata": {
+   "barres_communes": 73052,
+   "corr_rendements_30min": 0.9934,
+   "ecart_niveau_close_bps": {
+    "P50": -0.66,
+    "P90_abs": 1.08
+   },
+   "barres_par_annee": {
+    "2020": {
+     "saxo": 12799,
+     "histdata": 12459
+    },
+    "2021": {
+     "saxo": 12765,
+     "histdata": 12437
+    },
+    "2022": {
+     "saxo": 12763,
+     "histdata": 12473
+    },
+    "2023": {
+     "saxo": 12730,
+     "histdata": 10785
+    },
+    "2024": {
+     "saxo": 12806,
+     "histdata": 12475
+    },
+    "2025": {
+     "saxo": 12744,
+     "histdata": 12426
+    }
+   },
+   "barres_saxo_absentes_de_histdata": 3555,
+   "barres_histdata_absentes_de_saxo": 3
+  }
+ },
+ "ETF_TLT": {
+  "symbol": "TLT:xnas",
+  "uic": 3441903,
+  "asset_type": "CfdOnEtf",
+  "description": "iShares 20+ Year Treasury Bond  ETF",
+  "first_sample_time": "2016-02-02 14:32:00+00:00",
+  "sha256": "25367f6ed9bf2fec6e4cae8104b9f7f6e22402296acc54b2f0efc3ba29c5e7dd",
+  "prix": "dernier prix traité OHLC",
+  "premiere": "2020-01-02 14:30:00+00:00",
+  "derniere": "2025-12-31 20:30:00+00:00",
+  "barres": 19532,
+  "barres_par_annee": {
+   "2020": 3276,
+   "2021": 3270,
+   "2022": 3257,
+   "2023": 3239,
+   "2024": 3258,
+   "2025": 3232
+  },
+  "doublons": 0,
+  "desordre": 0,
+  "incoherences_ohlc": 0,
+  "prix_non_positifs": 0,
+  "pas_30_min": 0.9227,
+  "reprises_quotidiennes_ny": {
+   "09:30": 1180,
+   "10:30": 1
+  },
+  "duree_pause_quotidienne_min": {
+   "1080": 1179,
+   "60": 1,
+   "1050": 1
+  },
+  "reprises_hebdo_ny": {
+   "Mon 09:30": 281,
+   "Tue 09:30": 32,
+   "Fri 09:30": 10
+  },
+  "plus_long_trou_h": 93.0,
+  "premiere_barre_du_jour_ny_mode": "09:30",
+  "derniere_barre_du_jour_ny_mode": "15:30",
+  "saut_en_seance_bps": {
+   "P50": 0.0,
+   "P99": 1.7,
+   "max": 44.2
+  },
+  "saut_a_la_reprise_bps": {
+   "P50": 46.97,
+   "P99": 223.6
+  },
+  "plus_grands_sauts": [
+   {
+    "time_ny": "2020-03-09 Mon 09:30",
+    "bps": 713.3,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-03-06 Fri 09:30",
+    "bps": 539.1,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-03-12 Thu 09:30",
+    "bps": 436.3,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-03-16 Mon 09:30",
+    "bps": 372.9,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2024-11-06 Wed 09:30",
+    "bps": -340.0,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-03-20 Fri 09:30",
+    "bps": 332.9,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-03-24 Tue 09:30",
+    "bps": -298.7,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2025-04-23 Wed 09:30",
+    "bps": 273.7,
+    "type": "reprise"
+   }
+  ]
+ },
+ "ETF_USO": {
+  "symbol": "USO:arcx",
+  "uic": 35959,
+  "asset_type": "CfdOnEtf",
+  "description": "United States Oil ETF (PTP)",
+  "first_sample_time": "2008-11-25 15:30:00+00:00",
+  "sha256": "5b458f8913ac5bcc20c6426e789e1b2c0737ece827223f4adf4b6a1c3446f7fe",
+  "prix": "dernier prix traité OHLC",
+  "premiere": "2020-01-02 14:30:00+00:00",
+  "derniere": "2025-12-31 20:30:00+00:00",
+  "barres": 19531,
+  "barres_par_annee": {
+   "2020": 3276,
+   "2021": 3270,
+   "2022": 3257,
+   "2023": 3239,
+   "2024": 3257,
+   "2025": 3232
+  },
+  "doublons": 0,
+  "desordre": 0,
+  "incoherences_ohlc": 0,
+  "prix_non_positifs": 0,
+  "pas_30_min": 0.9227,
+  "reprises_quotidiennes_ny": {
+   "09:30": 1180,
+   "10:30": 1,
+   "12:00": 1
+  },
+  "duree_pause_quotidienne_min": {
+   "1080": 1179,
+   "60": 2,
+   "1050": 1
+  },
+  "reprises_hebdo_ny": {
+   "Mon 09:30": 281,
+   "Tue 09:30": 32,
+   "Fri 09:30": 10
+  },
+  "plus_long_trou_h": 93.0,
+  "premiere_barre_du_jour_ny_mode": "09:30",
+  "derniere_barre_du_jour_ny_mode": "15:30",
+  "saut_en_seance_bps": {
+   "P50": 0.0,
+   "P99": 9.8,
+   "max": 448.1
+  },
+  "saut_a_la_reprise_bps": {
+   "P50": 87.64,
+   "P99": 655.6
+  },
+  "plus_grands_sauts": [
+   {
+    "time_ny": "2020-03-09 Mon 09:30",
+    "bps": -2469.1,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-04-21 Tue 09:30",
+    "bps": -1617.3,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-03-18 Wed 09:30",
+    "bps": -1208.5,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-04-27 Mon 09:30",
+    "bps": -1187.5,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-04-20 Mon 09:30",
+    "bps": -1130.4,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-04-03 Fri 09:30",
+    "bps": 1092.7,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-03-16 Mon 09:30",
+    "bps": -954.6,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-03-10 Tue 09:30",
+    "bps": 838.1,
+    "type": "reprise"
+   }
+  ]
+ },
+ "ETF_SMH": {
+  "symbol": "SMH:xnas",
+  "uic": 15709451,
+  "asset_type": "CfdOnEtf",
+  "description": "VanEck Vectors Semiconductor ETF",
+  "first_sample_time": "2019-12-11 14:30:00+00:00",
+  "sha256": "f4756d75335505ee14610c08d807269eefb501b2fc2a4034180e40163fa29977",
+  "prix": "dernier prix traité OHLC",
+  "premiere": "2020-01-02 14:30:00+00:00",
+  "derniere": "2025-12-31 20:30:00+00:00",
+  "barres": 19532,
+  "barres_par_annee": {
+   "2020": 3276,
+   "2021": 3270,
+   "2022": 3257,
+   "2023": 3239,
+   "2024": 3258,
+   "2025": 3232
+  },
+  "doublons": 0,
+  "desordre": 0,
+  "incoherences_ohlc": 0,
+  "prix_non_positifs": 0,
+  "pas_30_min": 0.9227,
+  "reprises_quotidiennes_ny": {
+   "09:30": 1180,
+   "10:30": 1
+  },
+  "duree_pause_quotidienne_min": {
+   "1080": 1179,
+   "60": 1,
+   "1050": 1
+  },
+  "reprises_hebdo_ny": {
+   "Mon 09:30": 281,
+   "Tue 09:30": 32,
+   "Fri 09:30": 10
+  },
+  "plus_long_trou_h": 93.0,
+  "premiere_barre_du_jour_ny_mode": "09:30",
+  "derniere_barre_du_jour_ny_mode": "15:30",
+  "saut_en_seance_bps": {
+   "P50": 0.0,
+   "P99": 4.1,
+   "max": 146.3
+  },
+  "saut_a_la_reprise_bps": {
+   "P50": 76.15,
+   "P99": 490.4
+  },
+  "plus_grands_sauts": [
+   {
+    "time_ny": "2020-03-16 Mon 09:30",
+    "bps": -1244.4,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-03-09 Mon 09:30",
+    "bps": -889.2,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2024-08-05 Mon 09:30",
+    "bps": -832.6,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-03-18 Wed 09:30",
+    "bps": -776.0,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2025-01-27 Mon 09:30",
+    "bps": -756.3,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-03-12 Thu 09:30",
+    "bps": -724.8,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2023-05-25 Thu 09:30",
+    "bps": 643.0,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-03-24 Tue 09:30",
+    "bps": 618.8,
+    "type": "reprise"
+   }
+  ]
+ },
+ "ETF_URA": {
+  "symbol": "URA:arcx",
+  "uic": 49142,
+  "asset_type": "CfdOnEtf",
+  "description": "Global X Uranium ETF",
+  "first_sample_time": "2010-11-05 15:43:00+00:00",
+  "sha256": "df63955f53ec520fdea0557fb8bcd7745b31e86aaeb5402055754f4f105b79e3",
+  "prix": "dernier prix traité OHLC",
+  "premiere": "2020-01-02 14:30:00+00:00",
+  "derniere": "2025-12-31 20:30:00+00:00",
+  "barres": 19479,
+  "barres_par_annee": {
+   "2020": 3225,
+   "2021": 3269,
+   "2022": 3257,
+   "2023": 3239,
+   "2024": 3257,
+   "2025": 3232
+  },
+  "doublons": 0,
+  "desordre": 0,
+  "incoherences_ohlc": 0,
+  "prix_non_positifs": 0,
+  "pas_30_min": 0.9201,
+  "reprises_quotidiennes_ny": {
+   "09:30": 1180,
+   "14:00": 10,
+   "14:30": 10,
+   "12:30": 9
+  },
+  "duree_pause_quotidienne_min": {
+   "1080": 1178,
+   "60": 44,
+   "90": 4
+  },
+  "reprises_hebdo_ny": {
+   "Mon 09:30": 281,
+   "Tue 09:30": 32,
+   "Fri 09:30": 10
+  },
+  "plus_long_trou_h": 93.0,
+  "premiere_barre_du_jour_ny_mode": "09:30",
+  "derniere_barre_du_jour_ny_mode": "15:30",
+  "saut_en_seance_bps": {
+   "P50": 0.0,
+   "P99": 41.0,
+   "max": 193.8
+  },
+  "saut_a_la_reprise_bps": {
+   "P50": 67.8,
+   "P99": 511.2
+  },
+  "plus_grands_sauts": [
+   {
+    "time_ny": "2020-03-12 Thu 09:30",
+    "bps": -993.2,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-03-16 Mon 09:30",
+    "bps": -941.0,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2022-03-04 Fri 09:30",
+    "bps": -767.5,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2023-12-28 Thu 09:30",
+    "bps": -684.8,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2024-08-05 Mon 09:30",
+    "bps": -683.5,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2025-05-23 Fri 09:30",
+    "bps": 671.2,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-03-18 Wed 09:30",
+    "bps": -607.8,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2025-01-27 Mon 09:30",
+    "bps": -597.2,
+    "type": "reprise"
+   }
+  ]
+ },
+ "ETF_GDX": {
+  "symbol": "GDX:arcx",
+  "uic": 35663,
+  "asset_type": "CfdOnEtf",
+  "description": "VanEck Vectors Gold Miners ETF",
+  "first_sample_time": "2006-05-31 13:50:00+00:00",
+  "sha256": "93653907772f0cdbed6903a180a18ec4ba3daa88287b5709825aa4bf5901e100",
+  "prix": "dernier prix traité OHLC",
+  "premiere": "2020-01-02 14:30:00+00:00",
+  "derniere": "2025-12-31 20:30:00+00:00",
+  "barres": 19532,
+  "barres_par_annee": {
+   "2020": 3276,
+   "2021": 3270,
+   "2022": 3257,
+   "2023": 3239,
+   "2024": 3258,
+   "2025": 3232
+  },
+  "doublons": 0,
+  "desordre": 0,
+  "incoherences_ohlc": 0,
+  "prix_non_positifs": 0,
+  "pas_30_min": 0.9227,
+  "reprises_quotidiennes_ny": {
+   "09:30": 1180,
+   "10:30": 1
+  },
+  "duree_pause_quotidienne_min": {
+   "1080": 1179,
+   "60": 1,
+   "1050": 1
+  },
+  "reprises_hebdo_ny": {
+   "Mon 09:30": 281,
+   "Tue 09:30": 32,
+   "Fri 09:30": 10
+  },
+  "plus_long_trou_h": 93.0,
+  "premiere_barre_du_jour_ny_mode": "09:30",
+  "derniere_barre_du_jour_ny_mode": "15:30",
+  "saut_en_seance_bps": {
+   "P50": 0.0,
+   "P99": 4.1,
+   "max": 109.0
+  },
+  "saut_a_la_reprise_bps": {
+   "P50": 79.73,
+   "P99": 471.6
+  },
+  "plus_grands_sauts": [
+   {
+    "time_ny": "2020-03-24 Tue 09:30",
+    "bps": 1282.2,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-03-16 Mon 09:30",
+    "bps": -1260.4,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-03-12 Thu 09:30",
+    "bps": -905.9,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2025-10-21 Tue 09:30",
+    "bps": -734.4,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-03-20 Fri 09:30",
+    "bps": 716.5,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2024-08-05 Mon 09:30",
+    "bps": -616.2,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2022-11-10 Thu 09:30",
+    "bps": 570.3,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-03-18 Wed 09:30",
+    "bps": -556.4,
+    "type": "reprise"
+   }
+  ]
+ },
+ "ETF_NLR": {
+  "symbol": "NLR:arcx",
+  "uic": 35666,
+  "asset_type": "CfdOnEtf",
+  "description": "VanEck Uranium and Nuclear ETF",
+  "first_sample_time": "2007-09-03 14:54:00+00:00",
+  "sha256": "0f37a080b449c2fab570e9b1d4275abfb25dc6465591533f23b90fd6646d2eaa",
+  "prix": "dernier prix traité OHLC",
+  "premiere": "2020-01-02 14:30:00+00:00",
+  "derniere": "2025-12-31 20:30:00+00:00",
+  "barres": 12146,
+  "barres_par_annee": {
+   "2020": 519,
+   "2021": 1209,
+   "2022": 1821,
+   "2023": 2209,
+   "2024": 3156,
+   "2025": 3232
+  },
+  "doublons": 0,
+  "desordre": 0,
+  "incoherences_ohlc": 0,
+  "prix_non_positifs": 0,
+  "pas_30_min": 0.7451,
+  "reprises_quotidiennes_ny": {
+   "09:30": 964,
+   "15:30": 187,
+   "13:00": 177,
+   "14:30": 169
+  },
+  "duree_pause_quotidienne_min": {
+   "60": 729,
+   "1080": 710,
+   "90": 347
+  },
+  "reprises_hebdo_ny": {
+   "Mon 09:30": 246,
+   "Tue 09:30": 37,
+   "Fri 09:30": 13
+  },
+  "plus_long_trou_h": 163.0,
+  "premiere_barre_du_jour_ny_mode": "09:30",
+  "derniere_barre_du_jour_ny_mode": "15:30",
+  "saut_en_seance_bps": {
+   "P50": 2.63,
+   "P99": 72.2,
+   "max": 423.1
+  },
+  "saut_a_la_reprise_bps": {
+   "P50": 31.54,
+   "P99": 296.4
+  },
+  "plus_grands_sauts": [
+   {
+    "time_ny": "2020-03-16 Mon 12:30",
+    "bps": -891.0,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-03-18 Wed 09:30",
+    "bps": -703.8,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2025-01-27 Mon 09:30",
+    "bps": -690.4,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2025-05-23 Fri 09:30",
+    "bps": 610.3,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2021-09-20 Mon 09:30",
+    "bps": -598.8,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2020-03-12 Thu 09:30",
+    "bps": -571.3,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2025-04-08 Tue 09:30",
+    "bps": 565.8,
+    "type": "reprise"
+   },
+   {
+    "time_ny": "2025-06-03 Tue 09:30",
+    "bps": 473.2,
+    "type": "reprise"
+   }
+  ]
+ }
+}

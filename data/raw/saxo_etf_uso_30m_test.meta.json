@@ -1,0 +1,18 @@
+{
+ "source": "saxo-openapi",
+ "environnement": "LIVE",
+ "uic": 35959,
+ "asset_type": "CfdOnEtf",
+ "horizon_min": 30,
+ "mode": "From",
+ "time": "2020-01-02 00:00:00+00:00",
+ "count": 1200,
+ "symbol": "USO:arcx",
+ "description": "United States Oil ETF (PTP)",
+ "role": "bloc de test D01.7 (aucun backtest)",
+ "environnement_saxo": "live",
+ "n_rows": 1200,
+ "first": "2020-01-02T14:30:00Z",
+ "last": "2020-05-14T15:30:00Z",
+ "sha256": "43a4b97cc28acce88e5587a7e9ba9cba01f6cbf462afded807aea70dedfa2da5"
+}

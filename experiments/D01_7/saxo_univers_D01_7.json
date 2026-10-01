@@ -1,0 +1,3335 @@
+{
+ "date_utc": "2026-10-01T02:08:56.980981+00:00",
+ "environnement": "LIVE",
+ "reserve_2026": "aucune requête au-delà de 2025-12-31 23:59:59+00:00",
+ "droits": {
+  "users_me": {
+   "MarketDataViaOpenApiTermsAccepted": true
+  },
+  "clients_me": {
+   "LegalAssetTypes": [
+    "FxSpot",
+    "FxForwards",
+    "FxVanillaOption",
+    "ContractFutures",
+    "FuturesStrategy",
+    "Stock",
+    "StockOption",
+    "Bond",
+    "FuturesOption",
+    "StockIndexOption",
+    "Cash",
+    "CfdOnStock",
+    "CfdOnIndex",
+    "CfdOnFutures",
+    "StockIndex",
+    "MutualFund",
+    "CfdOnEtf",
+    "CfdOnEtc",
+    "CfdOnEtn",
+    "CfdOnFund",
+    "CfdOnRights",
+    "CfdOnCompanyWarrant",
+    "Etf",
+    "Etc",
+    "Etn",
+    "Fund",
+    "FxSwap",
+    "Rights",
+    "Warrant",
+    "MiniFuture",
+    "WarrantSpread",
+    "WarrantKnockOut",
+    "WarrantOpenEndKnockOut",
+    "WarrantDoubleKnockOut",
+    "CertificateUncappedCapitalProtection",
+    "CertificateCappedCapitalProtected",
+    "CertificateDiscount",
+    "CertificateCappedOutperformance",
+    "CertificateCappedBonus",
+    "CertificateExpress",
+    "CertificateTracker",
+    "CertificateUncappedOutperformance",
+    "CertificateBonus",
+    "CertificateConstantLeverage",
+    "IpoOnStock",
+    "CompanyWarrant",
+    "SubscriptionOnCertificate"
+   ]
+  }
+ },
+ "US100": {
+  "fichier": "saxo_us100_cfd_30m.csv",
+  "symbol": "USNAS100.I",
+  "uic": 4912,
+  "asset_type": "CfdOnIndex",
+  "statut": "déjà téléchargé et validé (audit_saxo_D01_7.md), non retéléchargé"
+ },
+ "JP225": {
+  "premier_passage": "0 candidat CfdOnIndex pour « Japan 225 », « JP225 », « Nikkei »",
+  "decision_porteur": "remplacé par Hong Kong 50 (2026-10-01)"
+ },
+ "univers": {
+  "GER40": {
+   "candidats": [
+    {
+     "Symbol": "GER40.I",
+     "Identifier": 4910,
+     "AssetType": "CfdOnIndex",
+     "Description": "Germany 40",
+     "ExchangeId": "",
+     "CurrencyCode": "EUR",
+     "TradableAs": [
+      "CfdOnIndex"
+     ],
+     "GroupId": 1,
+     "SummaryType": "Instrument",
+     "mots_cles": "Germany 40"
+    }
+   ],
+   "conformes": [
+    {
+     "Symbol": "GER40.I",
+     "Identifier": 4910,
+     "AssetType": "CfdOnIndex",
+     "Description": "Germany 40",
+     "TradableAs": [
+      "CfdOnIndex"
+     ],
+     "statut": 200,
+     "FirstSampleTime": "2003-10-31T08:00:00Z",
+     "DelayedByMinutes": 0,
+     "ExchangeId": "FSE"
+    }
+   ],
+   "retenu": {
+    "Symbol": "GER40.I",
+    "Identifier": 4910,
+    "AssetType": "CfdOnIndex",
+    "Description": "Germany 40",
+    "TradableAs": [
+     "CfdOnIndex"
+    ],
+    "statut": 200,
+    "FirstSampleTime": "2003-10-31T08:00:00Z",
+    "DelayedByMinutes": 0,
+    "ExchangeId": "FSE"
+   },
+   "test": {
+    "instrument": {
+     "Symbol": "GER40.I",
+     "Identifier": 4910,
+     "AssetType": "CfdOnIndex",
+     "Description": "Germany 40",
+     "ExchangeId": "",
+     "CurrencyCode": "EUR",
+     "TradableAs": [
+      "CfdOnIndex"
+     ],
+     "GroupId": 1,
+     "SummaryType": "Instrument",
+     "mots_cles": "Germany 40"
+    },
+    "chart_info": {
+     "DelayedByMinutes": 0,
+     "ExchangeId": "FSE",
+     "FirstSampleTime": "2003-10-31T08:00:00Z",
+     "Horizon": 30
+    },
+    "display": {
+     "Decimals": 2,
+     "Description": "Germany 40",
+     "Format": "Normal",
+     "NumeratorDecimals": 2,
+     "Symbol": "GER40.ISX"
+    },
+    "first_sample_time": "2003-10-31 08:00:00+00:00",
+    "couvre_2020_01_01": true,
+    "page_from_debut": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2020-01-02 00:00:00+00:00",
+     "derniere": "2020-02-11 12:30:00+00:00"
+    },
+    "page_upto_fin_2025": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2025-11-17 09:00:00+00:00",
+     "derniere": "2025-12-30 20:30:00+00:00"
+    },
+    "page_upto_janvier_2020": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2019-12-17 08:00:00+00:00",
+     "derniere": "2020-01-31 20:30:00+00:00"
+    },
+    "champs_prix": {
+     "bid_ask": [
+      "OpenBid",
+      "HighBid",
+      "LowBid",
+      "CloseBid",
+      "OpenAsk",
+      "HighAsk",
+      "LowAsk",
+      "CloseAsk"
+     ],
+     "dernier": [],
+     "volume": [],
+     "autres": []
+    },
+    "structure": {
+     "barres": 1200,
+     "doublons": 0,
+     "desordre": 0,
+     "pas_30_min": 0.9766472060050042,
+     "interruptions": 28,
+     "interruptions_duree_h": {
+      "min": 3.5,
+      "50%": 3.5,
+      "max": 51.5
+     },
+     "reprises_heure_new_york": {
+      "19:00": 27,
+      "20:00": 1
+     },
+     "barres_par_jour_semaine": {
+      "0": 252,
+      "1": 234,
+      "2": 210,
+      "3": 252,
+      "4": 252
+     }
+    },
+    "plus_grands_ecarts": [
+     {
+      "apres": "2020-01-07 20:30:00+00:00",
+      "reprise": "2020-01-08 00:00:00+00:00",
+      "ecart_bps": -146.2325831794995
+     },
+     {
+      "apres": "2020-01-24 20:30:00+00:00",
+      "reprise": "2020-01-27 00:00:00+00:00",
+      "ecart_bps": -77.96453586869173
+     },
+     {
+      "apres": "2020-01-03 20:30:00+00:00",
+      "reprise": "2020-01-06 00:00:00+00:00",
+      "ecart_bps": -46.40393676650836
+     },
+     {
+      "apres": "2020-01-08 20:30:00+00:00",
+      "reprise": "2020-01-09 00:00:00+00:00",
+      "ecart_bps": 32.12923787295009
+     },
+     {
+      "apres": "2020-02-07 20:30:00+00:00",
+      "reprise": "2020-02-10 00:00:00+00:00",
+      "ecart_bps": -31.962516627864833
+     }
+    ],
+    "controles_ohlc": {
+     "bid": {
+      "incoherences": 0,
+      "prix_non_positifs": 0
+     },
+     "ask": {
+      "incoherences": 0,
+      "prix_non_positifs": 0
+     },
+     "ecart_close_bps": {
+      "P50": 1.8579790552173252,
+      "P90": 2.2662632720952796,
+      "negatifs": 0
+     }
+    },
+    "pagination_from": {
+     "barres": 1200,
+     "chevauchement": 0,
+     "ecart_entre_pages_h": 0.5
+    },
+    "coherence_from_upto": {
+     "barres_communes": 922,
+     "valeurs_identiques": true
+    },
+    "heures_etendues": {
+     "barres_avec": 1200,
+     "barres_sans": 1200
+    },
+    "bloc_test": {
+     "fichier": "saxo_ger40_30m_test.csv",
+     "barres": 1200,
+     "sha256": "9ee2d1592273d5441d6ddeadd9659c389ad45477d1bfae76669c742df3d63e84",
+     "reproductible": true
+    },
+    "seances_annoncees": [
+     {
+      "State": "AutomatedTrading",
+      "debut_ny": "Wed 20:15",
+      "fin_ny": "Thu 16:00"
+     },
+     {
+      "State": "Closed",
+      "debut_ny": "Thu 16:00",
+      "fin_ny": "Thu 20:15"
+     },
+     {
+      "State": "AutomatedTrading",
+      "debut_ny": "Thu 20:15",
+      "fin_ny": "Fri 16:00"
+     },
+     {
+      "State": "Closed",
+      "debut_ny": "Fri 16:00",
+      "fin_ny": "Sun 20:00"
+     }
+    ],
+    "fuseau_bourse": 4
+   }
+  },
+  "HK50": {
+   "candidats": [
+    {
+     "Symbol": "HK50.I",
+     "Identifier": 47624,
+     "AssetType": "CfdOnIndex",
+     "Description": "Hong Kong 50",
+     "ExchangeId": "",
+     "CurrencyCode": "HKD",
+     "TradableAs": [
+      "CfdOnIndex"
+     ],
+     "GroupId": 24,
+     "SummaryType": "Instrument",
+     "mots_cles": "Hong Kong 50"
+    }
+   ],
+   "conformes": [
+    {
+     "Symbol": "HK50.I",
+     "Identifier": 47624,
+     "AssetType": "CfdOnIndex",
+     "Description": "Hong Kong 50",
+     "TradableAs": [
+      "CfdOnIndex"
+     ],
+     "statut": 200,
+     "FirstSampleTime": "2010-07-05T02:16:00Z",
+     "DelayedByMinutes": 0,
+     "ExchangeId": "HKEX"
+    }
+   ],
+   "retenu": {
+    "Symbol": "HK50.I",
+    "Identifier": 47624,
+    "AssetType": "CfdOnIndex",
+    "Description": "Hong Kong 50",
+    "TradableAs": [
+     "CfdOnIndex"
+    ],
+    "statut": 200,
+    "FirstSampleTime": "2010-07-05T02:16:00Z",
+    "DelayedByMinutes": 0,
+    "ExchangeId": "HKEX"
+   },
+   "test": {
+    "instrument": {
+     "Symbol": "HK50.I",
+     "Identifier": 47624,
+     "AssetType": "CfdOnIndex",
+     "Description": "Hong Kong 50",
+     "ExchangeId": "",
+     "CurrencyCode": "HKD",
+     "TradableAs": [
+      "CfdOnIndex"
+     ],
+     "GroupId": 24,
+     "SummaryType": "Instrument",
+     "mots_cles": "Hong Kong 50"
+    },
+    "chart_info": {
+     "DelayedByMinutes": 0,
+     "ExchangeId": "HKEX",
+     "FirstSampleTime": "2010-07-05T02:16:00Z",
+     "Horizon": 30
+    },
+    "display": {
+     "Decimals": 1,
+     "Description": "Hong Kong 50",
+     "Format": "Normal",
+     "NumeratorDecimals": 1,
+     "Symbol": "HK50.ISX"
+    },
+    "first_sample_time": "2010-07-05 02:16:00+00:00",
+    "couvre_2020_01_01": true,
+    "page_from_debut": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2020-01-02 01:00:00+00:00",
+     "derniere": "2020-02-26 15:00:00+00:00"
+    },
+    "page_upto_fin_2025": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2025-11-06 01:00:00+00:00",
+     "derniere": "2025-12-31 03:30:00+00:00"
+    },
+    "page_upto_janvier_2020": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2019-12-02 12:00:00+00:00",
+     "derniere": "2020-01-31 08:00:00+00:00"
+    },
+    "champs_prix": {
+     "bid_ask": [
+      "OpenBid",
+      "HighBid",
+      "LowBid",
+      "CloseBid",
+      "OpenAsk",
+      "HighAsk",
+      "LowAsk",
+      "CloseAsk"
+     ],
+     "dernier": [],
+     "volume": [],
+     "autres": []
+    },
+    "structure": {
+     "barres": 1200,
+     "doublons": 0,
+     "desordre": 0,
+     "pas_30_min": 0.908256880733945,
+     "interruptions": 110,
+     "interruptions_duree_h": {
+      "min": 1.0,
+      "50%": 1.5,
+      "max": 117.5
+     },
+     "reprises_heure_new_york": {
+      "00:00": 37,
+      "20:00": 37,
+      "04:00": 36
+     },
+     "barres_par_jour_semaine": {
+      "0": 231,
+      "1": 231,
+      "2": 257,
+      "3": 264,
+      "4": 217
+     }
+    },
+    "plus_grands_ecarts": [
+     {
+      "apres": "2020-01-24 03:30:00+00:00",
+      "reprise": "2020-01-29 01:00:00+00:00",
+      "ecart_bps": -313.9524142166764
+     },
+     {
+      "apres": "2020-01-07 18:30:00+00:00",
+      "reprise": "2020-01-08 01:00:00+00:00",
+      "ecart_bps": -131.45194003368272
+     },
+     {
+      "apres": "2020-02-05 08:00:00+00:00",
+      "reprise": "2020-02-05 09:00:00+00:00",
+      "ecart_bps": 120.22854384739448
+     },
+     {
+      "apres": "2020-02-21 18:30:00+00:00",
+      "reprise": "2020-02-24 01:00:00+00:00",
+      "ecart_bps": -110.98566755280345
+     },
+     {
+      "apres": "2020-02-26 08:00:00+00:00",
+      "reprise": "2020-02-26 09:00:00+00:00",
+      "ecart_bps": -110.61477020301564
+     }
+    ],
+    "controles_ohlc": {
+     "bid": {
+      "incoherences": 0,
+      "prix_non_positifs": 0
+     },
+     "ask": {
+      "incoherences": 0,
+      "prix_non_positifs": 0
+     },
+     "ecart_close_bps": {
+      "P50": 4.6157396722824835,
+      "P90": 5.02844697751703,
+      "negatifs": 0
+     }
+    },
+    "pagination_from": {
+     "barres": 1200,
+     "chevauchement": 0,
+     "ecart_entre_pages_h": 0.5
+    },
+    "coherence_from_upto": {
+     "barres_communes": 613,
+     "valeurs_identiques": true
+    },
+    "heures_etendues": {
+     "barres_avec": 1200,
+     "barres_sans": 1200
+    },
+    "bloc_test": {
+     "fichier": "saxo_hk50_30m_test.csv",
+     "barres": 1200,
+     "sha256": "8df0fe44831d771fc6198eebc0ba19f1a2e058b91179e6d36620b1e95df272cc",
+     "reproductible": true
+    },
+    "seances_annoncees": [
+     {
+      "State": "Closed",
+      "debut_ny": "Wed 15:00",
+      "fin_ny": "Thu 21:15"
+     },
+     {
+      "State": "AutomatedTrading",
+      "debut_ny": "Thu 21:15",
+      "fin_ny": "Fri 00:00"
+     },
+     {
+      "State": "Closed",
+      "debut_ny": "Fri 00:00",
+      "fin_ny": "Fri 01:00"
+     },
+     {
+      "State": "AutomatedTrading",
+      "debut_ny": "Fri 01:00",
+      "fin_ny": "Fri 04:30"
+     },
+     {
+      "State": "Closed",
+      "debut_ny": "Fri 04:30",
+      "fin_ny": "Fri 05:00"
+     },
+     {
+      "State": "AutomatedTrading",
+      "debut_ny": "Fri 05:00",
+      "fin_ny": "Fri 15:00"
+     },
+     {
+      "State": "Closed",
+      "debut_ny": "Fri 15:00",
+      "fin_ny": "Sun 21:14"
+     }
+    ],
+    "fuseau_bourse": 7
+   }
+  },
+  "EU50": {
+   "candidats": [
+    {
+     "Symbol": "EU50.I",
+     "Identifier": 16753,
+     "AssetType": "CfdOnIndex",
+     "Description": "EU Stocks 50",
+     "ExchangeId": "",
+     "CurrencyCode": "EUR",
+     "TradableAs": [
+      "CfdOnIndex"
+     ],
+     "GroupId": 14,
+     "SummaryType": "Instrument",
+     "mots_cles": "EU50"
+    }
+   ],
+   "conformes": [
+    {
+     "Symbol": "EU50.I",
+     "Identifier": 16753,
+     "AssetType": "CfdOnIndex",
+     "Description": "EU Stocks 50",
+     "TradableAs": [
+      "CfdOnIndex"
+     ],
+     "statut": 200,
+     "FirstSampleTime": "2005-08-22T12:02:00Z",
+     "DelayedByMinutes": 0,
+     "ExchangeId": "PAR"
+    }
+   ],
+   "retenu": {
+    "Symbol": "EU50.I",
+    "Identifier": 16753,
+    "AssetType": "CfdOnIndex",
+    "Description": "EU Stocks 50",
+    "TradableAs": [
+     "CfdOnIndex"
+    ],
+    "statut": 200,
+    "FirstSampleTime": "2005-08-22T12:02:00Z",
+    "DelayedByMinutes": 0,
+    "ExchangeId": "PAR"
+   },
+   "test": {
+    "instrument": {
+     "Symbol": "EU50.I",
+     "Identifier": 16753,
+     "AssetType": "CfdOnIndex",
+     "Description": "EU Stocks 50",
+     "ExchangeId": "",
+     "CurrencyCode": "EUR",
+     "TradableAs": [
+      "CfdOnIndex"
+     ],
+     "GroupId": 14,
+     "SummaryType": "Instrument",
+     "mots_cles": "EU50"
+    },
+    "chart_info": {
+     "DelayedByMinutes": 0,
+     "ExchangeId": "PAR",
+     "FirstSampleTime": "2005-08-22T12:02:00Z",
+     "Horizon": 30
+    },
+    "display": {
+     "Decimals": 2,
+     "Description": "EU Stocks 50",
+     "Format": "Normal",
+     "NumeratorDecimals": 1,
+     "Symbol": "EU50.ISX"
+    },
+    "first_sample_time": "2005-08-22 12:02:00+00:00",
+    "couvre_2020_01_01": true,
+    "page_from_debut": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2020-01-02 00:00:00+00:00",
+     "derniere": "2020-02-11 15:00:00+00:00"
+    },
+    "page_upto_fin_2025": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2025-11-17 08:30:00+00:00",
+     "derniere": "2025-12-30 20:30:00+00:00"
+    },
+    "page_upto_janvier_2020": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2019-12-17 04:00:00+00:00",
+     "derniere": "2020-01-31 20:30:00+00:00"
+    },
+    "champs_prix": {
+     "bid_ask": [
+      "OpenBid",
+      "HighBid",
+      "LowBid",
+      "CloseBid",
+      "OpenAsk",
+      "HighAsk",
+      "LowAsk",
+      "CloseAsk"
+     ],
+     "dernier": [],
+     "volume": [],
+     "autres": []
+    },
+    "structure": {
+     "barres": 1200,
+     "doublons": 0,
+     "desordre": 0,
+     "pas_30_min": 0.9733110925771477,
+     "interruptions": 32,
+     "interruptions_duree_h": {
+      "min": 1.0,
+      "50%": 3.5,
+      "max": 51.5
+     },
+     "reprises_heure_new_york": {
+      "19:00": 27,
+      "00:00": 2,
+      "15:00": 2,
+      "20:00": 1
+     },
+     "barres_par_jour_semaine": {
+      "0": 248,
+      "1": 239,
+      "2": 210,
+      "3": 251,
+      "4": 252
+     }
+    },
+    "plus_grands_ecarts": [
+     {
+      "apres": "2020-01-07 20:30:00+00:00",
+      "reprise": "2020-01-08 00:00:00+00:00",
+      "ecart_bps": -120.69731704590637
+     },
+     {
+      "apres": "2020-01-24 20:30:00+00:00",
+      "reprise": "2020-01-27 00:00:00+00:00",
+      "ecart_bps": -69.34748068680342
+     },
+     {
+      "apres": "2020-01-03 20:30:00+00:00",
+      "reprise": "2020-01-06 00:00:00+00:00",
+      "ecart_bps": -46.487611342838996
+     },
+     {
+      "apres": "2020-01-31 20:30:00+00:00",
+      "reprise": "2020-02-03 00:00:00+00:00",
+      "ecart_bps": 30.303470895609546
+     },
+     {
+      "apres": "2020-01-08 20:30:00+00:00",
+      "reprise": "2020-01-09 00:00:00+00:00",
+      "ecart_bps": 25.4714601215662
+     }
+    ],
+    "controles_ohlc": {
+     "bid": {
+      "incoherences": 0,
+      "prix_non_positifs": 0
+     },
+     "ask": {
+      "incoherences": 0,
+      "prix_non_positifs": 0
+     },
+     "ecart_close_bps": {
+      "P50": 5.306341743252183,
+      "P90": 5.435713179158389,
+      "negatifs": 0
+     }
+    },
+    "pagination_from": {
+     "barres": 1200,
+     "chevauchement": 0,
+     "ecart_entre_pages_h": 0.5
+    },
+    "coherence_from_upto": {
+     "barres_communes": 917,
+     "valeurs_identiques": true
+    },
+    "heures_etendues": {
+     "barres_avec": 1200,
+     "barres_sans": 1200
+    },
+    "bloc_test": {
+     "fichier": "saxo_eu50_30m_test.csv",
+     "barres": 1200,
+     "sha256": "f742fd6ce1e89851a0bd5bf05f838f0ceaa1c0db300178e1a68b935a5f973054",
+     "reproductible": true
+    },
+    "seances_annoncees": [
+     {
+      "State": "AutomatedTrading",
+      "debut_ny": "Wed 20:10",
+      "fin_ny": "Thu 16:00"
+     },
+     {
+      "State": "Closed",
+      "debut_ny": "Thu 16:00",
+      "fin_ny": "Thu 20:10"
+     },
+     {
+      "State": "AutomatedTrading",
+      "debut_ny": "Thu 20:10",
+      "fin_ny": "Fri 16:00"
+     },
+     {
+      "State": "Closed",
+      "debut_ny": "Fri 16:00",
+      "fin_ny": "Sun 20:00"
+     }
+    ],
+    "fuseau_bourse": 4
+   }
+  },
+  "US30": {
+   "candidats": [
+    {
+     "Symbol": "US30.I",
+     "Identifier": 4911,
+     "AssetType": "CfdOnIndex",
+     "Description": "US 30 Wall Street",
+     "ExchangeId": "",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "CfdOnIndex"
+     ],
+     "GroupId": 2,
+     "SummaryType": "Instrument",
+     "mots_cles": "US 30"
+    }
+   ],
+   "conformes": [
+    {
+     "Symbol": "US30.I",
+     "Identifier": 4911,
+     "AssetType": "CfdOnIndex",
+     "Description": "US 30 Wall Street",
+     "TradableAs": [
+      "CfdOnIndex"
+     ],
+     "statut": 200,
+     "FirstSampleTime": "2003-10-31T02:15:00Z",
+     "DelayedByMinutes": 0,
+     "ExchangeId": "NYSE"
+    }
+   ],
+   "retenu": {
+    "Symbol": "US30.I",
+    "Identifier": 4911,
+    "AssetType": "CfdOnIndex",
+    "Description": "US 30 Wall Street",
+    "TradableAs": [
+     "CfdOnIndex"
+    ],
+    "statut": 200,
+    "FirstSampleTime": "2003-10-31T02:15:00Z",
+    "DelayedByMinutes": 0,
+    "ExchangeId": "NYSE"
+   },
+   "test": {
+    "instrument": {
+     "Symbol": "US30.I",
+     "Identifier": 4911,
+     "AssetType": "CfdOnIndex",
+     "Description": "US 30 Wall Street",
+     "ExchangeId": "",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "CfdOnIndex"
+     ],
+     "GroupId": 2,
+     "SummaryType": "Instrument",
+     "mots_cles": "US 30"
+    },
+    "chart_info": {
+     "DelayedByMinutes": 0,
+     "ExchangeId": "NYSE",
+     "FirstSampleTime": "2003-10-31T02:15:00Z",
+     "Horizon": 30
+    },
+    "display": {
+     "Decimals": 1,
+     "Description": "US 30 Wall Street",
+     "Format": "Normal",
+     "NumeratorDecimals": 2,
+     "Symbol": "US30.ISX"
+    },
+    "first_sample_time": "2003-10-31 02:15:00+00:00",
+    "couvre_2020_01_01": true,
+    "page_from_debut": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2020-01-02 00:00:00+00:00",
+     "derniere": "2020-02-10 08:30:00+00:00"
+    },
+    "page_upto_fin_2025": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2025-11-23 23:00:00+00:00",
+     "derniere": "2025-12-31 21:30:00+00:00"
+    },
+    "page_upto_janvier_2020": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2019-12-23 09:30:00+00:00",
+     "derniere": "2020-01-31 20:30:00+00:00"
+    },
+    "champs_prix": {
+     "bid_ask": [
+      "OpenBid",
+      "HighBid",
+      "LowBid",
+      "CloseBid",
+      "OpenAsk",
+      "HighAsk",
+      "LowAsk",
+      "CloseAsk"
+     ],
+     "dernier": [],
+     "volume": [],
+     "autres": []
+    },
+    "structure": {
+     "barres": 1200,
+     "doublons": 0,
+     "desordre": 0,
+     "pas_30_min": 0.9774812343619683,
+     "interruptions": 27,
+     "interruptions_duree_h": {
+      "min": 2.5,
+      "50%": 2.5,
+      "max": 50.5
+     },
+     "reprises_heure_new_york": {
+      "18:00": 27
+     },
+     "barres_par_jour_semaine": {
+      "0": 232,
+      "1": 220,
+      "2": 220,
+      "3": 264,
+      "4": 252,
+      "6": 12
+     }
+    },
+    "plus_grands_ecarts": [
+     {
+      "apres": "2020-01-24 20:30:00+00:00",
+      "reprise": "2020-01-26 23:00:00+00:00",
+      "ecart_bps": -82.43926993791608
+     },
+     {
+      "apres": "2020-01-03 20:30:00+00:00",
+      "reprise": "2020-01-05 23:00:00+00:00",
+      "ecart_bps": -47.613969399953106
+     },
+     {
+      "apres": "2020-01-28 20:30:00+00:00",
+      "reprise": "2020-01-28 23:00:00+00:00",
+      "ecart_bps": 23.298604625544275
+     },
+     {
+      "apres": "2020-01-08 20:30:00+00:00",
+      "reprise": "2020-01-08 23:00:00+00:00",
+      "ecart_bps": 22.2058212093283
+     },
+     {
+      "apres": "2020-02-07 20:30:00+00:00",
+      "reprise": "2020-02-09 23:00:00+00:00",
+      "ecart_bps": -21.293401073731264
+     }
+    ],
+    "controles_ohlc": {
+     "bid": {
+      "incoherences": 0,
+      "prix_non_positifs": 0
+     },
+     "ask": {
+      "incoherences": 0,
+      "prix_non_positifs": 0
+     },
+     "ecart_close_bps": {
+      "P50": 1.3902308479834238,
+      "P90": 1.741359374972429,
+      "negatifs": 0
+     }
+    },
+    "pagination_from": {
+     "barres": 1200,
+     "chevauchement": 0,
+     "ecart_entre_pages_h": 0.5
+    },
+    "coherence_from_upto": {
+     "barres_communes": 960,
+     "valeurs_identiques": true
+    },
+    "heures_etendues": {
+     "barres_avec": 1200,
+     "barres_sans": 1200
+    },
+    "bloc_test": {
+     "fichier": "saxo_us30_30m_test.csv",
+     "barres": 1200,
+     "sha256": "3fd99b108224150136842f68b0a487c5f5b362a042ca50a57fbc84566a82ce41",
+     "reproductible": true
+    },
+    "seances_annoncees": [
+     {
+      "State": "AutomatedTrading",
+      "debut_ny": "Wed 18:00",
+      "fin_ny": "Thu 17:00"
+     },
+     {
+      "State": "Closed",
+      "debut_ny": "Thu 17:00",
+      "fin_ny": "Thu 18:00"
+     },
+     {
+      "State": "AutomatedTrading",
+      "debut_ny": "Thu 18:00",
+      "fin_ny": "Fri 17:00"
+     },
+     {
+      "State": "Closed",
+      "debut_ny": "Fri 17:00",
+      "fin_ny": "Sun 17:59"
+     }
+    ],
+    "fuseau_bourse": 3
+   }
+  },
+  "XAGUSD": {
+   "candidats": [
+    {
+     "Symbol": "XAGUSD",
+     "Identifier": 8177,
+     "AssetType": "FxSpot",
+     "Description": "Silver/US Dollar",
+     "ExchangeId": "SBFX",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "FxSpot",
+      "FxForwards",
+      "FxVanillaOption",
+      "FxSwap"
+     ],
+     "GroupId": 39461,
+     "SummaryType": "Instrument",
+     "mots_cles": "XAGUSD"
+    },
+    {
+     "Symbol": "XAGEUR",
+     "Identifier": 19846,
+     "AssetType": "FxSpot",
+     "Description": "Silver/Euro",
+     "ExchangeId": "SBFX",
+     "CurrencyCode": "EUR",
+     "TradableAs": [
+      "FxSpot",
+      "FxForwards",
+      "FxSwap"
+     ],
+     "GroupId": 39527,
+     "SummaryType": "Instrument",
+     "mots_cles": "Silver"
+    },
+    {
+     "Symbol": "XAUXAG",
+     "Identifier": 195179,
+     "AssetType": "FxSpot",
+     "Description": "Gold/Silver",
+     "ExchangeId": "SBFX",
+     "CurrencyCode": "XAG",
+     "TradableAs": [
+      "FxSpot",
+      "FxForwards",
+      "FxSwap"
+     ],
+     "GroupId": 39704,
+     "SummaryType": "Instrument",
+     "mots_cles": "Silver"
+    },
+    {
+     "Symbol": "XAGCHF",
+     "Identifier": 156327,
+     "AssetType": "FxSpot",
+     "Description": "Silver/Swiss Franc",
+     "ExchangeId": "SBFX",
+     "CurrencyCode": "CHF",
+     "TradableAs": [
+      "FxSpot"
+     ],
+     "GroupId": 39702,
+     "SummaryType": "Instrument",
+     "mots_cles": "Silver"
+    },
+    {
+     "Symbol": "XAGAUD",
+     "Identifier": 20770,
+     "AssetType": "FxSpot",
+     "Description": "Silver/Australian Dollar",
+     "ExchangeId": "SBFX",
+     "CurrencyCode": "AUD",
+     "TradableAs": [
+      "FxSpot"
+     ],
+     "GroupId": 39536,
+     "SummaryType": "Instrument",
+     "mots_cles": "Silver"
+    },
+    {
+     "Symbol": "XAGJPY",
+     "Identifier": 19847,
+     "AssetType": "FxSpot",
+     "Description": "Silver/Japanese Yen",
+     "ExchangeId": "SBFX",
+     "CurrencyCode": "JPY",
+     "TradableAs": [
+      "FxSpot"
+     ],
+     "GroupId": 39528,
+     "SummaryType": "Instrument",
+     "mots_cles": "Silver"
+    },
+    {
+     "Symbol": "XAGCNH",
+     "Identifier": 11701065,
+     "AssetType": "FxSpot",
+     "Description": "Silver/Offshore Chinese Renminbi",
+     "ExchangeId": "SBFX",
+     "CurrencyCode": "CNH",
+     "TradableAs": [
+      "FxSpot"
+     ],
+     "GroupId": 39735,
+     "SummaryType": "Instrument",
+     "mots_cles": "Silver"
+    },
+    {
+     "Symbol": "XAGHKD",
+     "Identifier": 22562,
+     "AssetType": "FxSpot",
+     "Description": "Silver/Hong Kong Dollar",
+     "ExchangeId": "SBFX",
+     "CurrencyCode": "HKD",
+     "TradableAs": [
+      "FxSpot"
+     ],
+     "GroupId": 39541,
+     "SummaryType": "Instrument",
+     "mots_cles": "Silver"
+    }
+   ],
+   "conformes": [
+    {
+     "Symbol": "XAGUSD",
+     "Identifier": 8177,
+     "AssetType": "FxSpot",
+     "Description": "Silver/US Dollar",
+     "TradableAs": [
+      "FxSpot",
+      "FxForwards",
+      "FxVanillaOption",
+      "FxSwap"
+     ],
+     "statut": 200,
+     "FirstSampleTime": "2004-03-16T09:04:00Z",
+     "DelayedByMinutes": 0,
+     "ExchangeId": "SBFX"
+    }
+   ],
+   "retenu": {
+    "Symbol": "XAGUSD",
+    "Identifier": 8177,
+    "AssetType": "FxSpot",
+    "Description": "Silver/US Dollar",
+    "TradableAs": [
+     "FxSpot",
+     "FxForwards",
+     "FxVanillaOption",
+     "FxSwap"
+    ],
+    "statut": 200,
+    "FirstSampleTime": "2004-03-16T09:04:00Z",
+    "DelayedByMinutes": 0,
+    "ExchangeId": "SBFX"
+   },
+   "test": {
+    "instrument": {
+     "Symbol": "XAGUSD",
+     "Identifier": 8177,
+     "AssetType": "FxSpot",
+     "Description": "Silver/US Dollar",
+     "ExchangeId": "SBFX",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "FxSpot",
+      "FxForwards",
+      "FxVanillaOption",
+      "FxSwap"
+     ],
+     "GroupId": 39461,
+     "SummaryType": "Instrument",
+     "mots_cles": "XAGUSD"
+    },
+    "chart_info": {
+     "DelayedByMinutes": 0,
+     "ExchangeId": "SBFX",
+     "FirstSampleTime": "2004-03-16T09:04:00Z",
+     "Horizon": 30
+    },
+    "display": {
+     "Decimals": 4,
+     "Description": "Silver/US Dollar",
+     "Format": "Normal",
+     "NumeratorDecimals": 2,
+     "Symbol": "XAGUSD"
+    },
+    "first_sample_time": "2004-03-16 09:04:00+00:00",
+    "couvre_2020_01_01": true,
+    "page_from_debut": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2020-01-02 00:00:00+00:00",
+     "derniere": "2020-02-07 05:30:00+00:00"
+    },
+    "page_upto_fin_2025": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2025-11-24 12:30:00+00:00",
+     "derniere": "2025-12-31 21:30:00+00:00"
+    },
+    "page_upto_janvier_2020": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2019-12-24 12:30:00+00:00",
+     "derniere": "2020-01-31 21:30:00+00:00"
+    },
+    "champs_prix": {
+     "bid_ask": [
+      "OpenBid",
+      "HighBid",
+      "LowBid",
+      "CloseBid",
+      "OpenAsk",
+      "HighAsk",
+      "LowAsk",
+      "CloseAsk"
+     ],
+     "dernier": [],
+     "volume": [],
+     "autres": []
+    },
+    "structure": {
+     "barres": 1200,
+     "doublons": 0,
+     "desordre": 0,
+     "pas_30_min": 0.9783152627189324,
+     "interruptions": 26,
+     "interruptions_duree_h": {
+      "min": 1.5,
+      "50%": 1.5,
+      "max": 49.5
+     },
+     "reprises_heure_new_york": {
+      "18:00": 26
+     },
+     "barres_par_jour_semaine": {
+      "0": 222,
+      "1": 230,
+      "2": 230,
+      "3": 276,
+      "4": 232,
+      "6": 10
+     }
+    },
+    "plus_grands_ecarts": [
+     {
+      "apres": "2020-01-24 21:30:00+00:00",
+      "reprise": "2020-01-26 23:00:00+00:00",
+      "ecart_bps": 137.76666203695297
+     },
+     {
+      "apres": "2020-01-03 21:30:00+00:00",
+      "reprise": "2020-01-05 23:00:00+00:00",
+      "ecart_bps": 62.98363362368691
+     },
+     {
+      "apres": "2020-01-31 21:30:00+00:00",
+      "reprise": "2020-02-02 23:00:00+00:00",
+      "ecart_bps": 17.737380627306933
+     },
+     {
+      "apres": "2020-01-21 21:30:00+00:00",
+      "reprise": "2020-01-21 23:00:00+00:00",
+      "ecart_bps": 14.051656191732208
+     },
+     {
+      "apres": "2020-01-10 21:30:00+00:00",
+      "reprise": "2020-01-12 23:00:00+00:00",
+      "ecart_bps": -12.165451622041088
+     }
+    ],
+    "controles_ohlc": {
+     "bid": {
+      "incoherences": 0,
+      "prix_non_positifs": 0
+     },
+     "ask": {
+      "incoherences": 0,
+      "prix_non_positifs": 0
+     },
+     "ecart_close_bps": {
+      "P50": 8.312471573865356,
+      "P90": 9.352135163812864,
+      "negatifs": 0
+     }
+    },
+    "pagination_from": {
+     "barres": 1200,
+     "chevauchement": 0,
+     "ecart_entre_pages_h": 0.5
+    },
+    "coherence_from_upto": {
+     "barres_communes": 1002,
+     "valeurs_identiques": true
+    },
+    "heures_etendues": {
+     "barres_avec": 1200,
+     "barres_sans": 1200
+    },
+    "bloc_test": {
+     "fichier": "saxo_xagusd_30m_test.csv",
+     "barres": 1200,
+     "sha256": "a2e9a9ff77c2eada081b1dc44c3d5966afb0ab13a9f0eb35f5042fe40b954307",
+     "reproductible": true
+    },
+    "seances_annoncees": [
+     {
+      "State": "AutomatedTrading",
+      "debut_ny": "Wed 18:01",
+      "fin_ny": "Thu 16:59"
+     },
+     {
+      "State": "Closed",
+      "debut_ny": "Thu 16:59",
+      "fin_ny": "Thu 18:01"
+     },
+     {
+      "State": "AutomatedTrading",
+      "debut_ny": "Thu 18:01",
+      "fin_ny": "Fri 16:59"
+     },
+     {
+      "State": "Closed",
+      "debut_ny": "Fri 16:59",
+      "fin_ny": "Sun 18:01"
+     }
+    ],
+    "fuseau_bourse": 3
+   }
+  },
+  "GBPJPY": {
+   "candidats": [
+    {
+     "Symbol": "GBPJPY",
+     "Identifier": 26,
+     "AssetType": "FxSpot",
+     "Description": "British Pound/Japanese Yen",
+     "ExchangeId": "SBFX",
+     "CurrencyCode": "JPY",
+     "TradableAs": [
+      "FxSpot",
+      "FxForwards",
+      "FxVanillaOption",
+      "FxSwap"
+     ],
+     "GroupId": 39376,
+     "SummaryType": "Instrument",
+     "mots_cles": "GBPJPY"
+    }
+   ],
+   "conformes": [
+    {
+     "Symbol": "GBPJPY",
+     "Identifier": 26,
+     "AssetType": "FxSpot",
+     "Description": "British Pound/Japanese Yen",
+     "TradableAs": [
+      "FxSpot",
+      "FxForwards",
+      "FxVanillaOption",
+      "FxSwap"
+     ],
+     "statut": 200,
+     "FirstSampleTime": "2002-09-25T02:40:00Z",
+     "DelayedByMinutes": 0,
+     "ExchangeId": "SBFX"
+    }
+   ],
+   "retenu": {
+    "Symbol": "GBPJPY",
+    "Identifier": 26,
+    "AssetType": "FxSpot",
+    "Description": "British Pound/Japanese Yen",
+    "TradableAs": [
+     "FxSpot",
+     "FxForwards",
+     "FxVanillaOption",
+     "FxSwap"
+    ],
+    "statut": 200,
+    "FirstSampleTime": "2002-09-25T02:40:00Z",
+    "DelayedByMinutes": 0,
+    "ExchangeId": "SBFX"
+   },
+   "test": {
+    "instrument": {
+     "Symbol": "GBPJPY",
+     "Identifier": 26,
+     "AssetType": "FxSpot",
+     "Description": "British Pound/Japanese Yen",
+     "ExchangeId": "SBFX",
+     "CurrencyCode": "JPY",
+     "TradableAs": [
+      "FxSpot",
+      "FxForwards",
+      "FxVanillaOption",
+      "FxSwap"
+     ],
+     "GroupId": 39376,
+     "SummaryType": "Instrument",
+     "mots_cles": "GBPJPY"
+    },
+    "chart_info": {
+     "DelayedByMinutes": 0,
+     "ExchangeId": "SBFX",
+     "FirstSampleTime": "2002-09-25T02:40:00Z",
+     "Horizon": 30
+    },
+    "display": {
+     "Decimals": 2,
+     "Description": "British Pound/Japanese Yen",
+     "Format": "Normal",
+     "NumeratorDecimals": 2,
+     "Symbol": "GBPJPY"
+    },
+    "first_sample_time": "2002-09-25 02:40:00+00:00",
+    "couvre_2020_01_01": true,
+    "page_from_debut": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2020-01-02 00:00:00+00:00",
+     "derniere": "2020-02-05 03:30:00+00:00"
+    },
+    "page_upto_fin_2025": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2025-11-27 01:00:00+00:00",
+     "derniere": "2025-12-31 21:30:00+00:00"
+    },
+    "page_upto_janvier_2020": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2019-12-27 20:30:00+00:00",
+     "derniere": "2020-01-31 21:30:00+00:00"
+    },
+    "champs_prix": {
+     "bid_ask": [
+      "OpenBid",
+      "HighBid",
+      "LowBid",
+      "CloseBid",
+      "OpenAsk",
+      "HighAsk",
+      "LowAsk",
+      "CloseAsk"
+     ],
+     "dernier": [],
+     "volume": [],
+     "autres": []
+    },
+    "structure": {
+     "barres": 1200,
+     "doublons": 0,
+     "desordre": 0,
+     "pas_30_min": 0.9958298582151793,
+     "interruptions": 5,
+     "interruptions_duree_h": {
+      "min": 44.5,
+      "50%": 44.5,
+      "max": 44.5
+     },
+     "reprises_heure_new_york": {
+      "13:00": 5
+     },
+     "barres_par_jour_semaine": {
+      "0": 240,
+      "1": 240,
+      "2": 200,
+      "3": 240,
+      "4": 220,
+      "6": 60
+     }
+    },
+    "plus_grands_ecarts": [
+     {
+      "apres": "2020-01-10 21:30:00+00:00",
+      "reprise": "2020-01-12 18:00:00+00:00",
+      "ecart_bps": -21.00267505919854
+     },
+     {
+      "apres": "2020-01-26 20:30:00+00:00",
+      "reprise": "2020-01-26 21:00:00+00:00",
+      "ecart_bps": -19.961489400905126
+     },
+     {
+      "apres": "2020-01-29 21:30:00+00:00",
+      "reprise": "2020-01-29 22:00:00+00:00",
+      "ecart_bps": -15.161187451019753
+     },
+     {
+      "apres": "2020-01-17 21:30:00+00:00",
+      "reprise": "2020-01-19 18:00:00+00:00",
+      "ecart_bps": -14.043719491446655
+     },
+     {
+      "apres": "2020-01-03 21:30:00+00:00",
+      "reprise": "2020-01-05 18:00:00+00:00",
+      "ecart_bps": -14.016907532187085
+     }
+    ],
+    "controles_ohlc": {
+     "bid": {
+      "incoherences": 0,
+      "prix_non_positifs": 0
+     },
+     "ask": {
+      "incoherences": 0,
+      "prix_non_positifs": 0
+     },
+     "ecart_close_bps": {
+      "P50": 2.81447342992473,
+      "P90": 3.412910843056693,
+      "negatifs": 0
+     }
+    },
+    "pagination_from": {
+     "barres": 1200,
+     "chevauchement": 0,
+     "ecart_entre_pages_h": 0.5
+    },
+    "coherence_from_upto": {
+     "barres_communes": 1084,
+     "valeurs_identiques": true
+    },
+    "heures_etendues": {
+     "barres_avec": 1200,
+     "barres_sans": 1200
+    },
+    "bloc_test": {
+     "fichier": "saxo_gbpjpy_30m_test.csv",
+     "barres": 1200,
+     "sha256": "383e1b8b6efe71d5496670cf25dfd1c3c786aff42e66f0de4b1e02664fc806e3",
+     "reproductible": true
+    },
+    "seances_annoncees": [
+     {
+      "State": "AutomatedTrading",
+      "debut_ny": "Wed 17:04",
+      "fin_ny": "Thu 16:59"
+     },
+     {
+      "State": "Closed",
+      "debut_ny": "Thu 16:59",
+      "fin_ny": "Thu 17:04"
+     },
+     {
+      "State": "AutomatedTrading",
+      "debut_ny": "Thu 17:04",
+      "fin_ny": "Fri 16:59"
+     },
+     {
+      "State": "Closed",
+      "debut_ny": "Fri 16:59",
+      "fin_ny": "Sun 14:04"
+     }
+    ],
+    "fuseau_bourse": 3
+   }
+  }
+ },
+ "option_etf": {
+  "ETF_TLT": {
+   "candidats": [
+    {
+     "Symbol": "TLT:xnas",
+     "Identifier": 3441903,
+     "AssetType": "CfdOnEtf",
+     "Description": "iShares 20+ Year Treasury Bond  ETF",
+     "ExchangeId": "NASDAQ",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "CfdOnEtf"
+     ],
+     "GroupId": 27833,
+     "SummaryType": "Instrument",
+     "mots_cles": "TLT"
+    },
+    {
+     "Symbol": "TLTD:arcx",
+     "Identifier": 6292246,
+     "AssetType": "CfdOnEtf",
+     "Description": "Northern Trust Morning Dev Markets ex-US Tilt ETF",
+     "ExchangeId": "NYSE_ARCA",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "CfdOnEtf"
+     ],
+     "GroupId": 28465,
+     "SummaryType": "Instrument",
+     "mots_cles": "TLT"
+    }
+   ],
+   "conformes": [
+    {
+     "Symbol": "TLT:xnas",
+     "Identifier": 3441903,
+     "AssetType": "CfdOnEtf",
+     "Description": "iShares 20+ Year Treasury Bond  ETF",
+     "TradableAs": [
+      "CfdOnEtf"
+     ],
+     "statut": 200,
+     "FirstSampleTime": "2016-02-02T14:32:00Z",
+     "DelayedByMinutes": 15,
+     "ExchangeId": "NASDAQ"
+    }
+   ],
+   "retenu": {
+    "Symbol": "TLT:xnas",
+    "Identifier": 3441903,
+    "AssetType": "CfdOnEtf",
+    "Description": "iShares 20+ Year Treasury Bond  ETF",
+    "TradableAs": [
+     "CfdOnEtf"
+    ],
+    "statut": 200,
+    "FirstSampleTime": "2016-02-02T14:32:00Z",
+    "DelayedByMinutes": 15,
+    "ExchangeId": "NASDAQ"
+   },
+   "test": {
+    "instrument": {
+     "Symbol": "TLT:xnas",
+     "Identifier": 3441903,
+     "AssetType": "CfdOnEtf",
+     "Description": "iShares 20+ Year Treasury Bond  ETF",
+     "ExchangeId": "NASDAQ",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "CfdOnEtf"
+     ],
+     "GroupId": 27833,
+     "SummaryType": "Instrument",
+     "mots_cles": "TLT"
+    },
+    "chart_info": {
+     "DelayedByMinutes": 15,
+     "ExchangeId": "NASDAQ",
+     "FirstSampleTime": "2016-02-02T14:32:00Z",
+     "Horizon": 30
+    },
+    "display": {
+     "Currency": "USD",
+     "Decimals": 2,
+     "Description": "iShares 20+ Year Treasury Bond  ETF",
+     "Format": "Normal",
+     "NumeratorDecimals": 4,
+     "Symbol": "TLT:xnas"
+    },
+    "first_sample_time": "2016-02-02 14:32:00+00:00",
+    "couvre_2020_01_01": true,
+    "page_from_debut": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2020-01-02 14:30:00+00:00",
+     "derniere": "2020-05-14 15:30:00+00:00"
+    },
+    "page_upto_fin_2025": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2025-08-19 18:30:00+00:00",
+     "derniere": "2025-12-31 20:30:00+00:00"
+    },
+    "page_upto_janvier_2020": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2019-09-18 18:30:00+00:00",
+     "derniere": "2020-01-31 20:30:00+00:00"
+    },
+    "champs_prix": {
+     "bid_ask": [],
+     "dernier": [
+      "Open",
+      "High",
+      "Low",
+      "Close"
+     ],
+     "volume": [
+      "Volume"
+     ],
+     "autres": [
+      "Interest",
+      "MarketTradingState"
+     ]
+    },
+    "structure": {
+     "barres": 1200,
+     "doublons": 0,
+     "desordre": 0,
+     "pas_30_min": 0.9224353628023353,
+     "interruptions": 93,
+     "interruptions_duree_h": {
+      "min": 1.0,
+      "50%": 18.0,
+      "max": 90.0
+     },
+     "reprises_heure_new_york": {
+      "09:30": 92,
+      "10:30": 1
+     },
+     "barres_par_jour_semaine": {
+      "0": 221,
+      "1": 247,
+      "2": 247,
+      "3": 251,
+      "4": 234
+     }
+    },
+    "plus_grands_ecarts": [
+     {
+      "apres": "2020-03-06 20:30:00+00:00",
+      "reprise": "2020-03-09 13:30:00+00:00",
+      "ecart_bps": 713.2869143317814
+     },
+     {
+      "apres": "2020-03-05 20:30:00+00:00",
+      "reprise": "2020-03-06 14:30:00+00:00",
+      "ecart_bps": 539.0783967054402
+     },
+     {
+      "apres": "2020-03-11 19:30:00+00:00",
+      "reprise": "2020-03-12 13:30:00+00:00",
+      "ecart_bps": 436.26465646363545
+     },
+     {
+      "apres": "2020-03-13 19:30:00+00:00",
+      "reprise": "2020-03-16 13:30:00+00:00",
+      "ecart_bps": 372.87180216555754
+     },
+     {
+      "apres": "2020-03-19 19:30:00+00:00",
+      "reprise": "2020-03-20 13:30:00+00:00",
+      "ecart_bps": 332.9440759523703
+     }
+    ],
+    "controles_ohlc": {
+     "dernier": {
+      "incoherences": 0,
+      "prix_non_positifs": 0
+     },
+     "volume_nul": 0
+    },
+    "pagination_from": {
+     "barres": 1200,
+     "chevauchement": 0,
+     "ecart_entre_pages_h": 0.5
+    },
+    "coherence_from_upto": {
+     "barres_communes": 273,
+     "valeurs_identiques": true
+    },
+    "heures_etendues": {
+     "barres_avec": 1200,
+     "barres_sans": 1200
+    },
+    "bloc_test": {
+     "fichier": "saxo_etf_tlt_30m_test.csv",
+     "barres": 1200,
+     "sha256": "cb492c8dfb5223665d35d64a927ce25e1d1fc6e4cb4f74593c1cce27ad686792",
+     "reproductible": true
+    },
+    "seances_annoncees": [
+     {
+      "State": "Closed",
+      "debut_ny": "Wed 17:00",
+      "fin_ny": "Thu 07:00"
+     },
+     {
+      "State": "PreMarket",
+      "debut_ny": "Thu 07:00",
+      "fin_ny": "Thu 09:30"
+     },
+     {
+      "State": "AutomatedTrading",
+      "debut_ny": "Thu 09:30",
+      "fin_ny": "Thu 16:00"
+     },
+     {
+      "State": "PostMarket",
+      "debut_ny": "Thu 16:00",
+      "fin_ny": "Thu 17:00"
+     },
+     {
+      "State": "Closed",
+      "debut_ny": "Thu 17:00",
+      "fin_ny": "Fri 07:00"
+     },
+     {
+      "State": "PreMarket",
+      "debut_ny": "Fri 07:00",
+      "fin_ny": "Fri 09:30"
+     },
+     {
+      "State": "AutomatedTrading",
+      "debut_ny": "Fri 09:30",
+      "fin_ny": "Fri 16:00"
+     },
+     {
+      "State": "PostMarket",
+      "debut_ny": "Fri 16:00",
+      "fin_ny": "Fri 17:00"
+     },
+     {
+      "State": "Closed",
+      "debut_ny": "Fri 17:00",
+      "fin_ny": "Mon 07:00"
+     }
+    ],
+    "fuseau_bourse": 3
+   }
+  },
+  "ETF_USO": {
+   "candidats": [
+    {
+     "Symbol": "USO:arcx",
+     "Identifier": 35959,
+     "AssetType": "CfdOnEtf",
+     "Description": "United States Oil ETF (PTP)",
+     "ExchangeId": "NYSE_ARCA",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "CfdOnEtf"
+     ],
+     "GroupId": 26247,
+     "SummaryType": "Instrument",
+     "mots_cles": "USO"
+    }
+   ],
+   "conformes": [
+    {
+     "Symbol": "USO:arcx",
+     "Identifier": 35959,
+     "AssetType": "CfdOnEtf",
+     "Description": "United States Oil ETF (PTP)",
+     "TradableAs": [
+      "CfdOnEtf"
+     ],
+     "statut": 200,
+     "FirstSampleTime": "2008-11-25T15:30:00Z",
+     "DelayedByMinutes": 15,
+     "ExchangeId": "NYSE_ARCA"
+    }
+   ],
+   "retenu": {
+    "Symbol": "USO:arcx",
+    "Identifier": 35959,
+    "AssetType": "CfdOnEtf",
+    "Description": "United States Oil ETF (PTP)",
+    "TradableAs": [
+     "CfdOnEtf"
+    ],
+    "statut": 200,
+    "FirstSampleTime": "2008-11-25T15:30:00Z",
+    "DelayedByMinutes": 15,
+    "ExchangeId": "NYSE_ARCA"
+   },
+   "test": {
+    "instrument": {
+     "Symbol": "USO:arcx",
+     "Identifier": 35959,
+     "AssetType": "CfdOnEtf",
+     "Description": "United States Oil ETF (PTP)",
+     "ExchangeId": "NYSE_ARCA",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "CfdOnEtf"
+     ],
+     "GroupId": 26247,
+     "SummaryType": "Instrument",
+     "mots_cles": "USO"
+    },
+    "chart_info": {
+     "DelayedByMinutes": 15,
+     "ExchangeId": "NYSE_ARCA",
+     "FirstSampleTime": "2008-11-25T15:30:00Z",
+     "Horizon": 30
+    },
+    "display": {
+     "Currency": "USD",
+     "Decimals": 2,
+     "Description": "United States Oil ETF (PTP)",
+     "Format": "Normal",
+     "NumeratorDecimals": 0,
+     "Symbol": "USO:arcx"
+    },
+    "first_sample_time": "2008-11-25 15:30:00+00:00",
+    "couvre_2020_01_01": true,
+    "page_from_debut": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2020-01-02 14:30:00+00:00",
+     "derniere": "2020-05-14 15:30:00+00:00"
+    },
+    "page_upto_fin_2025": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2025-08-19 18:30:00+00:00",
+     "derniere": "2025-12-31 20:30:00+00:00"
+    },
+    "page_upto_janvier_2020": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2019-09-18 18:30:00+00:00",
+     "derniere": "2020-01-31 20:30:00+00:00"
+    },
+    "champs_prix": {
+     "bid_ask": [],
+     "dernier": [
+      "Open",
+      "High",
+      "Low",
+      "Close"
+     ],
+     "volume": [
+      "Volume"
+     ],
+     "autres": [
+      "Interest",
+      "MarketTradingState"
+     ]
+    },
+    "structure": {
+     "barres": 1200,
+     "doublons": 0,
+     "desordre": 0,
+     "pas_30_min": 0.9224353628023353,
+     "interruptions": 93,
+     "interruptions_duree_h": {
+      "min": 1.0,
+      "50%": 18.0,
+      "max": 90.0
+     },
+     "reprises_heure_new_york": {
+      "09:30": 92,
+      "10:30": 1
+     },
+     "barres_par_jour_semaine": {
+      "0": 221,
+      "1": 247,
+      "2": 247,
+      "3": 251,
+      "4": 234
+     }
+    },
+    "plus_grands_ecarts": [
+     {
+      "apres": "2020-03-06 20:30:00+00:00",
+      "reprise": "2020-03-09 13:30:00+00:00",
+      "ecart_bps": -2469.058979961401
+     },
+     {
+      "apres": "2020-04-20 19:30:00+00:00",
+      "reprise": "2020-04-21 13:30:00+00:00",
+      "ecart_bps": -1617.3492318556623
+     },
+     {
+      "apres": "2020-03-17 19:30:00+00:00",
+      "reprise": "2020-03-18 13:30:00+00:00",
+      "ecart_bps": -1208.5254036854478
+     },
+     {
+      "apres": "2020-04-24 19:30:00+00:00",
+      "reprise": "2020-04-27 13:30:00+00:00",
+      "ecart_bps": -1187.4875277634237
+     },
+     {
+      "apres": "2020-04-17 19:30:00+00:00",
+      "reprise": "2020-04-20 13:30:00+00:00",
+      "ecart_bps": -1130.4369029248692
+     }
+    ],
+    "controles_ohlc": {
+     "dernier": {
+      "incoherences": 0,
+      "prix_non_positifs": 0
+     },
+     "volume_nul": 0
+    },
+    "pagination_from": {
+     "barres": 1200,
+     "chevauchement": 0,
+     "ecart_entre_pages_h": 0.5
+    },
+    "coherence_from_upto": {
+     "barres_communes": 273,
+     "valeurs_identiques": true
+    },
+    "heures_etendues": {
+     "barres_avec": 1200,
+     "barres_sans": 1200
+    },
+    "bloc_test": {
+     "fichier": "saxo_etf_uso_30m_test.csv",
+     "barres": 1200,
+     "sha256": "43a4b97cc28acce88e5587a7e9ba9cba01f6cbf462afded807aea70dedfa2da5",
+     "reproductible": true
+    },
+    "seances_annoncees": [
+     {
+      "State": "Closed",
+      "debut_ny": "Wed 17:00",
+      "fin_ny": "Thu 07:00"
+     },
+     {
+      "State": "PreMarket",
+      "debut_ny": "Thu 07:00",
+      "fin_ny": "Thu 09:30"
+     },
+     {
+      "State": "AutomatedTrading",
+      "debut_ny": "Thu 09:30",
+      "fin_ny": "Thu 16:00"
+     },
+     {
+      "State": "PostMarket",
+      "debut_ny": "Thu 16:00",
+      "fin_ny": "Thu 17:00"
+     },
+     {
+      "State": "Closed",
+      "debut_ny": "Thu 17:00",
+      "fin_ny": "Fri 07:00"
+     },
+     {
+      "State": "PreMarket",
+      "debut_ny": "Fri 07:00",
+      "fin_ny": "Fri 09:30"
+     },
+     {
+      "State": "AutomatedTrading",
+      "debut_ny": "Fri 09:30",
+      "fin_ny": "Fri 16:00"
+     },
+     {
+      "State": "PostMarket",
+      "debut_ny": "Fri 16:00",
+      "fin_ny": "Fri 17:00"
+     },
+     {
+      "State": "Closed",
+      "debut_ny": "Fri 17:00",
+      "fin_ny": "Mon 07:00"
+     }
+    ],
+    "fuseau_bourse": 3
+   }
+  },
+  "ETF_SMH": {
+   "candidats": [
+    {
+     "Symbol": "SMH:xnas",
+     "Identifier": 15709451,
+     "AssetType": "CfdOnEtf",
+     "Description": "VanEck Vectors Semiconductor ETF",
+     "ExchangeId": "NASDAQ",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "CfdOnEtf"
+     ],
+     "GroupId": 29760,
+     "SummaryType": "Instrument",
+     "mots_cles": "SMH"
+    }
+   ],
+   "conformes": [
+    {
+     "Symbol": "SMH:xnas",
+     "Identifier": 15709451,
+     "AssetType": "CfdOnEtf",
+     "Description": "VanEck Vectors Semiconductor ETF",
+     "TradableAs": [
+      "CfdOnEtf"
+     ],
+     "statut": 200,
+     "FirstSampleTime": "2019-12-11T14:30:00Z",
+     "DelayedByMinutes": 15,
+     "ExchangeId": "NASDAQ"
+    }
+   ],
+   "retenu": {
+    "Symbol": "SMH:xnas",
+    "Identifier": 15709451,
+    "AssetType": "CfdOnEtf",
+    "Description": "VanEck Vectors Semiconductor ETF",
+    "TradableAs": [
+     "CfdOnEtf"
+    ],
+    "statut": 200,
+    "FirstSampleTime": "2019-12-11T14:30:00Z",
+    "DelayedByMinutes": 15,
+    "ExchangeId": "NASDAQ"
+   },
+   "test": {
+    "instrument": {
+     "Symbol": "SMH:xnas",
+     "Identifier": 15709451,
+     "AssetType": "CfdOnEtf",
+     "Description": "VanEck Vectors Semiconductor ETF",
+     "ExchangeId": "NASDAQ",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "CfdOnEtf"
+     ],
+     "GroupId": 29760,
+     "SummaryType": "Instrument",
+     "mots_cles": "SMH"
+    },
+    "chart_info": {
+     "DelayedByMinutes": 15,
+     "ExchangeId": "NASDAQ",
+     "FirstSampleTime": "2019-12-11T14:30:00Z",
+     "Horizon": 30
+    },
+    "display": {
+     "Currency": "USD",
+     "Decimals": 4,
+     "Description": "VanEck Vectors Semiconductor ETF",
+     "Format": "Normal",
+     "NumeratorDecimals": 4,
+     "Symbol": "SMH:xnas"
+    },
+    "first_sample_time": "2019-12-11 14:30:00+00:00",
+    "couvre_2020_01_01": true,
+    "page_from_debut": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2020-01-02 14:30:00+00:00",
+     "derniere": "2020-05-14 15:30:00+00:00"
+    },
+    "page_upto_fin_2025": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2025-08-19 18:30:00+00:00",
+     "derniere": "2025-12-31 20:30:00+00:00"
+    },
+    "page_upto_janvier_2020": {
+     "statut": 200,
+     "barres": 449,
+     "premiere": "2019-12-11 14:30:00+00:00",
+     "derniere": "2020-01-31 20:30:00+00:00"
+    },
+    "champs_prix": {
+     "bid_ask": [],
+     "dernier": [
+      "Open",
+      "High",
+      "Low",
+      "Close"
+     ],
+     "volume": [
+      "Volume"
+     ],
+     "autres": [
+      "Interest",
+      "MarketTradingState"
+     ]
+    },
+    "structure": {
+     "barres": 1200,
+     "doublons": 0,
+     "desordre": 0,
+     "pas_30_min": 0.9224353628023353,
+     "interruptions": 93,
+     "interruptions_duree_h": {
+      "min": 1.0,
+      "50%": 18.0,
+      "max": 90.0
+     },
+     "reprises_heure_new_york": {
+      "09:30": 92,
+      "10:30": 1
+     },
+     "barres_par_jour_semaine": {
+      "0": 221,
+      "1": 247,
+      "2": 247,
+      "3": 251,
+      "4": 234
+     }
+    },
+    "plus_grands_ecarts": [
+     {
+      "apres": "2020-03-13 19:30:00+00:00",
+      "reprise": "2020-03-16 13:30:00+00:00",
+      "ecart_bps": -1244.3597189693182
+     },
+     {
+      "apres": "2020-03-06 20:30:00+00:00",
+      "reprise": "2020-03-09 13:30:00+00:00",
+      "ecart_bps": -889.1574519091465
+     },
+     {
+      "apres": "2020-03-17 19:30:00+00:00",
+      "reprise": "2020-03-18 13:30:00+00:00",
+      "ecart_bps": -775.96278690953
+     },
+     {
+      "apres": "2020-03-11 19:30:00+00:00",
+      "reprise": "2020-03-12 13:30:00+00:00",
+      "ecart_bps": -724.8126082103698
+     },
+     {
+      "apres": "2020-03-23 19:30:00+00:00",
+      "reprise": "2020-03-24 13:30:00+00:00",
+      "ecart_bps": 618.7540371808745
+     }
+    ],
+    "controles_ohlc": {
+     "dernier": {
+      "incoherences": 0,
+      "prix_non_positifs": 0
+     },
+     "volume_nul": 0
+    },
+    "pagination_from": {
+     "barres": 1200,
+     "chevauchement": 0,
+     "ecart_entre_pages_h": 0.5
+    },
+    "coherence_from_upto": {
+     "barres_communes": 273,
+     "valeurs_identiques": true
+    },
+    "heures_etendues": {
+     "barres_avec": 1200,
+     "barres_sans": 1200
+    },
+    "bloc_test": {
+     "fichier": "saxo_etf_smh_30m_test.csv",
+     "barres": 1200,
+     "sha256": "3349fbf9aab662650721b099bfa31d9b24e20676c6811696a0da4a755cbaf5e1",
+     "reproductible": true
+    },
+    "seances_annoncees": [
+     {
+      "State": "Closed",
+      "debut_ny": "Wed 17:00",
+      "fin_ny": "Thu 07:00"
+     },
+     {
+      "State": "PreMarket",
+      "debut_ny": "Thu 07:00",
+      "fin_ny": "Thu 09:30"
+     },
+     {
+      "State": "AutomatedTrading",
+      "debut_ny": "Thu 09:30",
+      "fin_ny": "Thu 16:00"
+     },
+     {
+      "State": "PostMarket",
+      "debut_ny": "Thu 16:00",
+      "fin_ny": "Thu 17:00"
+     },
+     {
+      "State": "Closed",
+      "debut_ny": "Thu 17:00",
+      "fin_ny": "Fri 07:00"
+     },
+     {
+      "State": "PreMarket",
+      "debut_ny": "Fri 07:00",
+      "fin_ny": "Fri 09:30"
+     },
+     {
+      "State": "AutomatedTrading",
+      "debut_ny": "Fri 09:30",
+      "fin_ny": "Fri 16:00"
+     },
+     {
+      "State": "PostMarket",
+      "debut_ny": "Fri 16:00",
+      "fin_ny": "Fri 17:00"
+     },
+     {
+      "State": "Closed",
+      "debut_ny": "Fri 17:00",
+      "fin_ny": "Mon 07:00"
+     }
+    ],
+    "fuseau_bourse": 3
+   }
+  },
+  "ETF_GDX": {
+   "candidats": [
+    {
+     "Symbol": "GDX:arcx",
+     "Identifier": 35663,
+     "AssetType": "CfdOnEtf",
+     "Description": "VanEck Vectors Gold Miners ETF",
+     "ExchangeId": "NYSE_ARCA",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "CfdOnEtf"
+     ],
+     "GroupId": 26240,
+     "SummaryType": "Instrument",
+     "mots_cles": "GDX"
+    },
+    {
+     "Symbol": "GDXJ:arcx",
+     "Identifier": 41589,
+     "AssetType": "CfdOnEtf",
+     "Description": "VanEck Vectors Junior Gold Miners ETF",
+     "ExchangeId": "NYSE_ARCA",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "CfdOnEtf"
+     ],
+     "GroupId": 26398,
+     "SummaryType": "Instrument",
+     "mots_cles": "GDX"
+    },
+    {
+     "Symbol": "G2X:xetr",
+     "Identifier": 2099654,
+     "AssetType": "CfdOnEtf",
+     "Description": "VanEck Gold Miners UCITS ETF",
+     "ExchangeId": "XETR_ETF",
+     "CurrencyCode": "EUR",
+     "TradableAs": [
+      "CfdOnEtf"
+     ],
+     "GroupId": 27769,
+     "SummaryType": "Instrument",
+     "mots_cles": "VanEck Gold Miners"
+    }
+   ],
+   "conformes": [
+    {
+     "Symbol": "GDX:arcx",
+     "Identifier": 35663,
+     "AssetType": "CfdOnEtf",
+     "Description": "VanEck Vectors Gold Miners ETF",
+     "TradableAs": [
+      "CfdOnEtf"
+     ],
+     "statut": 200,
+     "FirstSampleTime": "2006-05-31T13:50:00Z",
+     "DelayedByMinutes": 15,
+     "ExchangeId": "NYSE_ARCA"
+    },
+    {
+     "Symbol": "GDXJ:arcx",
+     "Identifier": 41589,
+     "AssetType": "CfdOnEtf",
+     "Description": "VanEck Vectors Junior Gold Miners ETF",
+     "TradableAs": [
+      "CfdOnEtf"
+     ],
+     "statut": 200,
+     "FirstSampleTime": "2009-11-13T14:30:00Z",
+     "DelayedByMinutes": 15,
+     "ExchangeId": "NYSE_ARCA"
+    },
+    {
+     "Symbol": "G2X:xetr",
+     "Identifier": 2099654,
+     "AssetType": "CfdOnEtf",
+     "Description": "VanEck Gold Miners UCITS ETF",
+     "TradableAs": [
+      "CfdOnEtf"
+     ],
+     "statut": 200,
+     "FirstSampleTime": "2015-07-01T15:24:00Z",
+     "DelayedByMinutes": 15,
+     "ExchangeId": "XETR_ETF"
+    }
+   ],
+   "retenu": {
+    "Symbol": "GDX:arcx",
+    "Identifier": 35663,
+    "AssetType": "CfdOnEtf",
+    "Description": "VanEck Vectors Gold Miners ETF",
+    "TradableAs": [
+     "CfdOnEtf"
+    ],
+    "statut": 200,
+    "FirstSampleTime": "2006-05-31T13:50:00Z",
+    "DelayedByMinutes": 15,
+    "ExchangeId": "NYSE_ARCA"
+   },
+   "test": {
+    "instrument": {
+     "Symbol": "GDX:arcx",
+     "Identifier": 35663,
+     "AssetType": "CfdOnEtf",
+     "Description": "VanEck Vectors Gold Miners ETF",
+     "ExchangeId": "NYSE_ARCA",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "CfdOnEtf"
+     ],
+     "GroupId": 26240,
+     "SummaryType": "Instrument",
+     "mots_cles": "GDX"
+    },
+    "chart_info": {
+     "DelayedByMinutes": 15,
+     "ExchangeId": "NYSE_ARCA",
+     "FirstSampleTime": "2006-05-31T13:50:00Z",
+     "Horizon": 30
+    },
+    "display": {
+     "Currency": "USD",
+     "Decimals": 4,
+     "Description": "VanEck Vectors Gold Miners ETF",
+     "Format": "Normal",
+     "NumeratorDecimals": 4,
+     "Symbol": "GDX:arcx"
+    },
+    "first_sample_time": "2006-05-31 13:50:00+00:00",
+    "couvre_2020_01_01": true,
+    "page_from_debut": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2020-01-02 14:30:00+00:00",
+     "derniere": "2020-05-14 15:30:00+00:00"
+    },
+    "page_upto_fin_2025": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2025-08-19 18:30:00+00:00",
+     "derniere": "2025-12-31 20:30:00+00:00"
+    },
+    "page_upto_janvier_2020": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2019-09-18 18:30:00+00:00",
+     "derniere": "2020-01-31 20:30:00+00:00"
+    },
+    "champs_prix": {
+     "bid_ask": [],
+     "dernier": [
+      "Open",
+      "High",
+      "Low",
+      "Close"
+     ],
+     "volume": [
+      "Volume"
+     ],
+     "autres": [
+      "Interest",
+      "MarketTradingState"
+     ]
+    },
+    "structure": {
+     "barres": 1200,
+     "doublons": 0,
+     "desordre": 0,
+     "pas_30_min": 0.9224353628023353,
+     "interruptions": 93,
+     "interruptions_duree_h": {
+      "min": 1.0,
+      "50%": 18.0,
+      "max": 90.0
+     },
+     "reprises_heure_new_york": {
+      "09:30": 92,
+      "10:30": 1
+     },
+     "barres_par_jour_semaine": {
+      "0": 221,
+      "1": 247,
+      "2": 247,
+      "3": 251,
+      "4": 234
+     }
+    },
+    "plus_grands_ecarts": [
+     {
+      "apres": "2020-03-23 19:30:00+00:00",
+      "reprise": "2020-03-24 13:30:00+00:00",
+      "ecart_bps": 1282.1633510566962
+     },
+     {
+      "apres": "2020-03-13 19:30:00+00:00",
+      "reprise": "2020-03-16 13:30:00+00:00",
+      "ecart_bps": -1260.4072089536505
+     },
+     {
+      "apres": "2020-03-11 19:30:00+00:00",
+      "reprise": "2020-03-12 13:30:00+00:00",
+      "ecart_bps": -905.9347037213445
+     },
+     {
+      "apres": "2020-03-19 19:30:00+00:00",
+      "reprise": "2020-03-20 13:30:00+00:00",
+      "ecart_bps": 716.5348812806799
+     },
+     {
+      "apres": "2020-03-17 19:30:00+00:00",
+      "reprise": "2020-03-18 13:30:00+00:00",
+      "ecart_bps": -556.3708030539573
+     }
+    ],
+    "controles_ohlc": {
+     "dernier": {
+      "incoherences": 0,
+      "prix_non_positifs": 0
+     },
+     "volume_nul": 0
+    },
+    "pagination_from": {
+     "barres": 1200,
+     "chevauchement": 0,
+     "ecart_entre_pages_h": 0.5
+    },
+    "coherence_from_upto": {
+     "barres_communes": 273,
+     "valeurs_identiques": true
+    },
+    "heures_etendues": {
+     "barres_avec": 1200,
+     "barres_sans": 1200
+    },
+    "bloc_test": {
+     "fichier": "saxo_etf_gdx_30m_test.csv",
+     "barres": 1200,
+     "sha256": "92310378bf4a451a15fe947f02ed22e61762fcd6946626645bec309eda40adc0",
+     "reproductible": true
+    },
+    "seances_annoncees": [
+     {
+      "State": "Closed",
+      "debut_ny": "Wed 17:00",
+      "fin_ny": "Thu 07:00"
+     },
+     {
+      "State": "PreMarket",
+      "debut_ny": "Thu 07:00",
+      "fin_ny": "Thu 09:30"
+     },
+     {
+      "State": "AutomatedTrading",
+      "debut_ny": "Thu 09:30",
+      "fin_ny": "Thu 16:00"
+     },
+     {
+      "State": "PostMarket",
+      "debut_ny": "Thu 16:00",
+      "fin_ny": "Thu 17:00"
+     },
+     {
+      "State": "Closed",
+      "debut_ny": "Thu 17:00",
+      "fin_ny": "Fri 07:00"
+     },
+     {
+      "State": "PreMarket",
+      "debut_ny": "Fri 07:00",
+      "fin_ny": "Fri 09:30"
+     },
+     {
+      "State": "AutomatedTrading",
+      "debut_ny": "Fri 09:30",
+      "fin_ny": "Fri 16:00"
+     },
+     {
+      "State": "PostMarket",
+      "debut_ny": "Fri 16:00",
+      "fin_ny": "Fri 17:00"
+     },
+     {
+      "State": "Closed",
+      "debut_ny": "Fri 17:00",
+      "fin_ny": "Mon 07:00"
+     }
+    ],
+    "fuseau_bourse": 3
+   }
+  },
+  "ETF_NLR": {
+   "candidats": [
+    {
+     "Symbol": "URA:arcx",
+     "Identifier": 49142,
+     "AssetType": "CfdOnEtf",
+     "Description": "Global X Uranium ETF",
+     "ExchangeId": "NYSE_ARCA",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "CfdOnEtf"
+     ],
+     "GroupId": 26579,
+     "SummaryType": "Instrument",
+     "mots_cles": "URA"
+    },
+    {
+     "Symbol": "URNM:arcx",
+     "Identifier": 18972677,
+     "AssetType": "CfdOnEtf",
+     "Description": "Sprott Uranium Miners ETF",
+     "ExchangeId": "NYSE_ARCA",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "CfdOnEtf"
+     ],
+     "GroupId": 30350,
+     "SummaryType": "Instrument",
+     "mots_cles": "URA"
+    },
+    {
+     "Symbol": "NLR:arcx",
+     "Identifier": 35666,
+     "AssetType": "CfdOnEtf",
+     "Description": "VanEck Uranium and Nuclear ETF",
+     "ExchangeId": "NYSE_ARCA",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "CfdOnEtf"
+     ],
+     "GroupId": 26246,
+     "SummaryType": "Instrument",
+     "mots_cles": "URA"
+    },
+    {
+     "Symbol": "U3O8:xetr",
+     "Identifier": 28926835,
+     "AssetType": "CfdOnEtf",
+     "Description": "Sprott Uranium Miners UCITS ETF",
+     "ExchangeId": "XETR_ETF",
+     "CurrencyCode": "EUR",
+     "TradableAs": [
+      "CfdOnEtf"
+     ],
+     "GroupId": 32258,
+     "SummaryType": "Instrument",
+     "mots_cles": "URA"
+    }
+   ],
+   "conformes": [
+    {
+     "Symbol": "URA:arcx",
+     "Identifier": 49142,
+     "AssetType": "CfdOnEtf",
+     "Description": "Global X Uranium ETF",
+     "TradableAs": [
+      "CfdOnEtf"
+     ],
+     "statut": 200,
+     "FirstSampleTime": "2010-11-05T15:43:00Z",
+     "DelayedByMinutes": 15,
+     "ExchangeId": "NYSE_ARCA"
+    },
+    {
+     "Symbol": "URNM:arcx",
+     "Identifier": 18972677,
+     "AssetType": "CfdOnEtf",
+     "Description": "Sprott Uranium Miners ETF",
+     "TradableAs": [
+      "CfdOnEtf"
+     ],
+     "statut": 200,
+     "FirstSampleTime": "2020-08-31T13:30:00Z",
+     "DelayedByMinutes": 15,
+     "ExchangeId": "NYSE_ARCA"
+    },
+    {
+     "Symbol": "NLR:arcx",
+     "Identifier": 35666,
+     "AssetType": "CfdOnEtf",
+     "Description": "VanEck Uranium and Nuclear ETF",
+     "TradableAs": [
+      "CfdOnEtf"
+     ],
+     "statut": 200,
+     "FirstSampleTime": "2007-09-03T14:54:00Z",
+     "DelayedByMinutes": 15,
+     "ExchangeId": "NYSE_ARCA"
+    },
+    {
+     "Symbol": "U3O8:xetr",
+     "Identifier": 28926835,
+     "AssetType": "CfdOnEtf",
+     "Description": "Sprott Uranium Miners UCITS ETF",
+     "TradableAs": [
+      "CfdOnEtf"
+     ],
+     "statut": 200,
+     "FirstSampleTime": "2022-05-06T15:17:00Z",
+     "DelayedByMinutes": 15,
+     "ExchangeId": "XETR_ETF"
+    }
+   ],
+   "retenu": {
+    "Symbol": "NLR:arcx",
+    "Identifier": 35666,
+    "AssetType": "CfdOnEtf",
+    "Description": "VanEck Uranium and Nuclear ETF",
+    "TradableAs": [
+     "CfdOnEtf"
+    ],
+    "statut": 200,
+    "FirstSampleTime": "2007-09-03T14:54:00Z",
+    "DelayedByMinutes": 15,
+    "ExchangeId": "NYSE_ARCA"
+   },
+   "test": {
+    "instrument": {
+     "Symbol": "NLR:arcx",
+     "Identifier": 35666,
+     "AssetType": "CfdOnEtf",
+     "Description": "VanEck Uranium and Nuclear ETF",
+     "ExchangeId": "NYSE_ARCA",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "CfdOnEtf"
+     ],
+     "GroupId": 26246,
+     "SummaryType": "Instrument",
+     "mots_cles": "URA"
+    },
+    "chart_info": {
+     "DelayedByMinutes": 15,
+     "ExchangeId": "NYSE_ARCA",
+     "FirstSampleTime": "2007-09-03T14:54:00Z",
+     "Horizon": 30
+    },
+    "display": {
+     "Currency": "USD",
+     "Decimals": 2,
+     "Description": "VanEck Uranium and Nuclear ETF",
+     "Format": "Normal",
+     "NumeratorDecimals": 4,
+     "Symbol": "NLR:arcx"
+    },
+    "first_sample_time": "2007-09-03 14:54:00+00:00",
+    "couvre_2020_01_01": true,
+    "page_from_debut": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2020-01-02 14:30:00+00:00",
+     "derniere": "2021-08-24 14:30:00+00:00"
+    },
+    "page_upto_fin_2025": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2025-08-19 18:30:00+00:00",
+     "derniere": "2025-12-31 20:30:00+00:00"
+    },
+    "page_upto_janvier_2020": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2018-02-12 15:30:00+00:00",
+     "derniere": "2020-01-31 17:30:00+00:00"
+    },
+    "champs_prix": {
+     "bid_ask": [],
+     "dernier": [
+      "Open",
+      "High",
+      "Low",
+      "Close"
+     ],
+     "volume": [
+      "Volume"
+     ],
+     "autres": [
+      "Interest",
+      "MarketTradingState"
+     ]
+    },
+    "structure": {
+     "barres": 1200,
+     "doublons": 0,
+     "desordre": 0,
+     "pas_30_min": 0.27689741451209343,
+     "interruptions": 867,
+     "interruptions_duree_h": {
+      "min": 1.0,
+      "50%": 3.5,
+      "max": 163.0
+     },
+     "reprises_heure_new_york": {
+      "09:30": 231,
+      "10:30": 80,
+      "15:30": 65,
+      "11:30": 61,
+      "15:00": 59,
+      "13:00": 57
+     },
+     "barres_par_jour_semaine": {
+      "0": 254,
+      "1": 246,
+      "2": 229,
+      "3": 263,
+      "4": 208
+     }
+    },
+    "plus_grands_ecarts": [
+     {
+      "apres": "2020-03-13 18:30:00+00:00",
+      "reprise": "2020-03-16 16:30:00+00:00",
+      "ecart_bps": -890.9547612751767
+     },
+     {
+      "apres": "2020-03-17 15:30:00+00:00",
+      "reprise": "2020-03-18 13:30:00+00:00",
+      "ecart_bps": -703.8437152081597
+     },
+     {
+      "apres": "2020-03-11 19:00:00+00:00",
+      "reprise": "2020-03-12 13:30:00+00:00",
+      "ecart_bps": -571.3130659011291
+     },
+     {
+      "apres": "2020-04-03 15:30:00+00:00",
+      "reprise": "2020-04-06 14:00:00+00:00",
+      "ecart_bps": 428.5053706311082
+     },
+     {
+      "apres": "2020-03-12 13:30:00+00:00",
+      "reprise": "2020-03-12 14:00:00+00:00",
+      "ecart_bps": 423.1008229023977
+     }
+    ],
+    "controles_ohlc": {
+     "dernier": {
+      "incoherences": 0,
+      "prix_non_positifs": 0
+     },
+     "volume_nul": 33
+    },
+    "pagination_from": {
+     "barres": 1200,
+     "chevauchement": 0,
+     "ecart_entre_pages_h": 23.0
+    },
+    "coherence_from_upto": {
+     "barres_communes": 46,
+     "valeurs_identiques": true
+    },
+    "heures_etendues": {
+     "barres_avec": 1200,
+     "barres_sans": 1200
+    },
+    "bloc_test": {
+     "fichier": "saxo_etf_ura_30m_test.csv",
+     "barres": 1200,
+     "sha256": "e9be484e51b69041850a17fd185d41a8b28525136a6c0dcd5f3071d0b5d2a66e",
+     "reproductible": true
+    },
+    "seances_annoncees": [
+     {
+      "State": "Closed",
+      "debut_ny": "Wed 17:00",
+      "fin_ny": "Thu 07:00"
+     },
+     {
+      "State": "PreMarket",
+      "debut_ny": "Thu 07:00",
+      "fin_ny": "Thu 09:30"
+     },
+     {
+      "State": "AutomatedTrading",
+      "debut_ny": "Thu 09:30",
+      "fin_ny": "Thu 16:00"
+     },
+     {
+      "State": "PostMarket",
+      "debut_ny": "Thu 16:00",
+      "fin_ny": "Thu 17:00"
+     },
+     {
+      "State": "Closed",
+      "debut_ny": "Thu 17:00",
+      "fin_ny": "Fri 07:00"
+     },
+     {
+      "State": "PreMarket",
+      "debut_ny": "Fri 07:00",
+      "fin_ny": "Fri 09:30"
+     },
+     {
+      "State": "AutomatedTrading",
+      "debut_ny": "Fri 09:30",
+      "fin_ny": "Fri 16:00"
+     },
+     {
+      "State": "PostMarket",
+      "debut_ny": "Fri 16:00",
+      "fin_ny": "Fri 17:00"
+     },
+     {
+      "State": "Closed",
+      "debut_ny": "Fri 17:00",
+      "fin_ny": "Mon 07:00"
+     }
+    ],
+    "fuseau_bourse": 3
+   },
+   "note": "retenu par erreur pour URA (motif trop large, plus ancien historique) ; conservé comme actif supplémentaire déclaré"
+  },
+  "ETF_URA": {
+   "candidats": [
+    {
+     "Symbol": "URA:arcx",
+     "Identifier": 49142,
+     "AssetType": "CfdOnEtf",
+     "Description": "Global X Uranium ETF",
+     "ExchangeId": "NYSE_ARCA",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "CfdOnEtf"
+     ],
+     "GroupId": 26579,
+     "SummaryType": "Instrument",
+     "mots_cles": "URA"
+    },
+    {
+     "Symbol": "URNM:arcx",
+     "Identifier": 18972677,
+     "AssetType": "CfdOnEtf",
+     "Description": "Sprott Uranium Miners ETF",
+     "ExchangeId": "NYSE_ARCA",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "CfdOnEtf"
+     ],
+     "GroupId": 30350,
+     "SummaryType": "Instrument",
+     "mots_cles": "URA"
+    },
+    {
+     "Symbol": "NLR:arcx",
+     "Identifier": 35666,
+     "AssetType": "CfdOnEtf",
+     "Description": "VanEck Uranium and Nuclear ETF",
+     "ExchangeId": "NYSE_ARCA",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "CfdOnEtf"
+     ],
+     "GroupId": 26246,
+     "SummaryType": "Instrument",
+     "mots_cles": "URA"
+    },
+    {
+     "Symbol": "U3O8:xetr",
+     "Identifier": 28926835,
+     "AssetType": "CfdOnEtf",
+     "Description": "Sprott Uranium Miners UCITS ETF",
+     "ExchangeId": "XETR_ETF",
+     "CurrencyCode": "EUR",
+     "TradableAs": [
+      "CfdOnEtf"
+     ],
+     "GroupId": 32258,
+     "SummaryType": "Instrument",
+     "mots_cles": "URA"
+    }
+   ],
+   "conformes": [
+    {
+     "Symbol": "URA:arcx",
+     "Identifier": 49142,
+     "AssetType": "CfdOnEtf",
+     "Description": "Global X Uranium ETF",
+     "TradableAs": [
+      "CfdOnEtf"
+     ],
+     "statut": 200,
+     "FirstSampleTime": "2010-11-05T15:43:00Z",
+     "DelayedByMinutes": 15,
+     "ExchangeId": "NYSE_ARCA"
+    }
+   ],
+   "retenu": {
+    "Symbol": "URA:arcx",
+    "Identifier": 49142,
+    "AssetType": "CfdOnEtf",
+    "Description": "Global X Uranium ETF",
+    "TradableAs": [
+     "CfdOnEtf"
+    ],
+    "statut": 200,
+    "FirstSampleTime": "2010-11-05T15:43:00Z",
+    "DelayedByMinutes": 15,
+    "ExchangeId": "NYSE_ARCA"
+   },
+   "test": {
+    "instrument": {
+     "Symbol": "URA:arcx",
+     "Identifier": 49142,
+     "AssetType": "CfdOnEtf",
+     "Description": "Global X Uranium ETF",
+     "ExchangeId": "NYSE_ARCA",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "CfdOnEtf"
+     ],
+     "GroupId": 26579,
+     "SummaryType": "Instrument",
+     "mots_cles": "URA"
+    },
+    "chart_info": {
+     "DelayedByMinutes": 15,
+     "ExchangeId": "NYSE_ARCA",
+     "FirstSampleTime": "2010-11-05T15:43:00Z",
+     "Horizon": 30
+    },
+    "display": {
+     "Currency": "USD",
+     "Decimals": 4,
+     "Description": "Global X Uranium ETF",
+     "Format": "Normal",
+     "NumeratorDecimals": 4,
+     "Symbol": "URA:arcx"
+    },
+    "first_sample_time": "2010-11-05 15:43:00+00:00",
+    "couvre_2020_01_01": true,
+    "page_from_debut": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2020-01-02 14:30:00+00:00",
+     "derniere": "2020-05-15 15:30:00+00:00"
+    },
+    "page_upto_fin_2025": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2025-08-19 18:30:00+00:00",
+     "derniere": "2025-12-31 20:30:00+00:00"
+    },
+    "page_upto_janvier_2020": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2019-09-16 16:00:00+00:00",
+     "derniere": "2020-01-31 20:30:00+00:00"
+    },
+    "champs_prix": {
+     "bid_ask": [],
+     "dernier": [
+      "Open",
+      "High",
+      "Low",
+      "Close"
+     ],
+     "volume": [
+      "Volume"
+     ],
+     "autres": [
+      "Interest",
+      "MarketTradingState"
+     ]
+    },
+    "structure": {
+     "barres": 1200,
+     "doublons": 0,
+     "desordre": 0,
+     "pas_30_min": 0.9107589658048374,
+     "interruptions": 107,
+     "interruptions_duree_h": {
+      "min": 1.0,
+      "50%": 18.0,
+      "max": 90.0
+     },
+     "reprises_heure_new_york": {
+      "09:30": 93,
+      "12:30": 4,
+      "14:00": 3,
+      "14:30": 3,
+      "13:30": 3,
+      "10:30": 1
+     },
+     "barres_par_jour_semaine": {
+      "0": 219,
+      "1": 243,
+      "2": 244,
+      "3": 258,
+      "4": 236
+     }
+    },
+    "plus_grands_ecarts": [
+     {
+      "apres": "2020-03-11 19:30:00+00:00",
+      "reprise": "2020-03-12 13:30:00+00:00",
+      "ecart_bps": -993.2266846907988
+     },
+     {
+      "apres": "2020-03-13 19:30:00+00:00",
+      "reprise": "2020-03-16 13:30:00+00:00",
+      "ecart_bps": -940.9732337911565
+     },
+     {
+      "apres": "2020-03-17 19:30:00+00:00",
+      "reprise": "2020-03-18 13:30:00+00:00",
+      "ecart_bps": -607.8489106912185
+     },
+     {
+      "apres": "2020-03-23 19:30:00+00:00",
+      "reprise": "2020-03-24 13:30:00+00:00",
+      "ecart_bps": 462.66754901615593
+     },
+     {
+      "apres": "2020-03-10 19:30:00+00:00",
+      "reprise": "2020-03-11 13:30:00+00:00",
+      "ecart_bps": -358.53921846245703
+     }
+    ],
+    "controles_ohlc": {
+     "dernier": {
+      "incoherences": 0,
+      "prix_non_positifs": 0
+     },
+     "volume_nul": 0
+    },
+    "pagination_from": {
+     "barres": 1200,
+     "chevauchement": 0,
+     "ecart_entre_pages_h": 0.5
+    },
+    "coherence_from_upto": {
+     "barres_communes": 271,
+     "valeurs_identiques": true
+    },
+    "heures_etendues": {
+     "barres_avec": 1200,
+     "barres_sans": 1200
+    },
+    "bloc_test": {
+     "fichier": "saxo_etf_ura_30m_test.csv",
+     "barres": 1200,
+     "sha256": "4a6159ee6f4f4e2248b0941dd161a7ce53d226c33420aea118d2072295d06682",
+     "reproductible": true
+    },
+    "seances_annoncees": [
+     {
+      "State": "Closed",
+      "debut_ny": "Wed 17:00",
+      "fin_ny": "Thu 07:00"
+     },
+     {
+      "State": "PreMarket",
+      "debut_ny": "Thu 07:00",
+      "fin_ny": "Thu 09:30"
+     },
+     {
+      "State": "AutomatedTrading",
+      "debut_ny": "Thu 09:30",
+      "fin_ny": "Thu 16:00"
+     },
+     {
+      "State": "PostMarket",
+      "debut_ny": "Thu 16:00",
+      "fin_ny": "Thu 17:00"
+     },
+     {
+      "State": "Closed",
+      "debut_ny": "Thu 17:00",
+      "fin_ny": "Fri 07:00"
+     },
+     {
+      "State": "PreMarket",
+      "debut_ny": "Fri 07:00",
+      "fin_ny": "Fri 09:30"
+     },
+     {
+      "State": "AutomatedTrading",
+      "debut_ny": "Fri 09:30",
+      "fin_ny": "Fri 16:00"
+     },
+     {
+      "State": "PostMarket",
+      "debut_ny": "Fri 16:00",
+      "fin_ny": "Fri 17:00"
+     },
+     {
+      "State": "Closed",
+      "debut_ny": "Fri 17:00",
+      "fin_ny": "Mon 07:00"
+     }
+    ],
+    "fuseau_bourse": 3
+   }
+  }
+ },
+ "telechargement": {
+  "GER40": {
+   "statut": "déjà téléchargé (même UIC), réutilisé",
+   "fichier": "saxo_ger40_30m.csv",
+   "sha256": "e963ef8ad8698296b013ccf4a9421997229e467d24db5ecd8d3082d613e354de",
+   "n_rows": 62430,
+   "extracted_at_utc": "2026-10-01T01:51:54.161422+00:00"
+  },
+  "HK50": {
+   "statut": "téléchargé",
+   "pages": 40,
+   "barres": 47025,
+   "doublons_entre_pages": 0,
+   "valeurs_contradictoires": 0,
+   "premiere": "2020-01-02 01:00:00+00:00",
+   "derniere": "2025-12-31 03:30:00+00:00",
+   "page_atteint_le_debut": true,
+   "fichier": "saxo_hk50_30m.csv",
+   "prix": "bid OHLC (CloseBid, etc.) ; volume absent (écrit nul)",
+   "sha256": "40639ef711764bc960e8371e6d354069a953f6da3e23d3d70c9929751a8e922a",
+   "n_rows": 47025,
+   "duree_s": 23
+  },
+  "EU50": {
+   "statut": "déjà téléchargé (même UIC), réutilisé",
+   "fichier": "saxo_eu50_30m.csv",
+   "sha256": "23382e43c5321a557fcbe0738d5a88d8a67db0baa81b61bde11646a31e5531b1",
+   "n_rows": 62370,
+   "extracted_at_utc": "2026-10-01T01:52:20.238937+00:00"
+  },
+  "US30": {
+   "statut": "déjà téléchargé (même UIC), réutilisé",
+   "fichier": "saxo_us30_30m.csv",
+   "sha256": "4d416befe63b5c21c0003652ffde7c45bdeffff7a4bb6e41de3006cc37e3eff6",
+   "n_rows": 69729,
+   "extracted_at_utc": "2026-10-01T01:52:49.371732+00:00"
+  },
+  "XAGUSD": {
+   "statut": "déjà téléchargé (même UIC), réutilisé",
+   "fichier": "saxo_xagusd_30m.csv",
+   "sha256": "040ae90bb33b8d1054f508640663b388b337ad7a30f251bb97f3a8bd04610b0e",
+   "n_rows": 70962,
+   "extracted_at_utc": "2026-10-01T01:53:18.266327+00:00"
+  },
+  "GBPJPY": {
+   "statut": "déjà téléchargé (même UIC), réutilisé",
+   "fichier": "saxo_gbpjpy_30m.csv",
+   "sha256": "3436db95c520333878133c19ff0a038caaba33d9848484db9a03f81ce06b7f01",
+   "n_rows": 76607,
+   "extracted_at_utc": "2026-10-01T01:53:46.749554+00:00"
+  },
+  "ETF_TLT": {
+   "statut": "téléchargé",
+   "pages": 17,
+   "barres": 19532,
+   "doublons_entre_pages": 0,
+   "valeurs_contradictoires": 0,
+   "premiere": "2020-01-02 14:30:00+00:00",
+   "derniere": "2025-12-31 20:30:00+00:00",
+   "page_atteint_le_debut": true,
+   "fichier": "saxo_etf_tlt_30m.csv",
+   "prix": "dernier prix traité OHLC (Open, High, Low, Close) et volume",
+   "sha256": "25367f6ed9bf2fec6e4cae8104b9f7f6e22402296acc54b2f0efc3ba29c5e7dd",
+   "n_rows": 19532,
+   "duree_s": 11
+  },
+  "ETF_USO": {
+   "statut": "téléchargé",
+   "pages": 17,
+   "barres": 19531,
+   "doublons_entre_pages": 0,
+   "valeurs_contradictoires": 0,
+   "premiere": "2020-01-02 14:30:00+00:00",
+   "derniere": "2025-12-31 20:30:00+00:00",
+   "page_atteint_le_debut": true,
+   "fichier": "saxo_etf_uso_30m.csv",
+   "prix": "dernier prix traité OHLC (Open, High, Low, Close) et volume",
+   "sha256": "5b458f8913ac5bcc20c6426e789e1b2c0737ece827223f4adf4b6a1c3446f7fe",
+   "n_rows": 19531,
+   "duree_s": 10
+  },
+  "ETF_SMH": {
+   "statut": "téléchargé",
+   "pages": 17,
+   "barres": 19532,
+   "doublons_entre_pages": 0,
+   "valeurs_contradictoires": 0,
+   "premiere": "2020-01-02 14:30:00+00:00",
+   "derniere": "2025-12-31 20:30:00+00:00",
+   "page_atteint_le_debut": true,
+   "fichier": "saxo_etf_smh_30m.csv",
+   "prix": "dernier prix traité OHLC (Open, High, Low, Close) et volume",
+   "sha256": "f4756d75335505ee14610c08d807269eefb501b2fc2a4034180e40163fa29977",
+   "n_rows": 19532,
+   "duree_s": 11
+  },
+  "ETF_GDX": {
+   "statut": "téléchargé",
+   "pages": 17,
+   "barres": 19532,
+   "doublons_entre_pages": 0,
+   "valeurs_contradictoires": 0,
+   "premiere": "2020-01-02 14:30:00+00:00",
+   "derniere": "2025-12-31 20:30:00+00:00",
+   "page_atteint_le_debut": true,
+   "fichier": "saxo_etf_gdx_30m.csv",
+   "prix": "dernier prix traité OHLC (Open, High, Low, Close) et volume",
+   "sha256": "93653907772f0cdbed6903a180a18ec4ba3daa88287b5709825aa4bf5901e100",
+   "n_rows": 19532,
+   "duree_s": 11
+  },
+  "ETF_NLR": {
+   "statut": "téléchargé",
+   "pages": 11,
+   "barres": 12146,
+   "doublons_entre_pages": 0,
+   "valeurs_contradictoires": 0,
+   "premiere": "2020-01-02 14:30:00+00:00",
+   "derniere": "2025-12-31 20:30:00+00:00",
+   "page_atteint_le_debut": true,
+   "fichier": "saxo_etf_nlr_30m.csv",
+   "prix": "dernier prix traité OHLC (Open, High, Low, Close) et volume",
+   "sha256": "0f37a080b449c2fab570e9b1d4275abfb25dc6465591533f23b90fd6646d2eaa",
+   "n_rows": 12146,
+   "duree_s": 6
+  },
+  "ETF_URA": {
+   "statut": "téléchargé",
+   "pages": 17,
+   "barres": 19479,
+   "doublons_entre_pages": 0,
+   "valeurs_contradictoires": 0,
+   "premiere": "2020-01-02 14:30:00+00:00",
+   "derniere": "2025-12-31 20:30:00+00:00",
+   "page_atteint_le_debut": true,
+   "fichier": "saxo_etf_ura_30m.csv",
+   "prix": "dernier prix traité OHLC (Open, High, Low, Close) et volume",
+   "sha256": "df63955f53ec520fdea0557fb8bcd7745b31e86aaeb5402055754f4f105b79e3",
+   "n_rows": 19479,
+   "duree_s": 11
+  }
+ },
+ "appels_api": 30,
+ "passes_ciblees": [
+  {
+   "date_utc": "2026-10-01T02:17:20.700816+00:00",
+   "cles": [
+    "ETF_URA"
+   ]
+  }
+ ],
+ "heures_etendues_etf": {
+  "ETF_SMH": {
+   "sans": {
+    "statut": 200,
+    "barres": 60,
+    "premiere_ny": "2024-03-04 09:30",
+    "derniere_ny": "2024-03-08 13:00",
+    "heures_ny": [
+     "09:30",
+     "10:00",
+     "10:30",
+     "11:00",
+     "11:30",
+     "12:00",
+     "12:30",
+     "13:00",
+     "13:30",
+     "14:00",
+     "14:30",
+     "15:00",
+     "15:30"
+    ]
+   },
+   "avec": {
+    "statut": 200,
+    "barres": 60,
+    "premiere_ny": "2024-03-04 09:30",
+    "derniere_ny": "2024-03-08 13:00",
+    "heures_ny": [
+     "09:30",
+     "10:00",
+     "10:30",
+     "11:00",
+     "11:30",
+     "12:00",
+     "12:30",
+     "13:00",
+     "13:30",
+     "14:00",
+     "14:30",
+     "15:00",
+     "15:30"
+    ]
+   }
+  }
+ }
+}

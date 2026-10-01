@@ -1,0 +1,18 @@
+{
+ "source": "saxo-openapi",
+ "environnement": "LIVE",
+ "uic": 4910,
+ "asset_type": "CfdOnIndex",
+ "horizon_min": 30,
+ "mode": "From",
+ "time": "2020-01-02 00:00:00+00:00",
+ "count": 1200,
+ "symbol": "GER40.I",
+ "description": "Germany 40",
+ "role": "bloc de test D01.7 (aucun backtest)",
+ "environnement_saxo": "live",
+ "n_rows": 1200,
+ "first": "2020-01-02T00:00:00Z",
+ "last": "2020-02-11T12:30:00Z",
+ "sha256": "9ee2d1592273d5441d6ddeadd9659c389ad45477d1bfae76669c742df3d63e84"
+}

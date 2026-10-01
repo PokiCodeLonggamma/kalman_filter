@@ -1,0 +1,18 @@
+{
+ "source": "saxo-openapi",
+ "environnement": "LIVE",
+ "uic": 35663,
+ "asset_type": "CfdOnEtf",
+ "horizon_min": 30,
+ "mode": "From",
+ "time": "2020-01-02 00:00:00+00:00",
+ "count": 1200,
+ "symbol": "GDX:arcx",
+ "description": "VanEck Vectors Gold Miners ETF",
+ "role": "bloc de test D01.7 (aucun backtest)",
+ "environnement_saxo": "live",
+ "n_rows": 1200,
+ "first": "2020-01-02T14:30:00Z",
+ "last": "2020-05-14T15:30:00Z",
+ "sha256": "92310378bf4a451a15fe947f02ed22e61762fcd6946626645bec309eda40adc0"
+}
