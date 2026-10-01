@@ -1,7 +1,9 @@
 """EXP-D01.7 — test de Saxo OpenAPI (LIVE) comme source des barres de 30 min 2020-2025 : CFD US100, US2000, WTI, cuivre,
 puis futures NQ, RTY, CL, HG (facultatif). Aucun backtest.
 
-Usage, depuis la racine du dépôt : python experiments/D01_7/saxo_probe_D01_7.py [--port 47321]
+Usage, depuis la racine du dépôt : python experiments/D01_7/saxo_probe_D01_7.py [--sim] [--port 47321]
+  --sim : environnement de simulation (test exigé par Saxo avant toute application LIVE ; clé SIM dans SAXO_APP_KEY) ;
+          sorties suffixées _sim.
 1. Prérequis : application LIVE (flux PKCE) créée sur le portail développeur Saxo, URL de retour
    http://localhost/akf-callback ; sa clé dans la variable d'environnement SAXO_APP_KEY (setx), jamais dans le chat.
 2. Le script ouvre un serveur local et affiche http://localhost:<port>/start : ouvrir cette adresse dans le navigateur,
@@ -29,24 +31,27 @@ sys.path.insert(0, str(ROOT / "src"))
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 
-from marketdata.saxo import (HOLDOUT, TOKEN_ENV, SaxoClient, app_key, browser_login, get_chart,  # noqa: E402
-                             price_fields, refresh, samples_frame, search_instruments, write_block)
+from marketdata.saxo import (ENVIRONMENTS, HOLDOUT, TOKEN_ENV, SaxoClient, app_key, browser_login,  # noqa: E402
+                             get_chart, price_fields, refresh, samples_frame, search_instruments, write_block)
 
 RAW = ROOT / "data" / "raw"
-OUT = HERE / "saxo_probe_D01_7.json"
+ENV = "sim" if "--sim" in sys.argv else "live"
+SUFFIX = "_sim" if ENV == "sim" else ""
+OUT = HERE / f"saxo_probe_D01_7{SUFFIX}.json"
 NY = "America/New_York"
 H30 = 30
 T_FROM = pd.Timestamp("2020-01-02T00:00:00Z")
 T_UPTO_FIN = pd.Timestamp("2025-12-31T23:30:00Z")
 T_UPTO_DEBUT = pd.Timestamp("2020-01-31T23:30:00Z")
 CFD = ["CfdOnIndex", "CfdOnFutures"]
+FUT_EXCH = {"US100": {"CME"}, "US2000": {"CME"}, "USOIL": {"NYMEX"}, "COPPER": {"COMEX"}}
 FUT = ["ContractFutures"]
 CIBLES = {
     "US100": {"futur": "NQ", "mots": ["US Tech 100", "USNAS100", "Nasdaq 100", "NAS100", "US100"],
               "motif": r"nasdaq|tech 100|nas100|us ?100", "mots_futur": ["E-mini Nasdaq 100", "Nasdaq 100", "NQ"]},
     "US2000": {"futur": "RTY", "mots": ["US Small Cap 2000", "US2000", "Russell 2000", "Small Cap"],
                "motif": r"russell|small ?cap|us ?2000", "mots_futur": ["E-mini Russell 2000", "Russell 2000", "RTY"]},
-    "USOIL": {"futur": "CL", "mots": ["US Crude", "WTI", "Crude Oil", "OIL"],
+    "USOIL": {"futur": "CL", "mots": ["US Crude", "WTI", "Crude Oil", "OIL", "Oil - US Crude", "WTI Crude"],
               "motif": r"wti|crude|us ?oil|light sweet", "mots_futur": ["WTI Crude Oil", "Crude Oil", "CL"]},
     "COPPER": {"futur": "HG", "mots": ["Copper", "COPPER"], "motif": r"copper|cuivre",
                "mots_futur": ["Copper", "HG"]},
@@ -61,8 +66,9 @@ def fit_count(t: pd.Timestamp, cap: int = 1200) -> int:
 class Session:
     """Client et jetons du processus : le jeton d'accès est rafraîchi avant son expiration (1 200 s)."""
 
-    def __init__(self, tok: dict):
-        self.client = SaxoClient()
+    def __init__(self, tok: dict, env: str = "live"):
+        self.auth, gateway = ENVIRONMENTS[env]
+        self.client = SaxoClient(gateway=gateway)
         self._set(tok)
 
     def _set(self, tok: dict):
@@ -72,7 +78,7 @@ class Session:
 
     def ensure(self):
         if time.time() > self.expires and self.refresh_token:
-            tok = refresh(self.refresh_token, self.verifier)
+            tok = refresh(self.refresh_token, self.verifier, auth=self.auth)
             tok["_verifier"] = self.verifier
             self._set(tok)
 
@@ -102,6 +108,17 @@ def gaps_profile(df: pd.DataFrame) -> dict:
             "reprises_heure_new_york": {f"{k:02d}:{m:02d}": int(v) for (k, m), v in
                                         pd.Series(list(zip(ny.dt.hour, ny.dt.minute))).value_counts().head(6).items()},
             "barres_par_jour_semaine": {int(k): int(v) for k, v in t.dt.dayofweek.value_counts().sort_index().items()}}
+
+
+def jumps(df: pd.DataFrame, k: int = 5) -> list[dict]:
+    """Plus grands écarts entre le close d'une barre et l'open de la suivante, en bps : roulements d'un continu,
+    reprises après pause ou trous."""
+    o, c = ("Open", "Close") if "Close" in df and df["Close"].notna().any() else ("OpenBid", "CloseBid")
+    if o not in df or len(df) < 2:
+        return []
+    g = (np.log(df[o].to_numpy(dtype=float)[1:] / df[c].to_numpy(dtype=float)[:-1]) * 1e4)
+    idx = np.argsort(-np.abs(g))[:k]
+    return [{"apres": str(df.time.iat[i]), "reprise": str(df.time.iat[i + 1]), "ecart_bps": float(g[i])} for i in idx]
 
 
 def ohlc_checks(df: pd.DataFrame) -> dict:
@@ -154,6 +171,7 @@ def probe_cfd(s: Session, key: str, cand: dict) -> dict:
     if a is not None and len(a):
         rep["champs_prix"] = price_fields(a)
         rep["structure"] = gaps_profile(a)
+        rep["plus_grands_ecarts"] = jumps(a)
         rep["controles_ohlc"] = ohlc_checks(a)
         t_next = a.time.iat[-1] + pd.Timedelta(minutes=H30)
         nxt = None
@@ -176,10 +194,11 @@ def probe_cfd(s: Session, key: str, cand: dict) -> dict:
         st, b = get_chart(s.client, uic, at, H30, "From", start, n0, extended_hours=True)
         if st == 200:
             rep["heures_etendues"] = {"barres_avec": len(samples_frame(b)), "barres_sans": len(a)}
-        meta = {"source": "saxo-openapi", "environnement": "LIVE", "uic": uic, "asset_type": at, "horizon_min": H30,
+        meta = {"source": "saxo-openapi", "environnement": ENV.upper(), "uic": uic, "asset_type": at, "horizon_min": H30,
                 "mode": "From", "time": str(start), "count": n0, "symbol": cand.get("Symbol"),
-                "description": cand.get("Description"), "role": "bloc de test D01.7 (aucun backtest)"}
-        csv = RAW / f"saxo_{key.lower()}_30m_test.csv"
+                "description": cand.get("Description"), "role": "bloc de test D01.7 (aucun backtest)",
+                "environnement_saxo": ENV}
+        csv = RAW / f"saxo_{key.lower()}_30m_test{SUFFIX}.csv"
         m1 = write_block(a, csv, meta)
         s.ensure()
         st, b = get_chart(s.client, uic, at, H30, "From", start, n0)
@@ -203,6 +222,14 @@ def probe_cfd(s: Session, key: str, cand: dict) -> dict:
     return rep
 
 
+def fut_rank(c: dict, key: str) -> tuple:
+    """Contrat continu d'abord (« continuous », symbole en c1), place d'origine du contrat (CME, NYMEX, COMEX), hors
+    micro."""
+    d = (c.get("Description") or "").lower()
+    cont = "continuous" in d or str(c.get("Symbol", "")).lower().endswith("c1")
+    return (not cont, "micro" in d, c.get("ExchangeId") not in FUT_EXCH[key], str(c.get("Symbol")))
+
+
 def choose(cands: list[dict], motif: str) -> list[dict]:
     """Candidats CFD dont la description ou le symbole correspond à l'actif : CfdOnIndex d'abord, puis CfdOnFutures."""
     rx = re.compile(motif, re.I)
@@ -217,12 +244,13 @@ def main() -> None:
         pass
     port = int(sys.argv[sys.argv.index("--port") + 1]) if "--port" in sys.argv else 47321
     key = app_key()
+    print(f"Environnement Saxo : {ENV.upper()}", flush=True)
     print("Serveur local prêt. Ouvrir dans le navigateur, puis se connecter à Saxo :", flush=True)
-    tok = browser_login(key, port=port, on_ready=lambda url: print(f"  {url}", flush=True))
-    s = Session(tok)
+    tok = browser_login(key, port=port, on_ready=lambda url: print(f"  {url}", flush=True), auth=ENVIRONMENTS[ENV][0])
+    s = Session(tok, ENV)
     del tok
     print("Connexion Saxo établie (jeton en mémoire seulement).", flush=True)
-    rep = {"date_utc": pd.Timestamp.now(tz="UTC").isoformat(), "environnement": "LIVE",
+    rep = {"date_utc": pd.Timestamp.now(tz="UTC").isoformat(), "environnement": ENV.upper(),
            "reserve_2026": f"aucune requête au-delà de {HOLDOUT - pd.Timedelta(seconds=1)}", "droits": account_rights(s),
            "cfd": {}, "futures": {}}
     for k, c in CIBLES.items():
@@ -264,9 +292,9 @@ def main() -> None:
                 if "erreur" in d or ident not in seen:
                     seen.add(ident)
                     cands.append({**d, "mots_cles": kw})
-        pool = [d for d in cands if "erreur" not in d][:6]
+        pool = sorted([d for d in cands if "erreur" not in d], key=lambda d: fut_rank(d, k))[:6]
         trials = []
-        for cand in pool[:3]:
+        for cand in pool[:2]:
             s.ensure()
             st, b = get_chart(s.client, cand["Identifier"], cand["AssetType"], H30, "UpTo", T_UPTO_FIN, 5)
             trials.append({"Symbol": cand.get("Symbol"), "Identifier": cand["Identifier"],
@@ -276,7 +304,12 @@ def main() -> None:
                            "erreur": None if st == 200 else b})
             if st != 200:
                 break
-        rep["futures"][c["futur"]] = {"candidats": cands, "essais": trials}
+        ok = [t for t in trials if t["statut"] == 200 and t["chart_info"]]
+        detail = None
+        if ok:
+            best = next(x for x in pool if x["Identifier"] == ok[0]["Identifier"])
+            detail = probe_cfd(s, f"fut_{c['futur']}", best)
+        rep["futures"][c["futur"]] = {"candidats": cands, "essais": trials, "test_detaille": detail}
         print(f"{c['futur']} : {len(cands)} contrats trouvés, {len(trials)} essais de graphique", flush=True)
     rep["appels_api"] = s.client.calls
     OUT.write_text(json.dumps(rep, ensure_ascii=False, indent=1, default=str), encoding="utf-8")

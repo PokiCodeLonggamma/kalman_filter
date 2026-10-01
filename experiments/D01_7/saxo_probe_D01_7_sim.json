@@ -1,0 +1,1106 @@
+{
+ "date_utc": "2026-10-01T00:26:32.554317+00:00",
+ "environnement": "SIM",
+ "reserve_2026": "aucune requête au-delà de 2025-12-31 23:59:59+00:00",
+ "droits": {
+  "users_me": {
+   "MarketDataViaOpenApiTermsAccepted": true
+  },
+  "clients_me": {
+   "LegalAssetTypes": [
+    "FxSpot",
+    "FxForwards",
+    "ContractFutures",
+    "Stock",
+    "StockOption",
+    "Bond",
+    "FuturesOption",
+    "StockIndexOption",
+    "CfdOnStock",
+    "CfdOnIndex",
+    "StockIndex",
+    "CfdOnEtf",
+    "CfdOnEtc",
+    "CfdOnEtn",
+    "CfdOnFund",
+    "CfdOnRights",
+    "CfdOnCompanyWarrant",
+    "Etf",
+    "Etc",
+    "Etn",
+    "Fund",
+    "FxSwap",
+    "Rights",
+    "IpoOnStock",
+    "CompanyWarrant"
+   ]
+  }
+ },
+ "cfd": {
+  "US100": {
+   "candidats": [
+    {
+     "Symbol": "USNAS100.I",
+     "Identifier": 4912,
+     "AssetType": "CfdOnIndex",
+     "Description": "US Tech 100 NAS",
+     "ExchangeId": "",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "CfdOnIndex"
+     ],
+     "GroupId": 3,
+     "SummaryType": "Instrument",
+     "mots_cles": "US Tech 100"
+    }
+   ],
+   "retenus_pour_test": [
+    {
+     "Symbol": "USNAS100.I",
+     "Identifier": 4912,
+     "AssetType": "CfdOnIndex",
+     "Description": "US Tech 100 NAS",
+     "statut": 200,
+     "FirstSampleTime": "2003-10-30T23:55:00Z",
+     "DelayedByMinutes": 0
+    }
+   ],
+   "tests": [
+    {
+     "instrument": {
+      "Symbol": "USNAS100.I",
+      "Identifier": 4912,
+      "AssetType": "CfdOnIndex",
+      "Description": "US Tech 100 NAS",
+      "ExchangeId": "",
+      "CurrencyCode": "USD",
+      "TradableAs": [
+       "CfdOnIndex"
+      ],
+      "GroupId": 3,
+      "SummaryType": "Instrument",
+      "mots_cles": "US Tech 100"
+     },
+     "chart_info": {
+      "DelayedByMinutes": 0,
+      "ExchangeId": "NASDAQ",
+      "FirstSampleTime": "2003-10-30T23:55:00Z",
+      "Horizon": 30
+     },
+     "display": {
+      "Decimals": 2,
+      "Description": "US Tech 100 NAS",
+      "Format": "Normal",
+      "NumeratorDecimals": 2,
+      "Symbol": "USNAS100.ISX"
+     },
+     "first_sample_time": "2003-10-30 23:55:00+00:00",
+     "couvre_2020_01_01": true,
+     "page_from_debut": {
+      "statut": 200,
+      "barres": 1200,
+      "premiere": "2020-01-02 00:00:00+00:00",
+      "derniere": "2020-02-10 08:30:00+00:00"
+     },
+     "page_upto_fin_2025": {
+      "statut": 200,
+      "barres": 1200,
+      "premiere": "2025-11-23 23:30:00+00:00",
+      "derniere": "2025-12-31 21:30:00+00:00"
+     },
+     "page_upto_janvier_2020": {
+      "statut": 200,
+      "barres": 1200,
+      "premiere": "2019-12-23 09:30:00+00:00",
+      "derniere": "2020-01-31 20:30:00+00:00"
+     },
+     "champs_prix": {
+      "bid_ask": [
+       "OpenBid",
+       "HighBid",
+       "LowBid",
+       "CloseBid",
+       "OpenAsk",
+       "HighAsk",
+       "LowAsk",
+       "CloseAsk"
+      ],
+      "dernier": [],
+      "volume": [],
+      "autres": []
+     },
+     "structure": {
+      "barres": 1200,
+      "doublons": 0,
+      "desordre": 0,
+      "pas_30_min": 0.9774812343619683,
+      "interruptions": 27,
+      "interruptions_duree_h": {
+       "min": 2.5,
+       "50%": 2.5,
+       "max": 50.5
+      },
+      "reprises_heure_new_york": {
+       "18:00": 27
+      },
+      "barres_par_jour_semaine": {
+       "0": 232,
+       "1": 220,
+       "2": 220,
+       "3": 264,
+       "4": 252,
+       "6": 12
+      }
+     },
+     "controles_ohlc": {
+      "bid": {
+       "incoherences": 0,
+       "prix_non_positifs": 0
+      },
+      "ask": {
+       "incoherences": 0,
+       "prix_non_positifs": 0
+      },
+      "ecart_close_bps": {
+       "P50": 1.1142290956549479,
+       "P90": 1.3888025579196868,
+       "negatifs": 0
+      }
+     },
+     "pagination_from": {
+      "barres": 1200,
+      "chevauchement": 0,
+      "ecart_entre_pages_h": 0.5
+     },
+     "coherence_from_upto": {
+      "barres_communes": 960,
+      "valeurs_identiques": true
+     },
+     "heures_etendues": {
+      "barres_avec": 1200,
+      "barres_sans": 1200
+     },
+     "bloc_test": {
+      "fichier": "saxo_us100_30m_test_sim.csv",
+      "barres": 1200,
+      "sha256": "4d6f9686ac901244610027b6893e1a85373a77d8fe08c60fd10e622f54b7ad3d",
+      "reproductible": true
+     },
+     "seances_annoncees": [
+      {
+       "State": "AutomatedTrading",
+       "debut_ny": "Wed 18:00",
+       "fin_ny": "Thu 17:00"
+      },
+      {
+       "State": "Closed",
+       "debut_ny": "Thu 17:00",
+       "fin_ny": "Thu 18:00"
+      },
+      {
+       "State": "AutomatedTrading",
+       "debut_ny": "Thu 18:00",
+       "fin_ny": "Fri 17:00"
+      },
+      {
+       "State": "Closed",
+       "debut_ny": "Fri 17:00",
+       "fin_ny": "Sun 17:59"
+      }
+     ],
+     "fuseau_bourse": 3
+    }
+   ],
+   "premier_echantillon_par_candidat": [
+    {
+     "Symbol": "USNAS100.I",
+     "Identifier": 4912,
+     "AssetType": "CfdOnIndex",
+     "Description": "US Tech 100 NAS",
+     "statut": 200,
+     "FirstSampleTime": "2003-10-30T23:55:00Z",
+     "DelayedByMinutes": 0
+    }
+   ]
+  },
+  "US2000": {
+   "candidats": [],
+   "retenus_pour_test": [],
+   "tests": [],
+   "premier_echantillon_par_candidat": []
+  },
+  "USOIL": {
+   "candidats": [],
+   "retenus_pour_test": [],
+   "tests": [],
+   "premier_echantillon_par_candidat": []
+  },
+  "COPPER": {
+   "candidats": [],
+   "retenus_pour_test": [],
+   "tests": [],
+   "premier_echantillon_par_candidat": []
+  }
+ },
+ "futures": {
+  "NQ": {
+   "candidats": [
+    {
+     "Symbol": "MNQc1",
+     "Identifier": 13677212,
+     "AssetType": "ContractFutures",
+     "Description": "Micro E-mini Nasdaq 100 - continuous",
+     "ExchangeId": "CME",
+     "CurrencyCode": "USD",
+     "TradableAs": null,
+     "GroupId": 39296,
+     "SummaryType": "Instrument",
+     "mots_cles": "E-mini Nasdaq 100"
+    },
+    {
+     "Symbol": "NQc1",
+     "Identifier": 4060,
+     "AssetType": "ContractFutures",
+     "Description": "E-mini NASDAQ-100 - continuous",
+     "ExchangeId": "CME",
+     "CurrencyCode": "USD",
+     "TradableAs": null,
+     "GroupId": 3,
+     "SummaryType": "Instrument",
+     "mots_cles": "NQ"
+    }
+   ],
+   "essais": [
+    {
+     "Symbol": "MNQc1",
+     "Identifier": 13677212,
+     "Description": "Micro E-mini Nasdaq 100 - continuous",
+     "statut": 200,
+     "chart_info": {
+      "DelayedByMinutes": 10,
+      "ExchangeId": "CME",
+      "FirstSampleTime": "2019-05-05T22:03:00Z",
+      "Horizon": 30
+     },
+     "champs_prix": {
+      "bid_ask": [],
+      "dernier": [
+       "Open",
+       "High",
+       "Low",
+       "Close"
+      ],
+      "volume": [
+       "Volume"
+      ],
+      "autres": [
+       "Interest",
+       "MarketTradingState"
+      ]
+     },
+     "erreur": null
+    },
+    {
+     "Symbol": "NQc1",
+     "Identifier": 4060,
+     "Description": "E-mini NASDAQ-100 - continuous",
+     "statut": 200,
+     "chart_info": {
+      "DelayedByMinutes": 10,
+      "ExchangeId": "CME",
+      "FirstSampleTime": "2003-10-30T23:49:00Z",
+      "Horizon": 30
+     },
+     "champs_prix": {
+      "bid_ask": [],
+      "dernier": [
+       "Open",
+       "High",
+       "Low",
+       "Close"
+      ],
+      "volume": [
+       "Volume"
+      ],
+      "autres": [
+       "Interest",
+       "MarketTradingState"
+      ]
+     },
+     "erreur": null
+    }
+   ]
+  },
+  "RTY": {
+   "candidats": [
+    {
+     "Symbol": "RTYc1",
+     "Identifier": 7327701,
+     "AssetType": "ContractFutures",
+     "Description": "E-mini Russell 2000 - continuous",
+     "ExchangeId": "CME",
+     "CurrencyCode": "USD",
+     "TradableAs": null,
+     "GroupId": 39284,
+     "SummaryType": "Instrument",
+     "mots_cles": "E-mini Russell 2000"
+    },
+    {
+     "Symbol": "M2Kc1",
+     "Identifier": 13677210,
+     "AssetType": "ContractFutures",
+     "Description": "Micro E-mini Russell 2000 - continuous",
+     "ExchangeId": "CME",
+     "CurrencyCode": "USD",
+     "TradableAs": null,
+     "GroupId": 39295,
+     "SummaryType": "Instrument",
+     "mots_cles": "E-mini Russell 2000"
+    }
+   ],
+   "essais": [
+    {
+     "Symbol": "RTYc1",
+     "Identifier": 7327701,
+     "Description": "E-mini Russell 2000 - continuous",
+     "statut": 200,
+     "chart_info": {
+      "DelayedByMinutes": 10,
+      "ExchangeId": "CME",
+      "FirstSampleTime": "2017-07-09T22:01:00Z",
+      "Horizon": 30
+     },
+     "champs_prix": {
+      "bid_ask": [],
+      "dernier": [
+       "Open",
+       "High",
+       "Low",
+       "Close"
+      ],
+      "volume": [
+       "Volume"
+      ],
+      "autres": [
+       "Interest",
+       "MarketTradingState"
+      ]
+     },
+     "erreur": null
+    },
+    {
+     "Symbol": "M2Kc1",
+     "Identifier": 13677210,
+     "Description": "Micro E-mini Russell 2000 - continuous",
+     "statut": 200,
+     "chart_info": {
+      "DelayedByMinutes": 10,
+      "ExchangeId": "CME",
+      "FirstSampleTime": "2019-05-05T22:01:00Z",
+      "Horizon": 30
+     },
+     "champs_prix": {
+      "bid_ask": [],
+      "dernier": [
+       "Open",
+       "High",
+       "Low",
+       "Close"
+      ],
+      "volume": [
+       "Volume"
+      ],
+      "autres": [
+       "Interest",
+       "MarketTradingState"
+      ]
+     },
+     "erreur": null
+    }
+   ]
+  },
+  "CL": {
+   "candidats": [
+    {
+     "Symbol": "WBSc1",
+     "Identifier": 21215,
+     "AssetType": "ContractFutures",
+     "Description": "WTI Light Sweet Crude Oil - continuous",
+     "ExchangeId": "ICE",
+     "CurrencyCode": "USD",
+     "TradableAs": null,
+     "GroupId": 39195,
+     "SummaryType": "Instrument",
+     "mots_cles": "WTI Crude Oil"
+    },
+    {
+     "Symbol": "MCLc1",
+     "Identifier": 238233,
+     "AssetType": "ContractFutures",
+     "Description": "Micro WTI Crude Oil - Continuous",
+     "ExchangeId": "NYMEX",
+     "CurrencyCode": "USD",
+     "TradableAs": null,
+     "GroupId": 39246,
+     "SummaryType": "Instrument",
+     "mots_cles": "WTI Crude Oil"
+    },
+    {
+     "Symbol": "CLX6",
+     "Identifier": 47316284,
+     "AssetType": "ContractFutures",
+     "Description": "Light Sweet Crude Oil (WTI) - Nov 2026",
+     "ExchangeId": "NYMEX",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "ContractFutures"
+     ],
+     "GroupId": 39127,
+     "SummaryType": "Instrument",
+     "mots_cles": "Crude Oil"
+    },
+    {
+     "Symbol": "CLZ6",
+     "Identifier": 31051110,
+     "AssetType": "ContractFutures",
+     "Description": "Light Sweet Crude Oil (WTI) - Dec 2026",
+     "ExchangeId": "NYMEX",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "ContractFutures"
+     ],
+     "GroupId": 39127,
+     "SummaryType": "Instrument",
+     "mots_cles": "Crude Oil"
+    },
+    {
+     "Symbol": "CLF7",
+     "Identifier": 48510236,
+     "AssetType": "ContractFutures",
+     "Description": "Light Sweet Crude Oil (WTI) - Jan 2027",
+     "ExchangeId": "NYMEX",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "ContractFutures"
+     ],
+     "GroupId": 39127,
+     "SummaryType": "Instrument",
+     "mots_cles": "Crude Oil"
+    },
+    {
+     "Symbol": "CLZ7",
+     "Identifier": 37393385,
+     "AssetType": "ContractFutures",
+     "Description": "Light Sweet Crude Oil (WTI) - Dec 2027",
+     "ExchangeId": "NYMEX",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "ContractFutures"
+     ],
+     "GroupId": 39127,
+     "SummaryType": "Instrument",
+     "mots_cles": "Crude Oil"
+    },
+    {
+     "Symbol": "CLZ8",
+     "Identifier": 44297266,
+     "AssetType": "ContractFutures",
+     "Description": "Light Sweet Crude Oil (WTI) - Dec 2028",
+     "ExchangeId": "NYMEX",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "ContractFutures"
+     ],
+     "GroupId": 39127,
+     "SummaryType": "Instrument",
+     "mots_cles": "Crude Oil"
+    },
+    {
+     "Symbol": "CLG7",
+     "Identifier": 49270000,
+     "AssetType": "ContractFutures",
+     "Description": "Light Sweet Crude Oil (WTI) - Feb 2027",
+     "ExchangeId": "NYMEX",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "ContractFutures"
+     ],
+     "GroupId": 39127,
+     "SummaryType": "Instrument",
+     "mots_cles": "Crude Oil"
+    },
+    {
+     "Symbol": "CLH7",
+     "Identifier": 49922410,
+     "AssetType": "ContractFutures",
+     "Description": "Light Sweet Crude Oil (WTI) - Mar 2027",
+     "ExchangeId": "NYMEX",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "ContractFutures"
+     ],
+     "GroupId": 39127,
+     "SummaryType": "Instrument",
+     "mots_cles": "Crude Oil"
+    },
+    {
+     "Symbol": "CLM7",
+     "Identifier": 51774580,
+     "AssetType": "ContractFutures",
+     "Description": "Light Sweet Crude Oil (WTI) - Jun 2027",
+     "ExchangeId": "NYMEX",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "ContractFutures"
+     ],
+     "GroupId": 39127,
+     "SummaryType": "Instrument",
+     "mots_cles": "Crude Oil"
+    },
+    {
+     "Symbol": "CLQ7",
+     "Identifier": 53236289,
+     "AssetType": "ContractFutures",
+     "Description": "Light Sweet Crude Oil (WTI) - Aug 2027",
+     "ExchangeId": "NYMEX",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "ContractFutures"
+     ],
+     "GroupId": 39127,
+     "SummaryType": "Instrument",
+     "mots_cles": "Crude Oil"
+    },
+    {
+     "Symbol": "CLN7",
+     "Identifier": 52477828,
+     "AssetType": "ContractFutures",
+     "Description": "Light Sweet Crude Oil (WTI) - Jul 2027",
+     "ExchangeId": "NYMEX",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "ContractFutures"
+     ],
+     "GroupId": 39127,
+     "SummaryType": "Instrument",
+     "mots_cles": "Crude Oil"
+    },
+    {
+     "Symbol": "CLU7",
+     "Identifier": 53860268,
+     "AssetType": "ContractFutures",
+     "Description": "Light Sweet Crude Oil (WTI) - Sep 2027",
+     "ExchangeId": "NYMEX",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "ContractFutures"
+     ],
+     "GroupId": 39127,
+     "SummaryType": "Instrument",
+     "mots_cles": "Crude Oil"
+    },
+    {
+     "Symbol": "CLV7",
+     "Identifier": 54529347,
+     "AssetType": "ContractFutures",
+     "Description": "Light Sweet Crude Oil (WTI) - Oct 2027",
+     "ExchangeId": "NYMEX",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "ContractFutures"
+     ],
+     "GroupId": 39127,
+     "SummaryType": "Instrument",
+     "mots_cles": "Crude Oil"
+    },
+    {
+     "Symbol": "CLJ7",
+     "Identifier": 50511612,
+     "AssetType": "ContractFutures",
+     "Description": "Light Sweet Crude Oil (WTI) - Apr 2027",
+     "ExchangeId": "NYMEX",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "ContractFutures"
+     ],
+     "GroupId": 39127,
+     "SummaryType": "Instrument",
+     "mots_cles": "Crude Oil"
+    },
+    {
+     "Symbol": "CLK7",
+     "Identifier": 51153571,
+     "AssetType": "ContractFutures",
+     "Description": "Light Sweet Crude Oil (WTI) - May 2027",
+     "ExchangeId": "NYMEX",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "ContractFutures"
+     ],
+     "GroupId": 39127,
+     "SummaryType": "Instrument",
+     "mots_cles": "Crude Oil"
+    },
+    {
+     "Symbol": "CLX7",
+     "Identifier": 55278924,
+     "AssetType": "ContractFutures",
+     "Description": "Light Sweet Crude Oil (WTI) - Nov 2027",
+     "ExchangeId": "NYMEX",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "ContractFutures"
+     ],
+     "GroupId": 39127,
+     "SummaryType": "Instrument",
+     "mots_cles": "Crude Oil"
+    },
+    {
+     "Symbol": "CLZ9",
+     "Identifier": 51774579,
+     "AssetType": "ContractFutures",
+     "Description": "Light Sweet Crude Oil (WTI) - Dec 2029",
+     "ExchangeId": "NYMEX",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "ContractFutures"
+     ],
+     "GroupId": 39127,
+     "SummaryType": "Instrument",
+     "mots_cles": "Crude Oil"
+    },
+    {
+     "Symbol": "CLM4",
+     "Identifier": 31051111,
+     "AssetType": "ContractFutures",
+     "Description": "Light Sweet Crude Oil (WTI) - Jun 2024",
+     "ExchangeId": "NYMEX",
+     "CurrencyCode": "USD",
+     "TradableAs": null,
+     "GroupId": 39127,
+     "SummaryType": "Instrument",
+     "mots_cles": "Crude Oil"
+    },
+    {
+     "Symbol": "CLc1",
+     "Identifier": 4034,
+     "AssetType": "ContractFutures",
+     "Description": "Light Sweet Crude Oil (WTI) - Continuous",
+     "ExchangeId": "NYMEX",
+     "CurrencyCode": "USD",
+     "TradableAs": null,
+     "GroupId": 39127,
+     "SummaryType": "Instrument",
+     "mots_cles": "Crude Oil"
+    },
+    {
+     "Symbol": "BZX6",
+     "Identifier": 54529339,
+     "AssetType": "ContractFutures",
+     "Description": "Brent Crude Oil Last Day - Nov 2026",
+     "ExchangeId": "NYMEX",
+     "CurrencyCode": "USD",
+     "TradableAs": null,
+     "GroupId": 39257,
+     "SummaryType": "Instrument",
+     "mots_cles": "Crude Oil"
+    },
+    {
+     "Symbol": "BZZ6",
+     "Identifier": 46652453,
+     "AssetType": "ContractFutures",
+     "Description": "Brent Crude Oil Last Day - Dec 2026",
+     "ExchangeId": "NYMEX",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "ContractFutures"
+     ],
+     "GroupId": 39257,
+     "SummaryType": "Instrument",
+     "mots_cles": "Crude Oil"
+    },
+    {
+     "Symbol": "BZF7",
+     "Identifier": 55981333,
+     "AssetType": "ContractFutures",
+     "Description": "Brent Crude Oil Last Day- Jan 2027",
+     "ExchangeId": "NYMEX",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "ContractFutures"
+     ],
+     "GroupId": 39257,
+     "SummaryType": "Instrument",
+     "mots_cles": "Crude Oil"
+    },
+    {
+     "Symbol": "BZZ7",
+     "Identifier": 54529338,
+     "AssetType": "ContractFutures",
+     "Description": "Brent Crude Oil Last Day - Dec 2027",
+     "ExchangeId": "NYMEX",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "ContractFutures"
+     ],
+     "GroupId": 39257,
+     "SummaryType": "Instrument",
+     "mots_cles": "Crude Oil"
+    },
+    {
+     "Symbol": "BZM7",
+     "Identifier": 50511605,
+     "AssetType": "ContractFutures",
+     "Description": "Brent Crude Oil Last Day - Jun 2027",
+     "ExchangeId": "NYMEX",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "ContractFutures"
+     ],
+     "GroupId": 39257,
+     "SummaryType": "Instrument",
+     "mots_cles": "Crude Oil"
+    },
+    {
+     "Symbol": "BZc1",
+     "Identifier": 673335,
+     "AssetType": "ContractFutures",
+     "Description": "Brent Crude Oil LD European - continuous",
+     "ExchangeId": "NYMEX",
+     "CurrencyCode": "USD",
+     "TradableAs": null,
+     "GroupId": 39257,
+     "SummaryType": "Instrument",
+     "mots_cles": "Crude Oil"
+    },
+    {
+     "Symbol": "QMZ6",
+     "Identifier": 46652599,
+     "AssetType": "ContractFutures",
+     "Description": "E-mini Light Sweet Crude Oil - Dec 2026",
+     "ExchangeId": "NYMEX",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "ContractFutures"
+     ],
+     "GroupId": 39143,
+     "SummaryType": "Instrument",
+     "mots_cles": "Crude Oil"
+    },
+    {
+     "Symbol": "QMZ7",
+     "Identifier": 54529497,
+     "AssetType": "ContractFutures",
+     "Description": "E-mini Light Sweet Crude Oil - Dec 2027",
+     "ExchangeId": "NYMEX",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "ContractFutures"
+     ],
+     "GroupId": 39143,
+     "SummaryType": "Instrument",
+     "mots_cles": "Crude Oil"
+    },
+    {
+     "Symbol": "QMc1",
+     "Identifier": 7695,
+     "AssetType": "ContractFutures",
+     "Description": "E-mini Light Sweet Crude Oil - Continuous",
+     "ExchangeId": "NYMEX",
+     "CurrencyCode": "USD",
+     "TradableAs": null,
+     "GroupId": 39143,
+     "SummaryType": "Instrument",
+     "mots_cles": "Crude Oil"
+    },
+    {
+     "Symbol": "DCc1",
+     "Identifier": 790340,
+     "AssetType": "ContractFutures",
+     "Description": "Class III Milk - Continuous",
+     "ExchangeId": "CME",
+     "CurrencyCode": "USD",
+     "TradableAs": null,
+     "GroupId": 39253,
+     "SummaryType": "Instrument",
+     "mots_cles": "CL"
+    }
+   ],
+   "essais": [
+    {
+     "Symbol": "WBSc1",
+     "Identifier": 21215,
+     "Description": "WTI Light Sweet Crude Oil - continuous",
+     "statut": 200,
+     "chart_info": {
+      "DelayedByMinutes": 15,
+      "ExchangeId": "ICE",
+      "FirstSampleTime": "2006-03-29T13:16:00Z",
+      "Horizon": 30
+     },
+     "champs_prix": {
+      "bid_ask": [],
+      "dernier": [
+       "Open",
+       "High",
+       "Low",
+       "Close"
+      ],
+      "volume": [
+       "Volume"
+      ],
+      "autres": [
+       "Interest",
+       "MarketTradingState"
+      ]
+     },
+     "erreur": null
+    },
+    {
+     "Symbol": "MCLc1",
+     "Identifier": 238233,
+     "Description": "Micro WTI Crude Oil - Continuous",
+     "statut": 200,
+     "chart_info": {
+      "DelayedByMinutes": 10,
+      "ExchangeId": "NYMEX",
+      "FirstSampleTime": "2012-10-17T14:13:00Z",
+      "Horizon": 30
+     },
+     "champs_prix": {
+      "bid_ask": [],
+      "dernier": [
+       "Open",
+       "High",
+       "Low",
+       "Close"
+      ],
+      "volume": [
+       "Volume"
+      ],
+      "autres": [
+       "Interest",
+       "MarketTradingState"
+      ]
+     },
+     "erreur": null
+    },
+    {
+     "Symbol": "CLX6",
+     "Identifier": 47316284,
+     "Description": "Light Sweet Crude Oil (WTI) - Nov 2026",
+     "statut": 200,
+     "chart_info": {
+      "DelayedByMinutes": 10,
+      "ExchangeId": "NYMEX",
+      "FirstSampleTime": "2025-02-26T19:28:00Z",
+      "Horizon": 30
+     },
+     "champs_prix": {
+      "bid_ask": [],
+      "dernier": [
+       "Open",
+       "High",
+       "Low",
+       "Close"
+      ],
+      "volume": [
+       "Volume"
+      ],
+      "autres": [
+       "Interest",
+       "MarketTradingState"
+      ]
+     },
+     "erreur": null
+    }
+   ]
+  },
+  "HG": {
+   "candidats": [
+    {
+     "Symbol": "HGU6",
+     "Identifier": 51153586,
+     "AssetType": "ContractFutures",
+     "Description": "Copper - Sep 2026",
+     "ExchangeId": "COMEX",
+     "CurrencyCode": "USD",
+     "TradableAs": null,
+     "GroupId": 39120,
+     "SummaryType": "Instrument",
+     "mots_cles": "Copper"
+    },
+    {
+     "Symbol": "HGZ6",
+     "Identifier": 53236305,
+     "AssetType": "ContractFutures",
+     "Description": "Copper - Dec 2026",
+     "ExchangeId": "COMEX",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "ContractFutures"
+     ],
+     "GroupId": 39120,
+     "SummaryType": "Instrument",
+     "mots_cles": "Copper"
+    },
+    {
+     "Symbol": "HGX6",
+     "Identifier": 52477915,
+     "AssetType": "ContractFutures",
+     "Description": "Copper - Nov 2026",
+     "ExchangeId": "COMEX",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "ContractFutures"
+     ],
+     "GroupId": 39120,
+     "SummaryType": "Instrument",
+     "mots_cles": "Copper"
+    },
+    {
+     "Symbol": "HGH7",
+     "Identifier": 55278939,
+     "AssetType": "ContractFutures",
+     "Description": "Copper - Mar 2027",
+     "ExchangeId": "COMEX",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "ContractFutures"
+     ],
+     "GroupId": 39120,
+     "SummaryType": "Instrument",
+     "mots_cles": "Copper"
+    },
+    {
+     "Symbol": "HGF7",
+     "Identifier": 53860291,
+     "AssetType": "ContractFutures",
+     "Description": "Copper - Jan 2027",
+     "ExchangeId": "COMEX",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "ContractFutures"
+     ],
+     "GroupId": 39120,
+     "SummaryType": "Instrument",
+     "mots_cles": "Copper"
+    },
+    {
+     "Symbol": "HGc1",
+     "Identifier": 4048,
+     "AssetType": "ContractFutures",
+     "Description": "Copper - continuous",
+     "ExchangeId": "COMEX",
+     "CurrencyCode": "USD",
+     "TradableAs": null,
+     "GroupId": 39120,
+     "SummaryType": "Instrument",
+     "mots_cles": "Copper"
+    },
+    {
+     "Symbol": "MHGc1",
+     "Identifier": 31225632,
+     "AssetType": "ContractFutures",
+     "Description": "Micro Copper - Continuous",
+     "ExchangeId": "COMEX",
+     "CurrencyCode": "USD",
+     "TradableAs": null,
+     "GroupId": 39327,
+     "SummaryType": "Instrument",
+     "mots_cles": "Copper"
+    }
+   ],
+   "essais": [
+    {
+     "Symbol": "HGU6",
+     "Identifier": 51153586,
+     "Description": "Copper - Sep 2026",
+     "statut": 200,
+     "chart_info": {
+      "DelayedByMinutes": 10,
+      "ExchangeId": "COMEX",
+      "FirstSampleTime": "2025-08-01T13:00:00Z",
+      "Horizon": 30
+     },
+     "champs_prix": {
+      "bid_ask": [],
+      "dernier": [
+       "Open",
+       "High",
+       "Low",
+       "Close"
+      ],
+      "volume": [
+       "Volume"
+      ],
+      "autres": [
+       "Interest",
+       "MarketTradingState"
+      ]
+     },
+     "erreur": null
+    },
+    {
+     "Symbol": "HGZ6",
+     "Identifier": 53236305,
+     "Description": "Copper - Dec 2026",
+     "statut": 200,
+     "chart_info": {
+      "DelayedByMinutes": 10,
+      "ExchangeId": "COMEX",
+      "FirstSampleTime": "2025-11-03T01:20:00Z",
+      "Horizon": 30
+     },
+     "champs_prix": {
+      "bid_ask": [],
+      "dernier": [
+       "Open",
+       "High",
+       "Low",
+       "Close"
+      ],
+      "volume": [
+       "Volume"
+      ],
+      "autres": [
+       "Interest",
+       "MarketTradingState"
+      ]
+     },
+     "erreur": null
+    },
+    {
+     "Symbol": "HGX6",
+     "Identifier": 52477915,
+     "Description": "Copper - Nov 2026",
+     "statut": 200,
+     "chart_info": {
+      "DelayedByMinutes": 10,
+      "ExchangeId": "COMEX",
+      "FirstSampleTime": "2025-10-03T15:43:00Z",
+      "Horizon": 30
+     },
+     "champs_prix": {
+      "bid_ask": [],
+      "dernier": [
+       "Open",
+       "High",
+       "Low",
+       "Close"
+      ],
+      "volume": [
+       "Volume"
+      ],
+      "autres": [
+       "Interest",
+       "MarketTradingState"
+      ]
+     },
+     "erreur": null
+    }
+   ]
+  }
+ },
+ "appels_api": 47
+}

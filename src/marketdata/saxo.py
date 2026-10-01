@@ -44,6 +44,9 @@ import pandas as pd
 
 GATEWAY = "https://gateway.saxobank.com/openapi"
 AUTH = "https://live.logonvalidation.net"
+#: (authentification, passerelle) par environnement ; la simulation sert au test exigé avant toute application LIVE.
+ENVIRONMENTS = {"live": (AUTH, GATEWAY),
+                "sim": ("https://sim.logonvalidation.net", "https://gateway.saxobank.com/sim/openapi")}
 HOLDOUT = pd.Timestamp("2026-01-01", tz="UTC")
 MAX_COUNT = 1200
 APP_KEY_ENV, TOKEN_ENV = "SAXO_APP_KEY", "SAXO_ACCESS_TOKEN"

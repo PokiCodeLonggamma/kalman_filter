@@ -1,0 +1,18 @@
+{
+ "source": "saxo-openapi",
+ "environnement": "SIM",
+ "uic": 4912,
+ "asset_type": "CfdOnIndex",
+ "horizon_min": 30,
+ "mode": "From",
+ "time": "2020-01-02 00:00:00+00:00",
+ "count": 1200,
+ "symbol": "USNAS100.I",
+ "description": "US Tech 100 NAS",
+ "role": "bloc de test D01.7 (aucun backtest)",
+ "environnement_saxo": "sim",
+ "n_rows": 1200,
+ "first": "2020-01-02T00:00:00Z",
+ "last": "2020-02-10T08:30:00Z",
+ "sha256": "4d6f9686ac901244610027b6893e1a85373a77d8fe08c60fd10e622f54b7ad3d"
+}
