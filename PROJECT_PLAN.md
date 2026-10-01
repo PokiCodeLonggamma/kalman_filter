@@ -22,7 +22,7 @@ Démarche : **mesurer → caractériser → catégoriser → isoler → exploite
 
 Chaque test est précédé du cadrage obligatoire (`RESEARCH_PHILOSOPHY.md` §4.6).
 
-### Avancement (au 2026-09-30)
+### Avancement (au 2026-10-01)
 
 | Étape | Expérience | Statut | Résultat principal |
 |---|---|---|---|
@@ -38,13 +38,15 @@ Chaque test est précédé du cadrage obligatoire (`RESEARCH_PHILOSOPHY.md` §4.
 | D | EXP-D01.5 | faite | Sensibilité de RE-1 à H seul, descriptive (or H 26-130 ; SPY et XLE H 6-130 ; 4 bps). Aucun IC à borne basse > 0 sur 15 configurations. Or : frais fixes en ATR (0,26), brut non croissant, H = 26 meilleur point. SPY : H = 13 traverse encore une nuit (91 %), H = 6 réduit les nuits sans brut à protéger. XLE : pic à H = 65 porté par la population (effet apparié ≈ 0). RE-1 inchangée. |
 | D | EXP-D01.7 | terminée (descriptive) | Portabilité zero-shot, séries Saxo (futures continus abandonnés, raccords non ajustés) ; univers du porteur : US100, US30, GER40, EU50, HK50, XAGUSD, GBPJPY et 5 CFD sur ETF. Aucun IC > 0 au coût principal ; brut de +0,06 à +0,42 ATR, absorbé par des frais de 0,24 à 0,42 ATR hors ETF ; US30 brut symétrique (+7,9 bps [+0,8 ; +16,0]), +0,211 ATR à l'écart réel ; ETF : brut venu des nuits, ~140 trades. GBPJPY Saxo confirme la partie 1. RE-1 inchangée. D02 à cadrer par le porteur. |
 | D | EXP-D01.6 | faite | Exploration sur SPY et XLE, descriptive. Les 31 trades de XLE sautés à H = 65 valent +0,118 ATR avec la sortie de RE-1 (−0,48 seulement tenus 65 barres) ; aucune signature à t hors leur délai depuis le trade précédent, rien ne se réplique sur SPY. Verrouillage distinct de la sortie (26 à 90) : zigzag, aucun IC > 0. Sortie de fin de séance : aucun IC > 0 ; brut en séance +0,16 ATR sur SPY (≈ frais), −0,09 sur XLE ; la nuit aide XLE et pèse sur SPY. RE-1 inchangée. |
+| D | **Clôture de D01** | décision du porteur (2026-10-01) | D01 est close : SOL et l'or jugés assez encourageants pour poursuivre ; D01 a dégagé les limites de RE-1 en zero-shot et les axes d'adaptation (réactivité R0, horizon H, transfert des seuils, coût d'exécution, horizon en temps sur les séances). |
+| D | EXP-D02 | à cadrer | Walk-forward et adaptation multi-actifs : gain de l'optimisation et du recalibrage contre RE-1 figée, hors échantillon. Espace envisagé : H et R0. Cadrage à valider par le porteur (`passation.md` §13) ; aucun calcul lancé. |
 
 **Direction de l'Étape D (porteur, 2026-09-29).** RE-1 est fonctionnelle, relativement performante sans optimisation, et figée.
 - **D01, portabilité multi-actifs sans optimisation :** RE-1 figée sur d'autres actifs. Si elle tient, cela valide la stratégie elle-même.
 - **D02, optimisation (Optuna, walk-forward) :** mesure le gain de performance dû à l'optimisation, contre RE-1 figée.
 - Ensuite, la validation finale sur le hold-out (phase 7).
 
-La reprise se fait avec `passation.md`, qui donne l'état complet du projet.
+La reprise se fait avec `passation.md` (réécrit le 2026-10-01 pour la transition D01 → D02), qui donne l'état complet du projet.
 
 **Conventions de l'Étape C (décisions du porteur) :**
 - une position à la fois ;

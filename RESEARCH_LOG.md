@@ -1360,3 +1360,16 @@ Grilles complètes : espérance ATR ; MDD ; Calmar.
 - [ ] **REJETÉ**
 - [ ] **NON CONCLUANT**
 - [x] **TERMINÉ (descriptif) : aucun actif à IC > 0 au coût principal ; candidats à examiner pour D02 selon le porteur : US30, GER40, US100, GDX, avec le biais de sélection à contrôler hors échantillon. RE-1 inchangée.**
+
+### [DÉCISION] — Clôture de D01, passage à D02 (2026-10-01)
+- **Décision du porteur :** D01 est close (D01, D01 bis, D01.5, D01.6, D01.7). Même sans avantage statistiquement
+  établi sur tous les actifs, les premiers tests sur SOL et l'or sont jugés assez encourageants pour poursuivre. D01 a
+  surtout permis d'identifier les limites de RE-1 en zero-shot et les axes d'adaptation, et d'éclairer l'effet des gaps,
+  de l'horizon et des coûts.
+- **Étape suivante :** D02, walk-forward et adaptation multi-actifs. Avant toute expérience, `passation.md` est réécrit
+  comme document de référence, à relire et valider par le porteur. Aucun calcul de D02 n'est lancé.
+- **Faits consignés** au §5 de `RESEARCH_PHILOSOPHY.md` :
+  - SOL +0,190 ATR [−0,079 ; +0,484] à 5 bps ;
+  - or −0,019 ATR [−0,362 ; +0,349] à 4 bps (brut +0,24, frais 0,26) ;
+  - D01.7 : aucun IC > 0 au coût principal.
+
