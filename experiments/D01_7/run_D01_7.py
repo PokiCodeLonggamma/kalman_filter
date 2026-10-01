@@ -1,40 +1,47 @@
-"""EXP-D01.7 — portabilité de RE-1 figée, sans réglage, sur des marchés traditionnels 24/5 ; BTC en référence.
+"""EXP-D01.7 — portabilité de RE-1 figée, sans réglage, sur des marchés quasi continus et des ETF ; BTC en référence.
 
 Usage, depuis la racine du dépôt : python experiments/D01_7/run_D01_7.py [--audit | --rapport]
   --audit   : étape 1, audit des données, aucun PnL → audit_D01_7.json ;
   (défaut)  : étape 2, contrôles bloquants (ancre P6.5d, parité BTC avec C02bis, seuils gelés, audit sans défaut,
-              recoupement externe), puis RE-1 sur chaque actif non bloqué → resultats_D01_7.csv, annuel_D01_7.csv,
+              recoupements externes), puis RE-1 sur chaque actif non bloqué → resultats_D01_7.csv, annuel_D01_7.csv,
               diagnostics_D01_7.json, controles_D01_7.json, figures/, rapport_D01_7.md ;
   --rapport : régénère rapport_D01_7.md (narratif_D01_7.md rédigé à la main, puis annexes générées) sans recalcul.
-Données : experiments/D01_7/donnees_D01_7.py.
+Données : experiments/D01_7/saxo_univers_D01_7.py (séries Saxo, audit_univers_D01_7.md) et donnees_D01_7.py (FRED).
 
-Cadrage (porteur, 2026-10-01)
+Cadrage (porteur, 2026-10-01 ; univers redéfini le même jour, partie 2)
 - QUESTION : RE-1, telle que verrouillée en C02bis sur BTC (seuils numériques de BTC, H = 26 barres de 30 min, moteur
-  v2.1 par défaut), conserve-t-elle son comportement sur des marchés traditionnels à cotation quasi continue 24/5 :
-  futures NQ, RTY, CL, HG (continus, OPEN_INTEREST, BACKWARDS_RATIO) et GBPJPY au comptant ?
+  v2.1 par défaut), conserve-t-elle son comportement hors crypto : CFD sur indices cotés presque 24 h sur 24 (US100,
+  US30, GER40, EU50, HK50), argent et GBPJPY au comptant, et CFD sur ETF cotés en séance américaine (TLT, USO, SMH,
+  URA, GDX) ?
 - PERTINENCE POUR LE FILTRE AKF : D01 a montré que la géométrie des signaux se transpose et que la rente dépend de la
-  structure du marché (frais en ATR, séances). Des marchés 24/5 retirent la nuit des ETF mais gardent le week-end et,
-  pour les futures, la pause quotidienne de CME et les roulements.
-- CE QUE LE PROTOCOLE MESURE RÉELLEMENT : audit des données (couverture, barres, horodatage, trous, séances, roulements,
-  recoupement externe) ; puis, par actif, les 8 métriques en brut et nettes de coûts explicites, l'espérance en ATR et en
-  bps avec IC par grappes mensuelles, le capital à 0,25 %/ATR et à 1x, Long/Short, F2b/F3, volatilité, sessions,
-  exposition au week-end et aux interruptions, concentration du PnL, distribution et queues.
+  structure du marché (frais en ATR, séances). L'univers croise des marchés quasi continus (pause quotidienne, week-end)
+  et des marchés de séance (nuit), des régions et des classes d'actifs différentes.
+- CE QUE LE PROTOCOLE MESURE RÉELLEMENT : audit des données (couverture, barres, horodatage, trous, séances,
+  recoupements externes) ; puis, par actif, les 8 métriques en brut et nettes de coûts explicites, l'espérance en ATR
+  et en bps avec IC par grappes mensuelles, le capital à 0,25 %/ATR et à 1x, Long/Short, F2b/F3, volatilité, sessions,
+  exposition aux interruptions, concentration du PnL, distribution et queues.
 - CE QU'IL NE PERMET PAS DE CONCLURE : pas de validation hors échantillon (2026, ETH et XRP scellés) ; pas de
-  classement statistique des actifs ; aucun réglage ni modification de RE-1 sur la base des résultats ; coûts réels non
-  mesurés (hypothèses déclarées ; swaps et financement absents).
+  classement statistique des actifs (choisir les meilleurs pour D02 sur ce même échantillon est une sélection, à
+  vérifier hors échantillon) ; aucun réglage ni modification de RE-1 sur la base des résultats ; coûts réels non
+  mesurés (hypothèses déclarées ; financement de nuit et dividendes des CFD absents).
 
-Règle de lecture (fixée avant le calcul)
+Règle de lecture (fixée avant le calcul ; décisions du porteur du 2026-10-01)
 - Descriptif : aucun seuil de réussite ; seul motif de blocage = validité des données ou technique. Un actif bloqué est
   documenté, jamais remplacé en silence.
-- Coûts aller-retour (hypothèses) : BTC 0, 5 et 10 bps ; GBPJPY 0 (brut), 2 bps (écart acheteur-vendeur ECN d'environ
-  1,5 à 2 pips et commission ; la série est un bid, le coût couvre l'écart entier) et 4 bps (lecture principale,
-  convention de D01 pour les CFD).
-- Recoupement de GBPJPY (critère fixé avant) : prix HistData à 12:00 heure de New York contre DEXUSUK × DEXJPUS
-  (taux de midi H.10) : corrélation des variations quotidiennes ≥ 0,95 au décalage 0, meilleur décalage à ± 30 min,
-  écart de niveau médian ≤ 10 bps.
+- Coûts aller-retour, validés par le porteur : 0 (brut), écart acheteur-vendeur médian mesuré sur la série Saxo, et un
+  coût principal = max(4 bps ; P90 de l'écart arrondi au point supérieur) : US100 0 / 0,9 / 4 ; US30 0 / 1,4 / 4 ;
+  GER40 0 / 2,2 / 4 ; EU50 0 / 4,8 / 7 ; HK50 0 / 6,1 / 8 ; XAGUSD 0 / 6,6 / 11 ; GBPJPY 0 / 2,5 / 4 ; ETF 0 / 4
+  (convention de D01 : prix traités sans écart mesurable, commission non mesurée) ; BTC 0, 5 et 10 bps.
+- GBPJPY : série Saxo (décision du porteur) ; la série HistData de la partie 1 reste pour mémoire.
+- Couverture (règle de D01) : première barre au plus tard le 2020-01-03, dernière au plus tôt le 2025-12-30, aucun trou
+  de plus de 5 jours, sauf les fermetures de bourse déclarées ici avant le calcul (ACTIFS[...]["fermetures"]).
+- Recoupements externes (critère de la partie 1) : corrélation des variations quotidiennes ≥ 0,95 au décalage 0,
+  meilleur décalage à ± 30 min, écart de niveau médian absolu ≤ 10 bps. GBPJPY à 12:00 heure de New York contre
+  DEXUSUK × DEXJPUS (H.10) ; US100 et US30 à 16:00 contre les clôtures officielles du NASDAQ-100 et du Dow Jones (FRED).
+  Pas de référence gratuite pour GER40, EU50, HK50, XAGUSD et les ETF (audit de Saxo seulement).
 - Sessions (heure de New York du signal) : Asie 17:00-02:00, Londres 02:00-08:00, Londres-New York 08:00-12:00,
-  New York après-midi 12:00-17:00. Interruptions : barre précédée d'un intervalle de plus de 30 min (week-end, fête,
-  trou) ; trade exposé = au moins une telle barre dans ]entrée ; sortie] (définitions de D01 bis).
+  New York après-midi 12:00-17:00. Interruptions : barre précédée d'un intervalle de plus de 30 min (pause, nuit,
+  week-end, fête, trou) ; trade exposé = au moins une telle barre dans ]entrée ; sortie] (définitions de D01 bis).
 """
 from __future__ import annotations
 
@@ -79,21 +86,68 @@ RAW = ROOT / "data" / "raw"
 FIG = HERE / "figures"
 NY = "America/New_York"
 BPS = 1e4
-QC_BLOQUE = ("en attente du porteur : QuantConnect exige un compte, et ses données ne sont utilisables que dans son "
-             "cloud (aucun export ; Object Store sans téléchargement ; téléchargement local sous licence payante, "
-             "réservé à LEAN et non convertible) ; aucune série téléchargée, aucun backtest")
+COUV = ("2020-01-03", "2025-12-30")
+NOEL_2025 = {"2025-12-23": "Noël 2025 : Eurex et Xetra fermés du 24 au 26 décembre"}
 ACTIFS = {
     "BTC": {"nom": "BTC/USD (Bitstamp, référence RE-1)", "csv": DATA_RAW, "fees": (0.0, 5.0, 10.0), "principal": 5.0},
-    "GBPJPY": {"nom": "GBP/JPY au comptant (HistData, bid)", "csv": RAW / "histdata_gbpjpy_30m.csv",
-               "fees": (0.0, 2.0, 4.0), "principal": 4.0, "couverture": ("2020-01-03", "2025-12-30")},
-    "NQ": {"nom": "E-mini Nasdaq-100, future continu", "bloque": QC_BLOQUE},
-    "RTY": {"nom": "E-mini Russell 2000, future continu", "bloque": QC_BLOQUE},
-    "CL": {"nom": "WTI Crude Oil, future continu", "bloque": QC_BLOQUE},
-    "HG": {"nom": "Copper, future continu", "bloque": QC_BLOQUE},
+    "US100": {"nom": "CFD US Tech 100, indice au comptant (Saxo USNAS100.I, bid)", "csv": RAW / "saxo_us100_cfd_30m.csv",
+              "fees": (0.0, 0.9, 4.0), "principal": 4.0, "recoupement": ("NASDAQ100", 16)},
+    "US30": {"nom": "CFD US 30 Wall Street, indice au comptant (Saxo US30.I, bid)", "csv": RAW / "saxo_us30_30m.csv",
+             "fees": (0.0, 1.4, 4.0), "principal": 4.0, "recoupement": ("DJIA", 16)},
+    "GER40": {"nom": "CFD Germany 40, indice au comptant (Saxo GER40.I, bid)", "csv": RAW / "saxo_ger40_30m.csv",
+              "fees": (0.0, 2.2, 4.0), "principal": 4.0, "fermetures": NOEL_2025},
+    "EU50": {"nom": "CFD EU Stocks 50, indice au comptant (Saxo EU50.I, bid)", "csv": RAW / "saxo_eu50_30m.csv",
+             "fees": (0.0, 4.8, 7.0), "principal": 7.0, "fermetures": NOEL_2025},
+    "HK50": {"nom": "CFD Hong Kong 50, indice au comptant (Saxo HK50.I, bid)", "csv": RAW / "saxo_hk50_30m.csv",
+             "fees": (0.0, 6.1, 8.0), "principal": 8.0,
+             "fermetures": {"2021-04-01": "Pâques et Ching Ming : HKEX fermé les 2, 5 et 6 avril 2021",
+                            "2023-01-20": "Nouvel An lunaire : HKEX fermé du 23 au 25 janvier 2023",
+                            "2025-01-28": "Nouvel An lunaire : HKEX fermé du 29 au 31 janvier 2025 (demi-séance le 28)"}},
+    "XAGUSD": {"nom": "Argent au comptant XAG/USD (Saxo FxSpot, bid)", "csv": RAW / "saxo_xagusd_30m.csv",
+               "fees": (0.0, 6.6, 11.0), "principal": 11.0},
+    "GBPJPY": {"nom": "GBP/JPY au comptant (Saxo FxSpot, bid)", "csv": RAW / "saxo_gbpjpy_30m.csv",
+               "fees": (0.0, 2.5, 4.0), "principal": 4.0, "recoupement": ("H10", 12)},
+    "TLT": {"nom": "CFD sur ETF TLT, taux longs américains (Saxo, prix traités, séance)",
+            "csv": RAW / "saxo_etf_tlt_30m.csv", "fees": (0.0, 4.0), "principal": 4.0},
+    "USO": {"nom": "CFD sur ETF USO, pétrole WTI (Saxo, prix traités, séance)", "csv": RAW / "saxo_etf_uso_30m.csv",
+            "fees": (0.0, 4.0), "principal": 4.0},
+    "SMH": {"nom": "CFD sur ETF SMH, semi-conducteurs (Saxo, prix traités, séance)", "csv": RAW / "saxo_etf_smh_30m.csv",
+            "fees": (0.0, 4.0), "principal": 4.0},
+    "URA": {"nom": "CFD sur ETF URA, uranium (Saxo, prix traités, séance)", "csv": RAW / "saxo_etf_ura_30m.csv",
+            "fees": (0.0, 4.0), "principal": 4.0},
+    "GDX": {"nom": "CFD sur ETF GDX, mines d'or (Saxo, prix traités, séance)", "csv": RAW / "saxo_etf_gdx_30m.csv",
+            "fees": (0.0, 4.0), "principal": 4.0},
 }
-for _k in ("GBPJPY",):                                            # réutilisation de prepare, asset_doc, coverage de D01
-    D01.ASSETS[_k] = {"nom": ACTIFS[_k]["nom"], "csv": ACTIFS[_k]["csv"], "fees": ACTIFS[_k]["fees"],
-                      "couverture": ACTIFS[_k]["couverture"]}
+for _k, _a in ACTIFS.items():                                    # réutilisation de prepare, asset_doc, coverage de D01
+    if _k != "BTC":
+        _a.setdefault("couverture", COUV)
+        D01.ASSETS[_k] = {"nom": _a["nom"], "csv": _a["csv"], "fees": _a["fees"], "couverture": _a["couverture"]}
+D01.DOC_KEYS = list(D01.DOC_KEYS) + [k for k in ("symbol", "description", "uic", "asset_type", "exchange_id",
+                                                 "first_sample_time") if k not in D01.DOC_KEYS]
+_D01_GAPS_PROFILE = D01.gaps_profile
+
+
+def _gaps_profile(key: str, p: dict):
+    """`run_D01.gaps_profile` sans sa comparaison série brute / série ajustée (convention d'Alpaca) : chez Saxo,
+    `<série>_brut.csv` contient les champs reçus (bid et ask), pas une série non ajustée. Les splits des ETF sont
+    contrôlés dans audit_univers_D01_7.md (historique ajusté)."""
+    a = D01.ASSETS[key]
+    if not a["csv"].name.startswith("saxo_"):
+        return _D01_GAPS_PROFILE(key, p)
+    real = a["csv"]
+    a["csv"] = real.with_name(real.stem + "__sans_serie_brute.csv")       # chemin absent : comparaison sautée
+    try:
+        return _D01_GAPS_PROFILE(key, p)
+    finally:
+        a["csv"] = real
+
+
+D01.gaps_profile = _gaps_profile
+REFERENCES = {"H10": "taux de midi H.10 (DEXUSUK × DEXJPUS)", "NASDAQ100": "clôture officielle du NASDAQ-100 (FRED)",
+              "DJIA": "clôture officielle du Dow Jones (FRED)"}
+COLORS = {"BTC": "#7f7f7f", "US100": "#1f77b4", "US30": "#17becf", "GER40": "#000000", "EU50": "#3a5fcd",
+          "HK50": "#d62728", "XAGUSD": "#a0a0a0", "GBPJPY": "#9467bd", "TLT": "#8c564b", "USO": "#2ca02c",
+          "SMH": "#ff7f0e", "URA": "#bcbd22", "GDX": "#d4a017"}
 SESSIONS = ["Asie 17:00-02:00", "Londres 02:00-08:00", "Londres-New York 08:00-12:00", "New York 12:00-17:00"]
 FED = {"corr_min": 0.95, "decalage_max": 1, "ecart_median_max_bps": 10.0}
 ECHELLES = (0.37, 2.9)
@@ -122,33 +176,59 @@ def week_structure(bars: pd.DataFrame) -> dict:
             "interruptions_duree_h": D01.q(step[mid] / np.timedelta64(1, "h"), (50, 90, 100)) if len(mid) else {}}
 
 
-def fed_noon(bars: pd.DataFrame) -> dict:
-    """GBPJPY HistData à 12:00 heure de New York (close de la barre qui finit à 12:00, et décalages de ± 2 h par pas de
-    30 min) contre DEXUSUK × DEXJPUS (taux de midi H.10 de la Réserve fédérale)."""
-    ref = {}
-    for sid in ("DEXUSUK", "DEXJPUS"):
-        s = pd.read_csv(RAW / f"fred_{sid.lower()}.csv", parse_dates=["date"]).dropna()
-        ref[sid] = s.set_index("date").valeur
-    cross = (ref["DEXUSUK"] * ref["DEXJPUS"]).dropna().rename("fed")
+def reference_series(ref: str) -> pd.Series:
+    if ref == "H10":
+        s = {sid: pd.read_csv(RAW / f"fred_{sid.lower()}.csv", parse_dates=["date"]).dropna().set_index("date").valeur
+             for sid in ("DEXUSUK", "DEXJPUS")}
+        return (s["DEXUSUK"] * s["DEXJPUS"]).dropna().rename("ref")
+    return pd.read_csv(RAW / f"fred_{ref.lower()}.csv", parse_dates=["date"]).dropna().set_index("date").valeur.rename("ref")
+
+
+def recoupement(bars: pd.DataFrame, ref: str, hour: int) -> dict:
+    """Close de la barre qui finit à `hour`:00 heure de New York (et décalages de ± 2 h par pas de 30 min) contre une
+    référence quotidienne externe : taux H.10 de midi pour GBPJPY, clôture officielle de 16:00 pour US100 et US30."""
+    cross = reference_series(ref)
     end = (bars.time + pd.Timedelta(minutes=30)).dt.tz_convert(NY)
     tod = (end - end.dt.normalize())
     rows = {}
     for k in range(-4, 5):
-        target = pd.Timedelta(hours=12) + k * pd.Timedelta(minutes=30)
+        target = pd.Timedelta(hours=hour) + k * pd.Timedelta(minutes=30)
         sel = (tod == target).to_numpy()
         px = pd.Series(bars.close.to_numpy()[sel], index=end[sel].dt.tz_localize(None).dt.normalize().to_numpy())
-        j = pd.concat([px.rename("histdata"), cross], axis=1, join="inner").dropna()
+        j = pd.concat([px.rename("serie"), cross], axis=1, join="inner").dropna()
         d = np.log(j).diff().dropna()
-        rows[k] = {"jours": int(len(j)), "corr_variations": float(d.histdata.corr(d.fed)),
-                   "ecart_median_bps": float(((j.histdata / j.fed - 1) * BPS).median()),
-                   "ecart_abs_median_bps": float(((j.histdata / j.fed - 1).abs() * BPS).median()),
-                   "ecart_abs_P95_bps": float(((j.histdata / j.fed - 1).abs() * BPS).quantile(.95))}
+        rows[k] = {"jours": int(len(j)), "corr_variations": float(d.serie.corr(d.ref)),
+                   "ecart_median_bps": float(((j.serie / j.ref - 1) * BPS).median()),
+                   "ecart_abs_median_bps": float(((j.serie / j.ref - 1).abs() * BPS).median()),
+                   "ecart_abs_P95_bps": float(((j.serie / j.ref - 1).abs() * BPS).quantile(.95))}
     best = max(rows, key=lambda k: rows[k]["corr_variations"])
     r0 = rows[0]
     ok = (r0["corr_variations"] >= FED["corr_min"] and abs(best) <= FED["decalage_max"]
           and r0["ecart_abs_median_bps"] <= FED["ecart_median_max_bps"])
-    return {"par_decalage_demi_heures": rows, "meilleur_decalage_demi_heures": int(best), "valide": bool(ok),
-            "critere": FED}
+    return {"reference": REFERENCES[ref], "heure_new_york": f"{hour:02d}:00", "par_decalage_demi_heures": rows,
+            "meilleur_decalage_demi_heures": int(best), "valide": bool(ok), "critere": FED}
+
+
+def fermetures(key: str, bars: pd.DataFrame, au: dict) -> None:
+    """Règle des 5 jours de D01 appliquée trou par trou : un trou de plus de 5 jours n'est admis que s'il commence à une
+    date de fermeture de bourse déclarée avant le calcul (ACTIFS[key]["fermetures"])."""
+    declared = ACTIFS[key].get("fermetures", {})
+    step = bars.time.diff()
+    big = np.flatnonzero((step > pd.Timedelta(hours=D01.TROU_MAX_H)).to_numpy())
+    adm, other = [], []
+    for i in big:
+        g = {"apres": str(bars.time.iat[i - 1]), "reprise": str(bars.time.iat[i]),
+             "duree_h": float(step.iat[i].total_seconds() / 3600)}
+        day = str(bars.time.iat[i - 1].date())
+        (adm if day in declared else other).append({**g, "motif": declared.get(day)})
+    au["fermetures_admises"] = adm
+    au["couverture"] = ([c for c in au["couverture"] if not c.startswith("trou de")]
+                        + [f"trou de {g['duree_h']:.0f} h après {g['apres'][:16]}" for g in other])
+    motifs = au["integrite"] + au["couverture"]
+    if motifs:
+        au["bloque"] = "série non exploitable : " + " ; ".join(motifs)
+    else:
+        au.pop("bloque", None)
 
 
 def audit_actif(key: str) -> dict:
@@ -161,9 +241,11 @@ def audit_actif(key: str) -> dict:
         au = D01.audit_asset(key)
         p = D01.prepare(key)
         au["semaine"] = week_structure(p["bars"])
-        au["recoupement_fed"] = fed_noon(p["bars"])
-        if not au["recoupement_fed"]["valide"]:
-            au["bloque"] = "recoupement H.10 hors critère"
+        fermetures(key, p["bars"], au)
+        if a.get("recoupement"):
+            au["recoupement"] = recoupement(p["bars"], *a["recoupement"])
+            if not au["recoupement"]["valide"]:
+                au["bloque"] = f"recoupement {au['recoupement']['reference']} hors critère"
     au["nom"] = a["nom"]
     return au
 
@@ -333,33 +415,38 @@ def run_main() -> None:
     (HERE / "controles_D01_7.json").write_text(json.dumps(D01.jsonable(ctrl), ensure_ascii=False, indent=1),
                                                encoding="utf-8")
     FIG.mkdir(parents=True, exist_ok=True)
-    figure(curves, diags)
+    figure(curves, diags, res)
     write_report()
     print(f"D01.7 : {len(res)} lignes en {ctrl['duree_s']} s ; résultats, diagnostics et rapport dans {HERE}")
 
 
-def figure(curves: dict, diags: dict) -> None:
-    fig, axes = plt.subplots(1, 2, figsize=(15, 4.8))
+def figure(curves: dict, diags: dict, res: pd.DataFrame) -> None:
+    """Capital à 0,25 %/ATR au coût principal ; espérance par trade nette [IC 95 %] et brute, par actif."""
+    fig, axes = plt.subplots(1, 2, figsize=(16, 5.6), gridspec_kw={"width_ratios": [1.6, 1]})
     for key, c in curves.items():
-        axes[0].plot(c.index, c.to_numpy(), lw=1.2, label=f"{key} ({diags[key]['frais_principal_bps']:g} bps)",
-                     color=D01.COLORS.get(key, "#8c564b"))
+        axes[0].plot(c.index, c.to_numpy(), lw=1.1, label=f"{key} ({diags[key]['frais_principal_bps']:g} bps)",
+                     color=COLORS.get(key, "#8c564b"))
     axes[0].set_yscale("log")
     axes[0].axhline(1, color="k", lw=0.8)
-    axes[0].set_title("Capital à 0,25 %/ATR, RE-1 figée")
-    axes[0].legend(fontsize=8)
+    axes[0].set_title("Capital à 0,25 %/ATR, RE-1 figée, coût principal de chaque actif")
+    axes[0].legend(fontsize=7, ncol=2)
     axes[0].grid(alpha=0.3)
     ax = axes[1]
-    for i, key in enumerate(curves):
-        s = diags[key]["sessions"]
-        x = np.arange(len(s)) + (i - 0.5) * 0.15
-        e = np.array([r["esperance_atr"] for r in s], dtype=float)
-        lo = np.array([r["lo"] for r in s], dtype=float)
-        hi = np.array([r["hi"] for r in s], dtype=float)
-        ax.errorbar(x, e, yerr=[e - lo, hi - e], fmt="o", capsize=3, color=D01.COLORS.get(key, "#8c564b"), label=key)
-    ax.set_xticks(np.arange(len(SESSIONS)))
-    ax.set_xticklabels([s.replace(" ", "\n", 1) for s in SESSIONS], fontsize=8)
-    ax.axhline(0, color="k", lw=0.8)
-    ax.set_title("Espérance nette par session du signal (heure de New York) [IC 95 %]")
+    keys = list(curves)
+    y = np.arange(len(keys))
+    net = res.set_index(["actif", "frais_bps"])
+    e = np.array([net.loc[(k, diags[k]["frais_principal_bps"]), "esperance_atr"] for k in keys], dtype=float)
+    lo = np.array([net.loc[(k, diags[k]["frais_principal_bps"]), "esperance_atr_lo"] for k in keys], dtype=float)
+    hi = np.array([net.loc[(k, diags[k]["frais_principal_bps"]), "esperance_atr_hi"] for k in keys], dtype=float)
+    brut = np.array([net.loc[(k, 0.0), "esperance_atr"] for k in keys], dtype=float)
+    for i, k in enumerate(keys):
+        ax.errorbar(e[i], y[i], xerr=[[e[i] - lo[i]], [hi[i] - e[i]]], fmt="o", capsize=3, color=COLORS.get(k, "#8c564b"))
+    ax.plot(brut, y, "x", color="k", label="brut (0 bps)")
+    ax.set_yticks(y)
+    ax.set_yticklabels(keys)
+    ax.invert_yaxis()
+    ax.axvline(0, color="k", lw=0.8)
+    ax.set_title("Espérance par trade (ATR) : nette [IC 95 %], brute ×", fontsize=11)
     ax.legend(fontsize=8)
     ax.grid(alpha=0.3)
     fig.tight_layout()
@@ -379,7 +466,10 @@ def section_audit(audit: dict) -> str:
         tr_ = b["trous"]
         cl = tr_["classes"]
         out.append(f"\n**{key} — {a['nom']}**\n")
-        rows = [["Source ; instrument", f"{doc.get('source')} ; {doc.get('instrument', doc.get('ticker', '—'))}"],
+        inst = doc.get("instrument") or doc.get("ticker") or (
+            f"{doc['symbol']}, {doc.get('description', '')} (UIC {doc.get('uic')}, {doc.get('asset_type')})"
+            if doc.get("symbol") else "—")
+        rows = [["Source ; instrument", f"{doc.get('source')} ; {inst}"],
                 ["Fuseau ; prix", f"{doc.get('timezone', 'UTC')[:140]} ; {doc.get('prix', '—')[:60]}"],
                 ["Barres ; première ; dernière", f"{n_fr(b['n_barres'])} ; {b['premiere'][:16]} ; {b['derniere'][:16]}"],
                 ["Intégrité (doublons, désordre, prix, OHLC)", " ; ".join(au["integrite"]) or "aucun défaut"],
@@ -396,10 +486,14 @@ def section_audit(audit: dict) -> str:
                      ["Interruptions de 30 min à 24 h en semaine ; barres manquantes ; par année",
                       f"{s['interruptions_en_semaine']} ; {n_fr(s['interruptions_barres_manquantes'])} ; "
                       + ", ".join(f"{k} : {v}" for k, v in s["interruptions_par_annee"].items())]]
-        if "recoupement_fed" in au:
-            f = au["recoupement_fed"]
+        if au.get("fermetures_admises"):
+            rows.append(["Trous de plus de 5 jours admis (fermetures de bourse déclarées avant le calcul)",
+                         " ; ".join(f"{g['apres'][:10]} ({fr(g['duree_h'], 1)} h) : {g['motif']}"
+                                    for g in au["fermetures_admises"])])
+        if "recoupement" in au:
+            f = au["recoupement"]
             r0 = f["par_decalage_demi_heures"]["0"]
-            rows.append(["Recoupement H.10 (12:00 New York)",
+            rows.append([f"Recoupement : {f['reference']} ({f['heure_new_york']} New York)",
                          f"{r0['jours']} jours ; corrélation des variations {fr(r0['corr_variations'], 4)} ; écart "
                          f"médian {sg(r0['ecart_median_bps'], 1)} bps (absolu {fr(r0['ecart_abs_median_bps'], 1)}, "
                          f"P95 {fr(r0['ecart_abs_P95_bps'], 1)}) ; meilleur décalage {f['meilleur_decalage_demi_heures']} "
@@ -417,7 +511,7 @@ def section_controles(ctrl: dict) -> str:
            "- Réserve 2026 : chaque série est tronquée avant le 2026-01-01 au chargement ; rien de 2026 n'a été "
            "téléchargé."]
     for c, r in ctrl["invariance_echelle"].items():
-        out.append(f"- Invariance d'échelle (prérequis des futures rétro-ajustés), BTC × {c} : signaux "
+        out.append(f"- Invariance d'échelle du moteur (contrôle de la partie 1), BTC × {c} : signaux "
                    f"{'identiques' if r['signaux_identiques'] else 'DIFFÉRENTS'} ; descripteurs à {r['ecart_relatif_max']:.1e} "
                    f"près en relatif (le plus sensible : `{r['descripteur_le_plus_sensible']}`) ; "
                    f"{r['signaux_changeant_de_famille']} signaux changent de famille ({'; '.join(r['changements'])}) ; "

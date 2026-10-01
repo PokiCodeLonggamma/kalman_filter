@@ -7,28 +7,89 @@
    "candidats": 1452,
    "sha256": "4a70ac3c9f999af06726bedf4fcbda20a9bcdb506114049e3d2874786ebc5d72"
   },
+  "US100": {
+   "statut": "mesuré",
+   "annees": 5.997376226328998,
+   "trades": 695,
+   "candidats": 862,
+   "sha256": "39c28eaa597c43e808060629be9d4db69dd88827089fc192d1a511242f1b52d3"
+  },
+  "US30": {
+   "statut": "mesuré",
+   "annees": 5.997376226328998,
+   "trades": 710,
+   "candidats": 917,
+   "sha256": "4d416befe63b5c21c0003652ffde7c45bdeffff7a4bb6e41de3006cc37e3eff6"
+  },
+  "GER40": {
+   "statut": "mesuré",
+   "annees": 5.997262149212868,
+   "trades": 545,
+   "candidats": 685,
+   "sha256": "e963ef8ad8698296b013ccf4a9421997229e467d24db5ecd8d3082d613e354de"
+  },
+  "EU50": {
+   "statut": "mesuré",
+   "annees": 5.997262149212868,
+   "trades": 535,
+   "candidats": 671,
+   "sha256": "23382e43c5321a557fcbe0738d5a88d8a67db0baa81b61bde11646a31e5531b1"
+  },
+  "HK50": {
+   "statut": "mesuré",
+   "annees": 5.997148072096738,
+   "trades": 425,
+   "candidats": 522,
+   "sha256": "40639ef711764bc960e8371e6d354069a953f6da3e23d3d70c9929751a8e922a"
+  },
+  "XAGUSD": {
+   "statut": "mesuré",
+   "annees": 5.997376226328998,
+   "trades": 651,
+   "candidats": 853,
+   "sha256": "040ae90bb33b8d1054f508640663b388b337ad7a30f251bb97f3a8bd04610b0e"
+  },
   "GBPJPY": {
    "statut": "mesuré",
-   "annees": 5.997490303445129,
-   "trades": 687,
-   "candidats": 867,
-   "sha256": "f0cb7f99566f31d9ff74b26318f55556ee867b90208f80568c74bb06c3a135c8"
+   "annees": 5.997946611909651,
+   "trades": 754,
+   "candidats": 969,
+   "sha256": "3436db95c520333878133c19ff0a038caaba33d9848484db9a03f81ce06b7f01"
   },
-  "NQ": {
-   "statut": "bloqué",
-   "motif": "en attente du porteur : QuantConnect exige un compte, et ses données ne sont utilisables que dans son cloud (aucun export ; Object Store sans téléchargement ; téléchargement local sous licence payante, réservé à LEAN et non convertible) ; aucune série téléchargée, aucun backtest"
+  "TLT": {
+   "statut": "mesuré",
+   "annees": 5.995608031028976,
+   "trades": 157,
+   "candidats": 193,
+   "sha256": "25367f6ed9bf2fec6e4cae8104b9f7f6e22402296acc54b2f0efc3ba29c5e7dd"
   },
-  "RTY": {
-   "statut": "bloqué",
-   "motif": "en attente du porteur : QuantConnect exige un compte, et ses données ne sont utilisables que dans son cloud (aucun export ; Object Store sans téléchargement ; téléchargement local sous licence payante, réservé à LEAN et non convertible) ; aucune série téléchargée, aucun backtest"
+  "USO": {
+   "statut": "mesuré",
+   "annees": 5.995608031028976,
+   "trades": 140,
+   "candidats": 167,
+   "sha256": "5b458f8913ac5bcc20c6426e789e1b2c0737ece827223f4adf4b6a1c3446f7fe"
   },
-  "CL": {
-   "statut": "bloqué",
-   "motif": "en attente du porteur : QuantConnect exige un compte, et ses données ne sont utilisables que dans son cloud (aucun export ; Object Store sans téléchargement ; téléchargement local sous licence payante, réservé à LEAN et non convertible) ; aucune série téléchargée, aucun backtest"
+  "SMH": {
+   "statut": "mesuré",
+   "annees": 5.995608031028976,
+   "trades": 149,
+   "candidats": 173,
+   "sha256": "f4756d75335505ee14610c08d807269eefb501b2fc2a4034180e40163fa29977"
   },
-  "HG": {
-   "statut": "bloqué",
-   "motif": "en attente du porteur : QuantConnect exige un compte, et ses données ne sont utilisables que dans son cloud (aucun export ; Object Store sans téléchargement ; téléchargement local sous licence payante, réservé à LEAN et non convertible) ; aucune série téléchargée, aucun backtest"
+  "URA": {
+   "statut": "mesuré",
+   "annees": 5.995608031028976,
+   "trades": 127,
+   "candidats": 145,
+   "sha256": "df63955f53ec520fdea0557fb8bcd7745b31e86aaeb5402055754f4f105b79e3"
+  },
+  "GDX": {
+   "statut": "mesuré",
+   "annees": 5.995608031028976,
+   "trades": 143,
+   "candidats": 172,
+   "sha256": "93653907772f0cdbed6903a180a18ec4ba3daa88287b5709825aa4bf5901e100"
   }
  },
  "btc": {
@@ -84,5 +145,5 @@
    ]
   }
  },
- "duree_s": 38
+ "duree_s": 88
 }

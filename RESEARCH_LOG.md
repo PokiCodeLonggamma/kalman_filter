@@ -1255,3 +1255,108 @@ Grilles complètes : espérance ATR ; MDD ; Calmar.
 #### Décision
 - [x] **Données validées pour le backtest de D01.7**, sous trois choix du porteur : la source de GBPJPY, les coûts
   aller-retour, et l'entrée ou non des ETF dans D01.7. Aucun backtest lancé.
+
+### [EXP-D01.7, partie 2] — Portabilité de RE-1 figée : CFD sur indices, argent, GBPJPY et CFD sur ETF (Saxo)
+- **Date :** 2026-10-01
+- **Étape :** D, test de portabilité zero-shot (univers redéfini par le porteur). RE-1 strictement gelée ; aucune
+  modification sur la base des résultats.
+- **Actifs & Période :** 2020-2025, toutes séries Saxo ; BTC en référence.
+  - CFD sur indices au comptant : US100, US30, GER40, EU50, HK50 (HK50 à la place de Japan 225, absent chez Saxo).
+  - Au comptant : XAGUSD et GBPJPY (GBPJPY lu chez Saxo, sur décision du porteur).
+  - CFD sur ETF, en séance américaine : TLT, USO, SMH, URA, GDX.
+- **Modèle de frais, validé par le porteur avant le calcul :**
+  - trois lectures : 0, écart médian mesuré, et un coût principal égal au plus grand de 4 bps et du P90 de l'écart,
+    arrondi au point supérieur ;
+  - coût principal : US100, US30, GER40 et GBPJPY 4 bps ; EU50 7 ; HK50 8 ; XAGUSD 11 ; ETF 4 ; BTC 5.
+- **Livrables :** `experiments/D01_7/run_D01_7.py`, `narratif_D01_7.md`, `rapport_D01_7.md`, `resultats_D01_7.csv`,
+  `annuel_D01_7.csv`, `audit_D01_7.json`, `diagnostics_D01_7.json`, `controles_D01_7.json`, `figures/D01_7.png` ;
+  `donnees_D01_7.py` (FRED NASDAQ100 et DJIA).
+
+#### 0. Cadrage obligatoire
+- **QUESTION :** RE-1 conserve-t-elle son comportement hors crypto, sur des CFD sur indices quasi continus, de l'argent et
+  du change au comptant, et des CFD sur ETF de séance ?
+- **PERTINENCE POUR LE FILTRE AKF :** la géométrie se transpose (D01) ; il s'agit de voir si la rente suit sur d'autres
+  structures de marché, régions et classes d'actifs.
+- **CE QUE LE PROTOCOLE MESURE RÉELLEMENT :**
+  - audit et recoupements externes avant tout backtest ;
+  - 8 métriques en brut et nettes ;
+  - Long/Short, F2b/F3, sessions, interruptions, concentration, queues.
+- **CE QU'IL NE PERMET PAS DE CONCLURE :**
+  - pas de hors échantillon ;
+  - pas de classement : une sélection d'actifs pour D02 faite sur ce même échantillon est biaisée ;
+  - coûts réels non mesurés (financement de nuit, dividendes des CFD).
+
+#### 1. Hypothèse & Motivation physique
+- Si la cinématique captée par RE-1 est générique, le brut devrait rester positif. Sa rentabilité dépendrait alors du
+  rapport entre frais et ATR.
+
+#### 2. Règle testée
+- **Règle :** RE-1 identique à C02bis, seuils de BTC gelés.
+- **Contrôles bloquants :**
+  - ancre P6.5d ; parité avec C02bis (1 080 trades, 40 métriques) ;
+  - audit sans défaut, règle des 5 jours de D01, à l'exception de quatre fermetures de bourse déclarées avant le calcul ;
+  - recoupements externes, critère de la partie 1 : US100 contre la clôture officielle du NASDAQ-100, US30 contre le Dow
+    Jones, GBPJPY contre les taux H.10.
+
+#### 3. Résultats nets (coût principal de chaque actif)
+| Actif (coût) | PnL net : 0,25 %/ATR ; 1x ; bps cumulés (1x) | PF (1x) | WR | Espérance ATR [IC] ; bps | MDD : 0,25 %/ATR ; 1x | Trades (/mois) | Durée médiane | Part des frais (1x) ; frais en ATR |
+|---|---|---|---|---|---|---|---|---|
+| BTC (5, réf.) | +138 % ; +204 % ; +13 320 | 1,20 | 44,3 % | +0,369 [+0,098 ; +0,645] ; +12,3 | −13,5 % ; −43,9 % | 1 080 (15,0) | 26 barres ; 13 h | 29 % ; 0,14 |
+| US100 (4) | −5 % ; −10 % ; −707 | 0,97 | 39,6 % | −0,097 [−0,428 ; +0,252] ; −1,0 | −19,7 % ; −27,0 % | 695 (9,7) | 13 h | 134 % ; 0,24 |
+| US30 (4) | +11 % ; +29 % ; +2 796 | 1,17 | 41,0 % | −0,004 [−0,350 ; +0,348] ; +3,9 | −13,7 % ; −14,1 % | 710 (9,9) | 13 h | 50 % ; 0,33 |
+| GER40 (4) | +0 % ; +5 % ; +767 | 1,05 | 43,1 % | −0,005 [−0,292 ; +0,294] ; +1,4 | −22,9 % ; −27,5 % | 545 (7,6) | 13 h | 74 % ; 0,24 |
+| EU50 (7) | −37 % ; −44 % ; −5 682 | 0,70 | 38,3 % | −0,590 [−0,946 ; −0,214] ; −10,6 | −40,6 % ; −47,8 % | 535 (7,4) | 13 h | brut ≤ 0 ; 0,42 |
+| HK50 (8) | −9 % ; −15 % ; −1 295 | 0,94 | 40,7 % | −0,103 [−0,539 ; +0,334] ; −3,0 | −32,3 % ; −41,9 % | 425 (5,9) | 20 h | 162 % ; 0,30 |
+| XAGUSD (11) | −41 % ; −57 % ; −7 863 | 0,79 | 38,1 % | −0,307 [−0,634 ; +0,006] ; −12,1 | −43,5 % ; −59,7 % | 651 (9,0) | 13 h | brut ≤ 0 en bps ; 0,37 |
+| GBPJPY (4) | −20 % ; −21 % ; −2 300 | 0,82 | 40,7 % | −0,303 [−0,572 ; −0,031] ; −3,0 | −22,0 % ; −22,1 % | 754 (10,5) | 13 h | 421 % ; 0,40 |
+| TLT (4) | −9 % ; −11 % ; −1 009 | 0,88 | 39,5 % | −0,205 [−0,972 ; +0,570] ; −6,4 | −16,6 % ; −21,1 % | 157 (2,2) | 48 h | brut ≤ 0 ; 0,16 |
+| USO (4) | +4 % ; +65 % ; +5 926 | 1,42 | 47,9 % | +0,148 [−0,553 ; +0,813] ; +42,3 | −9,6 % ; −24,8 % | 140 (1,9) | 48 h | 9 % ; 0,07 |
+| SMH (4) | −7 % ; −13 % ; −888 | 0,94 | 41,6 % | −0,180 [−0,795 ; +0,409] ; −6,0 | −15,5 % ; −30,4 % | 149 (2,1) | 48 h | brut ≤ 0 ; 0,08 |
+| URA (4) | +2 % ; −18 % ; −1 346 | 0,92 | 38,6 % | +0,093 [−0,823 ; +1,100] ; −10,6 | −12,6 % ; −41,8 % | 127 (1,8) | 48 h | brut ≤ 0 en bps ; 0,06 |
+| GDX (4) | +12 % ; +70 % ; +6 123 | 1,46 | 44,1 % | +0,349 [−0,365 ; +1,076] ; +42,8 | −8,5 % ; −19,1 % | 143 (2,0) | 48 h | 9 % ; 0,07 |
+
+- **Brut en ATR, sans frais :**
+  - US100 +0,139 ; US30 +0,327 (+7,9 bps [+0,8 ; +16,0]) ; GER40 +0,237 ; EU50 −0,172 ; HK50 +0,192 ;
+  - XAGUSD +0,060 ; GBPJPY +0,095 ;
+  - TLT −0,042 ; USO +0,220 ; SMH −0,105 ; URA +0,154 ; GDX +0,417.
+- **À l'écart médian de Saxo :** US30 +0,211 ATR [−0,136 ; +0,556], soit +6,5 bps ; GER40 +0,104 ; US100 +0,086 ;
+  HK50 −0,033 ; EU50 −0,458 ; XAGUSD −0,160 ; GBPJPY −0,154.
+- **Années à espérance positive au coût principal :** GDX 5/6 ; US30, GER40, HK50, TLT, USO, SMH et URA 2/6 ; US100, EU50
+  et XAGUSD 1/6 ; GBPJPY 0/6.
+
+#### 4. Analyse causale & Physique du trade
+- [OBS] **Audit :**
+  - 13 séries sans défaut ;
+  - recoupements : US100 0,9991 (−0,3 bp), US30 0,9994 (−0,3 bp), GBPJPY 0,9997 (−1,9 bp), meilleur décalage 0 ;
+  - aucun raccord caché dans les CFD sur indice ;
+  - géométrie des signaux transposée : `leg_atr` médian de 2,85 à 3,43, P75 de `nis_z_100` de 1,03 à 1,46.
+- [OBS] **Aucun IC à borne basse positive au coût principal.**
+  - Estimations positives : GDX, USO, URA, des ETF avec 127 à 157 trades.
+  - Négatifs significatifs : EU50 ; GBPJPY à la limite.
+- [OBS] **Frais en ATR, de 0,24 à 0,42 sur les CFD sur indices, l'argent et GBPJPY.** Leur ATR de 30 min ne vaut que 11 à
+  34 bps, et les frais y atteignent ou dépassent un brut de +0,06 à +0,33 ATR. Sur les ETF, ils ne coûtent que 0,06 à
+  0,16 ATR.
+- [OBS] **ETF :**
+  - 91 à 94 % des trades traversent une nuit.
+  - Le brut vient des gaps : GDX +0,41 contre +0,02 en séance ; USO +0,24 contre −0,01 ; SMH +0,21 contre −0,34 ; TLT
+    +0,14 contre −0,18. URA fait l'inverse (−0,00 contre +0,14).
+  - Stops percés : 7 à 17 par ETF, avec un dépassement de +0,7 à +2,4 ATR.
+- [OBS] **Long et Short, en brut :**
+  - US30 gagne des deux côtés (+0,44 et +0,20), comme HK50 (+0,16 et +0,23) et GDX (+0,23 et +0,59) ;
+  - GER40 n'est porté que par ses Longs (+0,77 contre −0,31) : dérive du DAX, composante symétrique de +0,23.
+- [OBS] **GBPJPY Saxo :** brut +0,095 et −0,303 à 4 bps, contre −0,035 et −0,443 avec HistData. Même conclusion ; les trous
+  de 2023 étaient sans effet.
+- [OBS] **Stop de F3 :** il aide US30 (+0,54 [+0,15 ; +0,93]) et nuit à HK50 (−0,49 [−0,94 ; −0,07]) ; ailleurs, l'IC
+  contient 0.
+- [OBS] **Queues :** médiane de −0,5 à −1,6 ATR, décile supérieur de +0,7 à +1,1 ATR par trade. C'est le profil de BTC, sans
+  la moyenne positive.
+- [HYP] **Le signal se transpose, la rente non.** Le rapport décisif est brut / ATR contre frais / ATR, comme pour l'or en
+  D01.
+- [HYP] **US30 :** son brut est symétrique et positif en bps ; sa viabilité dépend du coût réel (écart de 1,4 bp contre
+  4 retenus).
+- [HYP] **ETF :** effet des nuits sur environ 140 trades, impossible à distinguer du bruit (K8 à K10).
+
+#### 5. Décision
+- [ ] **REJETÉ**
+- [ ] **NON CONCLUANT**
+- [x] **TERMINÉ (descriptif) : aucun actif à IC > 0 au coût principal ; candidats à examiner pour D02 selon le porteur : US30, GER40, US100, GDX, avec le biais de sélection à contrôler hors échantillon. RE-1 inchangée.**

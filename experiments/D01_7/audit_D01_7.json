@@ -311,310 +311,307 @@
   "annees_echantillon": 6.0,
   "nom": "BTC/USD (Bitstamp, référence RE-1)"
  },
- "GBPJPY": {
+ "US100": {
   "doc": {
-   "instrument": "GBP/JPY au comptant (TradingView : FX:GBPJPY, OANDA:GBPJPY)",
-   "nature": "cotation OTC au comptant d'un courtier forex, compilée par HistData.com",
-   "ticker": "GBPJPY (HistData.com, ASCII M1)",
-   "continuite": "sans objet : cotation au comptant, sans échéance",
-   "rolls": "sans objet ; le coût de portage (swap) n'est pas dans les prix",
-   "ajustements": "aucun",
-   "prix": "bid (FAQ HistData : barres construites sur le bid des ticks)",
-   "timezone": "étiquettes HistData converties en UTC : la FAQ annonce un EST fixe, mais l'horloge suit l'heure d'été européenne (serveur EET/EEST moins 7 h : UTC−5 en hiver européen, UTC−4 de fin mars à fin octobre) ; établi par l'audit D01 (pause quotidienne à 17:00-18:00 heure de New York toute l'année après conversion)",
-   "horaires": "marché des changes OTC, du dimanche 17:00 au vendredi 17:00 heure de New York, sans pause quotidienne annoncée ; vérifiés par l'audit",
-   "construction_barres": "agrégation exacte des bougies d'une minute en barres de 30 min alignées sur :00 et :30 UTC ; time = ouverture de la barre ; volume absent de la source (écrit nul) ; une barre sans minute cotée est un trou, jamais comblé",
-   "couverture_demandee": "années 2020 à 2025 ; 2026 non téléchargé",
-   "limite": "fournisseur amont (courtier) non divulgué par HistData",
-   "sources_ecartees": "Dukascopy (2026-10-01 : HTTP 429 dès la deuxième requête sur datafeed.dukascopy.com, export massif réservé au bucket AWS « Requester Pays » cfg-public-proper-wallaby, identifiants AWS obligatoires : action du porteur requise, non contourné) ; OANDA (compte requis) ; Yahoo (intrajournalier limité aux 60 derniers jours)",
-   "source": "histdata.com",
-   "sha256": "f0cb7f99566f31d9ff74b26318f55556ee867b90208f80568c74bb06c3a135c8",
-   "premiere_barre": "2020-01-01 22:00:00+00:00",
+   "rolls": "CFD : voir l'audit (échéances éventuelles)",
+   "prix": "bid OHLC (CloseBid, etc.) ; volume absent (écrit nul)",
+   "timezone": "UTC (début de barre)",
+   "couverture_demandee": "2020-01-01 00:00 → 2025-12-31 23:30 UTC ; 2026 jamais demandé",
+   "symbol": "USNAS100.I",
+   "description": "US Tech 100 NAS",
+   "uic": 4912,
+   "asset_type": "CfdOnIndex",
+   "exchange_id": "NASDAQ",
+   "first_sample_time": "2003-10-30 23:55:00+00:00",
+   "source": "saxo-openapi",
+   "sha256": "39c28eaa597c43e808060629be9d4db69dd88827089fc192d1a511242f1b52d3",
+   "premiere_barre": "2020-01-01 23:00:00+00:00",
    "derniere_barre": "2025-12-31 21:30:00+00:00",
-   "barres": 73055,
-   "n_barres_moins_de_30_minutes": 2157,
-   "minutes_sources": 2182056,
-   "doublons_exacts_supprimes": {
-    "minutes": 360,
-    "dates": [
-     "2020-10-26",
-     "2021-11-01",
-     "2022-10-31",
-     "2023-10-30",
-     "2024-10-28",
-     "2025-10-27"
-    ]
-   }
+   "barres": 69805
   },
   "barres": {
-   "n_barres": 73055,
-   "premiere": "2020-01-01 22:00:00+00:00",
+   "n_barres": 69805,
+   "premiere": "2020-01-01 23:00:00+00:00",
    "derniere": "2025-12-31 21:30:00+00:00",
    "doublons": 0,
    "desordre": 0,
-   "part_barres_24_7": 0.6946504640194736,
+   "part_barres_24_7": 0.6637601506190214,
    "barres_par_annee": {
-    "2020": 12459,
-    "2021": 12437,
-    "2022": 12473,
-    "2023": 10785,
-    "2024": 12475,
-    "2025": 12426
+    "2020": 11284,
+    "2021": 11340,
+    "2022": 11804,
+    "2023": 11783,
+    "2024": 11837,
+    "2025": 11757
    },
    "prix_non_positifs": 0,
    "incoherences_ohlc": 0,
-   "barres_plates": 2,
-   "barres_volume_nul": 73055,
+   "barres_plates": 11,
+   "barres_volume_nul": 69805,
    "trous": {
-    "n": 1004,
-    "barres_manquantes": 32113,
+    "n": 1570,
+    "barres_manquantes": 35361,
     "classes": {
      "<= 2 h": {
-      "n": 678,
-      "barres_manquantes": 1542
+      "n": 1207,
+      "barres_manquantes": 3218
      },
      "<= 3 jours": {
-      "n": 326,
-      "barres_manquantes": 30571
+      "n": 352,
+      "barres_manquantes": 30524
      },
      "> 3 jours": {
-      "n": 0,
-      "barres_manquantes": 0
+      "n": 11,
+      "barres_manquantes": 1619
      }
     },
     "plus_longs": [
      {
-      "apres": "2020-12-31 21:30:00+00:00",
-      "reprise": "2021-01-03 22:00:00+00:00",
-      "duree_h": 72.0
+      "apres": "2020-12-24 18:00:00+00:00",
+      "reprise": "2020-12-27 23:00:00+00:00",
+      "duree_h": 76.5
      },
      {
-      "apres": "2023-12-29 21:30:00+00:00",
-      "reprise": "2024-01-01 22:00:00+00:00",
-      "duree_h": 72.0
+      "apres": "2020-04-09 19:30:00+00:00",
+      "reprise": "2020-04-12 22:00:00+00:00",
+      "duree_h": 74.0
      },
      {
-      "apres": "2023-04-06 23:30:00+00:00",
-      "reprise": "2023-04-09 22:00:00+00:00",
-      "duree_h": 70.0
+      "apres": "2020-12-31 20:30:00+00:00",
+      "reprise": "2021-01-03 23:00:00+00:00",
+      "duree_h": 74.0
      },
      {
-      "apres": "2020-12-25 07:00:00+00:00",
-      "reprise": "2020-12-27 22:00:00+00:00",
-      "duree_h": 62.5
+      "apres": "2021-12-23 20:30:00+00:00",
+      "reprise": "2021-12-26 23:00:00+00:00",
+      "duree_h": 74.0
      },
      {
-      "apres": "2024-10-25 15:30:00+00:00",
-      "reprise": "2024-10-27 21:00:00+00:00",
-      "duree_h": 53.0
+      "apres": "2022-04-14 20:30:00+00:00",
+      "reprise": "2022-04-17 22:00:00+00:00",
+      "duree_h": 73.0
      },
      {
-      "apres": "2023-03-31 18:30:00+00:00",
-      "reprise": "2023-04-02 23:00:00+00:00",
-      "duree_h": 52.0
+      "apres": "2022-12-23 21:30:00+00:00",
+      "reprise": "2022-12-26 23:00:00+00:00",
+      "duree_h": 73.0
      },
      {
-      "apres": "2023-04-28 18:30:00+00:00",
-      "reprise": "2023-04-30 22:00:00+00:00",
-      "duree_h": 51.0
-     },
-     {
-      "apres": "2023-07-07 19:30:00+00:00",
-      "reprise": "2023-07-09 23:00:00+00:00",
-      "duree_h": 51.0
-     },
-     {
-      "apres": "2025-02-21 21:30:00+00:00",
-      "reprise": "2025-02-24 01:00:00+00:00",
-      "duree_h": 51.0
+      "apres": "2022-12-30 21:30:00+00:00",
+      "reprise": "2023-01-02 23:00:00+00:00",
+      "duree_h": 73.0
      },
      {
       "apres": "2023-12-22 21:30:00+00:00",
-      "reprise": "2023-12-25 00:30:00+00:00",
-      "duree_h": 50.5
+      "reprise": "2023-12-25 23:00:00+00:00",
+      "duree_h": 73.0
+     },
+     {
+      "apres": "2023-12-29 21:30:00+00:00",
+      "reprise": "2024-01-01 23:00:00+00:00",
+      "duree_h": 73.0
+     },
+     {
+      "apres": "2024-03-28 20:30:00+00:00",
+      "reprise": "2024-03-31 22:00:00+00:00",
+      "duree_h": 73.0
      }
     ]
    },
    "barres_par_heure_utc": {
-    "0": 3119,
-    "1": 3122,
-    "2": 3120,
-    "3": 3122,
-    "4": 3120,
-    "5": 3118,
-    "6": 3118,
-    "7": 3117,
-    "8": 3108,
+    "0": 3100,
+    "1": 3100,
+    "2": 3099,
+    "3": 3099,
+    "4": 3095,
+    "5": 3094,
+    "6": 3093,
+    "7": 3093,
+    "8": 3095,
     "9": 3096,
-    "10": 3015,
-    "11": 2976,
-    "12": 3002,
-    "13": 2994,
-    "14": 2998,
-    "15": 2992,
-    "16": 2994,
-    "17": 2994,
-    "18": 2992,
-    "19": 2982,
-    "20": 2994,
-    "21": 2981,
-    "22": 2992,
-    "23": 2989
+    "10": 3095,
+    "11": 3095,
+    "12": 3092,
+    "13": 3096,
+    "14": 3097,
+    "15": 3096,
+    "16": 3096,
+    "17": 3049,
+    "18": 3001,
+    "19": 2992,
+    "20": 2328,
+    "21": 673,
+    "22": 2032,
+    "23": 3099
    },
    "barres_par_jour": {
-    "0": 14530,
-    "1": 14689,
-    "2": 14626,
-    "3": 14662,
-    "4": 12991,
-    "6": 1557
+    "0": 13762,
+    "1": 14160,
+    "2": 14066,
+    "3": 14033,
+    "4": 12760,
+    "6": 1024
    },
    "sauts": {
     "ecart_ouverture_bps": {
-     "P50": 0.07046918383264031,
-     "P90": 0.29685658569125206,
-     "P99": 8.434206739153435,
-     "P99.9": 28.8181772413728,
-     "P100": 159.39495303038484
+     "P50": 0.10226766274640886,
+     "P90": 0.22687699200951494,
+     "P99": 6.732192365599468,
+     "P99.9": 58.86393939797663,
+     "P100": 416.9564416649296
     },
     "ecart_ouverture_apres_trou_bps": {
-     "P50": 7.685623233505605,
-     "P90": 24.75286401079276,
-     "P99": 72.24600977296637,
-     "P99.9": 106.56029736394476,
-     "P100": 159.39495303038484
+     "P50": 4.408638499133666,
+     "P90": 31.240795709696265,
+     "P99": 148.64388588077404,
+     "P99.9": 330.8730130087651,
+     "P100": 416.9564416649296
     },
     "rendement_close_bps": {
-     "P50": 4.031392891990537,
-     "P90": 13.456391491323743,
-     "P99": 32.446093429476115,
-     "P99.9": 64.60606661298928,
-     "P100": 357.4506557172093
+     "P50": 7.228791833544868,
+     "P90": 30.726562860230203,
+     "P99": 87.84693974541055,
+     "P99.9": 181.85282473303585,
+     "P100": 552.6797459388079
     },
     "plus_grands_ecarts_ouverture": [
      {
-      "time": "2025-04-06 21:00:00+00:00",
-      "bps": 159.39495303038484
+      "time": "2020-03-22 22:00:00+00:00",
+      "bps": 416.9564416649296
      },
      {
-      "time": "2020-03-18 21:00:00+00:00",
-      "bps": 107.09928515608209
+      "time": "2020-03-15 22:00:00+00:00",
+      "bps": 379.35366579086667
      },
      {
-      "time": "2025-02-02 22:00:00+00:00",
-      "bps": 106.56811497183416
+      "time": "2020-03-08 22:00:00+00:00",
+      "bps": 294.1504095832667
      },
      {
-      "time": "2020-12-13 22:00:00+00:00",
-      "bps": 103.96224567530145
+      "time": "2025-04-06 22:00:00+00:00",
+      "bps": 223.76276699962844
      },
      {
-      "time": "2025-10-05 21:00:00+00:00",
-      "bps": 99.28460046810174
+      "time": "2025-04-13 22:00:00+00:00",
+      "bps": 215.31050328210583
      },
      {
-      "time": "2023-03-15 19:00:00+00:00",
-      "bps": 87.54850025837592
+      "time": "2020-03-29 22:00:00+00:00",
+      "bps": 212.96402389768053
      },
      {
-      "time": "2022-10-23 21:00:00+00:00",
-      "bps": 83.1585751884891
+      "time": "2022-05-04 19:00:00+00:00",
+      "bps": 212.80962820953957
      },
      {
-      "time": "2023-03-15 11:00:00+00:00",
-      "bps": 81.84185744766336
+      "time": "2020-03-16 13:30:00+00:00",
+      "bps": 211.2784779039177
      },
      {
-      "time": "2023-02-05 22:00:00+00:00",
-      "bps": 81.76165984694016
+      "time": "2020-03-01 23:00:00+00:00",
+      "bps": 203.38462975763096
      },
      {
-      "time": "2020-03-08 21:00:00+00:00",
-      "bps": 80.43085689548202
+      "time": "2022-02-27 23:00:00+00:00",
+      "bps": 202.14283363459404
      }
     ],
     "plus_grands_rendements": [
      {
-      "time": "2022-09-26 00:30:00+00:00",
-      "bps": 357.4506557172093
+      "time": "2020-03-23 12:00:00+00:00",
+      "bps": 552.6797459388079
      },
      {
-      "time": "2022-12-20 03:00:00+00:00",
-      "bps": 250.86405070425036
+      "time": "2020-03-22 22:00:00+00:00",
+      "bps": 515.8709953601275
      },
      {
-      "time": "2020-03-09 01:30:00+00:00",
-      "bps": 170.56401628154566
+      "time": "2020-03-13 19:30:00+00:00",
+      "bps": 502.86454116731676
      },
      {
-      "time": "2020-03-18 16:30:00+00:00",
-      "bps": 165.60095282425718
+      "time": "2020-03-15 22:00:00+00:00",
+      "bps": 500.64201613161026
      },
      {
-      "time": "2024-09-27 06:00:00+00:00",
-      "bps": 161.94435662794442
+      "time": "2025-04-09 17:00:00+00:00",
+      "bps": 482.65401643915385
      },
      {
-      "time": "2022-09-22 08:00:00+00:00",
-      "bps": 152.87601544192174
+      "time": "2025-04-06 22:00:00+00:00",
+      "bps": 463.5129993232548
      },
      {
-      "time": "2023-01-18 02:30:00+00:00",
-      "bps": 149.18421848880595
+      "time": "2020-03-16 13:30:00+00:00",
+      "bps": 428.15308180536323
      },
      {
-      "time": "2025-04-06 21:00:00+00:00",
-      "bps": 140.70220749414187
+      "time": "2020-03-18 19:30:00+00:00",
+      "bps": 427.7336428744499
      },
      {
-      "time": "2024-07-11 12:30:00+00:00",
-      "bps": 135.3806046470029
+      "time": "2020-03-16 19:30:00+00:00",
+      "bps": 425.38511017886213
      },
      {
-      "time": "2024-08-07 01:30:00+00:00",
-      "bps": 133.97784518691242
+      "time": "2020-03-08 22:00:00+00:00",
+      "bps": 401.34210267190554
      }
     ]
    }
   },
   "seances": {
-   "heures_utc_sans_barre_janvier": [],
-   "heures_utc_sans_barre_juillet": [],
-   "barres_le_samedi": 0
+   "heures_utc_sans_barre_janvier": [
+    22
+   ],
+   "heures_utc_sans_barre_juillet": [
+    21
+   ],
+   "barres_le_samedi": 0,
+   "pause_new_york": {
+    "semaines": 314,
+    "pause_17h_exactement": 209,
+    "pause_17h_et_autres_heures": 105,
+    "sans_pause_17h": 0
+   },
+   "ouverture_dimanche_heure_new_york": {
+    "18": 309
+   }
   },
   "integrite": [],
   "couverture": [],
   "signaux": {
-   "n_signaux": 4959,
-   "signaux_par_mois": 68.8913727690245,
-   "part_flips": 0.8175035289372857,
-   "part_x1_retourne": 0.5146198830409356,
+   "n_signaux": 4672,
+   "signaux_par_mois": 64.90554842390529,
+   "part_flips": 0.8129280821917808,
+   "part_x1_retourne": 0.4937928082191781,
    "leg_atr": {
-    "P10": 1.8118745524729325,
-    "P25": 2.2270466367693436,
-    "P50": 2.8632437320484754,
-    "P75": 3.887598973815999,
-    "P90": 5.3213611453888365
+    "P10": 1.6132605903711796,
+    "P25": 2.0935237052445146,
+    "P50": 2.916122144575713,
+    "P75": 4.087356140071109,
+    "P90": 5.899405926362447
    },
    "retrace_ratio": {
-    "P10": 0.19187940276438487,
-    "P25": 0.35891729591032306,
-    "P50": 0.6000000000000355,
-    "P75": 0.8532030866251836,
-    "P90": 1.0738704122728397
+    "P10": 0.1577066367473075,
+    "P25": 0.32142857142857145,
+    "P50": 0.5921410345491234,
+    "P75": 0.850846897686029,
+    "P90": 1.0897386964180857
    },
    "nis_z_100": {
-    "P10": -0.5462178265062005,
-    "P25": -0.2720944114896801,
-    "P50": 0.30257477911528974,
-    "P75": 1.397630913723495,
-    "P90": 2.867345359733229
+    "P10": -0.5299399732898278,
+    "P25": -0.3035764041803601,
+    "P50": 0.20495749278478315,
+    "P75": 1.162188616231721,
+    "P90": 2.583723577400674
    },
    "atr14_bps": {
-    "P10": 7.395432269486059,
-    "P25": 8.808363832568574,
-    "P50": 11.084762387377502,
-    "P75": 14.192745690322273,
-    "P90": 18.33947528571926
+    "P10": 11.461005172385377,
+    "P25": 15.178984089303553,
+    "P50": 21.72997953222422,
+    "P75": 31.661194128850397,
+    "P90": 44.40628762100106
    },
    "prev_seg_len": {
     "P10": 7.0,
@@ -623,211 +620,212 @@
     "P75": 13.0,
     "P90": 17.0
    },
-   "mediane_locale_leg_atr": 2.8632437320484754,
-   "p75_local_nis_z_100": 1.397630913723495,
-   "part_leg_sous_seuil_btc": 0.4867916918733616,
-   "part_nis_au_dessus_seuil_btc": 0.27828191167574107,
-   "part_nis_au_dessus_seuil_btc_dans_R2": 0.2775,
+   "mediane_locale_leg_atr": 2.916122144575713,
+   "p75_local_nis_z_100": 1.162188616231721,
+   "part_leg_sous_seuil_btc": 0.4736729452054795,
+   "part_nis_au_dessus_seuil_btc": 0.2399400684931507,
+   "part_nis_au_dessus_seuil_btc_dans_R2": 0.18984962406015038,
    "nis_nan": 0,
    "familles": {
-    "F1": 1391,
-    "F2a": 772,
-    "F2b": 997,
-    "F3": 869,
-    "F4": 382,
-    "F5": 548
+    "F1": 1355,
+    "F2a": 708,
+    "F2b": 869,
+    "F3": 779,
+    "F4": 396,
+    "F5": 565
    },
    "regimes": {
-    "R1": 1407,
-    "R2_avant_nis": 1200,
-    "R3": 1603,
-    "hors_regimes": 749
+    "R1": 1487,
+    "R2_avant_nis": 1064,
+    "R3": 1459,
+    "hors_regimes": 662
    },
-   "nis_exclus": 333,
-   "univers_RE1": 867,
-   "F2b": 449,
-   "F3": 418,
+   "nis_exclus": 202,
+   "univers_RE1": 862,
+   "F2b": 406,
+   "F3": 456,
    "par_annee": [
     {
      "annee": 2020,
-     "signaux": 794,
-     "atr14_bps_median": 12.250051860125055,
-     "part_nis_au_dessus_seuil_btc": 0.2947103274559194,
-     "univers_RE1": 130
+     "signaux": 736,
+     "atr14_bps_median": 30.537057300526882,
+     "part_nis_au_dessus_seuil_btc": 0.27717391304347827,
+     "univers_RE1": 116
     },
     {
      "annee": 2021,
-     "signaux": 853,
-     "atr14_bps_median": 8.901822422225335,
-     "part_nis_au_dessus_seuil_btc": 0.2567409144196952,
-     "univers_RE1": 157
+     "signaux": 758,
+     "atr14_bps_median": 18.134495061365097,
+     "part_nis_au_dessus_seuil_btc": 0.23878627968337732,
+     "univers_RE1": 142
     },
     {
      "annee": 2022,
-     "signaux": 869,
-     "atr14_bps_median": 14.079982681807534,
-     "part_nis_au_dessus_seuil_btc": 0.2911392405063291,
-     "univers_RE1": 151
+     "signaux": 784,
+     "atr14_bps_median": 33.42560750643719,
+     "part_nis_au_dessus_seuil_btc": 0.23979591836734693,
+     "univers_RE1": 144
     },
     {
      "annee": 2023,
-     "signaux": 725,
-     "atr14_bps_median": 11.408169327897555,
-     "part_nis_au_dessus_seuil_btc": 0.2717241379310345,
-     "univers_RE1": 118
+     "signaux": 805,
+     "atr14_bps_median": 18.70751221271478,
+     "part_nis_au_dessus_seuil_btc": 0.22236024844720498,
+     "univers_RE1": 157
     },
     {
      "annee": 2024,
-     "signaux": 859,
-     "atr14_bps_median": 10.69075697802475,
-     "part_nis_au_dessus_seuil_btc": 0.2840512223515716,
-     "univers_RE1": 156
+     "signaux": 794,
+     "atr14_bps_median": 16.802986123849887,
+     "part_nis_au_dessus_seuil_btc": 0.23929471032745592,
+     "univers_RE1": 153
     },
     {
      "annee": 2025,
-     "signaux": 859,
-     "atr14_bps_median": 10.150005762534736,
-     "part_nis_au_dessus_seuil_btc": 0.2712456344586729,
-     "univers_RE1": 155
+     "signaux": 795,
+     "atr14_bps_median": 19.026306776565885,
+     "part_nis_au_dessus_seuil_btc": 0.22515723270440252,
+     "univers_RE1": 150
     }
    ]
   },
-  "annees_echantillon": 5.997490303445129,
+  "annees_echantillon": 5.997376226328998,
   "gaps_ouverture": {
-   "seances": 1004,
-   "part_barres_ouverture": 0.013743070289507905,
+   "seances": 1570,
+   "part_barres_ouverture": 0.02249122555690853,
    "ecart_abs_bps": {
-    "P50": 7.685623233505605,
-    "P90": 24.75286401079276,
-    "P99": 72.24600977296637
+    "P50": 4.408638499133666,
+    "P90": 31.240795709696265,
+    "P99": 148.64388588077404
    },
    "ecart_abs_atr": {
-    "P50": 0.5690582190324898,
-    "P90": 1.8089521207979735,
-    "P99": 4.454316112783058
+    "P50": 0.1548642175093309,
+    "P90": 0.8733838842411558,
+    "P99": 3.279338006996303
    },
-   "ecart_moyen_bps": -2.23689199523415,
-   "part_ecarts_sup_1_atr": 0.29382470119521914,
-   "tr_en_atr_P50_ouverture": 1.138577604221763,
-   "tr_en_atr_P50_autres": 0.8759776937029463,
-   "part_tr_barres_ouverture": 0.021124967435601053,
-   "part_signaux_barre_ouverture": 0.011695906432748537,
-   "part_signaux_derniere_barre": 0.014317402702157693,
-   "nis_P50_ouverture": 0.6943611622753884,
-   "nis_P50_autres": 0.29944628616463437,
-   "part_nis_sup_seuil_ouverture": 0.41379310344827586,
-   "part_nis_sup_seuil_autres": 0.27667822893287086,
-   "part_R2_exclus_ouverture": 0.375,
-   "part_R2_exclus_autres": 0.27684563758389263,
-   "univers_RE1_sur_barre_ouverture": 5,
-   "univers_RE1": 867
+   "ecart_moyen_bps": -0.8948607495054446,
+   "part_ecarts_sup_1_atr": 0.08089171974522293,
+   "tr_en_atr_P50_ouverture": 0.6811720614797818,
+   "tr_en_atr_P50_autres": 0.8357719610935492,
+   "part_tr_barres_ouverture": 0.026558822566012028,
+   "part_signaux_barre_ouverture": 0.02696917808219178,
+   "part_signaux_derniere_barre": 0.023758561643835618,
+   "nis_P50_ouverture": 0.8692077462867064,
+   "nis_P50_autres": 0.18529849276873234,
+   "part_nis_sup_seuil_ouverture": 0.42857142857142855,
+   "part_nis_sup_seuil_autres": 0.23471183457985043,
+   "part_R2_exclus_ouverture": 0.3125,
+   "part_R2_exclus_autres": 0.18797709923664122,
+   "univers_RE1_sur_barre_ouverture": 11,
+   "univers_RE1": 862
   },
   "semaine": {
-   "reprises": 314,
+   "reprises": 316,
    "ouverture_new_york": {
-    "dim 17:00": 288,
-    "dim 18:00": 14,
-    "dim 17:30": 4,
-    "dim 19:00": 3,
-    "dim 18:30": 1,
-    "dim 19:30": 1
+    "dim 18:00": 309,
+    "lun 18:00": 4,
+    "mer 18:00": 2,
+    "jeu 18:00": 1
    },
    "fin_new_york": {
-    "ven 17:00": 299,
-    "ven 16:00": 8,
-    "ven 15:00": 2,
-    "ven 02:30": 1,
-    "jeu 17:00": 1,
-    "jeu 20:00": 1
+    "ven 17:00": 199,
+    "ven 16:00": 97,
+    "ven 13:30": 6,
+    "jeu 16:00": 3,
+    "jeu 17:00": 3,
+    "ven 13:00": 2
    },
-   "interruptions_en_semaine": 690,
-   "interruptions_barres_manquantes": 1758,
+   "interruptions_en_semaine": 1254,
+   "interruptions_barres_manquantes": 3698,
    "interruptions_par_annee": {
-    "2020": 2,
-    "2021": 2,
-    "2022": 3,
-    "2023": 673,
-    "2024": 4,
-    "2025": 6
+    "2020": 224,
+    "2021": 207,
+    "2022": 207,
+    "2023": 206,
+    "2024": 205,
+    "2025": 205
    },
    "interruptions_heure_new_york": {
-    "20": 55,
-    "19": 55,
-    "9": 55,
-    "15": 52,
-    "7": 51,
-    "11": 51
+    "18": 1234,
+    "9": 4,
+    "6": 2,
+    "8": 2,
+    "7": 2,
+    "4": 2
    },
    "interruptions_duree_h": {
     "P50": 1.5,
     "P90": 2.5,
-    "P100": 20.5
+    "P100": 10.0
    }
   },
-  "recoupement_fed": {
+  "fermetures_admises": [],
+  "recoupement": {
+   "reference": "clôture officielle du NASDAQ-100 (FRED)",
+   "heure_new_york": "16:00",
    "par_decalage_demi_heures": {
     "-4": {
-     "jours": 1444,
-     "corr_variations": 0.8671698163099111,
-     "ecart_median_bps": -2.729080536270634,
-     "ecart_abs_median_bps": 12.314385541306038,
-     "ecart_abs_P95_bps": 44.37868596653227
+     "jours": 1496,
+     "corr_variations": 0.7918776728285546,
+     "ecart_median_bps": -4.469756754830745,
+     "ecart_abs_median_bps": 26.962262413445792,
+     "ecart_abs_P95_bps": 134.35881622637314
     },
     "-3": {
-     "jours": 1444,
-     "corr_variations": 0.9151309906890042,
-     "ecart_median_bps": -3.024853624867263,
-     "ecart_abs_median_bps": 9.581923753396726,
-     "ecart_abs_P95_bps": 38.33076861009648
+     "jours": 1496,
+     "corr_variations": 0.8256313024991495,
+     "ecart_median_bps": -3.360035413471074,
+     "ecart_abs_median_bps": 23.514902334302313,
+     "ecart_abs_P95_bps": 118.2323467634061
     },
     "-2": {
-     "jours": 1444,
-     "corr_variations": 0.95290067935411,
-     "ecart_median_bps": -2.2745664619394645,
-     "ecart_abs_median_bps": 7.457668500941983,
-     "ecart_abs_P95_bps": 29.014536882081707
+     "jours": 1496,
+     "corr_variations": 0.8682247962040566,
+     "ecart_median_bps": -0.009041432059708754,
+     "ecart_abs_median_bps": 19.0732469417243,
+     "ecart_abs_P95_bps": 100.99858541548545
     },
     "-1": {
-     "jours": 1438,
-     "corr_variations": 0.9782505250251438,
-     "ecart_median_bps": -1.9449906723550958,
-     "ecart_abs_median_bps": 4.889858971711125,
-     "ecart_abs_P95_bps": 19.885049413370425
+     "jours": 1496,
+     "corr_variations": 0.9196807659123356,
+     "ecart_median_bps": -0.39424594340753405,
+     "ecart_abs_median_bps": 15.98232896671381,
+     "ecart_abs_P95_bps": 75.10290969269474
     },
     "0": {
-     "jours": 1438,
-     "corr_variations": 0.9997085793016611,
-     "ecart_median_bps": -1.2318393943810957,
-     "ecart_abs_median_bps": 1.273285175501515,
-     "ecart_abs_P95_bps": 2.9834820708372063
+     "jours": 1496,
+     "corr_variations": 0.999149426413452,
+     "ecart_median_bps": -0.31506204963727136,
+     "ecart_abs_median_bps": 2.0745896335289116,
+     "ecart_abs_P95_bps": 7.90537302292088
     },
     "1": {
-     "jours": 1444,
-     "corr_variations": 0.984360451758021,
-     "ecart_median_bps": -1.1127879745476132,
-     "ecart_abs_median_bps": 4.363558114929833,
-     "ecart_abs_P95_bps": 16.87704892483238
+     "jours": 993,
+     "corr_variations": 0.9697489715643068,
+     "ecart_median_bps": -0.26475168297790397,
+     "ecart_abs_median_bps": 8.597218986553523,
+     "ecart_abs_P95_bps": 42.854912481800724
     },
     "2": {
-     "jours": 1444,
-     "corr_variations": 0.9689063103769472,
-     "ecart_median_bps": -1.3087137554051997,
-     "ecart_abs_median_bps": 5.569583075746287,
-     "ecart_abs_P95_bps": 22.057085790898086
+     "jours": 994,
+     "corr_variations": 0.9578871884971238,
+     "ecart_median_bps": -0.046281383100921225,
+     "ecart_abs_median_bps": 8.92316971646656,
+     "ecart_abs_P95_bps": 48.08348294935118
     },
     "3": {
-     "jours": 1438,
-     "corr_variations": 0.9471456239592533,
-     "ecart_median_bps": -0.8408249362318321,
-     "ecart_abs_median_bps": 6.842560696037059,
-     "ecart_abs_P95_bps": 26.4788091244733
+     "jours": 0,
+     "corr_variations": null,
+     "ecart_median_bps": null,
+     "ecart_abs_median_bps": null,
+     "ecart_abs_P95_bps": null
     },
     "4": {
-     "jours": 1438,
-     "corr_variations": 0.9365232165036196,
-     "ecart_median_bps": -0.5662644599752076,
-     "ecart_abs_median_bps": 7.349092282890046,
-     "ecart_abs_P95_bps": 30.718647595005056
+     "jours": 0,
+     "corr_variations": null,
+     "ecart_median_bps": null,
+     "ecart_abs_median_bps": null,
+     "ecart_abs_P95_bps": null
     }
    },
    "meilleur_decalage_demi_heures": 0,
@@ -838,23 +836,5182 @@
     "ecart_median_max_bps": 10.0
    }
   },
-  "nom": "GBP/JPY au comptant (HistData, bid)"
+  "nom": "CFD US Tech 100, indice au comptant (Saxo USNAS100.I, bid)"
  },
- "NQ": {
-  "bloque": "en attente du porteur : QuantConnect exige un compte, et ses données ne sont utilisables que dans son cloud (aucun export ; Object Store sans téléchargement ; téléchargement local sous licence payante, réservé à LEAN et non convertible) ; aucune série téléchargée, aucun backtest",
-  "nom": "E-mini Nasdaq-100, future continu"
+ "US30": {
+  "doc": {
+   "rolls": "sans objet : CFD sur l'indice au comptant ou FX au comptant (aucune échéance) ; contrôle dans l'audit",
+   "prix": "bid OHLC (CloseBid, etc.) ; volume absent (écrit nul)",
+   "timezone": "UTC (début de barre)",
+   "couverture_demandee": "2020-01-01 00:00 → 2025-12-31 23:30 UTC ; 2026 jamais demandé",
+   "symbol": "US30.I",
+   "description": "US 30 Wall Street",
+   "uic": 4911,
+   "asset_type": "CfdOnIndex",
+   "exchange_id": "NYSE",
+   "first_sample_time": "2003-10-31 02:15:00+00:00",
+   "source": "saxo-openapi",
+   "sha256": "4d416befe63b5c21c0003652ffde7c45bdeffff7a4bb6e41de3006cc37e3eff6",
+   "premiere_barre": "2020-01-01 23:00:00+00:00",
+   "derniere_barre": "2025-12-31 21:30:00+00:00",
+   "barres": 69729
+  },
+  "barres": {
+   "n_barres": 69729,
+   "premiere": "2020-01-01 23:00:00+00:00",
+   "derniere": "2025-12-31 21:30:00+00:00",
+   "doublons": 0,
+   "desordre": 0,
+   "part_barres_24_7": 0.6630374835973604,
+   "barres_par_annee": {
+    "2020": 11266,
+    "2021": 11310,
+    "2022": 11777,
+    "2023": 11783,
+    "2024": 11837,
+    "2025": 11756
+   },
+   "prix_non_positifs": 0,
+   "incoherences_ohlc": 0,
+   "barres_plates": 3,
+   "barres_volume_nul": 69729,
+   "trous": {
+    "n": 1566,
+    "barres_manquantes": 35437,
+    "classes": {
+     "<= 2 h": {
+      "n": 1187,
+      "barres_manquantes": 3162
+     },
+     "<= 3 jours": {
+      "n": 368,
+      "barres_manquantes": 30656
+     },
+     "> 3 jours": {
+      "n": 11,
+      "barres_manquantes": 1619
+     }
+    },
+    "plus_longs": [
+     {
+      "apres": "2020-12-24 18:00:00+00:00",
+      "reprise": "2020-12-27 23:00:00+00:00",
+      "duree_h": 76.5
+     },
+     {
+      "apres": "2020-04-09 19:30:00+00:00",
+      "reprise": "2020-04-12 22:00:00+00:00",
+      "duree_h": 74.0
+     },
+     {
+      "apres": "2020-12-31 20:30:00+00:00",
+      "reprise": "2021-01-03 23:00:00+00:00",
+      "duree_h": 74.0
+     },
+     {
+      "apres": "2021-12-23 20:30:00+00:00",
+      "reprise": "2021-12-26 23:00:00+00:00",
+      "duree_h": 74.0
+     },
+     {
+      "apres": "2022-04-14 20:30:00+00:00",
+      "reprise": "2022-04-17 22:00:00+00:00",
+      "duree_h": 73.0
+     },
+     {
+      "apres": "2022-12-23 21:30:00+00:00",
+      "reprise": "2022-12-26 23:00:00+00:00",
+      "duree_h": 73.0
+     },
+     {
+      "apres": "2022-12-30 21:30:00+00:00",
+      "reprise": "2023-01-02 23:00:00+00:00",
+      "duree_h": 73.0
+     },
+     {
+      "apres": "2023-12-22 21:30:00+00:00",
+      "reprise": "2023-12-25 23:00:00+00:00",
+      "duree_h": 73.0
+     },
+     {
+      "apres": "2023-12-29 21:30:00+00:00",
+      "reprise": "2024-01-01 23:00:00+00:00",
+      "duree_h": 73.0
+     },
+     {
+      "apres": "2024-03-28 20:30:00+00:00",
+      "reprise": "2024-03-31 22:00:00+00:00",
+      "duree_h": 73.0
+     }
+    ]
+   },
+   "barres_par_heure_utc": {
+    "0": 3100,
+    "1": 3101,
+    "2": 3099,
+    "3": 3099,
+    "4": 3098,
+    "5": 3097,
+    "6": 3096,
+    "7": 3092,
+    "8": 3095,
+    "9": 3096,
+    "10": 3092,
+    "11": 3095,
+    "12": 3091,
+    "13": 3098,
+    "14": 3097,
+    "15": 3096,
+    "16": 3096,
+    "17": 3049,
+    "18": 3001,
+    "19": 2992,
+    "20": 2328,
+    "21": 674,
+    "22": 1993,
+    "23": 3054
+   },
+   "barres_par_jour": {
+    "0": 13749,
+    "1": 14149,
+    "2": 14047,
+    "3": 14019,
+    "4": 12757,
+    "6": 1008
+   },
+   "sauts": {
+    "ecart_ouverture_bps": {
+     "P50": 0.21561529059807844,
+     "P90": 0.34008492625214193,
+     "P99": 5.25698246458309,
+     "P99.9": 42.283650835305956,
+     "P100": 448.5152309921317
+    },
+    "ecart_ouverture_apres_trou_bps": {
+     "P50": 3.9528582658375764,
+     "P90": 21.827817649738417,
+     "P99": 113.04336935503599,
+     "P99.9": 343.43050053515094,
+     "P100": 448.5152309921317
+    },
+    "rendement_close_bps": {
+     "P50": 5.1661858929952515,
+     "P90": 22.439765688177136,
+     "P99": 68.00638314730196,
+     "P99.9": 159.22300126634218,
+     "P100": 549.2802013561695
+    },
+    "plus_grands_ecarts_ouverture": [
+     {
+      "time": "2020-03-22 22:00:00+00:00",
+      "bps": 448.5152309921317
+     },
+     {
+      "time": "2020-03-16 13:30:00+00:00",
+      "bps": 400.80965244512373
+     },
+     {
+      "time": "2020-03-15 22:00:00+00:00",
+      "bps": 395.5140922308731
+     },
+     {
+      "time": "2020-03-08 22:00:00+00:00",
+      "bps": 303.3307440968234
+     },
+     {
+      "time": "2020-04-16 22:00:00+00:00",
+      "bps": 294.5023812163161
+     },
+     {
+      "time": "2020-03-29 22:00:00+00:00",
+      "bps": 259.75851145589405
+     },
+     {
+      "time": "2020-03-09 13:30:00+00:00",
+      "bps": 219.0632024830034
+     },
+     {
+      "time": "2020-03-19 22:00:00+00:00",
+      "bps": 208.24550011158047
+     },
+     {
+      "time": "2020-03-18 13:30:00+00:00",
+      "bps": 192.900450582245
+     },
+     {
+      "time": "2020-03-17 22:00:00+00:00",
+      "bps": 182.9209495182473
+     }
+    ],
+    "plus_grands_rendements": [
+     {
+      "time": "2020-03-16 13:30:00+00:00",
+      "bps": 549.2802013561695
+     },
+     {
+      "time": "2020-03-23 12:00:00+00:00",
+      "bps": 535.0440098118023
+     },
+     {
+      "time": "2020-03-15 22:00:00+00:00",
+      "bps": 517.2389077018449
+     },
+     {
+      "time": "2020-03-22 22:00:00+00:00",
+      "bps": 515.8319656955745
+     },
+     {
+      "time": "2020-03-13 19:30:00+00:00",
+      "bps": 446.42199774152
+     },
+     {
+      "time": "2025-04-09 17:00:00+00:00",
+      "bps": 411.1775962481773
+     },
+     {
+      "time": "2020-03-08 22:00:00+00:00",
+      "bps": 397.4492743957236
+     },
+     {
+      "time": "2020-03-18 19:30:00+00:00",
+      "bps": 379.3828073529717
+     },
+     {
+      "time": "2025-04-06 22:00:00+00:00",
+      "bps": 334.43128162813247
+     },
+     {
+      "time": "2020-03-17 13:30:00+00:00",
+      "bps": 334.15479649808157
+     }
+    ]
+   }
+  },
+  "seances": {
+   "heures_utc_sans_barre_janvier": [
+    22
+   ],
+   "heures_utc_sans_barre_juillet": [
+    21
+   ],
+   "barres_le_samedi": 0,
+   "pause_new_york": {
+    "semaines": 314,
+    "pause_17h_exactement": 209,
+    "pause_17h_et_autres_heures": 105,
+    "sans_pause_17h": 0
+   },
+   "ouverture_dimanche_heure_new_york": {
+    "18": 304,
+    "20": 3,
+    "19": 2
+   }
+  },
+  "integrite": [],
+  "couverture": [],
+  "signaux": {
+   "n_signaux": 4748,
+   "signaux_par_mois": 65.96137498217087,
+   "part_flips": 0.8203454085930918,
+   "part_x1_retourne": 0.5107413647851727,
+   "leg_atr": {
+    "P10": 1.5704709478882093,
+    "P25": 2.0571429462204947,
+    "P50": 2.8476816689810267,
+    "P75": 4.039741828176153,
+    "P90": 5.667870622966741
+   },
+   "retrace_ratio": {
+    "P10": 0.17401981164041985,
+    "P25": 0.34952198431579456,
+    "P50": 0.6063098825963752,
+    "P75": 0.8658809700376378,
+    "P90": 1.0888824884792627
+   },
+   "nis_z_100": {
+    "P10": -0.5267871331582533,
+    "P25": -0.30487281611184136,
+    "P50": 0.21624460838943182,
+    "P75": 1.189390185458555,
+    "P90": 2.6480873862301113
+   },
+   "atr14_bps": {
+    "P10": 8.302967293958915,
+    "P25": 10.800816074588573,
+    "P50": 15.226703435258614,
+    "P75": 22.35437929785435,
+    "P90": 32.94172011976464
+   },
+   "prev_seg_len": {
+    "P10": 7.0,
+    "P25": 8.0,
+    "P50": 10.0,
+    "P75": 13.0,
+    "P90": 17.0
+   },
+   "mediane_locale_leg_atr": 2.8476816689810267,
+   "p75_local_nis_z_100": 1.189390185458555,
+   "part_leg_sous_seuil_btc": 0.4928390901432182,
+   "part_nis_au_dessus_seuil_btc": 0.2449452401010952,
+   "part_nis_au_dessus_seuil_btc_dans_R2": 0.204683434518647,
+   "nis_nan": 0,
+   "familles": {
+    "F1": 1253,
+    "F2a": 766,
+    "F2b": 880,
+    "F3": 864,
+    "F4": 389,
+    "F5": 596
+   },
+   "regimes": {
+    "R1": 1427,
+    "R2_avant_nis": 1153,
+    "R3": 1513,
+    "hors_regimes": 655
+   },
+   "nis_exclus": 236,
+   "univers_RE1": 917,
+   "F2b": 414,
+   "F3": 503,
+   "par_annee": [
+    {
+     "annee": 2020,
+     "signaux": 733,
+     "atr14_bps_median": 25.706834021064243,
+     "part_nis_au_dessus_seuil_btc": 0.27148703956343795,
+     "univers_RE1": 123
+    },
+    {
+     "annee": 2021,
+     "signaux": 777,
+     "atr14_bps_median": 13.468885702619385,
+     "part_nis_au_dessus_seuil_btc": 0.2651222651222651,
+     "univers_RE1": 147
+    },
+    {
+     "annee": 2022,
+     "signaux": 786,
+     "atr14_bps_median": 22.377204353826365,
+     "part_nis_au_dessus_seuil_btc": 0.2608142493638677,
+     "univers_RE1": 148
+    },
+    {
+     "annee": 2023,
+     "signaux": 824,
+     "atr14_bps_median": 12.41107878899804,
+     "part_nis_au_dessus_seuil_btc": 0.24757281553398058,
+     "univers_RE1": 163
+    },
+    {
+     "annee": 2024,
+     "signaux": 813,
+     "atr14_bps_median": 11.24642474062553,
+     "part_nis_au_dessus_seuil_btc": 0.2017220172201722,
+     "univers_RE1": 155
+    },
+    {
+     "annee": 2025,
+     "signaux": 815,
+     "atr14_bps_median": 13.821461665859033,
+     "part_nis_au_dessus_seuil_btc": 0.22699386503067484,
+     "univers_RE1": 181
+    }
+   ]
+  },
+  "annees_echantillon": 5.997376226328998,
+  "gaps_ouverture": {
+   "seances": 1566,
+   "part_barres_ouverture": 0.022458374564384976,
+   "ecart_abs_bps": {
+    "P50": 3.9528582658375764,
+    "P90": 21.827817649738417,
+    "P99": 113.04336935503599
+   },
+   "ecart_abs_atr": {
+    "P50": 0.2008491396630338,
+    "P90": 0.893994076590019,
+    "P99": 2.8088759560067316
+   },
+   "ecart_moyen_bps": -1.4929839764005357,
+   "part_ecarts_sup_1_atr": 0.08365261813537675,
+   "tr_en_atr_P50_ouverture": 0.6838617431091522,
+   "tr_en_atr_P50_autres": 0.8419330402998053,
+   "part_tr_barres_ouverture": 0.02625817616254798,
+   "part_signaux_barre_ouverture": 0.02379949452401011,
+   "part_signaux_derniere_barre": 0.02695871946082561,
+   "nis_P50_ouverture": 0.823937195603052,
+   "nis_P50_autres": 0.20450971832642517,
+   "part_nis_sup_seuil_ouverture": 0.4247787610619469,
+   "part_nis_sup_seuil_autres": 0.2405609492988134,
+   "part_R2_exclus_ouverture": 0.6923076923076923,
+   "part_R2_exclus_autres": 0.19912280701754387,
+   "univers_RE1_sur_barre_ouverture": 4,
+   "univers_RE1": 917
+  },
+  "semaine": {
+   "reprises": 316,
+   "ouverture_new_york": {
+    "dim 18:00": 304,
+    "lun 18:00": 4,
+    "dim 20:00": 3,
+    "dim 19:00": 2,
+    "mer 18:00": 2,
+    "jeu 18:00": 1
+   },
+   "fin_new_york": {
+    "ven 17:00": 199,
+    "ven 16:00": 97,
+    "ven 13:30": 6,
+    "jeu 16:00": 3,
+    "jeu 17:00": 3,
+    "ven 13:00": 2
+   },
+   "interruptions_en_semaine": 1250,
+   "interruptions_barres_manquantes": 3758,
+   "interruptions_par_annee": {
+    "2020": 221,
+    "2021": 207,
+    "2022": 206,
+    "2023": 206,
+    "2024": 205,
+    "2025": 205
+   },
+   "interruptions_heure_new_york": {
+    "18": 1215,
+    "20": 15,
+    "19": 6,
+    "9": 4,
+    "7": 3,
+    "23": 2
+   },
+   "interruptions_duree_h": {
+    "P50": 1.5,
+    "P90": 2.5,
+    "P100": 10.5
+   }
+  },
+  "fermetures_admises": [],
+  "recoupement": {
+   "reference": "clôture officielle du Dow Jones (FRED)",
+   "heure_new_york": "16:00",
+   "par_decalage_demi_heures": {
+    "-4": {
+     "jours": 1496,
+     "corr_variations": 0.7794435927675581,
+     "ecart_median_bps": -2.42843185568109,
+     "ecart_abs_median_bps": 20.569144358862367,
+     "ecart_abs_P95_bps": 106.29541364171297
+    },
+    "-3": {
+     "jours": 1496,
+     "corr_variations": 0.8119097514534158,
+     "ecart_median_bps": -1.865968548981356,
+     "ecart_abs_median_bps": 18.336080230910156,
+     "ecart_abs_P95_bps": 88.26862978123906
+    },
+    "-2": {
+     "jours": 1496,
+     "corr_variations": 0.8569647679070844,
+     "ecart_median_bps": -0.19223886812358426,
+     "ecart_abs_median_bps": 15.283476640657323,
+     "ecart_abs_P95_bps": 76.85031676888389
+    },
+    "-1": {
+     "jours": 1496,
+     "corr_variations": 0.9028397554005451,
+     "ecart_median_bps": 0.4525831181001472,
+     "ecart_abs_median_bps": 11.916954236686482,
+     "ecart_abs_P95_bps": 58.9125520058223
+    },
+    "0": {
+     "jours": 1496,
+     "corr_variations": 0.9994238181696331,
+     "ecart_median_bps": -0.27934328969969613,
+     "ecart_abs_median_bps": 1.5138719409746315,
+     "ecart_abs_P95_bps": 6.201471664180058
+    },
+    "1": {
+     "jours": 994,
+     "corr_variations": 0.9854246419607892,
+     "ecart_median_bps": -0.11410702162817365,
+     "ecart_abs_median_bps": 5.7252514658473475,
+     "ecart_abs_P95_bps": 22.05007875242703
+    },
+    "2": {
+     "jours": 994,
+     "corr_variations": 0.9828086308511762,
+     "ecart_median_bps": -0.23227428680494544,
+     "ecart_abs_median_bps": 6.110625619467069,
+     "ecart_abs_P95_bps": 25.297584689404168
+    },
+    "3": {
+     "jours": 0,
+     "corr_variations": null,
+     "ecart_median_bps": null,
+     "ecart_abs_median_bps": null,
+     "ecart_abs_P95_bps": null
+    },
+    "4": {
+     "jours": 0,
+     "corr_variations": null,
+     "ecart_median_bps": null,
+     "ecart_abs_median_bps": null,
+     "ecart_abs_P95_bps": null
+    }
+   },
+   "meilleur_decalage_demi_heures": 0,
+   "valide": true,
+   "critere": {
+    "corr_min": 0.95,
+    "decalage_max": 1,
+    "ecart_median_max_bps": 10.0
+   }
+  },
+  "nom": "CFD US 30 Wall Street, indice au comptant (Saxo US30.I, bid)"
  },
- "RTY": {
-  "bloque": "en attente du porteur : QuantConnect exige un compte, et ses données ne sont utilisables que dans son cloud (aucun export ; Object Store sans téléchargement ; téléchargement local sous licence payante, réservé à LEAN et non convertible) ; aucune série téléchargée, aucun backtest",
-  "nom": "E-mini Russell 2000, future continu"
+ "GER40": {
+  "doc": {
+   "rolls": "sans objet : CFD sur l'indice au comptant ou FX au comptant (aucune échéance) ; contrôle dans l'audit",
+   "prix": "bid OHLC (CloseBid, etc.) ; volume absent (écrit nul)",
+   "timezone": "UTC (début de barre)",
+   "couverture_demandee": "2020-01-01 00:00 → 2025-12-31 23:30 UTC ; 2026 jamais demandé",
+   "symbol": "GER40.I",
+   "description": "Germany 40",
+   "uic": 4910,
+   "asset_type": "CfdOnIndex",
+   "exchange_id": "FSE",
+   "first_sample_time": "2003-10-31 08:00:00+00:00",
+   "source": "saxo-openapi",
+   "sha256": "e963ef8ad8698296b013ccf4a9421997229e467d24db5ecd8d3082d613e354de",
+   "premiere_barre": "2020-01-02 00:00:00+00:00",
+   "derniere_barre": "2025-12-30 20:30:00+00:00",
+   "barres": 62430
+  },
+  "barres": {
+   "n_barres": 62430,
+   "premiere": "2020-01-02 00:00:00+00:00",
+   "derniere": "2025-12-30 20:30:00+00:00",
+   "doublons": 0,
+   "desordre": 0,
+   "part_barres_24_7": 0.5939265939836749,
+   "barres_par_annee": {
+    "2020": 10392,
+    "2021": 10444,
+    "2022": 10485,
+    "2023": 10406,
+    "2024": 10372,
+    "2025": 10331
+   },
+   "prix_non_positifs": 0,
+   "incoherences_ohlc": 0,
+   "barres_plates": 1,
+   "barres_volume_nul": 62430,
+   "trous": {
+    "n": 1532,
+    "barres_manquantes": 42684,
+    "classes": {
+     "<= 2 h": {
+      "n": 1,
+      "barres_manquantes": 1
+     },
+     "<= 3 jours": {
+      "n": 1514,
+      "barres_manquantes": 39591
+     },
+     "> 3 jours": {
+      "n": 17,
+      "barres_manquantes": 3092
+     }
+    },
+    "plus_longs": [
+     {
+      "apres": "2025-12-23 20:30:00+00:00",
+      "reprise": "2025-12-29 00:00:00+00:00",
+      "duree_h": 123.0
+     },
+     {
+      "apres": "2020-04-09 19:30:00+00:00",
+      "reprise": "2020-04-14 00:00:00+00:00",
+      "duree_h": 100.0
+     },
+     {
+      "apres": "2021-04-01 19:30:00+00:00",
+      "reprise": "2021-04-06 00:00:00+00:00",
+      "duree_h": 100.0
+     },
+     {
+      "apres": "2022-04-14 19:30:00+00:00",
+      "reprise": "2022-04-19 00:00:00+00:00",
+      "duree_h": 100.0
+     },
+     {
+      "apres": "2023-04-06 19:30:00+00:00",
+      "reprise": "2023-04-11 00:00:00+00:00",
+      "duree_h": 100.0
+     },
+     {
+      "apres": "2025-04-17 19:30:00+00:00",
+      "reprise": "2025-04-22 00:00:00+00:00",
+      "duree_h": 100.0
+     },
+     {
+      "apres": "2020-12-23 20:30:00+00:00",
+      "reprise": "2020-12-28 00:00:00+00:00",
+      "duree_h": 99.0
+     },
+     {
+      "apres": "2020-12-30 20:30:00+00:00",
+      "reprise": "2021-01-04 00:00:00+00:00",
+      "duree_h": 99.0
+     },
+     {
+      "apres": "2023-12-22 20:30:00+00:00",
+      "reprise": "2023-12-27 00:00:00+00:00",
+      "duree_h": 99.0
+     },
+     {
+      "apres": "2024-03-28 20:30:00+00:00",
+      "reprise": "2024-04-02 00:00:00+00:00",
+      "duree_h": 99.0
+     }
+    ]
+   },
+   "barres_par_heure_utc": {
+    "0": 3052,
+    "1": 3057,
+    "2": 3058,
+    "3": 3058,
+    "4": 3060,
+    "5": 3060,
+    "6": 3060,
+    "7": 3057,
+    "8": 3056,
+    "9": 3056,
+    "10": 3058,
+    "11": 3058,
+    "12": 3060,
+    "13": 3060,
+    "14": 3060,
+    "15": 3060,
+    "16": 3060,
+    "17": 3060,
+    "18": 3060,
+    "19": 3060,
+    "20": 1260
+   },
+   "barres_par_jour": {
+    "0": 12374,
+    "1": 12635,
+    "2": 12567,
+    "3": 12569,
+    "4": 12285
+   },
+   "sauts": {
+    "ecart_ouverture_bps": {
+     "P50": 0.3782159704404057,
+     "P90": 0.7209561034591516,
+     "P99": 14.657948847295474,
+     "P99.9": 66.16967634715553,
+     "P100": 694.8877062547584
+    },
+    "ecart_ouverture_apres_trou_bps": {
+     "P50": 10.57338181808778,
+     "P90": 40.80512691576306,
+     "P99": 151.43533959089268,
+     "P99.9": 438.20965462052203,
+     "P100": 694.8877062547584
+    },
+    "rendement_close_bps": {
+     "P50": 7.034706218708706,
+     "P90": 26.225424023009232,
+     "P99": 74.60027000190202,
+     "P99.9": 172.36198380058426,
+     "P100": 715.5487321815839
+    },
+    "plus_grands_ecarts_ouverture": [
+     {
+      "time": "2020-03-16 00:00:00+00:00",
+      "bps": 694.8877062547584
+     },
+     {
+      "time": "2020-03-09 00:00:00+00:00",
+      "bps": 438.7262565443084
+     },
+     {
+      "time": "2020-03-23 00:00:00+00:00",
+      "bps": 437.7533715654259
+     },
+     {
+      "time": "2020-05-04 00:00:00+00:00",
+      "bps": 387.59613614856795
+     },
+     {
+      "time": "2022-02-28 00:00:00+00:00",
+      "bps": 340.6248250256369
+     },
+     {
+      "time": "2025-04-07 00:00:00+00:00",
+      "bps": 273.2349116074467
+     },
+     {
+      "time": "2022-03-07 00:00:00+00:00",
+      "bps": 231.37308653884082
+     },
+     {
+      "time": "2020-04-17 00:00:00+00:00",
+      "bps": 217.69530647633712
+     },
+     {
+      "time": "2020-03-10 00:00:00+00:00",
+      "bps": 206.89318924533146
+     },
+     {
+      "time": "2025-04-03 00:00:00+00:00",
+      "bps": 190.47071333530684
+     }
+    ],
+    "plus_grands_rendements": [
+     {
+      "time": "2020-03-16 00:00:00+00:00",
+      "bps": 715.5487321815839
+     },
+     {
+      "time": "2020-03-09 00:00:00+00:00",
+      "bps": 424.7065524967762
+     },
+     {
+      "time": "2020-05-04 00:00:00+00:00",
+      "bps": 386.1556360044282
+     },
+     {
+      "time": "2022-02-28 00:00:00+00:00",
+      "bps": 385.89111717233516
+     },
+     {
+      "time": "2020-03-23 12:00:00+00:00",
+      "bps": 371.79639343518846
+     },
+     {
+      "time": "2022-03-08 08:00:00+00:00",
+      "bps": 368.5328312386214
+     },
+     {
+      "time": "2025-04-09 17:00:00+00:00",
+      "bps": 361.9361621529656
+     },
+     {
+      "time": "2020-03-23 00:00:00+00:00",
+      "bps": 348.4158625288032
+     },
+     {
+      "time": "2025-04-09 17:30:00+00:00",
+      "bps": 324.271100907718
+     },
+     {
+      "time": "2020-11-09 11:30:00+00:00",
+      "bps": 320.58729935664553
+     }
+    ]
+   }
+  },
+  "seances": {
+   "heures_utc_sans_barre_janvier": [
+    21,
+    22,
+    23
+   ],
+   "heures_utc_sans_barre_juillet": [
+    20,
+    21,
+    22,
+    23
+   ],
+   "barres_le_samedi": 0,
+   "pause_new_york": {
+    "semaines": 314,
+    "pause_17h_exactement": 0,
+    "pause_17h_et_autres_heures": 314,
+    "sans_pause_17h": 0
+   },
+   "ouverture_dimanche_heure_new_york": {
+    "20": 197,
+    "19": 106
+   }
+  },
+  "integrite": [],
+  "couverture": [],
+  "signaux": {
+   "n_signaux": 4193,
+   "signaux_par_mois": 58.27987974846118,
+   "part_flips": 0.8022895301693298,
+   "part_x1_retourne": 0.5022656808967326,
+   "leg_atr": {
+    "P10": 1.7769380517898963,
+    "P25": 2.2825911791659435,
+    "P50": 3.0008230745337907,
+    "P75": 4.094517636286501,
+    "P90": 5.640529839638595
+   },
+   "retrace_ratio": {
+    "P10": 0.18013902346823712,
+    "P25": 0.3466226115146065,
+    "P50": 0.5915377242229267,
+    "P75": 0.8478109798470841,
+    "P90": 1.0726299665742574
+   },
+   "nis_z_100": {
+    "P10": -0.5374417086545438,
+    "P25": -0.26642125995465343,
+    "P50": 0.30018878369984636,
+    "P75": 1.3716767342129077,
+    "P90": 2.925912482162457
+   },
+   "atr14_bps": {
+    "P10": 11.44499564355547,
+    "P25": 14.244213856825784,
+    "P50": 18.746405599503003,
+    "P75": 26.971559976981435,
+    "P90": 38.58144079109257
+   },
+   "prev_seg_len": {
+    "P10": 7.0,
+    "P25": 8.0,
+    "P50": 10.0,
+    "P75": 13.0,
+    "P90": 17.0
+   },
+   "mediane_locale_leg_atr": 3.0008230745337907,
+   "p75_local_nis_z_100": 1.3716767342129077,
+   "part_leg_sous_seuil_btc": 0.44240400667779634,
+   "part_nis_au_dessus_seuil_btc": 0.27235869305986166,
+   "part_nis_au_dessus_seuil_btc_dans_R2": 0.27666314677930304,
+   "nis_nan": 0,
+   "familles": {
+    "F1": 1306,
+    "F2a": 701,
+    "F2b": 757,
+    "F3": 707,
+    "F4": 331,
+    "F5": 391
+   },
+   "regimes": {
+    "R1": 1246,
+    "R2_avant_nis": 947,
+    "R3": 1422,
+    "hors_regimes": 578
+   },
+   "nis_exclus": 262,
+   "univers_RE1": 685,
+   "F2b": 333,
+   "F3": 352,
+   "par_annee": [
+    {
+     "annee": 2020,
+     "signaux": 661,
+     "atr14_bps_median": 30.789212382660658,
+     "part_nis_au_dessus_seuil_btc": 0.2723146747352496,
+     "univers_RE1": 115
+    },
+    {
+     "annee": 2021,
+     "signaux": 715,
+     "atr14_bps_median": 16.53301478840173,
+     "part_nis_au_dessus_seuil_btc": 0.2727272727272727,
+     "univers_RE1": 127
+    },
+    {
+     "annee": 2022,
+     "signaux": 693,
+     "atr14_bps_median": 28.62394538360631,
+     "part_nis_au_dessus_seuil_btc": 0.30014430014430016,
+     "univers_RE1": 101
+    },
+    {
+     "annee": 2023,
+     "signaux": 728,
+     "atr14_bps_median": 15.76827052109836,
+     "part_nis_au_dessus_seuil_btc": 0.2692307692307692,
+     "univers_RE1": 119
+    },
+    {
+     "annee": 2024,
+     "signaux": 702,
+     "atr14_bps_median": 14.683304957978688,
+     "part_nis_au_dessus_seuil_btc": 0.2692307692307692,
+     "univers_RE1": 119
+    },
+    {
+     "annee": 2025,
+     "signaux": 694,
+     "atr14_bps_median": 17.485205061792843,
+     "part_nis_au_dessus_seuil_btc": 0.2507204610951009,
+     "univers_RE1": 104
+    }
+   ]
+  },
+  "annees_echantillon": 5.997262149212868,
+  "gaps_ouverture": {
+   "seances": 1532,
+   "part_barres_ouverture": 0.02453948422232901,
+   "ecart_abs_bps": {
+    "P50": 10.57338181808778,
+    "P90": 40.80512691576306,
+    "P99": 151.43533959089268
+   },
+   "ecart_abs_atr": {
+    "P50": 0.5337683224927217,
+    "P90": 1.6453871586557305,
+    "P99": 3.9756962425078597
+   },
+   "ecart_moyen_bps": -1.346059284598608,
+   "part_ecarts_sup_1_atr": 0.2539164490861619,
+   "tr_en_atr_P50_ouverture": 1.041258677569212,
+   "tr_en_atr_P50_autres": 0.8538660097299247,
+   "part_tr_barres_ouverture": 0.0324306618843742,
+   "part_signaux_barre_ouverture": 0.027665156212735513,
+   "part_signaux_derniere_barre": 0.03553541616980682,
+   "nis_P50_ouverture": 0.6439740783239322,
+   "nis_P50_autres": 0.2917481040592875,
+   "part_nis_sup_seuil_ouverture": 0.33620689655172414,
+   "part_nis_sup_seuil_autres": 0.270542065244052,
+   "part_R2_exclus_ouverture": 0.4166666666666667,
+   "part_R2_exclus_autres": 0.2711306256860593,
+   "univers_RE1_sur_barre_ouverture": 21,
+   "univers_RE1": 685
+  },
+  "semaine": {
+   "reprises": 317,
+   "ouverture_new_york": {
+    "dim 20:00": 197,
+    "dim 19:00": 106,
+    "lun 20:00": 7,
+    "lun 19:00": 2,
+    "mar 19:00": 1,
+    "mer 20:00": 1
+   },
+   "fin_new_york": {
+    "ven 16:00": 281,
+    "ven 17:00": 20,
+    "jeu 16:00": 8,
+    "mer 16:00": 3,
+    "mar 16:00": 2,
+    "lun 16:00": 2
+   },
+   "interruptions_en_semaine": 1215,
+   "interruptions_barres_manquantes": 8732,
+   "interruptions_par_annee": {
+    "2020": 204,
+    "2021": 204,
+    "2022": 205,
+    "2023": 203,
+    "2024": 199,
+    "2025": 200
+   },
+   "interruptions_heure_new_york": {
+    "20": 798,
+    "19": 412,
+    "8": 1,
+    "0": 1,
+    "5": 1,
+    "21": 1
+   },
+   "interruptions_duree_h": {
+    "P50": 4.5,
+    "P90": 4.5,
+    "P100": 8.5
+   }
+  },
+  "fermetures_admises": [
+   {
+    "apres": "2025-12-23 20:30:00+00:00",
+    "reprise": "2025-12-29 00:00:00+00:00",
+    "duree_h": 123.5,
+    "motif": "Noël 2025 : Eurex et Xetra fermés du 24 au 26 décembre"
+   }
+  ],
+  "nom": "CFD Germany 40, indice au comptant (Saxo GER40.I, bid)"
  },
- "CL": {
-  "bloque": "en attente du porteur : QuantConnect exige un compte, et ses données ne sont utilisables que dans son cloud (aucun export ; Object Store sans téléchargement ; téléchargement local sous licence payante, réservé à LEAN et non convertible) ; aucune série téléchargée, aucun backtest",
-  "nom": "WTI Crude Oil, future continu"
+ "EU50": {
+  "doc": {
+   "rolls": "sans objet : CFD sur l'indice au comptant ou FX au comptant (aucune échéance) ; contrôle dans l'audit",
+   "prix": "bid OHLC (CloseBid, etc.) ; volume absent (écrit nul)",
+   "timezone": "UTC (début de barre)",
+   "couverture_demandee": "2020-01-01 00:00 → 2025-12-31 23:30 UTC ; 2026 jamais demandé",
+   "symbol": "EU50.I",
+   "description": "EU Stocks 50",
+   "uic": 16753,
+   "asset_type": "CfdOnIndex",
+   "exchange_id": "PAR",
+   "first_sample_time": "2005-08-22 12:02:00+00:00",
+   "source": "saxo-openapi",
+   "sha256": "23382e43c5321a557fcbe0738d5a88d8a67db0baa81b61bde11646a31e5531b1",
+   "premiere_barre": "2020-01-02 00:00:00+00:00",
+   "derniere_barre": "2025-12-30 20:30:00+00:00",
+   "barres": 62370
+  },
+  "barres": {
+   "n_barres": 62370,
+   "premiere": "2020-01-02 00:00:00+00:00",
+   "derniere": "2025-12-30 20:30:00+00:00",
+   "doublons": 0,
+   "desordre": 0,
+   "part_barres_24_7": 0.593355785147554,
+   "barres_par_annee": {
+    "2020": 10384,
+    "2021": 10444,
+    "2022": 10468,
+    "2023": 10389,
+    "2024": 10358,
+    "2025": 10327
+   },
+   "prix_non_positifs": 0,
+   "incoherences_ohlc": 0,
+   "barres_plates": 29,
+   "barres_volume_nul": 62370,
+   "trous": {
+    "n": 1575,
+    "barres_manquantes": 42744,
+    "classes": {
+     "<= 2 h": {
+      "n": 44,
+      "barres_manquantes": 48
+     },
+     "<= 3 jours": {
+      "n": 1514,
+      "barres_manquantes": 39591
+     },
+     "> 3 jours": {
+      "n": 17,
+      "barres_manquantes": 3105
+     }
+    },
+    "plus_longs": [
+     {
+      "apres": "2025-12-23 20:30:00+00:00",
+      "reprise": "2025-12-29 00:00:00+00:00",
+      "duree_h": 123.0
+     },
+     {
+      "apres": "2020-04-09 19:30:00+00:00",
+      "reprise": "2020-04-14 00:00:00+00:00",
+      "duree_h": 100.0
+     },
+     {
+      "apres": "2021-04-01 19:30:00+00:00",
+      "reprise": "2021-04-06 00:00:00+00:00",
+      "duree_h": 100.0
+     },
+     {
+      "apres": "2022-04-14 19:30:00+00:00",
+      "reprise": "2022-04-19 00:00:00+00:00",
+      "duree_h": 100.0
+     },
+     {
+      "apres": "2023-04-06 19:30:00+00:00",
+      "reprise": "2023-04-11 00:00:00+00:00",
+      "duree_h": 100.0
+     },
+     {
+      "apres": "2025-04-17 19:30:00+00:00",
+      "reprise": "2025-04-22 00:00:00+00:00",
+      "duree_h": 100.0
+     },
+     {
+      "apres": "2020-12-23 20:30:00+00:00",
+      "reprise": "2020-12-28 00:00:00+00:00",
+      "duree_h": 99.0
+     },
+     {
+      "apres": "2020-12-30 20:30:00+00:00",
+      "reprise": "2021-01-04 00:00:00+00:00",
+      "duree_h": 99.0
+     },
+     {
+      "apres": "2023-12-22 20:30:00+00:00",
+      "reprise": "2023-12-27 00:00:00+00:00",
+      "duree_h": 99.0
+     },
+     {
+      "apres": "2024-03-28 20:30:00+00:00",
+      "reprise": "2024-04-02 00:00:00+00:00",
+      "duree_h": 99.0
+     }
+    ]
+   },
+   "barres_par_heure_utc": {
+    "0": 3049,
+    "1": 3055,
+    "2": 3048,
+    "3": 3049,
+    "4": 3047,
+    "5": 3057,
+    "6": 3059,
+    "7": 3057,
+    "8": 3056,
+    "9": 3056,
+    "10": 3058,
+    "11": 3058,
+    "12": 3060,
+    "13": 3060,
+    "14": 3060,
+    "15": 3060,
+    "16": 3060,
+    "17": 3057,
+    "18": 3054,
+    "19": 3053,
+    "20": 1257
+   },
+   "barres_par_jour": {
+    "0": 12342,
+    "1": 12625,
+    "2": 12560,
+    "3": 12561,
+    "4": 12282
+   },
+   "sauts": {
+    "ecart_ouverture_bps": {
+     "P50": 0.6249414119459213,
+     "P90": 2.883351720275364,
+     "P99": 14.783285798104307,
+     "P99.9": 69.18090798675563,
+     "P100": 751.91951033675
+    },
+    "ecart_ouverture_apres_trou_bps": {
+     "P50": 10.643025965202364,
+     "P90": 39.93946032672005,
+     "P99": 156.2683566013497,
+     "P99.9": 445.16827265486535,
+     "P100": 751.91951033675
+    },
+    "rendement_close_bps": {
+     "P50": 7.506596633925681,
+     "P90": 27.42920400130387,
+     "P99": 76.11156733756508,
+     "P99.9": 179.38432614285145,
+     "P100": 735.995242772191
+    },
+    "plus_grands_ecarts_ouverture": [
+     {
+      "time": "2020-03-16 00:00:00+00:00",
+      "bps": 751.91951033675
+     },
+     {
+      "time": "2020-03-23 00:00:00+00:00",
+      "bps": 474.2649949509177
+     },
+     {
+      "time": "2020-03-09 00:00:00+00:00",
+      "bps": 423.5738411250286
+     },
+     {
+      "time": "2020-05-04 00:00:00+00:00",
+      "bps": 331.5016337330878
+     },
+     {
+      "time": "2022-02-28 00:00:00+00:00",
+      "bps": 329.5740395334724
+     },
+     {
+      "time": "2025-04-03 00:00:00+00:00",
+      "bps": 221.02157764916205
+     },
+     {
+      "time": "2020-03-10 00:00:00+00:00",
+      "bps": 213.39429547662522
+     },
+     {
+      "time": "2020-03-17 00:00:00+00:00",
+      "bps": 195.18892105561488
+     },
+     {
+      "time": "2020-04-17 00:00:00+00:00",
+      "bps": 190.0040623042968
+     },
+     {
+      "time": "2022-03-14 00:00:00+00:00",
+      "bps": 184.25410034595285
+     }
+    ],
+    "plus_grands_rendements": [
+     {
+      "time": "2020-03-16 00:00:00+00:00",
+      "bps": 735.995242772191
+     },
+     {
+      "time": "2022-03-08 08:00:00+00:00",
+      "bps": 443.6956442883069
+     },
+     {
+      "time": "2020-03-09 00:00:00+00:00",
+      "bps": 442.9660315054864
+     },
+     {
+      "time": "2022-02-28 00:00:00+00:00",
+      "bps": 385.3579197302311
+     },
+     {
+      "time": "2020-03-23 12:00:00+00:00",
+      "bps": 382.7354621371443
+     },
+     {
+      "time": "2020-11-09 11:30:00+00:00",
+      "bps": 382.6372409034695
+     },
+     {
+      "time": "2020-03-23 00:00:00+00:00",
+      "bps": 376.7516410152253
+     },
+     {
+      "time": "2020-05-04 00:00:00+00:00",
+      "bps": 370.6057038110673
+     },
+     {
+      "time": "2025-04-09 17:00:00+00:00",
+      "bps": 365.9104700311179
+     },
+     {
+      "time": "2020-03-16 08:00:00+00:00",
+      "bps": 349.340524717243
+     }
+    ]
+   }
+  },
+  "seances": {
+   "heures_utc_sans_barre_janvier": [
+    21,
+    22,
+    23
+   ],
+   "heures_utc_sans_barre_juillet": [
+    20,
+    21,
+    22,
+    23
+   ],
+   "barres_le_samedi": 0,
+   "pause_new_york": {
+    "semaines": 314,
+    "pause_17h_exactement": 0,
+    "pause_17h_et_autres_heures": 314,
+    "sans_pause_17h": 0
+   },
+   "ouverture_dimanche_heure_new_york": {
+    "20": 197,
+    "19": 105
+   }
+  },
+  "integrite": [],
+  "couverture": [],
+  "signaux": {
+   "n_signaux": 4187,
+   "signaux_par_mois": 58.196483784118044,
+   "part_flips": 0.8024838786720803,
+   "part_x1_retourne": 0.5185096727967519,
+   "leg_atr": {
+    "P10": 1.8071913533656898,
+    "P25": 2.3080446648729973,
+    "P50": 3.017766759393894,
+    "P75": 4.113008303779244,
+    "P90": 5.6535761450739415
+   },
+   "retrace_ratio": {
+    "P10": 0.1699224608911032,
+    "P25": 0.3466650778882523,
+    "P50": 0.5983876877977262,
+    "P75": 0.8557080058028539,
+    "P90": 1.0777056673412695
+   },
+   "nis_z_100": {
+    "P10": -0.5582348095679687,
+    "P25": -0.2839264827226448,
+    "P50": 0.3243516393439528,
+    "P75": 1.459254682237766,
+    "P90": 2.788571322424147
+   },
+   "atr14_bps": {
+    "P10": 11.700700115088727,
+    "P25": 14.65210653626642,
+    "P50": 19.37424451333595,
+    "P75": 27.596815181179597,
+    "P90": 39.25030249317382
+   },
+   "prev_seg_len": {
+    "P10": 7.0,
+    "P25": 8.0,
+    "P50": 10.0,
+    "P75": 13.0,
+    "P90": 17.0
+   },
+   "mediane_locale_leg_atr": 3.017766759393894,
+   "p75_local_nis_z_100": 1.459254682237766,
+   "part_leg_sous_seuil_btc": 0.4325292572247433,
+   "part_nis_au_dessus_seuil_btc": 0.2858848817769286,
+   "part_nis_au_dessus_seuil_btc_dans_R2": 0.2891949152542373,
+   "nis_nan": 0,
+   "familles": {
+    "F1": 1303,
+    "F2a": 725,
+    "F2b": 729,
+    "F3": 720,
+    "F4": 348,
+    "F5": 362
+   },
+   "regimes": {
+    "R1": 1206,
+    "R2_avant_nis": 944,
+    "R3": 1490,
+    "hors_regimes": 547
+   },
+   "nis_exclus": 273,
+   "univers_RE1": 671,
+   "F2b": 318,
+   "F3": 353,
+   "par_annee": [
+    {
+     "annee": 2020,
+     "signaux": 665,
+     "atr14_bps_median": 29.57048577657772,
+     "part_nis_au_dessus_seuil_btc": 0.29022556390977444,
+     "univers_RE1": 112
+    },
+    {
+     "annee": 2021,
+     "signaux": 707,
+     "atr14_bps_median": 16.69165211367407,
+     "part_nis_au_dessus_seuil_btc": 0.2814710042432815,
+     "univers_RE1": 115
+    },
+    {
+     "annee": 2022,
+     "signaux": 702,
+     "atr14_bps_median": 29.696132197402164,
+     "part_nis_au_dessus_seuil_btc": 0.27350427350427353,
+     "univers_RE1": 99
+    },
+    {
+     "annee": 2023,
+     "signaux": 727,
+     "atr14_bps_median": 16.36309678320848,
+     "part_nis_au_dessus_seuil_btc": 0.3108665749656121,
+     "univers_RE1": 117
+    },
+    {
+     "annee": 2024,
+     "signaux": 696,
+     "atr14_bps_median": 16.304123515869257,
+     "part_nis_au_dessus_seuil_btc": 0.27873563218390807,
+     "univers_RE1": 118
+    },
+    {
+     "annee": 2025,
+     "signaux": 690,
+     "atr14_bps_median": 17.11708765479124,
+     "part_nis_au_dessus_seuil_btc": 0.2797101449275362,
+     "univers_RE1": 110
+    }
+   ]
+  },
+  "annees_echantillon": 5.997262149212868,
+  "gaps_ouverture": {
+   "seances": 1575,
+   "part_barres_ouverture": 0.025252525252525252,
+   "ecart_abs_bps": {
+    "P50": 10.643025965202364,
+    "P90": 39.93946032672005,
+    "P99": 156.2683566013497
+   },
+   "ecart_abs_atr": {
+    "P50": 0.5318378942756122,
+    "P90": 1.5821913100861724,
+    "P99": 4.132964624503055
+   },
+   "ecart_moyen_bps": -2.394777366557688,
+   "part_ecarts_sup_1_atr": 0.24063492063492065,
+   "tr_en_atr_P50_ouverture": 1.0361470633860321,
+   "tr_en_atr_P50_autres": 0.8646574646344959,
+   "part_tr_barres_ouverture": 0.03326881475014945,
+   "part_signaux_barre_ouverture": 0.03272032481490327,
+   "part_signaux_derniere_barre": 0.033436828278003344,
+   "nis_P50_ouverture": 0.9826706144643479,
+   "nis_P50_autres": 0.3136665683113661,
+   "part_nis_sup_seuil_ouverture": 0.4306569343065693,
+   "part_nis_sup_seuil_autres": 0.28098765432098766,
+   "part_R2_exclus_ouverture": 0.5454545454545454,
+   "part_R2_exclus_autres": 0.27666666666666667,
+   "univers_RE1_sur_barre_ouverture": 20,
+   "univers_RE1": 671
+  },
+  "semaine": {
+   "reprises": 317,
+   "ouverture_new_york": {
+    "dim 20:00": 197,
+    "dim 19:00": 105,
+    "lun 20:00": 7,
+    "lun 19:00": 2,
+    "lun 01:30": 1,
+    "mar 19:00": 1
+   },
+   "fin_new_york": {
+    "ven 16:00": 281,
+    "ven 17:00": 20,
+    "jeu 16:00": 8,
+    "mer 16:00": 3,
+    "mar 16:00": 2,
+    "lun 16:00": 2
+   },
+   "interruptions_en_semaine": 1258,
+   "interruptions_barres_manquantes": 8779,
+   "interruptions_par_annee": {
+    "2020": 211,
+    "2021": 204,
+    "2022": 209,
+    "2023": 219,
+    "2024": 211,
+    "2025": 204
+   },
+   "interruptions_heure_new_york": {
+    "20": 799,
+    "19": 412,
+    "0": 9,
+    "15": 9,
+    "23": 9,
+    "14": 6
+   },
+   "interruptions_duree_h": {
+    "P50": 4.5,
+    "P90": 4.5,
+    "P100": 8.5
+   }
+  },
+  "fermetures_admises": [
+   {
+    "apres": "2025-12-23 20:30:00+00:00",
+    "reprise": "2025-12-29 00:00:00+00:00",
+    "duree_h": 123.5,
+    "motif": "Noël 2025 : Eurex et Xetra fermés du 24 au 26 décembre"
+   }
+  ],
+  "nom": "CFD EU Stocks 50, indice au comptant (Saxo EU50.I, bid)"
  },
- "HG": {
-  "bloque": "en attente du porteur : QuantConnect exige un compte, et ses données ne sont utilisables que dans son cloud (aucun export ; Object Store sans téléchargement ; téléchargement local sous licence payante, réservé à LEAN et non convertible) ; aucune série téléchargée, aucun backtest",
-  "nom": "Copper, future continu"
+ "HK50": {
+  "doc": {
+   "rolls": "sans objet : CFD sur l'indice au comptant, FX au comptant ou CFD sur ETF (aucune échéance) ; contrôle dans l'audit",
+   "prix": "bid OHLC (CloseBid, etc.) ; volume absent (écrit nul)",
+   "timezone": "UTC (début de barre)",
+   "couverture_demandee": "2020-01-01 00:00 → 2025-12-31 23:30 UTC ; 2026 jamais demandé",
+   "symbol": "HK50.I",
+   "description": "Hong Kong 50",
+   "uic": 47624,
+   "asset_type": "CfdOnIndex",
+   "exchange_id": "HKEX",
+   "first_sample_time": "2010-07-05 02:16:00+00:00",
+   "source": "saxo-openapi",
+   "sha256": "40639ef711764bc960e8371e6d354069a953f6da3e23d3d70c9929751a8e922a",
+   "premiere_barre": "2020-01-02 01:00:00+00:00",
+   "derniere_barre": "2025-12-31 03:30:00+00:00",
+   "barres": 47025
+  },
+  "barres": {
+   "n_barres": 47025,
+   "premiere": "2020-01-02 01:00:00+00:00",
+   "derniere": "2025-12-31 03:30:00+00:00",
+   "doublons": 0,
+   "desordre": 0,
+   "part_barres_24_7": 0.44732035842703044,
+   "barres_par_annee": {
+    "2020": 7848,
+    "2021": 7825,
+    "2022": 7824,
+    "2023": 7751,
+    "2024": 7781,
+    "2025": 7996
+   },
+   "prix_non_positifs": 0,
+   "incoherences_ohlc": 0,
+   "barres_plates": 1,
+   "barres_volume_nul": 47025,
+   "trous": {
+    "n": 4335,
+    "barres_manquantes": 58101,
+    "classes": {
+     "<= 2 h": {
+      "n": 2860,
+      "barres_manquantes": 4321
+     },
+     "<= 3 jours": {
+      "n": 1432,
+      "barres_manquantes": 45622
+     },
+     "> 3 jours": {
+      "n": 43,
+      "barres_manquantes": 8158
+     }
+    },
+    "plus_longs": [
+     {
+      "apres": "2025-01-28 03:30:00+00:00",
+      "reprise": "2025-02-03 01:00:00+00:00",
+      "duree_h": 141.0
+     },
+     {
+      "apres": "2021-04-01 18:30:00+00:00",
+      "reprise": "2021-04-07 01:00:00+00:00",
+      "duree_h": 126.0
+     },
+     {
+      "apres": "2023-01-20 18:30:00+00:00",
+      "reprise": "2023-01-26 01:00:00+00:00",
+      "duree_h": 126.0
+     },
+     {
+      "apres": "2020-01-24 03:30:00+00:00",
+      "reprise": "2020-01-29 01:00:00+00:00",
+      "duree_h": 117.0
+     },
+     {
+      "apres": "2021-02-11 03:30:00+00:00",
+      "reprise": "2021-02-16 01:00:00+00:00",
+      "duree_h": 117.0
+     },
+     {
+      "apres": "2024-02-09 03:30:00+00:00",
+      "reprise": "2024-02-14 01:00:00+00:00",
+      "duree_h": 117.0
+     },
+     {
+      "apres": "2025-12-24 03:30:00+00:00",
+      "reprise": "2025-12-29 01:00:00+00:00",
+      "duree_h": 117.0
+     },
+     {
+      "apres": "2020-04-29 08:00:00+00:00",
+      "reprise": "2020-05-04 01:00:00+00:00",
+      "duree_h": 112.5
+     },
+     {
+      "apres": "2020-09-30 08:00:00+00:00",
+      "reprise": "2020-10-05 01:00:00+00:00",
+      "duree_h": 112.5
+     },
+     {
+      "apres": "2024-03-28 08:00:00+00:00",
+      "reprise": "2024-04-02 01:00:00+00:00",
+      "duree_h": 112.5
+     }
+    ]
+   },
+   "barres_par_heure_utc": {
+    "1": 2943,
+    "2": 2944,
+    "3": 2944,
+    "5": 2922,
+    "6": 2924,
+    "7": 2924,
+    "8": 1462,
+    "9": 2800,
+    "10": 2800,
+    "11": 2798,
+    "12": 2796,
+    "13": 2796,
+    "14": 2796,
+    "15": 2794,
+    "16": 2794,
+    "17": 2794,
+    "18": 2794
+   },
+   "barres_par_jour": {
+    "0": 9175,
+    "1": 9613,
+    "2": 9553,
+    "3": 9669,
+    "4": 9015
+   },
+   "sauts": {
+    "ecart_ouverture_bps": {
+     "P50": 0.47089847463711504,
+     "P90": 1.1991629865799045,
+     "P99": 36.29487021368998,
+     "P99.9": 130.48579207558055,
+     "P100": 745.2991807326712
+    },
+    "ecart_ouverture_apres_trou_bps": {
+     "P50": 5.879366266796791,
+     "P90": 38.05012514083077,
+     "P99": 134.51281196167784,
+     "P99.9": 295.94282861594974,
+     "P100": 745.2991807326712
+    },
+    "rendement_close_bps": {
+     "P50": 10.258441184037512,
+     "P90": 38.85395452363968,
+     "P99": 103.33902443094402,
+     "P99.9": 213.294215137158,
+     "P100": 853.6549600221248
+    },
+    "plus_grands_ecarts_ouverture": [
+     {
+      "time": "2025-04-07 01:00:00+00:00",
+      "bps": 745.2991807326712
+     },
+     {
+      "time": "2020-05-04 01:00:00+00:00",
+      "bps": 367.032654006381
+     },
+     {
+      "time": "2020-03-23 01:00:00+00:00",
+      "bps": 336.2699323605457
+     },
+     {
+      "time": "2020-01-29 01:00:00+00:00",
+      "bps": 313.9524142166764
+     },
+     {
+      "time": "2020-03-16 01:00:00+00:00",
+      "bps": 296.8994735716532
+     },
+     {
+      "time": "2020-03-17 01:00:00+00:00",
+      "bps": 294.0352671174498
+     },
+     {
+      "time": "2020-03-24 01:00:00+00:00",
+      "bps": 282.4309683441326
+     },
+     {
+      "time": "2020-05-29 01:00:00+00:00",
+      "bps": 262.0770484369436
+     },
+     {
+      "time": "2022-12-01 01:00:00+00:00",
+      "bps": 260.84732419174105
+     },
+     {
+      "time": "2020-04-06 01:00:00+00:00",
+      "bps": 259.99925172481124
+     }
+    ],
+    "plus_grands_rendements": [
+     {
+      "time": "2025-04-07 01:00:00+00:00",
+      "bps": 853.6549600221248
+     },
+     {
+      "time": "2020-03-17 01:00:00+00:00",
+      "bps": 460.508624477749
+     },
+     {
+      "time": "2020-03-13 05:00:00+00:00",
+      "bps": 426.26951483598776
+     },
+     {
+      "time": "2020-05-04 01:00:00+00:00",
+      "bps": 358.60663395949064
+     },
+     {
+      "time": "2022-11-28 01:00:00+00:00",
+      "bps": 352.1613833859395
+     },
+     {
+      "time": "2024-10-08 01:30:00+00:00",
+      "bps": 339.58818625583893
+     },
+     {
+      "time": "2020-03-23 12:00:00+00:00",
+      "bps": 339.21620635716255
+     },
+     {
+      "time": "2022-11-07 01:30:00+00:00",
+      "bps": 322.67829281430124
+     },
+     {
+      "time": "2022-03-15 02:00:00+00:00",
+      "bps": 319.8628722330771
+     },
+     {
+      "time": "2022-10-24 01:00:00+00:00",
+      "bps": 307.8693995710611
+     }
+    ]
+   }
+  },
+  "seances": {
+   "heures_utc_sans_barre_janvier": [
+    0,
+    4,
+    19,
+    20,
+    21,
+    22,
+    23
+   ],
+   "heures_utc_sans_barre_juillet": [
+    0,
+    4,
+    19,
+    20,
+    21,
+    22,
+    23
+   ],
+   "barres_le_samedi": 0,
+   "pause_new_york": {
+    "semaines": 314,
+    "pause_17h_exactement": 0,
+    "pause_17h_et_autres_heures": 314,
+    "sans_pause_17h": 0
+   },
+   "ouverture_dimanche_heure_new_york": {
+    "21": 184,
+    "20": 100
+   }
+  },
+  "integrite": [],
+  "couverture": [],
+  "signaux": {
+   "n_signaux": 3152,
+   "signaux_par_mois": 43.80567895362663,
+   "part_flips": 0.8166243654822335,
+   "part_x1_retourne": 0.5092005076142132,
+   "leg_atr": {
+    "P10": 1.7649398886119574,
+    "P25": 2.2960156259063758,
+    "P50": 3.0728706334810694,
+    "P75": 4.316256121409819,
+    "P90": 5.98237670231229
+   },
+   "retrace_ratio": {
+    "P10": 0.16800672268907563,
+    "P25": 0.3275219298245614,
+    "P50": 0.5904545454545455,
+    "P75": 0.8633911052975801,
+    "P90": 1.1206742610837437
+   },
+   "nis_z_100": {
+    "P10": -0.5184067792373599,
+    "P25": -0.2759446796029408,
+    "P50": 0.261115833459272,
+    "P75": 1.2856491097591147,
+    "P90": 2.7607570700559214
+   },
+   "atr14_bps": {
+    "P10": 20.751634883059534,
+    "P25": 25.157379353557868,
+    "P50": 30.782190300942386,
+    "P75": 38.442504366003114,
+    "P90": 48.69361795348657
+   },
+   "prev_seg_len": {
+    "P10": 7.0,
+    "P25": 8.0,
+    "P50": 10.0,
+    "P75": 13.0,
+    "P90": 17.0
+   },
+   "mediane_locale_leg_atr": 3.0728706334810694,
+   "p75_local_nis_z_100": 1.2856491097591147,
+   "part_leg_sous_seuil_btc": 0.42576142131979694,
+   "part_nis_au_dessus_seuil_btc": 0.25761421319796957,
+   "part_nis_au_dessus_seuil_btc_dans_R2": 0.27800829875518673,
+   "nis_nan": 0,
+   "familles": {
+    "F1": 1023,
+    "F2a": 529,
+    "F2b": 492,
+    "F3": 564,
+    "F4": 258,
+    "F5": 286
+   },
+   "regimes": {
+    "R1": 968,
+    "R2_avant_nis": 723,
+    "R3": 1078,
+    "hors_regimes": 383
+   },
+   "nis_exclus": 201,
+   "univers_RE1": 522,
+   "F2b": 237,
+   "F3": 285,
+   "par_annee": [
+    {
+     "annee": 2020,
+     "signaux": 491,
+     "atr14_bps_median": 30.232905066077876,
+     "part_nis_au_dessus_seuil_btc": 0.24439918533604887,
+     "univers_RE1": 87
+    },
+    {
+     "annee": 2021,
+     "signaux": 539,
+     "atr14_bps_median": 26.133558083950113,
+     "part_nis_au_dessus_seuil_btc": 0.2690166975881262,
+     "univers_RE1": 91
+    },
+    {
+     "annee": 2022,
+     "signaux": 522,
+     "atr14_bps_median": 39.75517643160703,
+     "part_nis_au_dessus_seuil_btc": 0.2739463601532567,
+     "univers_RE1": 69
+    },
+    {
+     "annee": 2023,
+     "signaux": 534,
+     "atr14_bps_median": 31.456375416874327,
+     "part_nis_au_dessus_seuil_btc": 0.23220973782771537,
+     "univers_RE1": 107
+    },
+    {
+     "annee": 2024,
+     "signaux": 535,
+     "atr14_bps_median": 31.467671523648324,
+     "part_nis_au_dessus_seuil_btc": 0.2635514018691589,
+     "univers_RE1": 91
+    },
+    {
+     "annee": 2025,
+     "signaux": 531,
+     "atr14_bps_median": 27.515864976847713,
+     "part_nis_au_dessus_seuil_btc": 0.2617702448210923,
+     "univers_RE1": 77
+    }
+   ]
+  },
+  "annees_echantillon": 5.997148072096738,
+  "gaps_ouverture": {
+   "seances": 4335,
+   "part_barres_ouverture": 0.09218500797448166,
+   "ecart_abs_bps": {
+    "P50": 5.879366266796791,
+    "P90": 38.05012514083077,
+    "P99": 134.51281196167784
+   },
+   "ecart_abs_atr": {
+    "P50": 0.1721681608042877,
+    "P90": 1.4005351264761654,
+    "P99": 4.372676406021983
+   },
+   "ecart_moyen_bps": -1.0894269333889584,
+   "part_ecarts_sup_1_atr": 0.15709342560553632,
+   "tr_en_atr_P50_ouverture": 1.2135647529190496,
+   "tr_en_atr_P50_autres": 0.7631262266771213,
+   "part_tr_barres_ouverture": 0.13341350544272354,
+   "part_signaux_barre_ouverture": 0.09930203045685279,
+   "part_signaux_derniere_barre": 0.08946700507614214,
+   "nis_P50_ouverture": 0.5647835878465121,
+   "nis_P50_autres": 0.21845233565116007,
+   "part_nis_sup_seuil_ouverture": 0.3738019169329074,
+   "part_nis_sup_seuil_autres": 0.24480450862979922,
+   "part_R2_exclus_ouverture": 0.5555555555555556,
+   "part_R2_exclus_autres": 0.24299065420560748,
+   "univers_RE1_sur_barre_ouverture": 36,
+   "univers_RE1": 522
+  },
+  "semaine": {
+   "reprises": 337,
+   "ouverture_new_york": {
+    "dim 21:00": 184,
+    "dim 20:00": 100,
+    "lun 21:00": 17,
+    "mer 21:00": 9,
+    "mar 21:00": 7,
+    "jeu 21:00": 6
+   },
+   "fin_new_york": {
+    "ven 15:00": 171,
+    "ven 14:00": 92,
+    "ven 04:30": 16,
+    "jeu 15:00": 10,
+    "ven 03:30": 8,
+    "mar 15:00": 7
+   },
+   "interruptions_en_semaine": 3998,
+   "interruptions_barres_manquantes": 18610,
+   "interruptions_par_annee": {
+    "2020": 669,
+    "2021": 667,
+    "2022": 668,
+    "2023": 661,
+    "2024": 661,
+    "2025": 672
+   },
+   "interruptions_heure_new_york": {
+    "1": 958,
+    "5": 915,
+    "21": 733,
+    "0": 503,
+    "4": 486,
+    "20": 403
+   },
+   "interruptions_duree_h": {
+    "P50": 1.5,
+    "P90": 6.5,
+    "P100": 19.5
+   }
+  },
+  "fermetures_admises": [
+   {
+    "apres": "2021-04-01 18:30:00+00:00",
+    "reprise": "2021-04-07 01:00:00+00:00",
+    "duree_h": 126.5,
+    "motif": "Pâques et Ching Ming : HKEX fermé les 2, 5 et 6 avril 2021"
+   },
+   {
+    "apres": "2023-01-20 18:30:00+00:00",
+    "reprise": "2023-01-26 01:00:00+00:00",
+    "duree_h": 126.5,
+    "motif": "Nouvel An lunaire : HKEX fermé du 23 au 25 janvier 2023"
+   },
+   {
+    "apres": "2025-01-28 03:30:00+00:00",
+    "reprise": "2025-02-03 01:00:00+00:00",
+    "duree_h": 141.5,
+    "motif": "Nouvel An lunaire : HKEX fermé du 29 au 31 janvier 2025 (demi-séance le 28)"
+   }
+  ],
+  "nom": "CFD Hong Kong 50, indice au comptant (Saxo HK50.I, bid)"
  },
- "duree_s": 19
+ "XAGUSD": {
+  "doc": {
+   "rolls": "sans objet : CFD sur l'indice au comptant ou FX au comptant (aucune échéance) ; contrôle dans l'audit",
+   "prix": "bid OHLC (CloseBid, etc.) ; volume absent (écrit nul)",
+   "timezone": "UTC (début de barre)",
+   "couverture_demandee": "2020-01-01 00:00 → 2025-12-31 23:30 UTC ; 2026 jamais demandé",
+   "symbol": "XAGUSD",
+   "description": "Silver/US Dollar",
+   "uic": 8177,
+   "asset_type": "FxSpot",
+   "exchange_id": "SBFX",
+   "first_sample_time": "2004-03-16 09:04:00+00:00",
+   "source": "saxo-openapi",
+   "sha256": "040ae90bb33b8d1054f508640663b388b337ad7a30f251bb97f3a8bd04610b0e",
+   "premiere_barre": "2020-01-01 23:00:00+00:00",
+   "derniere_barre": "2025-12-31 21:30:00+00:00",
+   "barres": 70962
+  },
+  "barres": {
+   "n_barres": 70962,
+   "premiere": "2020-01-01 23:00:00+00:00",
+   "derniere": "2025-12-31 21:30:00+00:00",
+   "doublons": 0,
+   "desordre": 0,
+   "part_barres_24_7": 0.6747618051461499,
+   "barres_par_annee": {
+    "2020": 11854,
+    "2021": 11814,
+    "2022": 11826,
+    "2023": 11780,
+    "2024": 11869,
+    "2025": 11819
+   },
+   "prix_non_positifs": 0,
+   "incoherences_ohlc": 0,
+   "barres_plates": 0,
+   "barres_volume_nul": 70962,
+   "trous": {
+    "n": 1549,
+    "barres_manquantes": 34204,
+    "classes": {
+     "<= 2 h": {
+      "n": 1195,
+      "barres_manquantes": 2389
+     },
+     "<= 3 jours": {
+      "n": 341,
+      "barres_manquantes": 29911
+     },
+     "> 3 jours": {
+      "n": 13,
+      "barres_manquantes": 1904
+     }
+    },
+    "plus_longs": [
+     {
+      "apres": "2020-12-24 18:30:00+00:00",
+      "reprise": "2020-12-27 23:00:00+00:00",
+      "duree_h": 76.0
+     },
+     {
+      "apres": "2020-04-09 20:30:00+00:00",
+      "reprise": "2020-04-12 22:00:00+00:00",
+      "duree_h": 73.0
+     },
+     {
+      "apres": "2020-12-31 21:30:00+00:00",
+      "reprise": "2021-01-03 23:00:00+00:00",
+      "duree_h": 73.0
+     },
+     {
+      "apres": "2021-04-01 20:30:00+00:00",
+      "reprise": "2021-04-04 22:00:00+00:00",
+      "duree_h": 73.0
+     },
+     {
+      "apres": "2021-12-23 21:30:00+00:00",
+      "reprise": "2021-12-26 23:00:00+00:00",
+      "duree_h": 73.0
+     },
+     {
+      "apres": "2022-04-14 20:30:00+00:00",
+      "reprise": "2022-04-17 22:00:00+00:00",
+      "duree_h": 73.0
+     },
+     {
+      "apres": "2022-12-23 21:30:00+00:00",
+      "reprise": "2022-12-26 23:00:00+00:00",
+      "duree_h": 73.0
+     },
+     {
+      "apres": "2022-12-30 21:30:00+00:00",
+      "reprise": "2023-01-02 23:00:00+00:00",
+      "duree_h": 73.0
+     },
+     {
+      "apres": "2023-04-06 20:30:00+00:00",
+      "reprise": "2023-04-09 22:00:00+00:00",
+      "duree_h": 73.0
+     },
+     {
+      "apres": "2023-12-22 21:30:00+00:00",
+      "reprise": "2023-12-25 23:00:00+00:00",
+      "duree_h": 73.0
+     }
+    ]
+   },
+   "barres_par_heure_utc": {
+    "0": 3098,
+    "1": 3098,
+    "2": 3098,
+    "3": 3098,
+    "4": 3098,
+    "5": 3098,
+    "6": 3098,
+    "7": 3098,
+    "8": 3098,
+    "9": 3098,
+    "10": 3098,
+    "11": 3098,
+    "12": 3098,
+    "13": 3098,
+    "14": 3098,
+    "15": 3098,
+    "16": 3098,
+    "17": 3084,
+    "18": 3057,
+    "19": 3016,
+    "20": 3000,
+    "21": 1016,
+    "22": 2025,
+    "23": 3098
+   },
+   "barres_par_jour": {
+    "0": 14054,
+    "1": 14383,
+    "2": 14297,
+    "3": 14272,
+    "4": 12932,
+    "6": 1024
+   },
+   "sauts": {
+    "ecart_ouverture_bps": {
+     "P50": 0.13007932671136446,
+     "P90": 0.8185114555237287,
+     "P99": 7.12803891222868,
+     "P99.9": 37.979620864383165,
+     "P100": 522.2657248326017
+    },
+    "ecart_ouverture_apres_trou_bps": {
+     "P50": 5.365012583179084,
+     "P90": 20.782189746437385,
+     "P99": 105.15104164394513,
+     "P99.9": 235.35697072818073,
+     "P100": 522.2657248326017
+    },
+    "rendement_close_bps": {
+     "P50": 12.175724683232488,
+     "P90": 41.51987811816308,
+     "P99": 109.8788587826236,
+     "P99.9": 222.75944235567763,
+     "P100": 607.009027088712
+    },
+    "plus_grands_ecarts_ouverture": [
+     {
+      "time": "2021-01-31 23:00:00+00:00",
+      "bps": 522.2657248326017
+     },
+     {
+      "time": "2025-12-29 00:30:00+00:00",
+      "bps": 238.91965410869415
+     },
+     {
+      "time": "2025-12-28 23:00:00+00:00",
+      "bps": 236.2226276010218
+     },
+     {
+      "time": "2025-12-25 23:00:00+00:00",
+      "bps": 234.64296177466883
+     },
+     {
+      "time": "2020-03-15 22:00:00+00:00",
+      "bps": 200.87336927541287
+     },
+     {
+      "time": "2024-10-13 22:00:00+00:00",
+      "bps": 197.2839806676876
+     },
+     {
+      "time": "2025-04-06 22:00:00+00:00",
+      "bps": 193.2328319738507
+     },
+     {
+      "time": "2023-10-22 22:00:00+00:00",
+      "bps": 158.31920525916362
+     },
+     {
+      "time": "2020-08-02 22:00:00+00:00",
+      "bps": 155.38331831790097
+     },
+     {
+      "time": "2022-11-06 23:00:00+00:00",
+      "bps": 139.61916697126495
+     }
+    ],
+    "plus_grands_rendements": [
+     {
+      "time": "2021-01-31 23:00:00+00:00",
+      "bps": 607.009027088712
+     },
+     {
+      "time": "2020-07-28 03:00:00+00:00",
+      "bps": 570.3334746933682
+     },
+     {
+      "time": "2021-08-08 22:30:00+00:00",
+      "bps": 541.6847497532733
+     },
+     {
+      "time": "2025-04-07 01:00:00+00:00",
+      "bps": 511.21098487031634
+     },
+     {
+      "time": "2025-12-28 23:00:00+00:00",
+      "bps": 440.4638249076017
+     },
+     {
+      "time": "2020-03-16 13:00:00+00:00",
+      "bps": 432.39515138279666
+     },
+     {
+      "time": "2020-07-21 22:30:00+00:00",
+      "bps": 424.0707075287595
+     },
+     {
+      "time": "2020-03-16 12:00:00+00:00",
+      "bps": 421.80535438321175
+     },
+     {
+      "time": "2025-12-29 00:00:00+00:00",
+      "bps": 413.0984188565023
+     },
+     {
+      "time": "2020-07-28 07:30:00+00:00",
+      "bps": 399.58809313443993
+     }
+    ]
+   }
+  },
+  "seances": {
+   "heures_utc_sans_barre_janvier": [
+    22
+   ],
+   "heures_utc_sans_barre_juillet": [
+    21
+   ],
+   "barres_le_samedi": 0,
+   "pause_new_york": {
+    "semaines": 314,
+    "pause_17h_exactement": 314,
+    "pause_17h_et_autres_heures": 0,
+    "sans_pause_17h": 0
+   },
+   "ouverture_dimanche_heure_new_york": {
+    "18": 309
+   }
+  },
+  "integrite": [],
+  "couverture": [],
+  "signaux": {
+   "n_signaux": 4801,
+   "signaux_par_mois": 66.69767508201397,
+   "part_flips": 0.80816496563216,
+   "part_x1_retourne": 0.5019787544261612,
+   "leg_atr": {
+    "P10": 1.7453531369726685,
+    "P25": 2.2174500685102307,
+    "P50": 2.8963849344739336,
+    "P75": 3.9267091467373327,
+    "P90": 5.5090381398285455
+   },
+   "retrace_ratio": {
+    "P10": 0.19545454545454313,
+    "P25": 0.35817359465862675,
+    "P50": 0.5893186003683196,
+    "P75": 0.8421052631578887,
+    "P90": 1.0682432432432285
+   },
+   "nis_z_100": {
+    "P10": -0.5374474970449564,
+    "P25": -0.2700958639409527,
+    "P50": 0.25742284051026143,
+    "P75": 1.2010892306735326,
+    "P90": 2.5797573436849555
+   },
+   "atr14_bps": {
+    "P10": 22.967779752743258,
+    "P25": 27.39103630346515,
+    "P50": 33.89818128591718,
+    "P75": 43.24733946735146,
+    "P90": 56.06856233718513
+   },
+   "prev_seg_len": {
+    "P10": 7.0,
+    "P25": 8.0,
+    "P50": 10.0,
+    "P75": 13.0,
+    "P90": 17.0
+   },
+   "mediane_locale_leg_atr": 2.8963849344739336,
+   "p75_local_nis_z_100": 1.2010892306735326,
+   "part_leg_sous_seuil_btc": 0.47656738179545927,
+   "part_nis_au_dessus_seuil_btc": 0.24557383878358674,
+   "part_nis_au_dessus_seuil_btc_dans_R2": 0.2530647985989492,
+   "nis_nan": 0,
+   "familles": {
+    "F1": 1390,
+    "F2a": 797,
+    "F2b": 902,
+    "F3": 833,
+    "F4": 326,
+    "F5": 553
+   },
+   "regimes": {
+    "R1": 1449,
+    "R2_avant_nis": 1142,
+    "R3": 1544,
+    "hors_regimes": 666
+   },
+   "nis_exclus": 289,
+   "univers_RE1": 853,
+   "F2b": 403,
+   "F3": 450,
+   "par_annee": [
+    {
+     "annee": 2020,
+     "signaux": 779,
+     "atr14_bps_median": 45.47099597759437,
+     "part_nis_au_dessus_seuil_btc": 0.2631578947368421,
+     "univers_RE1": 137
+    },
+    {
+     "annee": 2021,
+     "signaux": 792,
+     "atr14_bps_median": 30.774249511309293,
+     "part_nis_au_dessus_seuil_btc": 0.2297979797979798,
+     "univers_RE1": 136
+    },
+    {
+     "annee": 2022,
+     "signaux": 820,
+     "atr14_bps_median": 35.972486184466106,
+     "part_nis_au_dessus_seuil_btc": 0.25121951219512195,
+     "univers_RE1": 133
+    },
+    {
+     "annee": 2023,
+     "signaux": 807,
+     "atr14_bps_median": 28.90356882543917,
+     "part_nis_au_dessus_seuil_btc": 0.2527881040892193,
+     "univers_RE1": 149
+    },
+    {
+     "annee": 2024,
+     "signaux": 813,
+     "atr14_bps_median": 33.80712575170196,
+     "part_nis_au_dessus_seuil_btc": 0.23739237392373924,
+     "univers_RE1": 163
+    },
+    {
+     "annee": 2025,
+     "signaux": 790,
+     "atr14_bps_median": 33.75997859192093,
+     "part_nis_au_dessus_seuil_btc": 0.23924050632911392,
+     "univers_RE1": 135
+    }
+   ]
+  },
+  "annees_echantillon": 5.997376226328998,
+  "gaps_ouverture": {
+   "seances": 1549,
+   "part_barres_ouverture": 0.021828584312730756,
+   "ecart_abs_bps": {
+    "P50": 5.365012583179084,
+    "P90": 20.782189746437385,
+    "P99": 105.15104164394513
+   },
+   "ecart_abs_atr": {
+    "P50": 0.15400096066060254,
+    "P90": 0.5094830689234925,
+    "P99": 2.3126378094399707
+   },
+   "ecart_moyen_bps": 1.3244530313538392,
+   "part_ecarts_sup_1_atr": 0.0342156229825694,
+   "tr_en_atr_P50_ouverture": 0.6445503621855976,
+   "tr_en_atr_P50_autres": 0.8550366265623006,
+   "part_tr_barres_ouverture": 0.020187824740569234,
+   "part_signaux_barre_ouverture": 0.025411372630701937,
+   "part_signaux_derniere_barre": 0.02770256196625703,
+   "nis_P50_ouverture": 0.09163870857375275,
+   "nis_P50_autres": 0.2614483356072573,
+   "part_nis_sup_seuil_ouverture": 0.22131147540983606,
+   "part_nis_sup_seuil_autres": 0.24620645437059202,
+   "part_R2_exclus_ouverture": 0.14285714285714285,
+   "part_R2_exclus_autres": 0.25512934879571814,
+   "univers_RE1_sur_barre_ouverture": 18,
+   "univers_RE1": 853
+  },
+  "semaine": {
+   "reprises": 316,
+   "ouverture_new_york": {
+    "dim 18:00": 307,
+    "lun 18:00": 4,
+    "dim 18:30": 2,
+    "mer 18:00": 2,
+    "jeu 18:00": 1
+   },
+   "fin_new_york": {
+    "ven 17:00": 296,
+    "jeu 17:00": 8,
+    "ven 14:00": 4,
+    "ven 13:00": 2,
+    "ven 15:00": 2,
+    "jeu 14:00": 1
+   },
+   "interruptions_en_semaine": 1233,
+   "interruptions_barres_manquantes": 2688,
+   "interruptions_par_annee": {
+    "2020": 206,
+    "2021": 206,
+    "2022": 206,
+    "2023": 205,
+    "2024": 205,
+    "2025": 205
+   },
+   "interruptions_heure_new_york": {
+    "18": 1232,
+    "19": 1
+   },
+   "interruptions_duree_h": {
+    "P50": 1.5,
+    "P90": 1.5,
+    "P100": 5.5
+   }
+  },
+  "fermetures_admises": [],
+  "nom": "Argent au comptant XAG/USD (Saxo FxSpot, bid)"
+ },
+ "GBPJPY": {
+  "doc": {
+   "rolls": "sans objet : CFD sur l'indice au comptant ou FX au comptant (aucune échéance) ; contrôle dans l'audit",
+   "prix": "bid OHLC (CloseBid, etc.) ; volume absent (écrit nul)",
+   "timezone": "UTC (début de barre)",
+   "couverture_demandee": "2020-01-01 00:00 → 2025-12-31 23:30 UTC ; 2026 jamais demandé",
+   "symbol": "GBPJPY",
+   "description": "British Pound/Japanese Yen",
+   "uic": 26,
+   "asset_type": "FxSpot",
+   "exchange_id": "SBFX",
+   "first_sample_time": "2002-09-25 02:40:00+00:00",
+   "source": "saxo-openapi",
+   "sha256": "3436db95c520333878133c19ff0a038caaba33d9848484db9a03f81ce06b7f01",
+   "premiere_barre": "2020-01-01 18:00:00+00:00",
+   "derniere_barre": "2025-12-31 21:30:00+00:00",
+   "barres": 76607
+  },
+  "barres": {
+   "n_barres": 76607,
+   "premiere": "2020-01-01 18:00:00+00:00",
+   "derniere": "2025-12-31 21:30:00+00:00",
+   "doublons": 0,
+   "desordre": 0,
+   "part_barres_24_7": 0.728369590020537,
+   "barres_par_annee": {
+    "2020": 12799,
+    "2021": 12765,
+    "2022": 12763,
+    "2023": 12730,
+    "2024": 12806,
+    "2025": 12744
+   },
+   "prix_non_positifs": 0,
+   "incoherences_ohlc": 0,
+   "barres_plates": 80,
+   "barres_volume_nul": 76607,
+   "trous": {
+    "n": 340,
+    "barres_manquantes": 28569,
+    "classes": {
+     "<= 2 h": {
+      "n": 22,
+      "barres_manquantes": 29
+     },
+     "<= 3 jours": {
+      "n": 318,
+      "barres_manquantes": 28540
+     },
+     "> 3 jours": {
+      "n": 0,
+      "barres_manquantes": 0
+     }
+    },
+    "plus_longs": [
+     {
+      "apres": "2020-12-31 21:30:00+00:00",
+      "reprise": "2021-01-03 19:00:00+00:00",
+      "duree_h": 69.0
+     },
+     {
+      "apres": "2023-12-29 21:30:00+00:00",
+      "reprise": "2024-01-01 18:00:00+00:00",
+      "duree_h": 68.0
+     },
+     {
+      "apres": "2020-12-25 06:30:00+00:00",
+      "reprise": "2020-12-27 18:00:00+00:00",
+      "duree_h": 59.0
+     },
+     {
+      "apres": "2023-12-22 21:30:00+00:00",
+      "reprise": "2023-12-24 23:00:00+00:00",
+      "duree_h": 49.0
+     },
+     {
+      "apres": "2022-06-24 20:30:00+00:00",
+      "reprise": "2022-06-26 21:00:00+00:00",
+      "duree_h": 48.0
+     },
+     {
+      "apres": "2022-12-30 21:30:00+00:00",
+      "reprise": "2023-01-01 22:00:00+00:00",
+      "duree_h": 48.0
+     },
+     {
+      "apres": "2020-04-10 20:30:00+00:00",
+      "reprise": "2020-04-12 19:30:00+00:00",
+      "duree_h": 46.5
+     },
+     {
+      "apres": "2020-04-17 20:30:00+00:00",
+      "reprise": "2020-04-19 19:30:00+00:00",
+      "duree_h": 46.5
+     },
+     {
+      "apres": "2022-08-12 20:30:00+00:00",
+      "reprise": "2022-08-14 19:30:00+00:00",
+      "duree_h": 46.5
+     },
+     {
+      "apres": "2023-08-04 20:30:00+00:00",
+      "reprise": "2023-08-06 19:30:00+00:00",
+      "duree_h": 46.5
+     }
+    ]
+   },
+   "barres_par_heure_utc": {
+    "0": 3124,
+    "1": 3124,
+    "2": 3124,
+    "3": 3124,
+    "4": 3124,
+    "5": 3124,
+    "6": 3124,
+    "7": 3122,
+    "8": 3116,
+    "9": 3116,
+    "10": 3116,
+    "11": 3116,
+    "12": 3116,
+    "13": 3116,
+    "14": 3116,
+    "15": 3116,
+    "16": 3116,
+    "17": 3116,
+    "18": 3416,
+    "19": 3726,
+    "20": 3735,
+    "21": 3336,
+    "22": 3120,
+    "23": 3124
+   },
+   "barres_par_jour": {
+    "0": 14967,
+    "1": 15020,
+    "2": 14971,
+    "3": 14993,
+    "4": 13290,
+    "5": 3,
+    "6": 3363
+   },
+   "sauts": {
+    "ecart_ouverture_bps": {
+     "P50": 0.0599351501943899,
+     "P90": 0.18275967112067282,
+     "P99": 8.620978859279475,
+     "P99.9": 34.83751595521488,
+     "P100": 125.59537766752102
+    },
+    "ecart_ouverture_apres_trou_bps": {
+     "P50": 21.058150593219743,
+     "P90": 42.57315653813165,
+     "P99": 79.32851703332794,
+     "P99.9": 91.89883163819965,
+     "P100": 95.6341004230833
+    },
+    "rendement_close_bps": {
+     "P50": 4.030889540220105,
+     "P90": 13.517385743499332,
+     "P99": 32.351046342532555,
+     "P99.9": 64.7525234742572,
+     "P100": 376.3013547344368
+    },
+    "plus_grands_ecarts_ouverture": [
+     {
+      "time": "2020-03-18 21:00:00+00:00",
+      "bps": 125.59537766752102
+     },
+     {
+      "time": "2020-03-01 18:00:00+00:00",
+      "bps": 95.6341004230833
+     },
+     {
+      "time": "2020-03-08 18:00:00+00:00",
+      "bps": 84.61560843227421
+     },
+     {
+      "time": "2020-03-15 18:00:00+00:00",
+      "bps": 80.21585284851457
+     },
+     {
+      "time": "2022-02-27 18:00:00+00:00",
+      "bps": 80.17334888494932
+     },
+     {
+      "time": "2025-10-05 18:00:00+00:00",
+      "bps": 78.00711336797136
+     },
+     {
+      "time": "2023-09-10 19:00:00+00:00",
+      "bps": 77.87908488873902
+     },
+     {
+      "time": "2022-06-12 19:00:00+00:00",
+      "bps": 72.82948739682085
+     },
+     {
+      "time": "2025-02-02 18:00:00+00:00",
+      "bps": 69.68814824894932
+     },
+     {
+      "time": "2022-12-18 18:00:00+00:00",
+      "bps": 63.259580420506786
+     }
+    ],
+    "plus_grands_rendements": [
+     {
+      "time": "2022-09-26 00:30:00+00:00",
+      "bps": 376.3013547344368
+     },
+     {
+      "time": "2022-12-20 03:00:00+00:00",
+      "bps": 253.56251040517597
+     },
+     {
+      "time": "2020-03-09 01:30:00+00:00",
+      "bps": 171.92188013580468
+     },
+     {
+      "time": "2020-03-18 16:30:00+00:00",
+      "bps": 165.61539483642647
+     },
+     {
+      "time": "2024-09-27 06:00:00+00:00",
+      "bps": 161.8405004479828
+     },
+     {
+      "time": "2022-09-22 08:00:00+00:00",
+      "bps": 154.67766617727258
+     },
+     {
+      "time": "2023-01-18 02:30:00+00:00",
+      "bps": 150.07420430123196
+     },
+     {
+      "time": "2024-07-11 12:30:00+00:00",
+      "bps": 139.0898219818268
+     },
+     {
+      "time": "2024-08-07 01:30:00+00:00",
+      "bps": 133.9865313943169
+     },
+     {
+      "time": "2024-05-01 20:00:00+00:00",
+      "bps": 131.90872850138678
+     }
+    ]
+   }
+  },
+  "seances": {
+   "heures_utc_sans_barre_janvier": [],
+   "heures_utc_sans_barre_juillet": [],
+   "barres_le_samedi": 3
+  },
+  "integrite": [],
+  "couverture": [],
+  "signaux": {
+   "n_signaux": 5259,
+   "signaux_par_mois": 73.05347278345614,
+   "part_flips": 0.8210686442289409,
+   "part_x1_retourne": 0.5318501616276858,
+   "leg_atr": {
+    "P10": 1.7918142105785018,
+    "P25": 2.2226037918880044,
+    "P50": 2.8745233303406272,
+    "P75": 3.8411071908829744,
+    "P90": 5.195929413357609
+   },
+   "retrace_ratio": {
+    "P10": 0.2017923186344094,
+    "P25": 0.3689579980271309,
+    "P50": 0.6133004926108168,
+    "P75": 0.8587793484655155,
+    "P90": 1.0840780599799047
+   },
+   "nis_z_100": {
+    "P10": -0.5353178782161401,
+    "P25": -0.2733001108489914,
+    "P50": 0.29556927195269467,
+    "P75": 1.409585610929759,
+    "P90": 2.890970521430384
+   },
+   "atr14_bps": {
+    "P10": 7.550259973269159,
+    "P25": 8.995635305907811,
+    "P50": 11.30245649149457,
+    "P75": 14.36262496928312,
+    "P90": 18.563556763007572
+   },
+   "prev_seg_len": {
+    "P10": 7.0,
+    "P25": 8.0,
+    "P50": 10.0,
+    "P75": 13.0,
+    "P90": 17.0
+   },
+   "mediane_locale_leg_atr": 2.8745233303406272,
+   "p75_local_nis_z_100": 1.409585610929759,
+   "part_leg_sous_seuil_btc": 0.483552006084807,
+   "part_nis_au_dessus_seuil_btc": 0.28009127210496293,
+   "part_nis_au_dessus_seuil_btc_dans_R2": 0.2703313253012048,
+   "nis_nan": 0,
+   "familles": {
+    "F1": 1433,
+    "F2a": 843,
+    "F2b": 1070,
+    "F3": 913,
+    "F4": 440,
+    "F5": 560
+   },
+   "regimes": {
+    "R1": 1447,
+    "R2_avant_nis": 1328,
+    "R3": 1737,
+    "hors_regimes": 747
+   },
+   "nis_exclus": 359,
+   "univers_RE1": 969,
+   "F2b": 526,
+   "F3": 443,
+   "par_annee": [
+    {
+     "annee": 2020,
+     "signaux": 820,
+     "atr14_bps_median": 12.396429828538029,
+     "part_nis_au_dessus_seuil_btc": 0.2865853658536585,
+     "univers_RE1": 141
+    },
+    {
+     "annee": 2021,
+     "signaux": 882,
+     "atr14_bps_median": 9.168569362408636,
+     "part_nis_au_dessus_seuil_btc": 0.2777777777777778,
+     "univers_RE1": 164
+    },
+    {
+     "annee": 2022,
+     "signaux": 892,
+     "atr14_bps_median": 14.365105069085445,
+     "part_nis_au_dessus_seuil_btc": 0.28475336322869954,
+     "univers_RE1": 158
+    },
+    {
+     "annee": 2023,
+     "signaux": 886,
+     "atr14_bps_median": 11.428591986536224,
+     "part_nis_au_dessus_seuil_btc": 0.2799097065462754,
+     "univers_RE1": 172
+    },
+    {
+     "annee": 2024,
+     "signaux": 890,
+     "atr14_bps_median": 10.874321191017707,
+     "part_nis_au_dessus_seuil_btc": 0.2696629213483146,
+     "univers_RE1": 176
+    },
+    {
+     "annee": 2025,
+     "signaux": 889,
+     "atr14_bps_median": 10.330179495409093,
+     "part_nis_au_dessus_seuil_btc": 0.2823397075365579,
+     "univers_RE1": 158
+    }
+   ]
+  },
+  "annees_echantillon": 5.997946611909651,
+  "semaine": {
+   "reprises": 312,
+   "ouverture_new_york": {
+    "dim 15:00": 152,
+    "dim 13:00": 96,
+    "dim 14:00": 48,
+    "dim 13:30": 6,
+    "dim 15:30": 4,
+    "dim 17:00": 2
+   },
+   "fin_new_york": {
+    "ven 17:00": 310,
+    "ven 02:00": 1,
+    "jeu 17:00": 1
+   },
+   "interruptions_en_semaine": 28,
+   "interruptions_barres_manquantes": 225,
+   "interruptions_par_annee": {
+    "2020": 1,
+    "2021": 8,
+    "2022": 3,
+    "2023": 4,
+    "2024": 5,
+    "2025": 7
+   },
+   "interruptions_heure_new_york": {
+    "15": 10,
+    "16": 9,
+    "14": 4,
+    "13": 3,
+    "17": 1,
+    "18": 1
+   },
+   "interruptions_duree_h": {
+    "P50": 1.0,
+    "P90": 15.950000000000005,
+    "P100": 24.0
+   }
+  },
+  "fermetures_admises": [],
+  "recoupement": {
+   "reference": "taux de midi H.10 (DEXUSUK × DEXJPUS)",
+   "heure_new_york": "12:00",
+   "par_decalage_demi_heures": {
+    "-4": {
+     "jours": 1499,
+     "corr_variations": 0.8636081967415071,
+     "ecart_median_bps": -3.6453925972157464,
+     "ecart_abs_median_bps": 12.626366637638053,
+     "ecart_abs_P95_bps": 44.85043522441134
+    },
+    "-3": {
+     "jours": 1499,
+     "corr_variations": 0.90914542842329,
+     "ecart_median_bps": -3.6208428751660637,
+     "ecart_abs_median_bps": 9.969645881199307,
+     "ecart_abs_P95_bps": 38.25591661586445
+    },
+    "-2": {
+     "jours": 1499,
+     "corr_variations": 0.9499667535003828,
+     "ecart_median_bps": -2.9766006867726347,
+     "ecart_abs_median_bps": 7.785644562041671,
+     "ecart_abs_P95_bps": 29.005087042129414
+    },
+    "-1": {
+     "jours": 1499,
+     "corr_variations": 0.9771690584951208,
+     "ecart_median_bps": -2.700297146172037,
+     "ecart_abs_median_bps": 5.092527615627729,
+     "ecart_abs_P95_bps": 20.099090648126428
+    },
+    "0": {
+     "jours": 1499,
+     "corr_variations": 0.9997081582499444,
+     "ecart_median_bps": -1.8822783728977832,
+     "ecart_abs_median_bps": 1.8940247116883135,
+     "ecart_abs_P95_bps": 3.513615779332512
+    },
+    "1": {
+     "jours": 1499,
+     "corr_variations": 0.9838647624839714,
+     "ecart_median_bps": -1.7801994585242564,
+     "ecart_abs_median_bps": 4.410900590696709,
+     "ecart_abs_P95_bps": 17.25765316480121
+    },
+    "2": {
+     "jours": 1499,
+     "corr_variations": 0.968298542248993,
+     "ecart_median_bps": -1.9425136827966316,
+     "ecart_abs_median_bps": 5.585253966552406,
+     "ecart_abs_P95_bps": 21.875275417154363
+    },
+    "3": {
+     "jours": 1499,
+     "corr_variations": 0.9458101357051114,
+     "ecart_median_bps": -1.4943404850642494,
+     "ecart_abs_median_bps": 6.976329973544804,
+     "ecart_abs_P95_bps": 25.978185269332922
+    },
+    "4": {
+     "jours": 1499,
+     "corr_variations": 0.9339277230547255,
+     "ecart_median_bps": -1.0754027046178116,
+     "ecart_abs_median_bps": 7.306867958195573,
+     "ecart_abs_P95_bps": 30.688159155260458
+    }
+   },
+   "meilleur_decalage_demi_heures": 0,
+   "valide": true,
+   "critere": {
+    "corr_min": 0.95,
+    "decalage_max": 1,
+    "ecart_median_max_bps": 10.0
+   }
+  },
+  "nom": "GBP/JPY au comptant (Saxo FxSpot, bid)"
+ },
+ "TLT": {
+  "doc": {
+   "rolls": "sans objet : CFD sur l'indice au comptant, FX au comptant ou CFD sur ETF (aucune échéance) ; contrôle dans l'audit",
+   "prix": "dernier prix traité OHLC (Open, High, Low, Close) et volume",
+   "timezone": "UTC (début de barre)",
+   "couverture_demandee": "2020-01-01 00:00 → 2025-12-31 23:30 UTC ; 2026 jamais demandé",
+   "symbol": "TLT:xnas",
+   "description": "iShares 20+ Year Treasury Bond  ETF",
+   "uic": 3441903,
+   "asset_type": "CfdOnEtf",
+   "exchange_id": "NASDAQ",
+   "first_sample_time": "2016-02-02 14:32:00+00:00",
+   "source": "saxo-openapi",
+   "sha256": "25367f6ed9bf2fec6e4cae8104b9f7f6e22402296acc54b2f0efc3ba29c5e7dd",
+   "premiere_barre": "2020-01-02 14:30:00+00:00",
+   "derniere_barre": "2025-12-31 20:30:00+00:00",
+   "barres": 19532
+  },
+  "barres": {
+   "n_barres": 19532,
+   "premiere": "2020-01-02 14:30:00+00:00",
+   "derniere": "2025-12-31 20:30:00+00:00",
+   "doublons": 0,
+   "desordre": 0,
+   "part_barres_24_7": 0.18578372157172343,
+   "barres_par_annee": {
+    "2020": 3276,
+    "2021": 3270,
+    "2022": 3257,
+    "2023": 3239,
+    "2024": 3258,
+    "2025": 3232
+   },
+   "prix_non_positifs": 0,
+   "incoherences_ohlc": 0,
+   "barres_plates": 0,
+   "barres_volume_nul": 0,
+   "trous": {
+    "n": 1508,
+    "barres_manquantes": 85601,
+    "classes": {
+     "<= 2 h": {
+      "n": 1,
+      "barres_manquantes": 1
+     },
+     "<= 3 jours": {
+      "n": 1464,
+      "barres_manquantes": 77891
+     },
+     "> 3 jours": {
+      "n": 43,
+      "barres_manquantes": 7709
+     }
+    },
+    "plus_longs": [
+     {
+      "apres": "2020-12-24 17:30:00+00:00",
+      "reprise": "2020-12-28 14:30:00+00:00",
+      "duree_h": 92.5
+     },
+     {
+      "apres": "2025-07-03 16:30:00+00:00",
+      "reprise": "2025-07-07 13:30:00+00:00",
+      "duree_h": 92.5
+     },
+     {
+      "apres": "2020-01-17 20:30:00+00:00",
+      "reprise": "2020-01-21 14:30:00+00:00",
+      "duree_h": 89.5
+     },
+     {
+      "apres": "2020-02-14 20:30:00+00:00",
+      "reprise": "2020-02-18 14:30:00+00:00",
+      "duree_h": 89.5
+     },
+     {
+      "apres": "2020-04-09 19:30:00+00:00",
+      "reprise": "2020-04-13 13:30:00+00:00",
+      "duree_h": 89.5
+     },
+     {
+      "apres": "2020-05-22 19:30:00+00:00",
+      "reprise": "2020-05-26 13:30:00+00:00",
+      "duree_h": 89.5
+     },
+     {
+      "apres": "2020-07-02 19:30:00+00:00",
+      "reprise": "2020-07-06 13:30:00+00:00",
+      "duree_h": 89.5
+     },
+     {
+      "apres": "2020-09-04 19:30:00+00:00",
+      "reprise": "2020-09-08 13:30:00+00:00",
+      "duree_h": 89.5
+     },
+     {
+      "apres": "2020-12-31 20:30:00+00:00",
+      "reprise": "2021-01-04 14:30:00+00:00",
+      "duree_h": 89.5
+     },
+     {
+      "apres": "2021-01-15 20:30:00+00:00",
+      "reprise": "2021-01-19 14:30:00+00:00",
+      "duree_h": 89.5
+     }
+    ]
+   },
+   "barres_par_heure_utc": {
+    "13": 992,
+    "14": 2499,
+    "15": 3016,
+    "16": 3016,
+    "17": 3010,
+    "18": 2992,
+    "19": 2992,
+    "20": 1015
+   },
+   "barres_par_jour": {
+    "0": 3648,
+    "1": 4050,
+    "2": 4018,
+    "3": 3926,
+    "4": 3890
+   },
+   "sauts": {
+    "ecart_ouverture_bps": {
+     "P50": 0.0,
+     "P90": 1.1439684277192939,
+     "P99": 109.56401591981763,
+     "P99.9": 215.68728170930297,
+     "P100": 713.2869143317814
+    },
+    "ecart_ouverture_apres_trou_bps": {
+     "P50": 46.971835953416985,
+     "P90": 119.275977235743,
+     "P99": 223.61345768122612,
+     "P99.9": 486.95183040286224,
+     "P100": 713.2869143317814
+    },
+    "rendement_close_bps": {
+     "P50": 9.512938312532459,
+     "P90": 35.44913891874159,
+     "P99": 121.5129438109384,
+     "P99.9": 242.28420274742624,
+     "P100": 554.6072775659986
+    },
+    "plus_grands_ecarts_ouverture": [
+     {
+      "time": "2020-03-09 13:30:00+00:00",
+      "bps": 713.2869143317814
+     },
+     {
+      "time": "2020-03-06 14:30:00+00:00",
+      "bps": 539.0783967054402
+     },
+     {
+      "time": "2020-03-12 13:30:00+00:00",
+      "bps": 436.26465646363545
+     },
+     {
+      "time": "2020-03-16 13:30:00+00:00",
+      "bps": 372.87180216555754
+     },
+     {
+      "time": "2024-11-06 14:30:00+00:00",
+      "bps": 339.98230030588496
+     },
+     {
+      "time": "2020-03-20 13:30:00+00:00",
+      "bps": 332.9440759523703
+     },
+     {
+      "time": "2020-03-24 13:30:00+00:00",
+      "bps": 298.74850735043486
+     },
+     {
+      "time": "2025-04-23 13:30:00+00:00",
+      "bps": 273.73972000421674
+     },
+     {
+      "time": "2023-01-03 14:30:00+00:00",
+      "bps": 261.7120027021289
+     },
+     {
+      "time": "2023-03-15 13:30:00+00:00",
+      "bps": 255.14733544663204
+     }
+    ],
+    "plus_grands_rendements": [
+     {
+      "time": "2020-03-06 14:30:00+00:00",
+      "bps": 554.6072775659986
+     },
+     {
+      "time": "2020-03-09 13:30:00+00:00",
+      "bps": 546.6351574382547
+     },
+     {
+      "time": "2020-03-18 19:00:00+00:00",
+      "bps": 347.7286201942933
+     },
+     {
+      "time": "2020-03-16 13:30:00+00:00",
+      "bps": 343.5233780902392
+     },
+     {
+      "time": "2020-03-20 13:30:00+00:00",
+      "bps": 333.59637039831307
+     },
+     {
+      "time": "2023-03-15 13:30:00+00:00",
+      "bps": 320.4887421991352
+     },
+     {
+      "time": "2024-11-06 14:30:00+00:00",
+      "bps": 311.5755638505651
+     },
+     {
+      "time": "2020-03-11 19:30:00+00:00",
+      "bps": 310.7168199339812
+     },
+     {
+      "time": "2022-11-10 14:30:00+00:00",
+      "bps": 309.0937567133814
+     },
+     {
+      "time": "2020-03-12 13:30:00+00:00",
+      "bps": 294.60177987775575
+     }
+    ]
+   }
+  },
+  "seances": {
+   "heures_utc_sans_barre_janvier": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    21,
+    22,
+    23
+   ],
+   "heures_utc_sans_barre_juillet": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    20,
+    21,
+    22,
+    23
+   ],
+   "barres_le_samedi": 0,
+   "pause_new_york": {
+    "semaines": 314,
+    "pause_17h_exactement": 0,
+    "pause_17h_et_autres_heures": 314,
+    "sans_pause_17h": 0
+   },
+   "ouverture_dimanche_heure_new_york": {}
+  },
+  "integrite": [],
+  "couverture": [],
+  "signaux": {
+   "n_signaux": 1282,
+   "signaux_par_mois": 17.815717383860292,
+   "part_flips": 0.7784711388455539,
+   "part_x1_retourne": 0.4875195007800312,
+   "leg_atr": {
+    "P10": 1.9156901312865917,
+    "P25": 2.3829107836115195,
+    "P50": 3.1808996569193875,
+    "P75": 4.639445105805868,
+    "P90": 6.5697415483660375
+   },
+   "retrace_ratio": {
+    "P10": 0.15696564584379635,
+    "P25": 0.3115904196306195,
+    "P50": 0.5911534701857327,
+    "P75": 0.8702069385270828,
+    "P90": 1.1247743682310358
+   },
+   "nis_z_100": {
+    "P10": -0.5371880413124791,
+    "P25": -0.26933204169966163,
+    "P50": 0.21521663783451692,
+    "P75": 1.1087949091381,
+    "P90": 2.4246501439401538
+   },
+   "atr14_bps": {
+    "P10": 17.484822882880668,
+    "P25": 20.77765853919808,
+    "P50": 25.231390937536165,
+    "P75": 32.926690649653544,
+    "P90": 41.24007286142869
+   },
+   "prev_seg_len": {
+    "P10": 7.0,
+    "P25": 8.0,
+    "P50": 11.0,
+    "P75": 13.0,
+    "P90": 18.0
+   },
+   "mediane_locale_leg_atr": 3.1808996569193875,
+   "p75_local_nis_z_100": 1.1087949091381,
+   "part_leg_sous_seuil_btc": 0.40249609984399376,
+   "part_nis_au_dessus_seuil_btc": 0.22464898595943839,
+   "part_nis_au_dessus_seuil_btc_dans_R2": 0.2744360902255639,
+   "nis_nan": 0,
+   "familles": {
+    "F1": 447,
+    "F2a": 209,
+    "F2b": 188,
+    "F3": 234,
+    "F4": 110,
+    "F5": 94
+   },
+   "regimes": {
+    "R1": 398,
+    "R2_avant_nis": 266,
+    "R3": 451,
+    "hors_regimes": 167
+   },
+   "nis_exclus": 73,
+   "univers_RE1": 193,
+   "F2b": 71,
+   "F3": 122,
+   "par_annee": [
+    {
+     "annee": 2020,
+     "signaux": 184,
+     "atr14_bps_median": 24.590489413055323,
+     "part_nis_au_dessus_seuil_btc": 0.2608695652173913,
+     "univers_RE1": 28
+    },
+    {
+     "annee": 2021,
+     "signaux": 228,
+     "atr14_bps_median": 22.688682080192226,
+     "part_nis_au_dessus_seuil_btc": 0.18859649122807018,
+     "univers_RE1": 31
+    },
+    {
+     "annee": 2022,
+     "signaux": 213,
+     "atr14_bps_median": 36.915504254787926,
+     "part_nis_au_dessus_seuil_btc": 0.215962441314554,
+     "univers_RE1": 36
+    },
+    {
+     "annee": 2023,
+     "signaux": 222,
+     "atr14_bps_median": 29.03323370114278,
+     "part_nis_au_dessus_seuil_btc": 0.21621621621621623,
+     "univers_RE1": 40
+    },
+    {
+     "annee": 2024,
+     "signaux": 210,
+     "atr14_bps_median": 23.123276532423247,
+     "part_nis_au_dessus_seuil_btc": 0.23333333333333334,
+     "univers_RE1": 24
+    },
+    {
+     "annee": 2025,
+     "signaux": 225,
+     "atr14_bps_median": 21.186969364345178,
+     "part_nis_au_dessus_seuil_btc": 0.24,
+     "univers_RE1": 34
+    }
+   ]
+  },
+  "annees_echantillon": 5.995608031028976,
+  "gaps_ouverture": {
+   "seances": 1508,
+   "part_barres_ouverture": 0.07720663526520581,
+   "ecart_abs_bps": {
+    "P50": 46.971835953416985,
+    "P90": 119.275977235743,
+    "P99": 223.61345768122612
+   },
+   "ecart_abs_atr": {
+    "P50": 1.9332531859726945,
+    "P90": 4.5620017134334985,
+    "P99": 7.872223437460918
+   },
+   "ecart_moyen_bps": -3.4225857767704557,
+   "part_ecarts_sup_1_atr": 0.7347480106100795,
+   "tr_en_atr_P50_ouverture": 2.7436241003030033,
+   "tr_en_atr_P50_autres": 0.7408533342505631,
+   "part_tr_barres_ouverture": 0.21357069708733029,
+   "part_signaux_barre_ouverture": 0.12090483619344773,
+   "part_signaux_derniere_barre": 0.1419656786271451,
+   "nis_P50_ouverture": 1.2240522193247967,
+   "nis_P50_autres": 0.14784995094470962,
+   "part_nis_sup_seuil_ouverture": 0.4967741935483871,
+   "part_nis_sup_seuil_autres": 0.18722271517302574,
+   "part_R2_exclus_ouverture": 0.6857142857142857,
+   "part_R2_exclus_autres": 0.12755102040816327,
+   "univers_RE1_sur_barre_ouverture": 22,
+   "univers_RE1": 193
+  },
+  "semaine": {
+   "reprises": 327,
+   "ouverture_new_york": {
+    "lun 09:30": 281,
+    "mar 09:30": 32,
+    "ven 09:30": 10,
+    "jeu 09:30": 3,
+    "mer 09:30": 1
+   },
+   "fin_new_york": {
+    "ven 16:00": 296,
+    "jeu 16:00": 9,
+    "mer 16:00": 8,
+    "ven 13:00": 6,
+    "jeu 13:00": 2,
+    "mar 16:00": 2
+   },
+   "interruptions_en_semaine": 1181,
+   "interruptions_barres_manquantes": 41300,
+   "interruptions_par_annee": {
+    "2020": 200,
+    "2021": 199,
+    "2022": 198,
+    "2023": 196,
+    "2024": 195,
+    "2025": 193
+   },
+   "interruptions_heure_new_york": {
+    "9": 1180,
+    "10": 1
+   },
+   "interruptions_duree_h": {
+    "P50": 18.0,
+    "P90": 18.0,
+    "P100": 18.0
+   }
+  },
+  "fermetures_admises": [],
+  "nom": "CFD sur ETF TLT, taux longs américains (Saxo, prix traités, séance)"
+ },
+ "USO": {
+  "doc": {
+   "rolls": "sans objet : CFD sur l'indice au comptant, FX au comptant ou CFD sur ETF (aucune échéance) ; contrôle dans l'audit",
+   "prix": "dernier prix traité OHLC (Open, High, Low, Close) et volume",
+   "timezone": "UTC (début de barre)",
+   "couverture_demandee": "2020-01-01 00:00 → 2025-12-31 23:30 UTC ; 2026 jamais demandé",
+   "symbol": "USO:arcx",
+   "description": "United States Oil ETF (PTP)",
+   "uic": 35959,
+   "asset_type": "CfdOnEtf",
+   "exchange_id": "NYSE_ARCA",
+   "first_sample_time": "2008-11-25 15:30:00+00:00",
+   "source": "saxo-openapi",
+   "sha256": "5b458f8913ac5bcc20c6426e789e1b2c0737ece827223f4adf4b6a1c3446f7fe",
+   "premiere_barre": "2020-01-02 14:30:00+00:00",
+   "derniere_barre": "2025-12-31 20:30:00+00:00",
+   "barres": 19531
+  },
+  "barres": {
+   "n_barres": 19531,
+   "premiere": "2020-01-02 14:30:00+00:00",
+   "derniere": "2025-12-31 20:30:00+00:00",
+   "doublons": 0,
+   "desordre": 0,
+   "part_barres_24_7": 0.1857742098104306,
+   "barres_par_annee": {
+    "2020": 3276,
+    "2021": 3270,
+    "2022": 3257,
+    "2023": 3239,
+    "2024": 3257,
+    "2025": 3232
+   },
+   "prix_non_positifs": 0,
+   "incoherences_ohlc": 0,
+   "barres_plates": 0,
+   "barres_volume_nul": 0,
+   "trous": {
+    "n": 1509,
+    "barres_manquantes": 85602,
+    "classes": {
+     "<= 2 h": {
+      "n": 2,
+      "barres_manquantes": 2
+     },
+     "<= 3 jours": {
+      "n": 1464,
+      "barres_manquantes": 77891
+     },
+     "> 3 jours": {
+      "n": 43,
+      "barres_manquantes": 7709
+     }
+    },
+    "plus_longs": [
+     {
+      "apres": "2020-12-24 17:30:00+00:00",
+      "reprise": "2020-12-28 14:30:00+00:00",
+      "duree_h": 92.5
+     },
+     {
+      "apres": "2025-07-03 16:30:00+00:00",
+      "reprise": "2025-07-07 13:30:00+00:00",
+      "duree_h": 92.5
+     },
+     {
+      "apres": "2020-01-17 20:30:00+00:00",
+      "reprise": "2020-01-21 14:30:00+00:00",
+      "duree_h": 89.5
+     },
+     {
+      "apres": "2020-02-14 20:30:00+00:00",
+      "reprise": "2020-02-18 14:30:00+00:00",
+      "duree_h": 89.5
+     },
+     {
+      "apres": "2020-04-09 19:30:00+00:00",
+      "reprise": "2020-04-13 13:30:00+00:00",
+      "duree_h": 89.5
+     },
+     {
+      "apres": "2020-05-22 19:30:00+00:00",
+      "reprise": "2020-05-26 13:30:00+00:00",
+      "duree_h": 89.5
+     },
+     {
+      "apres": "2020-07-02 19:30:00+00:00",
+      "reprise": "2020-07-06 13:30:00+00:00",
+      "duree_h": 89.5
+     },
+     {
+      "apres": "2020-09-04 19:30:00+00:00",
+      "reprise": "2020-09-08 13:30:00+00:00",
+      "duree_h": 89.5
+     },
+     {
+      "apres": "2020-12-31 20:30:00+00:00",
+      "reprise": "2021-01-04 14:30:00+00:00",
+      "duree_h": 89.5
+     },
+     {
+      "apres": "2021-01-15 20:30:00+00:00",
+      "reprise": "2021-01-19 14:30:00+00:00",
+      "duree_h": 89.5
+     }
+    ]
+   },
+   "barres_par_heure_utc": {
+    "13": 992,
+    "14": 2499,
+    "15": 3015,
+    "16": 3016,
+    "17": 3010,
+    "18": 2992,
+    "19": 2992,
+    "20": 1015
+   },
+   "barres_par_jour": {
+    "0": 3647,
+    "1": 4050,
+    "2": 4018,
+    "3": 3926,
+    "4": 3890
+   },
+   "sauts": {
+    "ecart_ouverture_bps": {
+     "P50": 0.0,
+     "P90": 5.886856478381497,
+     "P99": 243.1773382329614,
+     "P99.9": 620.3391428932515,
+     "P100": 2469.058979961401
+    },
+    "ecart_ouverture_apres_trou_bps": {
+     "P50": 87.63516909873739,
+     "P90": 278.4035847155574,
+     "P99": 655.566221737129,
+     "P99.9": 1409.6667271452707,
+     "P100": 2469.058979961401
+    },
+    "rendement_close_bps": {
+     "P50": 21.10826689012301,
+     "P90": 81.21697141104568,
+     "P99": 293.4095901389845,
+     "P99.9": 702.4740643981633,
+     "P100": 2265.8589550518263
+    },
+    "plus_grands_ecarts_ouverture": [
+     {
+      "time": "2020-03-09 13:30:00+00:00",
+      "bps": 2469.058979961401
+     },
+     {
+      "time": "2020-04-21 13:30:00+00:00",
+      "bps": 1617.3492318556623
+     },
+     {
+      "time": "2020-03-18 13:30:00+00:00",
+      "bps": 1208.5254036854478
+     },
+     {
+      "time": "2020-04-27 13:30:00+00:00",
+      "bps": 1187.4875277634237
+     },
+     {
+      "time": "2020-04-20 13:30:00+00:00",
+      "bps": 1130.4369029248692
+     },
+     {
+      "time": "2020-04-03 13:30:00+00:00",
+      "bps": 1092.6677062489143
+     },
+     {
+      "time": "2020-03-16 13:30:00+00:00",
+      "bps": 954.5944467511472
+     },
+     {
+      "time": "2020-03-10 13:30:00+00:00",
+      "bps": 838.1096460547459
+     },
+     {
+      "time": "2020-11-09 14:30:00+00:00",
+      "bps": 770.4499009521064
+     },
+     {
+      "time": "2025-04-04 13:30:00+00:00",
+      "bps": 769.3335985835869
+     }
+    ],
+    "plus_grands_rendements": [
+     {
+      "time": "2020-03-09 13:30:00+00:00",
+      "bps": 2265.8589550518263
+     },
+     {
+      "time": "2020-04-27 13:30:00+00:00",
+      "bps": 1677.5633188303696
+     },
+     {
+      "time": "2020-04-21 13:30:00+00:00",
+      "bps": 1461.8251017808132
+     },
+     {
+      "time": "2020-04-02 14:30:00+00:00",
+      "bps": 1396.688368399674
+     },
+     {
+      "time": "2020-04-21 18:30:00+00:00",
+      "bps": 1361.3217432458011
+     },
+     {
+      "time": "2020-03-18 13:30:00+00:00",
+      "bps": 1090.6458461650243
+     },
+     {
+      "time": "2020-03-20 18:00:00+00:00",
+      "bps": 929.9625667392773
+     },
+     {
+      "time": "2020-03-18 18:30:00+00:00",
+      "bps": 879.6877294595722
+     },
+     {
+      "time": "2020-04-21 16:00:00+00:00",
+      "bps": 879.3007250670224
+     },
+     {
+      "time": "2020-03-16 13:30:00+00:00",
+      "bps": 840.3074885149204
+     }
+    ]
+   }
+  },
+  "seances": {
+   "heures_utc_sans_barre_janvier": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    21,
+    22,
+    23
+   ],
+   "heures_utc_sans_barre_juillet": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    20,
+    21,
+    22,
+    23
+   ],
+   "barres_le_samedi": 0,
+   "pause_new_york": {
+    "semaines": 314,
+    "pause_17h_exactement": 0,
+    "pause_17h_et_autres_heures": 314,
+    "sans_pause_17h": 0
+   },
+   "ouverture_dimanche_heure_new_york": {}
+  },
+  "integrite": [],
+  "couverture": [],
+  "signaux": {
+   "n_signaux": 1289,
+   "signaux_par_mois": 17.91299509188449,
+   "part_flips": 0.78277734678045,
+   "part_x1_retourne": 0.5166795965865012,
+   "leg_atr": {
+    "P10": 2.0330048289350238,
+    "P25": 2.450015124709689,
+    "P50": 3.222240988922479,
+    "P75": 4.396940761780757,
+    "P90": 6.255721134722656
+   },
+   "retrace_ratio": {
+    "P10": 0.16648841354723665,
+    "P25": 0.32467532467532434,
+    "P50": 0.6086956521739112,
+    "P75": 0.8785046728972014,
+    "P90": 1.1280107047279193
+   },
+   "nis_z_100": {
+    "P10": -0.509960268905863,
+    "P25": -0.2897359602628313,
+    "P50": 0.2503105215565862,
+    "P75": 1.282295010047775,
+    "P90": 2.8089036442332653
+   },
+   "atr14_bps": {
+    "P10": 39.412631815993876,
+    "P25": 45.57235446751115,
+    "P50": 55.941467263739376,
+    "P75": 72.17634895750273,
+    "P90": 95.4660535564163
+   },
+   "prev_seg_len": {
+    "P10": 7.0,
+    "P25": 8.0,
+    "P50": 10.0,
+    "P75": 13.0,
+    "P90": 17.0
+   },
+   "mediane_locale_leg_atr": 3.222240988922479,
+   "p75_local_nis_z_100": 1.282295010047775,
+   "part_leg_sous_seuil_btc": 0.3708301008533747,
+   "part_nis_au_dessus_seuil_btc": 0.2622187742435997,
+   "part_nis_au_dessus_seuil_btc_dans_R2": 0.3183673469387755,
+   "nis_nan": 0,
+   "familles": {
+    "F1": 408,
+    "F2a": 239,
+    "F2b": 184,
+    "F3": 187,
+    "F4": 164,
+    "F5": 107
+   },
+   "regimes": {
+    "R1": 393,
+    "R2_avant_nis": 245,
+    "R3": 513,
+    "hors_regimes": 138
+   },
+   "nis_exclus": 78,
+   "univers_RE1": 167,
+   "F2b": 80,
+   "F3": 87,
+   "par_annee": [
+    {
+     "annee": 2020,
+     "signaux": 185,
+     "atr14_bps_median": 72.77213108988175,
+     "part_nis_au_dessus_seuil_btc": 0.24324324324324326,
+     "univers_RE1": 38
+    },
+    {
+     "annee": 2021,
+     "signaux": 220,
+     "atr14_bps_median": 50.630653982219044,
+     "part_nis_au_dessus_seuil_btc": 0.2681818181818182,
+     "univers_RE1": 30
+    },
+    {
+     "annee": 2022,
+     "signaux": 218,
+     "atr14_bps_median": 76.91750401110309,
+     "part_nis_au_dessus_seuil_btc": 0.25229357798165136,
+     "univers_RE1": 29
+    },
+    {
+     "annee": 2023,
+     "signaux": 224,
+     "atr14_bps_median": 57.43245612581041,
+     "part_nis_au_dessus_seuil_btc": 0.23660714285714285,
+     "univers_RE1": 31
+    },
+    {
+     "annee": 2024,
+     "signaux": 228,
+     "atr14_bps_median": 48.00938416660989,
+     "part_nis_au_dessus_seuil_btc": 0.2982456140350877,
+     "univers_RE1": 21
+    },
+    {
+     "annee": 2025,
+     "signaux": 214,
+     "atr14_bps_median": 47.597146029238175,
+     "part_nis_au_dessus_seuil_btc": 0.27102803738317754,
+     "univers_RE1": 18
+    }
+   ]
+  },
+  "annees_echantillon": 5.995608031028976,
+  "gaps_ouverture": {
+   "seances": 1509,
+   "part_barres_ouverture": 0.07726178895089857,
+   "ecart_abs_bps": {
+    "P50": 87.63516909873739,
+    "P90": 278.4035847155574,
+    "P99": 655.566221737129
+   },
+   "ecart_abs_atr": {
+    "P50": 1.6271041693523758,
+    "P90": 4.568402933700668,
+    "P99": 8.316952539601571
+   },
+   "ecart_moyen_bps": 3.0826572658862417,
+   "part_ecarts_sup_1_atr": 0.6713055003313453,
+   "tr_en_atr_P50_ouverture": 2.4885356612662206,
+   "tr_en_atr_P50_autres": 0.749859892742122,
+   "part_tr_barres_ouverture": 0.2037664613477977,
+   "part_signaux_barre_ouverture": 0.13188518231186966,
+   "part_signaux_derniere_barre": 0.15050426687354537,
+   "nis_P50_ouverture": 1.8676801350785897,
+   "nis_P50_autres": 0.15994793958296172,
+   "part_nis_sup_seuil_ouverture": 0.5882352941176471,
+   "part_nis_sup_seuil_autres": 0.2126899016979446,
+   "part_R2_exclus_ouverture": 0.8032786885245902,
+   "part_R2_exclus_autres": 0.15760869565217392,
+   "univers_RE1_sur_barre_ouverture": 12,
+   "univers_RE1": 167
+  },
+  "semaine": {
+   "reprises": 327,
+   "ouverture_new_york": {
+    "lun 09:30": 281,
+    "mar 09:30": 32,
+    "ven 09:30": 10,
+    "jeu 09:30": 3,
+    "mer 09:30": 1
+   },
+   "fin_new_york": {
+    "ven 16:00": 296,
+    "jeu 16:00": 9,
+    "mer 16:00": 8,
+    "ven 13:00": 6,
+    "jeu 13:00": 2,
+    "mar 16:00": 2
+   },
+   "interruptions_en_semaine": 1182,
+   "interruptions_barres_manquantes": 41301,
+   "interruptions_par_annee": {
+    "2020": 200,
+    "2021": 199,
+    "2022": 198,
+    "2023": 196,
+    "2024": 196,
+    "2025": 193
+   },
+   "interruptions_heure_new_york": {
+    "9": 1180,
+    "10": 1,
+    "12": 1
+   },
+   "interruptions_duree_h": {
+    "P50": 18.0,
+    "P90": 18.0,
+    "P100": 18.0
+   }
+  },
+  "fermetures_admises": [],
+  "nom": "CFD sur ETF USO, pétrole WTI (Saxo, prix traités, séance)"
+ },
+ "SMH": {
+  "doc": {
+   "rolls": "sans objet : CFD sur l'indice au comptant, FX au comptant ou CFD sur ETF (aucune échéance) ; contrôle dans l'audit",
+   "prix": "dernier prix traité OHLC (Open, High, Low, Close) et volume",
+   "timezone": "UTC (début de barre)",
+   "couverture_demandee": "2020-01-01 00:00 → 2025-12-31 23:30 UTC ; 2026 jamais demandé",
+   "symbol": "SMH:xnas",
+   "description": "VanEck Vectors Semiconductor ETF",
+   "uic": 15709451,
+   "asset_type": "CfdOnEtf",
+   "exchange_id": "NASDAQ",
+   "first_sample_time": "2019-12-11 14:30:00+00:00",
+   "source": "saxo-openapi",
+   "sha256": "f4756d75335505ee14610c08d807269eefb501b2fc2a4034180e40163fa29977",
+   "premiere_barre": "2020-01-02 14:30:00+00:00",
+   "derniere_barre": "2025-12-31 20:30:00+00:00",
+   "barres": 19532
+  },
+  "barres": {
+   "n_barres": 19532,
+   "premiere": "2020-01-02 14:30:00+00:00",
+   "derniere": "2025-12-31 20:30:00+00:00",
+   "doublons": 0,
+   "desordre": 0,
+   "part_barres_24_7": 0.18578372157172343,
+   "barres_par_annee": {
+    "2020": 3276,
+    "2021": 3270,
+    "2022": 3257,
+    "2023": 3239,
+    "2024": 3258,
+    "2025": 3232
+   },
+   "prix_non_positifs": 0,
+   "incoherences_ohlc": 0,
+   "barres_plates": 1,
+   "barres_volume_nul": 0,
+   "trous": {
+    "n": 1508,
+    "barres_manquantes": 85601,
+    "classes": {
+     "<= 2 h": {
+      "n": 1,
+      "barres_manquantes": 1
+     },
+     "<= 3 jours": {
+      "n": 1464,
+      "barres_manquantes": 77891
+     },
+     "> 3 jours": {
+      "n": 43,
+      "barres_manquantes": 7709
+     }
+    },
+    "plus_longs": [
+     {
+      "apres": "2020-12-24 17:30:00+00:00",
+      "reprise": "2020-12-28 14:30:00+00:00",
+      "duree_h": 92.5
+     },
+     {
+      "apres": "2025-07-03 16:30:00+00:00",
+      "reprise": "2025-07-07 13:30:00+00:00",
+      "duree_h": 92.5
+     },
+     {
+      "apres": "2020-01-17 20:30:00+00:00",
+      "reprise": "2020-01-21 14:30:00+00:00",
+      "duree_h": 89.5
+     },
+     {
+      "apres": "2020-02-14 20:30:00+00:00",
+      "reprise": "2020-02-18 14:30:00+00:00",
+      "duree_h": 89.5
+     },
+     {
+      "apres": "2020-04-09 19:30:00+00:00",
+      "reprise": "2020-04-13 13:30:00+00:00",
+      "duree_h": 89.5
+     },
+     {
+      "apres": "2020-05-22 19:30:00+00:00",
+      "reprise": "2020-05-26 13:30:00+00:00",
+      "duree_h": 89.5
+     },
+     {
+      "apres": "2020-07-02 19:30:00+00:00",
+      "reprise": "2020-07-06 13:30:00+00:00",
+      "duree_h": 89.5
+     },
+     {
+      "apres": "2020-09-04 19:30:00+00:00",
+      "reprise": "2020-09-08 13:30:00+00:00",
+      "duree_h": 89.5
+     },
+     {
+      "apres": "2020-12-31 20:30:00+00:00",
+      "reprise": "2021-01-04 14:30:00+00:00",
+      "duree_h": 89.5
+     },
+     {
+      "apres": "2021-01-15 20:30:00+00:00",
+      "reprise": "2021-01-19 14:30:00+00:00",
+      "duree_h": 89.5
+     }
+    ]
+   },
+   "barres_par_heure_utc": {
+    "13": 992,
+    "14": 2499,
+    "15": 3016,
+    "16": 3016,
+    "17": 3010,
+    "18": 2992,
+    "19": 2992,
+    "20": 1015
+   },
+   "barres_par_jour": {
+    "0": 3648,
+    "1": 4050,
+    "2": 4018,
+    "3": 3926,
+    "4": 3890
+   },
+   "sauts": {
+    "ecart_ouverture_bps": {
+     "P50": 0.0,
+     "P90": 2.6829689128175773,
+     "P99": 189.25796807495377,
+     "P99.9": 455.528613375537,
+     "P100": 1244.3597189693182
+    },
+    "ecart_ouverture_apres_trou_bps": {
+     "P50": 76.15460903113181,
+     "P90": 212.1407193745433,
+     "P99": 490.379599555959,
+     "P99.9": 860.4838198125773,
+     "P100": 1244.3597189693182
+    },
+    "rendement_close_bps": {
+     "P50": 21.579148838104523,
+     "P90": 77.9569742952991,
+     "P99": 246.0443865534576,
+     "P99.9": 462.5339200771581,
+     "P100": 942.8669836834925
+    },
+    "plus_grands_ecarts_ouverture": [
+     {
+      "time": "2020-03-16 13:30:00+00:00",
+      "bps": 1244.3597189693182
+     },
+     {
+      "time": "2020-03-09 13:30:00+00:00",
+      "bps": 889.1574519091465
+     },
+     {
+      "time": "2024-08-05 13:30:00+00:00",
+      "bps": 832.601964539169
+     },
+     {
+      "time": "2020-03-18 13:30:00+00:00",
+      "bps": 775.96278690953
+     },
+     {
+      "time": "2025-01-27 14:30:00+00:00",
+      "bps": 756.2976692862405
+     },
+     {
+      "time": "2020-03-12 13:30:00+00:00",
+      "bps": 724.8126082103698
+     },
+     {
+      "time": "2023-05-25 13:30:00+00:00",
+      "bps": 643.0171406898188
+     },
+     {
+      "time": "2020-03-24 13:30:00+00:00",
+      "bps": 618.7540371808745
+     },
+     {
+      "time": "2025-05-12 13:30:00+00:00",
+      "bps": 577.3508645503284
+     },
+     {
+      "time": "2022-11-10 14:30:00+00:00",
+      "bps": 566.2267779888722
+     }
+    ],
+    "plus_grands_rendements": [
+     {
+      "time": "2020-03-16 13:30:00+00:00",
+      "bps": 942.8669836834925
+     },
+     {
+      "time": "2020-03-24 13:30:00+00:00",
+      "bps": 717.813345268481
+     },
+     {
+      "time": "2025-01-27 14:30:00+00:00",
+      "bps": 697.0869699817245
+     },
+     {
+      "time": "2020-04-06 13:30:00+00:00",
+      "bps": 673.0156937700146
+     },
+     {
+      "time": "2025-04-10 13:30:00+00:00",
+      "bps": 645.543317892076
+     },
+     {
+      "time": "2022-11-10 14:30:00+00:00",
+      "bps": 623.0630535032598
+     },
+     {
+      "time": "2023-05-25 13:30:00+00:00",
+      "bps": 613.9747910816959
+     },
+     {
+      "time": "2025-04-09 17:00:00+00:00",
+      "bps": 604.1717180715348
+     },
+     {
+      "time": "2024-02-22 14:30:00+00:00",
+      "bps": 587.4598927953626
+     },
+     {
+      "time": "2020-03-12 13:30:00+00:00",
+      "bps": 582.3926185339218
+     }
+    ]
+   }
+  },
+  "seances": {
+   "heures_utc_sans_barre_janvier": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    21,
+    22,
+    23
+   ],
+   "heures_utc_sans_barre_juillet": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    20,
+    21,
+    22,
+    23
+   ],
+   "barres_le_samedi": 0,
+   "pause_new_york": {
+    "semaines": 314,
+    "pause_17h_exactement": 0,
+    "pause_17h_et_autres_heures": 314,
+    "sans_pause_17h": 0
+   },
+   "ouverture_dimanche_heure_new_york": {}
+  },
+  "integrite": [],
+  "couverture": [],
+  "signaux": {
+   "n_signaux": 1271,
+   "signaux_par_mois": 17.66285241410798,
+   "part_flips": 0.7938630999213218,
+   "part_x1_retourne": 0.4815106215578285,
+   "leg_atr": {
+    "P10": 1.9902397224107429,
+    "P25": 2.462624084001889,
+    "P50": 3.201702901426042,
+    "P75": 4.5798575501458,
+    "P90": 6.412441025108937
+   },
+   "retrace_ratio": {
+    "P10": 0.14505893019038932,
+    "P25": 0.31726460619290864,
+    "P50": 0.566666666666663,
+    "P75": 0.8409382376447486,
+    "P90": 1.068285280728379
+   },
+   "nis_z_100": {
+    "P10": -0.5326977202580808,
+    "P25": -0.3068484380224832,
+    "P50": 0.2084187285048832,
+    "P75": 1.1884030024710535,
+    "P90": 2.6937223397915258
+   },
+   "atr14_bps": {
+    "P10": 37.999728379017135,
+    "P25": 46.211167386832685,
+    "P50": 58.06388082290486,
+    "P75": 74.41336852728647,
+    "P90": 94.5752266341493
+   },
+   "prev_seg_len": {
+    "P10": 7.0,
+    "P25": 9.0,
+    "P50": 11.0,
+    "P75": 13.0,
+    "P90": 18.0
+   },
+   "mediane_locale_leg_atr": 3.201702901426042,
+   "p75_local_nis_z_100": 1.1884030024710535,
+   "part_leg_sous_seuil_btc": 0.3697875688434304,
+   "part_nis_au_dessus_seuil_btc": 0.24468922108575925,
+   "part_nis_au_dessus_seuil_btc_dans_R2": 0.2445414847161572,
+   "nis_nan": 0,
+   "familles": {
+    "F1": 441,
+    "F2a": 249,
+    "F2b": 181,
+    "F3": 186,
+    "F4": 111,
+    "F5": 103
+   },
+   "regimes": {
+    "R1": 402,
+    "R2_avant_nis": 229,
+    "R3": 488,
+    "hors_regimes": 152
+   },
+   "nis_exclus": 56,
+   "univers_RE1": 173,
+   "F2b": 75,
+   "F3": 98,
+   "par_annee": [
+    {
+     "annee": 2020,
+     "signaux": 188,
+     "atr14_bps_median": 56.55514275745041,
+     "part_nis_au_dessus_seuil_btc": 0.22872340425531915,
+     "univers_RE1": 19
+    },
+    {
+     "annee": 2021,
+     "signaux": 208,
+     "atr14_bps_median": 48.16408379360436,
+     "part_nis_au_dessus_seuil_btc": 0.27884615384615385,
+     "univers_RE1": 24
+    },
+    {
+     "annee": 2022,
+     "signaux": 217,
+     "atr14_bps_median": 79.30998053999146,
+     "part_nis_au_dessus_seuil_btc": 0.2534562211981567,
+     "univers_RE1": 29
+    },
+    {
+     "annee": 2023,
+     "signaux": 224,
+     "atr14_bps_median": 51.883143385530076,
+     "part_nis_au_dessus_seuil_btc": 0.26339285714285715,
+     "univers_RE1": 33
+    },
+    {
+     "annee": 2024,
+     "signaux": 210,
+     "atr14_bps_median": 58.65944331448778,
+     "part_nis_au_dessus_seuil_btc": 0.24761904761904763,
+     "univers_RE1": 31
+    },
+    {
+     "annee": 2025,
+     "signaux": 224,
+     "atr14_bps_median": 55.8213117809882,
+     "part_nis_au_dessus_seuil_btc": 0.19642857142857142,
+     "univers_RE1": 37
+    }
+   ]
+  },
+  "annees_echantillon": 5.995608031028976,
+  "gaps_ouverture": {
+   "seances": 1508,
+   "part_barres_ouverture": 0.07720663526520581,
+   "ecart_abs_bps": {
+    "P50": 76.15460903113181,
+    "P90": 212.1407193745433,
+    "P99": 490.379599555959
+   },
+   "ecart_abs_atr": {
+    "P50": 1.4159801040994733,
+    "P90": 3.344257804964749,
+    "P99": 6.297183440510724
+   },
+   "ecart_moyen_bps": 10.51829499544695,
+   "part_ecarts_sup_1_atr": 0.6173740053050398,
+   "tr_en_atr_P50_ouverture": 2.678652045660139,
+   "tr_en_atr_P50_autres": 0.752349550792827,
+   "part_tr_barres_ouverture": 0.21054285124093935,
+   "part_signaux_barre_ouverture": 0.1054287962234461,
+   "part_signaux_derniere_barre": 0.12903225806451613,
+   "nis_P50_ouverture": 1.6183857332551095,
+   "nis_P50_autres": 0.14071043020340343,
+   "part_nis_sup_seuil_ouverture": 0.5895522388059702,
+   "part_nis_sup_seuil_autres": 0.2040457343887423,
+   "part_R2_exclus_ouverture": 0.6346153846153846,
+   "part_R2_exclus_autres": 0.12994350282485875,
+   "univers_RE1_sur_barre_ouverture": 19,
+   "univers_RE1": 173
+  },
+  "semaine": {
+   "reprises": 327,
+   "ouverture_new_york": {
+    "lun 09:30": 281,
+    "mar 09:30": 32,
+    "ven 09:30": 10,
+    "jeu 09:30": 3,
+    "mer 09:30": 1
+   },
+   "fin_new_york": {
+    "ven 16:00": 296,
+    "jeu 16:00": 9,
+    "mer 16:00": 8,
+    "ven 13:00": 6,
+    "jeu 13:00": 2,
+    "mar 16:00": 2
+   },
+   "interruptions_en_semaine": 1181,
+   "interruptions_barres_manquantes": 41300,
+   "interruptions_par_annee": {
+    "2020": 200,
+    "2021": 199,
+    "2022": 198,
+    "2023": 196,
+    "2024": 195,
+    "2025": 193
+   },
+   "interruptions_heure_new_york": {
+    "9": 1180,
+    "10": 1
+   },
+   "interruptions_duree_h": {
+    "P50": 18.0,
+    "P90": 18.0,
+    "P100": 18.0
+   }
+  },
+  "fermetures_admises": [],
+  "nom": "CFD sur ETF SMH, semi-conducteurs (Saxo, prix traités, séance)"
+ },
+ "URA": {
+  "doc": {
+   "rolls": "sans objet : CFD sur l'indice au comptant, FX au comptant ou CFD sur ETF (aucune échéance) ; contrôle dans l'audit",
+   "prix": "dernier prix traité OHLC (Open, High, Low, Close) et volume",
+   "timezone": "UTC (début de barre)",
+   "couverture_demandee": "2020-01-01 00:00 → 2025-12-31 23:30 UTC ; 2026 jamais demandé",
+   "symbol": "URA:arcx",
+   "description": "Global X Uranium ETF",
+   "uic": 49142,
+   "asset_type": "CfdOnEtf",
+   "exchange_id": "NYSE_ARCA",
+   "first_sample_time": "2010-11-05 15:43:00+00:00",
+   "source": "saxo-openapi",
+   "sha256": "df63955f53ec520fdea0557fb8bcd7745b31e86aaeb5402055754f4f105b79e3",
+   "premiere_barre": "2020-01-02 14:30:00+00:00",
+   "derniere_barre": "2025-12-31 20:30:00+00:00",
+   "barres": 19479
+  },
+  "barres": {
+   "n_barres": 19479,
+   "premiere": "2020-01-02 14:30:00+00:00",
+   "derniere": "2025-12-31 20:30:00+00:00",
+   "doublons": 0,
+   "desordre": 0,
+   "part_barres_24_7": 0.185279598223203,
+   "barres_par_annee": {
+    "2020": 3225,
+    "2021": 3269,
+    "2022": 3257,
+    "2023": 3239,
+    "2024": 3257,
+    "2025": 3232
+   },
+   "prix_non_positifs": 0,
+   "incoherences_ohlc": 0,
+   "barres_plates": 139,
+   "barres_volume_nul": 0,
+   "trous": {
+    "n": 1555,
+    "barres_manquantes": 85654,
+    "classes": {
+     "<= 2 h": {
+      "n": 48,
+      "barres_manquantes": 52
+     },
+     "<= 3 jours": {
+      "n": 1464,
+      "barres_manquantes": 77893
+     },
+     "> 3 jours": {
+      "n": 43,
+      "barres_manquantes": 7709
+     }
+    },
+    "plus_longs": [
+     {
+      "apres": "2020-12-24 17:30:00+00:00",
+      "reprise": "2020-12-28 14:30:00+00:00",
+      "duree_h": 92.5
+     },
+     {
+      "apres": "2025-07-03 16:30:00+00:00",
+      "reprise": "2025-07-07 13:30:00+00:00",
+      "duree_h": 92.5
+     },
+     {
+      "apres": "2020-01-17 20:30:00+00:00",
+      "reprise": "2020-01-21 14:30:00+00:00",
+      "duree_h": 89.5
+     },
+     {
+      "apres": "2020-02-14 20:30:00+00:00",
+      "reprise": "2020-02-18 14:30:00+00:00",
+      "duree_h": 89.5
+     },
+     {
+      "apres": "2020-04-09 19:30:00+00:00",
+      "reprise": "2020-04-13 13:30:00+00:00",
+      "duree_h": 89.5
+     },
+     {
+      "apres": "2020-05-22 19:30:00+00:00",
+      "reprise": "2020-05-26 13:30:00+00:00",
+      "duree_h": 89.5
+     },
+     {
+      "apres": "2020-07-02 19:30:00+00:00",
+      "reprise": "2020-07-06 13:30:00+00:00",
+      "duree_h": 89.5
+     },
+     {
+      "apres": "2020-09-04 19:30:00+00:00",
+      "reprise": "2020-09-08 13:30:00+00:00",
+      "duree_h": 89.5
+     },
+     {
+      "apres": "2020-12-31 20:30:00+00:00",
+      "reprise": "2021-01-04 14:30:00+00:00",
+      "duree_h": 89.5
+     },
+     {
+      "apres": "2021-01-15 20:30:00+00:00",
+      "reprise": "2021-01-19 14:30:00+00:00",
+      "duree_h": 89.5
+     }
+    ]
+   },
+   "barres_par_heure_utc": {
+    "13": 992,
+    "14": 2499,
+    "15": 3015,
+    "16": 3006,
+    "17": 2994,
+    "18": 2971,
+    "19": 2988,
+    "20": 1014
+   },
+   "barres_par_jour": {
+    "0": 3640,
+    "1": 4040,
+    "2": 4004,
+    "3": 3921,
+    "4": 3874
+   },
+   "sauts": {
+    "ecart_ouverture_bps": {
+     "P50": 0.0,
+     "P90": 19.911911704013452,
+     "P99": 189.43175210963548,
+     "P99.9": 463.675123348698,
+     "P100": 993.2266846907988
+    },
+    "ecart_ouverture_apres_trou_bps": {
+     "P50": 67.7968698537877,
+     "P90": 206.8798406346025,
+     "P99": 511.17660920618033,
+     "P99.9": 844.849418394501,
+     "P100": 993.2266846907988
+    },
+    "rendement_close_bps": {
+     "P50": 25.88960754748443,
+     "P90": 90.35102401232366,
+     "P99": 282.6484744834621,
+     "P99.9": 618.6998412352118,
+     "P100": 1349.1931789937075
+    },
+    "plus_grands_ecarts_ouverture": [
+     {
+      "time": "2020-03-12 13:30:00+00:00",
+      "bps": 993.2266846907988
+     },
+     {
+      "time": "2020-03-16 13:30:00+00:00",
+      "bps": 940.9732337911565
+     },
+     {
+      "time": "2022-03-04 14:30:00+00:00",
+      "bps": 767.4645417393879
+     },
+     {
+      "time": "2023-12-28 14:30:00+00:00",
+      "bps": 684.8383609800103
+     },
+     {
+      "time": "2024-08-05 13:30:00+00:00",
+      "bps": 683.5220050781678
+     },
+     {
+      "time": "2025-05-23 13:30:00+00:00",
+      "bps": 671.2108806727068
+     },
+     {
+      "time": "2020-03-18 13:30:00+00:00",
+      "bps": 607.8489106912185
+     },
+     {
+      "time": "2025-01-27 14:30:00+00:00",
+      "bps": 597.2427389394047
+     },
+     {
+      "time": "2025-10-13 13:30:00+00:00",
+      "bps": 576.8309248632165
+     },
+     {
+      "time": "2021-09-20 13:30:00+00:00",
+      "bps": 575.7274987239366
+     }
+    ],
+    "plus_grands_rendements": [
+     {
+      "time": "2020-03-16 13:30:00+00:00",
+      "bps": 1349.1931789937075
+     },
+     {
+      "time": "2020-03-09 13:30:00+00:00",
+      "bps": 1160.2578655351183
+     },
+     {
+      "time": "2020-03-12 13:30:00+00:00",
+      "bps": 1079.593662016714
+     },
+     {
+      "time": "2025-05-23 13:30:00+00:00",
+      "bps": 936.5127557650711
+     },
+     {
+      "time": "2020-03-24 13:30:00+00:00",
+      "bps": 859.8601397299204
+     },
+     {
+      "time": "2025-10-13 13:30:00+00:00",
+      "bps": 855.0004978908647
+     },
+     {
+      "time": "2022-08-24 13:30:00+00:00",
+      "bps": 796.2269201223282
+     },
+     {
+      "time": "2025-01-27 14:30:00+00:00",
+      "bps": 790.3328173288162
+     },
+     {
+      "time": "2021-09-13 13:30:00+00:00",
+      "bps": 753.0044885202533
+     },
+     {
+      "time": "2025-10-28 13:30:00+00:00",
+      "bps": 750.1501444962373
+     }
+    ]
+   }
+  },
+  "seances": {
+   "heures_utc_sans_barre_janvier": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    21,
+    22,
+    23
+   ],
+   "heures_utc_sans_barre_juillet": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    20,
+    21,
+    22,
+    23
+   ],
+   "barres_le_samedi": 0,
+   "pause_new_york": {
+    "semaines": 314,
+    "pause_17h_exactement": 0,
+    "pause_17h_et_autres_heures": 314,
+    "sans_pause_17h": 0
+   },
+   "ouverture_dimanche_heure_new_york": {}
+  },
+  "integrite": [],
+  "couverture": [],
+  "signaux": {
+   "n_signaux": 1272,
+   "signaux_par_mois": 17.676749229540007,
+   "part_flips": 0.7602201257861635,
+   "part_x1_retourne": 0.44025157232704404,
+   "leg_atr": {
+    "P10": 1.934333198824043,
+    "P25": 2.5298616927632995,
+    "P50": 3.430367280273902,
+    "P75": 4.761508821459644,
+    "P90": 6.724999009761667
+   },
+   "retrace_ratio": {
+    "P10": 0.15151515151514824,
+    "P25": 0.3067265395894421,
+    "P50": 0.5627626050420144,
+    "P75": 0.8428119401985497,
+    "P90": 1.0864783653846195
+   },
+   "nis_z_100": {
+    "P10": -0.5307960825527895,
+    "P25": -0.2984761911784335,
+    "P50": 0.15471760569527632,
+    "P75": 1.0841386686747048,
+    "P90": 2.488559614842199
+   },
+   "atr14_bps": {
+    "P10": 46.87731107764498,
+    "P25": 58.00594877857506,
+    "P50": 72.31474005233608,
+    "P75": 91.23931027609358,
+    "P90": 113.67438059153612
+   },
+   "prev_seg_len": {
+    "P10": 7.0,
+    "P25": 9.0,
+    "P50": 10.0,
+    "P75": 13.0,
+    "P90": 18.0
+   },
+   "mediane_locale_leg_atr": 3.430367280273902,
+   "p75_local_nis_z_100": 1.0841386686747048,
+   "part_leg_sous_seuil_btc": 0.33490566037735847,
+   "part_nis_au_dessus_seuil_btc": 0.22641509433962265,
+   "part_nis_au_dessus_seuil_btc_dans_R2": 0.271356783919598,
+   "nis_nan": 0,
+   "familles": {
+    "F1": 466,
+    "F2a": 256,
+    "F2b": 155,
+    "F3": 189,
+    "F4": 124,
+    "F5": 82
+   },
+   "regimes": {
+    "R1": 429,
+    "R2_avant_nis": 199,
+    "R3": 498,
+    "hors_regimes": 146
+   },
+   "nis_exclus": 54,
+   "univers_RE1": 145,
+   "F2b": 51,
+   "F3": 94,
+   "par_annee": [
+    {
+     "annee": 2020,
+     "signaux": 183,
+     "atr14_bps_median": 54.2790718629176,
+     "part_nis_au_dessus_seuil_btc": 0.18032786885245902,
+     "univers_RE1": 17
+    },
+    {
+     "annee": 2021,
+     "signaux": 214,
+     "atr14_bps_median": 84.88352374211377,
+     "part_nis_au_dessus_seuil_btc": 0.22429906542056074,
+     "univers_RE1": 24
+    },
+    {
+     "annee": 2022,
+     "signaux": 218,
+     "atr14_bps_median": 94.52758742938403,
+     "part_nis_au_dessus_seuil_btc": 0.22477064220183487,
+     "univers_RE1": 29
+    },
+    {
+     "annee": 2023,
+     "signaux": 224,
+     "atr14_bps_median": 58.42385905973426,
+     "part_nis_au_dessus_seuil_btc": 0.28125,
+     "univers_RE1": 35
+    },
+    {
+     "annee": 2024,
+     "signaux": 220,
+     "atr14_bps_median": 66.389359390001,
+     "part_nis_au_dessus_seuil_btc": 0.2318181818181818,
+     "univers_RE1": 20
+    },
+    {
+     "annee": 2025,
+     "signaux": 213,
+     "atr14_bps_median": 79.94819636372611,
+     "part_nis_au_dessus_seuil_btc": 0.20657276995305165,
+     "univers_RE1": 20
+    }
+   ]
+  },
+  "annees_echantillon": 5.995608031028976,
+  "gaps_ouverture": {
+   "seances": 1555,
+   "part_barres_ouverture": 0.07982956003901638,
+   "ecart_abs_bps": {
+    "P50": 67.7968698537877,
+    "P90": 206.8798406346025,
+    "P99": 511.17660920618033
+   },
+   "ecart_abs_atr": {
+    "P50": 1.0688832716948222,
+    "P90": 2.960301177020394,
+    "P99": 6.66969058421173
+   },
+   "ecart_moyen_bps": 18.610921507928047,
+   "part_ecarts_sup_1_atr": 0.5318327974276528,
+   "tr_en_atr_P50_ouverture": 2.932005679236707,
+   "tr_en_atr_P50_autres": 0.7333457327985213,
+   "part_tr_barres_ouverture": 0.23078847753982845,
+   "part_signaux_barre_ouverture": 0.11163522012578617,
+   "part_signaux_derniere_barre": 0.139937106918239,
+   "nis_P50_ouverture": 1.2027879835004316,
+   "nis_P50_autres": 0.09906774295690718,
+   "part_nis_sup_seuil_ouverture": 0.49295774647887325,
+   "part_nis_sup_seuil_autres": 0.1929203539823009,
+   "part_R2_exclus_ouverture": 0.7083333333333334,
+   "part_R2_exclus_autres": 0.13245033112582782,
+   "univers_RE1_sur_barre_ouverture": 14,
+   "univers_RE1": 145
+  },
+  "semaine": {
+   "reprises": 327,
+   "ouverture_new_york": {
+    "lun 09:30": 281,
+    "mar 09:30": 32,
+    "ven 09:30": 10,
+    "jeu 09:30": 3,
+    "mer 09:30": 1
+   },
+   "fin_new_york": {
+    "ven 16:00": 295,
+    "jeu 16:00": 9,
+    "mer 16:00": 8,
+    "ven 13:00": 6,
+    "jeu 13:00": 2,
+    "mar 16:00": 2
+   },
+   "interruptions_en_semaine": 1228,
+   "interruptions_barres_manquantes": 41352,
+   "interruptions_par_annee": {
+    "2020": 245,
+    "2021": 200,
+    "2022": 198,
+    "2023": 196,
+    "2024": 196,
+    "2025": 193
+   },
+   "interruptions_heure_new_york": {
+    "9": 1180,
+    "14": 20,
+    "13": 12,
+    "12": 10,
+    "15": 5,
+    "10": 1
+   },
+   "interruptions_duree_h": {
+    "P50": 18.0,
+    "P90": 18.0,
+    "P100": 18.5
+   }
+  },
+  "fermetures_admises": [],
+  "nom": "CFD sur ETF URA, uranium (Saxo, prix traités, séance)"
+ },
+ "GDX": {
+  "doc": {
+   "rolls": "sans objet : CFD sur l'indice au comptant, FX au comptant ou CFD sur ETF (aucune échéance) ; contrôle dans l'audit",
+   "prix": "dernier prix traité OHLC (Open, High, Low, Close) et volume",
+   "timezone": "UTC (début de barre)",
+   "couverture_demandee": "2020-01-01 00:00 → 2025-12-31 23:30 UTC ; 2026 jamais demandé",
+   "symbol": "GDX:arcx",
+   "description": "VanEck Vectors Gold Miners ETF",
+   "uic": 35663,
+   "asset_type": "CfdOnEtf",
+   "exchange_id": "NYSE_ARCA",
+   "first_sample_time": "2006-05-31 13:50:00+00:00",
+   "source": "saxo-openapi",
+   "sha256": "93653907772f0cdbed6903a180a18ec4ba3daa88287b5709825aa4bf5901e100",
+   "premiere_barre": "2020-01-02 14:30:00+00:00",
+   "derniere_barre": "2025-12-31 20:30:00+00:00",
+   "barres": 19532
+  },
+  "barres": {
+   "n_barres": 19532,
+   "premiere": "2020-01-02 14:30:00+00:00",
+   "derniere": "2025-12-31 20:30:00+00:00",
+   "doublons": 0,
+   "desordre": 0,
+   "part_barres_24_7": 0.18578372157172343,
+   "barres_par_annee": {
+    "2020": 3276,
+    "2021": 3270,
+    "2022": 3257,
+    "2023": 3239,
+    "2024": 3258,
+    "2025": 3232
+   },
+   "prix_non_positifs": 0,
+   "incoherences_ohlc": 0,
+   "barres_plates": 0,
+   "barres_volume_nul": 0,
+   "trous": {
+    "n": 1508,
+    "barres_manquantes": 85601,
+    "classes": {
+     "<= 2 h": {
+      "n": 1,
+      "barres_manquantes": 1
+     },
+     "<= 3 jours": {
+      "n": 1464,
+      "barres_manquantes": 77891
+     },
+     "> 3 jours": {
+      "n": 43,
+      "barres_manquantes": 7709
+     }
+    },
+    "plus_longs": [
+     {
+      "apres": "2020-12-24 17:30:00+00:00",
+      "reprise": "2020-12-28 14:30:00+00:00",
+      "duree_h": 92.5
+     },
+     {
+      "apres": "2025-07-03 16:30:00+00:00",
+      "reprise": "2025-07-07 13:30:00+00:00",
+      "duree_h": 92.5
+     },
+     {
+      "apres": "2020-01-17 20:30:00+00:00",
+      "reprise": "2020-01-21 14:30:00+00:00",
+      "duree_h": 89.5
+     },
+     {
+      "apres": "2020-02-14 20:30:00+00:00",
+      "reprise": "2020-02-18 14:30:00+00:00",
+      "duree_h": 89.5
+     },
+     {
+      "apres": "2020-04-09 19:30:00+00:00",
+      "reprise": "2020-04-13 13:30:00+00:00",
+      "duree_h": 89.5
+     },
+     {
+      "apres": "2020-05-22 19:30:00+00:00",
+      "reprise": "2020-05-26 13:30:00+00:00",
+      "duree_h": 89.5
+     },
+     {
+      "apres": "2020-07-02 19:30:00+00:00",
+      "reprise": "2020-07-06 13:30:00+00:00",
+      "duree_h": 89.5
+     },
+     {
+      "apres": "2020-09-04 19:30:00+00:00",
+      "reprise": "2020-09-08 13:30:00+00:00",
+      "duree_h": 89.5
+     },
+     {
+      "apres": "2020-12-31 20:30:00+00:00",
+      "reprise": "2021-01-04 14:30:00+00:00",
+      "duree_h": 89.5
+     },
+     {
+      "apres": "2021-01-15 20:30:00+00:00",
+      "reprise": "2021-01-19 14:30:00+00:00",
+      "duree_h": 89.5
+     }
+    ]
+   },
+   "barres_par_heure_utc": {
+    "13": 992,
+    "14": 2499,
+    "15": 3016,
+    "16": 3016,
+    "17": 3010,
+    "18": 2992,
+    "19": 2992,
+    "20": 1015
+   },
+   "barres_par_jour": {
+    "0": 3648,
+    "1": 4050,
+    "2": 4018,
+    "3": 3926,
+    "4": 3890
+   },
+   "sauts": {
+    "ecart_ouverture_bps": {
+     "P50": 0.0,
+     "P90": 3.5292042010922025,
+     "P99": 204.72011867341152,
+     "P99.9": 461.86404589906397,
+     "P100": 1282.1633510566962
+    },
+    "ecart_ouverture_apres_trou_bps": {
+     "P50": 79.73255498310277,
+     "P90": 228.22364949536612,
+     "P99": 471.60784662782163,
+     "P99.9": 1080.68964880093,
+     "P100": 1282.1633510566962
+    },
+    "rendement_close_bps": {
+     "P50": 22.276101722924487,
+     "P90": 78.87592718308603,
+     "P99": 270.00468986978296,
+     "P99.9": 562.454685017917,
+     "P100": 1335.9015911588606
+    },
+    "plus_grands_ecarts_ouverture": [
+     {
+      "time": "2020-03-24 13:30:00+00:00",
+      "bps": 1282.1633510566962
+     },
+     {
+      "time": "2020-03-16 13:30:00+00:00",
+      "bps": 1260.4072089536505
+     },
+     {
+      "time": "2020-03-12 13:30:00+00:00",
+      "bps": 905.9347037213445
+     },
+     {
+      "time": "2025-10-21 13:30:00+00:00",
+      "bps": 734.3813489912326
+     },
+     {
+      "time": "2020-03-20 13:30:00+00:00",
+      "bps": 716.5348812806799
+     },
+     {
+      "time": "2024-08-05 13:30:00+00:00",
+      "bps": 616.1881103423644
+     },
+     {
+      "time": "2022-11-10 14:30:00+00:00",
+      "bps": 570.3137325030954
+     },
+     {
+      "time": "2020-03-18 13:30:00+00:00",
+      "bps": 556.3708030539573
+     },
+     {
+      "time": "2020-03-19 14:30:00+00:00",
+      "bps": 535.3598453870035
+     },
+     {
+      "time": "2020-08-11 13:30:00+00:00",
+      "bps": 520.5095957306199
+     }
+    ],
+    "plus_grands_rendements": [
+     {
+      "time": "2020-03-19 19:30:00+00:00",
+      "bps": 1335.9015911588606
+     },
+     {
+      "time": "2020-03-24 13:30:00+00:00",
+      "bps": 997.3597239863761
+     },
+     {
+      "time": "2020-03-16 14:00:00+00:00",
+      "bps": 898.2115686573316
+     },
+     {
+      "time": "2025-10-21 13:30:00+00:00",
+      "bps": 891.6310883080411
+     },
+     {
+      "time": "2020-03-12 13:30:00+00:00",
+      "bps": 771.9944857556959
+     },
+     {
+      "time": "2020-03-18 19:30:00+00:00",
+      "bps": 753.4124156172966
+     },
+     {
+      "time": "2020-11-09 14:30:00+00:00",
+      "bps": 744.0516001578507
+     },
+     {
+      "time": "2020-03-16 13:30:00+00:00",
+      "bps": 669.2733699988054
+     },
+     {
+      "time": "2022-11-04 13:30:00+00:00",
+      "bps": 659.0167891727873
+     },
+     {
+      "time": "2020-04-09 13:30:00+00:00",
+      "bps": 657.9627846132405
+     }
+    ]
+   }
+  },
+  "seances": {
+   "heures_utc_sans_barre_janvier": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    21,
+    22,
+    23
+   ],
+   "heures_utc_sans_barre_juillet": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    20,
+    21,
+    22,
+    23
+   ],
+   "barres_le_samedi": 0,
+   "pause_new_york": {
+    "semaines": 314,
+    "pause_17h_exactement": 0,
+    "pause_17h_et_autres_heures": 314,
+    "sans_pause_17h": 0
+   },
+   "ouverture_dimanche_heure_new_york": {}
+  },
+  "integrite": [],
+  "couverture": [],
+  "signaux": {
+   "n_signaux": 1297,
+   "signaux_par_mois": 18.024169615340714,
+   "part_flips": 0.7833461835003855,
+   "part_x1_retourne": 0.4387047031611411,
+   "leg_atr": {
+    "P10": 1.8788449227855604,
+    "P25": 2.419829798543616,
+    "P50": 3.2630686897408245,
+    "P75": 4.568730402712955,
+    "P90": 6.416307070486428
+   },
+   "retrace_ratio": {
+    "P10": 0.17468136382881763,
+    "P25": 0.3229037843185747,
+    "P50": 0.5869565217391329,
+    "P75": 0.8494623655913972,
+    "P90": 1.1037356321839085
+   },
+   "nis_z_100": {
+    "P10": -0.503085124023317,
+    "P25": -0.29088454927523966,
+    "P50": 0.16592288155967327,
+    "P75": 1.029942142553817,
+    "P90": 2.423435082883804
+   },
+   "atr14_bps": {
+    "P10": 45.16862283570136,
+    "P25": 51.06319277390658,
+    "P50": 61.30668689099472,
+    "P75": 76.32662319560508,
+    "P90": 94.53912515862655
+   },
+   "prev_seg_len": {
+    "P10": 7.0,
+    "P25": 9.0,
+    "P50": 10.0,
+    "P75": 13.0,
+    "P90": 17.0
+   },
+   "mediane_locale_leg_atr": 3.2630686897408245,
+   "p75_local_nis_z_100": 1.029942142553817,
+   "part_leg_sous_seuil_btc": 0.3808789514263685,
+   "part_nis_au_dessus_seuil_btc": 0.2104857363145721,
+   "part_nis_au_dessus_seuil_btc_dans_R2": 0.2803347280334728,
+   "nis_nan": 0,
+   "familles": {
+    "F1": 450,
+    "F2a": 242,
+    "F2b": 196,
+    "F3": 212,
+    "F4": 111,
+    "F5": 86
+   },
+   "regimes": {
+    "R1": 422,
+    "R2_avant_nis": 239,
+    "R3": 457,
+    "hors_regimes": 179
+   },
+   "nis_exclus": 67,
+   "univers_RE1": 172,
+   "F2b": 73,
+   "F3": 99,
+   "par_annee": [
+    {
+     "annee": 2020,
+     "signaux": 178,
+     "atr14_bps_median": 85.66117488398343,
+     "part_nis_au_dessus_seuil_btc": 0.21348314606741572,
+     "univers_RE1": 31
+    },
+    {
+     "annee": 2021,
+     "signaux": 234,
+     "atr14_bps_median": 53.72478476077871,
+     "part_nis_au_dessus_seuil_btc": 0.2094017094017094,
+     "univers_RE1": 41
+    },
+    {
+     "annee": 2022,
+     "signaux": 230,
+     "atr14_bps_median": 76.50556058735091,
+     "part_nis_au_dessus_seuil_btc": 0.2565217391304348,
+     "univers_RE1": 26
+    },
+    {
+     "annee": 2023,
+     "signaux": 217,
+     "atr14_bps_median": 56.96652766443146,
+     "part_nis_au_dessus_seuil_btc": 0.2073732718894009,
+     "univers_RE1": 18
+    },
+    {
+     "annee": 2024,
+     "signaux": 218,
+     "atr14_bps_median": 53.09728553103862,
+     "part_nis_au_dessus_seuil_btc": 0.19724770642201836,
+     "univers_RE1": 29
+    },
+    {
+     "annee": 2025,
+     "signaux": 220,
+     "atr14_bps_median": 58.42055753599973,
+     "part_nis_au_dessus_seuil_btc": 0.17727272727272728,
+     "univers_RE1": 27
+    }
+   ]
+  },
+  "annees_echantillon": 5.995608031028976,
+  "gaps_ouverture": {
+   "seances": 1508,
+   "part_barres_ouverture": 0.07720663526520581,
+   "ecart_abs_bps": {
+    "P50": 79.73255498310277,
+    "P90": 228.22364949536612,
+    "P99": 471.60784662782163
+   },
+   "ecart_abs_atr": {
+    "P50": 1.3601699144406056,
+    "P90": 3.6594705079378085,
+    "P99": 6.845961251658069
+   },
+   "ecart_moyen_bps": 8.632505459719642,
+   "part_ecarts_sup_1_atr": 0.616710875331565,
+   "tr_en_atr_P50_ouverture": 2.9299144406394966,
+   "tr_en_atr_P50_autres": 0.7190338007637557,
+   "part_tr_barres_ouverture": 0.22757839238647076,
+   "part_signaux_barre_ouverture": 0.1295296838858905,
+   "part_signaux_derniere_barre": 0.13878180416345412,
+   "nis_P50_ouverture": 1.750522150677178,
+   "nis_P50_autres": 0.07658305380946982,
+   "part_nis_sup_seuil_ouverture": 0.5476190476190477,
+   "part_nis_sup_seuil_autres": 0.16031886625332153,
+   "part_R2_exclus_ouverture": 0.7313432835820896,
+   "part_R2_exclus_autres": 0.10465116279069768,
+   "univers_RE1_sur_barre_ouverture": 18,
+   "univers_RE1": 172
+  },
+  "semaine": {
+   "reprises": 327,
+   "ouverture_new_york": {
+    "lun 09:30": 281,
+    "mar 09:30": 32,
+    "ven 09:30": 10,
+    "jeu 09:30": 3,
+    "mer 09:30": 1
+   },
+   "fin_new_york": {
+    "ven 16:00": 296,
+    "jeu 16:00": 9,
+    "mer 16:00": 8,
+    "ven 13:00": 6,
+    "jeu 13:00": 2,
+    "mar 16:00": 2
+   },
+   "interruptions_en_semaine": 1181,
+   "interruptions_barres_manquantes": 41300,
+   "interruptions_par_annee": {
+    "2020": 200,
+    "2021": 199,
+    "2022": 198,
+    "2023": 196,
+    "2024": 195,
+    "2025": 193
+   },
+   "interruptions_heure_new_york": {
+    "9": 1180,
+    "10": 1
+   },
+   "interruptions_duree_h": {
+    "P50": 18.0,
+    "P90": 18.0,
+    "P100": 18.0
+   }
+  },
+  "fermetures_admises": [],
+  "nom": "CFD sur ETF GDX, mines d'or (Saxo, prix traités, séance)"
+ },
+ "duree_s": 121
 }

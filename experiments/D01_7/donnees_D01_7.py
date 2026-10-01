@@ -15,7 +15,12 @@ téléchargée. Aucune série n'est substituée à une autre : un actif sans sou
     recoupement avec les taux de midi de New York de la Réserve fédérale (FRED, série H.10).
 - NQ, RTY, CL, HG : futures continus demandés sur QuantConnect (mapping OPEN_INTEREST, BACKWARDS_RATIO, profondeur 0).
   QuantConnect exige un compte ; ses données ne sont utilisables que dans son cloud (aucun export, Object Store sans
-  téléchargement ; téléchargement local sous licence payante, réservé à LEAN). Bloqués en attente du porteur.
+  téléchargement ; téléchargement local sous licence payante, réservé à LEAN). Puis Saxo OpenAPI : séries continues
+  brutes, non ajustées (audit_saxo_D01_7.md) ; futures et CFD continus abandonnés par le porteur (2026-10-01).
+- Univers redéfini par le porteur (2026-10-01) : séries Saxo téléchargées par saxo_univers_D01_7.py
+  (audit_univers_D01_7.md) ; GBPJPY lu chez Saxo sur décision du porteur, la série HistData restant pour mémoire.
+- Références externes de l'audit (FRED) : taux H.10 pour GBPJPY ; clôtures officielles du NASDAQ-100 et du Dow Jones
+  pour US100 et US30.
 """
 from __future__ import annotations
 
@@ -58,6 +63,9 @@ GBPJPY_META = {
 FRED_ROLE = ("référence externe de l'audit de GBPJPY : taux de change de midi à New York de la Réserve fédérale (H.10) ; "
              "GBPJPY de référence = DEXUSUK × DEXJPUS ; aucun calcul de stratégie")
 FRED_SERIES = {"DEXUSUK": "dollars américains pour une livre sterling", "DEXJPUS": "yens pour un dollar américain"}
+FRED_INDICES = {"NASDAQ100": "clôture officielle du NASDAQ-100 (points)", "DJIA": "clôture officielle du Dow Jones (points)"}
+FRED_ROLE_INDICES = ("référence externe de l'audit des CFD US100 et US30 de Saxo : clôtures officielles quotidiennes "
+                     "(16:00 heure de New York) ; aucun calcul de stratégie")
 
 
 def main() -> None:
@@ -70,7 +78,12 @@ def main() -> None:
         if not D01D.built(csv):
             meta = build_fred_csv(sid, "2019-12-01", "2025-12-31", csv, {"role": FRED_ROLE, "unite": unit})
             print(f"FRED {sid} : {meta['n_valeurs']} valeurs, {meta['first']} → {meta['last']}")
-    print("NQ, RTY, CL, HG : bloqués — accès QuantConnect ou autre source à décider par le porteur")
+    for sid, unit in FRED_INDICES.items():
+        csv = RAW / f"fred_{sid.lower()}.csv"
+        if not D01D.built(csv):
+            meta = build_fred_csv(sid, "2019-12-01", "2025-12-31", csv, {"role": FRED_ROLE_INDICES, "unite": unit})
+            print(f"FRED {sid} : {meta['n_valeurs']} valeurs, {meta['first']} → {meta['last']}")
+    print("Séries Saxo : experiments/D01_7/saxo_univers_D01_7.py (connexion du porteur) ; futures abandonnés")
 
 
 if __name__ == "__main__":

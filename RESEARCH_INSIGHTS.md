@@ -245,6 +245,24 @@ Elle se mesure séparément par sens et par type de signal (rang 1 ou répétiti
 - `[OBS]` En séance, le MDD est divisé par deux environ et les IC sont deux fois plus étroits (durée médiane 2 à 3 h contre 48 h).
 - `[HYP]` Sur SPY, le brut en séance est du même ordre que les frais (point mort ≈ 4 bps) : la question y est le coût d'exécution, pas le signal seul.
 
+### K11 — Hors crypto, la rente de RE-1 se joue dans le rapport brut / frais en ATR
+*Source : EXP-D01.7, partie 2 (CFD sur indices, argent, GBPJPY et CFD sur ETF chez Saxo, coût principal validé par le
+porteur).*
+
+- `[OBS]` La géométrie se transpose sur 12 actifs : `leg_atr` médian de 2,85 à 3,43 (BTC 2,82), P75 de `nis_z_100` de 1,03
+  à 1,46 (BTC 1,22).
+- `[OBS]` **Le brut est faible** : de +0,06 à +0,42 ATR sur 9 actifs, négatif sur 3, contre +0,50 sur BTC. Aucun IC en ATR
+  ne dépasse 0.
+- `[OBS]` **Le coût en ATR tranche.** Sur les CFD sur indices, l'argent et GBPJPY, l'ATR de 30 min vaut 11 à 34 bps : 4 à
+  11 bps y coûtent 0,24 à 0,42 ATR. Sur BTC, 5 bps coûtent 0,14 ATR, et 4 bps coûtent 0,06 à 0,16 ATR sur les ETF.
+- `[OBS]` **US30** gagne en brut des deux côtés (+0,44 et +0,20) ; son brut est positif en bps (+7,9 [+0,8 ; +16,0]).
+  - À son écart réel chez Saxo (1,4 bp), il donne +0,211 ATR [−0,136 ; +0,556].
+  - GER40, au contraire, ne gagne que par ses Longs, portés par la dérive du DAX.
+- `[OBS]` **ETF de séance :** le brut vient des gaps de nuit (GDX +0,41 contre +0,02 en séance), sur environ 140 trades.
+  C'est la structure de K8 à K10.
+- `[HYP]` Une même cinématique produit une rente là où le mouvement qui suit, en ATR, dépasse nettement le coût en ATR.
+  Sur des marchés calmes à 30 min, le levier est le coût d'exécution ; ce n'est pas le signal.
+
 ---
 
 ## 3. Trois phénomènes captés par le déclencheur

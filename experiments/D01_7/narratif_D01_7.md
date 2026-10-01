@@ -1,103 +1,188 @@
-# EXP-D01.7 — Portabilité de RE-1 figée sur des marchés 24/5 (zero-shot) : GBPJPY mesuré, futures en attente
+# EXP-D01.7 — Portabilité de RE-1 figée (zero-shot) : CFD sur indices, argent, GBPJPY et CFD sur ETF (Saxo)
 
-- **Date :** 2026-10-01. **Étape :** D, test de portabilité. **Descriptif** : RE-1 strictement gelée (H = 26, R0 = 100, frontière 0,85, P75 et médiane de `leg_atr` de BTC, cooldown, SL-B, F2b/F3), aucun réglage par actif, aucune modification de RE-1 sur la base de ces résultats.
-- **État de cette version :**
-  - GBPJPY mesuré, BTC en référence.
-  - NQ, RTY, CL et HG bloqués avant téléchargement : l'accès aux données demande une action du porteur (§1.2).
-- **Données :** 2020-2025 seulement, chaque série étant tronquée avant le 2026-01-01 au chargement. Rien de 2026 n'a été téléchargé.
+- **Date :** 2026-10-01. **Étape :** D, test de portabilité.
+- **Nature : descriptive.** RE-1 est strictement gelée : H = 26, R0 = 100, frontière 0,85, P75 de `nis_z_100` et médiane
+  de `leg_atr` de BTC, cooldown, SL-B, F2b/F3. Aucun réglage par actif, aucune modification de RE-1 sur la base de ces
+  résultats.
+- **Version : partie 2, univers redéfini par le porteur.**
+  - La partie 1 (GBPJPY de HistData : brut −0,035 ATR, −0,443 à 4 bps) reste consignée dans `RESEARCH_LOG.md`.
+  - Les futures NQ, RTY, CL et HG sont abandonnés, faute d'accès puis parce que les séries continues de Saxo ne sont pas
+    ajustées.
+- **Données :**
+  - 2020-2025 seulement, chaque série étant tronquée avant le 2026-01-01 au chargement ; rien de 2026 n'a été téléchargé.
+  - Séries Saxo OpenAPI LIVE, compte du porteur ; références FRED.
 - **Code :**
-  - `experiments/D01_7/donnees_D01_7.py` (acquisition) ;
-  - `experiments/D01_7/run_D01_7.py` (`--audit`, puis contrôles et mesures). Il réutilise la chaîne de D01 : `strategy.run_re1`, `prepare`, `diagnostics`.
+  - `experiments/D01_7/saxo_univers_D01_7.py` (séries) et `donnees_D01_7.py` (FRED) ;
+  - `run_D01_7.py` (`--audit`, puis contrôles et mesures), qui réutilise la chaîne de D01 : `strategy.run_re1`,
+    `prepare`, `diagnostics`.
 
 ## 0. Cadrage
 
-- **QUESTION :** RE-1, verrouillée en C02bis sur BTC, conserve-t-elle son comportement sur des marchés traditionnels à cotation quasi continue 24/5 ?
-- **PERTINENCE POUR LE FILTRE AKF :** D01 a montré que la géométrie des signaux se transpose, mais que la rente dépend de la structure du marché. Un marché 24/5 retire la nuit des ETF, mais garde le week-end, et, pour les futures, la pause de CME et les roulements.
+- **QUESTION :** RE-1, verrouillée en C02bis sur BTC, conserve-t-elle son comportement hors crypto, sur trois familles
+  de marchés ?
+  - CFD sur indices au comptant cotés presque 24 h sur 24 : US100, US30, GER40, EU50, HK50 ;
+  - argent et GBPJPY au comptant ;
+  - CFD sur ETF cotés en séance américaine : TLT, USO, SMH, URA, GDX.
+- **PERTINENCE POUR LE FILTRE AKF :** D01 a montré que la géométrie des signaux se transpose, mais que la rente dépend de
+  la structure du marché : frais en ATR, séances. Cet univers croise marchés quasi continus et marchés de séance,
+  régions et classes d'actifs.
 - **CE QUE LE PROTOCOLE MESURE RÉELLEMENT :**
   - l'audit des données avant tout backtest ;
-  - par actif, les 8 métriques en brut et nettes de coûts déclarés, l'espérance en ATR et en bps avec IC par grappes mensuelles, le capital à 0,25 %/ATR et à 1x ;
+  - par actif, les 8 métriques en brut et nettes de coûts déclarés, l'espérance en ATR et en bps avec IC par grappes
+    mensuelles, le capital à 0,25 %/ATR et à 1x ;
   - Long/Short, F2b/F3, volatilité, sessions, interruptions, concentration, queues.
-- **CE QU'IL NE PERMET PAS DE CONCLURE :** pas de validation hors échantillon ; pas de classement statistique des actifs ; coûts réels non mesurés (swaps et financement absents) ; aucun réglage.
+- **CE QU'IL NE PERMET PAS DE CONCLURE :**
+  - pas de validation hors échantillon ;
+  - pas de classement statistique : choisir les meilleurs actifs pour D02 sur ce même échantillon est une sélection, à
+    vérifier hors échantillon ;
+  - coûts réels non mesurés : ni financement de nuit, ni ajustements de dividendes des CFD ;
+  - aucun réglage.
 
 ## 1. Données et contrôles (avant les résultats)
 
-### 1.1 GBPJPY : source de repli déclarée, validée par recoupement
+### 1.1 Parcours des sources
 
-- **Dukascopy, demandé par le porteur, n'est pas accessible sans action de sa part.**
-  - Le flux datafeed.dukascopy.com répond HTTP 429 dès la deuxième requête et renvoie à sa page d'export.
-  - Cette page réserve l'historique en vrac à un bucket AWS « Requester Pays » (`cfg-public-proper-wallaby`, eu-west-1), avec des identifiants AWS obligatoires. Coût annoncé : environ 0,06 $ pour une paire majeure.
-  - Aucun contournement.
-- **Source retenue et déclarée : HistData.com.** Bougies d'une minute gratuites (bid), sans compte, agrégées en 30 min ; même chaîne que l'or de D01, horloge convertie en UTC.
-- **Audit [OBS] :**
-  - 73 055 barres, du 2020-01-01 22:00 au 2025-12-31 21:30 UTC ; aucun doublon, désordre, prix négatif ni OHLC incohérent ; couverture conforme ; plus long trou 72 h (Nouvel An).
-  - **Structure hebdomadaire :** 288 reprises sur 314 le dimanche à 17:00 heure de New York, 299 fins de semaine le vendredi à 17:00, ce qui est la séance du marché des changes. Les autres reprises correspondent à des fêtes.
-  - **Recoupement externe** avec les taux de midi de la Réserve fédérale (H.10, DEXUSUK × DEXJPUS) : sur 1 438 jours, la corrélation des variations quotidiennes vaut 0,9997 à 12:00 heure de New York. L'écart de niveau médian est de −1,2 bps (le bid est sous le milieu), l'écart absolu au P95 de 3,0 bps. Le meilleur décalage horaire est 0, avec un pic net : 0,978 et 0,984 à ± 30 min. **Horloge et prix sont validés** (critère fixé avant : ≥ 0,95).
-  - **Défaut de données en 2023 :** 673 des 690 interruptions de 30 min à 24 h en semaine tombent en 2023, pour environ 1 758 barres manquantes, soit près de 14 % des barres de l'année. Les autres années en comptent 2 à 6.
-    - Aucun seuil de densité de trous n'avait été fixé avant le calcul : l'actif n'est pas bloqué après coup.
-    - 2023 est présentée à part dans les résultats (§2).
-- **Ce que ce n'est pas :** Dukascopy aurait donné des ticks avec le bid et l'ask, donc un écart mesuré et une année 2023 sans trous.
+- **Sources écartées :** QuantConnect (aucun export), puis le dépôt GitHub axb0306/cme-futures-ohlc (FAIL : aucune donnée
+  2020-2025).
+- **Saxo OpenAPI LIVE :** c'est la seule source qui fournit des séries locales complètes de 2020 à 2025.
+  - Ses séries continues (futures c1, CFD « cont ») sont brutes : le raccord au changement de contrat n'est pas ajusté.
+  - Celui du WTI tombe au milieu d'une barre de 30 min, le dernier jour de cotation, vers 11:00 heure de New York.
+  - Le porteur a abandonné les séries continues (annexe 9 de `audit_saxo_D01_7.md`).
+- **Univers redéfini par le porteur :**
+  - US100, US30, GER40, EU50, HK50, XAGUSD, GBPJPY. HK50 remplace Japan 225, absent des CFD sur indice chez Saxo.
+  - En option, 5 CFD sur ETF, inclus par le porteur : SMH et URA à sa demande ; TLT, USO et GDX choisis par l'agent.
+- **GBPJPY :** lu chez Saxo, sur décision du porteur.
+- **Coûts aller-retour :** validés par le porteur avant tout résultat (§2).
 
-### 1.2 Futures NQ, RTY, CL, HG : bloqués, action du porteur requise
+### 1.2 Audit [OBS]
 
-- **QuantConnect exige un compte et une connexion.**
-- Ses données ne sont utilisables que dans son cloud (Research, backtests). Sa documentation de licence est claire :
-  - l'Object Store accepte les envois mais pas les téléchargements, « as it would be an easy way to export data » ;
-  - le téléchargement local demande une licence payante : US Futures Security Master (600 $ par an au premier palier) plus 0,50 $ par fichier (ticker, jour, format) en minute. Il est réservé à LEAN : « cannot be redistributed or converted in any format ».
-- **Conséquence : les barres de QuantConnect ne peuvent pas entrer dans notre chaîne locale.** L'audit, la parité du moteur et les contrôles de look-ahead s'y font en local.
-- **Aucune série n'a été téléchargée et aucun backtest n'a été lancé.** Les options sont données au porteur dans le compte rendu.
+- **13 séries sans défaut :**
+  - aucun doublon, désordre, prix négatif ou nul, ni OHLC incohérent ;
+  - couverture de 2020-01-02 à 2025-12-30/31 ;
+  - modes de requête UpTo et From identiques, téléchargements reproductibles (`audit_univers_D01_7.md`).
+- **Recoupements externes, critère de la partie 1 fixé avant :**
+
+  | Série | Référence | Jours | Corrélation des variations | Écart médian (absolu) | Meilleur décalage |
+  |---|---|---|---|---|---|
+  | US100 | clôture officielle du NASDAQ-100 à 16:00 | 1 496 | 0,9991 | −0,3 bp (2,1) | 0 |
+  | US30 | clôture du Dow Jones à 16:00 | 1 496 | 0,9994 | −0,3 bp (1,5) | 0 |
+  | GBPJPY | taux de midi H.10 | 1 499 | 0,9997 | −1,9 bp (1,9) | 0 |
+
+  Horodatage et prix des barres Saxo sont validés.
+- **Fermetures de bourse admises**, déclarées avant le calcul (règle des 5 jours de D01 appliquée trou par trou) :
+  - Noël 2025 pour GER40 et EU50 (123,5 h) ;
+  - pour HK50 : Pâques et Ching Ming 2021, Nouvel An lunaire 2023 et 2025 (126,5 à 141,5 h).
+
+  Aucun autre trou ne dépasse 5 jours.
+- **Aucun changement de contrat caché dans les CFD sur indice :** les sauts en séance ne sont pas plus fréquents les
+  jours d'échéance des futures.
+- **Séances :**
+  - CFD sur indices US : 23 h sur 24. Saxo a ajouté l'heure de 16:00 à 17:00 en 2022.
+  - GER40 et EU50 : de 02:00 à 22:00 heure de Berlin.
+  - HK50 : trois séances de la bourse de Hong Kong par jour.
+  - XAGUSD : 23 h sur 24 ; GBPJPY : continu en semaine.
+  - ETF : séance américaine seule, sans heures étendues ; historique ajusté des splits.
+- **Signaux : la géométrie se transpose.**
+  - Médiane locale de `leg_atr` : 2,85 à 3,07 sur les CFD, l'argent et GBPJPY ; 3,18 à 3,43 sur les ETF, allongée par
+    les gaps de nuit (K8). BTC : 2,82.
+  - P75 local de `nis_z_100` : 1,03 à 1,46 (BTC : 1,22).
+  - ATR de 30 min médian : 11 bps (GBPJPY) à 72 bps (URA) ; BTC : 50 bps.
 
 ### 1.3 Contrôles bloquants
 
-- Ancre P6.5d reproduite ; RE-1 de la chaîne = C02bis (1 080 trades, 40 métriques, écart ≤ 5·10⁻⁶) ; seuils BTC gelés.
-- **Invariance d'échelle** (prérequis des futures rétro-ajustés : le facteur commun d'une fenêtre dépend des roulements postérieurs) :
-  - BTC multiplié par 0,37 et par 2,9 : signaux identiques ;
-  - descripteurs identiques à 3·10⁻⁵ près en relatif (`nis_z_100` ; médiane 10⁻¹⁰), soit la précision machine ;
-  - seuls basculent 1 et 4 signaux dont le `retrace_ratio` vaut exactement 0,50, la borne de F2b (passage en F5) ;
-  - RE-1 à ×2,9 : 1 trade de moins sur 1 080, espérance +0,3686 → +0,3676 ATR.
-  - **Le rétro-ajustement par ratio n'apporterait donc aucune information future**, hormis ces égalités au seuil.
+- Ancre P6.5d reproduite.
+- RE-1 de la chaîne = C02bis : 1 080 trades, 40 métriques.
+- Seuils de BTC gelés.
+- Invariance d'échelle du moteur : contrôle de la partie 1, inchangé.
 
 ## 2. Résultats [OBS]
 
-**Coûts aller-retour (hypothèses fixées avant) :** BTC 0, 5 et 10 bps. GBPJPY 0 (brut), 2 bps (écart ECN d'environ 1,5 à 2 pips plus commission ; la série est un bid, le coût couvre l'écart entier) et 4 bps (lecture principale, convention de D01 pour les CFD).
+**Coûts aller-retour validés par le porteur.** Chaque actif se lit à trois niveaux : sans frais, à l'écart médian de
+Saxo, et au coût principal. Ce coût principal vaut le plus grand de 4 bps et du P90 de l'écart, arrondi au point
+supérieur. Pour les ETF, ce sont 0 et 4 bps. BTC, en référence, se lit à 5 bps.
 
-| Métrique | BTC 5 bps (réf.) | GBPJPY brut | GBPJPY 2 bps | GBPJPY 4 bps |
-|---|---|---|---|---|
-| Trades (par mois) | 1 080 (15,0) | 687 (9,5) | 687 (9,5) | 687 (9,5) |
-| **Espérance ATR [IC]** | +0,369 [+0,098 ; +0,645] | −0,035 [−0,284 ; +0,221] | −0,239 [−0,490 ; +0,018] | **−0,443 [−0,697 ; −0,180]** |
-| Espérance bps [IC] | +12,3 [+0,2 ; +24,4] | −0,6 [−3,7 ; +2,5] | −2,6 [−5,7 ; +0,5] | −4,6 [−7,7 ; −1,5] |
-| Frais en ATR par trade | 0,14 | 0 | 0,20 | 0,41 |
-| WR ; PF (1x) | 44,3 % ; 1,20 | 42,1 % ; 0,96 | 40,5 % ; 0,84 | 38,0 % ; 0,74 |
-| PnL 0,25 %/ATR ; 1x | +138 % ; +204 % | −4 % ; −5 % | −16 % ; −17 % | −27 % ; −27 % |
-| MDD 0,25 %/ATR ; 1x | −13,5 % ; −43,9 % | −8,7 % ; −8,8 % | −16,8 % ; −17,5 % | −27,2 % ; −27,9 % |
-| Calmar 0,25 %/ATR ; 1x | 1,16 ; 0,46 | −0,07 ; −0,09 | −0,17 ; −0,17 | −0,19 ; −0,19 |
-| Long ; Short (ATR) | +0,457 ; +0,266 | −0,014 ; −0,058 | −0,218 ; −0,262 | −0,422 ; −0,467 |
-| F2b ; F3 (ATR) | +0,459 ; +0,267 | −0,129 ; +0,066 | −0,338 ; −0,134 | −0,546 ; −0,333 |
-| Années à espérance > 0 | 6/6 | 3/6 | 1/6 | 0/6 |
+| Actif (coût principal) | Trades (par mois) | Brut ATR | **Net ATR [IC]** | Net bps [IC] | Frais en ATR | WR ; PF (1x) | PnL : 0,25 %/ATR ; 1x | MDD : 0,25 %/ATR ; 1x | Années > 0 |
+|---|---|---|---|---|---|---|---|---|---|
+| BTC (5 bps, réf.) | 1 080 (15,0) | +0,504 | **+0,369 [+0,098 ; +0,645]** | +12,3 [+0,2 ; +24,4] | 0,14 | 44,3 % ; 1,20 | +138 % ; +204 % | −13,5 % ; −43,9 % | 6/6 |
+| US100 (4) | 695 (9,7) | +0,139 | −0,097 [−0,428 ; +0,252] | −1,0 [−8,3 ; +6,5] | 0,24 | 39,6 % ; 0,97 | −5 % ; −10 % | −19,7 % ; −27,0 % | 1/6 |
+| US30 (4) | 710 (9,9) | +0,327 | −0,004 [−0,350 ; +0,348] | +3,9 [−3,2 ; +12,0] | 0,33 | 41,0 % ; 1,17 | +11 % ; +29 % | −13,7 % ; −14,1 % | 2/6 |
+| GER40 (4) | 545 (7,6) | +0,237 | −0,005 [−0,292 ; +0,294] | +1,4 [−5,2 ; +8,2] | 0,24 | 43,1 % ; 1,05 | +0 % ; +5 % | −22,9 % ; −27,5 % | 2/6 |
+| EU50 (7) | 535 (7,4) | −0,172 | **−0,590 [−0,946 ; −0,214]** | −10,6 [−19,1 ; −2,4] | 0,42 | 38,3 % ; 0,70 | −37 % ; −44 % | −40,6 % ; −47,8 % | 1/6 |
+| HK50 (8) | 425 (5,9) | +0,192 | −0,103 [−0,539 ; +0,334] | −3,0 [−15,0 ; +10,1] | 0,30 | 40,7 % ; 0,94 | −9 % ; −15 % | −32,3 % ; −41,9 % | 2/6 |
+| XAGUSD (11) | 651 (9,0) | +0,060 | −0,307 [−0,634 ; +0,006] | −12,1 [−22,5 ; −1,9] | 0,37 | 38,1 % ; 0,79 | −41 % ; −57 % | −43,5 % ; −59,7 % | 1/6 |
+| GBPJPY (4) | 754 (10,5) | +0,095 | **−0,303 [−0,572 ; −0,031]** | −3,0 [−6,5 ; +0,4] | 0,40 | 40,7 % ; 0,82 | −20 % ; −21 % | −22,0 % ; −22,1 % | 0/6 |
+| TLT (4) | 157 (2,2) | −0,042 | −0,205 [−0,972 ; +0,570] | −6,4 [−27,8 ; +15,8] | 0,16 | 39,5 % ; 0,88 | −9 % ; −11 % | −16,6 % ; −21,1 % | 2/6 |
+| USO (4) | 140 (1,9) | +0,220 | +0,148 [−0,553 ; +0,813] | +42,3 [−27,6 ; +122,1] | 0,07 | 47,9 % ; 1,42 | +4 % ; +65 % | −9,6 % ; −24,8 % | 2/6 |
+| SMH (4) | 149 (2,1) | −0,105 | −0,180 [−0,795 ; +0,409] | −6,0 [−38,6 ; +24,7] | 0,08 | 41,6 % ; 0,94 | −7 % ; −13 % | −15,5 % ; −30,4 % | 2/6 |
+| URA (4) | 127 (1,8) | +0,154 | +0,093 [−0,823 ; +1,100] | −10,6 [−68,6 ; +47,8] | 0,06 | 38,6 % ; 0,92 | +2 % ; −18 % | −12,6 % ; −41,8 % | 2/6 |
+| GDX (4) | 143 (2,0) | +0,417 | +0,349 [−0,365 ; +1,076] | +42,8 [−13,1 ; +109,4] | 0,07 | 44,1 % ; 1,46 | +12 % ; +70 % | −8,5 % ; −19,1 % | 5/6 |
 
-- **Le brut est nul sur GBPJPY** : −0,035 ATR, IC ±0,25, contre +0,504 sur BTC. Ce ne sont pas les frais qui effacent un avantage : il n'y en a pas avant frais.
-- **Les frais pèsent lourd.** L'ATR de 30 min de GBPJPY vaut 10 à 11 bps (P50 11,1 ; BTC 35 à 55). À 4 bps, les frais coûtent 0,41 ATR par trade, plus que sur l'or en D01 (0,26).
-- **Le dimensionnement à 0,25 %/ATR est dégénéré sur GBPJPY.** Il demanderait environ 2,3 fois de levier ; le plafond de 1x mord sur 98 % des trades. Les colonnes « 0,25 %/ATR » valent donc le 1x (risque réel ≈ 0,11 % par ATR).
-- **Pas de dérive, sens symétriques** : dérive +0,02 ATR, Long et Short proches en brut.
-- **Années :** à 4 bps, toutes les années sont négatives (−0,17 à −0,72 ATR). En brut, 2022, 2023 et 2024 sont positives (+0,15, +0,09, +0,21), les autres négatives. **2023, l'année trouée, n'est pas un cas à part** (−0,30 à 4 bps).
-- **Interruptions** (week-ends, fêtes, trous) : 9,5 % des trades en traversent une (6 % durent plus de 24 h). La composante des écarts de reprise vaut +0,013 ATR ; 5 stops percés sur 189 (+0,99 ATR). Elles ne pèsent pas.
-- **Sessions** (heure de New York du signal) : 53 % des signaux tombent en session asiatique (17:00-02:00), la plus calme.
-  - Asie −0,50 [−0,90 ; −0,10] ; Londres −0,60 [−1,13 ; −0,02] ; Londres-New York −0,42 ; New York après-midi −0,01 [−0,64 ; +0,74], à 4 bps.
-  - Sur BTC, les quatre sessions sont positives.
-- **Volatilité** (terciles d'ATR14(t), médianes 7,6, 10,0 et 14,0 bps) :
-  - net à 4 bps : calme −0,46, milieu −0,64, agité −0,23 ;
-  - brut +0,10, −0,24 et +0,04 : pas de régime porteur ;
-  - frais 0,55, 0,40 et 0,27 ATR.
-- **Concentration et queues :** médiane −1,42 ATR, P5 −5,5, P95 +6,1. Le décile supérieur apporte +0,75 ATR par trade ; sans lui, −1,32. Même profil de queue droite que BTC (médiane −0,42), sans la moyenne positive.
-- **Stops de F3 :** 57 % des F3 sont stoppés (BTC 51 %) ; effet apparié du stop +0,20 [−0,12 ; +0,54] ATR.
-- **Signaux :**
-  - La médiane locale de `leg_atr` vaut 2,86 (BTC 2,82) : la géométrie se transpose.
-  - Le P75 local de `nis_z_100` vaut 1,40 (BTC 1,22) : 28 % des signaux dépassent le seuil BTC.
-  - Univers de RE-1 : 867 candidats pour 4 959 signaux.
+Durée médiane : 26 barres, soit 13 h pour les marchés quasi continus, 20 h pour HK50 et 48 h pour les ETF. La part des
+frais et les tableaux complets à tous les coûts sont en annexe C.
+
+- **Aucun actif n'a un IC à borne basse positive au coût principal ; BTC reste le seul.**
+  - Estimations positives : GDX, USO et URA. Ce sont des ETF, avec 127 à 157 trades et des IC larges de ±0,7 à ±1,0 ATR.
+  - Significativement négatifs : EU50, et GBPJPY d'un cheveu.
+- **Le brut est faible.**
+  - Positif en estimation sur 9 actifs sur 12 : de +0,06 à +0,42 ATR, contre +0,50 sur BTC. Tous les IC en ATR
+    contiennent 0.
+  - Seul US30 a un IC en bps au-dessus de 0 : +7,9 bps [+0,8 ; +16,0], pour un IC en ATR de [−0,019 ; +0,667].
+- **Ce sont les frais en ATR qui tranchent.**
+  - Sur les CFD sur indices, l'argent et GBPJPY, l'ATR de 30 min ne vaut que 11 à 34 bps. Les coûts principaux y
+    coûtent de 0,24 à 0,42 ATR par trade, autant ou plus que le brut.
+  - Sur les ETF, 4 bps ne coûtent que 0,06 à 0,16 ATR.
+  - **À l'écart médian de Saxo :**
+    - US30 : +0,211 ATR [−0,136 ; +0,556], soit +6,5 bps [−0,6 ; +14,6] ;
+    - GER40 : +0,104 ;
+    - US100 : +0,086 ;
+    - HK50 : −0,033 ;
+    - EU50 : −0,458.
+- **ETF : le brut vient des nuits, sur peu de trades.**
+  - 91 à 94 % des trades traversent au moins une nuit, et 78 à 81 % durent plus de 24 h.
+  - Composante des gaps de nuit et composante en séance :
+    - GDX : +0,41 et +0,02 ATR ;
+    - USO : +0,24 et −0,01 ;
+    - SMH : +0,21 et −0,34 ;
+    - TLT : +0,14 et −0,18 ;
+    - URA, seul à l'inverse : −0,00 et +0,14.
+  - Stops percés à l'ouverture : 7 à 17 par ETF, avec un dépassement de +0,7 à +2,4 ATR. C'est le profil de SPY et XLE
+    en D01 bis (K8).
+- **Long et Short, en brut :**
+  - **US30 gagne des deux côtés** (+0,44 et +0,20), comme HK50 (+0,16 et +0,23) et GDX (+0,23 et +0,59).
+  - GER40 n'est porté que par ses Longs (+0,77 contre −0,31). C'est la dérive haussière du DAX ; la composante
+    symétrique ne vaut que +0,23.
+  - Même dissymétrie sur URA (+0,54 contre −0,35) et USO (−0,04 contre +0,47).
+- **Années, au coût principal :**
+  - GDX : 5 années positives sur 6 (2023 −0,80).
+  - US30 : 2 sur 6, avec 2020 à +0,58.
+  - GER40 : +0,65 et +0,51 en 2020-2021, −0,71 en 2025.
+  - HK50 : négatif de 2020 à 2022, puis +0,65 et +0,73 en 2024-2025.
+  - USO : 2020 à +1,46 à lui seul.
+- **GBPJPY Saxo confirme la partie 1.**
+  - Brut : +0,095 [−0,167 ; +0,364], contre −0,035 sur HistData.
+  - À 4 bps : −0,303 contre −0,443.
+  - Les trous de HistData en 2023 ne changeaient pas la conclusion.
+- **Dimensionnement :** le 0,25 %/ATR est plafonné à 1x pour 70 à 98 % des trades sur les CFD sur indices et GBPJPY
+  (ATR de 11 à 22 bps). Pour eux, la colonne « 0,25 %/ATR » vaut à peu près le 1x.
+- **Queues :** médiane de −0,5 (USO) à −1,6 ATR (EU50), et le décile supérieur apporte de +0,7 à +1,1 ATR par trade.
+  C'est le profil de BTC (médiane −0,42, décile supérieur +0,92), sans la moyenne positive.
+- **Stop de F3 :** il aide US30 (+0,54 [+0,15 ; +0,93]) et nuit à HK50 (−0,49 [−0,94 ; −0,07]). Ailleurs, l'IC contient 0.
 
 ## 3. Lecture
 
-- [HYP] Sur GBPJPY à 30 min, RE-1 ne capte pas de mouvement exploitable. Le brut est nul dans les deux sens, à toutes les sessions et dans tous les régimes de volatilité. C'est une différence de nature avec BTC, pas seulement de coût.
-- [HYP] Même avec un brut du niveau de SOL (+0,25 ATR), une paire de change calme ne couvrirait pas 4 bps à cette échelle de temps : le rapport frais / ATR (0,41) est structurellement défavorable pour une tenue de 13 h.
-- [PISTE] Futures NQ, RTY, CL, HG, selon l'accès choisi par le porteur (compte rendu).
-- [PISTE] Dukascopy (ticks bid et ask, via AWS) pour mesurer l'écart réel de GBPJPY et disposer d'un 2023 complet. Utile seulement si le porteur veut confirmer un résultat déjà net en brut.
-- [PISTE] Pour les actifs calmes, une unité de temps plus longue changerait le rapport frais / ATR. Ce n'est plus du zero-shot, donc hors D01.7.
+- [HYP] **Le signal se transpose, la rente non.**
+  - Hors BTC, RE-1 détecte la même cinématique, mais le mouvement qui suit, sur 13 h, vaut peu en ATR.
+  - Le rapport décisif est brut / ATR contre frais / ATR. C'est la leçon de l'or en D01, étendue ici aux indices.
+- [HYP] **US30 est le seul CFD sur indice dont le brut est symétrique et positif en bps.** Sa viabilité dépend du coût
+  réel : écart Saxo de 1,4 bp (P90 1,9), contre 4 bps retenus. C'est une question de coût d'exécution, pas de signal.
+- [HYP] **ETF :** le brut observé est un effet des gaps de nuit, mesuré sur environ 140 trades. On ne peut pas le
+  distinguer du bruit. Même structure que SPY et XLE (K8 à K10).
+- [PISTE] **Si le porteur retient des actifs pour D02,** les candidats par brut et par coût sont :
+  - US30 : brut +0,33 ATR, écart de 1,4 bp ;
+  - GER40 : brut +0,24, porté par la dérive ;
+  - US100 : brut +0,14, écart de 0,9 bp ;
+  - GDX : brut +0,42, mais venu des gaps, sur 143 trades.
+
+  Un choix fait sur ce même échantillon est biaisé vers les gagnants chanceux. À valider hors échantillon.
+- [PISTE] Mesurer le coût réel chez Saxo, sur un compte de démonstration ou par la grille tarifaire : écart, commission
+  des CFD sur ETF, financement de nuit. Il décide pour US30, US100 et GER40.

@@ -197,17 +197,33 @@ L'Étape C a testé ses quatre facteurs (horizon, stop par sous-famille, break-e
 
 - Les 31 trades de XLE « sautés » à H = 65 gagnent +0,118 ATR avec la sortie de RE-1 : rien à filtrer.
 
-### EXP-D01.7 (en cours) — portabilité zero-shot sur marchés 24/5
-*GBPJPY mesuré ; NQ, RTY, CL, HG en attente d'accès aux données.*
+### EXP-D01.7 — portabilité zero-shot : CFD sur indices, argent, GBPJPY et CFD sur ETF (Saxo, coût principal)
+*Descriptive. L'univers a été redéfini par le porteur : futures abandonnés (raccords de Saxo non ajustés), HK50 à la place
+de Japan 225. Coûts validés avant le calcul. Aucun IC à borne basse positive.*
 
-| | BTC 5 bps (réf.) | GBPJPY brut | GBPJPY 4 bps |
-|---|---|---|---|
-| Espérance ATR [IC] | +0,369 [+0,098 ; +0,645] | −0,035 [−0,284 ; +0,221] | −0,443 [−0,697 ; −0,180] |
-| PnL : 0,25 %/ATR ; 1x | +138 % ; +204 % | −4 % ; −5 % | −27 % ; −27 % |
-| MDD : 0,25 %/ATR ; 1x | −13,5 % ; −43,9 % | −8,7 % ; −8,8 % | −27,2 % ; −27,9 % |
-| Frais en ATR ; trades (/mois) | 0,14 ; 1 080 (15,0) | 0 ; 687 (9,5) | 0,41 ; 687 (9,5) |
+| Actif (coût) | Espérance ATR [IC] | Brut ATR ; frais ATR | PnL : 0,25 %/ATR ; 1x | MDD : 0,25 %/ATR ; 1x | Trades | Années > 0 |
+|---|---|---|---|---|---|---|
+| BTC (5, réf.) | +0,369 [+0,098 ; +0,645] | +0,50 ; 0,14 | +138 % ; +204 % | −13,5 % ; −43,9 % | 1 080 | 6/6 |
+| US30 (4) | −0,004 [−0,350 ; +0,348] | +0,33 ; 0,33 | +11 % ; +29 % | −13,7 % ; −14,1 % | 710 | 2/6 |
+| GER40 (4) | −0,005 [−0,292 ; +0,294] | +0,24 ; 0,24 | +0 % ; +5 % | −22,9 % ; −27,5 % | 545 | 2/6 |
+| US100 (4) | −0,097 [−0,428 ; +0,252] | +0,14 ; 0,24 | −5 % ; −10 % | −19,7 % ; −27,0 % | 695 | 1/6 |
+| HK50 (8) | −0,103 [−0,539 ; +0,334] | +0,19 ; 0,30 | −9 % ; −15 % | −32,3 % ; −41,9 % | 425 | 2/6 |
+| GBPJPY (4) | −0,303 [−0,572 ; −0,031] | +0,10 ; 0,40 | −20 % ; −21 % | −22,0 % ; −22,1 % | 754 | 0/6 |
+| XAGUSD (11) | −0,307 [−0,634 ; +0,006] | +0,06 ; 0,37 | −41 % ; −57 % | −43,5 % ; −59,7 % | 651 | 1/6 |
+| EU50 (7) | −0,590 [−0,946 ; −0,214] | −0,17 ; 0,42 | −37 % ; −44 % | −40,6 % ; −47,8 % | 535 | 1/6 |
+| GDX (4) | +0,349 [−0,365 ; +1,076] | +0,42 ; 0,07 | +12 % ; +70 % | −8,5 % ; −19,1 % | 143 | 5/6 |
+| USO (4) | +0,148 [−0,553 ; +0,813] | +0,22 ; 0,07 | +4 % ; +65 % | −9,6 % ; −24,8 % | 140 | 2/6 |
+| URA (4) | +0,093 [−0,823 ; +1,100] | +0,15 ; 0,06 | +2 % ; −18 % | −12,6 % ; −41,8 % | 127 | 2/6 |
+| SMH (4) | −0,180 [−0,795 ; +0,409] | −0,11 ; 0,08 | −7 % ; −13 % | −15,5 % ; −30,4 % | 149 | 2/6 |
+| TLT (4) | −0,205 [−0,972 ; +0,570] | −0,04 ; 0,16 | −9 % ; −11 % | −16,6 % ; −21,1 % | 157 | 2/6 |
 
-- GBPJPY : brut nul dans les deux sens ; le 0,25 %/ATR est plafonné à 1x pour 98 % des trades (ATR de 30 min ≈ 11 bps).
+- **Le signal se transpose, la rente non.**
+  - Sur les CFD sur indices, l'argent et GBPJPY, l'ATR de 30 min vaut 11 à 34 bps : les frais (0,24 à 0,42 ATR)
+    absorbent un brut de +0,06 à +0,33.
+  - À l'écart médian de Saxo, US30 donne +0,211 ATR [−0,136 ; +0,556].
+- **US30 :** brut positif des deux côtés (+0,44 et +0,20), seul IC en bps au-dessus de 0 en brut (+7,9 bps [+0,8 ; +16,0]).
+- **ETF :** frais faibles, mais environ 140 trades et un brut venu des gaps de nuit (GDX +0,41 contre +0,02 en séance).
+- **GBPJPY Saxo** confirme la partie 1 (HistData) : brut nul.
 
 ## Pistes écartées (à ne pas retester sans élément nouveau)
 

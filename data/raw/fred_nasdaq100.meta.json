@@ -1,0 +1,17 @@
+{
+ "source": "FRED (Federal Reserve Bank of St. Louis)",
+ "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=NASDAQ100",
+ "serie": "NASDAQ100",
+ "periode": [
+  "2019-12-01",
+  "2025-12-31"
+ ],
+ "extracted_at_utc": "2026-10-01T02:33:41.578526+00:00",
+ "n_rows": 1588,
+ "n_valeurs": 1529,
+ "first": "2019-12-02",
+ "last": "2025-12-31",
+ "sha256": "4d6aacd330968ff8843c831ff63e2c479674d4647a4a3314f9284e1cbc978c0e",
+ "role": "référence externe de l'audit des CFD US100 et US30 de Saxo : clôtures officielles quotidiennes (16:00 heure de New York) ; aucun calcul de stratégie",
+ "unite": "clôture officielle du NASDAQ-100 (points)"
+}
