@@ -1,0 +1,29 @@
+{
+ "source": "saxo-openapi",
+ "environnement": "LIVE",
+ "actif": "US100",
+ "version": "CFD",
+ "uic": 4912,
+ "asset_type": "CfdOnIndex",
+ "symbol": "USNAS100.I",
+ "description": "US Tech 100 NAS",
+ "exchange_id": "NASDAQ",
+ "first_sample_time": "2003-10-30 23:55:00+00:00",
+ "horizon_min": 30,
+ "couverture_demandee": "2020-01-01 00:00 → 2025-12-31 23:30 UTC ; 2026 jamais demandé",
+ "methode": "/chart/v3/charts, pages UpTo de 1 200 barres depuis le 2025-12-31 23:30 UTC vers le passé",
+ "rolls": "CFD : voir l'audit (échéances éventuelles)",
+ "prix": "bid OHLC (CloseBid, etc.) ; volume absent (écrit nul)",
+ "timezone": "UTC (début de barre)",
+ "n_rows": 69805,
+ "first": "2020-01-01 23:00:00+00:00",
+ "last": "2025-12-31 21:30:00+00:00",
+ "lignes_ohlc_manquantes_ecartees": 0,
+ "extracted_at_utc": "2026-10-01T00:58:05.126963+00:00",
+ "extracted_at_origin": "heure du téléchargement (barres antérieures à 2026)",
+ "serie_brute": {
+  "fichier": "saxo_us100_cfd_30m_brut.csv",
+  "sha256": "871da361762a9d78ee01d1fd6ef11b44c960bdad5b1f6924e2f871463ef3cf23"
+ },
+ "sha256": "39c28eaa597c43e808060629be9d4db69dd88827089fc192d1a511242f1b52d3"
+}

@@ -1,0 +1,29 @@
+{
+ "source": "saxo-openapi",
+ "environnement": "LIVE",
+ "actif": "US2000",
+ "version": "CFD",
+ "uic": 133720,
+ "asset_type": "CfdOnFutures",
+ "symbol": "US2000cont",
+ "description": "US 2000 continuous",
+ "exchange_id": "CME",
+ "first_sample_time": "2012-02-29 11:11:00+00:00",
+ "horizon_min": 30,
+ "couverture_demandee": "2020-01-01 00:00 → 2025-12-31 23:30 UTC ; 2026 jamais demandé",
+ "methode": "/chart/v3/charts, pages UpTo de 1 200 barres depuis le 2025-12-31 23:30 UTC vers le passé",
+ "rolls": "CFD : voir l'audit (échéances éventuelles)",
+ "prix": "bid OHLC (CloseBid, etc.) ; volume absent (écrit nul)",
+ "timezone": "UTC (début de barre)",
+ "n_rows": 61499,
+ "first": "2020-01-02 02:01:00+00:00",
+ "last": "2025-12-31 21:31:00+00:00",
+ "lignes_ohlc_manquantes_ecartees": 0,
+ "extracted_at_utc": "2026-10-01T00:59:12.677624+00:00",
+ "extracted_at_origin": "heure du téléchargement (barres antérieures à 2026)",
+ "serie_brute": {
+  "fichier": "saxo_us2000_cfd_30m_brut.csv",
+  "sha256": "0e550041ac93eeff61d89eb75ec8718348e27710653951ab5a43fc739b4c3c17"
+ },
+ "sha256": "a569d1c1bc86eaf212b89a1626928659c0a699afa4146c2a48672c9fa70b5ccc"
+}

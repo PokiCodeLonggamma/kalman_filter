@@ -1,0 +1,18 @@
+{
+ "source": "saxo-openapi",
+ "environnement": "LIVE",
+ "uic": 4048,
+ "asset_type": "ContractFutures",
+ "horizon_min": 30,
+ "mode": "From",
+ "time": "2020-01-02 00:00:00+00:00",
+ "count": 1200,
+ "symbol": "HGc1",
+ "description": "Copper - continuous",
+ "role": "bloc de test D01.7 (aucun backtest)",
+ "environnement_saxo": "live",
+ "n_rows": 1200,
+ "first": "2020-01-02T00:00:00Z",
+ "last": "2020-02-07T05:30:00Z",
+ "sha256": "fc6d8b72d33e4c82b101c70ada9038d5474d60c9b5832796a4d5c129136d6751"
+}

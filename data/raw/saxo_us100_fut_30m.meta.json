@@ -1,0 +1,29 @@
+{
+ "source": "saxo-openapi",
+ "environnement": "LIVE",
+ "actif": "US100",
+ "version": "future continu",
+ "uic": 4060,
+ "asset_type": "ContractFutures",
+ "symbol": "NQc1",
+ "description": "E-mini NASDAQ-100 - continuous",
+ "exchange_id": "CME",
+ "first_sample_time": "2003-10-30 23:49:00+00:00",
+ "horizon_min": 30,
+ "couverture_demandee": "2020-01-01 00:00 → 2025-12-31 23:30 UTC ; 2026 jamais demandé",
+ "methode": "/chart/v3/charts, pages UpTo de 1 200 barres depuis le 2025-12-31 23:30 UTC vers le passé",
+ "rolls": "future continu de Saxo : règle de raccord non fournie par l'API, écarts aux roulements recherchés par l'audit",
+ "prix": "dernier prix traité OHLC (Open, High, Low, Close) et volume",
+ "timezone": "UTC (début de barre)",
+ "n_rows": 70667,
+ "first": "2020-01-01 23:00:00+00:00",
+ "last": "2025-12-31 21:30:00+00:00",
+ "lignes_ohlc_manquantes_ecartees": 0,
+ "extracted_at_utc": "2026-10-01T00:58:41.093294+00:00",
+ "extracted_at_origin": "heure du téléchargement (barres antérieures à 2026)",
+ "serie_brute": {
+  "fichier": "saxo_us100_fut_30m_brut.csv",
+  "sha256": "2aec4a0f197a0a487a80f4ce93c5ad3aec94cfbcd9a95401d48aa1c11f2216b6"
+ },
+ "sha256": "16da9b916d3991fb99abc13992fdad07d1f73f1060337b8d8bd759eb1a596835"
+}

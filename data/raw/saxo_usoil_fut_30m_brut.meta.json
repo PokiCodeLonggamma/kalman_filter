@@ -1,0 +1,21 @@
+{
+ "source": "saxo-openapi",
+ "environnement": "LIVE",
+ "actif": "USOIL",
+ "version": "future continu",
+ "uic": 4034,
+ "asset_type": "ContractFutures",
+ "symbol": "CLc1",
+ "description": "Light Sweet Crude Oil (WTI) - Continuous",
+ "exchange_id": "NYMEX",
+ "first_sample_time": "2003-10-30 23:48:00+00:00",
+ "horizon_min": 30,
+ "couverture_demandee": "2020-01-01 00:00 → 2025-12-31 23:30 UTC ; 2026 jamais demandé",
+ "methode": "/chart/v3/charts, pages UpTo de 1 200 barres depuis le 2025-12-31 23:30 UTC vers le passé",
+ "rolls": "future continu de Saxo : règle de raccord non fournie par l'API, écarts aux roulements recherchés par l'audit",
+ "role": "série brute Saxo, intacte",
+ "n_rows": 70138,
+ "first": "2020-01-01T23:00:00Z",
+ "last": "2025-12-31T21:30:00Z",
+ "sha256": "76f6a2974fda82952807a19b0040084c9a393d6102d088767da95626aa08ae71"
+}

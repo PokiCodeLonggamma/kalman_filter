@@ -1,0 +1,18 @@
+{
+ "source": "saxo-openapi",
+ "environnement": "LIVE",
+ "uic": 133720,
+ "asset_type": "CfdOnFutures",
+ "horizon_min": 30,
+ "mode": "From",
+ "time": "2020-01-02 00:00:00+00:00",
+ "count": 1200,
+ "symbol": "US2000cont",
+ "description": "US 2000 continuous",
+ "role": "bloc de test D01.7 (aucun backtest)",
+ "environnement_saxo": "live",
+ "n_rows": 1200,
+ "first": "2020-01-02T02:01:00Z",
+ "last": "2020-02-13T05:31:00Z",
+ "sha256": "69a3b7d56b2117ecdd6171c48212b83ee927aa16923b6194214a38fe2c3bfabf"
+}

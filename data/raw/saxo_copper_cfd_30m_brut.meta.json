@@ -1,0 +1,21 @@
+{
+ "source": "saxo-openapi",
+ "environnement": "LIVE",
+ "actif": "COPPER",
+ "version": "CFD",
+ "uic": 37264,
+ "asset_type": "CfdOnFutures",
+ "symbol": "COPPERUScont",
+ "description": "US Copper continuous",
+ "exchange_id": "COMEX",
+ "first_sample_time": "2003-10-31 13:20:00+00:00",
+ "horizon_min": 30,
+ "couverture_demandee": "2020-01-01 00:00 → 2025-12-31 23:30 UTC ; 2026 jamais demandé",
+ "methode": "/chart/v3/charts, pages UpTo de 1 200 barres depuis le 2025-12-31 23:30 UTC vers le passé",
+ "rolls": "CFD : voir l'audit (échéances éventuelles)",
+ "role": "série brute Saxo, intacte",
+ "n_rows": 70855,
+ "first": "2020-01-01T23:01:00Z",
+ "last": "2025-12-31T21:31:00Z",
+ "sha256": "6f1acadec1988f13252b54d70991da051ee408de2ba1bb6012dfa9a55e079f2d"
+}

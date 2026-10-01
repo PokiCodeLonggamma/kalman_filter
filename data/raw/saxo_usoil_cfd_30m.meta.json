@@ -1,0 +1,29 @@
+{
+ "source": "saxo-openapi",
+ "environnement": "LIVE",
+ "actif": "USOIL",
+ "version": "CFD",
+ "uic": 22514,
+ "asset_type": "CfdOnFutures",
+ "symbol": "OILUScont",
+ "description": "US Crude, continuous",
+ "exchange_id": "NYMEX",
+ "first_sample_time": "2003-10-30 23:48:00+00:00",
+ "horizon_min": 30,
+ "couverture_demandee": "2020-01-01 00:00 → 2025-12-31 23:30 UTC ; 2026 jamais demandé",
+ "methode": "/chart/v3/charts, pages UpTo de 1 200 barres depuis le 2025-12-31 23:30 UTC vers le passé",
+ "rolls": "CFD : voir l'audit (échéances éventuelles)",
+ "prix": "bid OHLC (CloseBid, etc.) ; volume absent (écrit nul)",
+ "timezone": "UTC (début de barre)",
+ "n_rows": 70774,
+ "first": "2020-01-01 23:01:00+00:00",
+ "last": "2025-12-31 21:31:00+00:00",
+ "lignes_ohlc_manquantes_ecartees": 0,
+ "extracted_at_utc": "2026-10-01T01:00:22.153759+00:00",
+ "extracted_at_origin": "heure du téléchargement (barres antérieures à 2026)",
+ "serie_brute": {
+  "fichier": "saxo_usoil_cfd_30m_brut.csv",
+  "sha256": "c6e025b944e1ab01faae86e7f238626114c10ef09ee5c40e54b584a2e106486c"
+ },
+ "sha256": "d624fe7af923fd7f164f7fe906c069cded0e8ec99d5a0b6b64aa40940217ad9d"
+}

@@ -1,10 +1,10 @@
 {
- "date_utc": "2026-10-01T00:45:26.956172+00:00",
+ "date_utc": "2026-10-01T00:56:47.389355+00:00",
  "environnement": "LIVE",
  "reserve_2026": "aucune requête au-delà de 2025-12-31 23:59:59+00:00",
  "droits": {
   "users_me": {
-   "MarketDataViaOpenApiTermsAccepted": false
+   "MarketDataViaOpenApiTermsAccepted": true
   },
   "clients_me": {
    "LegalAssetTypes": [
@@ -88,26 +88,287 @@
      "mots_cles": "US Tech 100"
     }
    ],
-   "retenus_pour_test": [],
-   "tests": [],
-   "premier_echantillon_par_candidat": [
+   "retenus_pour_test": [
     {
      "Symbol": "USNAS100.I",
      "Identifier": 4912,
      "AssetType": "CfdOnIndex",
      "Description": "US Tech 100 NAS",
-     "statut": 403,
-     "FirstSampleTime": null,
-     "DelayedByMinutes": null
+     "statut": 200,
+     "FirstSampleTime": "2003-10-30T23:55:00Z",
+     "DelayedByMinutes": 0
     },
     {
      "Symbol": "USNAS100cont",
      "Identifier": 36423415,
      "AssetType": "CfdOnFutures",
      "Description": "US Tech 100 NAS, continuous",
-     "statut": 403,
-     "FirstSampleTime": null,
-     "DelayedByMinutes": null
+     "statut": 200,
+     "FirstSampleTime": "2025-04-03T08:18:00Z",
+     "DelayedByMinutes": 0
+    }
+   ],
+   "tests": [
+    {
+     "instrument": {
+      "Symbol": "USNAS100.I",
+      "Identifier": 4912,
+      "AssetType": "CfdOnIndex",
+      "Description": "US Tech 100 NAS",
+      "ExchangeId": "",
+      "CurrencyCode": "USD",
+      "TradableAs": [
+       "CfdOnIndex"
+      ],
+      "GroupId": 3,
+      "SummaryType": "Instrument",
+      "mots_cles": "US Tech 100"
+     },
+     "chart_info": {
+      "DelayedByMinutes": 0,
+      "ExchangeId": "NASDAQ",
+      "FirstSampleTime": "2003-10-30T23:55:00Z",
+      "Horizon": 30
+     },
+     "display": {
+      "Decimals": 2,
+      "Description": "US Tech 100 NAS",
+      "Format": "Normal",
+      "NumeratorDecimals": 2,
+      "Symbol": "USNAS100.ISX"
+     },
+     "first_sample_time": "2003-10-30 23:55:00+00:00",
+     "couvre_2020_01_01": true,
+     "page_from_debut": {
+      "statut": 200,
+      "barres": 1200,
+      "premiere": "2020-01-02 00:00:00+00:00",
+      "derniere": "2020-02-10 08:30:00+00:00"
+     },
+     "page_upto_fin_2025": {
+      "statut": 200,
+      "barres": 1200,
+      "premiere": "2025-11-23 23:30:00+00:00",
+      "derniere": "2025-12-31 21:30:00+00:00"
+     },
+     "page_upto_janvier_2020": {
+      "statut": 200,
+      "barres": 1200,
+      "premiere": "2019-12-23 09:30:00+00:00",
+      "derniere": "2020-01-31 20:30:00+00:00"
+     },
+     "champs_prix": {
+      "bid_ask": [
+       "OpenBid",
+       "HighBid",
+       "LowBid",
+       "CloseBid",
+       "OpenAsk",
+       "HighAsk",
+       "LowAsk",
+       "CloseAsk"
+      ],
+      "dernier": [],
+      "volume": [],
+      "autres": []
+     },
+     "structure": {
+      "barres": 1200,
+      "doublons": 0,
+      "desordre": 0,
+      "pas_30_min": 0.9774812343619683,
+      "interruptions": 27,
+      "interruptions_duree_h": {
+       "min": 2.5,
+       "50%": 2.5,
+       "max": 50.5
+      },
+      "reprises_heure_new_york": {
+       "18:00": 27
+      },
+      "barres_par_jour_semaine": {
+       "0": 232,
+       "1": 220,
+       "2": 220,
+       "3": 264,
+       "4": 252,
+       "6": 12
+      }
+     },
+     "plus_grands_ecarts": [
+      {
+       "apres": "2020-01-24 20:30:00+00:00",
+       "reprise": "2020-01-26 23:00:00+00:00",
+       "ecart_bps": -95.35056289963279
+      },
+      {
+       "apres": "2020-01-30 20:30:00+00:00",
+       "reprise": "2020-01-30 23:00:00+00:00",
+       "ecart_bps": 80.15544129678875
+      },
+      {
+       "apres": "2020-01-03 20:30:00+00:00",
+       "reprise": "2020-01-05 23:00:00+00:00",
+       "ecart_bps": -57.59425426991143
+      },
+      {
+       "apres": "2020-02-03 20:30:00+00:00",
+       "reprise": "2020-02-03 23:00:00+00:00",
+       "ecart_bps": -46.46751521487414
+      },
+      {
+       "apres": "2020-01-28 20:30:00+00:00",
+       "reprise": "2020-01-28 23:00:00+00:00",
+       "ecart_bps": 29.11133453398905
+      }
+     ],
+     "controles_ohlc": {
+      "bid": {
+       "incoherences": 0,
+       "prix_non_positifs": 0
+      },
+      "ask": {
+       "incoherences": 0,
+       "prix_non_positifs": 0
+      },
+      "ecart_close_bps": {
+       "P50": 1.1142290956549479,
+       "P90": 1.3888025579196868,
+       "negatifs": 0
+      }
+     },
+     "pagination_from": {
+      "barres": 1200,
+      "chevauchement": 0,
+      "ecart_entre_pages_h": 0.5
+     },
+     "coherence_from_upto": {
+      "barres_communes": 960,
+      "valeurs_identiques": true
+     },
+     "heures_etendues": {
+      "barres_avec": 1200,
+      "barres_sans": 1200
+     },
+     "bloc_test": {
+      "fichier": "saxo_us100_30m_test.csv",
+      "barres": 1200,
+      "sha256": "4d6f9686ac901244610027b6893e1a85373a77d8fe08c60fd10e622f54b7ad3d",
+      "reproductible": true
+     },
+     "seances_annoncees": [
+      {
+       "State": "AutomatedTrading",
+       "debut_ny": "Wed 18:00",
+       "fin_ny": "Thu 17:00"
+      },
+      {
+       "State": "Closed",
+       "debut_ny": "Thu 17:00",
+       "fin_ny": "Thu 18:00"
+      },
+      {
+       "State": "AutomatedTrading",
+       "debut_ny": "Thu 18:00",
+       "fin_ny": "Fri 17:00"
+      },
+      {
+       "State": "Closed",
+       "debut_ny": "Fri 17:00",
+       "fin_ny": "Sun 17:59"
+      }
+     ],
+     "fuseau_bourse": 3
+    },
+    {
+     "instrument": {
+      "Symbol": "USNAS100cont",
+      "Identifier": 36423415,
+      "AssetType": "CfdOnFutures",
+      "Description": "US Tech 100 NAS, continuous",
+      "ExchangeId": "",
+      "CurrencyCode": "USD",
+      "TradableAs": null,
+      "GroupId": 3,
+      "SummaryType": "Instrument",
+      "mots_cles": "US Tech 100"
+     },
+     "chart_info": {
+      "DelayedByMinutes": 0,
+      "ExchangeId": "CME",
+      "FirstSampleTime": "2025-04-03T08:18:00Z",
+      "Horizon": 30
+     },
+     "display": {
+      "Currency": "USD",
+      "Decimals": 2,
+      "Description": "US Tech 100 NAS, continuous",
+      "Format": "Normal",
+      "NumeratorDecimals": 2,
+      "Symbol": "USNAS100cont"
+     },
+     "first_sample_time": "2025-04-03 08:18:00+00:00",
+     "couvre_2020_01_01": false,
+     "page_upto_fin_2025": {
+      "statut": 200,
+      "barres": 1200,
+      "premiere": "2025-11-24 00:31:00+00:00",
+      "derniere": "2025-12-31 21:31:00+00:00"
+     },
+     "page_upto_janvier_2020": {
+      "statut": 200,
+      "barres": 0,
+      "premiere": null,
+      "derniere": null
+     },
+     "seances_annoncees": [
+      {
+       "State": "AutomatedTrading",
+       "debut_ny": "Wed 18:01",
+       "fin_ny": "Thu 17:00"
+      },
+      {
+       "State": "Closed",
+       "debut_ny": "Thu 17:00",
+       "fin_ny": "Thu 18:00"
+      },
+      {
+       "State": "PreTrading",
+       "debut_ny": "Thu 18:00",
+       "fin_ny": "Thu 18:01"
+      },
+      {
+       "State": "AutomatedTrading",
+       "debut_ny": "Thu 18:01",
+       "fin_ny": "Fri 17:00"
+      },
+      {
+       "State": "Closed",
+       "debut_ny": "Fri 17:00",
+       "fin_ny": "Sun 18:00"
+      }
+     ],
+     "fuseau_bourse": 5
+    }
+   ],
+   "premier_echantillon_par_candidat": [
+    {
+     "Symbol": "USNAS100.I",
+     "Identifier": 4912,
+     "AssetType": "CfdOnIndex",
+     "Description": "US Tech 100 NAS",
+     "statut": 200,
+     "FirstSampleTime": "2003-10-30T23:55:00Z",
+     "DelayedByMinutes": 0
+    },
+    {
+     "Symbol": "USNAS100cont",
+     "Identifier": 36423415,
+     "AssetType": "CfdOnFutures",
+     "Description": "US Tech 100 NAS, continuous",
+     "statut": 200,
+     "FirstSampleTime": "2025-04-03T08:18:00Z",
+     "DelayedByMinutes": 0
     }
    ]
   },
@@ -140,26 +401,312 @@
      "mots_cles": "US2000"
     }
    ],
-   "retenus_pour_test": [],
-   "tests": [],
-   "premier_echantillon_par_candidat": [
-    {
-     "Symbol": "US2000DEC26",
-     "Identifier": 60590697,
-     "AssetType": "CfdOnFutures",
-     "Description": "US 2000 December 2026",
-     "statut": 403,
-     "FirstSampleTime": null,
-     "DelayedByMinutes": null
-    },
+   "retenus_pour_test": [
     {
      "Symbol": "US2000cont",
      "Identifier": 133720,
      "AssetType": "CfdOnFutures",
      "Description": "US 2000 continuous",
-     "statut": 403,
-     "FirstSampleTime": null,
-     "DelayedByMinutes": null
+     "statut": 200,
+     "FirstSampleTime": "2012-02-29T11:11:00Z",
+     "DelayedByMinutes": 0
+    },
+    {
+     "Symbol": "US2000DEC26",
+     "Identifier": 60590697,
+     "AssetType": "CfdOnFutures",
+     "Description": "US 2000 December 2026",
+     "statut": 200,
+     "FirstSampleTime": "2026-09-03T01:01:00Z",
+     "DelayedByMinutes": 0
+    }
+   ],
+   "tests": [
+    {
+     "instrument": {
+      "Symbol": "US2000cont",
+      "Identifier": 133720,
+      "AssetType": "CfdOnFutures",
+      "Description": "US 2000 continuous",
+      "ExchangeId": "",
+      "CurrencyCode": "USD",
+      "TradableAs": null,
+      "GroupId": 39250,
+      "SummaryType": "Instrument",
+      "mots_cles": "US2000"
+     },
+     "chart_info": {
+      "DelayedByMinutes": 0,
+      "ExchangeId": "CME",
+      "FirstSampleTime": "2012-02-29T11:11:00Z",
+      "Horizon": 30
+     },
+     "display": {
+      "Currency": "USD",
+      "Decimals": 2,
+      "Description": "US 2000 continuous",
+      "Format": "Normal",
+      "NumeratorDecimals": 2,
+      "Symbol": "US2000cont"
+     },
+     "first_sample_time": "2012-02-29 11:11:00+00:00",
+     "couvre_2020_01_01": true,
+     "page_from_debut": {
+      "statut": 200,
+      "barres": 1200,
+      "premiere": "2020-01-02 02:01:00+00:00",
+      "derniere": "2020-02-13 05:31:00+00:00"
+     },
+     "page_upto_fin_2025": {
+      "statut": 200,
+      "barres": 1200,
+      "premiere": "2025-11-18 02:31:00+00:00",
+      "derniere": "2025-12-31 21:31:00+00:00"
+     },
+     "page_upto_janvier_2020": {
+      "statut": 200,
+      "barres": 1200,
+      "premiere": "2019-12-18 14:31:00+00:00",
+      "derniere": "2020-01-31 21:31:00+00:00"
+     },
+     "champs_prix": {
+      "bid_ask": [
+       "OpenBid",
+       "HighBid",
+       "LowBid",
+       "CloseBid",
+       "OpenAsk",
+       "HighAsk",
+       "LowAsk",
+       "CloseAsk"
+      ],
+      "dernier": [],
+      "volume": [],
+      "autres": []
+     },
+     "structure": {
+      "barres": 1200,
+      "doublons": 0,
+      "desordre": 0,
+      "pas_30_min": 0.9749791492910759,
+      "interruptions": 30,
+      "interruptions_duree_h": {
+       "min": 4.5,
+       "50%": 4.5,
+       "max": 52.5
+      },
+      "reprises_heure_new_york": {
+       "21:01": 30
+      },
+      "barres_par_jour_semaine": {
+       "0": 232,
+       "1": 240,
+       "2": 240,
+       "3": 248,
+       "4": 240
+      }
+     },
+     "plus_grands_ecarts": [
+      {
+       "apres": "2020-01-07 21:31:00+00:00",
+       "reprise": "2020-01-08 02:01:00+00:00",
+       "ecart_bps": -87.94598003557626
+      },
+      {
+       "apres": "2020-01-24 21:31:00+00:00",
+       "reprise": "2020-01-27 02:01:00+00:00",
+       "ecart_bps": -85.1737306534688
+      },
+      {
+       "apres": "2020-01-31 21:31:00+00:00",
+       "reprise": "2020-02-03 02:01:00+00:00",
+       "ecart_bps": 75.19759300525324
+      },
+      {
+       "apres": "2020-01-03 21:31:00+00:00",
+       "reprise": "2020-01-06 02:01:00+00:00",
+       "ecart_bps": -50.08307346004765
+      },
+      {
+       "apres": "2020-01-20 17:31:00+00:00",
+       "reprise": "2020-01-21 02:01:00+00:00",
+       "ecart_bps": -46.53499988951811
+      }
+     ],
+     "controles_ohlc": {
+      "bid": {
+       "incoherences": 0,
+       "prix_non_positifs": 0
+      },
+      "ask": {
+       "incoherences": 0,
+       "prix_non_positifs": 0
+      },
+      "ecart_close_bps": {
+       "P50": 3.0212393123659322,
+       "P90": 3.6321811247662477,
+       "negatifs": 0
+      }
+     },
+     "pagination_from": {
+      "barres": 1200,
+      "chevauchement": 0,
+      "ecart_entre_pages_h": 0.5
+     },
+     "coherence_from_upto": {
+      "barres_communes": 872,
+      "valeurs_identiques": true
+     },
+     "heures_etendues": {
+      "barres_avec": 1200,
+      "barres_sans": 1200
+     },
+     "bloc_test": {
+      "fichier": "saxo_us2000_30m_test.csv",
+      "barres": 1200,
+      "sha256": "69a3b7d56b2117ecdd6171c48212b83ee927aa16923b6194214a38fe2c3bfabf",
+      "reproductible": true
+     },
+     "seances_annoncees": [
+      {
+       "State": "Closed",
+       "debut_ny": "Wed 17:00",
+       "fin_ny": "Wed 21:00"
+      },
+      {
+       "State": "PreTrading",
+       "debut_ny": "Wed 21:00",
+       "fin_ny": "Wed 21:01"
+      },
+      {
+       "State": "AutomatedTrading",
+       "debut_ny": "Wed 21:01",
+       "fin_ny": "Thu 17:00"
+      },
+      {
+       "State": "Closed",
+       "debut_ny": "Thu 17:00",
+       "fin_ny": "Thu 21:00"
+      },
+      {
+       "State": "PreTrading",
+       "debut_ny": "Thu 21:00",
+       "fin_ny": "Thu 21:01"
+      },
+      {
+       "State": "AutomatedTrading",
+       "debut_ny": "Thu 21:01",
+       "fin_ny": "Fri 17:00"
+      },
+      {
+       "State": "Closed",
+       "debut_ny": "Fri 17:00",
+       "fin_ny": "Sun 21:00"
+      }
+     ],
+     "fuseau_bourse": 5
+    },
+    {
+     "instrument": {
+      "Symbol": "US2000DEC26",
+      "Identifier": 60590697,
+      "AssetType": "CfdOnFutures",
+      "Description": "US 2000 December 2026",
+      "ExchangeId": "",
+      "CurrencyCode": "USD",
+      "TradableAs": [
+       "CfdOnFutures"
+      ],
+      "GroupId": 39250,
+      "SummaryType": "Instrument",
+      "mots_cles": "US2000"
+     },
+     "chart_info": {
+      "DelayedByMinutes": 0,
+      "ExchangeId": "CME",
+      "FirstSampleTime": "2026-09-03T01:01:00Z",
+      "Horizon": 30
+     },
+     "display": {
+      "Currency": "USD",
+      "Decimals": 2,
+      "Description": "US 2000 December 2026",
+      "Format": "Normal",
+      "NumeratorDecimals": 2,
+      "Symbol": "US2000DEC26"
+     },
+     "first_sample_time": "2026-09-03 01:01:00+00:00",
+     "couvre_2020_01_01": false,
+     "page_upto_fin_2025": {
+      "statut": 200,
+      "barres": 0,
+      "premiere": null,
+      "derniere": null
+     },
+     "page_upto_janvier_2020": {
+      "statut": 200,
+      "barres": 0,
+      "premiere": null,
+      "derniere": null
+     },
+     "seances_annoncees": [
+      {
+       "State": "Closed",
+       "debut_ny": "Wed 17:00",
+       "fin_ny": "Wed 21:00"
+      },
+      {
+       "State": "PreTrading",
+       "debut_ny": "Wed 21:00",
+       "fin_ny": "Wed 21:01"
+      },
+      {
+       "State": "AutomatedTrading",
+       "debut_ny": "Wed 21:01",
+       "fin_ny": "Thu 17:00"
+      },
+      {
+       "State": "Closed",
+       "debut_ny": "Thu 17:00",
+       "fin_ny": "Thu 21:00"
+      },
+      {
+       "State": "PreTrading",
+       "debut_ny": "Thu 21:00",
+       "fin_ny": "Thu 21:01"
+      },
+      {
+       "State": "AutomatedTrading",
+       "debut_ny": "Thu 21:01",
+       "fin_ny": "Fri 17:00"
+      },
+      {
+       "State": "Closed",
+       "debut_ny": "Fri 17:00",
+       "fin_ny": "Sun 21:00"
+      }
+     ],
+     "fuseau_bourse": 5
+    }
+   ],
+   "premier_echantillon_par_candidat": [
+    {
+     "Symbol": "US2000cont",
+     "Identifier": 133720,
+     "AssetType": "CfdOnFutures",
+     "Description": "US 2000 continuous",
+     "statut": 200,
+     "FirstSampleTime": "2012-02-29T11:11:00Z",
+     "DelayedByMinutes": 0
+    },
+    {
+     "Symbol": "US2000DEC26",
+     "Identifier": 60590697,
+     "AssetType": "CfdOnFutures",
+     "Description": "US 2000 December 2026",
+     "statut": 200,
+     "FirstSampleTime": "2026-09-03T01:01:00Z",
+     "DelayedByMinutes": 0
     }
    ]
   },
@@ -448,116 +995,311 @@
      "mots_cles": "OIL"
     }
    ],
-   "retenus_pour_test": [],
-   "tests": [],
-   "premier_echantillon_par_candidat": [
+   "retenus_pour_test": [
     {
-     "Symbol": "OILUKAPR27",
-     "Identifier": 60437334,
+     "Symbol": "OILUScont",
+     "Identifier": 22514,
      "AssetType": "CfdOnFutures",
-     "Description": "UK Crude April 2027",
-     "statut": 403,
-     "FirstSampleTime": null,
-     "DelayedByMinutes": null
-    },
-    {
-     "Symbol": "OILUKDEC26",
-     "Identifier": 57385585,
-     "AssetType": "CfdOnFutures",
-     "Description": "UK Crude December 2026",
-     "statut": 403,
-     "FirstSampleTime": null,
-     "DelayedByMinutes": null
-    },
-    {
-     "Symbol": "OILUKFEB27",
-     "Identifier": 58960333,
-     "AssetType": "CfdOnFutures",
-     "Description": "UK Crude February 2027",
-     "statut": 403,
-     "FirstSampleTime": null,
-     "DelayedByMinutes": null
-    },
-    {
-     "Symbol": "OILUKJAN27",
-     "Identifier": 58119087,
-     "AssetType": "CfdOnFutures",
-     "Description": "UK Crude January 2027",
-     "statut": 403,
-     "FirstSampleTime": null,
-     "DelayedByMinutes": null
-    },
-    {
-     "Symbol": "OILUKMAR27",
-     "Identifier": 59724301,
-     "AssetType": "CfdOnFutures",
-     "Description": "UK Crude March 2027",
-     "statut": 403,
-     "FirstSampleTime": null,
-     "DelayedByMinutes": null
-    },
-    {
-     "Symbol": "OILUKMAY27",
-     "Identifier": 61246874,
-     "AssetType": "CfdOnFutures",
-     "Description": "UK Crude May 2027",
-     "statut": 403,
-     "FirstSampleTime": null,
-     "DelayedByMinutes": null
-    },
-    {
-     "Symbol": "OILUKNOV26",
-     "Identifier": 56641299,
-     "AssetType": "CfdOnFutures",
-     "Description": "UK Crude November 2026",
-     "statut": 403,
-     "FirstSampleTime": null,
-     "DelayedByMinutes": null
-    },
-    {
-     "Symbol": "OILUKcont",
-     "Identifier": 37864,
-     "AssetType": "CfdOnFutures",
-     "Description": "UK Crude, continuous",
-     "statut": 403,
-     "FirstSampleTime": null,
-     "DelayedByMinutes": null
-    },
-    {
-     "Symbol": "OILUSDEC26",
-     "Identifier": 60126210,
-     "AssetType": "CfdOnFutures",
-     "Description": "US Crude December 2026",
-     "statut": 403,
-     "FirstSampleTime": null,
-     "DelayedByMinutes": null
-    },
-    {
-     "Symbol": "OILUSJAN27",
-     "Identifier": 60919888,
-     "AssetType": "CfdOnFutures",
-     "Description": "US Crude January 2027",
-     "statut": 403,
-     "FirstSampleTime": null,
-     "DelayedByMinutes": null
+     "Description": "US Crude, continuous",
+     "statut": 200,
+     "FirstSampleTime": "2003-10-30T23:48:00Z",
+     "DelayedByMinutes": 0
     },
     {
      "Symbol": "OILUSNOV26",
      "Identifier": 59368644,
      "AssetType": "CfdOnFutures",
      "Description": "US Crude November 2026",
-     "statut": 403,
-     "FirstSampleTime": null,
-     "DelayedByMinutes": null
+     "statut": 200,
+     "FirstSampleTime": "2026-07-15T00:48:00Z",
+     "DelayedByMinutes": 0
+    }
+   ],
+   "tests": [
+    {
+     "instrument": {
+      "Symbol": "OILUScont",
+      "Identifier": 22514,
+      "AssetType": "CfdOnFutures",
+      "Description": "US Crude, continuous",
+      "ExchangeId": "",
+      "CurrencyCode": "USD",
+      "TradableAs": null,
+      "GroupId": 39090,
+      "SummaryType": "Instrument",
+      "mots_cles": "US Crude"
+     },
+     "chart_info": {
+      "DelayedByMinutes": 0,
+      "ExchangeId": "NYMEX",
+      "FirstSampleTime": "2003-10-30T23:48:00Z",
+      "Horizon": 30
+     },
+     "display": {
+      "Currency": "USD",
+      "Decimals": 2,
+      "Description": "US Crude, continuous",
+      "Format": "Normal",
+      "NumeratorDecimals": 1,
+      "Symbol": "OILUScont"
+     },
+     "first_sample_time": "2003-10-30 23:48:00+00:00",
+     "couvre_2020_01_01": true,
+     "page_from_debut": {
+      "statut": 200,
+      "barres": 1200,
+      "premiere": "2020-01-02 00:01:00+00:00",
+      "derniere": "2020-02-07 05:31:00+00:00"
+     },
+     "page_upto_fin_2025": {
+      "statut": 200,
+      "barres": 1200,
+      "premiere": "2025-11-24 04:01:00+00:00",
+      "derniere": "2025-12-31 21:31:00+00:00"
+     },
+     "page_upto_janvier_2020": {
+      "statut": 200,
+      "barres": 1200,
+      "premiere": "2019-12-24 13:01:00+00:00",
+      "derniere": "2020-01-31 21:31:00+00:00"
+     },
+     "champs_prix": {
+      "bid_ask": [
+       "OpenBid",
+       "HighBid",
+       "LowBid",
+       "CloseBid",
+       "OpenAsk",
+       "HighAsk",
+       "LowAsk",
+       "CloseAsk"
+      ],
+      "dernier": [],
+      "volume": [],
+      "autres": []
+     },
+     "structure": {
+      "barres": 1200,
+      "doublons": 0,
+      "desordre": 0,
+      "pas_30_min": 0.9783152627189324,
+      "interruptions": 26,
+      "interruptions_duree_h": {
+       "min": 1.5,
+       "50%": 1.5,
+       "max": 49.5
+      },
+      "reprises_heure_new_york": {
+       "18:01": 26
+      },
+      "barres_par_jour_semaine": {
+       "0": 222,
+       "1": 230,
+       "2": 230,
+       "3": 276,
+       "4": 232,
+       "6": 10
+      }
+     },
+     "plus_grands_ecarts": [
+      {
+       "apres": "2020-01-24 21:31:00+00:00",
+       "reprise": "2020-01-26 23:01:00+00:00",
+       "ecart_bps": -167.50810424815356
+      },
+      {
+       "apres": "2020-01-31 21:31:00+00:00",
+       "reprise": "2020-02-02 23:01:00+00:00",
+       "ecart_bps": -146.38692166662207
+      },
+      {
+       "apres": "2020-01-03 21:31:00+00:00",
+       "reprise": "2020-01-05 23:01:00+00:00",
+       "ecart_bps": 118.36325355352695
+      },
+      {
+       "apres": "2020-01-17 21:31:00+00:00",
+       "reprise": "2020-01-19 23:01:00+00:00",
+       "ecart_bps": 111.65739418732265
+      },
+      {
+       "apres": "2020-01-10 21:31:00+00:00",
+       "reprise": "2020-01-12 23:01:00+00:00",
+       "ecart_bps": -52.59151997888934
+      }
+     ],
+     "controles_ohlc": {
+      "bid": {
+       "incoherences": 0,
+       "prix_non_positifs": 0
+      },
+      "ask": {
+       "incoherences": 0,
+       "prix_non_positifs": 0
+      },
+      "ecart_close_bps": {
+       "P50": 8.956560680699376,
+       "P90": 9.995002498750056,
+       "negatifs": 0
+      }
+     },
+     "pagination_from": {
+      "barres": 1200,
+      "chevauchement": 0,
+      "ecart_entre_pages_h": 0.5
+     },
+     "coherence_from_upto": {
+      "barres_communes": 1002,
+      "valeurs_identiques": true
+     },
+     "heures_etendues": {
+      "barres_avec": 1200,
+      "barres_sans": 1200
+     },
+     "bloc_test": {
+      "fichier": "saxo_usoil_30m_test.csv",
+      "barres": 1200,
+      "sha256": "c7629884f59e3175abf8bde565be64ab68a979691cb624172f0e81a1a28fb4ee",
+      "reproductible": true
+     },
+     "seances_annoncees": [
+      {
+       "State": "AutomatedTrading",
+       "debut_ny": "Wed 18:01",
+       "fin_ny": "Thu 17:00"
+      },
+      {
+       "State": "Closed",
+       "debut_ny": "Thu 17:00",
+       "fin_ny": "Thu 18:00"
+      },
+      {
+       "State": "PreTrading",
+       "debut_ny": "Thu 18:00",
+       "fin_ny": "Thu 18:01"
+      },
+      {
+       "State": "AutomatedTrading",
+       "debut_ny": "Thu 18:01",
+       "fin_ny": "Fri 17:00"
+      },
+      {
+       "State": "Closed",
+       "debut_ny": "Fri 17:00",
+       "fin_ny": "Sun 18:00"
+      }
+     ],
+     "fuseau_bourse": 3
     },
+    {
+     "instrument": {
+      "Symbol": "OILUSNOV26",
+      "Identifier": 59368644,
+      "AssetType": "CfdOnFutures",
+      "Description": "US Crude November 2026",
+      "ExchangeId": "",
+      "CurrencyCode": "USD",
+      "TradableAs": [
+       "CfdOnFutures"
+      ],
+      "GroupId": 39090,
+      "SummaryType": "Instrument",
+      "mots_cles": "US Crude"
+     },
+     "chart_info": {
+      "DelayedByMinutes": 0,
+      "ExchangeId": "NYMEX",
+      "FirstSampleTime": "2026-07-15T00:48:00Z",
+      "Horizon": 30
+     },
+     "display": {
+      "Currency": "USD",
+      "Decimals": 2,
+      "Description": "US Crude November 2026",
+      "Format": "Normal",
+      "NumeratorDecimals": 1,
+      "Symbol": "OILUSNOV26"
+     },
+     "first_sample_time": "2026-07-15 00:48:00+00:00",
+     "couvre_2020_01_01": false,
+     "page_upto_fin_2025": {
+      "statut": 200,
+      "barres": 0,
+      "premiere": null,
+      "derniere": null
+     },
+     "page_upto_janvier_2020": {
+      "statut": 200,
+      "barres": 0,
+      "premiere": null,
+      "derniere": null
+     },
+     "seances_annoncees": [
+      {
+       "State": "AutomatedTrading",
+       "debut_ny": "Wed 18:01",
+       "fin_ny": "Thu 17:00"
+      },
+      {
+       "State": "Closed",
+       "debut_ny": "Thu 17:00",
+       "fin_ny": "Thu 18:00"
+      },
+      {
+       "State": "PreTrading",
+       "debut_ny": "Thu 18:00",
+       "fin_ny": "Thu 18:01"
+      },
+      {
+       "State": "AutomatedTrading",
+       "debut_ny": "Thu 18:01",
+       "fin_ny": "Fri 17:00"
+      },
+      {
+       "State": "Closed",
+       "debut_ny": "Fri 17:00",
+       "fin_ny": "Sun 18:00"
+      }
+     ],
+     "fuseau_bourse": 3
+    }
+   ],
+   "premier_echantillon_par_candidat": [
     {
      "Symbol": "OILUScont",
      "Identifier": 22514,
      "AssetType": "CfdOnFutures",
      "Description": "US Crude, continuous",
-     "statut": 403,
-     "FirstSampleTime": null,
-     "DelayedByMinutes": null
+     "statut": 200,
+     "FirstSampleTime": "2003-10-30T23:48:00Z",
+     "DelayedByMinutes": 0
+    },
+    {
+     "Symbol": "OILUSDEC26",
+     "Identifier": 60126210,
+     "AssetType": "CfdOnFutures",
+     "Description": "US Crude December 2026",
+     "statut": 200,
+     "FirstSampleTime": "2026-08-14T01:25:00Z",
+     "DelayedByMinutes": 0
+    },
+    {
+     "Symbol": "OILUSJAN27",
+     "Identifier": 60919888,
+     "AssetType": "CfdOnFutures",
+     "Description": "US Crude January 2027",
+     "statut": 200,
+     "FirstSampleTime": "2026-09-16T00:47:00Z",
+     "DelayedByMinutes": 0
+    },
+    {
+     "Symbol": "OILUSNOV26",
+     "Identifier": 59368644,
+     "AssetType": "CfdOnFutures",
+     "Description": "US Crude November 2026",
+     "statut": 200,
+     "FirstSampleTime": "2026-07-15T00:48:00Z",
+     "DelayedByMinutes": 0
     }
    ]
   },
@@ -604,35 +1346,302 @@
      "mots_cles": "Copper"
     }
    ],
-   "retenus_pour_test": [],
-   "tests": [],
-   "premier_echantillon_par_candidat": [
+   "retenus_pour_test": [
+    {
+     "Symbol": "COPPERUScont",
+     "Identifier": 37264,
+     "AssetType": "CfdOnFutures",
+     "Description": "US Copper continuous",
+     "statut": 200,
+     "FirstSampleTime": "2003-10-31T13:20:00Z",
+     "DelayedByMinutes": 0
+    },
     {
      "Symbol": "COPPERUSDEC26",
      "Identifier": 58860926,
      "AssetType": "CfdOnFutures",
      "Description": "US Copper December 2026",
-     "statut": 403,
-     "FirstSampleTime": null,
-     "DelayedByMinutes": null
+     "statut": 200,
+     "FirstSampleTime": "2026-06-23T00:48:00Z",
+     "DelayedByMinutes": 0
+    }
+   ],
+   "tests": [
+    {
+     "instrument": {
+      "Symbol": "COPPERUScont",
+      "Identifier": 37264,
+      "AssetType": "CfdOnFutures",
+      "Description": "US Copper continuous",
+      "ExchangeId": "",
+      "CurrencyCode": "USD",
+      "TradableAs": null,
+      "GroupId": 39094,
+      "SummaryType": "Instrument",
+      "mots_cles": "Copper"
+     },
+     "chart_info": {
+      "DelayedByMinutes": 0,
+      "ExchangeId": "COMEX",
+      "FirstSampleTime": "2003-10-31T13:20:00Z",
+      "Horizon": 30
+     },
+     "display": {
+      "Currency": "USX",
+      "Decimals": 2,
+      "Description": "US Copper continuous",
+      "Format": "Normal",
+      "NumeratorDecimals": 0,
+      "Symbol": "COPPERUScont"
+     },
+     "first_sample_time": "2003-10-31 13:20:00+00:00",
+     "couvre_2020_01_01": true,
+     "page_from_debut": {
+      "statut": 200,
+      "barres": 1200,
+      "premiere": "2020-01-02 00:01:00+00:00",
+      "derniere": "2020-02-07 05:31:00+00:00"
+     },
+     "page_upto_fin_2025": {
+      "statut": 200,
+      "barres": 1200,
+      "premiere": "2025-11-24 02:01:00+00:00",
+      "derniere": "2025-12-31 21:31:00+00:00"
+     },
+     "page_upto_janvier_2020": {
+      "statut": 200,
+      "barres": 1200,
+      "premiere": "2019-12-24 13:01:00+00:00",
+      "derniere": "2020-01-31 21:31:00+00:00"
+     },
+     "champs_prix": {
+      "bid_ask": [
+       "OpenBid",
+       "HighBid",
+       "LowBid",
+       "CloseBid",
+       "OpenAsk",
+       "HighAsk",
+       "LowAsk",
+       "CloseAsk"
+      ],
+      "dernier": [],
+      "volume": [],
+      "autres": []
+     },
+     "structure": {
+      "barres": 1200,
+      "doublons": 0,
+      "desordre": 0,
+      "pas_30_min": 0.9783152627189324,
+      "interruptions": 26,
+      "interruptions_duree_h": {
+       "min": 1.5,
+       "50%": 1.5,
+       "max": 49.5
+      },
+      "reprises_heure_new_york": {
+       "18:01": 26
+      },
+      "barres_par_jour_semaine": {
+       "0": 222,
+       "1": 230,
+       "2": 230,
+       "3": 276,
+       "4": 232,
+       "6": 10
+      }
+     },
+     "plus_grands_ecarts": [
+      {
+       "apres": "2020-01-24 21:31:00+00:00",
+       "reprise": "2020-01-26 23:01:00+00:00",
+       "ecart_bps": -65.537169317967
+      },
+      {
+       "apres": "2020-01-03 21:31:00+00:00",
+       "reprise": "2020-01-05 23:01:00+00:00",
+       "ecart_bps": -28.83924132904982
+      },
+      {
+       "apres": "2020-01-30 21:31:00+00:00",
+       "reprise": "2020-01-30 23:01:00+00:00",
+       "ecart_bps": -19.65409437702072
+      },
+      {
+       "apres": "2020-01-31 21:31:00+00:00",
+       "reprise": "2020-02-02 23:01:00+00:00",
+       "ecart_bps": -17.951535687508123
+      },
+      {
+       "apres": "2020-02-03 21:31:00+00:00",
+       "reprise": "2020-02-03 23:01:00+00:00",
+       "ecart_bps": -11.985618694116546
+      }
+     ],
+     "controles_ohlc": {
+      "bid": {
+       "incoherences": 0,
+       "prix_non_positifs": 0
+      },
+      "ask": {
+       "incoherences": 0,
+       "prix_non_positifs": 0
+      },
+      "ecart_close_bps": {
+       "P50": 19.764621327823605,
+       "P90": 21.64715143166321,
+       "negatifs": 0
+      }
+     },
+     "pagination_from": {
+      "barres": 1200,
+      "chevauchement": 0,
+      "ecart_entre_pages_h": 0.5
+     },
+     "coherence_from_upto": {
+      "barres_communes": 1002,
+      "valeurs_identiques": true
+     },
+     "heures_etendues": {
+      "barres_avec": 1200,
+      "barres_sans": 1200
+     },
+     "bloc_test": {
+      "fichier": "saxo_copper_30m_test.csv",
+      "barres": 1200,
+      "sha256": "d0bd26da3cba4f25d34b88c8760345292b7dffbdbf20a04e6e54970d105f6b00",
+      "reproductible": true
+     },
+     "seances_annoncees": [
+      {
+       "State": "AutomatedTrading",
+       "debut_ny": "Wed 18:01",
+       "fin_ny": "Thu 17:00"
+      },
+      {
+       "State": "Closed",
+       "debut_ny": "Thu 17:00",
+       "fin_ny": "Thu 18:00"
+      },
+      {
+       "State": "PreTrading",
+       "debut_ny": "Thu 18:00",
+       "fin_ny": "Thu 18:01"
+      },
+      {
+       "State": "AutomatedTrading",
+       "debut_ny": "Thu 18:01",
+       "fin_ny": "Fri 17:00"
+      },
+      {
+       "State": "Closed",
+       "debut_ny": "Fri 17:00",
+       "fin_ny": "Sun 18:00"
+      }
+     ],
+     "fuseau_bourse": 3
+    },
+    {
+     "instrument": {
+      "Symbol": "COPPERUSDEC26",
+      "Identifier": 58860926,
+      "AssetType": "CfdOnFutures",
+      "Description": "US Copper December 2026",
+      "ExchangeId": "",
+      "CurrencyCode": "USD",
+      "TradableAs": [
+       "CfdOnFutures"
+      ],
+      "GroupId": 39094,
+      "SummaryType": "Instrument",
+      "mots_cles": "Copper"
+     },
+     "chart_info": {
+      "DelayedByMinutes": 0,
+      "ExchangeId": "COMEX",
+      "FirstSampleTime": "2026-06-23T00:48:00Z",
+      "Horizon": 30
+     },
+     "display": {
+      "Currency": "USX",
+      "Decimals": 2,
+      "Description": "US Copper December 2026",
+      "Format": "Normal",
+      "NumeratorDecimals": 0,
+      "Symbol": "COPPERUSDEC26"
+     },
+     "first_sample_time": "2026-06-23 00:48:00+00:00",
+     "couvre_2020_01_01": false,
+     "page_upto_fin_2025": {
+      "statut": 200,
+      "barres": 0,
+      "premiere": null,
+      "derniere": null
+     },
+     "page_upto_janvier_2020": {
+      "statut": 200,
+      "barres": 0,
+      "premiere": null,
+      "derniere": null
+     },
+     "seances_annoncees": [
+      {
+       "State": "AutomatedTrading",
+       "debut_ny": "Wed 18:01",
+       "fin_ny": "Thu 17:00"
+      },
+      {
+       "State": "Closed",
+       "debut_ny": "Thu 17:00",
+       "fin_ny": "Thu 18:00"
+      },
+      {
+       "State": "PreTrading",
+       "debut_ny": "Thu 18:00",
+       "fin_ny": "Thu 18:01"
+      },
+      {
+       "State": "AutomatedTrading",
+       "debut_ny": "Thu 18:01",
+       "fin_ny": "Fri 17:00"
+      },
+      {
+       "State": "Closed",
+       "debut_ny": "Fri 17:00",
+       "fin_ny": "Sun 18:00"
+      }
+     ],
+     "fuseau_bourse": 3
+    }
+   ],
+   "premier_echantillon_par_candidat": [
+    {
+     "Symbol": "COPPERUScont",
+     "Identifier": 37264,
+     "AssetType": "CfdOnFutures",
+     "Description": "US Copper continuous",
+     "statut": 200,
+     "FirstSampleTime": "2003-10-31T13:20:00Z",
+     "DelayedByMinutes": 0
+    },
+    {
+     "Symbol": "COPPERUSDEC26",
+     "Identifier": 58860926,
+     "AssetType": "CfdOnFutures",
+     "Description": "US Copper December 2026",
+     "statut": 200,
+     "FirstSampleTime": "2026-06-23T00:48:00Z",
+     "DelayedByMinutes": 0
     },
     {
      "Symbol": "COPPERUSMAR27",
      "Identifier": 60367268,
      "AssetType": "CfdOnFutures",
      "Description": "US Copper March 2027",
-     "statut": 403,
-     "FirstSampleTime": null,
-     "DelayedByMinutes": null
-    },
-    {
-     "Symbol": "COPPERUScont",
-     "Identifier": 37264,
-     "AssetType": "CfdOnFutures",
-     "Description": "US Copper continuous",
-     "statut": 403,
-     "FirstSampleTime": null,
-     "DelayedByMinutes": null
+     "statut": 200,
+     "FirstSampleTime": "2026-08-24T01:25:00Z",
+     "DelayedByMinutes": 0
     }
    ]
   }
@@ -712,13 +1721,228 @@
      "Symbol": "NQc1",
      "Identifier": 4060,
      "Description": "E-mini NASDAQ-100 - continuous",
-     "statut": 403,
-     "chart_info": null,
-     "champs_prix": null,
-     "erreur": "\u001f�\b\u0000\u0000\u0000\u0000\u0000\u0004\u0000�Vr-*�/r�OIU�R���KU�Q�M-.NL\u0007\t8&'\u0003�\n)�y��)zJ�\u0000\u001b�b;/\u0000\u0000\u0000"
+     "statut": 200,
+     "chart_info": {
+      "DelayedByMinutes": 10,
+      "ExchangeId": "CME",
+      "FirstSampleTime": "2003-10-30T23:49:00Z",
+      "Horizon": 30
+     },
+     "champs_prix": {
+      "bid_ask": [],
+      "dernier": [
+       "Open",
+       "High",
+       "Low",
+       "Close"
+      ],
+      "volume": [
+       "Volume"
+      ],
+      "autres": [
+       "Interest",
+       "MarketTradingState"
+      ]
+     },
+     "erreur": null
+    },
+    {
+     "Symbol": "MNQc1",
+     "Identifier": 13677212,
+     "Description": "Micro E-mini Nasdaq 100 - continuous",
+     "statut": 200,
+     "chart_info": {
+      "DelayedByMinutes": 10,
+      "ExchangeId": "CME",
+      "FirstSampleTime": "2019-05-05T22:03:00Z",
+      "Horizon": 30
+     },
+     "champs_prix": {
+      "bid_ask": [],
+      "dernier": [
+       "Open",
+       "High",
+       "Low",
+       "Close"
+      ],
+      "volume": [
+       "Volume"
+      ],
+      "autres": [
+       "Interest",
+       "MarketTradingState"
+      ]
+     },
+     "erreur": null
     }
    ],
-   "test_detaille": null
+   "test_detaille": {
+    "instrument": {
+     "Symbol": "NQc1",
+     "Identifier": 4060,
+     "AssetType": "ContractFutures",
+     "Description": "E-mini NASDAQ-100 - continuous",
+     "ExchangeId": "CME",
+     "CurrencyCode": "USD",
+     "TradableAs": null,
+     "GroupId": 3,
+     "SummaryType": "Instrument",
+     "mots_cles": "NQ"
+    },
+    "chart_info": {
+     "DelayedByMinutes": 10,
+     "ExchangeId": "CME",
+     "FirstSampleTime": "2003-10-30T23:49:00Z",
+     "Horizon": 30
+    },
+    "display": {
+     "Decimals": 2,
+     "Description": "E-mini NASDAQ-100 - continuous",
+     "Format": "Normal",
+     "NumeratorDecimals": 0,
+     "Symbol": "NQc1"
+    },
+    "first_sample_time": "2003-10-30 23:49:00+00:00",
+    "couvre_2020_01_01": true,
+    "page_from_debut": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2020-01-02 00:00:00+00:00",
+     "derniere": "2020-02-07 05:30:00+00:00"
+    },
+    "page_upto_fin_2025": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2025-11-21 20:30:00+00:00",
+     "derniere": "2025-12-31 21:30:00+00:00"
+    },
+    "page_upto_janvier_2020": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2019-12-24 12:30:00+00:00",
+     "derniere": "2020-01-31 21:30:00+00:00"
+    },
+    "champs_prix": {
+     "bid_ask": [],
+     "dernier": [
+      "Open",
+      "High",
+      "Low",
+      "Close"
+     ],
+     "volume": [
+      "Volume"
+     ],
+     "autres": [
+      "Interest",
+      "MarketTradingState"
+     ]
+    },
+    "structure": {
+     "barres": 1200,
+     "doublons": 0,
+     "desordre": 0,
+     "pas_30_min": 0.9783152627189324,
+     "interruptions": 26,
+     "interruptions_duree_h": {
+      "min": 1.5,
+      "50%": 1.5,
+      "max": 49.5
+     },
+     "reprises_heure_new_york": {
+      "18:00": 26
+     },
+     "barres_par_jour_semaine": {
+      "0": 222,
+      "1": 230,
+      "2": 230,
+      "3": 276,
+      "4": 232,
+      "6": 10
+     }
+    },
+    "plus_grands_ecarts": [
+     {
+      "apres": "2020-01-24 21:30:00+00:00",
+      "reprise": "2020-01-26 23:00:00+00:00",
+      "ecart_bps": -65.61000819347825
+     },
+     {
+      "apres": "2020-01-03 21:30:00+00:00",
+      "reprise": "2020-01-05 23:00:00+00:00",
+      "ecart_bps": -44.92728212121856
+     },
+     {
+      "apres": "2020-01-31 21:30:00+00:00",
+      "reprise": "2020-02-02 23:00:00+00:00",
+      "ecart_bps": -33.89645388194206
+     },
+     {
+      "apres": "2020-01-30 21:30:00+00:00",
+      "reprise": "2020-01-30 23:00:00+00:00",
+      "ecart_bps": -11.915079399246048
+     },
+     {
+      "apres": "2020-01-27 21:30:00+00:00",
+      "reprise": "2020-01-27 23:00:00+00:00",
+      "ecart_bps": -8.65305492855112
+     }
+    ],
+    "controles_ohlc": {
+     "dernier": {
+      "incoherences": 0,
+      "prix_non_positifs": 0
+     },
+     "volume_nul": 0
+    },
+    "pagination_from": {
+     "barres": 1200,
+     "chevauchement": 0,
+     "ecart_entre_pages_h": 0.5
+    },
+    "coherence_from_upto": {
+     "barres_communes": 1002,
+     "valeurs_identiques": true
+    },
+    "heures_etendues": {
+     "barres_avec": 1200,
+     "barres_sans": 1200
+    },
+    "bloc_test": {
+     "fichier": "saxo_fut_nq_30m_test.csv",
+     "barres": 1200,
+     "sha256": "6f4450522fc6f5717aefae79ba9ad8b97fba8e66e1e098c1936eb79762ec0a26",
+     "reproductible": true
+    },
+    "seances_annoncees": [
+     {
+      "State": "AutomatedTrading",
+      "debut_ny": "Wed 18:00",
+      "fin_ny": "Thu 17:00"
+     },
+     {
+      "State": "Closed",
+      "debut_ny": "Thu 17:00",
+      "fin_ny": "Thu 17:45"
+     },
+     {
+      "State": "PreTrading",
+      "debut_ny": "Thu 17:45",
+      "fin_ny": "Thu 18:00"
+     },
+     {
+      "State": "AutomatedTrading",
+      "debut_ny": "Thu 18:00",
+      "fin_ny": "Fri 17:00"
+     },
+     {
+      "State": "Closed",
+      "debut_ny": "Fri 17:00",
+      "fin_ny": "Sun 17:15"
+     }
+    ],
+    "fuseau_bourse": 5
+   }
   },
   "RTY": {
    "candidats": [
@@ -780,13 +2004,229 @@
      "Symbol": "RTYc1",
      "Identifier": 7327701,
      "Description": "E-mini Russell 2000 - continuous",
-     "statut": 403,
-     "chart_info": null,
-     "champs_prix": null,
-     "erreur": "\u001f�\b\u0000\u0000\u0000\u0000\u0000\u0004\u0000�Vr-*�/r�OIU�R���KU�Q�M-.NL\u0007\t8&'\u0003�\n)�y��)zJ�\u0000\u001b�b;/\u0000\u0000\u0000"
+     "statut": 200,
+     "chart_info": {
+      "DelayedByMinutes": 10,
+      "ExchangeId": "CME",
+      "FirstSampleTime": "2017-07-09T22:01:00Z",
+      "Horizon": 30
+     },
+     "champs_prix": {
+      "bid_ask": [],
+      "dernier": [
+       "Open",
+       "High",
+       "Low",
+       "Close"
+      ],
+      "volume": [
+       "Volume"
+      ],
+      "autres": [
+       "Interest",
+       "MarketTradingState"
+      ]
+     },
+     "erreur": null
+    },
+    {
+     "Symbol": "M2Kc1",
+     "Identifier": 13677210,
+     "Description": "Micro E-mini Russell 2000 - continuous",
+     "statut": 200,
+     "chart_info": {
+      "DelayedByMinutes": 10,
+      "ExchangeId": "CME",
+      "FirstSampleTime": "2019-05-05T22:01:00Z",
+      "Horizon": 30
+     },
+     "champs_prix": {
+      "bid_ask": [],
+      "dernier": [
+       "Open",
+       "High",
+       "Low",
+       "Close"
+      ],
+      "volume": [
+       "Volume"
+      ],
+      "autres": [
+       "Interest",
+       "MarketTradingState"
+      ]
+     },
+     "erreur": null
     }
    ],
-   "test_detaille": null
+   "test_detaille": {
+    "instrument": {
+     "Symbol": "RTYc1",
+     "Identifier": 7327701,
+     "AssetType": "ContractFutures",
+     "Description": "E-mini Russell 2000 - continuous",
+     "ExchangeId": "CME",
+     "CurrencyCode": "USD",
+     "TradableAs": null,
+     "GroupId": 39250,
+     "SummaryType": "Instrument",
+     "mots_cles": "E-mini Russell 2000"
+    },
+    "chart_info": {
+     "DelayedByMinutes": 10,
+     "ExchangeId": "CME",
+     "FirstSampleTime": "2017-07-09T22:01:00Z",
+     "Horizon": 30
+    },
+    "display": {
+     "Currency": "USD",
+     "Decimals": 2,
+     "Description": "E-mini Russell 2000 - continuous",
+     "Format": "Normal",
+     "NumeratorDecimals": 0,
+     "Symbol": "RTYc1"
+    },
+    "first_sample_time": "2017-07-09 22:01:00+00:00",
+    "couvre_2020_01_01": true,
+    "page_from_debut": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2020-01-02 00:00:00+00:00",
+     "derniere": "2020-02-07 05:30:00+00:00"
+    },
+    "page_upto_fin_2025": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2025-11-21 13:30:00+00:00",
+     "derniere": "2025-12-31 21:30:00+00:00"
+    },
+    "page_upto_janvier_2020": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2019-12-24 12:30:00+00:00",
+     "derniere": "2020-01-31 21:30:00+00:00"
+    },
+    "champs_prix": {
+     "bid_ask": [],
+     "dernier": [
+      "Open",
+      "High",
+      "Low",
+      "Close"
+     ],
+     "volume": [
+      "Volume"
+     ],
+     "autres": [
+      "Interest",
+      "MarketTradingState"
+     ]
+    },
+    "structure": {
+     "barres": 1200,
+     "doublons": 0,
+     "desordre": 0,
+     "pas_30_min": 0.9783152627189324,
+     "interruptions": 26,
+     "interruptions_duree_h": {
+      "min": 1.5,
+      "50%": 1.5,
+      "max": 49.5
+     },
+     "reprises_heure_new_york": {
+      "18:00": 26
+     },
+     "barres_par_jour_semaine": {
+      "0": 222,
+      "1": 230,
+      "2": 230,
+      "3": 276,
+      "4": 232,
+      "6": 10
+     }
+    },
+    "plus_grands_ecarts": [
+     {
+      "apres": "2020-01-24 21:30:00+00:00",
+      "reprise": "2020-01-26 23:00:00+00:00",
+      "ecart_bps": -71.21333656081937
+     },
+     {
+      "apres": "2020-01-03 21:30:00+00:00",
+      "reprise": "2020-01-05 23:00:00+00:00",
+      "ecart_bps": -52.48722495900282
+     },
+     {
+      "apres": "2020-01-31 21:30:00+00:00",
+      "reprise": "2020-02-02 23:00:00+00:00",
+      "ecart_bps": -18.575856734712428
+     },
+     {
+      "apres": "2020-01-28 21:30:00+00:00",
+      "reprise": "2020-01-28 23:00:00+00:00",
+      "ecart_bps": -6.621918792377529
+     },
+     {
+      "apres": "2020-01-27 21:00:00+00:00",
+      "reprise": "2020-01-27 21:30:00+00:00",
+      "ecart_bps": 6.082355275404126
+     }
+    ],
+    "controles_ohlc": {
+     "dernier": {
+      "incoherences": 0,
+      "prix_non_positifs": 0
+     },
+     "volume_nul": 0
+    },
+    "pagination_from": {
+     "barres": 1200,
+     "chevauchement": 0,
+     "ecart_entre_pages_h": 0.5
+    },
+    "coherence_from_upto": {
+     "barres_communes": 1002,
+     "valeurs_identiques": true
+    },
+    "heures_etendues": {
+     "barres_avec": 1200,
+     "barres_sans": 1200
+    },
+    "bloc_test": {
+     "fichier": "saxo_fut_rty_30m_test.csv",
+     "barres": 1200,
+     "sha256": "b9d7c1e110a332b3172881207e93fd5824b853c4f6e8a624a5785b27a727ea6a",
+     "reproductible": true
+    },
+    "seances_annoncees": [
+     {
+      "State": "AutomatedTrading",
+      "debut_ny": "Wed 18:00",
+      "fin_ny": "Thu 17:00"
+     },
+     {
+      "State": "Closed",
+      "debut_ny": "Thu 17:00",
+      "fin_ny": "Thu 17:45"
+     },
+     {
+      "State": "PreTrading",
+      "debut_ny": "Thu 17:45",
+      "fin_ny": "Thu 18:00"
+     },
+     {
+      "State": "AutomatedTrading",
+      "debut_ny": "Thu 18:00",
+      "fin_ny": "Fri 17:00"
+     },
+     {
+      "State": "Closed",
+      "debut_ny": "Fri 17:00",
+      "fin_ny": "Sun 17:15"
+     }
+    ],
+    "fuseau_bourse": 5
+   }
   },
   "CL": {
    "candidats": [
@@ -966,7 +2406,7 @@
      ],
      "GroupId": 39090,
      "SummaryType": "Instrument",
-     "mots_cles": "Crude Oil"
+     "mots_cles": "Light Sweet Crude Oil"
     },
     {
      "Symbol": "CLZ6",
@@ -980,7 +2420,7 @@
      ],
      "GroupId": 39090,
      "SummaryType": "Instrument",
-     "mots_cles": "Crude Oil"
+     "mots_cles": "Light Sweet Crude Oil"
     },
     {
      "Symbol": "CLF7",
@@ -994,7 +2434,7 @@
      ],
      "GroupId": 39090,
      "SummaryType": "Instrument",
-     "mots_cles": "Crude Oil"
+     "mots_cles": "Light Sweet Crude Oil"
     },
     {
      "Symbol": "CLZ7",
@@ -1008,7 +2448,7 @@
      ],
      "GroupId": 39090,
      "SummaryType": "Instrument",
-     "mots_cles": "Crude Oil"
+     "mots_cles": "Light Sweet Crude Oil"
     },
     {
      "Symbol": "CLZ8",
@@ -1022,7 +2462,7 @@
      ],
      "GroupId": 39090,
      "SummaryType": "Instrument",
-     "mots_cles": "Crude Oil"
+     "mots_cles": "Light Sweet Crude Oil"
     },
     {
      "Symbol": "CLG7",
@@ -1036,7 +2476,7 @@
      ],
      "GroupId": 39090,
      "SummaryType": "Instrument",
-     "mots_cles": "Crude Oil"
+     "mots_cles": "Light Sweet Crude Oil"
     },
     {
      "Symbol": "CLH7",
@@ -1050,7 +2490,7 @@
      ],
      "GroupId": 39090,
      "SummaryType": "Instrument",
-     "mots_cles": "Crude Oil"
+     "mots_cles": "Light Sweet Crude Oil"
     },
     {
      "Symbol": "CLM7",
@@ -1064,7 +2504,7 @@
      ],
      "GroupId": 39090,
      "SummaryType": "Instrument",
-     "mots_cles": "Crude Oil"
+     "mots_cles": "Light Sweet Crude Oil"
     },
     {
      "Symbol": "CLQ7",
@@ -1078,7 +2518,7 @@
      ],
      "GroupId": 39090,
      "SummaryType": "Instrument",
-     "mots_cles": "Crude Oil"
+     "mots_cles": "Light Sweet Crude Oil"
     },
     {
      "Symbol": "CLN7",
@@ -1092,7 +2532,7 @@
      ],
      "GroupId": 39090,
      "SummaryType": "Instrument",
-     "mots_cles": "Crude Oil"
+     "mots_cles": "Light Sweet Crude Oil"
     },
     {
      "Symbol": "CLU7",
@@ -1106,7 +2546,7 @@
      ],
      "GroupId": 39090,
      "SummaryType": "Instrument",
-     "mots_cles": "Crude Oil"
+     "mots_cles": "Light Sweet Crude Oil"
     },
     {
      "Symbol": "CLV7",
@@ -1120,7 +2560,7 @@
      ],
      "GroupId": 39090,
      "SummaryType": "Instrument",
-     "mots_cles": "Crude Oil"
+     "mots_cles": "Light Sweet Crude Oil"
     },
     {
      "Symbol": "CLJ7",
@@ -1134,7 +2574,7 @@
      ],
      "GroupId": 39090,
      "SummaryType": "Instrument",
-     "mots_cles": "Crude Oil"
+     "mots_cles": "Light Sweet Crude Oil"
     },
     {
      "Symbol": "CLK7",
@@ -1148,7 +2588,7 @@
      ],
      "GroupId": 39090,
      "SummaryType": "Instrument",
-     "mots_cles": "Crude Oil"
+     "mots_cles": "Light Sweet Crude Oil"
     },
     {
      "Symbol": "CLX7",
@@ -1162,7 +2602,7 @@
      ],
      "GroupId": 39090,
      "SummaryType": "Instrument",
-     "mots_cles": "Crude Oil"
+     "mots_cles": "Light Sweet Crude Oil"
     },
     {
      "Symbol": "CLF8",
@@ -1176,7 +2616,7 @@
      ],
      "GroupId": 39090,
      "SummaryType": "Instrument",
-     "mots_cles": "Crude Oil"
+     "mots_cles": "Light Sweet Crude Oil"
     },
     {
      "Symbol": "CLG8",
@@ -1190,7 +2630,7 @@
      ],
      "GroupId": 39090,
      "SummaryType": "Instrument",
-     "mots_cles": "Crude Oil"
+     "mots_cles": "Light Sweet Crude Oil"
     },
     {
      "Symbol": "CLH8",
@@ -1204,7 +2644,7 @@
      ],
      "GroupId": 39090,
      "SummaryType": "Instrument",
-     "mots_cles": "Crude Oil"
+     "mots_cles": "Light Sweet Crude Oil"
     },
     {
      "Symbol": "CLJ8",
@@ -1218,7 +2658,7 @@
      ],
      "GroupId": 39090,
      "SummaryType": "Instrument",
-     "mots_cles": "Crude Oil"
+     "mots_cles": "Light Sweet Crude Oil"
     },
     {
      "Symbol": "CLK8",
@@ -1232,7 +2672,7 @@
      ],
      "GroupId": 39090,
      "SummaryType": "Instrument",
-     "mots_cles": "Crude Oil"
+     "mots_cles": "Light Sweet Crude Oil"
     },
     {
      "Symbol": "CLZ9",
@@ -1246,7 +2686,7 @@
      ],
      "GroupId": 39090,
      "SummaryType": "Instrument",
-     "mots_cles": "Crude Oil"
+     "mots_cles": "Light Sweet Crude Oil"
     },
     {
      "Symbol": "CLM4",
@@ -1258,7 +2698,7 @@
      "TradableAs": null,
      "GroupId": 39090,
      "SummaryType": "Instrument",
-     "mots_cles": "Crude Oil"
+     "mots_cles": "Light Sweet Crude Oil"
     },
     {
      "Symbol": "CLc1",
@@ -1270,7 +2710,61 @@
      "TradableAs": null,
      "GroupId": 39090,
      "SummaryType": "Instrument",
-     "mots_cles": "Crude Oil"
+     "mots_cles": "Light Sweet Crude Oil"
+    },
+    {
+     "Symbol": "QMX6",
+     "Identifier": 60566579,
+     "AssetType": "ContractFutures",
+     "Description": "E-mini Light Sweet Crude Oil - Nov 2026",
+     "ExchangeId": "NYMEX",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "ContractFutures"
+     ],
+     "GroupId": 39114,
+     "SummaryType": "Instrument",
+     "mots_cles": "Light Sweet Crude Oil"
+    },
+    {
+     "Symbol": "QMZ6",
+     "Identifier": 46652599,
+     "AssetType": "ContractFutures",
+     "Description": "E-mini Light Sweet Crude Oil - Dec 2026",
+     "ExchangeId": "NYMEX",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "ContractFutures"
+     ],
+     "GroupId": 39114,
+     "SummaryType": "Instrument",
+     "mots_cles": "Light Sweet Crude Oil"
+    },
+    {
+     "Symbol": "QMZ7",
+     "Identifier": 54529497,
+     "AssetType": "ContractFutures",
+     "Description": "E-mini Light Sweet Crude Oil - Dec 2027",
+     "ExchangeId": "NYMEX",
+     "CurrencyCode": "USD",
+     "TradableAs": [
+      "ContractFutures"
+     ],
+     "GroupId": 39114,
+     "SummaryType": "Instrument",
+     "mots_cles": "Light Sweet Crude Oil"
+    },
+    {
+     "Symbol": "QMc1",
+     "Identifier": 7695,
+     "AssetType": "ContractFutures",
+     "Description": "E-mini Light Sweet Crude Oil - Continuous",
+     "ExchangeId": "NYMEX",
+     "CurrencyCode": "USD",
+     "TradableAs": null,
+     "GroupId": 39114,
+     "SummaryType": "Instrument",
+     "mots_cles": "Light Sweet Crude Oil"
     },
     {
      "Symbol": "BZX6",
@@ -1437,60 +2931,6 @@
      "mots_cles": "Crude Oil"
     },
     {
-     "Symbol": "QMX6",
-     "Identifier": 60566579,
-     "AssetType": "ContractFutures",
-     "Description": "E-mini Light Sweet Crude Oil - Nov 2026",
-     "ExchangeId": "NYMEX",
-     "CurrencyCode": "USD",
-     "TradableAs": [
-      "ContractFutures"
-     ],
-     "GroupId": 39114,
-     "SummaryType": "Instrument",
-     "mots_cles": "Crude Oil"
-    },
-    {
-     "Symbol": "QMZ6",
-     "Identifier": 46652599,
-     "AssetType": "ContractFutures",
-     "Description": "E-mini Light Sweet Crude Oil - Dec 2026",
-     "ExchangeId": "NYMEX",
-     "CurrencyCode": "USD",
-     "TradableAs": [
-      "ContractFutures"
-     ],
-     "GroupId": 39114,
-     "SummaryType": "Instrument",
-     "mots_cles": "Crude Oil"
-    },
-    {
-     "Symbol": "QMZ7",
-     "Identifier": 54529497,
-     "AssetType": "ContractFutures",
-     "Description": "E-mini Light Sweet Crude Oil - Dec 2027",
-     "ExchangeId": "NYMEX",
-     "CurrencyCode": "USD",
-     "TradableAs": [
-      "ContractFutures"
-     ],
-     "GroupId": 39114,
-     "SummaryType": "Instrument",
-     "mots_cles": "Crude Oil"
-    },
-    {
-     "Symbol": "QMc1",
-     "Identifier": 7695,
-     "AssetType": "ContractFutures",
-     "Description": "E-mini Light Sweet Crude Oil - Continuous",
-     "ExchangeId": "NYMEX",
-     "CurrencyCode": "USD",
-     "TradableAs": null,
-     "GroupId": 39114,
-     "SummaryType": "Instrument",
-     "mots_cles": "Crude Oil"
-    },
-    {
      "Symbol": "DCU6",
      "Identifier": 58273635,
      "AssetType": "ContractFutures",
@@ -1559,16 +2999,235 @@
    ],
    "essais": [
     {
-     "Symbol": "BZc1",
-     "Identifier": 673335,
-     "Description": "Brent Crude Oil LD European - continuous",
-     "statut": 403,
-     "chart_info": null,
-     "champs_prix": null,
-     "erreur": "\u001f�\b\u0000\u0000\u0000\u0000\u0000\u0004\u0000�Vr-*�/r�OIU�R���KU�Q�M-.NL\u0007\t8&'\u0003�\n)�y��)zJ�\u0000\u001b�b;/\u0000\u0000\u0000"
+     "Symbol": "CLc1",
+     "Identifier": 4034,
+     "Description": "Light Sweet Crude Oil (WTI) - Continuous",
+     "statut": 200,
+     "chart_info": {
+      "DelayedByMinutes": 10,
+      "ExchangeId": "NYMEX",
+      "FirstSampleTime": "2003-10-30T23:48:00Z",
+      "Horizon": 30
+     },
+     "champs_prix": {
+      "bid_ask": [],
+      "dernier": [
+       "Open",
+       "High",
+       "Low",
+       "Close"
+      ],
+      "volume": [
+       "Volume"
+      ],
+      "autres": [
+       "Interest",
+       "MarketTradingState"
+      ]
+     },
+     "erreur": null
+    },
+    {
+     "Symbol": "QMc1",
+     "Identifier": 7695,
+     "Description": "E-mini Light Sweet Crude Oil - Continuous",
+     "statut": 200,
+     "chart_info": {
+      "DelayedByMinutes": 10,
+      "ExchangeId": "NYMEX",
+      "FirstSampleTime": "2004-06-07T12:15:00Z",
+      "Horizon": 30
+     },
+     "champs_prix": {
+      "bid_ask": [],
+      "dernier": [
+       "Open",
+       "High",
+       "Low",
+       "Close"
+      ],
+      "volume": [
+       "Volume"
+      ],
+      "autres": [
+       "Interest",
+       "MarketTradingState"
+      ]
+     },
+     "erreur": null
     }
    ],
-   "test_detaille": null
+   "test_detaille": {
+    "instrument": {
+     "Symbol": "CLc1",
+     "Identifier": 4034,
+     "AssetType": "ContractFutures",
+     "Description": "Light Sweet Crude Oil (WTI) - Continuous",
+     "ExchangeId": "NYMEX",
+     "CurrencyCode": "USD",
+     "TradableAs": null,
+     "GroupId": 39090,
+     "SummaryType": "Instrument",
+     "mots_cles": "Light Sweet Crude Oil"
+    },
+    "chart_info": {
+     "DelayedByMinutes": 10,
+     "ExchangeId": "NYMEX",
+     "FirstSampleTime": "2003-10-30T23:48:00Z",
+     "Horizon": 30
+    },
+    "display": {
+     "Decimals": 2,
+     "Description": "Light Sweet Crude Oil (WTI) - Continuous",
+     "Format": "Normal",
+     "NumeratorDecimals": 0,
+     "Symbol": "CLc1"
+    },
+    "first_sample_time": "2003-10-30 23:48:00+00:00",
+    "couvre_2020_01_01": true,
+    "page_from_debut": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2020-01-02 00:00:00+00:00",
+     "derniere": "2020-02-07 08:00:00+00:00"
+    },
+    "page_upto_fin_2025": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2025-11-21 18:00:00+00:00",
+     "derniere": "2025-12-31 21:30:00+00:00"
+    },
+    "page_upto_janvier_2020": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2019-12-24 10:30:00+00:00",
+     "derniere": "2020-01-31 21:30:00+00:00"
+    },
+    "champs_prix": {
+     "bid_ask": [],
+     "dernier": [
+      "Open",
+      "High",
+      "Low",
+      "Close"
+     ],
+     "volume": [
+      "Volume"
+     ],
+     "autres": [
+      "Interest",
+      "MarketTradingState"
+     ]
+    },
+    "structure": {
+     "barres": 1200,
+     "doublons": 0,
+     "desordre": 0,
+     "pas_30_min": 0.9749791492910759,
+     "interruptions": 30,
+     "interruptions_duree_h": {
+      "min": 1.0,
+      "50%": 1.5,
+      "max": 49.5
+     },
+     "reprises_heure_new_york": {
+      "18:00": 26,
+      "19:30": 1,
+      "00:30": 1,
+      "02:30": 1,
+      "05:30": 1
+     },
+     "barres_par_jour_semaine": {
+      "0": 222,
+      "1": 225,
+      "2": 230,
+      "3": 276,
+      "4": 237,
+      "6": 10
+     }
+    },
+    "plus_grands_ecarts": [
+     {
+      "apres": "2020-01-31 21:30:00+00:00",
+      "reprise": "2020-02-02 23:00:00+00:00",
+      "ecart_bps": -120.81206956722667
+     },
+     {
+      "apres": "2020-01-03 21:30:00+00:00",
+      "reprise": "2020-01-05 23:00:00+00:00",
+      "ecart_bps": 105.72090578773069
+     },
+     {
+      "apres": "2020-01-24 21:30:00+00:00",
+      "reprise": "2020-01-26 23:00:00+00:00",
+      "ecart_bps": -92.67906930781508
+     },
+     {
+      "apres": "2020-01-17 21:30:00+00:00",
+      "reprise": "2020-01-19 23:00:00+00:00",
+      "ecart_bps": 61.02748216738159
+     },
+     {
+      "apres": "2020-01-21 04:00:00+00:00",
+      "reprise": "2020-01-21 05:30:00+00:00",
+      "ecart_bps": -29.157039779690685
+     }
+    ],
+    "controles_ohlc": {
+     "dernier": {
+      "incoherences": 0,
+      "prix_non_positifs": 0
+     },
+     "volume_nul": 0
+    },
+    "pagination_from": {
+     "barres": 1200,
+     "chevauchement": 0,
+     "ecart_entre_pages_h": 0.5
+    },
+    "coherence_from_upto": {
+     "barres_communes": 997,
+     "valeurs_identiques": true
+    },
+    "heures_etendues": {
+     "barres_avec": 1200,
+     "barres_sans": 1200
+    },
+    "bloc_test": {
+     "fichier": "saxo_fut_cl_30m_test.csv",
+     "barres": 1200,
+     "sha256": "9ff6fd089ed72af5f9ee3ef7da3490f489498e7b518a614f62938bad91fab8f2",
+     "reproductible": true
+    },
+    "seances_annoncees": [
+     {
+      "State": "AutomatedTrading",
+      "debut_ny": "Wed 18:00",
+      "fin_ny": "Thu 17:00"
+     },
+     {
+      "State": "Closed",
+      "debut_ny": "Thu 17:00",
+      "fin_ny": "Thu 17:45"
+     },
+     {
+      "State": "PreTrading",
+      "debut_ny": "Thu 17:45",
+      "fin_ny": "Thu 18:00"
+     },
+     {
+      "State": "AutomatedTrading",
+      "debut_ny": "Thu 18:00",
+      "fin_ny": "Fri 17:00"
+     },
+     {
+      "State": "Closed",
+      "debut_ny": "Fri 17:00",
+      "fin_ny": "Sun 17:15"
+     }
+    ],
+    "fuseau_bourse": 3
+   }
   },
   "HG": {
    "candidats": [
@@ -1780,56 +3439,1133 @@
      "Symbol": "HGc1",
      "Identifier": 4048,
      "Description": "Copper - continuous",
-     "statut": 403,
-     "chart_info": null,
-     "champs_prix": null,
-     "erreur": "\u001f�\b\u0000\u0000\u0000\u0000\u0000\u0004\u0000�Vr-*�/r�OIU�R���KU�Q�M-.NL\u0007\t8&'\u0003�\n)�y��)zJ�\u0000\u001b�b;/\u0000\u0000\u0000"
+     "statut": 200,
+     "chart_info": {
+      "DelayedByMinutes": 10,
+      "ExchangeId": "COMEX",
+      "FirstSampleTime": "2003-10-31T13:20:00Z",
+      "Horizon": 30
+     },
+     "champs_prix": {
+      "bid_ask": [],
+      "dernier": [
+       "Open",
+       "High",
+       "Low",
+       "Close"
+      ],
+      "volume": [
+       "Volume"
+      ],
+      "autres": [
+       "Interest",
+       "MarketTradingState"
+      ]
+     },
+     "erreur": null
+    },
+    {
+     "Symbol": "MHGc1",
+     "Identifier": 31225632,
+     "Description": "Micro Copper - Continuous",
+     "statut": 200,
+     "chart_info": {
+      "DelayedByMinutes": 10,
+      "ExchangeId": "COMEX",
+      "FirstSampleTime": "2024-05-17T15:42:00Z",
+      "Horizon": 30
+     },
+     "champs_prix": {
+      "bid_ask": [],
+      "dernier": [
+       "Open",
+       "High",
+       "Low",
+       "Close"
+      ],
+      "volume": [
+       "Volume"
+      ],
+      "autres": [
+       "Interest",
+       "MarketTradingState"
+      ]
+     },
+     "erreur": null
     }
    ],
-   "test_detaille": null
+   "test_detaille": {
+    "instrument": {
+     "Symbol": "HGc1",
+     "Identifier": 4048,
+     "AssetType": "ContractFutures",
+     "Description": "Copper - continuous",
+     "ExchangeId": "COMEX",
+     "CurrencyCode": "USD",
+     "TradableAs": null,
+     "GroupId": 39094,
+     "SummaryType": "Instrument",
+     "mots_cles": "Copper"
+    },
+    "chart_info": {
+     "DelayedByMinutes": 10,
+     "ExchangeId": "COMEX",
+     "FirstSampleTime": "2003-10-31T13:20:00Z",
+     "Horizon": 30
+    },
+    "display": {
+     "Decimals": 2,
+     "Description": "Copper - continuous",
+     "Format": "Normal",
+     "NumeratorDecimals": 0,
+     "Symbol": "HGc1"
+    },
+    "first_sample_time": "2003-10-31 13:20:00+00:00",
+    "couvre_2020_01_01": true,
+    "page_from_debut": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2020-01-02 00:00:00+00:00",
+     "derniere": "2020-02-07 05:30:00+00:00"
+    },
+    "page_upto_fin_2025": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2025-11-24 02:00:00+00:00",
+     "derniere": "2025-12-31 21:30:00+00:00"
+    },
+    "page_upto_janvier_2020": {
+     "statut": 200,
+     "barres": 1200,
+     "premiere": "2019-12-24 13:00:00+00:00",
+     "derniere": "2020-01-31 21:30:00+00:00"
+    },
+    "champs_prix": {
+     "bid_ask": [],
+     "dernier": [
+      "Open",
+      "High",
+      "Low",
+      "Close"
+     ],
+     "volume": [
+      "Volume"
+     ],
+     "autres": [
+      "Interest",
+      "MarketTradingState"
+     ]
+    },
+    "structure": {
+     "barres": 1200,
+     "doublons": 0,
+     "desordre": 0,
+     "pas_30_min": 0.9783152627189324,
+     "interruptions": 26,
+     "interruptions_duree_h": {
+      "min": 1.5,
+      "50%": 1.5,
+      "max": 49.5
+     },
+     "reprises_heure_new_york": {
+      "18:00": 26
+     },
+     "barres_par_jour_semaine": {
+      "0": 222,
+      "1": 230,
+      "2": 230,
+      "3": 276,
+      "4": 232,
+      "6": 10
+     }
+    },
+    "plus_grands_ecarts": [
+     {
+      "apres": "2020-01-31 21:30:00+00:00",
+      "reprise": "2020-02-02 23:00:00+00:00",
+      "ecart_bps": -87.96538129335967
+     },
+     {
+      "apres": "2020-01-24 21:30:00+00:00",
+      "reprise": "2020-01-26 23:00:00+00:00",
+      "ecart_bps": -59.80208440975225
+     },
+     {
+      "apres": "2020-01-03 21:30:00+00:00",
+      "reprise": "2020-01-05 23:00:00+00:00",
+      "ecart_bps": -55.90132671183501
+     },
+     {
+      "apres": "2020-01-10 21:30:00+00:00",
+      "reprise": "2020-01-12 23:00:00+00:00",
+      "ecart_bps": -16.027071367647217
+     },
+     {
+      "apres": "2020-01-23 21:30:00+00:00",
+      "reprise": "2020-01-23 23:00:00+00:00",
+      "ecart_bps": -14.635933823765116
+     }
+    ],
+    "controles_ohlc": {
+     "dernier": {
+      "incoherences": 0,
+      "prix_non_positifs": 0
+     },
+     "volume_nul": 0
+    },
+    "pagination_from": {
+     "barres": 1200,
+     "chevauchement": 0,
+     "ecart_entre_pages_h": 0.5
+    },
+    "coherence_from_upto": {
+     "barres_communes": 1002,
+     "valeurs_identiques": true
+    },
+    "heures_etendues": {
+     "barres_avec": 1200,
+     "barres_sans": 1200
+    },
+    "bloc_test": {
+     "fichier": "saxo_fut_hg_30m_test.csv",
+     "barres": 1200,
+     "sha256": "fc6d8b72d33e4c82b101c70ada9038d5474d60c9b5832796a4d5c129136d6751",
+     "reproductible": true
+    },
+    "seances_annoncees": [
+     {
+      "State": "AutomatedTrading",
+      "debut_ny": "Wed 18:00",
+      "fin_ny": "Thu 17:00"
+     },
+     {
+      "State": "Closed",
+      "debut_ny": "Thu 17:00",
+      "fin_ny": "Thu 17:45"
+     },
+     {
+      "State": "PreTrading",
+      "debut_ny": "Thu 17:45",
+      "fin_ny": "Thu 18:00"
+     },
+     {
+      "State": "AutomatedTrading",
+      "debut_ny": "Thu 18:00",
+      "fin_ny": "Fri 17:00"
+     },
+     {
+      "State": "Closed",
+      "debut_ny": "Fri 17:00",
+      "fin_ny": "Sun 17:15"
+     }
+    ],
+    "fuseau_bourse": 3
+   }
   }
  },
  "telechargement": {
   "US100_cfd": {
-   "statut": "non téléchargé",
-   "motif": "instrument absent ou historique de 30 min postérieur au 2020-01-01",
-   "first_sample_time": null
+   "statut": "téléchargé",
+   "pages": 59,
+   "barres": 69805,
+   "doublons_entre_pages": 0,
+   "valeurs_contradictoires": 0,
+   "premiere": "2020-01-01 23:00:00+00:00",
+   "derniere": "2025-12-31 21:30:00+00:00",
+   "page_atteint_le_debut": true,
+   "fichier": "saxo_us100_cfd_30m.csv",
+   "sha256": "39c28eaa597c43e808060629be9d4db69dd88827089fc192d1a511242f1b52d3",
+   "n_rows": 69805,
+   "barres_par_annee": {
+    "2020": 11284,
+    "2021": 11340,
+    "2022": 11804,
+    "2023": 11783,
+    "2024": 11837,
+    "2025": 11757
+   },
+   "structure": {
+    "barres": 69805,
+    "doublons": 0,
+    "desordre": 0,
+    "pas_30_min": 0.9775084522376941,
+    "interruptions": 1570,
+    "interruptions_duree_h": {
+     "min": 1.0,
+     "50%": 1.5,
+     "max": 77.0
+    },
+    "reprises_heure_new_york": {
+     "18:00": 1549,
+     "04:00": 2,
+     "09:30": 2,
+     "09:00": 2,
+     "07:00": 2,
+     "08:30": 2
+    },
+    "barres_par_jour_semaine": {
+     "0": 13762,
+     "1": 14160,
+     "2": 14066,
+     "3": 14033,
+     "4": 12760,
+     "6": 1024
+    }
+   },
+   "plus_grands_ecarts": [
+    {
+     "apres": "2020-03-20 19:30:00+00:00",
+     "reprise": "2020-03-22 22:00:00+00:00",
+     "ecart_bps": -416.9564416649296
+    },
+    {
+     "apres": "2020-03-13 19:30:00+00:00",
+     "reprise": "2020-03-15 22:00:00+00:00",
+     "ecart_bps": -379.35366579086667
+    },
+    {
+     "apres": "2020-03-06 20:30:00+00:00",
+     "reprise": "2020-03-08 22:00:00+00:00",
+     "ecart_bps": -294.1504095832667
+    },
+    {
+     "apres": "2025-04-04 20:30:00+00:00",
+     "reprise": "2025-04-06 22:00:00+00:00",
+     "ecart_bps": -223.76276699962844
+    },
+    {
+     "apres": "2025-04-11 20:30:00+00:00",
+     "reprise": "2025-04-13 22:00:00+00:00",
+     "ecart_bps": 215.31050328210583
+    },
+    {
+     "apres": "2020-03-27 19:30:00+00:00",
+     "reprise": "2020-03-29 22:00:00+00:00",
+     "ecart_bps": -212.96402389768053
+    },
+    {
+     "apres": "2022-05-04 18:30:00+00:00",
+     "reprise": "2022-05-04 19:00:00+00:00",
+     "ecart_bps": 212.80962820953957
+    },
+    {
+     "apres": "2020-03-16 11:00:00+00:00",
+     "reprise": "2020-03-16 13:30:00+00:00",
+     "ecart_bps": -211.2784779039177
+    },
+    {
+     "apres": "2020-02-28 20:30:00+00:00",
+     "reprise": "2020-03-01 23:00:00+00:00",
+     "ecart_bps": -203.38462975763096
+    },
+    {
+     "apres": "2022-02-25 21:30:00+00:00",
+     "reprise": "2022-02-27 23:00:00+00:00",
+     "ecart_bps": -202.14283363459404
+    }
+   ],
+   "controles_ohlc": {
+    "bid": {
+     "incoherences": 0,
+     "prix_non_positifs": 0
+    },
+    "ask": {
+     "incoherences": 0,
+     "prix_non_positifs": 0
+    },
+    "ecart_close_bps": {
+     "P50": 0.933949939536081,
+     "P90": 1.4725122767758363,
+     "negatifs": 0
+    }
+   },
+   "duree_s": 26
   },
   "US100_fut": {
-   "statut": "non téléchargé",
-   "motif": "instrument absent ou historique de 30 min postérieur au 2020-01-01",
-   "first_sample_time": null
+   "statut": "téléchargé",
+   "pages": 59,
+   "barres": 70667,
+   "doublons_entre_pages": 0,
+   "valeurs_contradictoires": 0,
+   "premiere": "2020-01-01 23:00:00+00:00",
+   "derniere": "2025-12-31 21:30:00+00:00",
+   "page_atteint_le_debut": true,
+   "fichier": "saxo_us100_fut_30m.csv",
+   "sha256": "16da9b916d3991fb99abc13992fdad07d1f73f1060337b8d8bd759eb1a596835",
+   "n_rows": 70667,
+   "barres_par_annee": {
+    "2020": 11818,
+    "2021": 11776,
+    "2022": 11774,
+    "2023": 11757,
+    "2024": 11813,
+    "2025": 11729
+   },
+   "structure": {
+    "barres": 70667,
+    "doublons": 0,
+    "desordre": 0,
+    "pas_30_min": 0.977966773271446,
+    "interruptions": 1557,
+    "interruptions_duree_h": {
+     "min": 1.0,
+     "50%": 1.5,
+     "max": 77.0
+    },
+    "reprises_heure_new_york": {
+     "18:00": 1502,
+     "20:00": 34,
+     "19:00": 13,
+     "09:00": 2,
+     "02:30": 1,
+     "06:00": 1
+    },
+    "barres_par_jour_semaine": {
+     "0": 13918,
+     "1": 14348,
+     "2": 14252,
+     "3": 14206,
+     "4": 12955,
+     "6": 988
+    }
+   },
+   "plus_grands_ecarts": [
+    {
+     "apres": "2020-02-28 21:30:00+00:00",
+     "reprise": "2020-03-01 23:00:00+00:00",
+     "ecart_bps": -235.25622987508595
+    },
+    {
+     "apres": "2025-04-04 20:30:00+00:00",
+     "reprise": "2025-04-06 22:00:00+00:00",
+     "ecart_bps": -221.6481620999024
+    },
+    {
+     "apres": "2020-03-27 20:30:00+00:00",
+     "reprise": "2020-03-29 22:00:00+00:00",
+     "ecart_bps": -220.97945677721685
+    },
+    {
+     "apres": "2020-03-16 13:00:00+00:00",
+     "reprise": "2020-03-16 13:30:00+00:00",
+     "ecart_bps": -213.68834630496315
+    },
+    {
+     "apres": "2025-04-11 20:30:00+00:00",
+     "reprise": "2025-04-13 22:00:00+00:00",
+     "ecart_bps": 212.6481410598066
+    },
+    {
+     "apres": "2022-02-25 21:30:00+00:00",
+     "reprise": "2022-02-27 23:00:00+00:00",
+     "ecart_bps": -204.72090645327626
+    },
+    {
+     "apres": "2020-03-20 20:30:00+00:00",
+     "reprise": "2020-03-22 22:00:00+00:00",
+     "ecart_bps": -178.23444870713615
+    },
+    {
+     "apres": "2025-01-31 21:30:00+00:00",
+     "reprise": "2025-02-02 23:00:00+00:00",
+     "ecart_bps": -173.48638334612977
+    },
+    {
+     "apres": "2020-03-06 21:30:00+00:00",
+     "reprise": "2020-03-08 22:00:00+00:00",
+     "ecart_bps": -157.37621607611794
+    },
+    {
+     "apres": "2025-04-22 20:30:00+00:00",
+     "reprise": "2025-04-22 22:00:00+00:00",
+     "ecart_bps": 155.1172839643337
+    }
+   ],
+   "controles_ohlc": {
+    "dernier": {
+     "incoherences": 0,
+     "prix_non_positifs": 0
+    },
+    "volume_nul": 0
+   },
+   "duree_s": 36
   },
   "US2000_cfd": {
-   "statut": "non téléchargé",
-   "motif": "instrument absent ou historique de 30 min postérieur au 2020-01-01",
-   "first_sample_time": null
+   "statut": "téléchargé",
+   "pages": 52,
+   "barres": 61499,
+   "doublons_entre_pages": 0,
+   "valeurs_contradictoires": 0,
+   "premiere": "2020-01-02 02:01:00+00:00",
+   "derniere": "2025-12-31 21:31:00+00:00",
+   "page_atteint_le_debut": true,
+   "fichier": "saxo_us2000_cfd_30m.csv",
+   "sha256": "a569d1c1bc86eaf212b89a1626928659c0a699afa4146c2a48672c9fa70b5ccc",
+   "n_rows": 61499,
+   "barres_par_annee": {
+    "2020": 10243,
+    "2021": 10258,
+    "2022": 10263,
+    "2023": 10241,
+    "2024": 10283,
+    "2025": 10211
+   },
+   "structure": {
+    "barres": 61499,
+    "doublons": 0,
+    "desordre": 0,
+    "pas_30_min": 0.9744707144947803,
+    "interruptions": 1568,
+    "interruptions_duree_h": {
+     "min": 1.0,
+     "50%": 4.5,
+     "max": 80.0
+    },
+    "reprises_heure_new_york": {
+     "21:01": 1544,
+     "09:01": 4,
+     "06:31": 3,
+     "07:31": 3,
+     "23:01": 2,
+     "18:01": 2
+    },
+    "barres_par_jour_semaine": {
+     "0": 12068,
+     "1": 12500,
+     "2": 12408,
+     "3": 12389,
+     "4": 12134
+    }
+   },
+   "plus_grands_ecarts": [
+    {
+     "apres": "2020-03-13 20:31:00+00:00",
+     "reprise": "2020-03-16 01:01:00+00:00",
+     "ecart_bps": -956.6176487060403
+    },
+    {
+     "apres": "2020-03-06 21:31:00+00:00",
+     "reprise": "2020-03-09 01:01:00+00:00",
+     "ecart_bps": -403.54555127378933
+    },
+    {
+     "apres": "2025-04-04 20:31:00+00:00",
+     "reprise": "2025-04-07 01:01:00+00:00",
+     "ecart_bps": -374.75892645189987
+    },
+    {
+     "apres": "2020-03-20 20:31:00+00:00",
+     "reprise": "2020-03-23 01:01:00+00:00",
+     "ecart_bps": -369.7316557858355
+    },
+    {
+     "apres": "2020-03-09 20:31:00+00:00",
+     "reprise": "2020-03-10 01:01:00+00:00",
+     "ecart_bps": 345.0310164486527
+    },
+    {
+     "apres": "2020-03-17 20:31:00+00:00",
+     "reprise": "2020-03-18 01:01:00+00:00",
+     "ecart_bps": -330.2566309815507
+    },
+    {
+     "apres": "2025-01-31 21:31:00+00:00",
+     "reprise": "2025-02-03 02:01:00+00:00",
+     "ecart_bps": -321.5939095629627
+    },
+    {
+     "apres": "2020-04-03 20:31:00+00:00",
+     "reprise": "2020-04-06 01:01:00+00:00",
+     "ecart_bps": 302.39885189718177
+    },
+    {
+     "apres": "2025-10-10 20:31:00+00:00",
+     "reprise": "2025-10-13 01:01:00+00:00",
+     "ecart_bps": 267.05791459067126
+    },
+    {
+     "apres": "2022-02-25 21:31:00+00:00",
+     "reprise": "2022-02-28 02:01:00+00:00",
+     "ecart_bps": -260.96865841991024
+    }
+   ],
+   "controles_ohlc": {
+    "bid": {
+     "incoherences": 0,
+     "prix_non_positifs": 0
+    },
+    "ask": {
+     "incoherences": 0,
+     "prix_non_positifs": 0
+    },
+    "ecart_close_bps": {
+     "P50": 3.0512611879583824,
+     "P90": 4.169504246146194,
+     "negatifs": 0
+    }
+   },
+   "duree_s": 32
   },
   "US2000_fut": {
-   "statut": "non téléchargé",
-   "motif": "instrument absent ou historique de 30 min postérieur au 2020-01-01",
-   "first_sample_time": null
+   "statut": "téléchargé",
+   "pages": 59,
+   "barres": 70618,
+   "doublons_entre_pages": 0,
+   "valeurs_contradictoires": 0,
+   "premiere": "2020-01-01 23:00:00+00:00",
+   "derniere": "2025-12-31 21:30:00+00:00",
+   "page_atteint_le_debut": true,
+   "fichier": "saxo_us2000_fut_30m.csv",
+   "sha256": "79f473ed55464e8598dfe485782a66dd15401983837e5c33710616a1494dfc5c",
+   "n_rows": 70618,
+   "barres_par_annee": {
+    "2020": 11787,
+    "2021": 11776,
+    "2022": 11774,
+    "2023": 11757,
+    "2024": 11809,
+    "2025": 11715
+   },
+   "structure": {
+    "barres": 70618,
+    "doublons": 0,
+    "desordre": 0,
+    "pas_30_min": 0.9777815540167382,
+    "interruptions": 1569,
+    "interruptions_duree_h": {
+     "min": 1.0,
+     "50%": 1.5,
+     "max": 77.0
+    },
+    "reprises_heure_new_york": {
+     "18:00": 1501,
+     "20:00": 35,
+     "19:00": 12,
+     "01:30": 3,
+     "19:30": 2,
+     "05:00": 2
+    },
+    "barres_par_jour_semaine": {
+     "0": 13889,
+     "1": 14334,
+     "2": 14250,
+     "3": 14206,
+     "4": 12953,
+     "6": 986
+    }
+   },
+   "plus_grands_ecarts": [
+    {
+     "apres": "2020-03-16 13:00:00+00:00",
+     "reprise": "2020-03-16 13:30:00+00:00",
+     "ecart_bps": -433.6601213884608
+    },
+    {
+     "apres": "2025-04-04 20:30:00+00:00",
+     "reprise": "2025-04-06 22:00:00+00:00",
+     "ecart_bps": -279.44825730051946
+    },
+    {
+     "apres": "2020-02-28 21:30:00+00:00",
+     "reprise": "2020-03-01 23:00:00+00:00",
+     "ecart_bps": -269.95670812091
+    },
+    {
+     "apres": "2020-03-27 20:30:00+00:00",
+     "reprise": "2020-03-29 22:00:00+00:00",
+     "ecart_bps": -226.6360376709252
+    },
+    {
+     "apres": "2020-03-13 20:30:00+00:00",
+     "reprise": "2020-03-15 22:00:00+00:00",
+     "ecart_bps": -210.58729691042086
+    },
+    {
+     "apres": "2020-04-16 20:30:00+00:00",
+     "reprise": "2020-04-16 22:00:00+00:00",
+     "ecart_bps": 205.0428596803676
+    },
+    {
+     "apres": "2025-01-31 21:30:00+00:00",
+     "reprise": "2025-02-02 23:00:00+00:00",
+     "ecart_bps": -204.3043939171961
+    },
+    {
+     "apres": "2025-05-09 20:30:00+00:00",
+     "reprise": "2025-05-11 22:00:00+00:00",
+     "ecart_bps": 201.10233414277707
+    },
+    {
+     "apres": "2020-03-09 13:00:00+00:00",
+     "reprise": "2020-03-09 13:30:00+00:00",
+     "ecart_bps": -197.41587083740743
+    },
+    {
+     "apres": "2020-03-20 20:30:00+00:00",
+     "reprise": "2020-03-22 22:00:00+00:00",
+     "ecart_bps": -190.2121289642654
+    }
+   ],
+   "controles_ohlc": {
+    "dernier": {
+     "incoherences": 0,
+     "prix_non_positifs": 0
+    },
+    "volume_nul": 0
+   },
+   "duree_s": 39
   },
   "USOIL_cfd": {
-   "statut": "non téléchargé",
-   "motif": "instrument absent ou historique de 30 min postérieur au 2020-01-01",
-   "first_sample_time": null
+   "statut": "téléchargé",
+   "pages": 59,
+   "barres": 70774,
+   "doublons_entre_pages": 0,
+   "valeurs_contradictoires": 0,
+   "premiere": "2020-01-01 23:01:00+00:00",
+   "derniere": "2025-12-31 21:31:00+00:00",
+   "page_atteint_le_debut": true,
+   "fichier": "saxo_usoil_cfd_30m.csv",
+   "sha256": "d624fe7af923fd7f164f7fe906c069cded0e8ec99d5a0b6b64aa40940217ad9d",
+   "n_rows": 70774,
+   "barres_par_annee": {
+    "2020": 11806,
+    "2021": 11791,
+    "2022": 11776,
+    "2023": 11760,
+    "2024": 11846,
+    "2025": 11795
+   },
+   "structure": {
+    "barres": 70774,
+    "doublons": 0,
+    "desordre": 0,
+    "pas_30_min": 0.9777174911336244,
+    "interruptions": 1576,
+    "interruptions_duree_h": {
+     "min": 1.0,
+     "50%": 1.5,
+     "max": 76.5
+    },
+    "reprises_heure_new_york": {
+     "18:01": 1499,
+     "19:31": 35,
+     "18:31": 12,
+     "20:01": 3,
+     "00:01": 3,
+     "01:31": 2
+    },
+    "barres_par_jour_semaine": {
+     "0": 14018,
+     "1": 14342,
+     "2": 14270,
+     "3": 14240,
+     "4": 12903,
+     "6": 1001
+    }
+   },
+   "plus_grands_ecarts": [
+    {
+     "apres": "2020-04-21 06:01:00+00:00",
+     "reprise": "2020-04-21 13:31:00+00:00",
+     "ecart_bps": 29661.318037777004
+    },
+    {
+     "apres": "2020-03-06 21:31:00+00:00",
+     "reprise": "2020-03-08 22:01:00+00:00",
+     "ecart_bps": -2590.4767126655925
+    },
+    {
+     "apres": "2020-04-21 02:31:00+00:00",
+     "reprise": "2020-04-21 03:31:00+00:00",
+     "ecart_bps": 1910.5523676270923
+    },
+    {
+     "apres": "2020-04-21 14:01:00+00:00",
+     "reprise": "2020-04-21 14:31:00+00:00",
+     "ecart_bps": 1375.555429242481
+    },
+    {
+     "apres": "2020-04-03 20:31:00+00:00",
+     "reprise": "2020-04-05 22:01:00+00:00",
+     "ecart_bps": -1238.0493190024254
+    },
+    {
+     "apres": "2022-03-04 21:31:00+00:00",
+     "reprise": "2022-03-06 23:01:00+00:00",
+     "ecart_bps": 1021.8100123032103
+    },
+    {
+     "apres": "2020-04-21 00:01:00+00:00",
+     "reprise": "2020-04-21 00:31:00+00:00",
+     "ecart_bps": -1010.9611687136888
+    },
+    {
+     "apres": "2020-04-21 02:01:00+00:00",
+     "reprise": "2020-04-21 02:31:00+00:00",
+     "ecart_bps": -935.2605801082335
+    },
+    {
+     "apres": "2023-03-31 20:31:00+00:00",
+     "reprise": "2023-04-02 22:01:00+00:00",
+     "ecart_bps": 732.4849638100313
+    },
+    {
+     "apres": "2020-03-27 20:31:00+00:00",
+     "reprise": "2020-03-29 22:01:00+00:00",
+     "ecart_bps": -702.7095257328248
+    }
+   ],
+   "controles_ohlc": {
+    "bid": {
+     "incoherences": 0,
+     "prix_non_positifs": 2
+    },
+    "ask": {
+     "incoherences": 0,
+     "prix_non_positifs": 0
+    },
+    "ecart_close_bps": {
+     "P50": 7.439922624804278,
+     "P90": 12.325896708986631,
+     "negatifs": 0
+    }
+   },
+   "duree_s": 30
   },
   "USOIL_fut": {
-   "statut": "non téléchargé",
-   "motif": "instrument absent ou historique de 30 min postérieur au 2020-01-01",
-   "first_sample_time": null
+   "statut": "téléchargé",
+   "pages": 59,
+   "barres": 70138,
+   "doublons_entre_pages": 0,
+   "valeurs_contradictoires": 0,
+   "premiere": "2020-01-01 23:00:00+00:00",
+   "derniere": "2025-12-31 21:30:00+00:00",
+   "page_atteint_le_debut": true,
+   "fichier": "saxo_usoil_fut_30m.csv",
+   "sha256": "8e0470cd45a063f7f9947753c4108306799dd667003a28643f2ae9f02c4ce25e",
+   "n_rows": 70138,
+   "barres_par_annee": {
+    "2020": 11761,
+    "2021": 11680,
+    "2022": 11711,
+    "2023": 11652,
+    "2024": 11696,
+    "2025": 11638
+   },
+   "structure": {
+    "barres": 70138,
+    "doublons": 0,
+    "desordre": 0,
+    "pas_30_min": 0.9729814505895604,
+    "interruptions": 1895,
+    "interruptions_duree_h": {
+     "min": 1.0,
+     "50%": 1.5,
+     "max": 76.5
+    },
+    "reprises_heure_new_york": {
+     "18:00": 1485,
+     "20:00": 54,
+     "19:00": 25,
+     "01:30": 22,
+     "00:00": 20,
+     "01:00": 20
+    },
+    "barres_par_jour_semaine": {
+     "0": 13867,
+     "1": 14142,
+     "2": 14194,
+     "3": 14138,
+     "4": 12816,
+     "6": 981
+    }
+   },
+   "plus_grands_ecarts": [
+    {
+     "apres": "2020-04-21 06:30:00+00:00",
+     "reprise": "2020-04-21 07:00:00+00:00",
+     "ecart_bps": 15497.186777324783
+    },
+    {
+     "apres": "2020-04-21 14:30:00+00:00",
+     "reprise": "2020-04-21 15:00:00+00:00",
+     "ecart_bps": 12786.499726348406
+    },
+    {
+     "apres": "2020-04-21 09:00:00+00:00",
+     "reprise": "2020-04-21 09:30:00+00:00",
+     "ecart_bps": 5838.9182064057795
+    },
+    {
+     "apres": "2020-04-21 03:00:00+00:00",
+     "reprise": "2020-04-21 03:30:00+00:00",
+     "ecart_bps": -4440.799442359439
+    },
+    {
+     "apres": "2020-04-21 06:00:00+00:00",
+     "reprise": "2020-04-21 06:30:00+00:00",
+     "ecart_bps": -3364.722366212129
+    },
+    {
+     "apres": "2020-03-06 21:30:00+00:00",
+     "reprise": "2020-03-08 22:00:00+00:00",
+     "ecart_bps": -2348.183655884182
+    },
+    {
+     "apres": "2020-04-20 23:00:00+00:00",
+     "reprise": "2020-04-20 23:30:00+00:00",
+     "ecart_bps": -2231.435513142097
+    },
+    {
+     "apres": "2020-04-21 11:00:00+00:00",
+     "reprise": "2020-04-21 11:30:00+00:00",
+     "ecart_bps": 1625.1892949777493
+    },
+    {
+     "apres": "2020-04-21 10:00:00+00:00",
+     "reprise": "2020-04-21 10:30:00+00:00",
+     "ecart_bps": -1392.620673335078
+    },
+    {
+     "apres": "2020-04-21 04:30:00+00:00",
+     "reprise": "2020-04-21 05:00:00+00:00",
+     "ecart_bps": -1292.1173148000623
+    }
+   ],
+   "controles_ohlc": {
+    "dernier": {
+     "incoherences": 0,
+     "prix_non_positifs": 25
+    },
+    "volume_nul": 2
+   },
+   "duree_s": 30
   },
   "COPPER_cfd": {
-   "statut": "non téléchargé",
-   "motif": "instrument absent ou historique de 30 min postérieur au 2020-01-01",
-   "first_sample_time": null
+   "statut": "téléchargé",
+   "pages": 60,
+   "barres": 70855,
+   "doublons_entre_pages": 0,
+   "valeurs_contradictoires": 0,
+   "premiere": "2020-01-01 23:01:00+00:00",
+   "derniere": "2025-12-31 21:31:00+00:00",
+   "page_atteint_le_debut": true,
+   "fichier": "saxo_copper_cfd_30m.csv",
+   "sha256": "e76f7ee113e1409f143addf0e653be4d6e90d9c100acc5c2bc81eb808a21a2a0",
+   "n_rows": 70855,
+   "barres_par_annee": {
+    "2020": 11833,
+    "2021": 11793,
+    "2022": 11780,
+    "2023": 11781,
+    "2024": 11869,
+    "2025": 11799
+   },
+   "structure": {
+    "barres": 70855,
+    "doublons": 0,
+    "desordre": 0,
+    "pas_30_min": 0.9781381432240946,
+    "interruptions": 1548,
+    "interruptions_duree_h": {
+     "min": 1.4833333333333334,
+     "50%": 1.5,
+     "max": 76.5
+    },
+    "reprises_heure_new_york": {
+     "18:01": 1527,
+     "19:31": 13,
+     "18:31": 5,
+     "18:00": 2,
+     "08:31": 1
+    },
+    "barres_par_jour_semaine": {
+     "0": 14003,
+     "1": 14374,
+     "2": 14288,
+     "3": 14266,
+     "4": 12911,
+     "6": 1013
+    }
+   },
+   "plus_grands_ecarts": [
+    {
+     "apres": "2025-04-02 20:31:00+00:00",
+     "reprise": "2025-04-02 22:01:00+00:00",
+     "ecart_bps": -361.723241125423
+    },
+    {
+     "apres": "2025-10-10 20:31:00+00:00",
+     "reprise": "2025-10-12 22:01:00+00:00",
+     "ecart_bps": 320.1004891790029
+    },
+    {
+     "apres": "2022-07-08 20:31:00+00:00",
+     "reprise": "2022-07-10 22:01:00+00:00",
+     "ecart_bps": -312.1640752440878
+    },
+    {
+     "apres": "2025-04-04 20:31:00+00:00",
+     "reprise": "2025-04-06 22:01:00+00:00",
+     "ecart_bps": -277.4744488050395
+    },
+    {
+     "apres": "2024-09-27 20:31:00+00:00",
+     "reprise": "2024-09-29 22:01:00+00:00",
+     "ecart_bps": 275.2565995602169
+    },
+    {
+     "apres": "2022-11-04 20:31:00+00:00",
+     "reprise": "2022-11-06 23:01:00+00:00",
+     "ecart_bps": -228.5422768806544
+    },
+    {
+     "apres": "2025-12-24 18:31:00+00:00",
+     "reprise": "2025-12-25 23:01:00+00:00",
+     "ecart_bps": 221.05742793076234
+    },
+    {
+     "apres": "2025-05-30 20:31:00+00:00",
+     "reprise": "2025-06-01 22:01:00+00:00",
+     "ecart_bps": 185.52234428545253
+    },
+    {
+     "apres": "2025-11-24 21:31:00+00:00",
+     "reprise": "2025-11-24 23:01:00+00:00",
+     "ecart_bps": 170.58828823956713
+    },
+    {
+     "apres": "2025-08-25 20:31:00+00:00",
+     "reprise": "2025-08-25 22:01:00+00:00",
+     "ecart_bps": 169.04317121659983
+    }
+   ],
+   "controles_ohlc": {
+    "bid": {
+     "incoherences": 0,
+     "prix_non_positifs": 0
+    },
+    "ask": {
+     "incoherences": 0,
+     "prix_non_positifs": 0
+    },
+    "ecart_close_bps": {
+     "P50": 14.246705449364025,
+     "P90": 19.235813587479637,
+     "negatifs": 0
+    }
+   },
+   "duree_s": 36
   },
   "COPPER_fut": {
-   "statut": "non téléchargé",
-   "motif": "instrument absent ou historique de 30 min postérieur au 2020-01-01",
-   "first_sample_time": null
+   "statut": "téléchargé",
+   "pages": 59,
+   "barres": 70739,
+   "doublons_entre_pages": 0,
+   "valeurs_contradictoires": 0,
+   "premiere": "2020-01-01 23:00:00+00:00",
+   "derniere": "2025-12-31 21:30:00+00:00",
+   "page_atteint_le_debut": true,
+   "fichier": "saxo_copper_fut_30m.csv",
+   "sha256": "a2c5b2389950ce6ba0a9f4d32820b1e4fec38e3043e7ff479a44af4cc04c92d2",
+   "n_rows": 70739,
+   "barres_par_annee": {
+    "2020": 11827,
+    "2021": 11746,
+    "2022": 11796,
+    "2023": 11755,
+    "2024": 11841,
+    "2025": 11774
+   },
+   "structure": {
+    "barres": 70739,
+    "doublons": 0,
+    "desordre": 0,
+    "pas_30_min": 0.9780740196217026,
+    "interruptions": 1551,
+    "interruptions_duree_h": {
+     "min": 1.0,
+     "50%": 1.5,
+     "max": 76.5
+    },
+    "reprises_heure_new_york": {
+     "18:00": 1500,
+     "20:00": 35,
+     "19:00": 12,
+     "06:00": 1,
+     "15:30": 1,
+     "01:00": 1
+    },
+    "barres_par_jour_semaine": {
+     "0": 13987,
+     "1": 14349,
+     "2": 14264,
+     "3": 14239,
+     "4": 12910,
+     "6": 990
+    }
+   },
+   "plus_grands_ecarts": [
+    {
+     "apres": "2025-12-24 18:30:00+00:00",
+     "reprise": "2025-12-25 23:00:00+00:00",
+     "ecart_bps": 190.17724145660716
+    },
+    {
+     "apres": "2025-11-24 21:30:00+00:00",
+     "reprise": "2025-11-24 23:00:00+00:00",
+     "ecart_bps": 167.5213879623872
+    },
+    {
+     "apres": "2025-08-25 20:30:00+00:00",
+     "reprise": "2025-08-25 22:00:00+00:00",
+     "ecart_bps": 162.33400732272773
+    },
+    {
+     "apres": "2025-10-10 20:30:00+00:00",
+     "reprise": "2025-10-12 22:00:00+00:00",
+     "ecart_bps": 159.70855433333904
+    },
+    {
+     "apres": "2022-11-04 20:30:00+00:00",
+     "reprise": "2022-11-06 23:00:00+00:00",
+     "ecart_bps": -152.4668794339756
+    },
+    {
+     "apres": "2024-11-25 21:30:00+00:00",
+     "reprise": "2024-11-25 23:00:00+00:00",
+     "ecart_bps": 148.74208564358452
+    },
+    {
+     "apres": "2024-08-26 20:30:00+00:00",
+     "reprise": "2024-08-26 22:00:00+00:00",
+     "ecart_bps": 138.04714536369113
+    },
+    {
+     "apres": "2020-04-09 20:30:00+00:00",
+     "reprise": "2020-04-12 22:00:00+00:00",
+     "ecart_bps": 133.4665912007489
+    },
+    {
+     "apres": "2025-06-20 20:30:00+00:00",
+     "reprise": "2025-06-22 22:00:00+00:00",
+     "ecart_bps": -133.27977381041373
+    },
+    {
+     "apres": "2024-09-27 20:30:00+00:00",
+     "reprise": "2024-09-29 22:00:00+00:00",
+     "ecart_bps": 128.81057031438974
+    }
+   ],
+   "controles_ohlc": {
+    "dernier": {
+     "incoherences": 0,
+     "prix_non_positifs": 0
+    },
+    "volume_nul": 0
+   },
+   "duree_s": 30
   }
  },
- "appels_api": 53
+ "appels_api": 596
 }

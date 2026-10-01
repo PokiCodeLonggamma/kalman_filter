@@ -1,0 +1,21 @@
+{
+ "source": "saxo-openapi",
+ "environnement": "LIVE",
+ "actif": "US2000",
+ "version": "future continu",
+ "uic": 7327701,
+ "asset_type": "ContractFutures",
+ "symbol": "RTYc1",
+ "description": "E-mini Russell 2000 - continuous",
+ "exchange_id": "CME",
+ "first_sample_time": "2017-07-09 22:01:00+00:00",
+ "horizon_min": 30,
+ "couverture_demandee": "2020-01-01 00:00 → 2025-12-31 23:30 UTC ; 2026 jamais demandé",
+ "methode": "/chart/v3/charts, pages UpTo de 1 200 barres depuis le 2025-12-31 23:30 UTC vers le passé",
+ "rolls": "future continu de Saxo : règle de raccord non fournie par l'API, écarts aux roulements recherchés par l'audit",
+ "role": "série brute Saxo, intacte",
+ "n_rows": 70618,
+ "first": "2020-01-01T23:00:00Z",
+ "last": "2025-12-31T21:30:00Z",
+ "sha256": "5cc8126eb0aaeb69b88bcaa735644e1c4ed3047c576dbead7f33e867c0fad19b"
+}
