@@ -1561,3 +1561,36 @@ Grilles complètes : espérance ATR ; MDD ; Calmar.
 - Écarts signalés : le moteur de référence est `src/strategy/re1.py` (le protocole écrit `src/strategy.py`) ; stress à
   10 bps appliqué aussi à l'or (coût principal 4 bps), à confirmer.
 
+#### Gate 0 — passé (2026-10-01)
+*`experiments/D02/run_D02.py --gate0`, 54 s, rapport `experiments/D02/gate0_D02.md`. Aucun calcul de recherche :
+reproduction de résultats publiés et parité du noyau, sans aucune performance calculée hors du point de RE-1.*
+- [CODE] Commits `e2728f8` (docs) et `698d688` (`src/optimization`, 291 tests réussis, 2 ignorés).
+- [OBS] **G0-1 :** le noyau Numba redonne les 1 080 trades de RE-1 sur BTC 2020-2025, identiques au bit près à
+  `strategy.run_re1` (0 manquant, 0 fantôme) ; écart au CSV de C02bis, arrondi à 6 chiffres, ≤ 3,1·10⁻⁶.
+- [OBS] **G0-2 :** parité trade par trade à H = 6 et 60, frontière 0,75 et 0,95, R0 = 10 et 500, et avec des paramètres
+  qui changent à chaque semestre (530 trades, référence Python indépendante ; un trade à cheval sur deux semestres
+  garde l'horizon de son signal).
+- [OBS] **G0-3 :** ancres reproduites (SOL +0,190 et +0,129 ATR ; or −0,019 ; BTC 2013-2019 −0,045 et −0,146 ; or
+  2009-2019 +0,011), écart aux CSV ≤ 4,5·10⁻⁶.
+- [OBS] **G0-4 à G0-6 :** empreintes égales aux audits ; 22 / 29 / 5 / 4 semestres hors échantillon ; panne de 2015
+  (215 barres) ; aucune barre de 2026 lue ; seuils de la fenêtre 2020-2025 égaux aux seuils gelés au bit près ;
+  métriques d'IS égales à `strategy.metrics`.
+- [OBS] Coût : environ 0,04 ms par évaluation d'IS ; les 42 000 évaluations tiennent en quelques secondes, les 20 atlas
+  en quelques minutes.
+- [OBS] En cours de route : le nombre de signaux ne varie pas de façon monotone avec R0 (8 mois de BTC : R0 = 10, 50,
+  100 → 651, 834, 797 signaux) ; une hypothèse inverse dans un test a été corrigée.
+- [HYP] Effet de bord de la lecture littérale du score de voisinage : une case en bord de grille, moins entourée, peut
+  l'emporter sur le centre d'un plateau (exemple : Calmar [−2 ; 5 ; −2 ; 1,5 ; 1,6 ; 1,5] : 1,55 au bord, 1,533 au
+  centre). Soumis au porteur avant la grille.
+
+#### Arbitrages du porteur pour la grille (second GO, 2026-10-01)
+- **Règle de choix en IS :** variante topologique. On retient la plus grande zone connexe de la grille (voisins à ±1 pas
+  sur un axe) où le Calmar net est > 0, puis la configuration la plus proche de son centre géométrique. L'option
+  « voisin absent = 0 » est rejetée : elle postulerait une falaise au-delà de la grille.
+- **Calmar indéfini** (aucun trade, rendement nul) : score 0, jamais choisi ; on ne sélectionne pas un système inactif.
+- **Stress de coût :** 10 bps sur BTC, SOL et AVAX ; 6 bps sur l'or (coût principal 4 bps). 10 bps est une structure de
+  frais de preneur propre à la crypto.
+- **Statistiques de comparaison** (écarts appariés par mois, IC 95 %) écrites et testées avant la grille.
+- Push autorisé pour `e2728f8`, `698d688` et le commit de Gate 0 ; second GO donné pour les 20 atlas, les 42 000
+  évaluations d'IS, les séries hors échantillon et le rapport de D02.
+

@@ -1,0 +1,264 @@
+{
+ "date": "2026-10-01 06:11 UTC",
+ "commit": "698d688",
+ "G0-4": {
+  "BTC": {
+   "audit": "D02.0",
+   "sha256": "fa38b1796e9ee0db",
+   "premiere_barre": "2013-01-01 00:00:00+00:00",
+   "derniere_barre": "2025-12-31 23:30:00+00:00",
+   "barres": 227689,
+   "panne_2015_barres_retirees": 215,
+   "semestres_oos": 22,
+   "premier_is": "2013-01-01",
+   "premier_oos": "2015-01-01",
+   "fin_oos": "2026-01-01"
+  },
+  "XAU": {
+   "audit": "D02.0",
+   "sha256": "945286592f340ded",
+   "premiere_barre": "2009-03-15 22:00:00+00:00",
+   "derniere_barre": "2025-12-31 21:30:00+00:00",
+   "barres": 198695,
+   "semestres_oos": 29,
+   "premier_is": "2009-07-01",
+   "premier_oos": "2011-07-01",
+   "fin_oos": "2026-01-01"
+  },
+  "SOL": {
+   "audit": "D01",
+   "sha256": "e52874d28b5567d6",
+   "premiere_barre": "2021-06-17 16:00:00+00:00",
+   "derniere_barre": "2025-12-31 23:30:00+00:00",
+   "barres": 79577,
+   "semestres_oos": 5,
+   "premier_is": "2021-07-01",
+   "premier_oos": "2023-07-01",
+   "fin_oos": "2026-01-01"
+  },
+  "AVAX": {
+   "audit": "D02.0",
+   "sha256": "5bd5cc38b68e9b70",
+   "premiere_barre": "2021-09-30 19:00:00+00:00",
+   "derniere_barre": "2025-12-31 23:30:00+00:00",
+   "barres": 74530,
+   "semestres_oos": 4,
+   "premier_is": "2022-01-01",
+   "premier_oos": "2024-01-01",
+   "fin_oos": "2026-01-01"
+  },
+  "reserve_2026": {
+   "fichier_btc_2020_derniere_barre_brute": "2026-09-15 16:00:00+00:00",
+   "derniere_barre_lue": "2025-12-31 23:30:00+00:00",
+   "tronquee": true
+  }
+ },
+ "G0-1": {
+  "c02bis": {
+   "ancre": {
+    "sans_stop": {
+     "n_trades": 6037,
+     "n_stops": 0
+    },
+    "stop_2_5": {
+     "n_trades": 6589,
+     "n_stops": 780
+    }
+   },
+   "trades": 1080,
+   "identiques_c02bis": true,
+   "metriques_comparees": 40,
+   "ecart_relatif_max": 4.493512022106744e-06
+  },
+  "identite": {
+   "trades": 1080,
+   "reference": 1080,
+   "manquants": 0,
+   "fantomes": 0,
+   "identiques": true
+  },
+  "metriques_c02bis": {
+   "5": {
+    "colonnes": [
+     "pnl_compose",
+     "pnl_compose_r25",
+     "esperance_atr",
+     "esperance_bps",
+     "n_trades",
+     "mdd_valorise",
+     "mdd_valorise_r25",
+     "calmar_r25"
+    ],
+    "ecart_relatif_max": 3.106852972767366e-06
+   },
+   "10": {
+    "colonnes": [
+     "pnl_compose",
+     "pnl_compose_r25",
+     "esperance_atr",
+     "esperance_bps",
+     "n_trades",
+     "mdd_valorise",
+     "mdd_valorise_r25",
+     "calmar_r25"
+    ],
+    "ecart_relatif_max": 2.088358199388966e-06
+   }
+  },
+  "seuils_2020_2025": {
+   "leg_atr_p50": 2.823322693433984,
+   "nis_z_100_p75": 1.2245041356145911,
+   "signaux": 7296,
+   "egaux_aux_geles": true
+  },
+  "objectif": {
+   "ecart_relatif_max": 0.0,
+   "detail": {
+    "pnl_r25": 0.0,
+    "mdd_r25": 0.0,
+    "calmar_r25": 0.0,
+    "esperance_atr": 0.0,
+    "n_trades": 0.0
+   }
+  }
+ },
+ "G0-2": {
+  "H=6": {
+   "trades": 1452,
+   "reference": 1452,
+   "manquants": 0,
+   "fantomes": 0,
+   "identiques": true
+  },
+  "H=60": {
+   "trades": 774,
+   "reference": 774,
+   "manquants": 0,
+   "fantomes": 0,
+   "identiques": true
+  },
+  "frontiere=0.75": {
+   "trades": 1080,
+   "reference": 1080,
+   "manquants": 0,
+   "fantomes": 0,
+   "identiques": true
+  },
+  "frontiere=0.95": {
+   "trades": 1080,
+   "reference": 1080,
+   "manquants": 0,
+   "fantomes": 0,
+   "identiques": true
+  },
+  "R0=10": {
+   "trades": 937,
+   "reference": 937,
+   "manquants": 0,
+   "fantomes": 0,
+   "identiques": true,
+   "signaux": 5936
+  },
+  "R0=500": {
+   "trades": 656,
+   "reference": 656,
+   "manquants": 0,
+   "fantomes": 0,
+   "identiques": true,
+   "signaux": 5740
+  },
+  "parametres_par_semestre": {
+   "trades": 530,
+   "reference": 530,
+   "manquants": 0,
+   "fantomes": 0,
+   "identiques": true,
+   "semestres": 8,
+   "a_cheval": 1,
+   "a_cheval_sans_stop": 1,
+   "a_cheval_horizon_propre": true
+  }
+ },
+ "G0-3": {
+  "D01 SOL 2020-2025": {
+   "identite": {
+    "trades": 769,
+    "reference": 769,
+    "manquants": 0,
+    "fantomes": 0,
+    "identiques": true
+   },
+   "metriques": {
+    "5": {
+     "esperance_atr": 0.18967281510279663,
+     "ecart_relatif_max": 3.318960324808674e-06
+    },
+    "10": {
+     "esperance_atr": 0.12906606605593018,
+     "ecart_relatif_max": 4.489537884292008e-06
+    }
+   }
+  },
+  "D01 XAU 2020-2025": {
+   "identite": {
+    "trades": 651,
+    "reference": 651,
+    "manquants": 0,
+    "fantomes": 0,
+    "identiques": true
+   },
+   "metriques": {
+    "4": {
+     "esperance_atr": -0.018766377337343414,
+     "ecart_relatif_max": 4.5116186481475515e-06
+    }
+   }
+  },
+  "D02.0 BTC 2013-2019": {
+   "identite": {
+    "trades": 1357,
+    "reference": 1357,
+    "manquants": 0,
+    "fantomes": 0,
+    "identiques": true
+   },
+   "metriques": {
+    "5": {
+     "esperance_atr": -0.045200327052089824,
+     "ecart_relatif_max": 2.5896451240859878e-06
+    },
+    "10": {
+     "esperance_atr": -0.14596310941757082,
+     "ecart_relatif_max": 1.9088948272231106e-06
+    }
+   }
+  },
+  "D02.0 XAU 2009-2019": {
+   "identite": {
+    "trades": 1253,
+    "reference": 1253,
+    "manquants": 0,
+    "fantomes": 0,
+    "identiques": true
+   },
+   "metriques": {
+    "4": {
+     "esperance_atr": 0.011227914170800143,
+     "ecart_relatif_max": 3.293942550221084e-06
+    }
+   }
+  }
+ },
+ "temps": {
+  "evaluation_6_ans_ms": 0.12410249997628851,
+  "evaluation_is_24_mois_ms_estimee": 0.04136749999209617,
+  "evaluations_grille": 42000,
+  "grille_minutes_estimees": 0.028957249994467322,
+  "atlas_btc_2020_2025_par_r0_s": {
+   "10": 5.3467323780059814,
+   "500": 5.420186281204224
+  }
+ },
+ "passe": true,
+ "duree_s": 54
+}
