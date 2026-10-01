@@ -27,6 +27,7 @@ Réserve 2026 : aucune requête de graphique ne peut viser une barre postérieur
 from __future__ import annotations
 
 import base64
+import gzip
 import hashlib
 import http.server
 import json
@@ -168,6 +169,11 @@ def browser_login(client_id: str, port: int = 47321, timeout_s: int = 900, on_re
 
 
 # ── Appels OpenAPI ──────────────────────────────────────────────────────────────
+def _gunzip(raw: bytes) -> bytes:
+    """Corps compressé en gzip (les erreurs de la passerelle le sont) : décompressé ; sinon inchangé."""
+    return gzip.decompress(raw) if raw[:2] == b"\x1f\x8b" else raw
+
+
 class SaxoClient:
     """GET authentifié sur la passerelle : jeton lu dans os.environ[SAXO_ACCESS_TOKEN] à chaque appel ; nouvel essai
     après 429 (en-tête Retry-After) ou 5xx ; une erreur renvoie (statut, corps) sans jamais exposer le jeton."""
@@ -185,11 +191,11 @@ class SaxoClient:
                 with self.opener(req, timeout=60) as r:
                     self.calls += 1
                     time.sleep(self.pause)
-                    body = r.read()
+                    body = _gunzip(r.read())
                     return r.status, (json.loads(body) if body else {})
             except urllib.error.HTTPError as e:
                 self.calls += 1
-                body = e.read()[:2000].decode("utf-8", "replace")
+                body = _gunzip(e.read())[:2000].decode("utf-8", "replace")
                 if e.code == 429 or e.code >= 500:
                     time.sleep(float(e.headers.get("Retry-After") or 2 * (k + 1)))
                     continue
@@ -207,19 +213,26 @@ def search_instruments(client: SaxoClient, keywords: str, asset_types: list[str]
     return [{k: d.get(k) for k in keep} for d in body.get("Data", [])]
 
 
+FROM_MARGIN = pd.Timedelta(days=400)
+
+
 def check_window(time_utc: pd.Timestamp, mode: str, count: int, horizon_min: int) -> None:
-    """Réserve 2026 : la dernière barre visée par la requête doit être antérieure au 2026-01-01."""
+    """Réserve 2026, avant l'appel. UpTo : la dernière barre possible est `time_utc`, qui doit précéder le 2026-01-01.
+    From : le nombre de barres ne borne pas la durée couverte (nuits, week-ends, fêtes), donc une requête From doit partir
+    plus de 400 jours avant le 2026-01-01 (1 200 barres de 30 min couvrent au plus ≈ 140 jours sur une séance de 6,5 h).
+    Les séries complètes se téléchargent en UpTo (`download_upto`)."""
     if count < 1 or count > MAX_COUNT or mode not in ("UpTo", "From"):
         raise ValueError("Count dans [1, 1 200] et Mode UpTo ou From exigés")
-    last = time_utc if mode == "UpTo" else time_utc + pd.Timedelta(minutes=horizon_min) * (count - 1)
-    if last >= HOLDOUT:
-        raise ValueError(f"réserve 2026 : la requête atteindrait {last}")
+    if mode == "UpTo" and time_utc >= HOLDOUT:
+        raise ValueError(f"réserve 2026 : UpTo {time_utc}")
+    if mode == "From" and time_utc >= HOLDOUT - FROM_MARGIN:
+        raise ValueError(f"réserve 2026 : une requête From doit partir avant {HOLDOUT - FROM_MARGIN} (UpTo sinon)")
 
 
 def get_chart(client: SaxoClient, uic: int, asset_type: str, horizon: int, mode: str, time_utc: pd.Timestamp,
               count: int = MAX_COUNT, extended_hours: bool | None = None) -> tuple[int, dict | str]:
-    """Une page de /chart/v3/charts (ChartInfo, Data, DisplayAndFormat). En mode From, la fenêtre visée est bornée
-    en nombre de barres : count × horizon après `time_utc`, contrôlée avant l'appel."""
+    """Une page de /chart/v3/charts (ChartInfo, Data, DisplayAndFormat), fenêtre contrôlée avant l'appel
+    (`check_window`) et barres contrôlées après."""
     time_utc = pd.Timestamp(time_utc).tz_convert("UTC")
     check_window(time_utc, mode, count, horizon)
     params = {"AssetType": asset_type, "Uic": int(uic), "Horizon": int(horizon), "Mode": mode,
@@ -249,6 +262,70 @@ def price_fields(df: pd.DataFrame) -> dict:
     has = lambda cols: [c for c in cols if c in df and df[c].notna().any()]  # noqa: E731
     return {"bid_ask": has(BID_ASK), "dernier": has(LAST[:4]), "volume": has(["Volume"]),
             "autres": [c for c in df.columns if c not in ["time"] + BID_ASK + LAST]}
+
+
+def download_upto(client: SaxoClient, uic: int, asset_type: str, start: pd.Timestamp,
+                  end: pd.Timestamp = pd.Timestamp("2025-12-31T23:30:00Z"), horizon: int = 30,
+                  max_pages: int = 400, before: Callable[[], None] | None = None) -> tuple[pd.DataFrame | None, dict]:
+    """Série complète [start, end] par pages UpTo successives de 1 200 barres, de `end` vers le passé : aucune requête
+    ne peut viser une barre postérieure à `end`. Renvoie les échantillons (champs reçus, dédoublonnés, triés) et un
+    résumé (pages, barres, horodatages en double entre pages et valeurs contradictoires)."""
+    start, t = pd.Timestamp(start), pd.Timestamp(end)
+    frames, pages = [], 0
+    while pages < max_pages:
+        if before is not None:
+            before()                                                  # rafraîchissement du jeton, par exemple
+        st, body = get_chart(client, uic, asset_type, horizon, "UpTo", t, MAX_COUNT)
+        if st != 200:
+            return None, {"erreur": st, "corps": body, "pages": pages}
+        df = samples_frame(body)
+        pages += 1
+        if df.empty:
+            break
+        frames.append(df)
+        if df.time.iat[0] <= start:
+            break
+        t = df.time.iat[0] - pd.Timedelta(minutes=horizon)
+    if not frames:
+        return None, {"erreur": "aucune barre", "pages": pages}
+    data = pd.concat(frames, ignore_index=True)
+    dup = data[data.time.duplicated(keep=False)]
+    contradictions = int(dup.drop_duplicates().time.duplicated().sum())
+    n0 = len(data)
+    data = data.drop_duplicates("time").sort_values("time")
+    data = data[(data.time >= start) & (data.time < HOLDOUT)].reset_index(drop=True)
+    return data, {"pages": pages, "barres": len(data), "doublons_entre_pages": int(n0 - len(pd.concat(frames).drop_duplicates("time"))),
+                  "valeurs_contradictoires": contradictions,
+                  "premiere": str(data.time.iat[0]) if len(data) else None,
+                  "derniere": str(data.time.iat[-1]) if len(data) else None,
+                  "page_atteint_le_debut": bool(len(frames) and frames[-1].time.iat[0] <= start)}
+
+
+def write_series(df: pd.DataFrame, kind: str, out_csv: Path, meta: dict) -> dict:
+    """Série brute intacte (champs reçus) dans <out>_brut.csv, et série au schéma de `load_ohlc` (time, timestamp, open,
+    high, low, close, volume) : CFD → bid OHLC, volume nul ; future → dernier prix OHLC et volume. Chaque fichier a son
+    .meta.json ; celui de la série de travail porte l'heure d'extraction et l'empreinte de la série brute."""
+    out_csv = Path(out_csv)
+    raw = write_block(df, out_csv.with_name(out_csv.stem + "_brut.csv"), {**meta, "role": "série brute Saxo, intacte"})
+    cols = ["OpenBid", "HighBid", "LowBid", "CloseBid"] if kind == "cfd" else ["Open", "High", "Low", "Close"]
+    out = pd.DataFrame({"time": df.time, "open": df[cols[0]], "high": df[cols[1]], "low": df[cols[2]],
+                        "close": df[cols[3]],
+                        "volume": 0.0 if kind == "cfd" else df.get("Volume", pd.Series(0.0, index=df.index))})
+    missing = int(out[["open", "high", "low", "close"]].isna().any(axis=1).sum())
+    out = out.dropna(subset=["open", "high", "low", "close"]).reset_index(drop=True)
+    out.insert(1, "timestamp", (out.time.astype("int64") // 10**9).astype("int64"))
+    out.to_csv(out_csv, index=False, lineterminator="\n")
+    full = {**meta, "prix": "bid OHLC (CloseBid, etc.) ; volume absent (écrit nul)" if kind == "cfd"
+            else "dernier prix traité OHLC (Open, High, Low, Close) et volume", "timezone": "UTC (début de barre)",
+            "n_rows": len(out), "first": str(out.time.iat[0]) if len(out) else None,
+            "last": str(out.time.iat[-1]) if len(out) else None, "lignes_ohlc_manquantes_ecartees": missing,
+            "extracted_at_utc": pd.Timestamp.now(tz="UTC").isoformat(),
+            "extracted_at_origin": "heure du téléchargement (barres antérieures à 2026)",
+            "serie_brute": {"fichier": out_csv.stem + "_brut.csv", "sha256": raw["sha256"]},
+            "sha256": hashlib.sha256(out_csv.read_bytes()).hexdigest()}
+    out_csv.with_name(out_csv.stem + ".meta.json").write_text(json.dumps(full, ensure_ascii=False, indent=1),
+                                                             encoding="utf-8")
+    return full
 
 
 def write_block(df: pd.DataFrame, out_csv: Path, meta: dict) -> dict:

@@ -44,11 +44,11 @@ def test_url_d_autorisation_et_echanges_oauth():
 
 def test_reserve_2026_avant_la_requete():
     saxo.check_window(pd.Timestamp("2025-12-31T23:30:00Z"), "UpTo", 1200, 30)
-    saxo.check_window(pd.Timestamp("2025-12-01T00:00:00Z"), "From", 1200, 30)       # finit le 2025-12-25
+    saxo.check_window(pd.Timestamp("2020-01-02T00:00:00Z"), "From", 1200, 30)
     with pytest.raises(ValueError):
         saxo.check_window(pd.Timestamp("2026-01-01T00:00:00Z"), "UpTo", 10, 30)
-    with pytest.raises(ValueError):
-        saxo.check_window(pd.Timestamp("2025-12-20T00:00:00Z"), "From", 1200, 30)   # atteindrait 2026
+    with pytest.raises(ValueError):                                    # From : nuits et week-ends allongent la durée
+        saxo.check_window(pd.Timestamp("2025-06-01T00:00:00Z"), "From", 100, 30)
     with pytest.raises(ValueError):
         saxo.check_window(pd.Timestamp("2020-01-02T00:00:00Z"), "From", 1201, 30)
 
@@ -117,3 +117,47 @@ def test_jeton_dans_l_en_tete_seulement_jamais_dans_une_erreur(monkeypatch):
     st, body = saxo.SaxoClient(opener=opener, pause=0).get("/chart/v3/charts", {"Uic": 1})
     assert seen["auth"] == "Bearer JETON-SECRET"
     assert st == 403 and "JETON-SECRET" not in body
+
+
+class PagesUpTo:
+    """Fausse passerelle : barres de 30 min en séance 23 h sur 24 (pause 21:00-22:00 UTC, week-end), pages UpTo."""
+
+    def __init__(self, first="2019-12-20T00:00:00Z"):
+        idx = pd.date_range(first, "2025-12-31T23:30:00Z", freq="30min")
+        idx = idx[(idx.dayofweek < 5) & (idx.hour != 21)]
+        self.idx, self.asked = idx, []
+
+    def get(self, path, params=None):
+        t = pd.Timestamp(params["Time"])
+        assert params["Mode"] == "UpTo" and t < saxo.HOLDOUT
+        self.asked.append(t)
+        sel = self.idx[self.idx <= t][-params["Count"]:]
+        return 200, {"Data": [_ech(x.strftime("%Y-%m-%dT%H:%M:%SZ"), OpenBid=1.0, HighBid=1.2, LowBid=0.9, CloseBid=1.1,
+                                   OpenAsk=1.01, HighAsk=1.21, LowAsk=0.91, CloseAsk=1.11) for x in sel]}
+
+
+def test_serie_complete_en_remontant_jamais_au_dela_de_2025(tmp_path):
+    gw = PagesUpTo()
+    df, info = saxo.download_upto(gw, 1, "CfdOnIndex", pd.Timestamp("2020-01-01T00:00:00Z"))
+    assert max(gw.asked) == pd.Timestamp("2025-12-31T23:30:00Z")
+    assert df.time.iat[0] == pd.Timestamp("2020-01-01T00:00:00Z") and df.time.iat[-1] == pd.Timestamp("2025-12-31T23:30:00Z")
+    expect = gw.idx[gw.idx >= pd.Timestamp("2020-01-01T00:00:00Z")]
+    assert len(df) == len(expect) and not df.time.duplicated().any()
+    assert info["doublons_entre_pages"] == 0 and info["valeurs_contradictoires"] == 0 and info["page_atteint_le_debut"]
+    meta = saxo.write_series(df, "cfd", tmp_path / "s.csv", {"uic": 1})
+    out = pd.read_csv(tmp_path / "s.csv", parse_dates=["time"])
+    assert list(out.columns) == ["time", "timestamp", "open", "high", "low", "close", "volume"]
+    assert out.close.iat[0] == 1.1 and (out.volume == 0).all() and meta["n_rows"] == len(df)
+    assert meta["serie_brute"]["fichier"] == "s_brut.csv" and (tmp_path / "s_brut.csv").exists()
+    assert "extracted_at_utc" in meta
+
+
+def test_erreur_compressee_gzip_decodee(monkeypatch):
+    import gzip
+    monkeypatch.setenv(saxo.TOKEN_ENV, "J")
+
+    def opener(req, timeout):
+        raise urllib.error.HTTPError(req.full_url, 403, "Forbidden", {}, io.BytesIO(gzip.compress(b'{"ErrorCode":"NoAccess"}')))
+
+    st, body = saxo.SaxoClient(opener=opener, pause=0).get("/chart/v3/charts", {"Uic": 1})
+    assert st == 403 and json.loads(body) == {"ErrorCode": "NoAccess"}

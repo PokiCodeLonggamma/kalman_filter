@@ -1,7 +1,9 @@
 """EXP-D01.7 — test de Saxo OpenAPI (LIVE) comme source des barres de 30 min 2020-2025 : CFD US100, US2000, WTI, cuivre,
 puis futures NQ, RTY, CL, HG (facultatif). Aucun backtest.
 
-Usage, depuis la racine du dépôt : python experiments/D01_7/saxo_probe_D01_7.py [--sim] [--port 47321]
+Usage, depuis la racine du dépôt : python experiments/D01_7/saxo_probe_D01_7.py [--sim] [--download] [--port 47321]
+  --download : après le sondage, séries complètes 2020-2025 (CFD et future de chaque actif couvrant 2020), au schéma de
+               load_ohlc, plus la série brute intacte ; data/raw/saxo_<actif>_<cfd|fut>_30m.csv.
   --sim : environnement de simulation (test exigé par Saxo avant toute application LIVE ; clé SIM dans SAXO_APP_KEY) ;
           sorties suffixées _sim.
 1. Prérequis : application LIVE (flux PKCE) créée sur le portail développeur Saxo, URL de retour
@@ -31,8 +33,9 @@ sys.path.insert(0, str(ROOT / "src"))
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 
-from marketdata.saxo import (ENVIRONMENTS, HOLDOUT, TOKEN_ENV, SaxoClient, app_key, browser_login,  # noqa: E402
-                             get_chart, price_fields, refresh, samples_frame, search_instruments, write_block)
+from marketdata.saxo import (ENVIRONMENTS, FROM_MARGIN, HOLDOUT, TOKEN_ENV, SaxoClient, app_key,  # noqa: E402
+                             browser_login, download_upto, get_chart, price_fields, refresh, samples_frame,
+                             search_instruments, write_block, write_series)
 
 RAW = ROOT / "data" / "raw"
 ENV = "sim" if "--sim" in sys.argv else "live"
@@ -48,19 +51,23 @@ FUT_EXCH = {"US100": {"CME"}, "US2000": {"CME"}, "USOIL": {"NYMEX"}, "COPPER": {
 FUT = ["ContractFutures"]
 CIBLES = {
     "US100": {"futur": "NQ", "mots": ["US Tech 100", "USNAS100", "Nasdaq 100", "NAS100", "US100"],
-              "motif": r"nasdaq|tech 100|nas100|us ?100", "mots_futur": ["E-mini Nasdaq 100", "Nasdaq 100", "NQ"]},
+              "motif": r"nasdaq|tech 100|nas100|us ?100", "mots_futur": ["E-mini Nasdaq 100", "Nasdaq 100", "NQ"],
+              "motif_futur": r"nasdaq"},
     "US2000": {"futur": "RTY", "mots": ["US Small Cap 2000", "US2000", "Russell 2000", "Small Cap"],
-               "motif": r"russell|small ?cap|us ?2000", "mots_futur": ["E-mini Russell 2000", "Russell 2000", "RTY"]},
+               "motif": r"russell|small ?cap|us ?2000", "mots_futur": ["E-mini Russell 2000", "Russell 2000", "RTY"],
+               "motif_futur": r"russell"},
     "USOIL": {"futur": "CL", "mots": ["US Crude", "WTI", "Crude Oil", "OIL", "Oil - US Crude", "WTI Crude"],
-              "motif": r"wti|crude|us ?oil|light sweet", "mots_futur": ["WTI Crude Oil", "Crude Oil", "CL"]},
+              "motif": r"us crude|wti|light sweet", "mots_futur": ["WTI Crude Oil", "Light Sweet Crude Oil", "Crude Oil", "CL"],
+              "motif_futur": r"wti|light sweet"},
     "COPPER": {"futur": "HG", "mots": ["Copper", "COPPER"], "motif": r"copper|cuivre",
-               "mots_futur": ["Copper", "HG"]},
+               "mots_futur": ["Copper", "HG"], "motif_futur": r"copper"},
 }
 
 
 def fit_count(t: pd.Timestamp, cap: int = 1200) -> int:
-    """Nombre de barres d'une requête From qui reste avant le 2026-01-01 (réserve 2026)."""
-    return max(0, min(cap, int((HOLDOUT - t) / pd.Timedelta(minutes=H30))))
+    """Barres d'une requête From : 1 200 si elle part plus de 400 jours avant le 2026-01-01 (règle de
+    `marketdata.saxo.check_window`), 0 sinon (le test From est alors omis ; les séries se téléchargent en UpTo)."""
+    return cap if t < HOLDOUT - FROM_MARGIN else 0
 
 
 class Session:
@@ -189,7 +196,7 @@ def probe_cfd(s: Session, key: str, cand: dict) -> dict:
             same = all(np.allclose(common[f"{c}_f"].astype(float), common[f"{c}_u"].astype(float), equal_nan=True)
                        for c in cols if pd.api.types.is_numeric_dtype(a[c]))
             rep["coherence_from_upto"] = {"barres_communes": len(common), "valeurs_identiques": bool(same)}
-        n0 = fit_count(start)
+        n0 = fit_count(start) or len(a)
         s.ensure()
         st, b = get_chart(s.client, uic, at, H30, "From", start, n0, extended_hours=True)
         if st == 200:
@@ -222,6 +229,48 @@ def probe_cfd(s: Session, key: str, cand: dict) -> dict:
     return rep
 
 
+START = pd.Timestamp("2020-01-01T00:00:00Z")
+
+
+def download_all(s: Session, rep: dict) -> dict:
+    """Séries complètes 2020-01-01 → 2025-12-31 23:30 UTC des instruments retenus, CFD et future de chaque actif, si leur
+    historique de 30 min commence au plus tard le 2020-01-01 ; pages UpTo vers le passé (aucune barre de 2026)."""
+    out = {}
+    for k, c in CIBLES.items():
+        cfd = (rep["cfd"][k]["tests"] or [None])[0]
+        fut = rep["futures"][c["futur"]].get("test_detaille")
+        for kind, test in (("cfd", cfd), ("fut", fut)):
+            name = f"{k}_{kind}"
+            if not test or not test.get("couvre_2020_01_01"):
+                out[name] = {"statut": "non téléchargé", "motif": "instrument absent ou historique de 30 min postérieur au "
+                                                               "2020-01-01", "first_sample_time": (test or {}).get("first_sample_time")}
+                continue
+            inst = test["instrument"]
+            t0 = time.time()
+            df, info = download_upto(s.client, inst["Identifier"], inst["AssetType"], START, before=s.ensure)
+            if df is None:
+                out[name] = {"statut": "erreur", **info}
+                continue
+            csv = RAW / f"saxo_{k.lower()}_{kind}_30m{SUFFIX}.csv"
+            meta = {"source": "saxo-openapi", "environnement": ENV.upper(), "actif": k,
+                    "version": "CFD" if kind == "cfd" else "future continu", "uic": inst["Identifier"],
+                    "asset_type": inst["AssetType"], "symbol": inst.get("Symbol"), "description": inst.get("Description"),
+                    "exchange_id": (test.get("chart_info") or {}).get("ExchangeId"),
+                    "first_sample_time": test.get("first_sample_time"), "horizon_min": H30,
+                    "couverture_demandee": "2020-01-01 00:00 → 2025-12-31 23:30 UTC ; 2026 jamais demandé",
+                    "methode": "/chart/v3/charts, pages UpTo de 1 200 barres depuis le 2025-12-31 23:30 UTC vers le passé",
+                    "rolls": ("future continu de Saxo : règle de raccord non fournie par l'API, écarts aux roulements "
+                              "recherchés par l'audit") if kind == "fut" else "CFD : voir l'audit (échéances éventuelles)"}
+            m = write_series(df, kind, csv, meta)
+            years = df.time.dt.year.value_counts().sort_index()
+            out[name] = {"statut": "téléchargé", **info, "fichier": csv.name, "sha256": m["sha256"], "n_rows": m["n_rows"],
+                         "barres_par_annee": {int(y): int(n) for y, n in years.items()}, "structure": gaps_profile(df),
+                         "plus_grands_ecarts": jumps(df, 10), "controles_ohlc": ohlc_checks(df),
+                         "duree_s": round(time.time() - t0)}
+            print(f"  {name} : {m['n_rows']} barres, {info['premiere']} → {info['derniere']}, {info['pages']} pages", flush=True)
+    return out
+
+
 def fut_rank(c: dict, key: str) -> tuple:
     """Contrat continu d'abord (« continuous », symbole en c1), place d'origine du contrat (CME, NYMEX, COMEX), hors
     micro."""
@@ -234,7 +283,8 @@ def choose(cands: list[dict], motif: str) -> list[dict]:
     """Candidats CFD dont la description ou le symbole correspond à l'actif : CfdOnIndex d'abord, puis CfdOnFutures."""
     rx = re.compile(motif, re.I)
     ok = [c for c in cands if "erreur" not in c and rx.search(f"{c.get('Description', '')} {c.get('Symbol', '')}")]
-    return sorted(ok, key=lambda c: (c["AssetType"] != "CfdOnIndex", str(c.get("Symbol"))))
+    cont = lambda c: str(c.get("Symbol", "")).lower().endswith("cont") or "continuous" in str(c.get("Description", "")).lower()  # noqa: E731
+    return sorted(ok, key=lambda c: (c["AssetType"] != "CfdOnIndex", not cont(c), str(c.get("Symbol"))))
 
 
 def main() -> None:
@@ -292,7 +342,9 @@ def main() -> None:
                 if "erreur" in d or ident not in seen:
                     seen.add(ident)
                     cands.append({**d, "mots_cles": kw})
-        pool = sorted([d for d in cands if "erreur" not in d], key=lambda d: fut_rank(d, k))[:6]
+        rx = re.compile(c["motif_futur"], re.I)
+        pool = sorted([d for d in cands if "erreur" not in d and rx.search(f"{d.get('Description', '')} {d.get('Symbol', '')}")],
+                      key=lambda d: fut_rank(d, k))[:6]
         trials = []
         for cand in pool[:2]:
             s.ensure()
@@ -311,6 +363,8 @@ def main() -> None:
             detail = probe_cfd(s, f"fut_{c['futur']}", best)
         rep["futures"][c["futur"]] = {"candidats": cands, "essais": trials, "test_detaille": detail}
         print(f"{c['futur']} : {len(cands)} contrats trouvés, {len(trials)} essais de graphique", flush=True)
+    if "--download" in sys.argv:
+        rep["telechargement"] = download_all(s, rep)
     rep["appels_api"] = s.client.calls
     OUT.write_text(json.dumps(rep, ensure_ascii=False, indent=1, default=str), encoding="utf-8")
     os.environ.pop(TOKEN_ENV, None)
