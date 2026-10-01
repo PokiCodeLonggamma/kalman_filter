@@ -609,6 +609,17 @@ d'extraction, couverture, construction. Tous les chargements tronquent avant le 
 
 > Cette section reprend ce que le porteur a décidé, puis **propose** le reste. Tout ce qui est marqué
 > « à trancher » doit être validé par lui avant le moindre code ou calcul.
+>
+> **Mise à jour du 2026-10-01 : le protocole EXP-D02 du porteur tranche les points ouverts de §13.2 à §13.4**
+> (`RESEARCH_LOG.md`, entrée EXP-D02). En bref :
+> - univers BTC 2013-2025, SOL, AVAX, or 2009-2025, une passe indépendante par actif ;
+> - H (6 à 60), R0 (10 à 500) et frontière F2b/F3 (0,75 à 0,95), en OFAT puis conjointement ; grille exhaustive ;
+> - IS de 24 mois, OOS de 6 mois ; seuils de population réestimés sur chaque IS ;
+> - choix en IS au Calmar net sur voisinage ;
+> - noyau Numba (VectorBT abandonné) et Gate 0 avant tout calcul.
+>
+> La fonction objectif « fixée avant » de §13.2.3 est celle du porteur ; l'agent ne propose aucun seuil a priori. Le
+> reste de la section décrit l'état de la réflexion avant ce protocole.
 
 ### 13.1 Objectifs
 

@@ -1458,7 +1458,8 @@ Grilles complètes : espérance ATR ; MDD ; Calmar.
   F2b/F3 de signes opposés à ceux de 2020-2025.
 - [HYP] **Sur BTC, l'avantage de RE-1 n'est pas stationnaire :** sélection en échantillon pendant la construction
   (A01 → C05) ou changement de régime (marché spot étroit avant 2017) ; non séparables ici. 2026 reste le seul hors
-  échantillon vierge de BTC.
+  échantillon de BTC, non vierge : il a été vu par d'anciens projets (`passation.md` §2.1 ; correction du 2026-10-01,
+  la première version disait « vierge »).
 - [HYP] **Sur l'or, un brut de +0,25 à +0,30 ATR persiste sur 17 ans** ; le net dépend du rapport brut / frais en ATR (K11)
   et du régime.
 - [HYP] **Pour D02 :** la référence figée dépend de la période ; le walk-forward devra montrer un gain sur ces périodes
@@ -1468,4 +1469,95 @@ Grilles complètes : espérance ATR ; MDD ; Calmar.
 - [ ] **REJETÉ**
 - [ ] **NON CONCLUANT**
 - [x] **TERMINÉ (descriptif) : BTC 2013-2019 sans espérance nette (estimation négative, IC contenant 0) ; or 2009-2019 net nul, brut positif. Panne de 2015 sans effet. RE-1 inchangée. Univers de D02 : AVAX ajouté.**
+
+### [EXP-D02] — Walk-forward de RE-1 : protocole d'adaptation dynamique (BTC, SOL, AVAX, or) — cadrage validé
+- **Date :** 2026-10-01
+- **Étape :** D, D02. Protocole écrit par le porteur, audité par l'agent, puis arbitré par le porteur (six points).
+  GO pour la documentation, le code (`src/optimization/`) et le contrôle bloquant Gate 0 ; la grille ne part que sur
+  un second GO, après lecture du rapport de Gate 0.
+- **Actifs & Période :** une passe indépendante par actif, sans aucun paramètre ni seuil mutualisé.
+  - BTC/USD Bitstamp 2013-2025, panne de janvier 2015 retirée (convention de D02.0) ;
+  - SOL/USD Coinbase dès le 2021-06-17 ; AVAX/USD Coinbase dès le 2021-09-30 ;
+  - CFD or XAU/USD HistData dès le 2009-03-15 ;
+  - barres de 30 min jusqu'au 2025-12-31 ; 2026, ETH et XRP ne sont pas lus.
+- **Modèle de frais :** convention de RE-1, 5 bps aller-retour sur les cryptos et 4 bps sur l'or. Lecture de stress à
+  10 bps sur les séries hors échantillon, avec les paramètres choisis au coût principal, sans réoptimisation. Capital à
+  0,25 % par ATR14(t), levier ≤ 1x ; PnL et MDD à 1x publiés à côté.
+
+#### 0. Cadrage (format du porteur ; champs du §4.6 inclus)
+- **QUESTION :** recalibrer chaque semestre H, R0 ou la frontière F2b/F3, un à un puis ensemble, apporte-t-il hors
+  échantillon une valeur nette face à RE-1 gelée et à une calibration statique ?
+- **PERTINENCE POUR LE FILTRE AKF :**
+  - R0 est le seul axe sensible du moteur sous le reset de P (`RESEARCH_PHILOSOPHY.md` §4.4) ;
+  - H fixe le moment où le jugement cinématique fait à t est encaissé (K9) ;
+  - la frontière ne change pas la population de RE-1 (petite jambe, retracement ≥ 0,50, x1 retourné) : elle décide
+    seulement quels trades portent le stop SL-B ;
+  - D02.0 a montré que l'avantage de RE-1 dépend de la période (K12).
+- **DONNÉES :** séries ci-dessus, empreintes conformes à leurs `.meta.json`. Fenêtres semestrielles calendaires :
+  60 semestres hors échantillon (BTC 22 de 2015 à 2025, or 29 du S2 2011 à 2025, SOL 5 du S2 2023 à 2025, AVAX 4 de
+  2024 à 2025), chiffres du porteur vérifiés.
+- **MÉTHODE :**
+  - **Fenêtres :** apprentissage (IS) = les 4 semestres qui précèdent chaque semestre de test (OOS), soit 24 mois pour
+    6 (80/20) ; premier OOS = premier semestre dont l'IS commence à la première barre de la série ou après.
+  - **Atlas :** un par valeur de R0 ∈ {10, 50, 100, 200, 500}, calculé par le moteur certifié sur toute la série
+    (paramètre transmis à `anatomy.build_atlas`, `src/indicator/` intouché).
+  - **Seuils de population :** P50 de `leg_atr` et P75 de `nis_z_100` réestimés sur les signaux de chaque IS, pour
+    chaque R0, puis gelés pour le semestre OOS suivant ; aucun quantile sur l'historique entier.
+  - **Grille exhaustive** (pas d'Optuna) : H de 6 à 60 barres au pas de 2 (28 valeurs, cooldown = H), R0 (5 valeurs),
+    frontière de 0,75 à 0,95 au pas de 0,05 (5 valeurs). Branches OFAT, les autres paramètres aux valeurs de RE-1, et
+    branche conjointe (5 × 28 × 5 = 700 combinaisons par IS), espace fixé a priori. 42 000 évaluations IS ; les
+    36 configurations distinctes de l'OFAT font partie de la grille conjointe.
+  - **Choix en IS** (règle du porteur, forme opérationnelle validée) :
+    - admissible : E[ATR] net > 0 et MDD < 0 sur l'IS ;
+    - score : moyenne du Calmar net (0,25 %/ATR) de la configuration et de ses voisins immédiats, ±1 pas sur un axe
+      (R0 par rang) ; un voisin inadmissible compte pour sa propre valeur ;
+    - choix au score maximal parmi les admissibles ; à égalité, le plus proche de RE-1 ; aucun admissible : paramètres
+      de RE-1 avec les seuils de la fenêtre ;
+    - conventions techniques de l'agent, à confirmer avec Gate 0 : un Calmar indéfini (aucun trade, MDD nul) compte
+      pour 0 ; « le plus proche » se mesure en pas de grille (distance L1), puis par ordre lexicographique.
+  - **Séries hors échantillon** (10 par actif, capital continu, mêmes dates) : RE-1 gelée (seuils BTC gelés), Contrôle
+    (paramètres de RE-1, seuils réestimés seuls), puis Statique (choix de l'IS 1 gelé sur tout l'OOS) et WFO (choix
+    semestriel) pour H, R0, frontière et conjointe. Tous, hors RE-1 gelée, partagent la politique de seuils réestimés.
+  - **Étanchéité :** un trade d'IS encore ouvert est clos à la dernière barre de son IS (aucune barre OOS ne sert au
+    choix) ; une position ouverte en fin de semestre OOS garde jusqu'à sa clôture les règles de son entrée ; un trade
+    ouvert le 2025-12-31 est clos à la dernière barre de 2025.
+  - **Moteur :** noyau Numba qui reprend `envelope.stop_trades` (`dynamic=False`), avec H et niveau de stop par signal ;
+    métriques de `strategy.re1`. VectorBT est abandonné (décision du porteur).
+  - **Gate 0, bloquant avant toute grille :**
+    - le noyau reproduit les 1 080 trades de RE-1 sur BTC 2020-2025 (`strategy.run_re1`) : 0 trade manquant ou fantôme,
+      écart relatif ≤ 10⁻⁵ sur le PnL cumulé et l'espérance en ATR ;
+    - parité hors du point de RE-1 (H, frontière, R0, paramètres qui changent à une frontière de semestre) ;
+    - ancres : RE-1 gelée redonne D01 (SOL, or 2020-2025) et D02.0 (BTC 2013-2019, or 2009-2019) ;
+    - fenêtres 22 / 29 / 5 / 4, empreintes des données, garde 2026, seuils lus sur l'IS seul.
+- **CRITÈRE DE LECTURE :**
+  - **« Statistiquement tangible »** : écart apparié par mois (mêmes tirages, 2 000, graine fixe), IC 95 % entièrement
+    au-dessus de 0 sur l'espérance (ATR et bps) et sur le rendement. MDD et Calmar se lisent sur chemins réordonnés
+    (part des chemins, plage P2,5-P97,5) ; « ne dégrade pas le MDD » : plage pas entièrement défavorable.
+  - **Règles de décision du porteur :** chaque variante est jugée face à RE-1 gelée ; un WFO n'est retenu face à son
+    Statique que si son gain de Calmar et d'espérance est tangible sans dégrader le MDD (sinon, le Statique est
+    préféré) ; la conjointe doit dépasser les meilleures variantes 1D et statiques ; si aucune variante ne dépasse
+    significativement RE-1 sur le profil global (rendement net, Calmar, MDD, espérance), absence de valeur ajoutée
+    démontrée, RE-1 inchangée.
+  - **Lus aussi :** effet propre de chaque paramètre contre le Contrôle (même politique de seuils) ; stabilité des
+    paramètres choisis ; cartes IS ; effet de H sur entrées figées (I-M16) ; brut, frais et queues ; nombre de
+    configurations et de comparaisons publié.
+  - **Ce qu'il ne permet pas de conclure :**
+    - BTC 2020-2025 a servi à construire RE-1 : aucun de ces semestres n'est vierge, pour aucune variante ;
+    - avant 2020, RE-1 gelée porte des seuils estimés sur 2020-2025 : c'est une référence fixe, pas une stratégie
+      causale ;
+    - SOL et AVAX : 4 à 5 semestres hors échantillon, puissance faible ;
+    - les Statiques de BTC sont tirés de l'IS 2013-2014 (marché étroit ; 2014 à −0,740 ATR en D02.0) ;
+    - environ 50 comparaisons à 95 % : quelques résultats « significatifs » sont attendus par hasard ;
+    - ni portage (funding, emprunt du short, financement de nuit) ni glissement au-delà des frais ; hold-out non lu.
+- **Sensibilités de BTC (annexe) :** panne de 2015 sur la série brute (fenêtres touchées recalculées) ; 2013 retiré de la
+  lecture (OOS dès le S1 2016, Statique tiré de l'IS 2014-2015, mêmes fenêtres).
+
+#### Décisions du porteur (2026-10-01)
+- Protocole EXP-D02 adopté ; l'audit de l'agent (étanchéité, contrôles, limites) est validé.
+- Arbitrages : (1) noyau Numba sur `stop_trades`, VectorBT abandonné ; (2) grille exhaustive seule ; (3) score de
+  voisinage ; (4) écart apparié par mois ; (5) sensibilités de BTC ; (6) stress à 10 bps.
+- Sa réponse « pas de critère a priori » (relecture de `RESEARCH_PHILOSOPHY.md` §3.1) vise les seuils et vetos
+  proposés par l'agent ; la règle de choix en IS, fixée par le porteur avant toute mesure, est une consigne.
+- Écarts signalés : le moteur de référence est `src/strategy/re1.py` (le protocole écrit `src/strategy.py`) ; stress à
+  10 bps appliqué aussi à l'or (coût principal 4 bps), à confirmer.
 
