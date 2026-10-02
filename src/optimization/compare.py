@@ -12,6 +12,8 @@
 - « Statistiquement tangible » : IC 95 % entièrement au-dessus de 0 (espérance en ATR et en bps ; rendement).
 - `frozen_entries` : mêmes entrées qu'une série de référence, autre horizon par trade, même stop, sans sélection
   séquentielle ; avec `envelope.effect_ci`, lecture d'un changement d'horizon sur entrées figées (I-M16).
+- `drop_best` (EXP-D02.1, stress du porteur) : la série sans ses ⌈1 % · n⌉ meilleurs trades (au moins un), classés
+  par rendement net en ATR14(t), c'est-à-dire par poids dans le capital à 0,25 %/ATR hors plafond 1x.
 """
 from __future__ import annotations
 
@@ -164,3 +166,15 @@ def frozen_entries(bars: pd.DataFrame, ref: pd.DataFrame, horizon, level=None, l
         out = apply_stop(bars, e, x, s, dist)
     out["signal_bar"] = t
     return out[TRADE_COLUMNS]
+
+
+def drop_best(trades: pd.DataFrame, atr_bps, fee: float, share: float = 0.01) -> pd.DataFrame:
+    """La série sans ses ⌈share · n⌉ meilleurs trades (au moins un), rendement net en ATR14(t) au coût `fee` ; ordre
+    chronologique gardé ; à égalité, le plus ancien est retiré d'abord."""
+    tr = trades.reset_index(drop=True)
+    if not len(tr):
+        return tr
+    atr = np.asarray(atr_bps, dtype=float)[tr.signal_bar.to_numpy(dtype=np.int64)]
+    net = (tr.ret_gross_bps.to_numpy(dtype=float) - fee) / atr
+    k = max(1, int(np.ceil(share * len(tr) - 1e-9)))
+    return tr.drop(index=np.argsort(-net, kind="stable")[:k]).reset_index(drop=True)

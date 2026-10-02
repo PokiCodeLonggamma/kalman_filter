@@ -8,8 +8,8 @@ import pytest
 
 from envelope import effect_ci, stop_trades, summarize_sized
 from envelope.metrics import _cluster_counts
-from optimization.compare import (frozen_entries, month_draws, month_index, mdd_exits, paired_comparison,
-                                  series_stats)
+from optimization.compare import (drop_best, frozen_entries, month_draws, month_index, mdd_exits,
+                                  paired_comparison, series_stats)
 
 UTC = "UTC"
 
@@ -82,3 +82,18 @@ def test_entrees_figees_pour_lire_un_changement_d_horizon(barres_synthetiques, s
     assert np.array_equal(longer.entry_bar, tr.entry_bar) and (longer.exit_bar >= tr.exit_bar).all()
     eff = effect_ci(longer, tr, bars, pd.Series(atr, index=np.arange(len(bars))), n_boot=200)
     assert np.isfinite(eff["effet_atr"]) and eff["effet_atr_lo"] <= eff["effet_atr"] <= eff["effet_atr_hi"]
+
+
+def test_retrait_des_meilleurs_trades_stress_du_porteur(barres_synthetiques, signaux_synthetiques):
+    """EXP-D02.1 : la série sans son 1 % de meilleurs trades (⌈1 % · n⌉, au moins un), classés par rendement net en
+    ATR14(t) ; ordre chronologique gardé."""
+    bars, tr, atr, *_ = _cas(barres_synthetiques, signaux_synthetiques, seed=21)
+    net = (tr.ret_gross_bps.to_numpy() - 5.0) / atr[tr.signal_bar.to_numpy()]
+    k = int(np.ceil(0.01 * len(tr)))
+    assert len(tr) > 150 and k >= 2
+    got = drop_best(tr, atr, 5.0)
+    best = np.argsort(-net, kind="stable")[:k]
+    assert got.equals(tr.drop(index=best).reset_index(drop=True))
+    assert np.argmax(net) in best and np.argmax(tr.ret_gross_bps.to_numpy()) != np.argmax(net)  # rang en ATR
+    assert len(drop_best(tr.iloc[:50], atr, 5.0)) == 49 and len(drop_best(tr.iloc[:200], atr, 5.0)) == 198
+    assert drop_best(tr.iloc[:0], atr, 5.0).empty

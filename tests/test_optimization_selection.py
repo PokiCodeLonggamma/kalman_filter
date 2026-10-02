@@ -108,3 +108,55 @@ def test_zone_en_trois_dimensions():
     c[2, 2, 2] = 50.0                                       # pic isolé
     idx, info = select_plateau(np.full(c.shape, 0.1), c, np.full(c.shape, -0.1), ref=(1, 1, 1))
     assert info["zone"] == 8 and idx == (1, 1, 1)           # 8 cases à égale distance du centre : RE-1 l'emporte
+
+
+# ── EXP-D02.1 : inertie (porteur, 2026-10-03) ── égalité au centre : la case la plus proche du paramètre de la fenêtre
+# précédente (première fenêtre : meilleur Calmar IS) ; aucune zone : paramètre précédent (première : meilleur Calmar).
+
+def _carte(calmar):
+    c = np.asarray(calmar, dtype=float)
+    return np.full(c.shape, 0.1), c, np.full(c.shape, -0.1)
+
+
+def test_inertie_egalite_au_centre_departagee_par_le_parametre_precedent():
+    e, c, m = _carte([-1.0, 2.0, 3.0, -1.0, -1.0])           # zone {1, 2}, centre 1,5 : égalité
+    assert select_plateau(e, c, m, ref=(0,))[0] == (1,)       # D02 : la plus proche de RE-1
+    idx, info = select_plateau(e, c, m, ref=(0,), prev=(4,), inertie=True)
+    assert idx == (2,) and info["inertie"] == "egalite" and not info["repli"]
+    assert select_plateau(e, c, m, ref=(4,), prev=(0,), inertie=True)[0] == (1,)
+    assert select_plateau(e, c, m, ref=(0,), prev=(2,), inertie=True)[0] == (2,)
+
+
+def test_inertie_premiere_fenetre_egalite_au_meilleur_calmar():
+    e, c, m = _carte([-1.0, 2.0, 3.0, -1.0, -1.0])
+    idx, info = select_plateau(e, c, m, ref=(0,), prev=None, inertie=True)
+    assert idx == (2,) and info["inertie"] == "egalite"
+
+
+def test_inertie_sans_zone_garde_le_parametre_precedent():
+    e, c, m = _carte([-1.0, -0.5, -2.0, -0.1])
+    idx, info = select_plateau(e, c, m, ref=(0,), prev=(2,), inertie=True)
+    assert idx == (2,) and info["repli"] and info["inertie"] == "aucune zone"
+
+
+def test_inertie_sans_zone_premiere_fenetre_au_meilleur_calmar_defini():
+    e, c, m = _carte([-1.0, -0.5, np.nan, -0.1])
+    idx, info = select_plateau(e, c, m, ref=(0,), prev=None, inertie=True)
+    assert idx == (3,) and info["repli"] and info["inertie"] == "aucune zone"
+    e, c, m = _carte([np.nan, np.nan])
+    assert select_plateau(e, c, m, ref=(1,), prev=None, inertie=True)[0] == (1,)
+
+
+def test_inertie_sans_effet_hors_egalite():
+    e, c, m = _carte([-1.0, 2.0, 3.0, 1.0, -1.0])            # zone {1, 2, 3} : centre 2
+    for prev in (None, (0,), (4,)):
+        idx, info = select_plateau(e, c, m, ref=(0,), prev=prev, inertie=True)
+        assert idx == (2,) and info["inertie"] is None
+
+
+def test_sans_inertie_la_regle_de_d02_ignore_le_precedent():
+    e, c, m = _carte([-1.0, 2.0, 3.0, -1.0, -1.0])
+    assert select_plateau(e, c, m, ref=(0,), prev=(4,))[0] == (1,)
+    e, c, m = _carte([-1.0, -0.5])
+    idx, info = select_plateau(e, c, m, ref=(0,), prev=(1,))
+    assert idx == (0,) and info["repli"] and info["inertie"] is None

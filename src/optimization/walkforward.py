@@ -13,6 +13,11 @@ WFO, séries hors échantillon (protocole du porteur, 2026-10-01).
 - Hors échantillon (`oos_candidates`, `run_oos`) : candidats de chaque semestre aux paramètres et aux seuils de ce
   semestre, réunis en une seule course (capital continu) ; une position à cheval sur deux semestres garde l'horizon
   et le stop de son signal ; un trade ouvert le 2025-12-31 est clos à la dernière barre de 2025.
+
+EXP-D02.1 (porteur, 2026-10-03) : verrou (cooldown) distinct de l'horizon (`lock`, défaut = H, règle de D02) dans
+`evaluate_is` et `run_oos` ; seuils BTC gelés possibles en IS (`thresholds="geles"`) ; grille fine de R0
+(`GRID_R0_FIN`) ; `axis_schedule` : choix semestre par semestre sur une grille à un seul axe, avec l'inertie de
+`select_plateau` (la case de la fenêtre précédente tranche les égalités au centre et l'absence de zone).
 """
 from __future__ import annotations
 
@@ -30,6 +35,7 @@ from optimization.windows import Window, bar_span
 from strategy import LEG_ATR_P50_BTC, NIS_Z100_P75_BTC, RISK_BPS
 
 GRID_R0 = (10.0, 50.0, 100.0, 200.0, 500.0)
+GRID_R0_FIN = (10.0, 25.0, 50.0, 75.0, 100.0, 150.0, 200.0, 300.0, 500.0)      # EXP-D02.1
 GRID_H = tuple(range(6, 61, 2))
 GRID_F = (0.75, 0.80, 0.85, 0.90, 0.95)
 GRID = (GRID_R0, GRID_H, GRID_F)
@@ -79,9 +85,12 @@ def _is_years(w: Window) -> float:
     return ((w.is_end.year - w.is_start.year) * 12 + (w.is_end.month - w.is_start.month)) / 12.0
 
 
-def evaluate_is(data: AssetData, w: Window, grid=GRID, risk_bps: float = RISK_BPS) -> dict[str, np.ndarray]:
+def evaluate_is(data: AssetData, w: Window, grid=GRID, risk_bps: float = RISK_BPS, lock: int | None = None,
+                thresholds: str = "fenetre") -> dict[str, np.ndarray]:
     """Métriques de chaque configuration (R0, H, frontière) de la grille sur l'IS de la fenêtre `w`, et seuils de
-    population de l'IS pour chaque R0."""
+    population de l'IS pour chaque R0 (« fenetre ») ou seuils BTC gelés (« geles ») ; `lock` : verrou du noyau."""
+    if thresholds not in THRESHOLDS:
+        raise ValueError(f"evaluate_is : politique de seuils inconnue {thresholds!r}")
     r0s, hs, fs = grid
     shape = (len(r0s), len(hs), len(fs))
     out = {k: np.full(shape, np.nan) for k in METRICS}
@@ -92,12 +101,14 @@ def evaluate_is(data: AssetData, w: Window, grid=GRID, risk_bps: float = RISK_BP
     for i, r0 in enumerate(r0s):
         tab = data.tabs[r0]
         leg, nis, nsig = window_thresholds(tab, w.is_start, w.is_end)
+        if thresholds == "geles":
+            leg, nis = LEG_ATR_P50_BTC, NIS_Z100_P75_BTC
         out["leg_p50"][i], out["nis_p75"][i], out["n_signaux"][i] = leg, nis, nsig
         for k, f in enumerate(fs):
             t, s, lv = candidates(tab, leg, nis, f, w.is_start, w.is_end)
             op, hi, lo, t, s, _, lv, last_ = prepare_inputs(data.bars, t, s, 1, lv, last, check_bars=False)
             for j, h in enumerate(hs):
-                res = simulate(op, hi, lo, t, s, np.full(len(t), h, dtype=np.int64), lv, last_)
+                res = simulate(op, hi, lo, t, s, np.full(len(t), h, dtype=np.int64), lv, last_, lock=lock)
                 m = is_metrics(res, close, data.atr_bps, data.fee, risk_bps, ny)
                 for key in METRICS:
                     out[key][i, j, k] = m[key]
@@ -136,6 +147,23 @@ def variant_schedule(evs: list[dict], name: str) -> tuple[list[Params], str]:
     return [branch_choice(ev, branch)[0] for ev in evs], thresholds
 
 
+def axis_schedule(evs: list[dict], grid, axis: int, ref: int, inertie: bool = False) -> list[tuple[Params, dict]]:
+    """Choix de chaque semestre sur une grille dont seul l'axe `axis` varie (0 : R0, 1 : H, 2 : frontière), règle de
+    la zone connexe, référence d'indice `ref` ; `inertie` : la case choisie à la fenêtre précédente tranche."""
+    if any(len(g) != 1 for i, g in enumerate(grid) if i != axis):
+        raise ValueError("axis_schedule : un seul axe variable exigé")
+    out, prev = [], None
+    for ev in evs:
+        e, c, m = (np.asarray(ev[k], dtype=float).reshape(-1) for k in ("esperance_atr", "calmar_r25", "mdd_r25"))
+        idx, info = select_plateau(e, c, m, (ref,), prev, inertie)
+        full = [0, 0, 0]
+        full[axis] = idx[0]
+        out.append((Params(float(grid[0][full[0]]), int(grid[1][full[1]]), float(grid[2][full[2]])),
+                    dict(info, index=idx[0])))
+        prev = idx
+    return out
+
+
 def oos_candidates(data: AssetData, windows: list[Window], schedule: list[Params], thresholds: str):
     """(barres, sens, horizons, niveaux de stop, semestre) des candidats hors échantillon, triés."""
     if thresholds not in THRESHOLDS:
@@ -155,9 +183,10 @@ def oos_candidates(data: AssetData, windows: list[Window], schedule: list[Params
     return t, s, h, lv, k
 
 
-def run_oos(data: AssetData, cands) -> pd.DataFrame:
-    """Une seule course hors échantillon (capital continu) ; colonne `semestre` : fenêtre du signal."""
+def run_oos(data: AssetData, cands, lock: int | None = None) -> pd.DataFrame:
+    """Une seule course hors échantillon (capital continu) ; colonne `semestre` : fenêtre du signal ; `lock` : verrou
+    du noyau (défaut : l'horizon de chaque signal)."""
     t, s, h, lv, k = cands
-    tr = run_trades(data.bars, t, s, h, lv)
+    tr = run_trades(data.bars, t, s, h, lv, lock=lock)
     tr["semestre"] = pd.Series(k, index=t).reindex(tr.signal_bar.to_numpy()).to_numpy()
     return tr

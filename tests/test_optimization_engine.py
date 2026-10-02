@@ -5,9 +5,11 @@ import pandas as pd
 import pytest
 
 from envelope import stop_distance, stop_trades
+from envelope.decouple import lock_trades
 from envelope.stops import _sequential
 from estimand.stoploss import TRADE_COLUMNS, apply_stop
-from optimization.engine import run_trades
+from optimization.compare import frozen_entries
+from optimization.engine import run_trades, superseded
 
 
 def _reference_par_signal(bars, t, s, h, level, last):
@@ -86,3 +88,81 @@ def test_noyau_sans_candidat_rend_le_cadre_vide_de_stop_trades(barres_synthetiqu
     t, s = np.array([len(bars) - 2]), np.array([1])
     got = run_trades(bars, t, s, 26)
     assert got.empty and got.equals(stop_trades(bars, t, s, 26, None, dynamic=False))
+
+
+# ── EXP-D02.1 : verrou (cooldown) distinct de l'horizon de sortie, option C du porteur ─────────────────────────────
+
+def _niveaux(level, t, trades):
+    return pd.Series(level, index=t).reindex(trades.signal_bar.to_numpy()).to_numpy()
+
+
+def test_verrou_egal_a_l_horizon_redonne_le_noyau_de_d02(barres_synthetiques, signaux_synthetiques):
+    bars = barres_synthetiques(1500, seed=8)
+    t, s, level = signaux_synthetiques(bars, 250, seed=9)
+    for h in (3, 26, 60):
+        assert run_trades(bars, t, s, h, level, lock=h).equals(run_trades(bars, t, s, h, level)), h
+
+
+def test_verrou_au_moins_egal_a_l_horizon_redonne_lock_trades(barres_synthetiques, signaux_synthetiques):
+    """Verrou ≥ horizon : sortie à l'horizon ou au stop, entrée suivante à partir de t + verrou (EXP-D01.6)."""
+    bars = barres_synthetiques(1500, seed=10)
+    t, s, level = signaux_synthetiques(bars, 250, seed=11)
+    for h, lock in ((6, 26), (16, 26), (26, 26), (26, 40)):
+        assert run_trades(bars, t, s, h, level, lock=lock).equals(lock_trades(bars, t, s, h, lock, level)), (h, lock)
+
+
+def test_verrou_court_garde_les_entrees_a_tout_horizon(barres_synthetiques, signaux_synthetiques):
+    """Verrou de 26 : mêmes entrées qu'à H = 26, quel que soit l'horizon de sortie (population constante)."""
+    bars = barres_synthetiques(1500, seed=12)
+    t, s, level = signaux_synthetiques(bars, 250, seed=13)
+    cols = ["signal_bar", "entry_bar", "side", "entry_price"]
+    ref = run_trades(bars, t, s, 26, level)
+    for h in (6, 28, 40, 60):
+        assert run_trades(bars, t, s, h, level, lock=26)[cols].equals(ref[cols]), h
+
+
+def test_verrou_court_l_entree_suivante_clot_la_position(barres_synthetiques, signaux_synthetiques):
+    """H > verrou : la position encore ouverte sort à l'ouverture où entre la suivante (une position à la fois) ;
+    les autres trades sont ceux du signal joué seul (horizon ou stop)."""
+    bars = barres_synthetiques(1500, seed=14)
+    t, s, level = signaux_synthetiques(bars, 250, seed=15)
+    got = run_trades(bars, t, s, 60, level, lock=26)
+    e, x = got.entry_bar.to_numpy(), got.exit_bar.to_numpy()
+    assert (x[:-1] <= e[1:]).all()
+    cut = superseded(got, 60)
+    i = np.flatnonzero(cut)
+    assert len(i) > 5 and (i < len(got) - 1).all()
+    assert (x[i] == e[i + 1]).all() and not got.stop.to_numpy()[i].any()
+    assert np.array_equal(got.exit_price.to_numpy()[i], bars.open.to_numpy()[x[i]])
+    seul = frozen_entries(bars, got, 60, _niveaux(level, t, got))
+    assert got[~cut].equals(seul[~cut])
+    assert (seul.exit_bar.to_numpy()[i] > x[i]).all()
+
+
+def test_verrou_court_ne_lit_aucune_barre_posterieure_a_la_sortie(barres_synthetiques, signaux_synthetiques):
+    bars = barres_synthetiques(1500, seed=16)
+    t, s, level = signaux_synthetiques(bars, 250, seed=17)
+    b = 900
+    sel = t + 1 < b
+    t, s, level = t[sel], s[sel], level[sel]
+    got = run_trades(bars, t, s, 60, level, lock=26)
+    altered = bars.copy()
+    altered.loc[b:, ["open", "high", "low", "close"]] *= 1.3
+    alt = run_trades(altered, t, s, 60, level, lock=26)
+    done = (got.exit_bar < b).to_numpy()
+    assert done.sum() > 20 and got[done].equals(alt[done])
+
+
+def test_verrou_invalide_refuse(barres_synthetiques, signaux_synthetiques):
+    bars = barres_synthetiques(400)
+    t, s, level = signaux_synthetiques(bars, 40)
+    with pytest.raises(ValueError, match="verrou"):
+        run_trades(bars, t, s, 26, level, lock=0)
+
+
+def test_coupure_reperee_sans_faux_positif_quand_verrou_egal_horizon(barres_synthetiques, signaux_synthetiques):
+    bars = barres_synthetiques(1500, seed=18)
+    t, s, level = signaux_synthetiques(bars, 250, seed=19)
+    for h in (6, 26, 60):
+        assert not superseded(run_trades(bars, t, s, h, level), h).any(), h
+    assert not superseded(run_trades(bars, t, s, 26, level, last=700), 26).any()     # fin de série : pas une coupure

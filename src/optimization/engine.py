@@ -12,6 +12,12 @@ ordre (résultats identiques au bit près, contrôle bloquant Gate 0) :
 Deux ajouts pour le walk-forward, sans changer ces règles :
 - `h` peut varier d'un signal à l'autre : un trade garde jusqu'à sa clôture l'horizon et le stop de son signal ;
 - `last` borne la série : fin d'un IS, où tout trade encore ouvert est clos à l'ouverture de la barre `last`.
+
+EXP-D02.1 (porteur, 2026-10-03) — verrou (cooldown) distinct de l'horizon, `lock` :
+- après un signal exécuté en t, le suivant n'est admissible qu'à partir de t + `lock`, sortie et stop ignorés ; les
+  entrées ne dépendent donc que des signaux et du verrou ; `lock` absent : `lock = h`, règle de D02 ci-dessus ;
+- option C du porteur : si l'entrée suivante tombe avant la sortie prévue (h > verrou), elle clôt la position encore
+  ouverte à la même ouverture (une position à la fois, levier ≤ 1x) ; le stop est testé jusqu'à cette sortie.
 """
 from __future__ import annotations
 
@@ -25,8 +31,17 @@ from estimand.stoploss import TRADE_COLUMNS
 
 
 @njit(cache=True)
-def _simulate(op, hi, lo, t, s, h, level, last):
+def _simulate(op, hi, lo, t, s, h, level, last, lock):
     n = t.shape[0]
+    adm = np.empty(n, np.int64)                               # signaux exécutés : verrou seul, sorties ignorées
+    m = 0
+    libre = -1
+    for i in range(n):
+        if t[i] < libre:
+            continue                                          # verrou : signal ignoré
+        adm[m] = i
+        m += 1
+        libre = t[i] + lock[i]
     sig = np.empty(n, np.int64)
     ent = np.empty(n, np.int64)
     ext = np.empty(n, np.int64)
@@ -36,17 +51,16 @@ def _simulate(op, hi, lo, t, s, h, level, last):
     stop = np.zeros(n, np.bool_)
     gap = np.zeros(n, np.bool_)
     ret = np.empty(n, np.float64)
-    k = 0
-    libre = -1
-    for i in range(n):
+    for k in range(m):
+        i = adm[k]
         ti = t[i]
-        if ti < libre:
-            continue                                          # position ouverte : signal ignoré
         si = s[i]
         e = ti + 1
         x = ti + 1 + h[i]
         if x > last:
             x = last
+        if k + 1 < m and t[adm[k + 1]] + 1 < x:
+            x = t[adm[k + 1]] + 1                             # option C : l'entrée suivante clôt la position
         p0 = op[e]
         sortie = x
         prix = op[x]
@@ -76,9 +90,7 @@ def _simulate(op, hi, lo, t, s, h, level, last):
         stop[k] = touche
         gap[k] = au_dela
         ret[k] = si * (prix / p0 - 1.0) * BPS
-        k += 1
-        libre = x - 1
-    return sig[:k], ent[:k], ext[:k], side[:k], p_in[:k], p_out[:k], stop[:k], gap[:k], ret[:k]
+    return sig[:m], ent[:m], ext[:m], side[:m], p_in[:m], p_out[:m], stop[:m], gap[:m], ret[:m]
 
 
 def prepare_inputs(bars: pd.DataFrame, signal_bar, side, horizon, level=None, last: int | None = None,
@@ -112,17 +124,40 @@ def prepare_inputs(bars: pd.DataFrame, signal_bar, side, horizon, level=None, la
             np.ascontiguousarray(t), np.ascontiguousarray(s), np.ascontiguousarray(h), np.ascontiguousarray(lv), last)
 
 
-def simulate(op, hi, lo, t, s, h, level, last) -> dict[str, np.ndarray]:
-    """Trades d'entrées déjà contrôlées (`prepare_inputs`), sous forme de tableaux, colonnes de `TRADE_COLUMNS`."""
-    out = _simulate(op, hi, lo, t, s, h, level, last)
+def _lock(h: np.ndarray, lock) -> np.ndarray:
+    if lock is None:
+        return h
+    if int(lock) != lock or int(lock) < 1:
+        raise ValueError("run_trades : verrou entier ≥ 1 exigé")
+    return np.full(h.shape, int(lock), dtype=np.int64)
+
+
+def simulate(op, hi, lo, t, s, h, level, last, lock: int | None = None) -> dict[str, np.ndarray]:
+    """Trades d'entrées déjà contrôlées (`prepare_inputs`), sous forme de tableaux, colonnes de `TRADE_COLUMNS` ;
+    `lock` : verrou en barres (défaut : l'horizon de chaque signal, règle de D02)."""
+    out = _simulate(op, hi, lo, t, s, h, level, last, _lock(h, lock))
     return dict(zip(["signal_bar", "entry_bar", "exit_bar", "side", "entry_price", "exit_price", "stop", "gap",
                      "ret_gross_bps"], out))
 
 
-def run_trades(bars: pd.DataFrame, signal_bar, side, horizon, level=None, last: int | None = None) -> pd.DataFrame:
+def run_trades(bars: pd.DataFrame, signal_bar, side, horizon, level=None, last: int | None = None,
+               lock: int | None = None) -> pd.DataFrame:
     """`envelope.stop_trades(bars, signal_bar, side, horizon, level, dynamic=False)`, avec `horizon` scalaire ou un
-    par signal, et une fin de série `last` (défaut : dernière barre). Même tableau, mêmes types."""
+    par signal, une fin de série `last` (défaut : dernière barre) et un verrou `lock` distinct de l'horizon (défaut :
+    l'horizon). Même tableau, mêmes types."""
     args = prepare_inputs(bars, signal_bar, side, horizon, level, last)
     if not len(args[3]):
+        _lock(args[5], lock)
         return pd.DataFrame({c: pd.Series(dtype=float) for c in TRADE_COLUMNS})
-    return pd.DataFrame(simulate(*args))[TRADE_COLUMNS]
+    return pd.DataFrame(simulate(*args, lock=lock))[TRADE_COLUMNS]
+
+
+def superseded(trades: pd.DataFrame, horizon) -> np.ndarray:
+    """Trades clos par l'entrée suivante (option C) : ni stop ni sortie prévue, sortie à l'ouverture où entre le trade
+    suivant. `horizon` : scalaire ou un par trade. Une fin de série (`last`) n'est pas une coupure."""
+    tr = trades.reset_index(drop=True)
+    h = np.broadcast_to(np.asarray(horizon, dtype=np.int64), (len(tr),))
+    x = tr.exit_bar.to_numpy(dtype=np.int64)
+    nxt = np.r_[tr.entry_bar.to_numpy(dtype=np.int64)[1:], -1]
+    early = x < tr.signal_bar.to_numpy(dtype=np.int64) + 1 + h
+    return early & ~tr.stop.to_numpy(dtype=bool) & (x == nxt)

@@ -11,8 +11,9 @@ from config import ROOT
 from optimization.engine import run_trades
 from optimization.objective import is_metrics
 from optimization.universe import candidates, signal_table, window_thresholds
-from optimization.walkforward import (GRID_F, GRID_H, GRID_R0, RE1_INDEX, RE1_POINT, VARIANTS, AssetData, Params,
-                                      branch_choice, evaluate_is, oos_candidates, run_oos, variant_schedule)
+from optimization.walkforward import (GRID_F, GRID_H, GRID_R0, GRID_R0_FIN, RE1_INDEX, RE1_POINT, VARIANTS,
+                                      AssetData, Params, axis_schedule, branch_choice, evaluate_is, oos_candidates,
+                                      run_oos, variant_schedule)
 from optimization.windows import bar_span, walk_forward_windows
 from strategy import LEG_ATR_P50_BTC, NIS_Z100_P75_BTC
 
@@ -171,3 +172,74 @@ def test_une_position_a_cheval_garde_les_regles_de_son_entree(barres_synthetique
 def test_aucun_decalage_vers_le_futur_dans_optimization():
     for p in (ROOT / "src" / "optimization").glob("*.py"):
         assert "shift(-" not in Path(p).read_text(encoding="utf-8"), p.name
+
+
+# ── EXP-D02.1 : verrou fixe, seuils gelés en IS, grille fine de R0, choix séquentiel avec inertie ──────────────────
+
+def test_grille_fine_de_r0_du_porteur():
+    assert GRID_R0_FIN == (10.0, 25.0, 50.0, 75.0, 100.0, 150.0, 200.0, 300.0, 500.0)
+    assert set(GRID_R0) <= set(GRID_R0_FIN)
+
+
+def test_evaluation_is_avec_verrou_et_seuils_geles(barres_synthetiques, atlas_synthetique):
+    data = _asset(barres_synthetiques, atlas_synthetique, seed=3)
+    w = _windows(data)[0]
+    grid = ((100.0,), (6, 26, 40), (0.85,))
+    ev = evaluate_is(data, w, grid=grid, lock=26, thresholds="geles")
+    assert ev["leg_p50"][0] == LEG_ATR_P50_BTC and ev["nis_p75"][0] == NIS_Z100_P75_BTC
+    _, last = bar_span(data.bars.time, w.is_start, w.is_end)
+    t, s, lv = candidates(data.tabs[100.0], LEG_ATR_P50_BTC, NIS_Z100_P75_BTC, 0.85, w.is_start, w.is_end)
+    entrees = None
+    for j, h in enumerate(grid[1]):
+        tr = run_trades(data.bars, t, s, h, lv, last=last, lock=26)
+        m = is_metrics(tr, data.bars.close.to_numpy(), data.atr_bps, 5.0, n_years=1.0)
+        for key in ("n_trades", "esperance_atr", "calmar_r25", "mdd_r25", "pnl_r25"):
+            assert ev[key][0, j, 0] == m[key], (h, key)
+        entrees = tr.entry_bar.to_numpy() if entrees is None else entrees
+        assert np.array_equal(tr.entry_bar.to_numpy(), entrees)          # population constante
+    with pytest.raises(ValueError, match="seuils"):
+        evaluate_is(data, w, grid=grid, thresholds="historique")
+
+
+def test_calendrier_sur_un_axe_egal_aux_branches_de_d02():
+    rng = np.random.default_rng(2)
+    shape = (len(GRID_R0), len(GRID_H), len(GRID_F))
+    evs = [{"esperance_atr": rng.normal(0.1, 0.2, shape), "calmar_r25": rng.normal(0.5, 1.0, shape),
+            "mdd_r25": -rng.uniform(0.01, 0.2, shape)} for _ in range(6)]
+    i0, j0, k0 = RE1_INDEX
+    cut = {"R0": ((slice(None), slice(j0, j0 + 1), slice(k0, k0 + 1)), (GRID_R0, (26,), (0.85,)), 0, i0),
+           "H": ((slice(i0, i0 + 1), slice(None), slice(k0, k0 + 1)), ((100.0,), GRID_H, (0.85,)), 1, j0)}
+    for branch, (sl, grid, axis, ref) in cut.items():
+        sub = [{k: v[sl] for k, v in ev.items()} for ev in evs]
+        got = axis_schedule(sub, grid, axis, ref)
+        assert [p for p, _ in got] == [branch_choice(ev, branch)[0] for ev in evs], branch
+
+
+def test_calendrier_inertie_suit_la_fenetre_precedente():
+    def ev(calmar):
+        c = np.asarray(calmar, dtype=float).reshape(-1, 1, 1)
+        return {"esperance_atr": np.full(c.shape, 0.1), "calmar_r25": c, "mdd_r25": np.full(c.shape, -0.1)}
+    grid = ((10.0, 50.0, 100.0, 200.0), (26,), (0.85,))
+    evs = [ev([-1.0, -1.0, 1.0, 2.0]),     # 1re fenêtre, égalité {100, 200} : meilleur Calmar, 200
+           ev([1.0, 3.0, -1.0, -1.0]),     # égalité {10, 50} : la plus proche de 200, 50
+           ev([-1.0, -1.0, -1.0, -1.0]),   # aucune zone : 50 gardé
+           ev([2.0, 1.0, 1.0, -1.0])]      # zone {10, 50, 100} : centre 50, sans inertie
+    got = axis_schedule(evs, grid, 0, 2, inertie=True)
+    assert [p.r0 for p, _ in got] == [200.0, 50.0, 50.0, 50.0]
+    assert [i["inertie"] for _, i in got] == ["egalite", "egalite", "aucune zone", None]
+    assert [p.r0 for p, _ in axis_schedule(evs, grid, 0, 2)] == [100.0, 50.0, 100.0, 50.0]   # règle de D02
+    with pytest.raises(ValueError, match="axe"):
+        axis_schedule(evs, ((10.0, 50.0), (6, 26), (0.85,)), 0, 1)
+
+
+def test_course_hors_echantillon_avec_verrou(barres_synthetiques, atlas_synthetique):
+    data = _asset(barres_synthetiques, atlas_synthetique, seed=4)
+    ws = _windows(data)
+    sched = [Params(100.0, 60, 0.85), Params(100.0, 40, 0.85)]
+    cands = oos_candidates(data, ws, sched, "geles")
+    tr = run_oos(data, cands, lock=26)
+    t, s, h, lv, k = cands
+    ref = run_trades(data.bars, t, s, h, lv, lock=26)
+    assert tr.drop(columns="semestre").equals(ref)
+    assert tr.semestre.tolist() == pd.Series(k, index=t).reindex(ref.signal_bar.to_numpy()).tolist()
+    assert (tr.exit_bar.to_numpy()[:-1] <= tr.entry_bar.to_numpy()[1:]).all()

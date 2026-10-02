@@ -1645,3 +1645,61 @@ reproduction de résultats publiés et parité du noyau, sans aucune performance
 - [x] **NON CONCLUANT au sens du protocole : aucune valeur ajoutée démontrée du walk-forward, par actif comme
   conjointement. RE-1 inchangée.** La suite (hold-out, autre cadrage) est à décider par le porteur.
 
+
+### [DÉCISION] — Suite de D02 : RE-1 gelée gardée, WFO-R0 à creuser (2026-10-02)
+- **Décision du porteur, après lecture de D02 :** RE-1 gelée reste la piste principale ; le walk-forward de R0 est à
+  creuser ; le multi-actif est mis de côté pour le moment. Le porteur juge bons les résultats de RE-1 et de WFO-R0.
+- **Faits contraires déjà consignés** (§5 de `RESEARCH_PHILOSOPHY.md`, entrée EXP-D02) : l'écart WFO-R0 − RE-1 gelée
+  n'est pas significatif (+0,074 ATR [−0,067 ; +0,225]) et vient de 2015 et 2018 (+0,004 lu dès 2016).
+- **Relecture de l'agent sur les sorties de D02** (récapitulatif du 2026-10-02, cadrage du 2026-10-03, sans calcul) :
+  - la perte de WFO-H vient de la population de trades, pas des sorties : 138 trades du Contrôle perdus (+48,7 bps
+    en moyenne), 76 ajoutés (−16,0 bps) ; le cooldown suit H ;
+  - WFO-R0 sur BTC ne s'est jamais replié sur RE-1 (0 semestre sur 22) ; le départage vers RE-1 a tranché 12 semestres
+    (zones de 2 ou 4 cases) ; de 2022 à 2025, R0 = 100 gagne sur le Calmar IS lui-même ;
+  - sur H, la règle du centre suit la grille plus que le profil : 7 semestres sur 22 ont une zone de 23 à 28 cases et
+    un choix de 32 à 38 barres ; en 2018-S2 et 2019-S1, le meilleur Calmar IS est à H = 14 (+2,97 ; +3,96), le choix
+    à 32 (+0,42 ; +0,50) ;
+  - avec un verrou de 26 barres et H > 26, l'entrée suivante tombe avant la sortie pour 3 % (H = 28) à 42 % (H = 60)
+    des 2 075 trades de RE-1 gelée.
+- **Correction de l'agent :** dans le récapitulatif, « à partir de 2022, R0 = 100 est la seule valeur positive » est
+  inexact. C'est vrai dès le S2 2024 ; de 2022 au S1 2024, R0 = 500 (+0,09 à +0,47) et R0 = 10 (+0,38 ; +0,07) étaient
+  positifs mais isolés, et R0 = 100 avait le meilleur Calmar IS.
+
+### [EXP-D02.1] — Verrou fixe et WFO de H_exit ; WFO de R0 sur grille fine avec inertie ; stress (BTC) — cadrage validé
+- **Date :** 2026-10-03
+- **Étape :** D, D02.1. Demande du porteur (2026-10-03), cadrage de l'agent en quatre champs, arbitrages du porteur
+  (cinq points), GO pour le code, le contrôle de non-régression, D02.1a puis D02.1b. Push de 457a1ed et 8a2212e
+  autorisé (fait, origin = 8a2212e).
+- **Décision de méthode du porteur, pour tous les tests futurs (statiques ou WFO) :** le verrou (cooldown) est une
+  constante de 26 barres, distincte de l'horizon de sortie H_exit. Elle ne change rien à RE-1 ni au WFO-R0 (H = 26).
+- **Actifs & Période :** BTC/USD Bitstamp 2013-2025, panne de janvier 2015 retirée ; 22 semestres hors échantillon, du
+  S1 2015 au S2 2025 ; IS = 24 mois. 2026, ETH et XRP ne sont pas lus ; le multi-actif est mis de côté.
+- **Modèle de frais :** 5 bps aller-retour (choix en IS, lecture principale), 10 bps en stress ; 0,25 % du capital par
+  ATR14(t), levier ≤ 1x ; PnL et MDD à 1x publiés à côté.
+
+#### 0. Cadrage (validé)
+- **D02.1a — QUESTION :** à entrées identiques à celles de RE-1 gelée (verrou de 26 barres), recalibrer chaque semestre
+  l'horizon de sortie H_exit améliore-t-il le résultat ?
+  - **MÉTHODE :** RE-1 gelée (seuils BTC gelés, R0 = 100, frontière 0,85, ses 2 075 entrées) ; H_exit de 6 à 60 au
+    pas de 2 ; option C du porteur : si H_exit > 26 et qu'une entrée survient alors que le trade précédent est ouvert,
+    elle clôt la position (une position, levier ≤ 1x) ; choix par semestre avec la règle de D02 inchangée (centre de la
+    plus grande zone à Calmar > 0, égalités et repli vers H = 26), pour isoler l'effet du verrou ; annexe : effet trade
+    par trade sans la coupure (entrées figées, I-M16).
+- **D02.1b — QUESTION :** avec 9 valeurs de R0 et l'inertie à la place du départage vers RE-1, que deviennent
+  l'espérance nette et le profil de risque du WFO-R0 ?
+  - **MÉTHODE :** WFO-R0 de D02 à l'identique (H = 26, verrou 26, frontière 0,85, seuils réestimés sur chaque IS et
+    pour chaque R0), grille {10, 25, 50, 75, 100, 150, 200, 300, 500} (centre en rang de grille) ; inertie : égalité au
+    centre → la case la plus proche du R0 de la fenêtre précédente (première fenêtre : meilleur Calmar IS) ; aucune
+    zone → R0 précédent (première fenêtre : meilleur Calmar IS défini). Décomposition 2 × 2 (grille 5 / 9 × règle de D02
+    / inertie) ; candidate = grille 9 avec inertie, les trois autres cases servent seulement à attribuer l'écart.
+- **Stress (porteur : pour toutes les séries et tous les comparateurs) :** 10 bps ; retrait du 1 % meilleur (⌈1 % · n⌉
+  trades, classés par rendement net en ATR, chaque série retire les siens) ; les deux combinés.
+- **CRITÈRE DE LECTURE (sans seuil) :** 8 métriques à 0,25 %/ATR et à 1x ; écarts appariés par mois avec RE-1 gelée et
+  les séries de D02 (espérance en ATR et en bps avec IC, rendement, MDD et Calmar sur chemins réordonnés ; règle
+  « surpasse » de D02 rapportée) ; effet trade par trade à entrées égales ; paramètres choisis et cartes IS ; périodes
+  2015-2019 et 2020-2025 ; médiane, moyenne, décile supérieur.
+- **Contrôle de non-régression (bloquant, avant tout résultat) :** données ; Gate 0 de D02 repassé sur BTC 2020-2025 ;
+  D02 reproduit avec le verrou par défaut (cartes IS, choix, séries RE-1 gelée, Contrôle, WFO-R0, WFO-H) ; verrou ≥ H
+  identique à `envelope.lock_trades` (D01.6) ; entrées constantes à chaque H de la grille avec le verrou de 26.
+- **Code :** `optimization.engine` (`lock`, option C, `superseded`), `selection.select_plateau` (inertie),
+  `walkforward` (`GRID_R0_FIN`, `axis_schedule`, verrou et seuils gelés en IS), `compare.drop_best` ; 321 tests.

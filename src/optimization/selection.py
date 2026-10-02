@@ -11,6 +11,11 @@ Règle retenue par le porteur (second GO, 2026-10-01), `select_plateau` :
   lexicographique ; aucune case candidate : repli sur la référence (paramètres de RE-1, seuils de la fenêtre).
 - Pas de bord fictif : rien n'est supposé au-delà de la grille (l'option « voisin absent = 0 » a été rejetée).
 
+Inertie (EXP-D02.1, porteur, 2026-10-03 ; `inertie=True`, `prev` = case choisie à la fenêtre précédente) : à égalité
+sur le centre de la zone, la case la plus proche (L1) de `prev`, puis la règle ci-dessus ; sans `prev` (première
+fenêtre), celle de meilleur Calmar IS. Aucune zone : `prev` (repli), ou, à la première fenêtre, la case de meilleur
+Calmar IS défini, même négatif. La référence RE-1 ne sert plus qu'aux égalités résiduelles.
+
 Lecture littérale du score de voisinage (`neighbour_mean`, `select`), non retenue : moyenne du Calmar de la case et de
 ses voisins immédiats existants, Calmar indéfini compté 0 ; elle favorise une case de bord, moins entourée.
 """
@@ -88,22 +93,41 @@ def plateau_zones(mask) -> list[np.ndarray]:
     return zones
 
 
-def select_plateau(esperance, calmar, mdd, ref) -> tuple[tuple[int, ...], dict]:
-    """Règle retenue : centre de la plus grande zone connexe de cases admissibles à Calmar net > 0."""
+def select_plateau(esperance, calmar, mdd, ref, prev=None, inertie: bool = False) -> tuple[tuple[int, ...], dict]:
+    """Règle retenue : centre de la plus grande zone connexe de cases admissibles à Calmar net > 0 ; `inertie` :
+    égalités au centre et absence de zone tranchées par la case précédente `prev` (en-tête du module)."""
     e, c, m = (np.asarray(x, dtype=float) for x in (esperance, calmar, mdd))
     ref = tuple(int(i) for i in ref)
     with np.errstate(invalid="ignore"):
         ok = _admissible(e, c, m) & (c > 0)
     zones = plateau_zones(ok)
     if not zones:
-        return ref, {"repli": True, "zone": 0, "n_zones": 0, "n_candidates": 0, "centre": None,
-                     "calmar_zone": np.nan}
+        info = {"repli": True, "zone": 0, "n_zones": 0, "n_candidates": 0, "centre": None, "calmar_zone": np.nan,
+                "inertie": "aucune zone" if inertie else None}
+        if not inertie:
+            return ref, info
+        if prev is not None:
+            return tuple(int(i) for i in prev), info
+        fin = np.isfinite(c)
+        if not fin.any():
+            return ref, info
+        return tuple(int(i) for i in _closest(np.argwhere(fin & (c == c[fin].max())), ref)), info
     means = [float(np.mean(c[tuple(z.T)])) for z in zones]
     best = min(range(len(zones)), key=lambda i: (-len(zones[i]), -means[i], tuple(zones[i][0])))
     z = zones[best]
     centre = z.mean(axis=0)
     d2 = ((z - centre) ** 2).sum(axis=1)
-    pick = _closest(z[d2 <= d2.min() + 1e-12], ref)
+    tied = z[d2 <= d2.min() + 1e-12]
+    rule = None
+    if inertie and len(tied) > 1:
+        rule = "egalite"
+        if prev is None:
+            cv = c[tuple(tied.T)]
+            tied = tied[cv == cv.max()]
+        else:
+            dist = np.abs(tied - np.asarray(prev)).sum(axis=1)
+            tied = tied[dist == dist.min()]
+    pick = _closest(tied, ref)
     return tuple(int(i) for i in pick), {"repli": False, "zone": int(len(z)), "n_zones": len(zones),
                                          "n_candidates": int(ok.sum()), "centre": [float(x) for x in centre],
-                                         "calmar_zone": means[best]}
+                                         "calmar_zone": means[best], "inertie": rule}
