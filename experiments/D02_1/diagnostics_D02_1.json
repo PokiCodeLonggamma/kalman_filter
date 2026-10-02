@@ -1,0 +1,457 @@
+{
+ "donnees": {
+  "panne_barres_retirees": 215,
+  "atlas_s": {
+   "10": 14.0,
+   "25": 12.6,
+   "50": 12.6,
+   "75": 12.4,
+   "100": 12.5,
+   "150": 12.5,
+   "200": 12.5,
+   "300": 12.4,
+   "500": 12.5
+  },
+  "signaux_R0_10": 12588,
+  "signaux_R0_25": 15558,
+  "signaux_R0_50": 16355,
+  "signaux_R0_75": 16155,
+  "signaux_R0_100": 15819,
+  "signaux_R0_150": 15047,
+  "signaux_R0_200": 14424,
+  "signaux_R0_300": 13581,
+  "signaux_R0_500": 12380,
+  "barres": 227689,
+  "premiere": "2013-01-01 00:00:00+00:00",
+  "derniere": "2025-12-31 23:30:00+00:00",
+  "evaluations_is": 1430,
+  "grille_s": 0.4
+ },
+ "D02_1a": {
+  "effets_trade_par_trade": {
+   "2015-2025": {
+    "trades": 2075,
+    "avec_coupure": {
+     "effet_bps": -0.15497896992712704,
+     "effet_bps_lo": -4.917301285389659,
+     "effet_bps_hi": 4.651430627884142,
+     "effet_atr": 0.028600712588162568,
+     "effet_atr_lo": -0.0753735098242069,
+     "effet_atr_hi": 0.1393884371985597
+    },
+    "sans_coupure": {
+     "effet_bps": -0.13105448827167612,
+     "effet_bps_lo": -5.417125090356534,
+     "effet_bps_hi": 4.940631106783127,
+     "effet_atr": 0.03535132008072368,
+     "effet_atr_lo": -0.07058522160103674,
+     "effet_atr_hi": 0.14679372094162896
+    }
+   },
+   "2015-2019": {
+    "trades": 988,
+    "avec_coupure": {
+     "effet_bps": -0.5815488433641329,
+     "effet_bps_lo": -9.665689409110987,
+     "effet_bps_hi": 8.104656483230618,
+     "effet_atr": 0.005237040945200616,
+     "effet_atr_lo": -0.16865315068755696,
+     "effet_atr_hi": 0.18164290563459404
+    },
+    "sans_coupure": {
+     "effet_bps": -0.6036357517173248,
+     "effet_bps_lo": -10.815617043928926,
+     "effet_bps_hi": 8.93696560397204,
+     "effet_atr": 0.017613750397709835,
+     "effet_atr_lo": -0.15931068136019869,
+     "effet_atr_hi": 0.19003673737587012
+    }
+   },
+   "2020-2025": {
+    "trades": 1087,
+    "avec_coupure": {
+     "effet_bps": 0.23274047345443763,
+     "effet_bps_lo": -4.359860957077761,
+     "effet_bps_hi": 4.6433449149002675,
+     "effet_atr": 0.0498365061330075,
+     "effet_atr_lo": -0.0845486519138955,
+     "effet_atr_hi": 0.18325589229683925
+    },
+    "sans_coupure": {
+     "effet_bps": 0.2984857953385348,
+     "effet_bps_lo": -4.214215385150013,
+     "effet_bps_hi": 4.626997629565349,
+     "effet_atr": 0.051473416535937754,
+     "effet_atr_lo": -0.07949519336105193,
+     "effet_atr_hi": 0.18885832528220234
+    }
+   }
+  },
+  "part_coupee": 0.06602409638554217,
+  "coupes": 137,
+  "part_coupee_si_H_sup_26": 0.10148148148148148,
+  "h_moyen": 31.930602409638553,
+  "part_h_26": 0.3493975903614458,
+  "profil_H_fixe": [
+   {
+    "H": 6,
+    "trades": 2075,
+    "part_coupee": 0.0,
+    "part_stop": 0.08385542168674699,
+    "esperance_atr_5bps": -0.08235382590055333
+   },
+   {
+    "H": 8,
+    "trades": 2075,
+    "part_coupee": 0.0,
+    "part_stop": 0.10554216867469879,
+    "esperance_atr_5bps": -0.018315596600544066
+   },
+   {
+    "H": 10,
+    "trades": 2075,
+    "part_coupee": 0.0,
+    "part_stop": 0.1306024096385542,
+    "esperance_atr_5bps": 0.0634302044546855
+   },
+   {
+    "H": 12,
+    "trades": 2075,
+    "part_coupee": 0.0,
+    "part_stop": 0.15373493975903615,
+    "esperance_atr_5bps": 0.07173668672084581
+   },
+   {
+    "H": 14,
+    "trades": 2075,
+    "part_coupee": 0.0,
+    "part_stop": 0.16963855421686747,
+    "esperance_atr_5bps": 0.10568208606520206
+   },
+   {
+    "H": 16,
+    "trades": 2075,
+    "part_coupee": 0.0,
+    "part_stop": 0.18409638554216867,
+    "esperance_atr_5bps": 0.13381658982236022
+   },
+   {
+    "H": 18,
+    "trades": 2075,
+    "part_coupee": 0.0,
+    "part_stop": 0.19518072289156627,
+    "esperance_atr_5bps": 0.14497534305252838
+   },
+   {
+    "H": 20,
+    "trades": 2075,
+    "part_coupee": 0.0,
+    "part_stop": 0.20626506024096386,
+    "esperance_atr_5bps": 0.14845766509052638
+   },
+   {
+    "H": 22,
+    "trades": 2075,
+    "part_coupee": 0.0,
+    "part_stop": 0.21349397590361446,
+    "esperance_atr_5bps": 0.18352019975436315
+   },
+   {
+    "H": 24,
+    "trades": 2075,
+    "part_coupee": 0.0,
+    "part_stop": 0.22313253012048193,
+    "esperance_atr_5bps": 0.2017654258639427
+   },
+   {
+    "H": 26,
+    "trades": 2075,
+    "part_coupee": 0.0,
+    "part_stop": 0.23036144578313253,
+    "esperance_atr_5bps": 0.2175181129099898
+   },
+   {
+    "H": 28,
+    "trades": 2075,
+    "part_coupee": 0.026024096385542168,
+    "part_stop": 0.24048192771084337,
+    "esperance_atr_5bps": 0.23580586968463604
+   },
+   {
+    "H": 30,
+    "trades": 2075,
+    "part_coupee": 0.047228915662650604,
+    "part_stop": 0.2457831325301205,
+    "esperance_atr_5bps": 0.24984299635752472
+   },
+   {
+    "H": 32,
+    "trades": 2075,
+    "part_coupee": 0.07373493975903614,
+    "part_stop": 0.25060240963855424,
+    "esperance_atr_5bps": 0.2336165384629762
+   },
+   {
+    "H": 34,
+    "trades": 2075,
+    "part_coupee": 0.09542168674698795,
+    "part_stop": 0.25734939759036146,
+    "esperance_atr_5bps": 0.2235830583552695
+   },
+   {
+    "H": 36,
+    "trades": 2075,
+    "part_coupee": 0.12144578313253013,
+    "part_stop": 0.2597590361445783,
+    "esperance_atr_5bps": 0.23584751044518812
+   },
+   {
+    "H": 38,
+    "trades": 2075,
+    "part_coupee": 0.13349397590361445,
+    "part_stop": 0.2612048192771084,
+    "esperance_atr_5bps": 0.3177352246863774
+   },
+   {
+    "H": 40,
+    "trades": 2075,
+    "part_coupee": 0.1508433734939759,
+    "part_stop": 0.26313253012048193,
+    "esperance_atr_5bps": 0.34176296733240896
+   },
+   {
+    "H": 42,
+    "trades": 2075,
+    "part_coupee": 0.17204819277108432,
+    "part_stop": 0.26506024096385544,
+    "esperance_atr_5bps": 0.3302728557785958
+   },
+   {
+    "H": 44,
+    "trades": 2075,
+    "part_coupee": 0.19325301204819278,
+    "part_stop": 0.26795180722891565,
+    "esperance_atr_5bps": 0.3269647933034603
+   },
+   {
+    "H": 46,
+    "trades": 2075,
+    "part_coupee": 0.2125301204819277,
+    "part_stop": 0.27036144578313254,
+    "esperance_atr_5bps": 0.29489812824316464
+   },
+   {
+    "H": 48,
+    "trades": 2075,
+    "part_coupee": 0.2274698795180723,
+    "part_stop": 0.2708433734939759,
+    "esperance_atr_5bps": 0.2877583713371809
+   },
+   {
+    "H": 50,
+    "trades": 2075,
+    "part_coupee": 0.24481927710843374,
+    "part_stop": 0.2727710843373494,
+    "esperance_atr_5bps": 0.28255717595052804
+   },
+   {
+    "H": 52,
+    "trades": 2075,
+    "part_coupee": 0.2597590361445783,
+    "part_stop": 0.27566265060240963,
+    "esperance_atr_5bps": 0.2501859430965963
+   },
+   {
+    "H": 54,
+    "trades": 2075,
+    "part_coupee": 0.27518072289156625,
+    "part_stop": 0.27710843373493976,
+    "esperance_atr_5bps": 0.2674404118113611
+   },
+   {
+    "H": 56,
+    "trades": 2075,
+    "part_coupee": 0.28771084337349395,
+    "part_stop": 0.27951807228915665,
+    "esperance_atr_5bps": 0.25401726368449695
+   },
+   {
+    "H": 58,
+    "trades": 2075,
+    "part_coupee": 0.2978313253012048,
+    "part_stop": 0.2809638554216867,
+    "esperance_atr_5bps": 0.2745940501918877
+   },
+   {
+    "H": 60,
+    "trades": 2075,
+    "part_coupee": 0.31180722891566265,
+    "part_stop": 0.2814457831325301,
+    "esperance_atr_5bps": 0.2812689725631021
+   }
+  ],
+  "chemin_H": [
+   26,
+   26,
+   26,
+   26,
+   26,
+   48,
+   34,
+   32,
+   34,
+   34,
+   36,
+   36,
+   28,
+   26,
+   26,
+   34,
+   34,
+   38,
+   36,
+   34,
+   34,
+   34
+  ],
+  "replis": 5,
+  "zone_axe_entier": 1,
+  "zone_23_et_plus": 10
+ },
+ "D02_1b": {
+  "WFO-R0 (D02)": {
+   "chemin_R0": [
+    200.0,
+    200.0,
+    200.0,
+    200.0,
+    200.0,
+    50.0,
+    50.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0
+   ],
+   "replis": 0,
+   "egalites_tranchees_par_inertie": 0,
+   "aucune_zone_inertie": 0,
+   "egalites_paires": 12,
+   "semestres_R0_100": 15
+  },
+  "WFO-R0 grille 5 inertie": {
+   "chemin_R0": [
+    200.0,
+    200.0,
+    200.0,
+    200.0,
+    200.0,
+    50.0,
+    50.0,
+    50.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0
+   ],
+   "replis": 0,
+   "egalites_tranchees_par_inertie": 12,
+   "aucune_zone_inertie": 0,
+   "egalites_paires": 12,
+   "semestres_R0_100": 14
+  },
+  "WFO-R0 grille 9": {
+   "chemin_R0": [
+    200.0,
+    200.0,
+    200.0,
+    300.0,
+    300.0,
+    25.0,
+    25.0,
+    75.0,
+    150.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    50.0,
+    100.0,
+    25.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0
+   ],
+   "replis": 0,
+   "egalites_tranchees_par_inertie": 0,
+   "aucune_zone_inertie": 0,
+   "egalites_paires": 10,
+   "semestres_R0_100": 11
+  },
+  "WFO-R0 grille 9 inertie": {
+   "chemin_R0": [
+    200.0,
+    200.0,
+    200.0,
+    300.0,
+    300.0,
+    25.0,
+    25.0,
+    75.0,
+    150.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    50.0,
+    75.0,
+    25.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0
+   ],
+   "replis": 0,
+   "egalites_tranchees_par_inertie": 10,
+   "aucune_zone_inertie": 0,
+   "egalites_paires": 10,
+   "semestres_R0_100": 10
+  }
+ },
+ "trades": {
+  "RE-1 gelée": 2075,
+  "Contrôle": 1909,
+  "WFO-H (D02)": 1847,
+  "WFO-R0 (D02)": 1836,
+  "WFO-H_exit verrou 26": 2075,
+  "WFO-R0 grille 5 inertie": 1867,
+  "WFO-R0 grille 9": 1855,
+  "WFO-R0 grille 9 inertie": 1859
+ }
+}

@@ -161,6 +161,7 @@ Elle se mesure séparément par sens et par type de signal (rang 1 ou répétiti
 - À dimensionnement égal (0,25 % par ATR14 de 30 min), le risque par trade croît avec H : MDD de l'or −13,6 % à H = 26, −41,6 % à H = 130. Comparer des H au Calmar suppose de fixer cette convention.
 - **Verrouillage découplé de la sortie (EXP-D01.6).** À sortie fixe (26 barres), faire varier le verrouillage (26 à 90) donne un zigzag sans tendance sur SPY et XLE : chaque valeur retire un paquet de trades différent, valant de −0,75 à +0,87 ATR. Les trades sautés ne se distinguent à t que par leur délai depuis le trade précédent. Le verrouillage est un sélecteur de calendrier, pas un paramètre à optimiser.
 - **Recalibrage de H (EXP-D02).** Sur BTC 2015-2025, H réoptimisé chaque semestre perd −0,174 ATR [−0,276 ; −0,074] face à H = 26 en séquentiel, mais −0,008 [−0,121 ; +0,116] sur les entrées figées du Contrôle : la perte est un effet de calendrier, pas de sortie.
+- **Verrou fixe (EXP-D02.1, décision du porteur : 26 barres pour tous les tests).** Les 2 075 entrées de RE-1 gelée restent identiques pour tout H ; au-delà de 26, l'entrée suivante clôt la position (option C). Le WFO de H_exit regagne +0,227 ATR [+0,090 ; +0,365] sur celui de D02, mais ne fait pas mieux que H = 26 : +0,029 [−0,075 ; +0,139]. Le verrou supprime l'effet de calendrier ; il ne révèle aucune valeur des sorties.
 
 ### I-M18 — Un choix « au centre du plateau » dépend de la géométrie de la grille `[MÉTHODE]` `[OBS]`
 *Source : EXP-D02 (règle du porteur : centre de la plus grande zone connexe à Calmar net > 0).*
@@ -168,6 +169,14 @@ Elle se mesure séparément par sens et par type de signal (rang 1 ou répétiti
 - En trois dimensions (R0 sur 5 rangs, H sur 28 pas, frontière sur 5 pas), les zones retenues couvrent souvent une grande part de la grille : de 107 à 559 cases sur 700 sur BTC (médiane 280). Leur centre retombe alors près du centre de la grille (H de 30 à 44 sur BTC), quel que soit le marché.
 - Sur un axe entièrement positif, le centre est le milieu de l'axe : la frontière tombe sur 0,85, milieu de 0,75-0,95, par construction.
 - **Règle :** publier la taille des zones avec le choix, et lire ce choix au regard des bornes de la grille. Un choix au centre d'une très grande zone ne mesure pas le marché ; il reflète les bornes posées.
+- **À entrées constantes (EXP-D02.1),** le profil de H se lisse : 10 semestres sur 22 ont une zone de 23 à 28 cases sur 28 (7 en D02), et le choix tombe à 32-38, alors que le meilleur Calmar IS était à 14-16 (2018-2019), 40-42 (2020, 2024) ou 22 (2025).
+
+### I-M19 — Un départage vers le point de référence transporte l'information de sa période de construction `[MÉTHODE]` `[OBS]`
+*Source : EXP-D02.1 (WFO de R0, règle de D02 contre inertie).*
+
+- En D02, les égalités au centre d'une zone étaient tranchées vers le point de RE-1 (R0 = 100), autour duquel RE-1 a été construite sur BTC 2020-2025. Sur la grille {10, 50, 100, 200, 500}, ce départage a joué 12 semestres sur 22.
+- Avec l'inertie (case la plus proche du choix précédent), un seul choix change : 2018-S2, R0 = 50 au lieu de 100. 2018 passe de +0,482 à −0,160 ATR, et toute l'avance du WFO-R0 de D02 disparaît (−0,065 [−0,155 ; −0,002]).
+- **Règle :** un walk-forward qui se replie ou départage vers la configuration de référence hérite de l'information de sa période de construction. Lire son avance au regard des semestres tranchés par ce départage, et tester une règle neutre à côté.
 
 ---
 
@@ -301,6 +310,20 @@ porteur).*
 - `[HYP]` La cinématique que RE-1 exploite change de réglage optimal entre les deux époques de BTC (marché spot étroit,
   puis marché à dérivés et ETF). Un recalibrage sur 24 mois réagit trop tard, ou par hasard ; la valeur ajoutée du
   walk-forward n'est pas démontrée avec ce protocole.
+
+### K14 — L'avantage de RE-1 tient à environ deux grands gagnants par an : des expansions de volatilité nées d'états calmes
+*Source : EXP-D02.1 (stress du porteur, BTC 2015-2025, 5 bps).*
+
+- `[OBS]` Les 21 meilleurs trades de RE-1 gelée (1 % de 2 075) font 84 % de la somme nette en ATR et 91 % de la croissance
+  log du capital à 0,25 %/ATR. Les 5 % meilleurs font 266 % du total, les 10 % meilleurs 409 % : le reste perd environ
+  trois fois le résultat final. Le trade médian perd 0,43 ATR.
+- `[OBS]` Ces 21 trades sont des mouvements de +196 à +961 bps bruts, ouverts quand l'ATR était bas (32 bps en moyenne,
+  contre 57), sans stop touché ; 6 sont plafonnés à 1x. Ils sont répartis sur 10 des 11 années (aucun en 2020).
+- `[OBS]` Sans eux, RE-1 gelée fait +0,035 ATR [−0,128 ; +0,199] et +9 % au lieu de +159 % ; à 10 bps en plus, −0,089.
+  Toutes les séries de D02 et de D02.1 suivent le même schéma.
+- `[HYP]` RE-1 récolte des expansions de volatilité qui partent d'états calmes. Sa robustesse dépend de leur fréquence et
+  de leur taille, pas du trade moyen ; les frais et la perte de quelques grands gagnants s'additionnent jusqu'à
+  l'effacer.
 
 ---
 
@@ -487,3 +510,4 @@ L'atlas A01 soutient cette lecture à travers le ratio de retracement `retrace_r
 13. L'inversion F2b / F3 de l'or (F2b Short −0,70, F3 Long +0,55) tient-elle à la hausse séculaire de 2020-2025 (dérive +0,38 ATR) ou à la microstructure d'un CFD ? Non testé.
 14. ~~WTI : quelle source pour 2020-2025 ?~~ **Tranché par le porteur (2026-09-30)** : WTI retiré de D01, remplacé par l'ETF XLE (corrélation quotidienne 0,46 avec le spot WTI, 0,60 avec SPY).
 15. Sur une série en séances, H doit-il se compter en barres ou en temps, et faut-il sortir avant la nuit ? D01 bis montre des trades traversant deux nuits, les gaps pesant 35 à 47 % de leur amplitude. Question pour D02, à cadrer : H est l'un des deux paramètres autorisés. **Mesuré (EXP-D01.5) :** H = 13 traverse encore une nuit (91 % des trades) ; H = 6 réduit l'exposition de moitié, mais la composante en séance est ≈ 0 (SPY) ou négative (XLE) : sortir avant la nuit ne créerait pas d'espérance (K9). **Mesuré (EXP-D01.6) :** la sortie de fin de séance donne un net de −0,04 (SPY) et −0,17 ATR (XLE), sans IC > 0, avec un MDD divisé par deux (K10).
+16. La queue droite de RE-1 (21 trades, 1 %, font 84 % de l'espérance en ATR ; ouverts à ATR bas, K14) se laisse-t-elle cibler à t, ou seulement attendre ? Non testé ; à décrire avant toute règle, sans apprentissage.

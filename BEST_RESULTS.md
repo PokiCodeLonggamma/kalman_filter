@@ -263,6 +263,24 @@ WFO n'est retenu face à son Statique ; RE-1 inchangée.*
   de l'horizon est nul (calendrier, I-M16).
 - **10 bps :** plus aucun IC > 0 sur BTC (RE-1 gelée +0,093, WFO-R0 +0,165).
 
+### EXP-D02.1 — verrou fixe et WFO de H_exit ; WFO de R0 sur grille fine avec inertie ; stress (BTC 2015-2025)
+*Verrou de 26 barres (option C : l'entrée suivante clôt la position), règle de D02 pour H ; inertie et grille de 9 valeurs
+pour R0. Verdict : aucune des deux modifications ne surpasse RE-1 gelée ; RE-1 inchangée.*
+
+| Série (5 bps) | Espérance ATR [IC] | Brut ; frais (ATR) | PnL : 0,25 %/ATR ; 1x | MDD : 0,25 %/ATR ; 1x | Calmar | Trades |
+|---|---|---|---|---|---|---|
+| RE-1 gelée | +0,218 [+0,032 ; +0,401] | +0,34 ; 0,12 | +159 % ; +396 % | −28,4 % ; −53,0 % | 0,32 | 2 075 |
+| WFO-H_exit verrou 26 | +0,246 [+0,028 ; +0,467] | +0,37 ; 0,12 | +173 % ; +335 % | −28,4 % ; −53,0 % | 0,34 | 2 075 |
+| WFO-R0 grille 9 inertie | +0,253 [+0,035 ; +0,465] | +0,38 ; 0,13 | +168 % ; +441 % | −35,7 % ; −56,3 % | 0,26 | 1 859 |
+| WFO-R0 (D02) | +0,291 [+0,088 ; +0,499] | +0,42 ; 0,13 | +214 % ; +478 % | −15,8 % ; −40,6 % | 0,69 | 1 836 |
+
+- **Verrou fixe :** il répare le WFO-H (+0,227 ATR [+0,090 ; +0,365] face à celui de D02), mais les sorties choisies
+  n'ont aucun effet sur les mêmes entrées (+0,029 [−0,075 ; +0,139]).
+- **WFO-R0 de D02 :** son avance tenait au départage de 2018-S2 vers R0 = 100 ; avec l'inertie, −0,065 ATR [−0,155 ;
+  −0,002].
+- **Stress :** sans le 1 % meilleur (21 trades), RE-1 gelée fait +0,035 ATR [−0,128 ; +0,199] et +9 %. À 10 bps et sans
+  le 1 % meilleur, toutes les séries sont négatives.
+
 ## Pistes écartées (à ne pas retester sans élément nouveau)
 
 | Piste | Raison | Source |

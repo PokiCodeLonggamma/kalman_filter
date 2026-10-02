@@ -1,0 +1,99 @@
+{
+ "date": "2026-10-02 23:26 UTC",
+ "commit": "466d767",
+ "G1": {
+  "sha256": "fa38b1796e9ee0db",
+  "derniere_barre": "2025-12-31 23:30:00+00:00",
+  "panne_barres": 215,
+  "semestres": 22,
+  "premier_oos": "2015-01-01"
+ },
+ "G2": {
+  "c02bis": {
+   "ancre": {
+    "sans_stop": {
+     "n_trades": 6037,
+     "n_stops": 0
+    },
+    "stop_2_5": {
+     "n_trades": 6589,
+     "n_stops": 780
+    }
+   },
+   "trades": 1080,
+   "identiques_c02bis": true,
+   "metriques_comparees": 40,
+   "ecart_relatif_max": 4.493512022106744e-06
+  },
+  "identite": {
+   "trades": 1080,
+   "reference": 1080,
+   "manquants": 0,
+   "fantomes": 0,
+   "identiques": true
+  },
+  "metriques_c02bis": {
+   "5": {
+    "colonnes": [
+     "pnl_compose",
+     "pnl_compose_r25",
+     "esperance_atr",
+     "esperance_bps",
+     "n_trades",
+     "mdd_valorise",
+     "mdd_valorise_r25",
+     "calmar_r25"
+    ],
+    "ecart_relatif_max": 3.106852972767366e-06
+   },
+   "10": {
+    "colonnes": [
+     "pnl_compose",
+     "pnl_compose_r25",
+     "esperance_atr",
+     "esperance_bps",
+     "n_trades",
+     "mdd_valorise",
+     "mdd_valorise_r25",
+     "calmar_r25"
+    ],
+    "ecart_relatif_max": 2.088358199388966e-06
+   }
+  },
+  "seuils_2020_2025": {
+   "leg_atr_p50": 2.823322693433984,
+   "nis_z_100_p75": 1.2245041356145911,
+   "signaux": 7296,
+   "egaux_aux_geles": true
+  },
+  "objectif": {
+   "ecart_relatif_max": 0.0,
+   "detail": {
+    "pnl_r25": 0.0,
+    "mdd_r25": 0.0,
+    "calmar_r25": 0.0,
+    "esperance_atr": 0.0,
+    "n_trades": 0.0
+   }
+  }
+ },
+ "G3": {
+  "cartes": "22 semestres × (5 R0 + 28 H) cases identiques au bit près",
+  "choix_R0": "identiques",
+  "choix_H": "identiques",
+  "serie_RE-1 gelée": "2075 trades identiques",
+  "serie_Contrôle": "1909 trades identiques",
+  "serie_WFO-R0": "1836 trades identiques",
+  "serie_WFO-H": "1847 trades identiques"
+ },
+ "G4": {
+  "H_6": "2075 trades identiques à lock_trades",
+  "H_16": "2075 trades identiques à lock_trades",
+  "H_26": "2075 trades identiques à lock_trades"
+ },
+ "G5": {
+  "entrees_constantes": "2 075 entrées identiques pour les 28 valeurs de H"
+ },
+ "duree_s": 174,
+ "comparaisons": 96
+}

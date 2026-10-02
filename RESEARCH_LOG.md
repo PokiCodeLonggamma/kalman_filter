@@ -1703,3 +1703,34 @@ reproduction de résultats publiés et parité du noyau, sans aucune performance
   identique à `envelope.lock_trades` (D01.6) ; entrées constantes à chaque H de la grille avec le verrou de 26.
 - **Code :** `optimization.engine` (`lock`, option C, `superseded`), `selection.select_plateau` (inertie),
   `walkforward` (`GRID_R0_FIN`, `axis_schedule`, verrou et seuils gelés en IS), `compare.drop_best` ; 321 tests.
+
+#### Résultats (BTC 2015-2025, 5 bps sauf mention ; `experiments/D02_1/rapport_D02_1.md`)
+- **Contrôle de non-régression passé** (174 s, commit 466d767) : données ; 1 080 trades de RE-1 ; D02 reproduit au bit
+  près avec le verrou par défaut (cartes IS, choix, séries RE-1 gelée, Contrôle, WFO-R0, WFO-H) ; verrou ≥ H identique
+  à `lock_trades` ; 2 075 entrées identiques pour les 28 valeurs de H avec le verrou de 26.
+- [OBS] **D02.1a :** WFO-H_exit +0,246 ATR [+0,028 ; +0,467], +10,0 bps, PnL +173 % (1x +335 %), MDD −28,4 % (1x −53,0 %).
+  - face à RE-1 gelée : +0,029 ATR [−0,075 ; +0,139], −0,2 bps [−4,9 ; +4,7] ; même écart trade par trade, +0,035 sans
+    la coupure de l'option C ;
+  - face au WFO-H de D02 : +0,227 [+0,090 ; +0,365], règle « surpasse » remplie ;
+  - H choisi : 26 pendant 5 semestres (replis), puis de 26 à 48, surtout 32 à 38 ; 10 semestres sur 22 ont une zone de
+    23 à 28 cases (I-M18) ; 137 trades (6,6 %) clos par l'entrée suivante.
+- [OBS] **D02.1b :** grille 9 avec inertie +0,253 ATR [+0,035 ; +0,465], PnL +168 % (1x +441 %), MDD −35,7 % (1x −56,3 %),
+  Calmar 0,26.
+  - face à RE-1 gelée : +0,036 [−0,151 ; +0,236] ; face au WFO-R0 de D02 : −0,038 [−0,209 ; +0,130], MDD −19,7 points ;
+  - 2015-2019 : +0,304 (RE-1 gelée +0,064, WFO-R0 de D02 +0,205) ; 2020-2025 : +0,216 (RE-1 gelée +0,357) ;
+  - 2022 : −0,562 ATR, −24,1 % (R0 = 50, 75 puis 25).
+- [OBS] **Décomposition :** l'inertie sur la grille 5 ne change que 2018-S2 (50 au lieu de 100) et coûte −0,065 ATR
+  [−0,155 ; −0,002] (2018 : −0,160 contre +0,482). Grille 9 face à grille 5 : −0,019 [−0,186 ; +0,145] ; inertie sur la
+  grille 9 : −0,019 [−0,063 ; +0,016].
+- [OBS] **Stress (toutes les séries) :** à 10 bps, aucun IC > 0. Sans le 1 % meilleur, RE-1 gelée fait +0,035 ATR
+  [−0,128 ; +0,199] et +9 %, et toutes les séries tombent entre −0,17 et +0,10 ATR. Les deux combinés : toutes négatives
+  (RE-1 gelée −0,089).
+- [OBS] **Queue de RE-1 gelée :** 21 trades (1 %) font 84 % de la somme nette en ATR et 91 % de la croissance log du
+  capital. Ouverts à ATR bas (32 bps contre 57), aucun stoppé, répartis sur 10 des 11 années (K14).
+- [HYP] Les sorties ne portent pas l'avantage. R0 se choisit mal sur 24 mois, et l'avance du WFO-R0 de D02 tenait à un
+  départage vers le point de RE-1 (I-M19). RE-1 récolte des expansions de volatilité nées d'états calmes.
+
+#### Décision
+- [ ] **VALIDÉ**
+- [x] **NON CONCLUANT : aucune des deux modifications ne surpasse RE-1 gelée (règle de D02). RE-1 gelée reste la
+  référence ; le verrou fixe de 26 barres devient la convention, sans effet sur RE-1.** Suite à décider par le porteur.
