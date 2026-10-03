@@ -1734,3 +1734,64 @@ reproduction de résultats publiés et parité du noyau, sans aucune performance
 - [ ] **VALIDÉ**
 - [x] **NON CONCLUANT : aucune des deux modifications ne surpasse RE-1 gelée (règle de D02). RE-1 gelée reste la
   référence ; le verrou fixe de 26 barres devient la convention, sans effet sur RE-1.** Suite à décider par le porteur.
+
+### [DÉCISION] — Fin du walk-forward ; RE-1 gelée version finale du moteur ; exploitation en fonds propres (2026-10-03)
+- **Décisions du porteur, après lecture de D02.1 :** le walk-forward est définitivement abandonné ; RE-1 gelée est
+  déclarée version finale du moteur ; le projet bascule sur l'exploitation en fonds propres, où l'on accepte l'usure du
+  trade médian (−0,43 ATR) pour capter la queue droite. Dernier levier visé : filtrer le bruit d'usure sans amputer la
+  queue droite (EXP-D03). Push de 466d767 et 8350415 autorisé (fait, origin = 8350415).
+
+### [EXP-D03] — Profilage des extrêmes, filtre de compression (ATR) et portefeuille BTC + SOL
+- **Date :** 2026-10-03
+- **Étape :** D, D03. Demande du porteur (trois actions, aucune optimisation) ; formes opérationnelles fixées par l'agent
+  avant le calcul et consignées ici.
+- **Actifs & Période :** BTC/USD Bitstamp 2015-2025 (panne de 2015 retirée) ; SOL/USD Coinbase dès le 2021-06-17 ;
+  barres de 30 min ; 2026, ETH et XRP ne sont pas lus.
+- **Modèle de frais :** 5 bps aller-retour (10 bps en lecture) ; 0,25 % du capital par ATR14(t), levier ≤ 1x par
+  position ; PnL et MDD à 1x publiés à côté.
+
+#### 0. Cadrage (formes opérationnelles, fixées avant le calcul)
+- **QUESTION :** les 5 % meilleurs trades de RE-1 gelée se distinguent-ils à t (volatilité, compression, position dans
+  les bandes, tendance, heure) ? Le filtre ATR ≤ P60 glissant augmente-t-il le Calmar sans amputer la queue droite ?
+  Combiner BTC et SOL lisse-t-il le capital ?
+- **DONNÉES :** RE-1 gelée BTC 2015-2025 (2 075 trades, identiques à D02) ; RE-1 gelée SOL (769 trades, identiques à
+  D01).
+- **MÉTHODE :**
+  - Action 1 : Alpha = ⌈5 % · n⌉ = 104 meilleurs trades par rendement net en ATR, Usure = les autres ; même découpage
+    en bps contre l'artefact de définition (le rang en ATR favorise les ATR bas). Variables à la clôture de t : ATR14 et
+    son rang sur 24 mois glissants, `leg_atr` et son rapport au P50 local (24 mois), %B et largeur de Bollinger (20,
+    2 écarts-types de population), rang de la largeur, écart à l'EMA 200 (30 min) en ATR orienté, heure UTC ;
+  - Action 2 : ATR14_bps(t) ≤ P60 glissant des barres de ]t − 730 j, t] (aucun seuil fixe tiré de l'action 1) ; lecture
+    sur entrées figées (le verrou suit RE-1) et en séquentiel ; même filtre sur SOL dès le S2 2023 (hors de
+    l'échantillon de l'idée) ;
+  - Action 3 : capital commun (`envelope.portfolio_equity`), 0,25 %/ATR par trade sur chaque actif, entrées du
+    2021-07-01 au 2025-12-31.
+- **CRITÈRE DE LECTURE (sans seuil) :** distributions comparées et quintiles ; 8 métriques et écarts appariés par mois ;
+  Alpha et top 1 % gardés ; PnL, MDD, Calmar, plus longue période sous le pic, mois positifs, corrélation mensuelle.
+- **Code :** `context.volatility` (`bollinger`, `trailing_quantile`, `trailing_rank`), `envelope.portfolio`
+  (`portfolio_equity`, une jambe = `equity_curve_sized`) ; 332 tests.
+
+#### Résultats (`experiments/D03/rapport_D03.md`)
+- **Contrôles bloquants passés :** RE-1 gelée BTC = D02 (2 075 trades) ; SOL = `run_re1` et métriques de D01 ;
+  portefeuille d'une jambe = capital valorisé du dépôt.
+- [OBS] **Action 1 :** classés en ATR, les 104 Alpha naissent à ATR bas (médiane 37 bps contre 48 pour l'Usure ; rang de
+  largeur 0,17 contre 0,28). Classés en bps, ils naissent à ATR haut (75 bps ; rang de largeur 0,46). 53 trades
+  communs sur 104. Par quintile du rang d'ATR, l'espérance vaut en bps +4,8, +7,4, +15,0, +2,6, +21,2 (bas → haut).
+  %B, EMA 200 et `leg_atr` ne séparent pas les groupes. Heure UTC : 04-08 h +0,689 ATR, 16-20 h −0,205 (descriptif).
+- [OBS] **Action 2 (BTC 2015-2025, 5 bps) :** filtre sur entrées figées +0,258 ATR [+0,024 ; +0,486], PnL +125 % (1x
+  +205 %), MDD −22,3 % (1x −40,2 %), Calmar 0,34 contre 0,32 ; écart apparié +0,040 [−0,056 ; +0,131] et −1,3 bps,
+  Calmar meilleur sur 43 % des chemins. Il garde les 21 trades du top 1 % et 92 Alpha sur 104 ; il retire 557 trades
+  d'Usure (−0,091 ATR) et 12 Alpha. 2015-2019 : +0,029 contre +0,064 ; 2020-2025 : +0,456 contre +0,357. Séquentiel :
+  Calmar 0,28. 10 bps : Calmar 0,09 des deux côtés. SOL : +0,243 contre +0,252, Calmar 0,57 contre 0,76.
+- [OBS] **Action 3 (2021-07 → 2025, 5 bps) :** portefeuille PnL +163 % (1x par position +478 %), MDD −15,2 % (1x
+  −40,1 %), Calmar 1,58 contre 1,18 (BTC seul) et 0,59 (SOL seul) ; plus longue période sous le pic 238 jours (224 pour
+  BTC, 567 pour SOL) ; mois positifs 59 % ; corrélation mensuelle −0,04 ; exposition brute maximale 2,0. 10 bps : Calmar
+  0,77 contre 0,59 et 0,32. SOL seul : +0,190 ATR [−0,079 ; +0,484].
+- [HYP] Le « calme » des grands gagnants vient surtout de la taille de position à 0,25 % par ATR ; un filtre de
+  compression trie la taille, pas la qualité, et agit comme un désendettement. La diversification est le seul levier
+  mesuré qui améliore le rapport rendement / drawdown ; elle repose sur un avantage de SOL non établi à 95 %.
+
+#### Décision
+- [ ] **VALIDÉ**
+- [x] **Filtre ATR non retenu (proposition) ; portefeuille BTC + SOL : gain de Calmar mesuré, avantage de SOL à
+  confirmer.** RE-1 gelée inchangée. Suite à décider par le porteur.

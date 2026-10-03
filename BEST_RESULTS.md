@@ -281,6 +281,24 @@ pour R0. Verdict : aucune des deux modifications ne surpasse RE-1 gelée ; RE-1 
 - **Stress :** sans le 1 % meilleur (21 trades), RE-1 gelée fait +0,035 ATR [−0,128 ; +0,199] et +9 %. À 10 bps et sans
   le 1 % meilleur, toutes les séries sont négatives.
 
+### EXP-D03 — filtre de compression et portefeuille BTC + SOL (RE-1 gelée, version finale)
+*Aucune optimisation. Filtre du porteur : ATR14 ≤ P60 glissant sur 24 mois. Portefeuille : capital commun, 0,25 %/ATR
+par trade sur chaque actif.*
+
+| Série (5 bps) | Espérance ATR [IC] | PnL : 0,25 %/ATR ; 1x | MDD : 0,25 %/ATR ; 1x | Calmar | Trades |
+|---|---|---|---|---|---|
+| BTC 2015-2025 · RE-1 gelée | +0,218 [+0,032 ; +0,401] | +159 % ; +396 % | −28,4 % ; −53,0 % | 0,32 | 2 075 |
+| BTC 2015-2025 · RE-1 + filtre ATR (entrées figées) | +0,258 [+0,024 ; +0,486] | +125 % ; +205 % | −22,3 % ; −40,2 % | 0,34 | 1 506 |
+| 2021-07 → 2025 · BTC seul | +0,370 [+0,050 ; +0,686] | +90 % ; +118 % | −12,9 % ; −29,9 % | 1,18 | 806 |
+| 2021-07 → 2025 · portefeuille BTC + SOL | — | +163 % ; +478 % | −15,2 % ; −40,1 % | 1,58 | 1 575 |
+
+- **Filtre ATR :** Calmar inchangé (écart apparié +0,03, 43 % des chemins) ; il garde le top 1 % mais retire 12 Alpha ;
+  gain limité à 2020-2025, absent sur SOL.
+- **Portefeuille :** corrélation mensuelle BTC / SOL −0,04 ; Calmar 1,18 → 1,58 ; plus longue période sous le pic non
+  raccourcie (238 jours) ; avantage de SOL seul +0,190 ATR [−0,079 ; +0,484].
+- **Profil :** le « calme » des 5 % meilleurs trades tient au classement en ATR ; classés en bps, ils naissent à ATR
+  haut.
+
 ## Pistes écartées (à ne pas retester sans élément nouveau)
 
 | Piste | Raison | Source |
@@ -300,3 +318,4 @@ pour R0. Verdict : aucune des deux modifications ne surpasse RE-1 gelée ; RE-1 
 | Veto des signaux contre la tendance (EMA 200, EMA 50, Kalman v2.1 sur 4 h) | les trades contre-tendance valent autant ou plus que les alignés (+0,39 à +0,43 ATR) et portent jusqu'à 48 % du décile supérieur ; espérance +0,369 → +0,22 à +0,26 ; Calmar 1,16 → 0,41 à 0,49 ; pire à 10 bps et sur tout le plateau | C04 |
 | Stop à l'extremum pour les retracements de 0,75 à 0,85 (frontière F2b / F3 abaissée) | coupe les meilleurs F2b (+0,9 à +1,0 ATR sans stop) ; frontière 0,75 : −0,095 ATR par trade [−0,157 ; −0,030], MDD −19,2 % | C05 |
 | Exclusion de `nis_z_100` relâchée (P80 à P90) | les signaux admis perdent (−0,29 à −0,53 ATR) ; −0,06 à −0,15 ATR par trade, significatif ; Calmar 0,84 → 0,56 | C05 |
+| Walk-forward de H, R0 et de la frontière (recalibrage semestriel sur 24 mois) | aucune variante ne surpasse RE-1 gelée ; recalibrer H ne fait que déplacer le calendrier ; l'avance du WFO-R0 tenait à un départage vers RE-1 ; abandon définitif décidé par le porteur (2026-10-03) | D02, D02.1 |

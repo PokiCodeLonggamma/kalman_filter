@@ -1,0 +1,26 @@
+{
+ "date": "2026-10-03 00:22 UTC",
+ "commit": "8350415",
+ "donnees": {
+  "BTC": {
+   "sha256": "fa38b1796e9ee0db",
+   "panne_barres_retirees": 215,
+   "barres": 227689,
+   "premiere": "2013-01-01 00:00:00+00:00",
+   "derniere": "2025-12-31 23:30:00+00:00",
+   "signaux": 15819
+  },
+  "SOL": {
+   "sha256": "e52874d28b5567d6",
+   "barres": 79577,
+   "premiere": "2021-06-17 16:00:00+00:00",
+   "derniere": "2025-12-31 23:30:00+00:00",
+   "signaux": 5385
+  }
+ },
+ "RE-1 gelée BTC 2015-2025": "2075 trades identiques à D02",
+ "RE-1 gelée SOL": "769 trades identiques à run_re1 ; métriques de D01 à 1e-5 (5 et 10 bps)",
+ "portefeuille une jambe": "PnL et MDD identiques au capital valorisé de RE-1 gelée BTC (1e-10)",
+ "duree_s": 39,
+ "comparaisons": 16
+}

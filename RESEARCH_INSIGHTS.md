@@ -178,6 +178,13 @@ Elle se mesure séparément par sens et par type de signal (rang 1 ou répétiti
 - Avec l'inertie (case la plus proche du choix précédent), un seul choix change : 2018-S2, R0 = 50 au lieu de 100. 2018 passe de +0,482 à −0,160 ATR, et toute l'avance du WFO-R0 de D02 disparaît (−0,065 [−0,155 ; −0,002]).
 - **Règle :** un walk-forward qui se replie ou départage vers la configuration de référence hérite de l'information de sa période de construction. Lire son avance au regard des semestres tranchés par ce départage, et tester une règle neutre à côté.
 
+### I-M20 — Un classement en ATR favorise les trades ouverts à ATR bas : profiler aussi en bps `[MÉTHODE]` `[OBS]`
+*Source : EXP-D03 (profil des 5 % meilleurs trades de RE-1 gelée, BTC 2015-2025).*
+
+- Le rendement en ATR divise le mouvement par l'ATR du signal : à mouvement égal, un ATR bas donne un rang plus haut. Avec un risque de 0,25 % par ATR, ces trades engagent aussi plus de notionnel, donc pèsent plus dans le capital.
+- Classés en ATR, les 104 meilleurs trades naissent à ATR bas (médiane 37 bps contre 48) ; classés en bps, à ATR haut (75 bps). Les deux classements n'ont que 53 trades en commun.
+- **Règle :** tout profil des meilleurs ou des pires trades se lit selon deux classements, en ATR (poids dans le capital) et en bps (mouvement du marché), avant d'en tirer un filtre.
+
 ---
 
 ## 2. Cinématique du moteur v2.1
@@ -324,6 +331,19 @@ porteur).*
 - `[HYP]` RE-1 récolte des expansions de volatilité qui partent d'états calmes. Sa robustesse dépend de leur fréquence et
   de leur taille, pas du trade moyen ; les frais et la perte de quelques grands gagnants s'additionnent jusqu'à
   l'effacer.
+- `[OBS]` **Nuance (EXP-D03, I-M20) :** le « calme » tient surtout au classement en ATR et à la taille de position. En bps,
+  les plus gros gains naissent à ATR haut : par quintile du rang d'ATR, +4,8, +7,4, +15,0, +2,6, +21,2 bps (bas → haut).
+  Le filtre ATR ≤ P60 garde les 21 trades du top 1 % mais ne change pas le Calmar (0,34 contre 0,32).
+
+### K15 — Sur 2021-2025, BTC et SOL ne sont pas corrélés sous RE-1 gelée : la diversification améliore le Calmar
+*Source : EXP-D03 (portefeuille sur capital commun, 0,25 %/ATR par trade sur chaque actif, 5 bps).*
+
+- `[OBS]` Corrélation des rendements mensuels −0,04. Portefeuille : PnL +163 %, MDD −15,2 %, Calmar 1,58, contre 1,18
+  pour BTC seul et 0,59 pour SOL seul ; 59 % de mois positifs contre 54 et 56 %.
+- `[OBS]` La plus longue période sous le pic n'est pas raccourcie (238 jours contre 224 pour BTC seul). Exposition brute
+  jusqu'à 2,0 ; les deux positions sont ouvertes 7 % du temps.
+- `[HYP]` Le gain vient de flux d'avantage indépendants ; il ne vaut que si chacun est réel. Celui de SOL ne l'est pas à
+  95 % (+0,190 ATR [−0,079 ; +0,484]), et BTC 2021-2025 est dans la période de construction de RE-1.
 
 ---
 
@@ -510,4 +530,5 @@ L'atlas A01 soutient cette lecture à travers le ratio de retracement `retrace_r
 13. L'inversion F2b / F3 de l'or (F2b Short −0,70, F3 Long +0,55) tient-elle à la hausse séculaire de 2020-2025 (dérive +0,38 ATR) ou à la microstructure d'un CFD ? Non testé.
 14. ~~WTI : quelle source pour 2020-2025 ?~~ **Tranché par le porteur (2026-09-30)** : WTI retiré de D01, remplacé par l'ETF XLE (corrélation quotidienne 0,46 avec le spot WTI, 0,60 avec SPY).
 15. Sur une série en séances, H doit-il se compter en barres ou en temps, et faut-il sortir avant la nuit ? D01 bis montre des trades traversant deux nuits, les gaps pesant 35 à 47 % de leur amplitude. Question pour D02, à cadrer : H est l'un des deux paramètres autorisés. **Mesuré (EXP-D01.5) :** H = 13 traverse encore une nuit (91 % des trades) ; H = 6 réduit l'exposition de moitié, mais la composante en séance est ≈ 0 (SPY) ou négative (XLE) : sortir avant la nuit ne créerait pas d'espérance (K9). **Mesuré (EXP-D01.6) :** la sortie de fin de séance donne un net de −0,04 (SPY) et −0,17 ATR (XLE), sans IC > 0, avec un MDD divisé par deux (K10).
-16. La queue droite de RE-1 (21 trades, 1 %, font 84 % de l'espérance en ATR ; ouverts à ATR bas, K14) se laisse-t-elle cibler à t, ou seulement attendre ? Non testé ; à décrire avant toute règle, sans apprentissage.
+16. La queue droite de RE-1 (21 trades, 1 %, font 84 % de l'espérance en ATR ; ouverts à ATR bas, K14) se laisse-t-elle cibler à t, ou seulement attendre ? **Décrit (EXP-D03) :** ni la compression (Bollinger, ATR), ni %B, ni l'EMA 200, ni `leg_atr` ne la séparent une fois l'artefact du classement en ATR écarté (I-M20) ; le filtre ATR ≤ P60 ne change pas le Calmar.
+17. Le contraste horaire de RE-1 sur BTC (04-08 h UTC +0,689 ATR, 16-20 h −0,205 ; EXP-D03, descriptif, sans IC) se retrouve-t-il sur des données non vues (SOL, BTC 2013-2014) ? Non testé.

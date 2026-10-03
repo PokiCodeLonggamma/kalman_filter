@@ -23,11 +23,12 @@ L'exécution d'un trade, la stratégie native (ancre P6.5d), le capital et le dr
 """
 from envelope.metrics import (DEV_MONTHS, by_year, effect_ci, equity_curve_sized, mean_ci, risk_weights, summarize,
                               summarize_sized, trade_frame)
+from envelope.portfolio import Leg, portfolio_equity
 from envelope.sequential import dev_signals, time_stop_trades
 from envelope.stops import (atr_stop_levels, breakeven_trades, breakeven_trigger_levels, route_levels, rule_levels,
                             segment_extremum, stop_distance, stop_trades, structural_stop_levels)
 
-__all__ = ["dev_signals", "time_stop_trades", "summarize", "mean_ci", "by_year", "trade_frame", "DEV_MONTHS",
+__all__ = ["Leg", "portfolio_equity", "dev_signals", "time_stop_trades", "summarize", "mean_ci", "by_year", "trade_frame", "DEV_MONTHS",
            "risk_weights", "equity_curve_sized", "summarize_sized", "effect_ci", "atr_stop_levels",
            "segment_extremum", "structural_stop_levels", "stop_distance", "stop_trades", "rule_levels",
            "route_levels", "breakeven_trigger_levels", "breakeven_trades"]
