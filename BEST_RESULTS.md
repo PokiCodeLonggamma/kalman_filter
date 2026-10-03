@@ -2,7 +2,7 @@
 
 > Aide-mémoire : les deux ou trois résultats les plus utiles de chaque étape, avec leur statut. Le détail est dans `RESEARCH_LOG.md`, la lecture dans `RESEARCH_INSIGHTS.md`, les chiffres dans `experiments/<expérience>/`.
 >
-> Tout porte sur BTC/USD 30 min, 2020-2025, **dans l'échantillon**, sauf l'Étape D (transfert à d'autres actifs). Aucun résultat n'est validé hors échantillon : le hold-out (BTC 2026, ETH, XRP) reste scellé jusqu'à la fin de l'Étape D.
+> Tout porte sur BTC/USD 30 min, 2020-2025, **dans l'échantillon**, sauf l'Étape D (transfert à d'autres actifs). Le hold-out (BTC 2026, ETH, XRP, 2026 des autres actifs) a été levé en EXP-D04 (2026-10-03), protocole pré-enregistré.
 >
 > **Conventions :**
 > - PnL nets de frais ; une position à la fois ;
@@ -319,6 +319,22 @@ barre. 5 bps, 0,25 %/ATR.*
 *RE-1 gelée et stop catastrophe de 4 ATR14(t) greffé sur tous les trades (`strategy.final`). Elle redonne trade par
 trade la série « Stop catastrophe 4 ATR » de D03.1 : BTC 2015-2025 +0,180 ATR [+0,012 ; +0,350], MDD −21,4 % (1x
 −42,5 %) ; SOL +0,135 ATR. Testée sur la réserve en EXP-D04 (ETH, XRP, 2026), protocole pré-enregistré.*
+
+### EXP-D04 — épreuve de la réserve (version finale de RE-1, protocole pré-enregistré)
+*Stop catastrophe de 4 ATR inclus ; 0,25 %/ATR ; 5 bps (or 4 bps). Hors échantillon pour RE-1 : aucun paramètre choisi sur
+ces données ; ETH, XRP et BTC 2026 avaient été vus par d'anciens projets.*
+
+| Série | Espérance ATR [IC] | PnL : 0,25 %/ATR ; 1x | MDD : 0,25 %/ATR ; 1x | Trades | Pire journée UTC |
+|---|---|---|---|---|---|
+| ETH 2017-2026 | +0,183 [−0,010 ; +0,385] | +82 % ; +155 % | −39,1 % ; −72,1 % | 1 525 | −3,03 % |
+| XRP 2016-2026 | +0,263 [−0,014 ; +0,640] | +148 % ; +354 % | −20,9 % ; −61,7 % | 1 689 | −2,57 % |
+| BTC 2026 (9 mois) | +0,705 [+0,045 ; +1,469] | +29 % ; +52 % | −6,9 % ; −8,6 % | 135 | −1,18 % |
+| SOL 2026 | +0,410 [−0,081 ; +0,997] | +15 % ; +36 % | −6,0 % ; −19,6 % | 138 | −1,83 % |
+| AVAX 2026 | +1,059 [+0,328 ; +1,784] | +32 % ; +61 % | −4,7 % ; −9,9 % | 109 | −1,11 % |
+| Or 2026 (4 bps) | +0,987 [+0,449 ; +1,479] | +21 % ; +26 % | −3,1 % ; −5,6 % | 81 | −1,48 % |
+
+- **Signe tenu hors échantillon,** marge mince : sans le 1 % meilleur, ETH et XRP ≈ −0,06 ATR ; un trade de XRP
+  (juillet 2023) = 56 % de la somme. 2026 est la période la plus favorable mesurée, à ne pas extrapoler.
 
 ## Pistes écartées (à ne pas retester sans élément nouveau)
 

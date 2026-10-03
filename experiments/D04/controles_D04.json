@@ -1,0 +1,45 @@
+{
+ "date": "2026-10-03 19:48 UTC",
+ "commit": "c4207f8",
+ "version_finale_egale_D03_1": {
+  "BTC": {
+   "trades": 2075,
+   "esperance_atr": 0.180207
+  },
+  "SOL": {
+   "trades": 769,
+   "esperance_atr": 0.135282
+  }
+ },
+ "prolongement_BTC": {
+  "barres_avant_2026": 227689,
+  "candidats_avant_2026": 3297,
+  "trades_identiques": 2444,
+  "trades_non_compares_en_fin_de_serie_scellee": 1,
+  "candidats_censures_en_fin_de_serie_scellee": []
+ },
+ "prolongement_SOL": {
+  "barres_avant_2026": 79577,
+  "candidats_avant_2026": 1030,
+  "trades_identiques": 769,
+  "trades_non_compares_en_fin_de_serie_scellee": 0,
+  "candidats_censures_en_fin_de_serie_scellee": []
+ },
+ "prolongement_AVAX": {
+  "barres_avant_2026": 74530,
+  "candidats_avant_2026": 915,
+  "trades_identiques": 683,
+  "trades_non_compares_en_fin_de_serie_scellee": 0,
+  "candidats_censures_en_fin_de_serie_scellee": []
+ },
+ "prolongement_XAU": {
+  "barres_avant_2026": 198695,
+  "candidats_avant_2026": 2442,
+  "trades_identiques": 1908,
+  "trades_non_compares_en_fin_de_serie_scellee": 0,
+  "candidats_censures_en_fin_de_serie_scellee": [
+   "2025-12-31 17:00:00+00:00"
+  ]
+ },
+ "duree_s": 121
+}

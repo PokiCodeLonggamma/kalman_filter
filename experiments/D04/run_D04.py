@@ -471,7 +471,7 @@ def write_rapport() -> None:
            ""]
     for k, v in ct.items():
         if k not in ("date", "commit", "duree_s"):
-            out.append(f"- {k} : " + re.sub(r"\b(\d)(\d{3})\b", r"\1 \2", json.dumps(v, ensure_ascii=False)) + ".")
+            out.append(f"- {k} : " + re.sub(r"\b(\d)(\d{3})\b(?!-)", r"\1 \2", json.dumps(v, ensure_ascii=False)) + ".")
     base = res.groupby("cle").frais_bps.transform("min") == res.frais_bps
     for test, title in (("A", "Test A — ETH et XRP, tout l'historique"), ("B", "Test B — 2026 (janvier-septembre)")):
         r = res[res.test == test]
@@ -513,7 +513,24 @@ def write_rapport() -> None:
                        if d.get("plus_long_trou") else ""),
                     f"{n_fr(sum(d['volume_nul_par_an'].values()))} ; {n_fr(sum(d['plates_par_an'].values()))}",
                     str(d["premier_signal"])[:10]] for k, d in dt.items()]),
-            "", "## A7. Figure", "", "![Capital](figures/D04_capital.png)", ""]
+            ""]
+    lec = HERE / "lectures_D04.json"
+    if lec.exists():
+        lx = json.loads(lec.read_text(encoding="utf-8"))
+        out += ["## A7. Lectures complémentaires, hors protocole (`lectures_D04.py`, 5 bps)", "",
+                table(["Série", "Médiane ATR", "Part du 1 % ; du 5 % meilleurs", "Espérance sans le 1 % meilleur",
+                       "Meilleur trade : date ; ATR ; capital ; part de la somme", "Espérance ; PnL sans lui",
+                       "Sorties sur stop ; stop catastrophe", "Pire journée : capital valorisé ; solde réalisé"],
+                      [[k, sg(v["mediane_atr"], 2), f"{pct(v['part_top1'], 0)} ({v['n_top1']}) ; {pct(v['part_top5'], 0)}",
+                        sg(v["esperance_sans_top1"], 3),
+                        f"{v['meilleur_trade_capital']['entree'][:10]} ; {sg(v['meilleur_trade_capital']['atr'], 1)} ; "
+                        f"{spct(v['meilleur_trade_capital']['capital'], 1)} ; {pct(v['meilleur_trade_capital']['part_somme_atr'], 0)}",
+                        f"{sg(v['meilleur_trade_capital']['esperance_sans_lui'], 3)} ; "
+                        f"{spct(v['meilleur_trade_capital']['pnl_r25_sans_lui'])}",
+                        f"{pct(v['part_sorties_stop'], 0)} ; {pct(v['part_stop_catastrophe'], 1)}",
+                        f"{v['pire_journee']['jour']} : {spct(v['pire_journee']['perte_ref_capital_valorise'], 2)} ; "
+                        f"{spct(v['pire_journee']['perte_ref_solde_realise'], 2)}"] for k, v in lx.items()]), ""]
+    out += ["## A8. Figure", "", "![Capital](figures/D04_capital.png)", ""]
     (HERE / "rapport_D04.md").write_text("\n".join(out) + "\n", encoding="utf-8")
 
 

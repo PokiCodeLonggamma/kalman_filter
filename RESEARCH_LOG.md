@@ -1914,3 +1914,31 @@ reproduction de résultats publiés et parité du noyau, sans aucune performance
   dépend ; même convention en D01-D03.1 (elle écarte aussi les derniers signaux de 2026 sans sortie native observée,
   comptés dans les annexes). Contrôle reformulé : candidats scellés = candidats prolongés hors signaux ainsi
   censurés, chacun vérifié ; trades identiques avant le premier d'entre eux. Bug d'audit corrigé (plus long trou).
+
+#### Résultats (`experiments/D04/rapport_D04.md`)
+- **Contrôles bloquants passés :** version finale = D03.1 (BTC 2 075 trades, +0,180207 ATR ; SOL 769, +0,135282) ; séries
+  prolongées identiques aux scellées avant 2026 (BTC, SOL, AVAX, or ; un signal de l'or censuré par la convention de
+  fin d'échantillon, vérifié) ; BTC 2026 identique à l'ancien fichier Bitstamp (12 368 barres).
+- [OBS] **Test A (5 bps) :**
+  - ETH (2017-08 → 2026-09) : +0,183 ATR [−0,010 ; +0,385], +10,4 bps ; PnL +82 % (1x +155 %) ; MDD −39,1 % (1x −72,1 %) ;
+    1 525 trades (14,0/mois) ; PF 1,11 ; WR 42,0 % ; frais 33 % du brut ; Calmar 0,17 ;
+  - XRP (2016-12 → 2026-09) : +0,263 ATR [−0,014 ; +0,640], +16,0 bps [+0,1 ; +32,9] ; PnL +148 % (1x +354 %) ; MDD
+    −20,9 % (1x −61,7 %) ; 1 689 trades (14,5/mois) ; PF 1,15 ; WR 43,3 % ; frais 24 % ; Calmar 0,47 ;
+  - 10 bps : ETH +0,088, XRP +0,181. Par année : ETH positif 7 ans sur 10 (négatif en 2022, 2023, 2025), XRP 8 sur 10.
+- [OBS] **Test B (2026, janvier-septembre ; or jusqu'au 24 septembre) :**
+  - BTC +0,705 ATR [+0,045 ; +1,469], PnL +29 %, MDD −6,9 % ; SOL +0,410 [−0,081 ; +0,997], +15 %, −6,0 % ;
+  - AVAX +1,059 [+0,328 ; +1,784], +32 %, −4,7 % ; or (4 bps) +0,987 [+0,449 ; +1,479], +21 %, −3,1 %.
+- [OBS] **Survie (0,25 %/ATR) :** pire trade −1,04 % (2026), −1,05 % (ETH), −1,21 % (XRP, gap de janvier 2017) ; pire
+  journée UTC en 2026 de −1,1 % à −1,8 % (−2,0 % aux extrêmes) ; ETH −3,03 % le 2020-08-02 (gain latent rendu dans un
+  krach éclair ; −0,50 % rapporté au solde réalisé), XRP −2,57 %.
+- [OBS] **Queue droite (lecture hors protocole) :** sans le 1 % meilleur, ETH −0,060 et XRP −0,058 ATR ; un trade de XRP
+  (2023-07-13, jour de la décision SEC contre Ripple) fait 56 % de la somme en ATR (+61,9 % du capital) ; sans lui, XRP
+  +0,117 ATR.
+- [HYP] La réserve confirme la nature de RE-1 (queue droite, trade médian perdant) avec une marge mince ; 2026 est la
+  période la plus favorable mesurée, à ne pas extrapoler ; risques de production : gains latents rendus dans la perte
+  journalière, stops remplis dans les krachs éclairs, pertes simultanées d'un portefeuille (non mesurées).
+
+#### Décision
+- [ ] **VALIDÉ**
+- [x] **Règle du porteur, lecture littérale : condition 1 remplie (ETH +0,183, XRP +0,263 ATR) ; condition 2 (survie à
+  2026) à juger par le porteur sur les mesures.** Décision de mise en production au porteur. Commits locaux, non poussés.

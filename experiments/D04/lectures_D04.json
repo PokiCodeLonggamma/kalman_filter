@@ -1,0 +1,56 @@
+{
+ "ETH": {
+  "trades": 1525,
+  "mediane_atr": -0.9698509537507455,
+  "part_top1": 1.324151587888766,
+  "n_top1": 16,
+  "part_top5": 3.4887030425700742,
+  "esperance_sans_top1": -0.060084709282457585,
+  "meilleur_trade_capital": {
+   "entree": "2024-08-04 14:30:00+00:00",
+   "brut_bps": 1961.7440810942167,
+   "atr": 39.278407603307336,
+   "capital": 0.09819601900826834,
+   "part_somme_atr": 0.14042641930348315,
+   "esperance_sans_lui": 0.15776226848344957,
+   "pnl_r25_sans_lui": 0.6566343724348549,
+   "pnl_r25": 0.8193092727602205
+  },
+  "part_sorties_stop": 0.40262295081967214,
+  "stop_catastrophe_touche": 242,
+  "part_stop_catastrophe": 0.15868852459016394,
+  "gaps": 8,
+  "pire_journee": {
+   "jour": "2020-08-02",
+   "perte_ref_capital_valorise": -0.030282288263634438,
+   "perte_ref_solde_realise": -0.0050209864799986015
+  }
+ },
+ "XRP": {
+  "trades": 1689,
+  "mediane_atr": -0.6532514206757152,
+  "part_top1": 1.219629315007235,
+  "n_top1": 17,
+  "part_top5": 2.5624421760032137,
+  "esperance_sans_top1": -0.05834352127355065,
+  "meilleur_trade_capital": {
+   "entree": "2023-07-13 10:30:00+00:00",
+   "brut_bps": 7149.299233602915,
+   "atr": 247.4347686067054,
+   "capital": 0.6185869215167635,
+   "part_somme_atr": 0.5570858428535976,
+   "esperance_sans_lui": 0.11654287377026312,
+   "pnl_r25_sans_lui": 0.5291904721480023,
+   "pnl_r25": 1.4751276987267956
+  },
+  "part_sorties_stop": 0.3706335109532268,
+  "stop_catastrophe_touche": 208,
+  "part_stop_catastrophe": 0.123149792776791,
+  "gaps": 9,
+  "pire_journee": {
+   "jour": "2022-05-16",
+   "perte_ref_capital_valorise": -0.025746721225160085,
+   "perte_ref_solde_realise": -0.016057049274577406
+  }
+ }
+}

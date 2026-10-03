@@ -362,6 +362,22 @@ porteur).*
 
 ---
 
+---
+
+### K17 — Hors échantillon, RE-1 garde le signe et le profil de queue ; sa marge reste mince
+*Source : EXP-D04 (réserve levée, protocole pré-enregistré ; version finale avec stop catastrophe de 4 ATR ; 5 bps).*
+
+- `[OBS]` ETH +0,183 ATR [−0,010 ; +0,385] et XRP +0,263 [−0,014 ; +0,640] sur 9 à 10 ans ; trade médian −0,97 et −0,65
+  ATR ; F3 et F2b positifs sur les deux. Sans le 1 % meilleur : −0,060 et −0,058 (BTC 2015-2025 sans stop : +0,035).
+- `[OBS]` Un seul trade de XRP, ouvert le 2023-07-13 (décision SEC contre Ripple), fait +247 ATR, 56 % de la somme et
+  +61,9 % du capital : la queue droite contient aussi des sauts de nouvelles, non reproductibles.
+- `[OBS]` 2026 (neuf mois) : BTC, SOL, AVAX et l'or tous positifs, +0,41 à +1,06 ATR, l'or compris (net nul en
+  échantillon) : régime porteur commun aux actifs.
+- `[OBS]` La perte journalière d'un compte peut dépasser la perte maximale d'un trade : ETH −3,03 % le 2020-08-02, un
+  gain latent de +4,5 % rendu dans un krach éclair (−0,50 % rapporté au solde réalisé).
+- `[HYP]` RE-1 est une récolte de queue droite transportable d'un actif à l'autre ; sa rentabilité dépend de quelques
+  événements par an et de l'exécution des stops dans les mouvements extrêmes.
+
 ## 3. Trois phénomènes captés par le déclencheur
 *Hypothèse de travail du porteur, 2026-09-28. Chiffres vérifiés : EXP-A01, annexe I.*
 
