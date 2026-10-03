@@ -1907,3 +1907,10 @@ reproduction de résultats publiés et parité du noyau, sans aucune performance
 - **Téléchargements faits (2026-10-03) :** ETH/USD 159 951 barres (2017-08-16 16:30 → 2026-09-30 23:30), XRP/USD
   171 621 (2016-12-16 13:30 → 2026-09-30), BTC/USD 241 008 (2013 → 2026-09-30), SOL/USD 92 669, AVAX/USD 87 622, or
   207 353 (→ 2026-09-24) ; anciennes séries inchangées.
+- **Incident de contrôle (avant tout résultat sur 2026, consigné) :** le contrôle (4) s'est arrêté sur l'or : un signal
+  du 2025-12-31 17:00 UTC est candidat sur la série prolongée, absent de la série scellée. Cause : convention de
+  l'atlas (`anatomy.dev_universe`), un signal n'est gardé que si sa sortie native (ouverture après le premier signal
+  opposé) est dans l'échantillon ; sur la série scellée, celle de ce signal tombait en 2026. Aucune variable n'en
+  dépend ; même convention en D01-D03.1 (elle écarte aussi les derniers signaux de 2026 sans sortie native observée,
+  comptés dans les annexes). Contrôle reformulé : candidats scellés = candidats prolongés hors signaux ainsi
+  censurés, chacun vérifié ; trades identiques avant le premier d'entre eux. Bug d'audit corrigé (plus long trou).

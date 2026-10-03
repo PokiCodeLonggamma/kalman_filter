@@ -209,23 +209,29 @@ def prepare(key: str, csv: Path, end: pd.Timestamp | None) -> dict:
     bars = df[["time", "open", "high", "low", "close"]].copy()
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
-        atlas, _, _, atr = build_atlas(df, kalman=KalmanParams(R0=100.0))
+        atlas, f, idx, atr = build_atlas(df, kalman=KalmanParams(R0=100.0))
     tab = signal_table(bars, atlas, atr)
+    sig = f.signal.to_numpy().astype(int)
+    raw = np.flatnonzero((sig != 0) & f.valid_features.to_numpy(dtype=bool))
+    tail = raw[raw > (idx.max() if len(idx) else -1)]           # signaux de fin de série sans sortie native observée
     vol = df["volume"].to_numpy(dtype=float) if "volume" in df else np.full(len(df), np.nan)
     year = df.time.dt.year
     info.update({"barres": len(bars), "premiere": str(bars.time.iat[0]), "derniere": str(bars.time.iat[-1]),
                  "signaux": len(atlas), "premier_signal": str(tab.time[0]) if len(tab.t) else None,
+                 "signaux_bruts_censures_en_fin": len(tail),
+                 "premier_signal_censure": str(bars.time.iat[int(tail[0])]) if len(tail) else None,
                  "volume_nul_par_an": {int(y): int(v) for y, v in pd.Series(vol <= 0).groupby(year.to_numpy()).sum().items()},
                  "plates_par_an": {int(y): int(v) for y, v in
                                    pd.Series((df.high == df.low).to_numpy()).groupby(year.to_numpy()).sum().items()}})
-    step = bars.time.diff()
+    step = bars.time.diff().fillna(pd.Timedelta(0))
     big = step > pd.Timedelta(minutes=30)
     info["trous"] = int(big.sum())
     if big.any():
         i = int(np.argmax(step.to_numpy()))
         info["plus_long_trou"] = {"apres": str(bars.time.iat[i - 1]), "barres_manquantes":
                                   int(step.iat[i] / pd.Timedelta(minutes=30)) - 1}
-    return {"key": key, "bars": bars, "tab": tab, "atr_bps": atr / bars.close.to_numpy() * BPS, "info": info}
+    return {"key": key, "bars": bars, "tab": tab, "atr_bps": atr / bars.close.to_numpy() * BPS, "info": info,
+            "sig": sig}
 
 
 def final_series(p: dict, start: str | None, end) -> dict:
@@ -265,15 +271,29 @@ def check_extension(key: str, sealed: dict, ext: dict) -> dict:
     if not np.array_equal(ext["atr_bps"][:n], sealed["atr_bps"], equal_nan=True):
         stop(f"{key} : ATR14 antérieur à 2026 différent")
     s_s, s_e = final_series(sealed, None, None), final_series(ext, "2000-01-01", B0)
+    t_s, t_e = s_s["cands"][0], s_e["cands"][0]
+    if np.setdiff1d(t_s, t_e).size:
+        stop(f"{key} : candidat de la série scellée absent de la série prolongée")
+    extra = np.setdiff1d(t_e, t_s)
+    sig = ext["sig"]
+    for t in extra:                          # convention de l'atlas (`anatomy.dev_universe`) : sortie native observée
+        opp = np.flatnonzero(sig[t + 1:] == -sig[t])
+        exit_native = t + 1 + int(opp[0]) + 1 if opp.size else len(sig)
+        if exit_native <= n - 1:
+            stop(f"{key} : candidat en plus avant 2026 non expliqué par la convention de fin d'échantillon ({t})")
+    keep = np.isin(t_e, t_s)
     for i, name in enumerate(("barres", "sens", "SL-B", "niveaux finaux")):
-        if not np.array_equal(s_s["cands"][i], s_e["cands"][i], equal_nan=True):
+        if not np.array_equal(s_s["cands"][i], s_e["cands"][i][keep], equal_nan=True):
             stop(f"{key} : candidats antérieurs à 2026 différents ({name})")
-    done = s_s["trades"].exit_bar.to_numpy() < n - 1
-    a, b = s_s["trades"][done].reset_index(drop=True), s_e["trades"].iloc[:int(done.sum())].reset_index(drop=True)
+    t_cut = int(extra.min()) if extra.size else n
+    tr = s_s["trades"]
+    done = (tr.exit_bar.to_numpy() < n - 1) & (tr.signal_bar.to_numpy() < t_cut)
+    a, b = tr[done].reset_index(drop=True), s_e["trades"].iloc[:int(done.sum())].reset_index(drop=True)
     if not a[TRADE_COLUMNS].equals(b[TRADE_COLUMNS]):
         stop(f"{key} : trades antérieurs à 2026 différents")
-    return {"barres_avant_2026": n, "candidats_avant_2026": len(s_s["cands"][0]), "trades_identiques": int(done.sum()),
-            "trades_coupes_en_fin_de_serie_scellee": int((~done).sum())}
+    return {"barres_avant_2026": n, "candidats_avant_2026": len(t_s), "trades_identiques": int(done.sum()),
+            "trades_non_compares_en_fin_de_serie_scellee": int((~done).sum()),
+            "candidats_censures_en_fin_de_serie_scellee": [str(ext["bars"].time.iat[int(t)]) for t in extra]}
 
 
 # ── Mesures ─────────────────────────────────────────────────────────────────────
