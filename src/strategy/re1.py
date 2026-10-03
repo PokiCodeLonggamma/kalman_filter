@@ -31,6 +31,7 @@ from envelope import (by_year, mean_ci, risk_weights, route_levels, stop_trades,
                       trade_frame)
 from estimand.bars import check_no_holdout
 from estimand.excursions import BPS
+from reserve import exiger_levee
 from utils.data_loader import load_ohlc
 
 #: Seuils de population de RE-1, atlas BTC 2020-2025 : np.median(leg_atr) et np.quantile(nis_z_100, 0,75).
@@ -46,11 +47,17 @@ T0 = pd.Timestamp("2020-01-01", tz="UTC")
 N_YEARS_DEV = 6.0                                       # 2020-01-01 → 2025-12-31 (convention de C02bis)
 
 
-def load_asset(path: str | Path) -> tuple[pd.DataFrame, pd.DataFrame]:
-    """(barres pour `build_atlas`, barres `time, open, high, low, close` pour l'exécution), tronquées avant 2026 ;
-    empreinte SHA-256 du `.meta.json` vérifiée par `load_ohlc`, trous signalés et jamais comblés."""
+def load_asset(path: str | Path, end=None) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """(barres pour `build_atlas`, barres `time, open, high, low, close` pour l'exécution), tronquées avant `end`
+    (2026-01-01 par défaut ; plus tard seulement dans un bloc `reserve.levee`, EXP-D04) ; empreinte SHA-256 du
+    `.meta.json` vérifiée par `load_ohlc`, trous signalés et jamais comblés."""
+    end = DEV_END if end is None else pd.Timestamp(end)
+    if end.tzinfo is None:
+        end = end.tz_localize("UTC")
+    if end > DEV_END:
+        exiger_levee(f"lecture jusqu'au {end} demandée")
     df = load_ohlc(path)
-    df = df[df.time < DEV_END].reset_index(drop=True)
+    df = df[df.time < end].reset_index(drop=True)
     bars = df[["time", "open", "high", "low", "close"]].copy()
     check_no_holdout(bars)
     if not bars.time.is_monotonic_increasing:

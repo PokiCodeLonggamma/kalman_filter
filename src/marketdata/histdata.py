@@ -18,7 +18,10 @@
 - Agrégation exacte en barres de 30 min alignées sur :00 et :30 UTC (`marketdata.bars.aggregate_30m`).
 - Le fournisseur amont (courtier) et, pour le WTI, la règle de roulement du CFD ne sont pas publiés : limites à
   documenter et à caractériser par l'audit.
-- Réserve 2026 : aucune année ≥ 2026 n'est demandée, aucune barre ≥ 2026-01-01 n'est écrite.
+- Année en cours : HistData ne publie pas d'archive annuelle mais une archive par mois terminé (page
+  `…/<paire>/<année>/<mois>`, même formulaire, champ `datemonth` = AAAAMM) : `fetch_month`.
+- Réserve 2026 : aucune année ≥ 2026 n'est demandée, aucune barre ≥ 2026-01-01 n'est écrite, sauf dans un bloc
+  `reserve.levee` (EXP-D04 : 2026 de l'or, décision du porteur du 2026-10-03).
 """
 from __future__ import annotations
 
@@ -36,6 +39,7 @@ from pathlib import Path
 import pandas as pd
 
 from marketdata.bars import aggregate_30m
+from reserve import exiger_levee, motif
 from utils.data_loader import meta_path
 
 PAGE = "https://www.histdata.com/download-free-forex-historical-data/?/ascii/1-minute-bar-quotes/{pair}/{year}"
@@ -70,8 +74,9 @@ class Session:
                                                                           "Referer": referer}))
 
 
-def form_fields(html: str, pair: str, year: int) -> dict:
-    """Champs du formulaire de téléchargement de la page annuelle ; vérifie la paire et l'année."""
+def form_fields(html: str, pair: str, year: int, month: int | None = None) -> dict:
+    """Champs du formulaire de téléchargement de la page annuelle (ou mensuelle) ; vérifie la paire, l'année et le
+    mois."""
     found = {}
     for k, v in re.findall(r'name="(' + "|".join(FIELDS) + r')"[^>]*value="([^"]*)"', html):
         found.setdefault(k, v)
@@ -80,13 +85,15 @@ def form_fields(html: str, pair: str, year: int) -> dict:
         raise ValueError(f"HistData {pair} {year} : champs absents du formulaire {missing}")
     if found["fxpair"].upper() != pair.upper() or found["date"] != str(year) or found["timeframe"] != "M1":
         raise ValueError(f"HistData : formulaire inattendu {found}")
+    if month is not None and found["datemonth"] != f"{year}{month:02d}":
+        raise ValueError(f"HistData : formulaire inattendu pour {year}-{month:02d} {found}")
     return found
 
 
 def fetch_year(pair: str, year: int, cache: Path, session=None) -> tuple[Path, str]:
     """Archive annuelle (cache réutilisé s'il contient le CSV attendu) et son SHA-256."""
     if pd.Timestamp(f"{year}-01-01", tz="UTC") >= HOLDOUT:
-        raise ValueError(f"réserve 2026 : l'année {year} n'est pas téléchargeable")
+        exiger_levee(f"l'année {year} n'est pas téléchargeable")
     pair = pair.upper()
     path = Path(cache) / f"HISTDATA_COM_ASCII_{pair}_M1{year}.zip"
     name = f"DAT_ASCII_{pair}_M1_{year}.csv"
@@ -96,6 +103,28 @@ def fetch_year(pair: str, year: int, cache: Path, session=None) -> tuple[Path, s
         data = session.post(GET_PHP, form_fields(session.get(page), pair, year), page)
         if not zipfile.is_zipfile(io.BytesIO(data)) or name not in zipfile.ZipFile(io.BytesIO(data)).namelist():
             raise ValueError(f"HistData {pair} {year} : réponse sans archive {name}")
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(data)
+    return path, hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def fetch_month(pair: str, year: int, month: int, cache: Path, session=None) -> tuple[Path, str]:
+    """Archive d'un mois terminé de l'année en cours (cache réutilisé s'il contient le CSV attendu) et son SHA-256."""
+    start = pd.Timestamp(year=year, month=month, day=1, tz="UTC")
+    if start >= HOLDOUT:
+        exiger_levee(f"le mois {year}-{month:02d} n'est pas téléchargeable")
+    if start + pd.offsets.MonthBegin(1) > pd.Timestamp.now(tz="UTC"):
+        raise ValueError(f"HistData {pair} : le mois {year}-{month:02d} n'est pas terminé")
+    pair = pair.upper()
+    tag = f"{year}{month:02d}"
+    path = Path(cache) / f"HISTDATA_COM_ASCII_{pair}_M1{tag}.zip"
+    name = f"DAT_ASCII_{pair}_M1_{tag}.csv"
+    if not (path.exists() and zipfile.is_zipfile(path) and name in zipfile.ZipFile(path).namelist()):
+        session = session or Session()
+        page = PAGE.format(pair=pair.lower(), year=year) + f"/{month}"
+        data = session.post(GET_PHP, form_fields(session.get(page), pair, year, month), page)
+        if not zipfile.is_zipfile(io.BytesIO(data)) or name not in zipfile.ZipFile(io.BytesIO(data)).namelist():
+            raise ValueError(f"HistData {pair} {tag} : réponse sans archive {name}")
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_bytes(data)
     return path, hashlib.sha256(path.read_bytes()).hexdigest()
@@ -117,7 +146,8 @@ def parse_m1(text: str) -> pd.DataFrame:
     return out
 
 
-def read_year(path: Path, pair: str, year: int) -> pd.DataFrame:
+def read_year(path: Path, pair: str, year) -> pd.DataFrame:
+    """CSV d'une archive annuelle (`year` = AAAA) ou mensuelle (`year` = « AAAAMM »)."""
     with zipfile.ZipFile(path) as z:
         return parse_m1(z.read(f"DAT_ASCII_{pair.upper()}_M1_{year}.csv").decode("ascii"))
 
@@ -135,20 +165,30 @@ def drop_exact_duplicates(m1: pd.DataFrame, who: str) -> tuple[pd.DataFrame, dic
 
 
 def build_histdata_csv(pair: str, first_year: int, last_year: int, out_csv: Path, cache: Path,
-                       meta_extra: dict | None = None, session=None) -> dict:
-    """Archives annuelles [first_year, last_year], agrégation en 30 min, CSV au schéma de `load_ohlc` et `.meta.json`."""
+                       meta_extra: dict | None = None, session=None, months=(), end=None) -> dict:
+    """Archives annuelles [first_year, last_year] puis archives mensuelles `months` ((année, mois), année en cours),
+    minutes < `end` (2026-01-01 par défaut), agrégation en 30 min, CSV au schéma de `load_ohlc` et `.meta.json`."""
     if last_year >= HOLDOUT.year:
-        raise ValueError(f"réserve 2026 : l'année {last_year} n'est pas téléchargeable")
+        exiger_levee(f"l'année {last_year} n'est pas téléchargeable")
+    end = HOLDOUT if end is None else pd.Timestamp(end)
+    end = end.tz_localize("UTC") if end.tzinfo is None else end
+    if end > HOLDOUT:
+        exiger_levee(f"fin {end} postérieure au 2026-01-01")
     frames, files = [], []
     for y in range(first_year, last_year + 1):
         path, sha = fetch_year(pair, y, cache, session)
         m1, dup = drop_exact_duplicates(read_year(path, pair, y), f"{pair} {y}")
         frames.append(m1)
         files.append({"archive": path.name, "sha256": sha, "minutes": len(m1), "doublons_exacts_supprimes": dup})
+    for y, mo in months:
+        path, sha = fetch_month(pair, y, mo, cache, session)
+        m1, dup = drop_exact_duplicates(read_year(path, pair, f"{y}{mo:02d}"), f"{pair} {y}-{mo:02d}")
+        frames.append(m1)
+        files.append({"archive": path.name, "sha256": sha, "minutes": len(m1), "doublons_exacts_supprimes": dup})
     m1 = pd.concat(frames, ignore_index=True).sort_values("time").reset_index(drop=True)
     if m1.time.duplicated().any():
-        raise ValueError(f"{pair} : minutes dupliquées entre archives annuelles")
-    m1 = m1[m1.time < HOLDOUT]                      # étiquettes du 31/12 au soir tombant en 2026 UTC : exclues
+        raise ValueError(f"{pair} : minutes dupliquées entre archives")
+    m1 = m1[m1.time < end]                          # étiquettes du dernier soir tombant après la fin en UTC : exclues
     bars = aggregate_30m(m1)
     out_csv = Path(out_csv)
     out_csv.parent.mkdir(parents=True, exist_ok=True)
@@ -156,7 +196,8 @@ def build_histdata_csv(pair: str, first_year: int, last_year: int, out_csv: Path
     meta = {"source": "histdata.com", "url_page": PAGE.format(pair=pair.lower(), year="<année>"), "pair": pair.lower(),
             "granularite_source": "M1 (bougies d'une minute, bid)", "step_s": 1800,
             "extracted_at_utc": pd.Timestamp.now(tz="UTC").isoformat(),
-            "extracted_at_origin": "heure du téléchargement (années civiles complètes, antérieures à 2026)",
+            "extracted_at_origin": f"heure du téléchargement (archives complètes ; minutes < {end})",
+            "fin_exclue": str(end), "reserve_levee": motif() if end > HOLDOUT else None,
             "n_rows": len(bars), "first": str(bars.time.iat[0]), "last": str(bars.time.iat[-1]),
             "minutes_sources": int(len(m1)), "n_barres_moins_de_30_minutes": int((bars.n_sub < 30).sum()),
             "sha256": hashlib.sha256(out_csv.read_bytes()).hexdigest(), "archives": files, **(meta_extra or {})}

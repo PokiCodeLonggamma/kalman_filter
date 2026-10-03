@@ -1,0 +1,14 @@
+{
+ "date": "2026-10-03 19:27 UTC",
+ "commit": "bb80d6d",
+ "version_finale_egale_D03_1": {
+  "BTC": {
+   "trades": 2075,
+   "esperance_atr": 0.180207
+  },
+  "SOL": {
+   "trades": 769,
+   "esperance_atr": 0.135282
+  }
+ }
+}

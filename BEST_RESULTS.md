@@ -315,6 +315,11 @@ barre. 5 bps, 0,25 %/ATR.*
 - **Latence :** sans effet. **Glissement des stops :** −0,115 ATR par trade pour 0,5 ATR ; c'est le risque d'exécution
   principal.
 
+### RE-1 version finale (décision du porteur, 2026-10-03)
+*RE-1 gelée et stop catastrophe de 4 ATR14(t) greffé sur tous les trades (`strategy.final`). Elle redonne trade par
+trade la série « Stop catastrophe 4 ATR » de D03.1 : BTC 2015-2025 +0,180 ATR [+0,012 ; +0,350], MDD −21,4 % (1x
+−42,5 %) ; SOL +0,135 ATR. Testée sur la réserve en EXP-D04 (ETH, XRP, 2026), protocole pré-enregistré.*
+
 ## Pistes écartées (à ne pas retester sans élément nouveau)
 
 | Piste | Raison | Source |
@@ -324,7 +329,7 @@ barre. 5 bps, 0,25 %/ATR.*
 | Entrée en continuation (R3, `nis_z_100` Q4) | +10,3 bps [+1,3 ; +19,8] à H26 seulement, porté par 2020-2021 ; écartée par le porteur | C01 |
 | R1, F1, F5 (x1 encore opposé) | aucune espérance nette positive, avec ou sans stop ; les frais coûtent 0,135 ATR par trade sur F5 ; rejet définitif (décision du porteur) : x1 retourné est un prérequis d'entrée | C02 |
 | Stop sur F2b | coupe les gagnants : −0,15 à −0,38 ATR par trade | C02 |
-| Stop de catastrophe à 5 ATR sur F2b dans le moteur (RE-3) | −0,08 ATR par trade, drawdown plus élevé, Calmar 0,77 contre 1,16 | C02bis |
+| Stop de catastrophe à 5 ATR sur F2b dans le moteur (RE-3) | −0,08 ATR par trade, drawdown plus élevé, Calmar 0,77 contre 1,16 ; repris ensuite à 4 ATR sur tous les trades comme assurance contre la ruine, non comme amélioration (décision du porteur, 2026-10-03) | C02bis, D03.1 |
 | Réouverture immédiate après un stop (H ≤ 32) | les trades débloqués font −0,15 à −1,38 ATR ; le cooldown fait mieux | C02bis |
 | Horizon propre à chaque sous-famille (F2b à H28) | à H28 : F3 +0,148 ATR, DD −16,2 %, Calmar 0,92 ; paramètre libre choisi après lecture ; H = 26 verrouillé (décision du porteur) | C02bis |
 | Take-profit fixe sur RE-1 (2 à 6 ATR) | même la borne optimiste (TP pris dès que la MFE26 l'atteint) reste sous RE-1 : +0,200 à +0,347 ATR contre +0,369 ; exclu (décision du porteur, vérifiée) | C03 |

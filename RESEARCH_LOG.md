@@ -1846,3 +1846,51 @@ reproduction de résultats publiés et parité du noyau, sans aucune performance
 - [ ] **VALIDÉ**
 - [x] **À trancher par le porteur :** greffe du stop catastrophe (le « coût marginal » est sa règle) ; choix du lieu et
   du type d'ordre pour les stops. RE-1 inchangée à ce stade.
+
+### [DÉCISION] — Stop catastrophe greffé : RE-1 version finale ; GO de D04 (2026-10-03)
+- **Décision du porteur, après lecture de D03.1 :** le stop catastrophe de 4 ATR est greffé définitivement à RE-1 et
+  fait partie de la version finale. Motif du porteur : en production ou en compte financé (limite de perte
+  journalière de 4 %), un trade F2b sans stop pendant un krach est éliminatoire, quelle que soit la taille. La latence
+  nulle mesurée en D03.1 ouvre la voie aux ordres à cours limité pour les entrées.
+- **Version finale (`strategy.final`) :** seuils BTC gelés, R0 = 100, frontière 0,85, H = 26, verrou 26, F2b sans
+  SL-B, F3 SL-B à 0, stop catastrophe open[t + 1] − sens · 4 · ATR14(t) sur tous les trades (le plus proche des deux pour
+  F3). Contrôle : elle redonne trade par trade la série « Stop catastrophe 4 ATR » de D03.1 (BTC 2015-2025 : 2 075
+  trades, +0,180 ATR ; SOL : 769 trades, +0,135 ATR).
+- **Réserve levée par un interrupteur explicite (`reserve.levee`) :** scellée par défaut dans tout le dépôt ; levée
+  seulement dans un bloc du script de D04 (lecture de `strategy.load_asset` au-delà de 2025, contrôle
+  `check_no_holdout`, téléchargeurs Bitstamp, Coinbase et HistData). Alpaca, FRED et Saxo restent scellés.
+- **Téléchargements autorisés par le porteur** après annonce des fichiers, sources et tailles : ETH/USD et XRP/USD
+  (Bitstamp, tout l'historique), 2026 de BTC/USD (Bitstamp), SOL/USD et AVAX/USD (Coinbase), XAU/USD (HistData).
+  Push de bb80d6d autorisé (fait, origin = bb80d6d). Pré-enregistrement : commit local, sans push.
+
+### [EXP-D04] — Épreuve de la réserve (Phase 7) : ETH et XRP, année 2026 — protocole pré-enregistré
+- **Date :** 2026-10-03
+- **Étape :** D, D04 (Phase 7). Protocole du porteur ; formes opérationnelles consignées dans
+  `experiments/D04/run_D04.py` et ici, puis commit local, avant tout téléchargement. Aucune modification après lecture.
+- **Actifs & Période :** test A, ETH/USD et XRP/USD Bitstamp, de la première barre cotée au 2026-10-01 00:00 UTC
+  exclu ; test B, signaux du 2026-01-01 au 2026-10-01 exclu pour BTC/USD (Bitstamp), SOL/USD et AVAX/USD (Coinbase),
+  CFD or XAU/USD (HistData ; fin au 2026-09-01 si septembre n'est pas publié). Barres de 30 min telles que servies.
+- **Modèle de frais :** 5 bps (or 4 bps) ; 10 bps (or 6 bps) en lecture ; 0,25 % du capital par ATR14(t), levier ≤ 1x ;
+  PnL et MDD à 1x à côté.
+
+#### 0. Cadrage
+- **QUESTION :** la version finale de RE-1 garde-t-elle une espérance nette positive sur deux actifs jamais utilisés
+  pour la construire (ETH, XRP), et comment traverse-t-elle 2026 sur les quatre actifs de développement ?
+- **DONNÉES :** séries ci-dessus ; pour le test B, atlas calculé sur l'historique continu (filtre de Kalman depuis la
+  première barre ; panne de janvier 2015 retirée pour BTC, comme en D02-D03.1).
+- **MÉTHODE :** version finale seule (aucune autre variante calculée sur la réserve) ; test A, tous les signaux hors
+  warm-up ; test B, candidats restreints à la période (convention de D03.1, verrou neuf au 1er janvier).
+- **CRITÈRE DE LECTURE :** 8 métriques par série ; espérance par année d'entrée pour ETH et XRP (ATR, bps, IC 95 % par
+  grappes mensuelles) ; survie : pire trade et pire journée UTC en % du capital (valorisé aux clôtures de 30 min et aux
+  extrêmes défavorables des barres détenues), à 0,25 %/ATR et à 1x, MDD, PnL.
+- **Règle de décision du porteur (verbatim) :** « Si la stratégie dégage une espérance nette strictement positive
+  (E[ATR]_net > 0) sur ETH et XRP d'une part, et qu'elle a survécu sans crash à l'année 2026 d'autre part, la stratégie
+  est validée pour la production. » Lecture fixée avant les données : E[ATR]_net = moyenne par trade du rendement net
+  de 5 bps en ATR14(t), estimation ponctuelle, pour ETH et pour XRP séparément, IC en lecture ; « survécu sans crash » :
+  jugé par le porteur sur les mesures, sans seuil fixé (réponse du porteur).
+- **Contrôles bloquants :** version finale = D03.1 (fait, réserve scellée) ; empreintes des nouvelles séries ; barres
+  antérieures à 2026 des séries prolongées identiques aux séries scellées ; mêmes candidats et mêmes trades avant 2026.
+- **Réserve non vierge (passation §2.1) :** ETH et XRP vus par d'anciens projets (Kalman, « Labos 2-3 ») ; BTC 2026
+  aussi. Aucun paramètre de RE-1 n'a été choisi sur ces données.
+- **Code :** `reserve` (interrupteur), `strategy.final` (version finale), `envelope.daily` (pertes journalières),
+  téléchargeurs (année partielle Bitstamp, mois de 2026 Coinbase, archives mensuelles HistData) ; 349 tests.

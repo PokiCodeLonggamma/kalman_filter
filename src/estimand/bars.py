@@ -6,7 +6,8 @@
 - `load_events_dev` : événements de développement du dataset ML1 `B-1.0`, avec les filtres de `ml.prepare_dev`
   (censure filtrée, entrée ou sortie en 2026 exclue) réécrits ici pour ne pas importer le paquet `ml` (qui importe
   sklearn) ; l'équivalence avec `ml.load_dev_dataset` est testée ;
-- `check_no_holdout` : lève une erreur si une barre ou un événement touche 2026.
+- `check_no_holdout` : lève une erreur si une barre ou un événement touche 2026 (sauf levée explicite de la
+  réserve, `reserve.levee`, EXP-D04).
 """
 from __future__ import annotations
 
@@ -14,11 +15,15 @@ import numpy as np
 import pandas as pd
 
 from config import DATA_RAW, ML1_DATASET_CSV, ML_HOLDOUT_START
+from reserve import scellee
 
 HOLDOUT = pd.Timestamp(ML_HOLDOUT_START, tz="UTC")
 
 
 def check_no_holdout(df: pd.DataFrame, cols=("time",)) -> None:
+    """Erreur si une date ≥ 2026-01-01 apparaît, sauf dans un bloc `reserve.levee` (EXP-D04)."""
+    if not scellee():
+        return
     for c in cols:
         if c in df.columns and len(df) and (pd.to_datetime(df[c], utc=True) >= HOLDOUT).any():
             raise ValueError(f"réserve 2026 : la colonne {c} contient une date ≥ {HOLDOUT.date()} (D43)")

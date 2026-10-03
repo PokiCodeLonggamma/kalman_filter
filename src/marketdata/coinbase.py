@@ -9,7 +9,8 @@
   barre dont un seul quart d'heure a des transactions est gardée ; une barre sans aucune bougie est un trou.
 - Sortie : schéma de `utils.data_loader.load_ohlc` et `.meta.json` (provenance, construction, empreintes des
   fichiers mensuels de bougies de 15 min mis en cache).
-- Réserve 2026 : aucune bougie ≥ 2026-01-01 n'est demandée ni écrite.
+- Réserve 2026 : aucune bougie ≥ 2026-01-01 n'est demandée ni écrite, sauf dans un bloc `reserve.levee` (EXP-D04 :
+  2026 de SOL/USD et AVAX/USD, décision du porteur du 2026-10-03). Un mois n'est téléchargé que s'il est terminé.
 """
 from __future__ import annotations
 
@@ -25,6 +26,7 @@ import numpy as np
 import pandas as pd
 
 from marketdata.bars import aggregate_30m
+from reserve import exiger_levee, motif
 from utils.data_loader import meta_path
 
 API = "https://api.exchange.coinbase.com/products/{product}/candles"
@@ -74,7 +76,7 @@ def fetch_candles(product: str, first, last, granularity: int = GRANULARITY,
     t0 = t0.tz_localize("UTC") if t0.tzinfo is None else t0
     t1 = t1.tz_localize("UTC") if t1.tzinfo is None else t1
     if t1 > HOLDOUT:
-        raise ValueError(f"réserve 2026 : fin demandée {t1} postérieure au 2026-01-01")
+        exiger_levee(f"fin demandée {t1} postérieure au 2026-01-01")
     step = pd.Timedelta(seconds=granularity)
     frames, a = [], t0
     while a < t1:
@@ -102,7 +104,9 @@ def build_coinbase_csv(product: str, first: str, last: str, out_csv: Path, cache
     CSV au schéma de `load_ohlc` et son `.meta.json`. Renvoie le méta."""
     months = pd.period_range(pd.Period(first, "M"), pd.Period(last, "M"), freq="M")
     if months[-1].end_time.tz_localize("UTC") >= HOLDOUT:
-        raise ValueError(f"réserve 2026 : le mois {months[-1]} n'est pas téléchargeable")
+        exiger_levee(f"le mois {months[-1]} n'est pas téléchargeable")
+    if (months[-1] + 1).start_time.tz_localize("UTC") > pd.Timestamp.now(tz="UTC"):
+        raise ValueError(f"{product} : le mois {months[-1]} n'est pas terminé")
     cache = Path(cache)
     cache.mkdir(parents=True, exist_ok=True)
     frames, files = [], []
@@ -120,14 +124,15 @@ def build_coinbase_csv(product: str, first: str, last: str, out_csv: Path, cache
         raise ValueError(f"{product} : bougies dupliquées entre mois")
     bars = aggregate_30m(c15)
     if (bars.time >= HOLDOUT).any():
-        raise ValueError("réserve 2026 : barre ≥ 2026-01-01")
+        exiger_levee("barre ≥ 2026-01-01")
     out_csv = Path(out_csv)
     out_csv.parent.mkdir(parents=True, exist_ok=True)
     bars[CSV_COLUMNS].to_csv(out_csv, index=False)
     meta = {"source": "coinbase", "url": API.format(product=product), "product": product,
             "pair": product.replace("-", "").lower(), "granularite_source_s": GRANULARITY, "step_s": 1800,
             "extracted_at_utc": pd.Timestamp.now(tz="UTC").isoformat(),
-            "extracted_at_origin": "heure du téléchargement (mois civils complets, antérieurs à 2026)",
+            "extracted_at_origin": "heure du téléchargement (mois civils complets)",
+            "reserve_levee": motif() if (bars.time >= HOLDOUT).any() else None,
             "n_rows": len(bars), "first": str(bars.time.iat[0]), "last": str(bars.time.iat[-1]),
             "n_barres_un_seul_quart_d_heure": int((bars.n_sub == 1).sum()),
             "sha256": _sha256(out_csv), "fichiers_15m": files, **(meta_extra or {})}
