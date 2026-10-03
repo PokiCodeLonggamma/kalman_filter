@@ -1894,3 +1894,8 @@ reproduction de résultats publiés et parité du noyau, sans aucune performance
   aussi. Aucun paramètre de RE-1 n'a été choisi sur ces données.
 - **Code :** `reserve` (interrupteur), `strategy.final` (version finale), `envelope.daily` (pertes journalières),
   téléchargeurs (année partielle Bitstamp, mois de 2026 Coinbase, archives mensuelles HistData) ; 349 tests.
+- **Incident d'acquisition (avant toute lecture, consigné) :** le premier téléchargement s'est arrêté sur une page vide
+  (ETH/USD, départ au 2014-01-01). Sondes : l'API Bitstamp sert les barres de [start, start + 999 pas], pas les 1 000
+  premières barres ≥ start ; premières cotations ETH/USD le 2017-08-16 (16:30 UTC en 30 min), XRP/USD le 2016-12-16 ;
+  rien avant. Correction du téléchargeur : une page vide est une fenêtre vide, la suivante est demandée (sans perte,
+  test sur une API simulée à fenêtre) ; commit séparé avant la reprise.

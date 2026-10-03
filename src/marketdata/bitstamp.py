@@ -11,9 +11,10 @@ RE-1 figée ; décision du porteur du 2026-10-01).
   (#KAKALMAN/src/utils/download_ohlc.py) : sur la période commune, les valeurs doivent être identiques.
 - Cache : un CSV par année civile ; le méta consigne l'empreinte de chacun. Une dernière année partielle (`end`) a
   son propre fichier, suffixé par sa date de fin exclue.
-- Paire cotée en cours d'année : l'API sert les barres d'ouverture ≥ start, donc les premières barres cotées ; une
-  année antérieure à la cotation est vide. Une page vide avant la fin demandée arrête tout (rien n'est comblé ni
-  sauté).
+- Sémantique de fenêtre (constatée le 2026-10-03, EXP-D04) : l'API sert les barres de [start, start + 999 pas], pas
+  les 1 000 premières barres ≥ start (ETH/USD, pas d'une journée depuis le 2016-09-27 : 677 bougies, du 2017-08-16,
+  première cotation, au 2019-06-23, fin de la fenêtre). Une page vide est donc une fenêtre sans barre : la fenêtre
+  suivante est demandée, sans perte ; une année antérieure à la cotation est vide. Rien n'est comblé.
 - Réserve 2026 : aucune barre ≥ 2026-01-01 n'est demandée ni écrite, sauf dans un bloc `reserve.levee` (EXP-D04 :
   ETH/USD, XRP/USD et 2026 de BTC/USD, décision du porteur du 2026-10-03).
 """
@@ -65,8 +66,9 @@ def fetch_ohlc(pair: str, first, last, step: int = STEP,
     a, end, frames = int(t0.timestamp()), int(t1.timestamp()), []
     while a < end:
         df = parse_ohlc(fetch(f"{API.format(pair=pair)}?step={step}&limit={LIMIT}&start={a}"))
-        if df.empty:                                  # aucune barre à partir de `a` : rien n'est comblé ni sauté
-            raise RuntimeError(f"Bitstamp {pair} : aucune barre servie à partir de {pd.Timestamp(a, unit='s', tz='UTC')}")
+        if df.empty:                                  # fenêtre [a, a + 999 pas] sans barre : fenêtre suivante
+            a += LIMIT * step
+            continue
         frames.append(df[(df.timestamp >= a) & (df.timestamp < end)])
         nxt = int(df.timestamp.iat[-1]) + step
         if nxt <= a:

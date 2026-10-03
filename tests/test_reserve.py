@@ -3,6 +3,7 @@ rescellée après, même sur erreur ; gardes des lectures (`check_no_holdout`, `
 téléchargeurs Bitstamp, Coinbase et HistData (API simulées, sans réseau)."""
 import io
 import zipfile
+from urllib.parse import parse_qs, urlparse
 
 import numpy as np
 import pandas as pd
@@ -85,14 +86,28 @@ def test_bitstamp_annee_partielle_levee_et_page_vide(tmp_path):
             build_bitstamp_csv("btcusd", 2026, 2026, tmp_path / "q.csv", tmp_path / "c", None, fake)
 
 
-def test_bitstamp_paire_cotee_en_cours_d_annee_et_page_vide(tmp_path):
-    late = FakeBitstamp("2013-03-10", "2014-01-01")                 # paire cotée à partir du 10 mars 2013
-    meta = build_bitstamp_csv("xrpusd", 2012, 2013, tmp_path / "x.csv", tmp_path / "c", None, late)
-    d = load_ohlc(tmp_path / "x.csv")
-    assert d.time.iat[0] == pd.Timestamp("2013-03-10", tz="UTC") and len(d) == (365 - 68) * 48
-    assert [f["barres"] for f in meta["fichiers_annuels"]] == [0, (365 - 68) * 48]   # 2012 : année vide
-    with pytest.raises(RuntimeError, match="aucune barre"):
-        fetch_ohlc("xrpusd", "2013-01-01", "2013-02-01", fetch=lambda url: {"data": {"ohlc": []}})
+class FakeBitstampFenetre(FakeBitstamp):
+    """Sémantique réelle constatée : barres de la fenêtre [start, start + (limit − 1) · step] seulement."""
+
+    def __call__(self, url: str):
+        self.urls.append(url)
+        q = parse_qs(urlparse(url).query)
+        start, limit, step = int(q["start"][0]), int(q["limit"][0]), int(q["step"][0])
+        sel = [{k: v for k, v in r.items() if k != "close_f"} for r in self.rows
+               if start <= int(r["timestamp"]) <= start + (limit - 1) * step]
+        return {"data": {"pair": "XRP/USD", "ohlc": sel}}
+
+
+def test_bitstamp_paire_cotee_en_cours_d_annee_fenetres_vides_sans_perte(tmp_path):
+    for fake in (FakeBitstamp("2013-03-10 16:30", "2014-01-01"), FakeBitstampFenetre("2013-03-10 16:30", "2014-01-01")):
+        meta = build_bitstamp_csv("xrpusd", 2012, 2013, tmp_path / "x.csv", tmp_path / type(fake).__name__, None, fake)
+        d = load_ohlc(tmp_path / "x.csv")
+        n = (365 - 69) * 48 + 15                                    # du 10 mars 16:30 au 31 décembre 23:30
+        assert d.time.iat[0] == pd.Timestamp("2013-03-10 16:30", tz="UTC") and len(d) == n
+        assert [f["barres"] for f in meta["fichiers_annuels"]] == [0, n]          # 2012 : année vide
+    got = fetch_ohlc("xrpusd", "2013-01-01", "2013-04-01", fetch=FakeBitstampFenetre("2013-03-10 16:30", "2013-04-01"))
+    assert got.time.iat[0] == pd.Timestamp("2013-03-10 16:30", tz="UTC") and got.time.is_unique
+    assert fetch_ohlc("xrpusd", "2013-01-01", "2013-02-01", fetch=lambda url: {"data": {"ohlc": []}}).empty
 
 
 def test_coinbase_mois_de_2026_dans_le_bloc_seulement(tmp_path):
