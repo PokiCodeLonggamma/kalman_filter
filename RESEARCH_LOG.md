@@ -1899,3 +1899,11 @@ reproduction de résultats publiés et parité du noyau, sans aucune performance
   premières barres ≥ start ; premières cotations ETH/USD le 2017-08-16 (16:30 UTC en 30 min), XRP/USD le 2016-12-16 ;
   rien avant. Correction du téléchargeur : une page vide est une fenêtre vide, la suivante est demandée (sans perte,
   test sur une API simulée à fenêtre) ; commit séparé avant la reprise.
+- **Incidents de données de l'or (avant tout calcul sur 2026, consignés) :** l'archive HistData de juin 2026 sert 26
+  minutes deux fois avec des valeurs différentes (2026-06-28 22:08 → 2026-06-30 16:02 UTC, écart jusqu'à 16 $ pour
+  ≈ 4 080 $) ; elles sont fusionnées (ouverture de la première ligne, plus haut et plus bas des deux, clôture de la
+  dernière ; `histdata.merge_conflicting_minutes`, `conflits="fusion"`), rien n'est jeté. L'archive de septembre est
+  partielle (dernière minute le 2026-09-24) : barres prises telles que servies, aucun signal de l'or après le 24.
+- **Téléchargements faits (2026-10-03) :** ETH/USD 159 951 barres (2017-08-16 16:30 → 2026-09-30 23:30), XRP/USD
+  171 621 (2016-12-16 13:30 → 2026-09-30), BTC/USD 241 008 (2013 → 2026-09-30), SOL/USD 92 669, AVAX/USD 87 622, or
+  207 353 (→ 2026-09-24) ; anciennes séries inchangées.

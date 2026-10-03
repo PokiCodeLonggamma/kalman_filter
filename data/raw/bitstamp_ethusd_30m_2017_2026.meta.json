@@ -1,0 +1,103 @@
+{
+ "source": "bitstamp",
+ "url": "https://www.bitstamp.net/api/v2/ohlc/ethusd/",
+ "pair": "ethusd",
+ "step_s": 1800,
+ "extracted_at_utc": "2026-10-03T19:41:03.319557+00:00",
+ "extracted_at_origin": "heure du téléchargement (fin exclue : 2026-10-01 00:00:00+00:00)",
+ "fin_exclue": "2026-10-01 00:00:00+00:00",
+ "reserve_levee": "EXP-D04 (porteur, 2026-10-03)",
+ "n_rows": 159951,
+ "first": "2017-08-16 16:30:00+00:00",
+ "last": "2026-09-30 23:30:00+00:00",
+ "barres_volume_nul_par_an": {
+  "2017": 40,
+  "2018": 2,
+  "2019": 26,
+  "2020": 16,
+  "2021": 5,
+  "2022": 8,
+  "2023": 5,
+  "2024": 9,
+  "2025": 7,
+  "2026": 0
+ },
+ "barres_plates_par_an": {
+  "2017": 44,
+  "2018": 5,
+  "2019": 85,
+  "2020": 26,
+  "2021": 5,
+  "2022": 9,
+  "2023": 6,
+  "2024": 10,
+  "2025": 7,
+  "2026": 0
+ },
+ "sha256": "e76d47b1fc74873616495483528f1063dabd71a276e0d82185138c777a15fc9c",
+ "fichiers_annuels": [
+  {
+   "annee": 2017,
+   "barres": 6591,
+   "sha256": "a5764badd5686c58c51ccb258c7f2ae52e03ce7b8cf4e625e383cd388eaba04e"
+  },
+  {
+   "annee": 2018,
+   "barres": 17520,
+   "sha256": "77fe7f7311e646ed3c0faa43022669842860e6cad1740f374616f254326f6ee6"
+  },
+  {
+   "annee": 2019,
+   "barres": 17520,
+   "sha256": "e7efcf1b70a6669ae8c03c21331498ad4aa94be7db22bcf2b26d4d50c42ba7ec"
+  },
+  {
+   "annee": 2020,
+   "barres": 17568,
+   "sha256": "178bc04542da2fb13b1d592d8f408de84e4f873bace2dcf9687bd43803c6209a"
+  },
+  {
+   "annee": 2021,
+   "barres": 17520,
+   "sha256": "6f041b4ef0f224a176dd8fd56733ed730023a7390f00b5d00b5cda659e3d52c6"
+  },
+  {
+   "annee": 2022,
+   "barres": 17520,
+   "sha256": "dd2d5408c29e41219a6c054cfa00c8e40a313e4195b4d4683abbf8aae8e3949c"
+  },
+  {
+   "annee": 2023,
+   "barres": 17520,
+   "sha256": "1947cc38e79ce45da9184bf582b83c7da962b8a47aa10bdbbef4b1b9108beff8"
+  },
+  {
+   "annee": 2024,
+   "barres": 17568,
+   "sha256": "62c1fc1429402b4da2d7126301c519046a0d4b192176fc17b8f0a94c3d287902"
+  },
+  {
+   "annee": 2025,
+   "barres": 17520,
+   "sha256": "f080816ffc89763e8ea7e46b1896f0fcfbec50161b3f5163c368394015e2dd09"
+  },
+  {
+   "annee": 2026,
+   "barres": 13104,
+   "sha256": "17724847c79616b1296a9d9580415d2d2ad064865f791a9a748caed1074b4b4a"
+  }
+ ],
+ "actif": "ETH",
+ "instrument": "ETH/USD, carnet spot de Bitstamp (TradingView : BITSTAMP:ETHUSD)",
+ "nature": "spot crypto, cotation en dollars américains",
+ "ticker": "ethusd (Bitstamp)",
+ "continuite": "sans objet : instrument spot, série unique",
+ "rolls": "sans objet",
+ "ajustements": "aucun",
+ "timezone": "UTC (ouverture des barres Bitstamp)",
+ "horaires": "cotation continue 24/7 ; les interruptions sont des maintenances ou incidents de la plateforme",
+ "construction_barres": "barres natives de 30 min de l'API OHLC publique de Bitstamp (step 1800), telles que servies ; une barre sans transaction est servie plate au dernier prix, volume nul, et gardée",
+ "couverture_demandee": "première barre cotée → 2026-09-30 (fin exclue 2026-10-01) ; années antérieures à la cotation demandées, vides",
+ "sources_ecartees": "aucune",
+ "decision": "porteur, 2026-10-03 : EXP-D04, réserve levée (test A)"
+}

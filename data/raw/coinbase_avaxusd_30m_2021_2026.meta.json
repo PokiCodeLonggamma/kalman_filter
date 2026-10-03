@@ -1,0 +1,337 @@
+{
+ "source": "coinbase",
+ "url": "https://api.exchange.coinbase.com/products/AVAX-USD/candles",
+ "product": "AVAX-USD",
+ "pair": "avaxusd",
+ "granularite_source_s": 900,
+ "step_s": 1800,
+ "extracted_at_utc": "2026-10-03T19:41:15.251056+00:00",
+ "extracted_at_origin": "heure du téléchargement (mois civils complets)",
+ "reserve_levee": "EXP-D04 (porteur, 2026-10-03)",
+ "n_rows": 87622,
+ "first": "2021-09-30 19:00:00+00:00",
+ "last": "2026-09-30 23:30:00+00:00",
+ "n_barres_un_seul_quart_d_heure": 35,
+ "sha256": "cad24342e951d29e47dda7622dd56cf371fb94ffcec79f5e234c06305694681c",
+ "fichiers_15m": [
+  {
+   "mois": "2021-09",
+   "bougies_15m": 20,
+   "sha256": "8886c3fbf08bf01a723b899f08947ced7e72e6eba8e0bb520aced6642d3e0bba"
+  },
+  {
+   "mois": "2021-10",
+   "bougies_15m": 2976,
+   "sha256": "15e3695e602c10eac69247055c84722b3f153cb82a0c170aaedf63796847985c"
+  },
+  {
+   "mois": "2021-11",
+   "bougies_15m": 2878,
+   "sha256": "e6a582d142136609e7571d12813229ac642cc744f44fb77b243fffd8ace1710c"
+  },
+  {
+   "mois": "2021-12",
+   "bougies_15m": 2972,
+   "sha256": "01ab7033feb60f6a6af6e6118a53ca84ed3c31bcf7e74df889e5c999759d9ebb"
+  },
+  {
+   "mois": "2022-01",
+   "bougies_15m": 2976,
+   "sha256": "f80aacbaa47268bfa1c9f7832e0f9bdca7a1ba71084caec5dc74a1fa056c9a5e"
+  },
+  {
+   "mois": "2022-02",
+   "bougies_15m": 2688,
+   "sha256": "aa887697acc642a2ac28761dabd5db0ab2fa2cac45cc69d0487c072c2fb4f1e2"
+  },
+  {
+   "mois": "2022-03",
+   "bougies_15m": 2976,
+   "sha256": "aabb0fdd7da0941f04f01ded1f914e1cefcf2b8210fab4abd5c7747bf2425d65"
+  },
+  {
+   "mois": "2022-04",
+   "bougies_15m": 2880,
+   "sha256": "5527eb63e09e10a7559cf4809b3c288a9eadf4822775db60ff09d632c72b3843"
+  },
+  {
+   "mois": "2022-05",
+   "bougies_15m": 2976,
+   "sha256": "299c0520315eb9f9079c925104573573d69bce56efa74e09fcaa5ea0a62d5180"
+  },
+  {
+   "mois": "2022-06",
+   "bougies_15m": 2880,
+   "sha256": "eb7a85ec6149173a642b1390b0167ee737e3cf0a3b4ff11157d07542fe25dc01"
+  },
+  {
+   "mois": "2022-07",
+   "bougies_15m": 2976,
+   "sha256": "56030bffef148d5df49a4a2820287620a8c8abb838f29fd0542e9a8cc6d3dadb"
+  },
+  {
+   "mois": "2022-08",
+   "bougies_15m": 2976,
+   "sha256": "53a06ee2472ae4a4914e86c882120aa29b4a3c2b73c06d1d6e809c1904f361f3"
+  },
+  {
+   "mois": "2022-09",
+   "bougies_15m": 2880,
+   "sha256": "7000f8c09b0aaceb317328899fd6105a7b5b8028ed71b3f8ea023b2c294e57b7"
+  },
+  {
+   "mois": "2022-10",
+   "bougies_15m": 2976,
+   "sha256": "ce90fc91df8f63157037185695cc331d3413b5b203ef1da08bbce15e5d2a647f"
+  },
+  {
+   "mois": "2022-11",
+   "bougies_15m": 2880,
+   "sha256": "ce4a6d54bc475bbf8f195038fdb666809349d4a27ff333b47c07279662263679"
+  },
+  {
+   "mois": "2022-12",
+   "bougies_15m": 2976,
+   "sha256": "9df8c993033725c6bbe4c239caa02e8ad2db8d6e067a0105e34533102d48369b"
+  },
+  {
+   "mois": "2023-01",
+   "bougies_15m": 2976,
+   "sha256": "ee53959d989b34dc6bd3d55a35f34e62dc2b9b810dfcbe55f116fe241d443df8"
+  },
+  {
+   "mois": "2023-02",
+   "bougies_15m": 2688,
+   "sha256": "4813155bbcc20c8605bacb6d21dd543f3061a23cff857d98d63f3d25c494ef7a"
+  },
+  {
+   "mois": "2023-03",
+   "bougies_15m": 2956,
+   "sha256": "931dc6f9c006850db71cbe9fac5219ba26b5e1dc93a3314dca8e30113494903c"
+  },
+  {
+   "mois": "2023-04",
+   "bougies_15m": 2880,
+   "sha256": "08545888cd033ea9a64443f89b71528ead9782f9e9c7d6beff039aa0553e9e66"
+  },
+  {
+   "mois": "2023-05",
+   "bougies_15m": 2974,
+   "sha256": "94cb03f92f7ecee37b15718810beb04438ba444646fe763a85191bb5497c44db"
+  },
+  {
+   "mois": "2023-06",
+   "bougies_15m": 2880,
+   "sha256": "fd716f7f6ce40fdb301ee2d715d6f1913e2114f0ad35a5566ab866550ebc7654"
+  },
+  {
+   "mois": "2023-07",
+   "bougies_15m": 2976,
+   "sha256": "7fd3bb43b8ed33c48c3e54d4930090365f6e1fa8b380fb4b2c56d0d9422d2201"
+  },
+  {
+   "mois": "2023-08",
+   "bougies_15m": 2976,
+   "sha256": "d781ec487397e28296951c1715ac9d867459c793f3cd26a9c2e5f1df4ce4d4aa"
+  },
+  {
+   "mois": "2023-09",
+   "bougies_15m": 2877,
+   "sha256": "02eb3e10ea72e8e449fd3629c66022f5e01368cb68c8712991ec1e561f90b3ba"
+  },
+  {
+   "mois": "2023-10",
+   "bougies_15m": 2971,
+   "sha256": "6860df6694b62f202d3cbec7c18324bf5afbac0d4812a5d1fb8047001fa643fe"
+  },
+  {
+   "mois": "2023-11",
+   "bougies_15m": 2880,
+   "sha256": "fe181f0c3f967be17ac9da2b74382a24f7639381706ad5f166721f4f7838ebbe"
+  },
+  {
+   "mois": "2023-12",
+   "bougies_15m": 2976,
+   "sha256": "eefe04f8fa64242e60028fa8990fa2c7a50816fb655f3ecc71ebf25a1b379ca4"
+  },
+  {
+   "mois": "2024-01",
+   "bougies_15m": 2976,
+   "sha256": "ad8025e89bfaf1242d2fa7ebb342b5ec9cf60acb57a7a6d25321619fe3e09d40"
+  },
+  {
+   "mois": "2024-02",
+   "bougies_15m": 2783,
+   "sha256": "3251524fd897b4176520ee477bd393b9e22d4603250b12b3a68a7b5c93b56ad4"
+  },
+  {
+   "mois": "2024-03",
+   "bougies_15m": 2976,
+   "sha256": "13c851e41fa22b346b07b0cb15d7d5756dc4b98d1cfa280b275f04a7ca424099"
+  },
+  {
+   "mois": "2024-04",
+   "bougies_15m": 2880,
+   "sha256": "5d56a90178ae21af56404ed501aa27f7c5f681a9c2dd0f291fdb38a0573f02db"
+  },
+  {
+   "mois": "2024-05",
+   "bougies_15m": 2972,
+   "sha256": "a89f4b96fb75fe575f3813a3a92d3589278a5552bc2342cb0d8bd7e42507ae80"
+  },
+  {
+   "mois": "2024-06",
+   "bougies_15m": 2880,
+   "sha256": "9bf9900aaa3e95510f5f3d0e723dc3ca85e155c56c11fa637af92e1835f21084"
+  },
+  {
+   "mois": "2024-07",
+   "bougies_15m": 2976,
+   "sha256": "9a4a89292ca3375dbe9bc9bb67a67bfb2add5707d76ef8bfb9962a7092ab5e4d"
+  },
+  {
+   "mois": "2024-08",
+   "bougies_15m": 2976,
+   "sha256": "af3f80bef30f4197b51fa99ef9910e30ab8baed0349b2cddf544bea16e570523"
+  },
+  {
+   "mois": "2024-09",
+   "bougies_15m": 2880,
+   "sha256": "cd023b96d9de5406c35f46f1b80324cd4ad438ea29907742371dd6c120737080"
+  },
+  {
+   "mois": "2024-10",
+   "bougies_15m": 2972,
+   "sha256": "66526a9c7ee564d336995b436232c5b90abc4d7ea0aaa9190907b77f3d8e7cbf"
+  },
+  {
+   "mois": "2024-11",
+   "bougies_15m": 2880,
+   "sha256": "ee4a5578a785f0069b6037acf9f77dfd9a1c0f2e756068e2c4eb0cb40b85116a"
+  },
+  {
+   "mois": "2024-12",
+   "bougies_15m": 2976,
+   "sha256": "1654e5b829642cea838d7af1bee66ea71e4d37a556860ca25832b695ba1a4a26"
+  },
+  {
+   "mois": "2025-01",
+   "bougies_15m": 2976,
+   "sha256": "08174ab61b43c2ecd7f9ff16f8112401ba43a6d4be710bbdf3811be1fd87892e"
+  },
+  {
+   "mois": "2025-02",
+   "bougies_15m": 2688,
+   "sha256": "a35bf0077ab3f2ba62f89a691b8974523454415936e15ec65648fc5891a190c0"
+  },
+  {
+   "mois": "2025-03",
+   "bougies_15m": 2976,
+   "sha256": "b31bd079eff545c5e70cfa9bcd4cbb6de72ac53d1b46edb6ad30a9617e041e09"
+  },
+  {
+   "mois": "2025-04",
+   "bougies_15m": 2880,
+   "sha256": "5229f9e57674ab4c28c7195531cc12878a7c32f6a7840f12e0f8cc018a0bd905"
+  },
+  {
+   "mois": "2025-05",
+   "bougies_15m": 2976,
+   "sha256": "8fe8a89f362a9610259914657ed92526fa5cbfc0c48fb771a6dafedb378f7afd"
+  },
+  {
+   "mois": "2025-06",
+   "bougies_15m": 2880,
+   "sha256": "817c275327bf3e34b7b85d7b40199ce2313ef233d5d5e3fcff4079a80c5be68b"
+  },
+  {
+   "mois": "2025-07",
+   "bougies_15m": 2976,
+   "sha256": "38efe9be6f86a355fcb634bf68399edbc9060ac3f8600342f93bde3583e0b850"
+  },
+  {
+   "mois": "2025-08",
+   "bougies_15m": 2976,
+   "sha256": "e4d139760986783d0467d8546692a58511bf6555018c0a10ec123ae550876dca"
+  },
+  {
+   "mois": "2025-09",
+   "bougies_15m": 2880,
+   "sha256": "189e711f64df28a9c0a0847ea54e16cac330d534828025a60ac3cf2a78ef0dde"
+  },
+  {
+   "mois": "2025-10",
+   "bougies_15m": 2953,
+   "sha256": "be63ae4dbb6a4561cc95651240cd048e38d19e4db981a6c37e9c879125eaa4d4"
+  },
+  {
+   "mois": "2025-11",
+   "bougies_15m": 2880,
+   "sha256": "55ed9961cf7d5a22053e0bb658867dbe2659efcb17051a3b7a4b2be67521a6d3"
+  },
+  {
+   "mois": "2025-12",
+   "bougies_15m": 2976,
+   "sha256": "4248d8c5f10c66f560b995ddd87245423424dc6693d68158a9719f92f975a79e"
+  },
+  {
+   "mois": "2026-01",
+   "bougies_15m": 2976,
+   "sha256": "2ae6b8b42dd7af8e20d7bf132d80f6b6cee22992792d50bbcc264fade5904b60"
+  },
+  {
+   "mois": "2026-02",
+   "bougies_15m": 2688,
+   "sha256": "3549a76b2089b04abd82ce06911d410bcfa3d010b5525b7662bff35be2f585b4"
+  },
+  {
+   "mois": "2026-03",
+   "bougies_15m": 2976,
+   "sha256": "52a9b485f6d8b04a120031373eb499ec91898d97d3acf25440c6260cb4aa4c8d"
+  },
+  {
+   "mois": "2026-04",
+   "bougies_15m": 2880,
+   "sha256": "e12e95bf94937e5c9658d3850033541e4db048ccbf7a20ff16ed0bd053699a05"
+  },
+  {
+   "mois": "2026-05",
+   "bougies_15m": 2951,
+   "sha256": "2021e293c9b4a8b4b759cc8ee960fe6d8c002c39df7872015d71bd6310fe7d08"
+  },
+  {
+   "mois": "2026-06",
+   "bougies_15m": 2880,
+   "sha256": "7b616a657a22d780ed686ca480eb55d70ac4ee793e231c24fc33892b9b00a592"
+  },
+  {
+   "mois": "2026-07",
+   "bougies_15m": 2964,
+   "sha256": "19463d445e07bd1f4d1d55b304e971bc026a9c915683ec82cbbda4e45191602a"
+  },
+  {
+   "mois": "2026-08",
+   "bougies_15m": 2974,
+   "sha256": "a1ad68a9253a9a7548c26964204b10a8a5757f25cbc1c8957831c3984ad7b8b9"
+  },
+  {
+   "mois": "2026-09",
+   "bougies_15m": 2880,
+   "sha256": "ab45b63291da74a97c86d5155572b94fb9aafc37c22c047ac227556eab788318"
+  }
+ ],
+ "actif": "AVAX",
+ "instrument": "AVAX/USD, carnet spot de Coinbase Exchange (TradingView : COINBASE:AVAXUSD)",
+ "nature": "spot crypto, cotation en dollars américains",
+ "ticker": "AVAX-USD (Coinbase Exchange)",
+ "continuite": "sans objet : instrument spot, série unique",
+ "rolls": "sans objet",
+ "ajustements": "aucun",
+ "timezone": "UTC (début des bougies Coinbase)",
+ "horaires": "cotation continue 24/7 ; les interruptions sont des maintenances ou incidents de la plateforme",
+ "construction_barres": "agrégation exacte des bougies natives de 15 min (granularité 900 s) en barres de 30 min alignées sur :00 et :30 UTC : open de la première, plus haut, plus bas, close de la dernière, somme des volumes (en AVAX) ; time = ouverture de la barre ; une barre sans transaction est un trou, jamais comblé",
+ "couverture_demandee": "2021-09 → 2025-12 ; AVAX-USD est coté sur Coinbase depuis le 2021-09-30 ; 2026 non téléchargé",
+ "sources_ecartees": "Binance.US AVAXUSD (coté depuis le 2021-11-18, aucune bougie en 2024, quasi aucune transaction en 2025) ; Bitstamp AVAX/USD (coté depuis le 2022-03-08) ; Binance AVAX/USDT (cotation en USDT, écartée par le porteur pour SOL)",
+ "decision": "question du porteur, 2026-10-01 : ajouter une autre crypto à l'univers, comme AVAX ; données seulement, aucun backtest",
+ "decision_d04": "porteur, 2026-10-03 : 2026 téléchargé pour EXP-D04 (réserve levée)"
+}

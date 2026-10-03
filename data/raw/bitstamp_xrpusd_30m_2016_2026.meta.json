@@ -1,0 +1,110 @@
+{
+ "source": "bitstamp",
+ "url": "https://www.bitstamp.net/api/v2/ohlc/xrpusd/",
+ "pair": "xrpusd",
+ "step_s": 1800,
+ "extracted_at_utc": "2026-10-03T19:41:08.149152+00:00",
+ "extracted_at_origin": "heure du téléchargement (fin exclue : 2026-10-01 00:00:00+00:00)",
+ "fin_exclue": "2026-10-01 00:00:00+00:00",
+ "reserve_levee": "EXP-D04 (porteur, 2026-10-03)",
+ "n_rows": 171621,
+ "first": "2016-12-16 13:30:00+00:00",
+ "last": "2026-09-30 23:30:00+00:00",
+ "barres_volume_nul_par_an": {
+  "2016": 737,
+  "2017": 2173,
+  "2018": 0,
+  "2019": 3,
+  "2020": 12,
+  "2021": 5,
+  "2022": 8,
+  "2023": 16,
+  "2024": 10,
+  "2025": 3,
+  "2026": 0
+ },
+ "barres_plates_par_an": {
+  "2016": 737,
+  "2017": 2999,
+  "2018": 0,
+  "2019": 9,
+  "2020": 12,
+  "2021": 6,
+  "2022": 9,
+  "2023": 24,
+  "2024": 12,
+  "2025": 3,
+  "2026": 0
+ },
+ "sha256": "d70583474d32322e3ab1fa00ebf0fd17ca0aeff35b5b5d43aeea9fbd85365b8f",
+ "fichiers_annuels": [
+  {
+   "annee": 2016,
+   "barres": 741,
+   "sha256": "ad496c87a73c053afbcd0c6ba0e279e3371b8be1ea3694b29774daf18b1b4a9d"
+  },
+  {
+   "annee": 2017,
+   "barres": 17520,
+   "sha256": "bc3825c705f3c92ddea125048f50f0cc4d526b9e92c58f1865e34a5504792629"
+  },
+  {
+   "annee": 2018,
+   "barres": 17520,
+   "sha256": "ad10391d808dfabc48eaac7b170ba3c3901200cc6833b60abfac64f2b095e29f"
+  },
+  {
+   "annee": 2019,
+   "barres": 17520,
+   "sha256": "2b49fc0a456c08435099fdb104f94e986c40eec0ab2f48b7c0baeb5e93e298ec"
+  },
+  {
+   "annee": 2020,
+   "barres": 17568,
+   "sha256": "bc70f3906dacc0c9bebdcbb158f07f0ce3db6d99b0b7040fb1c02c22289a4590"
+  },
+  {
+   "annee": 2021,
+   "barres": 17520,
+   "sha256": "974fee9e5cc9a4e16505e325999596e5d21ba06d04a2922ae948ef6b9f0cc7a2"
+  },
+  {
+   "annee": 2022,
+   "barres": 17520,
+   "sha256": "2a068b58016320b5ab2e9b50caecbc2ca79f4c1f6810d24854fecabfd510835a"
+  },
+  {
+   "annee": 2023,
+   "barres": 17520,
+   "sha256": "bd22211bb32fbc9f6443560e2a11b94ef907145db9515931cbe452de90401fad"
+  },
+  {
+   "annee": 2024,
+   "barres": 17568,
+   "sha256": "c39a076cc07467eb1b516b08b7349bd2abc35b9b3deb834c9faf063b12a3f7ff"
+  },
+  {
+   "annee": 2025,
+   "barres": 17520,
+   "sha256": "bfce0c26f1ab6fec78e1cd7649adeda2969df93e9871ed0efc16060c90976bda"
+  },
+  {
+   "annee": 2026,
+   "barres": 13104,
+   "sha256": "9b4c804a9aeff4e514c599b9eb05bd47638d32667493c01876e9703eed67d263"
+  }
+ ],
+ "actif": "XRP",
+ "instrument": "XRP/USD, carnet spot de Bitstamp (TradingView : BITSTAMP:XRPUSD)",
+ "nature": "spot crypto, cotation en dollars américains",
+ "ticker": "xrpusd (Bitstamp)",
+ "continuite": "sans objet : instrument spot, série unique",
+ "rolls": "sans objet",
+ "ajustements": "aucun",
+ "timezone": "UTC (ouverture des barres Bitstamp)",
+ "horaires": "cotation continue 24/7 ; les interruptions sont des maintenances ou incidents de la plateforme",
+ "construction_barres": "barres natives de 30 min de l'API OHLC publique de Bitstamp (step 1800), telles que servies ; une barre sans transaction est servie plate au dernier prix, volume nul, et gardée",
+ "couverture_demandee": "première barre cotée → 2026-09-30 (fin exclue 2026-10-01) ; années antérieures à la cotation demandées, vides",
+ "sources_ecartees": "aucune",
+ "decision": "porteur, 2026-10-03 : EXP-D04, réserve levée (test A)"
+}

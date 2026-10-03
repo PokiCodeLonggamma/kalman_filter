@@ -1,0 +1,370 @@
+{
+ "source": "histdata.com",
+ "url_page": "https://www.histdata.com/download-free-forex-historical-data/?/ascii/1-minute-bar-quotes/xauusd/<année>",
+ "pair": "xauusd",
+ "granularite_source": "M1 (bougies d'une minute, bid)",
+ "step_s": 1800,
+ "extracted_at_utc": "2026-10-03T19:41:51.194756+00:00",
+ "extracted_at_origin": "heure du téléchargement (archives complètes ; minutes < 2026-10-01 00:00:00+00:00)",
+ "fin_exclue": "2026-10-01 00:00:00+00:00",
+ "reserve_levee": "EXP-D04 (porteur, 2026-10-03)",
+ "conflits": "fusion",
+ "n_rows": 207353,
+ "first": "2009-03-15 22:00:00+00:00",
+ "last": "2026-09-24 23:30:00+00:00",
+ "minutes_sources": 6140213,
+ "n_barres_moins_de_30_minutes": 18214,
+ "sha256": "afc60a4945418857e3718f1a1e47b20878881f750458a2d32b55d4764256cc34",
+ "archives": [
+  {
+   "archive": "HISTDATA_COM_ASCII_XAUUSD_M12009.zip",
+   "sha256": "60891e43b5cdb92834a0b582ee040f4d5a409fe5ffbb9f9d83190e020a559d6b",
+   "minutes": 276109,
+   "doublons_exacts_supprimes": {
+    "n": 0,
+    "dates": []
+   }
+  },
+  {
+   "archive": "HISTDATA_COM_ASCII_XAUUSD_M12010.zip",
+   "sha256": "0c96454b792317999a918d7ae28123f89c740d315e1d0b6937e6e9ac36c83134",
+   "minutes": 346196,
+   "doublons_exacts_supprimes": {
+    "n": 0,
+    "dates": []
+   }
+  },
+  {
+   "archive": "HISTDATA_COM_ASCII_XAUUSD_M12011.zip",
+   "sha256": "6b48d5a23c6d702f0859fe26e78fe61dd66161240999c5b2a473ea3b713eb8f7",
+   "minutes": 352266,
+   "doublons_exacts_supprimes": {
+    "n": 0,
+    "dates": []
+   }
+  },
+  {
+   "archive": "HISTDATA_COM_ASCII_XAUUSD_M12012.zip",
+   "sha256": "66954b906552f053b9815d38f69f9405b5f61da17ad75c297394ab30fdfd1cc0",
+   "minutes": 354797,
+   "doublons_exacts_supprimes": {
+    "n": 0,
+    "dates": []
+   }
+  },
+  {
+   "archive": "HISTDATA_COM_ASCII_XAUUSD_M12013.zip",
+   "sha256": "805267a6100103d1a5d3618f62e6d5ed731d16ed2621302e8b4a9127b6c99da8",
+   "minutes": 355160,
+   "doublons_exacts_supprimes": {
+    "n": 0,
+    "dates": []
+   }
+  },
+  {
+   "archive": "HISTDATA_COM_ASCII_XAUUSD_M12014.zip",
+   "sha256": "d342c8005382ec989532eb7f6314b9873aa8291491b1e15e5e04089e930f61e8",
+   "minutes": 351606,
+   "doublons_exacts_supprimes": {
+    "n": 0,
+    "dates": []
+   }
+  },
+  {
+   "archive": "HISTDATA_COM_ASCII_XAUUSD_M12015.zip",
+   "sha256": "21ed022f1ee5377f37fe2f78288de40653a14173d29e589d35cf2a5a3cc22ef3",
+   "minutes": 351666,
+   "doublons_exacts_supprimes": {
+    "n": 0,
+    "dates": []
+   }
+  },
+  {
+   "archive": "HISTDATA_COM_ASCII_XAUUSD_M12016.zip",
+   "sha256": "a258029bc2f21581b19619edaec33d1df2cd98e03d7cf0ee76c101e9e5cd6a3f",
+   "minutes": 353415,
+   "doublons_exacts_supprimes": {
+    "n": 0,
+    "dates": []
+   }
+  },
+  {
+   "archive": "HISTDATA_COM_ASCII_XAUUSD_M12017.zip",
+   "sha256": "a39c1ccaaeb022c83309685107c9e619c2bcff8b2fd94fbd7405a721a4fe70ff",
+   "minutes": 352360,
+   "doublons_exacts_supprimes": {
+    "n": 0,
+    "dates": []
+   }
+  },
+  {
+   "archive": "HISTDATA_COM_ASCII_XAUUSD_M12018.zip",
+   "sha256": "625f521a364aba0887d5acd27405a9e001a426d686ac1e4e15377356e9bd5c4f",
+   "minutes": 353778,
+   "doublons_exacts_supprimes": {
+    "n": 0,
+    "dates": []
+   }
+  },
+  {
+   "archive": "HISTDATA_COM_ASCII_XAUUSD_M12019.zip",
+   "sha256": "0ba9fcfbe1a0b640329de9f2b3682d67449d708a92b144f19e51e74480201d79",
+   "minutes": 352628,
+   "doublons_exacts_supprimes": {
+    "n": 60,
+    "dates": [
+     "2019-10-28"
+    ]
+   }
+  },
+  {
+   "archive": "HISTDATA_COM_ASCII_XAUUSD_M12020.zip",
+   "sha256": "4942ba4cc97b85b8fa3ec62a6a35925632722910eeb5478b1a87d728d62a3d11",
+   "minutes": 354291,
+   "doublons_exacts_supprimes": {
+    "n": 60,
+    "dates": [
+     "2020-10-26"
+    ]
+   }
+  },
+  {
+   "archive": "HISTDATA_COM_ASCII_XAUUSD_M12021.zip",
+   "sha256": "312229c9db5b39138c41b1e488d00ed32e158a0d1fc3f23a225b223c3271c0a4",
+   "minutes": 353386,
+   "doublons_exacts_supprimes": {
+    "n": 60,
+    "dates": [
+     "2021-11-01"
+    ]
+   }
+  },
+  {
+   "archive": "HISTDATA_COM_ASCII_XAUUSD_M12022.zip",
+   "sha256": "e752b9d83a14b934099de372c1419ab476278e7cd949c313c3af06207960b1d8",
+   "minutes": 354568,
+   "doublons_exacts_supprimes": {
+    "n": 60,
+    "dates": [
+     "2022-10-31"
+    ]
+   }
+  },
+  {
+   "archive": "HISTDATA_COM_ASCII_XAUUSD_M12023.zip",
+   "sha256": "89a4f3f7ec2a52b29fbce8d4ca2ab650971817ae371b332f5fe471a488bcffc2",
+   "minutes": 308752,
+   "doublons_exacts_supprimes": {
+    "n": 60,
+    "dates": [
+     "2023-10-30"
+    ]
+   }
+  },
+  {
+   "archive": "HISTDATA_COM_ASCII_XAUUSD_M12024.zip",
+   "sha256": "6d47f5cb269e0c4f35c63c7532713aae7dcf98901f605458b00dd6a69e7105de",
+   "minutes": 355592,
+   "doublons_exacts_supprimes": {
+    "n": 60,
+    "dates": [
+     "2024-10-28"
+    ]
+   }
+  },
+  {
+   "archive": "HISTDATA_COM_ASCII_XAUUSD_M12025.zip",
+   "sha256": "dd0b4dc6983c07fafd89ba83b0c7f514aa16977654eaeb4c9fc8884ed359d98e",
+   "minutes": 353951,
+   "doublons_exacts_supprimes": {
+    "n": 60,
+    "dates": [
+     "2025-10-27"
+    ]
+   }
+  },
+  {
+   "archive": "HISTDATA_COM_ASCII_XAUUSD_M1202601.zip",
+   "sha256": "496bbc7d723f67876bc0f35b96ceedaa7b20ec034167e17ebc223816bea70182",
+   "minutes": 28827,
+   "doublons_exacts_supprimes": {
+    "n": 0,
+    "dates": []
+   }
+  },
+  {
+   "archive": "HISTDATA_COM_ASCII_XAUUSD_M1202602.zip",
+   "sha256": "422e89f5f611712e6eb5e5e9920d50a5caaba83c13e5bdf0798c816ceb84513a",
+   "minutes": 27429,
+   "doublons_exacts_supprimes": {
+    "n": 0,
+    "dates": []
+   }
+  },
+  {
+   "archive": "HISTDATA_COM_ASCII_XAUUSD_M1202603.zip",
+   "sha256": "24e4bd74637e3daa39467302ce788a50678f9bdd66d9603a94d16bb76fc26aca",
+   "minutes": 30595,
+   "doublons_exacts_supprimes": {
+    "n": 0,
+    "dates": []
+   }
+  },
+  {
+   "archive": "HISTDATA_COM_ASCII_XAUUSD_M1202604.zip",
+   "sha256": "57389fc67b3797ec4c5523e1cb682c1bd6949ebc9cab81fbec4ed14d6bb6c203",
+   "minutes": 28976,
+   "doublons_exacts_supprimes": {
+    "n": 0,
+    "dates": []
+   }
+  },
+  {
+   "archive": "HISTDATA_COM_ASCII_XAUUSD_M1202605.zip",
+   "sha256": "994a47c7e0a25a3ad3ade007c00aa08baa9bab5eeb5ec9ad23ea769d25891828",
+   "minutes": 28822,
+   "doublons_exacts_supprimes": {
+    "n": 0,
+    "dates": []
+   }
+  },
+  {
+   "archive": "HISTDATA_COM_ASCII_XAUUSD_M1202606.zip",
+   "sha256": "ba5dc6142c5da5fc71f369c12ba785418d3c305de0028781193c05cb1500d192",
+   "minutes": 30118,
+   "doublons_exacts_supprimes": {
+    "n": 0,
+    "dates": []
+   },
+   "minutes_en_conflit_fusionnees": {
+    "n_minutes": 26,
+    "n_lignes": 52,
+    "dates": [
+     "2026-06-28",
+     "2026-06-29",
+     "2026-06-30"
+    ],
+    "qui": "XAUUSD 2026-06"
+   }
+  },
+  {
+   "archive": "HISTDATA_COM_ASCII_XAUUSD_M1202607.zip",
+   "sha256": "b7137dc34dd398895b891d28b40b67179a56408a4543c1b7d9c81694dab1d317",
+   "minutes": 31138,
+   "doublons_exacts_supprimes": {
+    "n": 0,
+    "dates": []
+   },
+   "minutes_en_conflit_fusionnees": {
+    "n_minutes": 264,
+    "n_lignes": 540,
+    "dates": [
+     "2026-07-01",
+     "2026-07-02",
+     "2026-07-06",
+     "2026-07-07",
+     "2026-07-08",
+     "2026-07-09",
+     "2026-07-10",
+     "2026-07-13",
+     "2026-07-14",
+     "2026-07-15",
+     "2026-07-16",
+     "2026-07-17",
+     "2026-07-20",
+     "2026-07-21",
+     "2026-07-22",
+     "2026-07-23",
+     "2026-07-29",
+     "2026-07-30",
+     "2026-07-31"
+    ],
+    "qui": "XAUUSD 2026-07"
+   }
+  },
+  {
+   "archive": "HISTDATA_COM_ASCII_XAUUSD_M1202608.zip",
+   "sha256": "b6bdb6989098437df2df11cb2e0f16d145c138f66425b0848bd6ce575626fd77",
+   "minutes": 29339,
+   "doublons_exacts_supprimes": {
+    "n": 0,
+    "dates": []
+   },
+   "minutes_en_conflit_fusionnees": {
+    "n_minutes": 98,
+    "n_lignes": 196,
+    "dates": [
+     "2026-08-03",
+     "2026-08-04",
+     "2026-08-05",
+     "2026-08-06",
+     "2026-08-07",
+     "2026-08-10",
+     "2026-08-11",
+     "2026-08-12",
+     "2026-08-13",
+     "2026-08-14",
+     "2026-08-17",
+     "2026-08-18",
+     "2026-08-19",
+     "2026-08-20",
+     "2026-08-24",
+     "2026-08-25",
+     "2026-08-26",
+     "2026-08-27",
+     "2026-08-28",
+     "2026-08-31"
+    ],
+    "qui": "XAUUSD 2026-08"
+   }
+  },
+  {
+   "archive": "HISTDATA_COM_ASCII_XAUUSD_M1202609.zip",
+   "sha256": "d9453677b7ce5b423e2c525b1a111ecd88352b14520cc8da5f003c253ec57bbc",
+   "minutes": 24448,
+   "doublons_exacts_supprimes": {
+    "n": 0,
+    "dates": []
+   },
+   "minutes_en_conflit_fusionnees": {
+    "n_minutes": 336,
+    "n_lignes": 702,
+    "dates": [
+     "2026-09-01",
+     "2026-09-02",
+     "2026-09-03",
+     "2026-09-04",
+     "2026-09-08",
+     "2026-09-09",
+     "2026-09-10",
+     "2026-09-11",
+     "2026-09-14",
+     "2026-09-15",
+     "2026-09-16",
+     "2026-09-17",
+     "2026-09-18",
+     "2026-09-21",
+     "2026-09-22"
+    ],
+    "qui": "XAUUSD 2026-09"
+   }
+  }
+ ],
+ "actif": "XAU",
+ "instrument": "CFD sur l'or au comptant, XAU/USD (TradingView : XAUUSD, p. ex. OANDA:XAUUSD, FOREXCOM:XAUUSD)",
+ "nature": "CFD / cotation OTC au comptant d'un courtier forex, compilée par HistData.com",
+ "ticker": "XAUUSD (HistData.com, ASCII M1)",
+ "continuite": "sans objet : cotation au comptant, sans échéance",
+ "rolls": "sans objet ; le coût de portage (swap) d'un CFD au comptant n'est pas dans les prix",
+ "ajustements": "aucun",
+ "decision": "porteur, 2026-09-30 : CFD sur l'or (nom TradingView), source libre ; 2026-10-01 : historique long, d'abord pour le rétro-test de RE-1 figée (2009-2019), puis pour D02",
+ "prix": "bid (FAQ HistData : barres construites sur le bid des ticks)",
+ "timezone": "étiquettes HistData converties en UTC : la FAQ annonce un EST fixe, mais l'horloge suit l'heure d'été européenne (serveur EET/EEST moins 7 h : UTC−5 en hiver européen, UTC−4 de fin mars à fin octobre) ; établi par l'audit D01 (pause quotidienne à 17:00-18:00 heure de New York toute l'année après conversion) ; revérifiée année par année sur 2009-2019 par l'audit de D02.0",
+ "horaires": "marché OTC 24 h sur 24, 5 jours sur 7, pause quotidienne d'une heure calée sur New York ; vérifiés par l'audit",
+ "construction_barres": "agrégation exacte des bougies d'une minute en barres de 30 min alignées sur :00 et :30 UTC ; time = ouverture de la barre ; volume absent de la source (écrit nul) ; une barre sans minute cotée est un trou, jamais comblé",
+ "couverture_demandee": "années 2009 à 2025 ; 2026 non téléchargé",
+ "sources_ecartees": "Dukascopy (accès automatisés refusés, HTTP 429 « Bot blocked » ; export massif réservé à un bucket AWS « Requester Pays ») ; Alpaca (ETF seulement : proxys) ; OANDA (compte requis)",
+ "limite": "fournisseur amont (courtier) non divulgué par HistData",
+ "decision_d04": "porteur, 2026-10-03 : 2026 téléchargé pour EXP-D04 (réserve levée)",
+ "incident_d04_conflits": "archive de juin 2026 : 26 minutes servies deux fois avec des valeurs différentes (2026-06-28 22:08 → 2026-06-30 16:02 UTC) ; fusionnées (conflits=\"fusion\"), règle fixée avant tout calcul sur 2026"
+}

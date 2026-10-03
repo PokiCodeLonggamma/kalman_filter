@@ -190,3 +190,37 @@ def test_formulaire_mensuel_verifie():
     assert form_fields(html, "XAUUSD", 2026, 3)["datemonth"] == "202603"
     with pytest.raises(ValueError, match="2026-04"):
         form_fields(html, "XAUUSD", 2026, 4)
+
+
+def test_minutes_en_conflit_arret_par_defaut_fusion_explicite(tmp_path):
+    from marketdata import build_histdata_csv
+    from marketdata.histdata import merge_conflicting_minutes
+    y2025 = ["20250102 100000;10;11;9;10.5;0"]
+    juin = ["20260628 180800;100;101;98;99;0", "20260628 180900;99.5;99.5;99.5;99.5;0",       # 22:08 et 22:09 UTC
+            "20260628 180800;99;99.2;98.9;99.1;0", "20260628 180900;99.1;100.5;98.2;98.4;0",     # servies une 2e fois
+            "20260628 181000;98;98;98;98;0", "20260628 181000;98;98;98;98;0"]                   # doublon exact
+    fake = FakeHistDataMois({"2025": y2025, "202606": juin})
+    with levee("D04"):
+        with pytest.raises(ValueError, match="valeurs différentes"):
+            build_histdata_csv("XAUUSD", 2025, 2025, tmp_path / "a.csv", tmp_path / "c", None, fake,
+                               months=[(2026, 6)], end="2026-07-01")
+        meta = build_histdata_csv("XAUUSD", 2025, 2025, tmp_path / "b.csv", tmp_path / "c", None, fake,
+                                  months=[(2026, 6)], end="2026-07-01", conflits="fusion")
+    juin_meta = meta["archives"][1]
+    assert juin_meta["minutes"] == 3 and juin_meta["doublons_exacts_supprimes"]["n"] == 1
+    assert juin_meta["minutes_en_conflit_fusionnees"]["n_minutes"] == 2
+    assert juin_meta["minutes_en_conflit_fusionnees"]["n_lignes"] == 4 and meta["conflits"] == "fusion"
+    df = pd.read_csv(tmp_path / "b.csv", parse_dates=["time"])
+    bar = df[df.time == pd.Timestamp("2026-06-28 22:00", tz="UTC")].iloc[0]    # barre de 22:00 : 22:08 à 22:10
+    assert bar[["open", "high", "low", "close"]].tolist() == [100.0, 101.0, 98.0, 98.0]
+    m = pd.DataFrame({"time": pd.to_datetime(["2026-06-28 22:08"] * 2 + ["2026-06-28 22:09"] * 2, utc=True),
+                      "open": [100.0, 99.0, 99.5, 99.1], "high": [101.0, 99.2, 99.5, 100.5],
+                      "low": [98.0, 98.9, 99.5, 98.2], "close": [99.0, 99.1, 99.5, 98.4], "volume": 0.0})
+    out, info = merge_conflicting_minutes(m.iloc[[0, 2, 1, 3]].reset_index(drop=True), "t")      # ordre du fichier
+    assert out.iloc[0][["open", "high", "low", "close"]].tolist() == [100.0, 101.0, 98.0, 99.1]
+    assert out.iloc[1][["open", "high", "low", "close"]].tolist() == [99.5, 100.5, 98.2, 98.4]
+    assert info["n_minutes"] == 2 and info["n_lignes"] == 4
+    with pytest.raises(ValueError, match="conflits"):
+        with levee("D04"):
+            build_histdata_csv("XAUUSD", 2025, 2025, tmp_path / "d.csv", tmp_path / "c", None, fake,
+                               months=[(2026, 6)], end="2026-07-01", conflits="autre")

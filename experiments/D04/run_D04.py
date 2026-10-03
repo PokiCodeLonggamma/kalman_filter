@@ -22,6 +22,8 @@ lecture : un incident de données est consigné comme tel, jamais corrigé en si
   la première barre). BTC/USD Bitstamp (panne de janvier 2015 retirée, comme en D02-D03.1), SOL/USD et AVAX/USD
   Coinbase (5 bps, 10 en lecture), or XAU/USD HistData (4 bps, 6 en lecture ; si HistData n'a pas publié septembre,
   fin au 2026-09-01). 8 métriques.
+- Incident consigné (avant tout calcul sur 2026) : l'archive HistData de juin 2026 sert 26 minutes deux fois avec des
+  valeurs différentes ; elles sont fusionnées (`histdata.merge_conflicting_minutes`), rien n'est jeté.
 - Lectures de survie (les six séries) : pire trade et pire journée UTC en % du capital (valorisé aux clôtures de 30 min,
   et aux extrêmes défavorables des barres détenues ; `envelope.daily`), à 0,25 %/ATR et à 1x ; MDD ; PnL.
 - Règle de décision du porteur (verbatim) : « Si la stratégie dégage une espérance nette strictement positive
@@ -173,8 +175,11 @@ def download() -> dict:
             months, end, note = months[:-1], END_XAU_SANS_SEPTEMBRE, f"septembre 2026 indisponible : {e}"
         if note:
             extra["incident_d04"] = note
+        extra["incident_d04_conflits"] = ("archive de juin 2026 : 26 minutes servies deux fois avec des valeurs "
+                                          "différentes (2026-06-28 22:08 → 2026-06-30 16:02 UTC) ; fusionnées "
+                                          "(conflits=\"fusion\"), règle fixée avant tout calcul sur 2026")
         out["XAU"] = build_histdata_csv("XAUUSD", 2009, 2025, EXTENDED["XAU"], CACHE / "histdata", extra,
-                                        months=months, end=end)
+                                        months=months, end=end, conflits="fusion")
         print(f"XAU : {out['XAU']['n_rows']} barres → {out['XAU']['last']}" + (f" ({note})" if note else ""), flush=True)
     (HERE / "telechargements_D04.json").write_text(json.dumps(D01.jsonable(
         {k: {c: v[c] for c in ("source", "n_rows", "first", "last", "sha256", "extracted_at_utc") if c in v}

@@ -12,6 +12,9 @@
   encore, et à 22:00 UTC le reste de l'été. Conversion retenue : heure serveur = étiquette + 7 h, localisée en
   Europe/Athens (EET/EEST), puis UTC ; la pause tombe alors à 17:00 heure de New York toute l'année (contrôle de
   l'audit). Les valeurs des barres ne changent pas (décalage d'heures entières), seuls leurs horodatages.
+- Minutes servies deux fois avec des valeurs différentes (constaté dans l'archive de juin 2026, EXP-D04) : arrêt par
+  défaut ; avec `conflits="fusion"`, elles sont fusionnées en une minute (ouverture de la première ligne dans l'ordre
+  du fichier, plus haut et plus bas des lignes, clôture de la dernière, volumes sommés) et comptées dans le méta.
 - Doublons : HistData répète à l'identique une heure par an (00:00-00:59 UTC le lundi qui suit la fin de l'heure
   d'été européenne, artefact de conversion horaire ; continuité des prix vérifiée, aucune heure manquante). Les
   doublons exacts sont supprimés et comptés dans le méta ; des doublons de valeurs différentes arrêtent tout.
@@ -164,8 +167,39 @@ def drop_exact_duplicates(m1: pd.DataFrame, who: str) -> tuple[pd.DataFrame, dic
     return m1[~extra].reset_index(drop=True), info
 
 
+def merge_conflicting_minutes(m1: pd.DataFrame, who: str) -> tuple[pd.DataFrame, dict]:
+    """Fusionne les minutes servies plusieurs fois avec des valeurs différentes (ordre du fichier) : ouverture de la
+    première ligne, plus haut et plus bas des lignes, clôture de la dernière, volumes sommés. À appeler après
+    `drop_exact_duplicates`."""
+    dup = m1.time.duplicated(keep=False)
+    if not dup.any():
+        return m1, {"n_minutes": 0, "n_lignes": 0, "dates": []}
+    g = m1.groupby("time", sort=True)
+    out = pd.DataFrame({"open": g.open.first(), "high": g.high.max(), "low": g.low.min(), "close": g.close.last(),
+                        "volume": g.volume.sum()}).reset_index()
+    info = {"n_minutes": int(m1.time[dup].nunique()), "n_lignes": int(dup.sum()),
+            "dates": sorted({str(d) for d in m1.time[dup].dt.date}), "qui": who}
+    return out[["time", "open", "high", "low", "close", "volume"]], info
+
+
+def _clean(m1: pd.DataFrame, who: str, conflits: str) -> tuple[pd.DataFrame, dict, dict]:
+    if conflits == "fusion":
+        dup = m1.time.duplicated(keep=False)
+        exact = m1[dup].groupby("time")[["open", "high", "low", "close"]].nunique().le(1).all(axis=1)
+        same = m1.time.isin(exact[exact].index)
+        kept, info = drop_exact_duplicates(m1[~(dup & ~same)].reset_index(drop=True), who)
+        merged, minfo = merge_conflicting_minutes(m1[dup & ~same].reset_index(drop=True), who)
+        both = pd.concat([kept, merged], ignore_index=True).sort_values("time", kind="stable").reset_index(drop=True)
+        return both, info, minfo
+    if conflits != "arret":
+        raise ValueError(f"conflits : « arret » ou « fusion », pas {conflits!r}")
+    m, info = drop_exact_duplicates(m1, who)
+    return m, info, {"n_minutes": 0, "n_lignes": 0, "dates": []}
+
+
 def build_histdata_csv(pair: str, first_year: int, last_year: int, out_csv: Path, cache: Path,
-                       meta_extra: dict | None = None, session=None, months=(), end=None) -> dict:
+                       meta_extra: dict | None = None, session=None, months=(), end=None,
+                       conflits: str = "arret") -> dict:
     """Archives annuelles [first_year, last_year] puis archives mensuelles `months` ((année, mois), année en cours),
     minutes < `end` (2026-01-01 par défaut), agrégation en 30 min, CSV au schéma de `load_ohlc` et `.meta.json`."""
     if last_year >= HOLDOUT.year:
@@ -177,14 +211,16 @@ def build_histdata_csv(pair: str, first_year: int, last_year: int, out_csv: Path
     frames, files = [], []
     for y in range(first_year, last_year + 1):
         path, sha = fetch_year(pair, y, cache, session)
-        m1, dup = drop_exact_duplicates(read_year(path, pair, y), f"{pair} {y}")
+        m1, dup, conf = _clean(read_year(path, pair, y), f"{pair} {y}", conflits)
         frames.append(m1)
-        files.append({"archive": path.name, "sha256": sha, "minutes": len(m1), "doublons_exacts_supprimes": dup})
+        files.append({"archive": path.name, "sha256": sha, "minutes": len(m1), "doublons_exacts_supprimes": dup}
+                     | ({"minutes_en_conflit_fusionnees": conf} if conf["n_minutes"] else {}))
     for y, mo in months:
         path, sha = fetch_month(pair, y, mo, cache, session)
-        m1, dup = drop_exact_duplicates(read_year(path, pair, f"{y}{mo:02d}"), f"{pair} {y}-{mo:02d}")
+        m1, dup, conf = _clean(read_year(path, pair, f"{y}{mo:02d}"), f"{pair} {y}-{mo:02d}", conflits)
         frames.append(m1)
-        files.append({"archive": path.name, "sha256": sha, "minutes": len(m1), "doublons_exacts_supprimes": dup})
+        files.append({"archive": path.name, "sha256": sha, "minutes": len(m1), "doublons_exacts_supprimes": dup}
+                     | ({"minutes_en_conflit_fusionnees": conf} if conf["n_minutes"] else {}))
     m1 = pd.concat(frames, ignore_index=True).sort_values("time").reset_index(drop=True)
     if m1.time.duplicated().any():
         raise ValueError(f"{pair} : minutes dupliquées entre archives")
@@ -197,7 +233,7 @@ def build_histdata_csv(pair: str, first_year: int, last_year: int, out_csv: Path
             "granularite_source": "M1 (bougies d'une minute, bid)", "step_s": 1800,
             "extracted_at_utc": pd.Timestamp.now(tz="UTC").isoformat(),
             "extracted_at_origin": f"heure du téléchargement (archives complètes ; minutes < {end})",
-            "fin_exclue": str(end), "reserve_levee": motif() if end > HOLDOUT else None,
+            "fin_exclue": str(end), "reserve_levee": motif() if end > HOLDOUT else None, "conflits": conflits,
             "n_rows": len(bars), "first": str(bars.time.iat[0]), "last": str(bars.time.iat[-1]),
             "minutes_sources": int(len(m1)), "n_barres_moins_de_30_minutes": int((bars.n_sub < 30).sum()),
             "sha256": hashlib.sha256(out_csv.read_bytes()).hexdigest(), "archives": files, **(meta_extra or {})}
