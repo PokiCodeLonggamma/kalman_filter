@@ -1795,3 +1795,54 @@ reproduction de résultats publiés et parité du noyau, sans aucune performance
 - [ ] **VALIDÉ**
 - [x] **Filtre ATR non retenu (proposition) ; portefeuille BTC + SOL : gain de Calmar mesuré, avantage de SOL à
   confirmer.** RE-1 gelée inchangée. Suite à décider par le porteur.
+
+### [DÉCISION] — Architecture finale de RE-1 ; hold-out (D04) différé après D03.1 (2026-10-03)
+- **Décisions du porteur :** RE-1 (seuils gelés, R0 = 100, frontière 0,85, H = 26, verrou 26, F2b sans stop, F3 SL-B à
+  0) est la version finale absolue, plus aucun paramètre ne sera modifié ; aucun filtre de condition ; exploitation en
+  portefeuille multi-actifs pour diluer le drawdown. Levée des scellés annoncée (EXP-D04 : ETH et XRP, année 2026,
+  portefeuille BTC + SOL + ETH), puis différée : le porteur a demandé des pistes avant d'ouvrir.
+- **Pistes de l'agent :** fixer par écrit le protocole de D04 avant d'ouvrir ; viabilité réelle (coûts du lieu
+  d'exécution, latence, glissement des stops, flux de prix) ; risque de perte extrême et taille ; amélioration de
+  l'avantage seulement si le moteur est rouvert. Chiffres donnés : coût aller-retour qui annule l'espérance de BTC
+  2015-2025, 13,8 bps (18,2 bps en 2020-2025, 7,9 en 2015-2019) ; pires trades −6,2 %, −4,7 % et −4,3 % du capital à
+  0,25 %/ATR (F2b sans stop) ; IC attendu d'un actif sur neuf mois de 2026, environ ±0,8 ATR.
+- **Réponse du porteur :** point 4 rejeté (le moteur n'est pas rouvert) ; priorité à la survie du capital (points 2
+  et 3) : EXP-D03.1 avant D04 ; le protocole de D04 sera consigné ensuite, puis les téléchargements et la levée des
+  verrous autorisés. Push de 79be76f autorisé (fait, origin = 79be76f).
+
+### [EXP-D03.1] — Viabilité et sécurité : stop catastrophe, glissement des stops, latence (BTC, SOL)
+- **Date :** 2026-10-03
+- **Étape :** D, D03.1. Tests du porteur ; formes opérationnelles de l'agent consignées dans
+  `experiments/D03_1/run_D03_1.py` avant le calcul. Le moteur n'est pas rouvert : chaque test est une lecture.
+- **Actifs & Période :** BTC/USD Bitstamp, entrées 2015-2025 ; SOL/USD Coinbase 2021-2025 ; 5 bps (10 bps en lecture),
+  0,25 %/ATR, levier ≤ 1x.
+- **MÉTHODE :**
+  - stop catastrophe : open[t + 1] − sens · 4 · ATR14(t), greffé sur F2b et F3, le premier stop touché sort ; mêmes
+    entrées que RE-1 ;
+  - glissement : sorties sur stop de F3 exécutées 0,5 · ATR14(t) plus loin ;
+  - latence : entrée à open[t + 2], même horizon, même stop, même verrou relatif ; un stop déjà franchi fait sortir
+    aussitôt, brut nul ;
+  - lecture supplémentaire : les trois ensemble.
+- **Code :** `envelope.stress` (`nearest_levels`, `slip_stops`, `delayed_trades`) ; 337 tests.
+
+#### Résultats (`experiments/D03_1/rapport_D03_1.md`)
+- [OBS] **Stop catastrophe :** il ne touche que des F2b (284 sur BTC, 98 sur SOL) ; la pire perte d'un trade passe de
+  −6,2 % à −1,05 % du capital (BTC) et de −3,3 % à −1,05 % (SOL).
+  - BTC 2015-2025 : +0,180 ATR contre +0,218, écart −0,037 [−0,118 ; +0,040] ; MDD −21,4 % contre −28,4 % ; Calmar 0,36
+    contre 0,32 ;
+  - BTC 2020-2025 : −0,121 ATR [−0,237 ; −0,006], rendement −5,2 points par an, Calmar 0,66 contre 1,12 ;
+  - BTC 2015-2019 : +0,055 ATR, Calmar meilleur sur 91 % des chemins ;
+  - SOL : −0,054 ATR, −9,9 bps [−20,4 ; −1,2], Calmar 0,34 contre 0,58 ;
+  - 89 % des trades coupés auraient fini négatifs ; 1 trade du top 1 % et 7 du top 5 % coupés sur BTC.
+- [OBS] **Glissement de 0,5 ATR :** 23 % des trades sortent sur stop ; −0,115 ATR par trade (BTC), −0,121 (SOL) ; Calmar
+  0,32 → 0,10 (BTC). Chaque 0,1 ATR de glissement coûte environ 0,023 ATR par trade.
+- [OBS] **Latence d'une barre :** +0,014 ATR [−0,025 ; +0,056] (BTC), +0,002 (SOL).
+- [OBS] **Les trois ensemble :** −0,221 ATR [−0,313 ; −0,137] (BTC), espérance −0,003.
+- [HYP] La latence n'est pas un risque ; l'exécution des stops l'est. Le stop catastrophe est une assurance contre la
+  ruine, dont l'historique ne contient pas le scénario couvert ; son coût est faible sur 2015-2025 entier, élevé sur
+  2020-2025 et SOL.
+
+#### Décision
+- [ ] **VALIDÉ**
+- [x] **À trancher par le porteur :** greffe du stop catastrophe (le « coût marginal » est sa règle) ; choix du lieu et
+  du type d'ordre pour les stops. RE-1 inchangée à ce stade.

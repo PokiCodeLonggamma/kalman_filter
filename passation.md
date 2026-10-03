@@ -738,10 +738,10 @@ d'extraction, couverture, construction. Tous les chargements tronquent avant le 
 |---|---|
 | Dossier local | `C:\Users\poek9\Projet Claude\#KalmanFilter` (le `#` impose des guillemets) |
 | GitHub | https://github.com/PokiCodeLonggamma/kalman_filter, **public**, branche `main` |
-| `origin/main` | `8350415` (analyse de D02.1), poussé le 2026-10-03 avec l'accord du porteur ; vérifier par `git log --oneline -5` |
-| Commits locaux non poussés | D03 : le commit du profil, du filtre ATR et du portefeuille (voir `git log`) ; push sur accord du porteur |
+| `origin/main` | `79be76f` (D03), poussé le 2026-10-03 avec l'accord du porteur ; vérifier par `git log --oneline -5` |
+| Commits locaux non poussés | D03.1 : le commit des tests de viabilité (voir `git log`) ; push sur accord du porteur |
 | Identité git | `PokiCodeLonggamma <250868839+PokiCodeLonggamma@users.noreply.github.com>` |
-| Tests | 332 réussis, 2 ignorés (244 à la validation, +5 en D02.0, +53 en D02, +19 en D02.1, +11 en D03) |
+| Tests | 337 réussis, 2 ignorés (244 à la validation, +5 en D02.0, +53 en D02, +19 en D02.1, +11 en D03, +5 en D03.1) |
 | Système | Windows 11, Git Bash et PowerShell, application Claude Code de bureau, navigateur intégré |
 | Python | 3.11 ; numpy, pandas, matplotlib (`pyproject.toml`) |
 | Mémoire de l'assistant | `C:\Users\poek9\.claude\projects\C--Users-poek9-Projet-Claude--KalmanFilter\memory\` |
@@ -767,7 +767,8 @@ d'extraction, couverture, construction. Tous les chargements tronquent avant le 
 | D02.0 | `7dca1f8` (historiques longs et audit), `7ae6a8e` (rétro-test de RE-1 figée) |
 | D02 | `e2728f8` (protocole), `698d688` (`src/optimization`), `b1d75fb` (Gate 0), `457a1ed` (règle de choix, statistiques), `8a2212e` (grille et rapport) |
 | D02.1 | `466d767` (code, tests, protocole), `8350415` (analyse et rapport) |
-| D03 | le commit du profil, du filtre ATR et du portefeuille |
+| D03 | `79be76f` (profil, filtre ATR, portefeuille) |
+| D03.1 | le commit des tests de viabilité (stop catastrophe, glissement, latence) |
 
 ---
 
@@ -783,14 +784,17 @@ d'extraction, couverture, construction. Tous les chargements tronquent avant le 
    (2026-10-03) : WFO abandonné définitivement, RE-1 gelée version finale du moteur, exploitation en fonds propres.
    Puis EXP-D03 (`experiments/D03/rapport_D03.md`) : le « calme » des grands gagnants tient au classement en ATR
    (I-M20) ; le filtre ATR ≤ P60 ne change pas le Calmar ; le portefeuille BTC + SOL le porte de 1,18 à 1,58 (K15),
-   avantage de SOL à confirmer. Suite à décider par le porteur.
+   avantage de SOL à confirmer. Puis RE-1 déclarée version finale absolue, aucun filtre, portefeuille multi-actifs ;
+   EXP-D03.1 (`experiments/D03_1/rapport_D03_1.md`) : latence sans effet, glissement des stops coûteux, stop
+   catastrophe de 4 ATR en assurance (greffe à trancher). Prochaine étape : protocole écrit de D04 (hold-out ETH, XRP,
+   2026), puis téléchargements et levée des verrous, sur accord du porteur.
 2. **Nouvelle session :** lire ce document, puis :
    - `CLAUDE.md`, `RESEARCH_PHILOSOPHY.md`, `PROJECT_PLAN.md` ;
    - `BEST_RESULTS.md`, `RESEARCH_INSIGHTS.md` ;
    - les dernières entrées de `RESEARCH_LOG.md` ;
    - `src/strategy/re1.py` ;
    - `experiments/D01_7/narratif_D01_7.md`.
-3. **Vérifier l'état :** `git status`, `git log --oneline -5`, `python -m pytest -q` (attendu : 332 réussis, 2 ignorés).
+3. **Vérifier l'état :** `git status`, `git log --oneline -5`, `python -m pytest -q` (attendu : 337 réussis, 2 ignorés).
 4. **Rendre au porteur un compte rendu court**, balisé :
    - compréhension du projet et de RE-1 ;
    - règles ;

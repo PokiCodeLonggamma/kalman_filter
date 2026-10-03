@@ -299,6 +299,22 @@ par trade sur chaque actif.*
 - **Profil :** le « calme » des 5 % meilleurs trades tient au classement en ATR ; classés en bps, ils naissent à ATR
   haut.
 
+### EXP-D03.1 — viabilité et sécurité de RE-1 (lectures, moteur inchangé)
+*Stop catastrophe de 4 ATR sur tous les trades ; glissement de 0,5 ATR sur les stops de F3 ; entrée retardée d'une
+barre. 5 bps, 0,25 %/ATR.*
+
+| Série | Espérance ATR [IC] | PnL : 0,25 %/ATR ; 1x | MDD : 0,25 %/ATR ; 1x | Calmar | Pire trade (capital) |
+|---|---|---|---|---|---|
+| BTC 2015-2025 · RE-1 gelée | +0,218 [+0,032 ; +0,401] | +159 % ; +396 % | −28,4 % ; −53,0 % | 0,32 | −6,2 % |
+| BTC 2015-2025 · stop 4 ATR | +0,180 [+0,012 ; +0,350] | +128 % ; +385 % | −21,4 % ; −42,5 % | 0,36 | −1,05 % |
+| BTC 2015-2025 · entrée retardée | +0,232 [+0,050 ; +0,412] | +170 % ; +259 % | −23,9 % ; −49,4 % | 0,39 | |
+| BTC 2015-2025 · glissement 0,5 ATR | +0,102 [−0,083 ; +0,290] | +45 % ; +39 % | −35,4 % ; −61,1 % | 0,10 | |
+
+- **Stop catastrophe :** coût −0,037 ATR non significatif sur 2015-2025, mais −0,121 [−0,237 ; −0,006] sur 2020-2025 et
+  −9,9 bps sur SOL ; pire perte d'un trade ramenée à environ 1 % du capital.
+- **Latence :** sans effet. **Glissement des stops :** −0,115 ATR par trade pour 0,5 ATR ; c'est le risque d'exécution
+  principal.
+
 ## Pistes écartées (à ne pas retester sans élément nouveau)
 
 | Piste | Raison | Source |

@@ -1,0 +1,148 @@
+{
+ "BTC": {
+  "stop_catastrophe": {
+   "touches": 284,
+   "touches_F2b": 284,
+   "touches_F3": 0,
+   "part_trades": 0.13686746987951806,
+   "esperance_atr_touches_avec": -4.131347993309358,
+   "esperance_atr_touches_sans": -3.8587371852355017,
+   "part_touches_finis_positifs_sans": 0.1056338028169014,
+   "top1_coupes": 1,
+   "top5_coupes": 7,
+   "pire_trade_capital_avant": -0.061924358076851774,
+   "pire_trade_capital_apres": -0.01049575224613536,
+   "pire_trade_1x_bps_avant": -986.2500000000002,
+   "pire_trade_1x_bps_apres": -960.1896164924245
+  },
+  "glissement": {
+   "trades_stoppes_F3": 478,
+   "part_trades": 0.23036144578313253,
+   "cout_moyen_atr_par_trade": 0.11518072289156626
+  },
+  "retard": {
+   "trades": 2075,
+   "sorties_immediates": 48,
+   "signaux_perdus_en_fin": 0
+  },
+  "effets_trade_par_trade": {
+   "Stop catastrophe 4 ATR": {
+    "effet_bps": -0.3685429353196036,
+    "effet_bps_lo": -3.6366897053136,
+    "effet_bps_hi": 2.7419902204790914,
+    "effet_atr": -0.0373115515628797,
+    "effet_atr_lo": -0.11764259859681629,
+    "effet_atr_hi": 0.0397939084409557,
+    "trades": 2075,
+    "effet_atr_F2b": -0.06791356973068015,
+    "effet_atr_F3": 0.0
+   },
+   "Glissement 0,5 ATR (stops de F3)": {
+    "effet_bps": -6.033830744246705,
+    "effet_bps_lo": -6.704204896170665,
+    "effet_bps_hi": -5.4056013562206795,
+    "effet_atr": -0.11518072289156626,
+    "effet_atr_lo": -0.1243953277689448,
+    "effet_atr_hi": -0.10609606627969567,
+    "trades": 2075,
+    "effet_atr_F2b": 0.0,
+    "effet_atr_F3": -0.2556149732620321
+   },
+   "Entrée retardée d'une barre": {
+    "effet_bps": -1.5724363744694723,
+    "effet_bps_lo": -4.678254295504633,
+    "effet_bps_hi": 1.0847438602916086,
+    "effet_atr": 0.014008325615733253,
+    "effet_atr_lo": -0.02448545978397049,
+    "effet_atr_hi": 0.05495512896588047,
+    "trades": 2075,
+    "effet_atr_F2b": 0.0311609509202588,
+    "effet_atr_F3": -0.00690503571812676
+   },
+   "Les trois ensemble": {
+    "effet_bps": -11.779953415434381,
+    "effet_bps_lo": -16.191492216580222,
+    "effet_bps_hi": -7.698367779552837,
+    "effet_atr": -0.22097798107977565,
+    "effet_atr_lo": -0.3123367703084481,
+    "effet_atr_hi": -0.136770265682245,
+    "trades": 2075,
+    "effet_atr_F2b": -0.18295886170533857,
+    "effet_atr_F3": -0.2673328432047578
+   }
+  }
+ },
+ "SOL": {
+  "stop_catastrophe": {
+   "touches": 98,
+   "touches_F2b": 98,
+   "touches_F3": 0,
+   "part_trades": 0.12743823146944083,
+   "esperance_atr_touches_avec": -4.065556991142094,
+   "esperance_atr_touches_sans": -3.6387528561009046,
+   "part_touches_finis_positifs_sans": 0.09183673469387756,
+   "top1_coupes": 0,
+   "top5_coupes": 1,
+   "pire_trade_capital_avant": -0.03337689198378702,
+   "pire_trade_capital_apres": -0.010493481861276877,
+   "pire_trade_1x_bps_avant": -1545.0072703772528,
+   "pire_trade_1x_bps_apres": -1051.0717702452448
+  },
+  "glissement": {
+   "trades_stoppes_F3": 186,
+   "part_trades": 0.24187256176853056,
+   "cout_moyen_atr_par_trade": 0.12093628088426528
+  },
+  "retard": {
+   "trades": 769,
+   "sorties_immediates": 8,
+   "signaux_perdus_en_fin": 0
+  },
+  "effets_trade_par_trade": {
+   "Stop catastrophe 4 ATR": {
+    "effet_bps": -9.85351577438552,
+    "effet_bps_lo": -20.49350255931468,
+    "effet_bps_hi": -1.0039457826912221,
+    "effet_atr": -0.05439116415349349,
+    "effet_atr_lo": -0.12792490411737464,
+    "effet_atr_hi": 0.020946299573214543,
+    "trades": 769,
+    "effet_atr_F2b": -0.1007874824916542,
+    "effet_atr_F3": 0.0
+   },
+   "Glissement 0,5 ATR (stops de F3)": {
+    "effet_bps": -11.185138276138533,
+    "effet_bps_lo": -13.281631415237353,
+    "effet_bps_hi": -9.103843565624327,
+    "effet_atr": -0.12093628088426528,
+    "effet_atr_lo": -0.13874096782494097,
+    "effet_atr_hi": -0.10223506255851565,
+    "trades": 769,
+    "effet_atr_F2b": 0.0,
+    "effet_atr_F3": -0.2627118644067797
+   },
+   "Entrée retardée d'une barre": {
+    "effet_bps": 0.46053232305228436,
+    "effet_bps_lo": -4.708070196113757,
+    "effet_bps_hi": 5.879004315679972,
+    "effet_atr": 0.0019829666387035554,
+    "effet_atr_lo": -0.06055490138168817,
+    "effet_atr_hi": 0.06678681784702216,
+    "trades": 769,
+    "effet_atr_F2b": 0.02057284052005267,
+    "effet_atr_F3": -0.019810247092256553
+   },
+   "Les trois ensemble": {
+    "effet_bps": -26.985175681962364,
+    "effet_bps_lo": -39.754538231365345,
+    "effet_bps_hi": -15.510562548824653,
+    "effet_atr": -0.22847388426905868,
+    "effet_atr_lo": -0.3214178083146979,
+    "effet_atr_hi": -0.12904155046140575,
+    "trades": 769,
+    "effet_atr_F2b": -0.18116527598131882,
+    "effet_atr_F3": -0.2839345408775673
+   }
+  }
+ }
+}

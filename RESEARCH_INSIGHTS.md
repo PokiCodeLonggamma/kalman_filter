@@ -347,6 +347,21 @@ porteur).*
 
 ---
 
+### K16 — L'exécution des stops pèse plus que la latence ; le stop catastrophe borne la perte d'un trade
+*Source : EXP-D03.1 (BTC 2015-2025, SOL 2021-2025, 5 bps, 0,25 %/ATR ; lectures, moteur inchangé).*
+
+- `[OBS]` Entrer une barre plus tard (30 min) ne change rien : +0,014 ATR [−0,025 ; +0,056] sur BTC, +0,002 sur SOL.
+- `[OBS]` 23 % des trades sortent sur le stop de F3 ; un glissement de 0,5 ATR sur ces sorties coûte −0,115 ATR par
+  trade (BTC) et −0,121 (SOL), la moitié de l'espérance. L'espérance de BTC s'annulerait vers 0,95 ATR de glissement.
+- `[OBS]` Un stop de 4 ATR ne touche que des F2b (13 à 14 % des trades) et ramène la pire perte d'un trade de −6,2 % à
+  −1,05 % du capital (BTC). Coût : −0,037 ATR [−0,118 ; +0,040] sur 2015-2025, mais −0,121 [−0,237 ; −0,006] sur
+  2020-2025 et −9,9 bps [−20,4 ; −1,2] sur SOL ; 89 % des trades coupés auraient fini négatifs.
+- `[HYP]` RE-1 n'exploite pas une micro-structure fugace ; son risque d'exécution est la qualité des sorties sur stop.
+  Le stop catastrophe est une assurance dont l'historique ne contient pas le sinistre (krach de 20 à 30 % pendant une
+  position à 1x).
+
+---
+
 ## 3. Trois phénomènes captés par le déclencheur
 *Hypothèse de travail du porteur, 2026-09-28. Chiffres vérifiés : EXP-A01, annexe I.*
 
