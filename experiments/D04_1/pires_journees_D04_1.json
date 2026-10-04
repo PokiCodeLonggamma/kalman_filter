@@ -1,0 +1,422 @@
+{
+ "portefeuille": {
+  "commune": [
+   {
+    "jour": "2022-11-04",
+    "perte": -0.05199059713307275,
+    "perte_pessimiste": -0.052945338950870724,
+    "perte_ref_solde": -0.040347805789951896,
+    "heure_du_plus_bas": "2022-11-04 08:00:00+00:00",
+    "positions_au_plus_bas": 1,
+    "exposition_brute_max_du_jour": 3.477264794273984,
+    "contributions": {
+     "BTC": -0.011379208158608973,
+     "SOL": -0.014099639589007434,
+     "AVAX": -0.007252416123428973,
+     "XAU": 0.005063757236169632,
+     "ETH": -0.012567361115354576,
+     "XRP": -0.01175572938284248
+    }
+   },
+   {
+    "jour": "2026-01-26",
+    "perte": -0.05137537887299759,
+    "perte_pessimiste": -0.059013904724763644,
+    "perte_ref_solde": 0.03317114934973309,
+    "heure_du_plus_bas": "2026-01-26 02:00:00+00:00",
+    "positions_au_plus_bas": 3,
+    "exposition_brute_max_du_jour": 2.1872620492698056,
+    "contributions": {
+     "SOL": -0.017319266713902645,
+     "ETH": -0.017085064806974384,
+     "XRP": -0.016971047352120586
+    }
+   },
+   {
+    "jour": "2025-11-06",
+    "perte": -0.050627666809005434,
+    "perte_pessimiste": -0.050627666809005434,
+    "perte_ref_solde": -0.03239162556494213,
+    "heure_du_plus_bas": "2025-11-06 16:00:00+00:00",
+    "positions_au_plus_bas": 0,
+    "exposition_brute_max_du_jour": 1.387979882294616,
+    "contributions": {
+     "BTC": -0.01441840107500736,
+     "SOL": -0.013047449676965077,
+     "AVAX": -0.01269896820399815,
+     "ETH": -0.010048863436767705,
+     "XRP": -0.00041398441626715627
+    }
+   },
+   {
+    "jour": "2022-02-06",
+    "perte": -0.0407344177378417,
+    "perte_pessimiste": -0.0407344177378417,
+    "perte_ref_solde": -0.041585492334311414,
+    "heure_du_plus_bas": "2022-02-07 00:00:00+00:00",
+    "positions_au_plus_bas": 0,
+    "exposition_brute_max_du_jour": 1.6848843798208286,
+    "contributions": {
+     "BTC": -0.010268190637395078,
+     "SOL": -0.0052139607824599485,
+     "AVAX": -0.010136001404406876,
+     "ETH": -0.012201444465502599,
+     "XRP": -0.002914820448077256
+    }
+   },
+   {
+    "jour": "2022-05-16",
+    "perte": -0.04071966294423446,
+    "perte_pessimiste": -0.04178465117790098,
+    "perte_ref_solde": -0.02599227695705808,
+    "heure_du_plus_bas": "2022-05-16 20:00:00+00:00",
+    "positions_au_plus_bas": 2,
+    "exposition_brute_max_du_jour": 0.57887497707288,
+    "contributions": {
+     "AVAX": -2.9904532937999545e-05,
+     "ETH": -0.015232868499210217,
+     "XRP": -0.025456889912086333
+    }
+   }
+  ],
+  "longue": [
+   {
+    "jour": "2022-11-04",
+    "perte": -0.05199059713307275,
+    "perte_pessimiste": -0.05294533895087061,
+    "perte_ref_solde": -0.040347805789951896,
+    "heure_du_plus_bas": "2022-11-04 08:00:00+00:00",
+    "positions_au_plus_bas": 1,
+    "exposition_brute_max_du_jour": 3.477264794273982,
+    "contributions": {
+     "BTC": -0.011379208158608942,
+     "SOL": -0.01409963958900743,
+     "AVAX": -0.007252416123428975,
+     "XAU": 0.005063757236169632,
+     "ETH": -0.01256736111535457,
+     "XRP": -0.011755729382842474
+    }
+   },
+   {
+    "jour": "2026-01-26",
+    "perte": -0.05137537887299759,
+    "perte_pessimiste": -0.059013904724763644,
+    "perte_ref_solde": 0.03317114934973309,
+    "heure_du_plus_bas": "2026-01-26 02:00:00+00:00",
+    "positions_au_plus_bas": 3,
+    "exposition_brute_max_du_jour": 2.187262049269806,
+    "contributions": {
+     "SOL": -0.01731926671390264,
+     "ETH": -0.017085064806974408,
+     "XRP": -0.016971047352120554
+    }
+   },
+   {
+    "jour": "2025-11-06",
+    "perte": -0.05062766680900532,
+    "perte_pessimiste": -0.05062766680900532,
+    "perte_ref_solde": -0.03239162556494213,
+    "heure_du_plus_bas": "2025-11-06 16:00:00+00:00",
+    "positions_au_plus_bas": 0,
+    "exposition_brute_max_du_jour": 1.387979882294616,
+    "contributions": {
+     "BTC": -0.014418401075007338,
+     "SOL": -0.013047449676965073,
+     "AVAX": -0.012698968203998136,
+     "ETH": -0.010048863436767705,
+     "XRP": -0.0004139844162671527
+    }
+   },
+   {
+    "jour": "2022-02-06",
+    "perte": -0.04073441773784181,
+    "perte_pessimiste": -0.04073441773784181,
+    "perte_ref_solde": -0.041585492334311525,
+    "heure_du_plus_bas": "2022-02-07 00:00:00+00:00",
+    "positions_au_plus_bas": 0,
+    "exposition_brute_max_du_jour": 1.6848843798208282,
+    "contributions": {
+     "BTC": -0.010268190637395066,
+     "SOL": -0.005213960782459941,
+     "AVAX": -0.010136001404406876,
+     "ETH": -0.012201444465502613,
+     "XRP": -0.002914820448077261
+    }
+   },
+   {
+    "jour": "2022-05-16",
+    "perte": -0.04071966294423468,
+    "perte_pessimiste": -0.04178465117790109,
+    "perte_ref_solde": -0.02599227695705819,
+    "heure_du_plus_bas": "2022-05-16 20:00:00+00:00",
+    "positions_au_plus_bas": 2,
+    "exposition_brute_max_du_jour": 0.5788749770728798,
+    "contributions": {
+     "AVAX": -2.9904532938000642e-05,
+     "ETH": -0.01523286849921026,
+     "XRP": -0.025456889912086337
+    }
+   }
+  ]
+ },
+ "distribution": {
+  "commune·valorise": {
+   "jours_en_position": 1775,
+   "pire": -0.05199059713307275,
+   "pire_jour": "2022-11-04",
+   "P1": -0.03201650957226448,
+   "P5": -0.023038893518833335,
+   "mediane": -0.006516329505999896,
+   "jours_sous_1pct": 602,
+   "jours_sous_2pct": 153,
+   "jours_sous_3pct": 25,
+   "jours_sous_4pct": 5
+  },
+  "commune·valorise·2026": {
+   "jours_en_position": 266,
+   "pire": -0.05137537887299759,
+   "pire_jour": "2026-01-26",
+   "P1": -0.03236852037783516,
+   "P5": -0.021343906904596116,
+   "mediane": -0.005318000340224227,
+   "jours_sous_1pct": 84,
+   "jours_sous_2pct": 19,
+   "jours_sous_3pct": 5,
+   "jours_sous_4pct": 1
+  },
+  "commune·solde": {
+   "jours_en_position": 1775,
+   "pire": -0.041585492334311414,
+   "pire_jour": "2022-02-06",
+   "P1": -0.03092489165613563,
+   "P5": -0.02287888116669288,
+   "mediane": -0.005179810276488506,
+   "jours_sous_1pct": 519,
+   "jours_sous_2pct": 144,
+   "jours_sous_3pct": 22,
+   "jours_sous_4pct": 3
+  },
+  "commune·solde·2026": {
+   "jours_en_position": 266,
+   "pire": -0.03207826910930245,
+   "pire_jour": "2026-04-23",
+   "P1": -0.026953109118510434,
+   "P5": -0.020540860216236467,
+   "mediane": -0.003991704581599864,
+   "jours_sous_1pct": 68,
+   "jours_sous_2pct": 15,
+   "jours_sous_3pct": 1,
+   "jours_sous_4pct": 0
+  },
+  "commune·pessimiste": {
+   "jours_en_position": 1775,
+   "pire": -0.059013904724763644,
+   "pire_jour": "2026-01-26",
+   "P1": -0.033770295018722855,
+   "P5": -0.0245779168828844,
+   "mediane": -0.008156967499489132,
+   "jours_sous_1pct": 741,
+   "jours_sous_2pct": 199,
+   "jours_sous_3pct": 35,
+   "jours_sous_4pct": 5
+  },
+  "commune·pessimiste·2026": {
+   "jours_en_position": 266,
+   "pire": -0.059013904724763644,
+   "pire_jour": "2026-01-26",
+   "P1": -0.03390712971170471,
+   "P5": -0.024068968927483142,
+   "mediane": -0.007335846142983049,
+   "jours_sous_1pct": 104,
+   "jours_sous_2pct": 30,
+   "jours_sous_3pct": 7,
+   "jours_sous_4pct": 1
+  },
+  "commune·valorise_1x": {
+   "jours_en_position": 1775,
+   "pire": -0.16768419385759548,
+   "pire_jour": "2022-05-16",
+   "P1": -0.1061279805278346,
+   "P5": -0.06581162738163072,
+   "mediane": -0.014433777863361197,
+   "jours_sous_1pct": 1043,
+   "jours_sous_2pct": 699,
+   "jours_sous_3pct": 454,
+   "jours_sous_4pct": 296
+  },
+  "commune·valorise_1x·2026": {
+   "jours_en_position": 266,
+   "pire": -0.09876414994180549,
+   "pire_jour": "2026-02-16",
+   "P1": -0.07626034509366458,
+   "P5": -0.04919565176712787,
+   "mediane": -0.00873146347956838,
+   "jours_sous_1pct": 121,
+   "jours_sous_2pct": 77,
+   "jours_sous_3pct": 39,
+   "jours_sous_4pct": 26
+  },
+  "longue·valorise": {
+   "jours_en_position": 3186,
+   "pire": -0.05199059713307275,
+   "pire_jour": "2022-11-04",
+   "P1": -0.03031022813998619,
+   "P5": -0.021250761454530087,
+   "mediane": -0.005509661101587682,
+   "jours_sous_1pct": 924,
+   "jours_sous_2pct": 206,
+   "jours_sous_3pct": 33,
+   "jours_sous_4pct": 5
+  },
+  "longue·valorise·2026": {
+   "jours_en_position": 266,
+   "pire": -0.05137537887299759,
+   "pire_jour": "2026-01-26",
+   "P1": -0.03236852037783523,
+   "P5": -0.02134390690459606,
+   "mediane": -0.0053180003402241716,
+   "jours_sous_1pct": 84,
+   "jours_sous_2pct": 19,
+   "jours_sous_3pct": 5,
+   "jours_sous_4pct": 1
+  },
+  "longue·solde": {
+   "jours_en_position": 3186,
+   "pire": -0.041585492334311525,
+   "pire_jour": "2022-02-06",
+   "P1": -0.02952607498782688,
+   "P5": -0.02083705783833628,
+   "mediane": -0.004507684360156861,
+   "jours_sous_1pct": 833,
+   "jours_sous_2pct": 192,
+   "jours_sous_3pct": 29,
+   "jours_sous_4pct": 3
+  },
+  "longue·solde·2026": {
+   "jours_en_position": 266,
+   "pire": -0.03207826910930234,
+   "pire_jour": "2026-04-23",
+   "P1": -0.02695310911851062,
+   "P5": -0.020540860216236523,
+   "mediane": -0.003991704581599753,
+   "jours_sous_1pct": 68,
+   "jours_sous_2pct": 15,
+   "jours_sous_3pct": 1,
+   "jours_sous_4pct": 0
+  },
+  "longue·pessimiste": {
+   "jours_en_position": 3186,
+   "pire": -0.059013904724763644,
+   "pire_jour": "2026-01-26",
+   "P1": -0.031662125742485975,
+   "P5": -0.02233289861678292,
+   "mediane": -0.007041979341045834,
+   "jours_sous_1pct": 1120,
+   "jours_sous_2pct": 266,
+   "jours_sous_3pct": 43,
+   "jours_sous_4pct": 6
+  },
+  "longue·pessimiste·2026": {
+   "jours_en_position": 266,
+   "pire": -0.059013904724763644,
+   "pire_jour": "2026-01-26",
+   "P1": -0.03390712971170482,
+   "P5": -0.024068968927483225,
+   "mediane": -0.007335846142983049,
+   "jours_sous_1pct": 104,
+   "jours_sous_2pct": 30,
+   "jours_sous_3pct": 7,
+   "jours_sous_4pct": 1
+  },
+  "longue·valorise_1x": {
+   "jours_en_position": 3186,
+   "pire": -0.21106528426403315,
+   "pire_jour": "2019-07-17",
+   "P1": -0.11688893300256407,
+   "P5": -0.06686317420809806,
+   "mediane": -0.013856488230777064,
+   "jours_sous_1pct": 1839,
+   "jours_sous_2pct": 1211,
+   "jours_sous_3pct": 766,
+   "jours_sous_4pct": 494
+  },
+  "longue·valorise_1x·2026": {
+   "jours_en_position": 266,
+   "pire": -0.0987641499418056,
+   "pire_jour": "2026-02-16",
+   "P1": -0.07626034509366458,
+   "P5": -0.049195651767127896,
+   "mediane": -0.00873146347956838,
+   "jours_sous_1pct": 121,
+   "jours_sous_2pct": 77,
+   "jours_sous_3pct": 39,
+   "jours_sous_4pct": 26
+  }
+ },
+ "actif_seul": {
+  "commune": {
+   "BTC": {
+    "pire": -0.024561426781989693,
+    "jour": "2024-12-09",
+    "trades": 885
+   },
+   "SOL": {
+    "pire": -0.018335317133869822,
+    "jour": "2026-01-26",
+    "trades": 862
+   },
+   "AVAX": {
+    "pire": -0.014508587688660146,
+    "jour": "2024-02-19",
+    "trades": 792
+   },
+   "XAU": {
+    "pire": -0.014794269796316706,
+    "jour": "2026-03-02",
+    "trades": 532
+   },
+   "ETH": {
+    "pire": -0.018034045267323884,
+    "jour": "2026-01-26",
+    "trades": 839
+   },
+   "XRP": {
+    "pire": -0.025746721225160196,
+    "jour": "2022-05-16",
+    "trades": 834
+   }
+  },
+  "longue": {
+   "BTC": {
+    "pire": -0.024561426781989693,
+    "jour": "2024-12-09",
+    "trades": 1669
+   },
+   "SOL": {
+    "pire": -0.01833531713386971,
+    "jour": "2026-01-26",
+    "trades": 907
+   },
+   "AVAX": {
+    "pire": -0.014508587688660146,
+    "jour": "2024-02-19",
+    "trades": 792
+   },
+   "XAU": {
+    "pire": -0.014794269796316817,
+    "jour": "2026-03-02",
+    "trades": 1008
+   },
+   "ETH": {
+    "pire": -0.030282288263634438,
+    "jour": "2020-08-02",
+    "trades": 1525
+   },
+   "XRP": {
+    "pire": -0.025746721225160085,
+    "jour": "2022-05-16",
+    "trades": 1594
+   }
+  }
+ }
+}

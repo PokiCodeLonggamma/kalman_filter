@@ -1,0 +1,14 @@
+{
+ "date": "2026-10-04 15:09 UTC",
+ "commit": "c46a7ca",
+ "ETH_identique_a_D04": {
+  "trades": 1525,
+  "esperance_atr": 0.183415
+ },
+ "XRP_identique_a_D04": {
+  "trades": 1689,
+  "esperance_atr": 0.262972
+ },
+ "jambe_seule_ETH_pertes_journalieres_identiques": 983,
+ "duree_s": 72
+}

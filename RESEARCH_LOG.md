@@ -1942,3 +1942,42 @@ reproduction de résultats publiés et parité du noyau, sans aucune performance
 - [ ] **VALIDÉ**
 - [x] **Règle du porteur, lecture littérale : condition 1 remplie (ETH +0,183, XRP +0,263 ATR) ; condition 2 (survie à
   2026) à juger par le porteur sur les mesures.** Décision de mise en production au porteur. Commits locaux, non poussés.
+
+### [EXP-D04.1] — Pire journée du portefeuille complet (six actifs, RE-1 version finale)
+- **Date :** 2026-10-04
+- **Étape :** D, D04.1. Demande du porteur (« Mesure la pire journée du portefeuille complet ») après D04 ; push des
+  commits de D04 autorisé et fait (origin = c46a7ca).
+- **Actifs & Période :** BTC, SOL, AVAX, or, ETH, XRP (séries de D04) ; fenêtre commune, entrées du 2021-10-01 au
+  2026-10-01 exclu ; fenêtre longue dès le 2017-08-16 (SOL et AVAX à leur cotation).
+- **Modèle de frais :** 5 bps (or 4 bps) ; 0,25 % du capital valorisé par ATR14(t) et par trade, ≤ 1x par position ;
+  1x par position en lecture.
+
+#### 0. Cadrage (fixé avant le calcul, `experiments/D04_1/run_D04_1.py`)
+- **QUESTION :** pire journée UTC du capital commun quand la version finale tourne sur les six actifs ; journées proches
+  de la limite de 4 % citée par le porteur.
+- **MÉTHODE :** `envelope.portfolio_paths` (règles de `portfolio_equity`, un état après les clôtures et un après les
+  sorties et entrées de chaque instant) ; `envelope.daily_from_paths` ; référence = capital valorisé à 00:00, ou solde
+  réalisé à 00:00 ; borne pessimiste = toutes les positions à l'extrême défavorable de la même barre.
+- **CRITÈRE DE LECTURE (sans seuil) :** pire journée et contributions ; quantiles ; journées sous −1 à −4 % ; actifs
+  seuls ; 8 métriques ; exposition brute.
+- **Code :** `portfolio_paths`, `daily_from_paths` ; 354 tests.
+
+#### Résultats (`experiments/D04_1/rapport_D04_1.md`)
+- **Contrôles bloquants passés :** trades d'ETH et de XRP identiques à D04 ; une jambe seule redonne ses pertes
+  journalières.
+- [OBS] **Fenêtre commune :** pire journée −5,20 % (2022-11-04) sur le capital valorisé, −4,16 % sur le solde réalisé
+  (2022-02-06), −5,90 % en borne pessimiste ; 5 journées sous −4 % (3 sur le solde), 25 sous −3 %, 153 sous −2 %, sur
+  1 775 ; 2026 : −5,14 % (26 janvier, gain latent rendu), −3,21 % sur le solde. Actif seul, même fenêtre : au pire
+  −2,57 % (XRP).
+- [OBS] **Mécanisme :** quatre stops catastrophe touchés ensemble sur des cryptos corrélées (2022-11-04 : ventes F2b
+  de BTC, SOL, ETH, XRP ; 2025-11-06 : achats F2b de BTC, SOL, AVAX, ETH), environ −1 % chacun.
+- [OBS] **8 métriques (fenêtre commune) :** PnL +584 % (1x par position +1 439 %), PF 1,13, WR 42,3 %, +0,198 ATR,
+  +9,9 bps, MDD −37,4 % (1x −81,5 %), 4 744 trades (79/mois), 26 barres, frais 33 % du brut, Calmar 1,25 ; exposition
+  brute jusqu'à 5,2x (P99 3,1) ; capital ×3,1 sur les neuf mois de 2026 ; MDD du 2023-07-13 au 2024-01-27.
+- [OBS] **Fenêtre longue (2017-08 → 2026-09) :** aucune journée pire (−5,20 %), 5 journées sous −4 %.
+- [HYP] À 0,25 %/ATR par trade sur six actifs, une limite journalière de 4 % sur le capital valorisé est franchie
+  environ une fois par an ; la perte du jour est à peu près proportionnelle à la taille par trade.
+
+#### Décision
+- [ ] **VALIDÉ**
+- [x] **Mesure faite ; taille par trade et règles du compte à arbitrer par le porteur.** Commit local, non poussé.

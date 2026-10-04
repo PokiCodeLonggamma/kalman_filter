@@ -85,3 +85,56 @@ def test_portefeuille_ne_lit_aucun_prix_futur(barres_synthetiques, signaux_synth
     eq2, _ = portfolio_equity([a, Leg(b.name, bars, b.trades, b.weight, b.cost)])
     before = eq.index < cut
     assert before.sum() > 1000 and np.array_equal(eq.to_numpy()[before], eq2.to_numpy()[before])
+
+
+def test_chemins_du_portefeuille_redonnent_portfolio_equity(barres_synthetiques, signaux_synthetiques):
+    """EXP-D04.1 : un état par instant ; capital valorisé = dernière valeur de `portfolio_equity` à chaque instant ;
+    solde réalisé, borne pessimiste ≤ capital valorisé, résultats par jambe sommés = capital − 1."""
+    from envelope.portfolio import portfolio_paths
+    a = _jambe(barres_synthetiques, signaux_synthetiques, seed=9)
+    b = _jambe(barres_synthetiques, signaux_synthetiques, seed=11)
+    eq, info = portfolio_equity([a, b])
+    p = portfolio_paths([a, b])
+    ref, got = eq.groupby(level=0).last(), p.capital_valorise.groupby(level=0).last()
+    assert got.index.equals(ref.index) and np.allclose(got.to_numpy(), ref.to_numpy(), rtol=1e-12, atol=0)
+    assert np.isclose(p.solde_realise.iat[-1], 1.0 + info["pnl"], rtol=1e-12)
+    assert (p.capital_pessimiste <= p.capital_valorise + 1e-12).all() and (p.capital_pessimiste < p.capital_valorise).any()
+    assert np.allclose(p[[f"pnl_{a.name}", f"pnl_{b.name}"]].sum(axis=1).to_numpy(), p.capital_valorise.to_numpy() - 1.0,
+                       rtol=0, atol=1e-12)
+    assert p.exposition_brute.max() <= info["exposition_max"] + 1e-12 and p.exposition_brute.max() > 1.0
+    flat = p.exposition_brute == 0.0
+    assert flat.any() and np.allclose(p.solde_realise[flat], p.capital_valorise[flat], rtol=1e-12)
+
+
+def test_borne_pessimiste_a_la_main():
+    """Deux achats ouverts ensemble : à la clôture de la barre, chaque jambe est valorisée à son plus bas."""
+    from envelope.portfolio import portfolio_paths
+    t = pd.date_range("2021-01-01", periods=5, freq="30min", tz="UTC")
+    ba = pd.DataFrame({"time": t, "open": [100.0] * 5, "high": [101.0] * 5, "low": [100, 100, 90, 100, 100.0],
+                       "close": [100, 100, 98, 100, 100.0]})
+    bb = pd.DataFrame({"time": t, "open": [50.0] * 5, "high": [51.0] * 5, "low": [50, 50, 40, 50, 50.0],
+                       "close": [50, 50, 49, 50, 50.0]})
+    ta, tb = _trade(ba, 1, 4, 1), _trade(bb, 1, 4, 1)
+    p = portfolio_paths([Leg("A", ba, ta, np.array([0.5]), 0.0), Leg("B", bb, tb, np.array([0.5]), 0.0)])
+    at = t[2] + pd.Timedelta(minutes=30)                      # clôture de la barre 2
+    assert np.isclose(p.capital_valorise[at], 1 + 0.5 * (98 / 100 - 1) + 0.5 * (49 / 50 - 1))
+    assert np.isclose(p.capital_pessimiste[at], 1 + 0.5 * (90 / 100 - 1) + 0.5 * (40 / 50 - 1))
+    assert np.isclose(p.solde_realise[at], 1.0) and np.isclose(p.exposition_brute[at], (0.5 * 0.98 + 0.5 * 0.98)
+                                                                / p.capital_valorise[at])
+
+
+def test_une_jambe_journees_identiques_a_daily_losses(barres_synthetiques, signaux_synthetiques):
+    """Une jambe : mêmes pertes journalières (valeurs ≤ 0) que `envelope.daily.daily_losses`, clôtures et extrêmes. Le
+    point de l'instant d'entrée, au capital réalisé, ramène à 0 une « perte » positive ; les journées en plus (instant
+    d'entrée seul) ont une perte nulle."""
+    from envelope.daily import daily_from_paths, daily_losses
+    from envelope.portfolio import portfolio_paths
+    leg = _jambe(barres_synthetiques, signaux_synthetiques, seed=13)
+    p = portfolio_paths([leg])
+    for ext in (False, True):
+        a = daily_from_paths(p.capital_valorise, low=p.capital_pessimiste if ext else None)
+        b = daily_losses(leg.bars, leg.trades, leg.cost, leg.weight, extremes=ext)
+        common = a.index.intersection(b.index)
+        la, lb = np.minimum(a.perte[common], 0.0), np.minimum(b.perte[common], 0.0)    # pertes (≤ 0) seulement :
+        assert len(common) == len(b) and np.allclose(la, lb, rtol=1e-12, atol=1e-15)      # l'instant d'entrée vaut le
+        assert (a.perte.drop(common).abs() < 1e-15).all()                                 # capital de minuit

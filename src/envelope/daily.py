@@ -50,6 +50,30 @@ def marked_equity(bars: pd.DataFrame, trades: pd.DataFrame, cost_bps: float, wei
     return pd.Series(np.concatenate(values), index=pd.to_datetime(np.concatenate(times), utc=True))
 
 
+def daily_from_paths(equity: pd.Series, low: pd.Series | None = None,
+                     reference: pd.Series | None = None) -> pd.DataFrame:
+    """EXP-D04.1 — journées UTC ]J 00:00, J + 1 00:00] d'un capital daté (points chronologiques) : référence = dernière
+    valeur de `reference` (défaut : `equity`) datée au plus tard de J 00:00, 1 avant le premier point ; plus bas =
+    minimum de `low` (défaut : `equity`) dans la journée ; perte = plus bas / référence − 1. `low` et `reference`
+    doivent couvrir les mêmes journées que `equity` (par exemple les colonnes de `portfolio_paths`)."""
+    low = equity if low is None else low
+    reference = equity if reference is None else reference
+
+    def by_day(s: pd.Series):
+        return pd.Series(s.to_numpy(), index=(s.index - pd.Timedelta(1, "ns")).normalize()).groupby(level=0, sort=True)
+
+    lo, end, fin = by_day(low).min(), by_day(reference).last(), by_day(equity).last()
+    if not (lo.index.equals(end.index) and lo.index.equals(fin.index)):
+        raise ValueError("daily_from_paths : séries sur des journées différentes")
+    start = end.shift(1).fillna(1.0)
+    if len(start):
+        start.iloc[0] = 1.0
+    out = pd.DataFrame({"debut": start, "plus_bas": lo, "fin": fin})
+    out["perte"] = out.plus_bas / out.debut - 1.0
+    out.index.name = "jour"
+    return out
+
+
 def daily_losses(bars: pd.DataFrame, trades: pd.DataFrame, cost_bps: float, weight,
                  extremes: bool = False) -> pd.DataFrame:
     """Une ligne par journée UTC avec position : capital à 00:00, plus bas, capital en fin de journée, perte du jour."""

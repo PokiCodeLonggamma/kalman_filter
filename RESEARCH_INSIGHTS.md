@@ -378,6 +378,20 @@ porteur).*
 - `[HYP]` RE-1 est une récolte de queue droite transportable d'un actif à l'autre ; sa rentabilité dépend de quelques
   événements par an et de l'exécution des stops dans les mouvements extrêmes.
 
+---
+
+### K18 — En portefeuille, la pire journée vient des stops touchés ensemble sur des cryptos corrélées
+*Source : EXP-D04.1 (six actifs, capital commun, 0,25 %/ATR par trade, 5 bps ; 2021-10 → 2026-09).*
+
+- `[OBS]` Pire journée −5,20 % sur le capital valorisé de minuit (−4,16 % sur le solde réalisé), contre −2,57 % au pire
+  pour un actif seul ; 5 journées sous −4 % en cinq ans.
+- `[OBS]` Les pires journées réunissent quatre stops catastrophe de cryptos différentes, touchés dans la même heure
+  (2022-11-04, 2025-11-06), à environ −1 % chacun : un même mouvement déclenche le même signal sur des actifs corrélés.
+  L'or a compensé une fois (+2,07 %).
+- `[OBS]` Une journée de −5,14 % (2026-01-26) n'est qu'un gain latent rendu : positive sur le solde réalisé.
+- `[HYP]` La diversification de RE-1 entre cryptos réduit peu le risque d'une journée ; la perte journalière dépend du
+  nombre de positions crypto ouvertes ensemble et de la taille par trade.
+
 ## 3. Trois phénomènes captés par le déclencheur
 *Hypothèse de travail du porteur, 2026-09-28. Chiffres vérifiés : EXP-A01, annexe I.*
 

@@ -41,3 +41,20 @@ def test_journee_utc_et_reference_a_minuit_a_la_main():
     e = daily_losses(bars, tr, 0.0, [0.5], extremes=True)
     assert np.isclose(e.perte.iat[1], (1 + 0.5 * (94 / 100 - 1)) / d.debut.iat[1] - 1)  # plus bas 94 (00:00-00:30)
     assert daily_losses(bars, tr.iloc[:0], 0.0, []).empty
+
+
+def test_journees_d_un_capital_date_redonnent_daily_losses(barres_synthetiques, signaux_synthetiques):
+    """EXP-D04.1 : `daily_from_paths` sur les points d'`equity_curve_sized` = `daily_losses` (clôtures, extrêmes)."""
+    from envelope.daily import daily_from_paths
+    bars = barres_synthetiques(1500, seed=6)
+    t, s, level = signaux_synthetiques(bars, 200, seed=7)
+    tr = run_trades(bars, t, s, 26, level)
+    w = risk_weights(np.random.default_rng(1).uniform(20, 80, len(tr)), 25.0)
+    closes, ext = marked_equity(bars, tr, 5.0, w), marked_equity(bars, tr, 5.0, w, extremes=True)
+    a, b = daily_from_paths(closes), daily_losses(bars, tr, 5.0, w)
+    assert a.index.equals(b.index) and np.allclose(a.to_numpy(), b.to_numpy(), rtol=1e-14, atol=0)
+    c, d = daily_from_paths(closes, low=ext), daily_losses(bars, tr, 5.0, w, extremes=True)
+    assert np.allclose(c.perte.to_numpy(), d.perte.to_numpy(), rtol=1e-14, atol=0)
+    flat = pd.Series(1.0, index=closes.index)                                     # solde constant : référence 1
+    e = daily_from_paths(closes, reference=flat)
+    assert np.allclose(e.debut.to_numpy(), 1.0) and (e.perte <= a.perte + 1e-12).sum() > 0

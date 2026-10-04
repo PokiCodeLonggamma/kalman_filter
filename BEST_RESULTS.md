@@ -336,6 +336,15 @@ ces données ; ETH, XRP et BTC 2026 avaient été vus par d'anciens projets.*
 - **Signe tenu hors échantillon,** marge mince : sans le 1 % meilleur, ETH et XRP ≈ −0,06 ATR ; un trade de XRP
   (juillet 2023) = 56 % de la somme. 2026 est la période la plus favorable mesurée, à ne pas extrapoler.
 
+### EXP-D04.1 — portefeuille complet (six actifs, capital commun, 0,25 %/ATR par trade)
+
+| Fenêtre | PnL : 0,25 %/ATR ; 1x | MDD : 0,25 %/ATR ; 1x | Calmar | Pire journée : capital valorisé ; solde | Journées < −4 % |
+|---|---|---|---|---|---|
+| 2021-10 → 2026-09 | +584 % ; +1 439 % | −37,4 % ; −81,5 % | 1,25 | −5,20 % ; −4,16 % | 5 ; 3 |
+
+- Pire journée d'un actif seul sur la même fenêtre : −2,57 %. Les pires journées viennent de quatre stops catastrophe
+  touchés ensemble sur des cryptos corrélées. Exposition brute jusqu'à 5,2x.
+
 ## Pistes écartées (à ne pas retester sans élément nouveau)
 
 | Piste | Raison | Source |

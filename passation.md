@@ -738,10 +738,10 @@ d'extraction, couverture, construction. Tous les chargements tronquent avant le 
 |---|---|
 | Dossier local | `C:\Users\poek9\Projet Claude\#KalmanFilter` (le `#` impose des guillemets) |
 | GitHub | https://github.com/PokiCodeLonggamma/kalman_filter, **public**, branche `main` |
-| `origin/main` | `bb80d6d` (D03.1), poussé le 2026-10-03 avec l'accord du porteur ; vérifier par `git log --oneline -5` |
-| Commits locaux non poussés | D04 : `4c549ba` (pré-enregistrement), `9aa265f`, `edbd25e`, `c4207f8` (incidents consignés avant lecture), puis le commit des résultats ; push sur accord du porteur |
+| `origin/main` | `c46a7ca` (D04), poussé le 2026-10-04 avec l'accord du porteur ; vérifier par `git log --oneline -5` |
+| Commits locaux non poussés | D04.1 : le commit du portefeuille complet ; push sur accord du porteur |
 | Identité git | `PokiCodeLonggamma <250868839+PokiCodeLonggamma@users.noreply.github.com>` |
-| Tests | 350 réussis, 2 ignorés (244 à la validation, +5 en D02.0, +53 en D02, +19 en D02.1, +11 en D03, +5 en D03.1, +13 en D04) |
+| Tests | 354 réussis, 2 ignorés (244 à la validation, +5 en D02.0, +53 en D02, +19 en D02.1, +11 en D03, +5 en D03.1, +13 en D04, +4 en D04.1) |
 | Système | Windows 11, Git Bash et PowerShell, application Claude Code de bureau, navigateur intégré |
 | Python | 3.11 ; numpy, pandas, matplotlib (`pyproject.toml`) |
 | Mémoire de l'assistant | `C:\Users\poek9\.claude\projects\C--Users-poek9-Projet-Claude--KalmanFilter\memory\` |
@@ -769,7 +769,8 @@ d'extraction, couverture, construction. Tous les chargements tronquent avant le 
 | D02.1 | `466d767` (code, tests, protocole), `8350415` (analyse et rapport) |
 | D03 | `79be76f` (profil, filtre ATR, portefeuille) |
 | D03.1 | `bb80d6d` (stop catastrophe, glissement, latence) |
-| D04 | `4c549ba` (pré-enregistrement, version finale, réserve levée par interrupteur), `9aa265f`, `edbd25e`, `c4207f8` (incidents), puis les résultats |
+| D04 | `4c549ba` (pré-enregistrement, version finale, réserve levée par interrupteur), `9aa265f`, `edbd25e`, `c4207f8` (incidents), `c46a7ca` (résultats) |
+| D04.1 | le commit du portefeuille complet (pire journée) |
 
 ---
 
@@ -791,14 +792,15 @@ d'extraction, couverture, construction. Tous les chargements tronquent avant le 
    (`experiments/D04/rapport_D04.md`, protocole pré-enregistré, réserve levée par `reserve.levee`) : ETH +0,183 ATR
    [−0,010 ; +0,385], XRP +0,263 [−0,014 ; +0,640] ; 2026 positif sur BTC, SOL, AVAX et l'or ; sans le 1 % meilleur,
    ETH et XRP ≈ −0,06 (K17). Condition 1 de la règle du porteur remplie ; survie à 2026 et mise en production à
-   décider par le porteur.
+   décider par le porteur. EXP-D04.1 (`experiments/D04_1/rapport_D04_1.md`) : pire journée du portefeuille
+   des six actifs −5,20 % (capital valorisé de minuit), −4,16 % (solde réalisé) ; 5 journées sous −4 % en cinq ans (K18).
 2. **Nouvelle session :** lire ce document, puis :
    - `CLAUDE.md`, `RESEARCH_PHILOSOPHY.md`, `PROJECT_PLAN.md` ;
    - `BEST_RESULTS.md`, `RESEARCH_INSIGHTS.md` ;
    - les dernières entrées de `RESEARCH_LOG.md` ;
    - `src/strategy/re1.py` ;
    - `experiments/D01_7/narratif_D01_7.md`.
-3. **Vérifier l'état :** `git status`, `git log --oneline -5`, `python -m pytest -q` (attendu : 350 réussis, 2 ignorés).
+3. **Vérifier l'état :** `git status`, `git log --oneline -5`, `python -m pytest -q` (attendu : 354 réussis, 2 ignorés).
 4. **Rendre au porteur un compte rendu court**, balisé :
    - compréhension du projet et de RE-1 ;
    - règles ;
