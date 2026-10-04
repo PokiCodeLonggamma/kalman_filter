@@ -732,14 +732,14 @@ d'extraction, couverture, construction. Tous les chargements tronquent avant le 
 
 ---
 
-## 14. État exact du dépôt et des commits (2026-10-01)
+## 14. État exact du dépôt et des commits (2026-10-05)
 
 | Élément | Valeur |
 |---|---|
 | Dossier local | `C:\Users\poek9\Projet Claude\#KalmanFilter` (le `#` impose des guillemets) |
 | GitHub | https://github.com/PokiCodeLonggamma/kalman_filter, **public**, branche `main` |
-| `origin/main` | `c46a7ca` (D04), poussé le 2026-10-04 avec l'accord du porteur ; vérifier par `git log --oneline -5` |
-| Commits locaux non poussés | D04.1 (`deb86f1`) et D04.2 (portefeuille en OFAT) ; push sur accord du porteur |
+| `origin/main` | `5650153` (D04.2), poussé le 2026-10-05 avec l'accord du porteur ; vérifier par `git log --oneline -5` |
+| Commits locaux non poussés | le livre blanc « Fonds propres » ; push sur accord du porteur |
 | Identité git | `PokiCodeLonggamma <250868839+PokiCodeLonggamma@users.noreply.github.com>` |
 | Tests | 354 réussis, 2 ignorés (244 à la validation, +5 en D02.0, +53 en D02, +19 en D02.1, +11 en D03, +5 en D03.1, +13 en D04, +4 en D04.1) |
 | Système | Windows 11, Git Bash et PowerShell, application Claude Code de bureau, navigateur intégré |
@@ -771,7 +771,8 @@ d'extraction, couverture, construction. Tous les chargements tronquent avant le 
 | D03.1 | `bb80d6d` (stop catastrophe, glissement, latence) |
 | D04 | `4c549ba` (pré-enregistrement, version finale, réserve levée par interrupteur), `9aa265f`, `edbd25e`, `c4207f8` (incidents), `c46a7ca` (résultats) |
 | D04.1 | `deb86f1` (portefeuille complet, pire journée) |
-| D04.2 | le commit de l'OFAT (composition, levier) |
+| D04.2 | `5650153` (portefeuille en OFAT, composition et levier) |
+| Livre blanc « Fonds propres » | le commit du livre blanc (branche close) |
 
 ---
 
@@ -796,9 +797,12 @@ d'extraction, couverture, construction. Tous les chargements tronquent avant le 
    décider par le porteur. EXP-D04.1 (`experiments/D04_1/rapport_D04_1.md`) : pire journée du portefeuille
    des six actifs −5,20 % (capital valorisé de minuit), −4,16 % (solde réalisé) ; 5 journées sous −4 % en cinq ans (K18).
    EXP-D04.2 (`experiments/D04_2/rapport_D04_2.md`) : sans XRP −5,03 % ; la pire journée suit le risque
-   par trade (≈ 21 fois) : −3,19 % à 0,15 %/ATR, MDD −26,3 %.
+   par trade (≈ 21 fois) : −3,19 % à 0,15 %/ATR, MDD −26,3 %. Décision du porteur (2026-10-05) : six
+   actifs gardés, projet séparé en deux ; la branche « Fonds propres » est close par
+   `RE1_FONDS_PROPRES_LIVRE_BLANC.md` (cahier des charges du bot). Prochain cycle : contraintes Prop Firm.
 2. **Nouvelle session :** lire ce document, puis :
    - `CLAUDE.md`, `RESEARCH_PHILOSOPHY.md`, `PROJECT_PLAN.md` ;
+   - `RE1_FONDS_PROPRES_LIVRE_BLANC.md` (version finale de RE-1 et son exploitation) ;
    - `BEST_RESULTS.md`, `RESEARCH_INSIGHTS.md` ;
    - les dernières entrées de `RESEARCH_LOG.md` ;
    - `src/strategy/re1.py` ;

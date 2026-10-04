@@ -2012,3 +2012,30 @@ reproduction de résultats publiés et parité du noyau, sans aucune performance
 #### Décision
 - [ ] **VALIDÉ**
 - [x] **Mesures faites ; composition et taille à arbitrer par le porteur.** Commit local, non poussé.
+
+### [DÉCISION] — Séparation du projet ; branche « Fonds propres » close par son livre blanc (2026-10-05)
+- **Décisions du porteur, après lecture de D04.2 :**
+  - l'univers des six actifs est gardé entier : retirer ETH serait une sélection après lecture de la réserve ; l'or est
+    le seul diversifiant mesuré ;
+  - le projet est séparé en deux. La branche « Fonds propres » est close ; un nouveau cycle de recherche, consacré aux
+    contraintes des Prop Firms, suivra.
+- **Livrable :** `RE1_FONDS_PROPRES_LIVRE_BLANC.md` à la racine, cahier des charges du bot :
+  - spécification de la version finale (`strategy.final`) et critère de conformité (rejeu trade par trade) ;
+  - univers des six actifs, rôle de l'or ;
+  - matrice de taille (D04.2) ;
+  - avertissements d'exécution et risques hors modèle.
+- **Sources :** aucun calcul nouveau ; chiffres des rapports D02.1, D03.1, D04, D04.1 et D04.2. Déductions
+  arithmétiques signalées comme telles : rendement annualisé, multiples de r, coût du glissement selon la part des
+  sorties sur stop, ≈ +20 % par an hors 2026.
+- **Relecture des énoncés du porteur :**
+  - « pire journée ≈ 21 × risque » : confirmé (20,8 à 22,0 fois) ;
+  - « l'or, seul vrai parachute lors des krachs » : l'or est le seul actif dont le retrait aggrave la pire journée et le
+    MDD. Le 2022-11-04, il gagne +0,51 % au plus bas, un jour de hausse qui stoppe quatre ventes crypto. Sa
+    corrélation aux cryptos n'est pas mesurée ;
+  - « le trade médian perd, le top 1 % fait la rentabilité » : confirmé sur BTC (RE-1 sans stop catastrophe), ETH et
+    XRP ;
+  - « la latence ne coûte rien » : mesuré sur l'entrée (D03.1). Le remplissage d'un ordre passif et sa sélection adverse
+    ne sont pas mesurés ;
+  - « glissement mortel des stops F3 » : 0,5 ATR sur les stops de F3 divise par deux l'espérance de BTC. Appliqué à tous
+    les stops de la version finale, un glissement d'environ 0,5 ATR l'annule.
+- **Push :** aucun ; commit local.
