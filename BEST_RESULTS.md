@@ -345,6 +345,18 @@ ces données ; ETH, XRP et BTC 2026 avaient été vus par d'anciens projets.*
 - Pire journée d'un actif seul sur la même fenêtre : −2,57 %. Les pires journées viennent de quatre stops catastrophe
   touchés ensemble sur des cryptos corrélées. Exposition brute jusqu'à 5,2x.
 
+### EXP-D04.2 — portefeuille en OFAT (six actifs ; 2021-10 → 2026-09)
+
+| Configuration | Pire journée : valorisé ; solde | Jours < −4 % | MDD | PnL | Calmar |
+|---|---|---|---|---|---|
+| Six actifs, 0,25 %/ATR (référence) | −5,20 % ; −4,16 % | 5 | −37,4 % | +584 % | 1,25 |
+| Sans XRP, 0,25 %/ATR | −5,03 % ; −4,08 % | 2 | −35,6 % | +274 % | 0,85 |
+| Six actifs, 0,15 %/ATR | −3,19 % ; −2,55 % | 0 | −26,3 % | +248 % | 1,08 |
+| Six actifs, 0,10 %/ATR | −2,16 % ; −1,75 % | 0 | −19,8 % | +139 % | 0,96 |
+
+- La pire journée suit le risque par trade (≈ 21 fois) ; retirer un actif ne la ramène pas au-dessus de −4 %. Lecture
+  descriptive sur des données déjà vues.
+
 ## Pistes écartées (à ne pas retester sans élément nouveau)
 
 | Piste | Raison | Source |

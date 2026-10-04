@@ -1981,3 +1981,34 @@ reproduction de résultats publiés et parité du noyau, sans aucune performance
 #### Décision
 - [ ] **VALIDÉ**
 - [x] **Mesure faite ; taille par trade et règles du compte à arbitrer par le porteur.** Commit local, non poussé.
+
+### [EXP-D04.2] — Portefeuille complet en OFAT : composition (un actif retiré à la fois) et levier (risque par trade)
+- **Date :** 2026-10-04
+- **Étape :** D, D04.2. Demande du porteur (« 1) Test sans XRP dans le portefeuille. 2) Test également plusieurs
+  configurations de portefeuille différent. 3) Test aussi, en OFAT différents leverage. ») ; plan validé par le
+  porteur : levier = risque par trade, compositions = retrait d'un actif à la fois.
+- **Actifs & Période :** ceux de D04.1, fenêtre commune 2021-10 → 2026-09 ; 5 bps (or 4 bps).
+
+#### 0. Cadrage (fixé avant le calcul, `experiments/D04_2/run_D04_2.py`)
+- **QUESTION :** effet sur la pire journée, le MDD et le PnL (1) du retrait de chaque actif, XRP compris, (2) du risque
+  par trade.
+- **MÉTHODE :** référence = six actifs, 0,25 %/ATR, ≤ 1x (D04.1) ; axe composition au risque de référence ; axe levier
+  à 0,05, 0,10, 0,15, 0,20 et 0,30 %/ATR sur les six actifs, plafond inchangé.
+- **CRITÈRE DE LECTURE (sans seuil) :** mesures de D04.1. Biais signalé : la réserve a été lue ; retirer un actif à la
+  fois évite de choisir une composition après lecture.
+
+#### Résultats (`experiments/D04_2/rapport_D04_2.md`)
+- **Contrôle passé :** la référence redonne D04.1.
+- [OBS] **Composition (0,25 %/ATR) :** sans XRP −5,03 % (−4,08 % sur le solde), 2 journées sous −4 %, MDD −35,6 %, PnL
+  +274 %, Calmar 0,85 (référence −5,20 %, 5, −37,4 %, +584 %, 1,25) ; au mieux −4,06 % (sans ETH) et −4,07 % (sans
+  SOL) ; sans or −5,71 %, MDD −41,5 % : l'or est le seul diversifiant.
+- [OBS] **Levier (six actifs) :** pire journée −1,10 / −2,16 / −3,19 / −4,18 / −5,20 / −6,32 % pour 0,05 / 0,10 / 0,15 /
+  0,20 / 0,25 / 0,30 %/ATR (≈ 21 × le risque) ; aucune journée sous −4 % jusqu'à 0,15 % ; MDD −10,7 à −43,1 % ; Calmar
+  0,89 à 1,28 ; exposition brute P99 de 0,85x à 3,41x.
+- [HYP] Pour une limite journalière, la taille commande, pas la composition ; « sans ETH » (Calmar 1,69) serait une
+  sélection après lecture ; si le compte impose une perte totale maximale, le MDD contraint davantage (−26,3 % à
+  0,15 %/ATR, −10,7 % à 0,05 %).
+
+#### Décision
+- [ ] **VALIDÉ**
+- [x] **Mesures faites ; composition et taille à arbitrer par le porteur.** Commit local, non poussé.
