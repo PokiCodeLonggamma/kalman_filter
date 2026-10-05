@@ -2353,3 +2353,50 @@ reproduction de résultats publiés et parité du noyau, sans aucune performance
   - un challenge plus agressif perd par tentative ; il ne gagne qu'en suite.
 - **D05.7 :** tirage par blocs sans 2026 sur ce roster ; cadrage soumis au porteur, GO attendu.
 - **Push :** aucun ; commit local.
+
+### [DÉCISION] — GO de D05.7 (blocs d'une et de quatre semaines) ; push autorisé (2026-10-05)
+- **GO du porteur :** tirage par blocs sans 2026 sur le roster final, deux séries de 200 histoires :
+  - blocs d'une semaine : l'enchaînement des semaines est entièrement détruit ;
+  - blocs de quatre semaines : un mois d'enchaînement est gardé.
+- **Lecture annoncée par le porteur :** si l'avantage des pistes rapides s'effondre avec des blocs d'une semaine mais
+  résiste avec des blocs de quatre, le modèle a besoin d'un régime persistant d'au moins un mois. Nuance de l'agent :
+  le tirage donne un indice, pas une preuve ; l'histoire réelle reste une seule trajectoire.
+- **Push autorisé et fait :** `b5cecb5`, `6fc12d2`, `5f4cc65` ; origin/main = `5f4cc65`.
+- **Prompt Sniper :** la phrase du porteur sur cTrader reste hors des commits (session parallèle).
+
+### [EXP-D05.7] — Tirage par blocs de semaines, sans 2026 : le roster final face à des histoires recomposées
+- **Date :** 2026-10-05
+- **Étape :** D05, étape 4. GO du porteur.
+- **Actifs & Période :** six actifs ; 221 semaines du lundi 2021-10-04 au lundi 2025-12-29 (sans 2026) ; 5 bps (or
+  4 bps).
+
+#### 0. Cadrage (fixé avant le calcul, `experiments/D05_7/run_D05_7.py`)
+- **QUESTION :** les gains du challenge rapide et de la relance survivent-ils quand on détruit l'enchaînement des
+  semaines (blocs d'une semaine), ou au-delà d'un mois (blocs de quatre semaines) ?
+- **MÉTHODE :**
+  - Nouveau module `propfirm.blocs`, testé : chaque semaine tirée apporte ses trades sur les six actifs, avec leur
+    chemin de prix d'origine.
+  - 200 histoires par longueur de bloc.
+  - Le roster et la référence sont évalués sur chaque histoire : tentative et suite, à 12 et 24 mois.
+- **CRITÈRE DE LECTURE (sans seuil) :** distribution des écarts entre pistes ; part des histoires où l'écart est
+  positif ; rang de l'histoire réelle.
+
+#### Résultats (`experiments/D05_7/rapport_D05_7.md`)
+- **Contrôle passé :** l'histoire identité redonne exactement la simulation d'origine.
+- [OBS] **La vitesse du challenge survit en suite.** Chaque pas (0,20 → 0,25 → 0,30) rapporte en médiane +1,9 à
+  +2,3 k€ en 12 mois et +3,4 à +4,1 k€ en 24 mois. L'écart est positif dans 80 à 94 % des histoires, aux deux
+  longueurs de bloc.
+- [OBS] **La relance ne survit pas :** médiane de −1,1 à +0,1 k€ au lieu du fixe 0,25 ; positive dans 37 à 58 % des
+  histoires.
+- [OBS] **Le compte financé à 0,25 au lieu de 0,20 ne survit pas par tentative** (médiane proche de zéro, positif dans
+  42 à 52 % des histoires). En suite, il garde un petit gain (+0,4 à +1,3 k€, 62 à 68 %).
+- [OBS] **Les blocs de quatre semaines donnent presque les mêmes résultats que ceux d'une semaine.**
+- [OBS] **L'histoire réelle était favorable à toutes les pistes** (78e à 96e centile).
+  - Médianes recomposées : +3,1 à +4,6 k€ par tentative à 12 mois ; +23 à +34 k€ en suite à 24 mois.
+  - Valeur positive dans 90 à 99,5 % des histoires.
+- [HYP] **La vitesse paie par mécanique** (plus de tentatives). La relance et le compte financé agressif misaient sur
+  l'ordre réel des semaines : persistance de plus d'un mois, ou chance.
+
+#### Décision
+- [ ] **VALIDÉ**
+- [x] **Mesures faites ; choix de la taille à décider par le porteur.** Commit local, non poussé.
