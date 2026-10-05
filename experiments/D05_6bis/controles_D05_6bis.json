@@ -1,0 +1,21 @@
+{
+ "date": "2026-10-05 15:51 UTC",
+ "commit": "b5cecb5",
+ "motif": "EXP-D05.6bis (porteur, 2026-10-05)",
+ "challenges_egaux_D05_6": 12,
+ "fixe 0,10_deux_phases_12 mois_egal_D05_5": 0.033355,
+ "fixe 0,10_deux_phases_24 mois_egal_D05_5": 0.035581,
+ "fixe 0,10_deux_phases_sans 2026, 12 mois_egal_D05_5": 0.023398,
+ "fixe 0,15_deux_phases_12 mois_egal_D05_5": 0.069016,
+ "fixe 0,15_deux_phases_24 mois_egal_D05_5": 0.093391,
+ "fixe 0,15_deux_phases_sans 2026, 12 mois_egal_D05_5": 0.083966,
+ "fixe 0,20_deux_phases_12 mois_egal_D05_5": 0.092176,
+ "fixe 0,20_deux_phases_24 mois_egal_D05_5": 0.109062,
+ "fixe 0,20_deux_phases_sans 2026, 12 mois_egal_D05_5": 0.111,
+ "fixe 0,25_deux_phases_12 mois_egal_D05_5": 0.07504,
+ "fixe 0,25_deux_phases_24 mois_egal_D05_5": 0.086944,
+ "fixe 0,25_deux_phases_sans 2026, 12 mois_egal_D05_5": 0.088494,
+ "coussin 0,20_deux_phases_12 mois_egal_D05_6": 0.044841,
+ "coussin 0,20_deux_phases_sans 2026, 12 mois_egal_D05_6": 0.028502,
+ "duree_s": 136
+}

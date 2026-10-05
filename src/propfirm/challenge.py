@@ -1,4 +1,4 @@
-"""EXP-D05.4 à D05.6 — issues d'un challenge en deux phases, du compte financé, et valeur d'une tentative, à partir de
+"""EXP-D05.4 à D05.6bis — issues d'un challenge en deux phases, du compte financé, et valeur d'une tentative, à partir de
 `Simulation`.
 
 - Une phase (objectif k) se termine au premier de ses événements : échec (perte du jour ou perte totale) ou réussite. À
@@ -8,6 +8,9 @@
   du départ de ce minuit. Le compte financé démarre de même au premier minuit qui suit la réussite de P2.
 - Compte financé (EXP-D05.5) : il dure jusqu'à sa première rupture de règle ; seuls les retraits antérieurs comptent.
   Valeur d'une tentative = − frais + (frais remboursés + part × retraits) si au moins un retrait a lieu.
+- Suite de tentatives (EXP-D05.6bis) : un seul compte à la fois, une nouvelle tentative au minuit qui suit chaque échec
+  du challenge ou chaque rupture du compte financé ; la taille du challenge et celle du compte financé peuvent différer
+  (deux `Simulation`).
 - `coupure` (ns) : les événements postérieurs ne sont pas observés (« en cours ») ; les départs à partir de la coupure
   sont retirés.
 """
@@ -147,6 +150,52 @@ def valeur(sim_c: Simulation, sim_f: Simulation, ref: str = "solde", mode: str =
     out = pd.DataFrame({"depart": _depart_local(sim_c), "issue": issue,
                         "jours_total": np.where(t_fin < INF, (t_fin - d) / JOUR, np.nan), "finance": finance,
                         "n_retraits": n_ret, "retire": retire, "recu": recu, "valeur": recu - frais})
+    if coupure is not None:
+        out = out[d < coupure].reset_index(drop=True)
+    return out
+
+
+def suite(sim_c: Simulation, sim_f: Simulation, ref: str = "solde", mode: str = "pessimiste", frais: float = 0.0054,
+          part: float = 0.8, horizon_jours: float = 365.0, coupure: int | None = None) -> pd.DataFrame:
+    """EXP-D05.6bis — suite de tentatives, un seul compte à la fois : une tentative au départ, puis une nouvelle au
+    premier minuit qui suit l'échec du challenge ou la rupture du compte financé. Chaque tentative coûte `frais` à son
+    départ, remboursés à son premier retrait. Ne comptent que les tentatives démarrées et les retraits reçus dans
+    `horizon_jours` depuis le départ (et avant la coupure) ; la suite s'arrête sur un challenge en cours ou un compte
+    financé ouvert à l'horizon. Une ligne par départ, en fraction du capital du compte : valeur (somme nette reçue),
+    nombre de tentatives et de comptes financés."""
+    if not np.array_equal(sim_c.departs, sim_f.departs):
+        raise ValueError("suite : challenge et compte financé sur les mêmes départs")
+    d, n = sim_c.departs, len(sim_c.departs)
+    _, t1, _, t_fin, issue = _enchainer(sim_c, ref, mode, coupure)
+    ok = issue == "reussite"
+    fin_c = np.where(np.isin(issue, ("echec_p1_jour", "echec_p1_max")), t1, t_fin)    # INF : challenge en cours
+    fin_f, _ = _echec(sim_f, ref, mode, coupure)
+    r = _retraits(sim_f)
+    rd, rt, rm = r.depart.to_numpy(dtype=np.int64), r.t.to_numpy(dtype=np.int64), r.montant.to_numpy(dtype=float)
+    lo, hi = np.searchsorted(rd, np.arange(n), side="left"), np.searchsorted(rd, np.arange(n), side="right")
+    h = int(round(horizon_jours * JOUR))
+    val, n_t, n_f = np.zeros(n), np.zeros(n, dtype=np.int64), np.zeros(n, dtype=np.int64)
+    for s0 in range(n):
+        lim = d[s0] + h if coupure is None else min(d[s0] + h, coupure)
+        k = s0
+        while k < n and d[k] <= lim:
+            val[s0] -= frais
+            n_t[s0] += 1
+            fin = fin_c[k]
+            if ok[k]:
+                k3 = int(np.searchsorted(d, fin, side="left"))
+                if k3 >= n or d[k3] > lim:
+                    break
+                n_f[s0] += 1
+                tt, mm = rt[lo[k3]:hi[k3]], rm[lo[k3]:hi[k3]]
+                m = (tt < fin_f[k3]) & (tt <= lim)
+                if m.any():
+                    val[s0] += frais + part * mm[m].sum()
+                fin = fin_f[k3]
+            if fin > lim:                                     # INF compris
+                break
+            k = max(int(np.searchsorted(d, fin, side="left")), k + 1)
+    out = pd.DataFrame({"depart": _depart_local(sim_c), "valeur": val, "n_tentatives": n_t, "n_finances": n_f})
     if coupure is not None:
         out = out[d < coupure].reset_index(drop=True)
     return out

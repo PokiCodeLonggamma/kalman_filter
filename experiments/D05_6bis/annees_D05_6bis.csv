@@ -1,0 +1,1373 @@
+challenge,finance,lecture,mesure,annee,n_departs,valeur,ecart_ref
+"fixe 0,10","fixe 0,10",12 mois,tentative,2021,92,0.0188055,-0.0505831
+"fixe 0,10","fixe 0,10",12 mois,tentative,2022,365,0.0289319,-0.0799985
+"fixe 0,10","fixe 0,10",12 mois,tentative,2023,365,0.00716579,-0.114508
+"fixe 0,10","fixe 0,10",12 mois,tentative,2024,366,0.0352438,-0.0776413
+"fixe 0,10","fixe 0,10",12 mois,tentative,2025,274,0.0764983,0.0659481
+"fixe 0,10","fixe 0,10",12 mois,suite,2021,92,0.0153425,-0.140215
+"fixe 0,10","fixe 0,10",12 mois,suite,2022,365,0.0526523,-0.20032
+"fixe 0,10","fixe 0,10",12 mois,suite,2023,365,0.00314168,-0.106533
+"fixe 0,10","fixe 0,10",12 mois,suite,2024,366,0.0334438,-0.126514
+"fixe 0,10","fixe 0,10",12 mois,suite,2025,274,0.105603,-0.201421
+"fixe 0,10","fixe 0,10",24 mois,tentative,2021,92,0.0188055,-0.0505831
+"fixe 0,10","fixe 0,10",24 mois,tentative,2022,365,0.0289319,-0.0799985
+"fixe 0,10","fixe 0,10",24 mois,tentative,2023,365,0.0202753,-0.102009
+"fixe 0,10","fixe 0,10",24 mois,tentative,2024,275,0.0703349,-0.0346269
+"fixe 0,10","fixe 0,10",24 mois,suite,2021,92,0.207007,-0.340035
+"fixe 0,10","fixe 0,10",24 mois,suite,2022,365,0.14582,-0.294147
+"fixe 0,10","fixe 0,10",24 mois,suite,2023,365,0.0351178,-0.254583
+"fixe 0,10","fixe 0,10",24 mois,suite,2024,275,0.193744,-0.30767
+"fixe 0,10","fixe 0,10","sans 2026, 12 mois",tentative,2021,92,0.0188055,-0.0505831
+"fixe 0,10","fixe 0,10","sans 2026, 12 mois",tentative,2022,365,0.0289319,-0.0799985
+"fixe 0,10","fixe 0,10","sans 2026, 12 mois",tentative,2023,365,0.00716579,-0.114508
+"fixe 0,10","fixe 0,10","sans 2026, 12 mois",tentative,2024,366,0.0352438,-0.0776413
+"fixe 0,10","fixe 0,10","sans 2026, 12 mois",tentative,2025,1,0.0157054,-0.0929566
+"fixe 0,10","fixe 0,10","sans 2026, 12 mois",suite,2021,92,0.0153425,-0.140215
+"fixe 0,10","fixe 0,10","sans 2026, 12 mois",suite,2022,365,0.0526523,-0.20032
+"fixe 0,10","fixe 0,10","sans 2026, 12 mois",suite,2023,365,0.00314168,-0.106533
+"fixe 0,10","fixe 0,10","sans 2026, 12 mois",suite,2024,366,0.0334438,-0.126514
+"fixe 0,10","fixe 0,10","sans 2026, 12 mois",suite,2025,1,0.0103054,-0.153126
+"fixe 0,10","fixe 0,15",12 mois,tentative,2021,92,0.0286562,-0.0407324
+"fixe 0,10","fixe 0,15",12 mois,tentative,2022,365,0.0440701,-0.0648603
+"fixe 0,10","fixe 0,15",12 mois,tentative,2023,365,0.0130535,-0.10862
+"fixe 0,10","fixe 0,15",12 mois,tentative,2024,366,0.0529492,-0.0599359
+"fixe 0,10","fixe 0,15",12 mois,tentative,2025,274,0.117153,0.106603
+"fixe 0,10","fixe 0,15",12 mois,suite,2021,92,0.0243127,-0.131244
+"fixe 0,10","fixe 0,15",12 mois,suite,2022,365,0.0803504,-0.172622
+"fixe 0,10","fixe 0,15",12 mois,suite,2023,365,0.00778669,-0.101888
+"fixe 0,10","fixe 0,15",12 mois,suite,2024,366,0.0507066,-0.109251
+"fixe 0,10","fixe 0,15",12 mois,suite,2025,274,0.160884,-0.14614
+"fixe 0,10","fixe 0,15",24 mois,tentative,2021,92,0.0286562,-0.0407324
+"fixe 0,10","fixe 0,15",24 mois,tentative,2022,365,0.0440701,-0.0648603
+"fixe 0,10","fixe 0,15",24 mois,tentative,2023,365,0.0319905,-0.0902935
+"fixe 0,10","fixe 0,15",24 mois,tentative,2024,275,0.104835,-0.00012712
+"fixe 0,10","fixe 0,15",24 mois,suite,2021,92,0.0178562,-0.529185
+"fixe 0,10","fixe 0,15",24 mois,suite,2022,365,0.115354,-0.324612
+"fixe 0,10","fixe 0,15",24 mois,suite,2023,365,0.06507,-0.224631
+"fixe 0,10","fixe 0,15",24 mois,suite,2024,275,0.279993,-0.22142
+"fixe 0,10","fixe 0,15","sans 2026, 12 mois",tentative,2021,92,0.0286562,-0.0407324
+"fixe 0,10","fixe 0,15","sans 2026, 12 mois",tentative,2022,365,0.0440701,-0.0648603
+"fixe 0,10","fixe 0,15","sans 2026, 12 mois",tentative,2023,365,0.0130535,-0.10862
+"fixe 0,10","fixe 0,15","sans 2026, 12 mois",tentative,2024,366,0.0529492,-0.0599359
+"fixe 0,10","fixe 0,15","sans 2026, 12 mois",tentative,2025,1,0.0204607,-0.0882013
+"fixe 0,10","fixe 0,15","sans 2026, 12 mois",suite,2021,92,0.0243127,-0.131244
+"fixe 0,10","fixe 0,15","sans 2026, 12 mois",suite,2022,365,0.0803504,-0.172622
+"fixe 0,10","fixe 0,15","sans 2026, 12 mois",suite,2023,365,0.00778669,-0.101888
+"fixe 0,10","fixe 0,15","sans 2026, 12 mois",suite,2024,366,0.0507066,-0.109251
+"fixe 0,10","fixe 0,15","sans 2026, 12 mois",suite,2025,1,0.00966068,-0.153771
+"fixe 0,10","fixe 0,20",12 mois,tentative,2021,92,0.0387696,-0.030619
+"fixe 0,10","fixe 0,20",12 mois,tentative,2022,365,0.0587229,-0.0502075
+"fixe 0,10","fixe 0,20",12 mois,tentative,2023,365,0.0185443,-0.103129
+"fixe 0,10","fixe 0,20",12 mois,tentative,2024,366,0.0694915,-0.0433936
+"fixe 0,10","fixe 0,20",12 mois,tentative,2025,274,0.122414,0.111864
+"fixe 0,10","fixe 0,20",12 mois,suite,2021,92,0.0333696,-0.122187
+"fixe 0,10","fixe 0,20",12 mois,suite,2022,365,0.106004,-0.146968
+"fixe 0,10","fixe 0,20",12 mois,suite,2023,365,0.0131443,-0.0965301
+"fixe 0,10","fixe 0,20",12 mois,suite,2024,366,0.0672194,-0.0927382
+"fixe 0,10","fixe 0,20",12 mois,suite,2025,274,0.174357,-0.132667
+"fixe 0,10","fixe 0,20",24 mois,tentative,2021,92,0.0387696,-0.030619
+"fixe 0,10","fixe 0,20",24 mois,tentative,2022,365,0.0587229,-0.0502075
+"fixe 0,10","fixe 0,20",24 mois,tentative,2023,365,0.0432682,-0.0790157
+"fixe 0,10","fixe 0,20",24 mois,tentative,2024,275,0.136794,0.031832
+"fixe 0,10","fixe 0,20",24 mois,suite,2021,92,0.0279696,-0.519072
+"fixe 0,10","fixe 0,20",24 mois,suite,2022,365,0.159894,-0.280072
+"fixe 0,10","fixe 0,20",24 mois,suite,2023,365,0.0841109,-0.20559
+"fixe 0,10","fixe 0,20",24 mois,suite,2024,275,0.310119,-0.191294
+"fixe 0,10","fixe 0,20","sans 2026, 12 mois",tentative,2021,92,0.0387696,-0.030619
+"fixe 0,10","fixe 0,20","sans 2026, 12 mois",tentative,2022,365,0.0587229,-0.0502075
+"fixe 0,10","fixe 0,20","sans 2026, 12 mois",tentative,2023,365,0.0185443,-0.103129
+"fixe 0,10","fixe 0,20","sans 2026, 12 mois",tentative,2024,366,0.0694915,-0.0433936
+"fixe 0,10","fixe 0,20","sans 2026, 12 mois",tentative,2025,1,0.0242187,-0.0844433
+"fixe 0,10","fixe 0,20","sans 2026, 12 mois",suite,2021,92,0.0333696,-0.122187
+"fixe 0,10","fixe 0,20","sans 2026, 12 mois",suite,2022,365,0.106004,-0.146968
+"fixe 0,10","fixe 0,20","sans 2026, 12 mois",suite,2023,365,0.0131443,-0.0965301
+"fixe 0,10","fixe 0,20","sans 2026, 12 mois",suite,2024,366,0.0672194,-0.0927382
+"fixe 0,10","fixe 0,20","sans 2026, 12 mois",suite,2025,1,0.0188187,-0.144613
+"fixe 0,10","fixe 0,25",12 mois,tentative,2021,92,0.0485829,-0.0208056
+"fixe 0,10","fixe 0,25",12 mois,tentative,2022,365,0.0350196,-0.0739108
+"fixe 0,10","fixe 0,25",12 mois,tentative,2023,365,0.00748008,-0.114194
+"fixe 0,10","fixe 0,25",12 mois,tentative,2024,366,0.0785589,-0.0343262
+"fixe 0,10","fixe 0,25",12 mois,tentative,2025,274,0.130928,0.120378
+"fixe 0,10","fixe 0,25",12 mois,suite,2021,92,0.0422438,-0.113313
+"fixe 0,10","fixe 0,25",12 mois,suite,2022,365,0.0595729,-0.193399
+"fixe 0,10","fixe 0,25",12 mois,suite,2023,365,0.00185816,-0.107816
+"fixe 0,10","fixe 0,25",12 mois,suite,2024,366,0.0764398,-0.0835178
+"fixe 0,10","fixe 0,25",12 mois,suite,2025,274,0.190951,-0.116073
+"fixe 0,10","fixe 0,25",24 mois,tentative,2021,92,0.0485829,-0.0208056
+"fixe 0,10","fixe 0,25",24 mois,tentative,2022,365,0.0350196,-0.0739108
+"fixe 0,10","fixe 0,25",24 mois,tentative,2023,365,0.0365597,-0.0857243
+"fixe 0,10","fixe 0,25",24 mois,tentative,2024,275,0.164047,0.0590854
+"fixe 0,10","fixe 0,25",24 mois,suite,2021,92,0.196443,-0.350599
+"fixe 0,10","fixe 0,25",24 mois,suite,2022,365,0.16143,-0.278537
+"fixe 0,10","fixe 0,25",24 mois,suite,2023,365,0.0775469,-0.212154
+"fixe 0,10","fixe 0,25",24 mois,suite,2024,275,0.322575,-0.178839
+"fixe 0,10","fixe 0,25","sans 2026, 12 mois",tentative,2021,92,0.0485829,-0.0208056
+"fixe 0,10","fixe 0,25","sans 2026, 12 mois",tentative,2022,365,0.0350196,-0.0739108
+"fixe 0,10","fixe 0,25","sans 2026, 12 mois",tentative,2023,365,0.00748008,-0.114194
+"fixe 0,10","fixe 0,25","sans 2026, 12 mois",tentative,2024,366,0.0785589,-0.0343262
+"fixe 0,10","fixe 0,25","sans 2026, 12 mois",tentative,2025,1,-0.0054,-0.114062
+"fixe 0,10","fixe 0,25","sans 2026, 12 mois",suite,2021,92,0.0422438,-0.113313
+"fixe 0,10","fixe 0,25","sans 2026, 12 mois",suite,2022,365,0.0595729,-0.193399
+"fixe 0,10","fixe 0,25","sans 2026, 12 mois",suite,2023,365,0.00185816,-0.107816
+"fixe 0,10","fixe 0,25","sans 2026, 12 mois",suite,2024,366,0.0764398,-0.0835178
+"fixe 0,10","fixe 0,25","sans 2026, 12 mois",suite,2025,1,-0.0108,-0.174231
+"fixe 0,10","fixe 0,30",12 mois,tentative,2021,92,0.0575094,-0.0118792
+"fixe 0,10","fixe 0,30",12 mois,tentative,2022,365,0.0419011,-0.0670294
+"fixe 0,10","fixe 0,30",12 mois,tentative,2023,365,0.00937349,-0.1123
+"fixe 0,10","fixe 0,30",12 mois,tentative,2024,366,0.0831309,-0.0297542
+"fixe 0,10","fixe 0,30",12 mois,tentative,2025,274,0.156762,0.146211
+"fixe 0,10","fixe 0,30",12 mois,suite,2021,92,0.0512289,-0.104328
+"fixe 0,10","fixe 0,30",12 mois,suite,2022,365,0.0700618,-0.182911
+"fixe 0,10","fixe 0,30",12 mois,suite,2023,365,0.00375157,-0.105923
+"fixe 0,10","fixe 0,30",12 mois,suite,2024,366,0.0799766,-0.079981
+"fixe 0,10","fixe 0,30",12 mois,suite,2025,274,0.219346,-0.0876783
+"fixe 0,10","fixe 0,30",24 mois,tentative,2021,92,0.0575094,-0.0118792
+"fixe 0,10","fixe 0,30",24 mois,tentative,2022,365,0.0419011,-0.0670294
+"fixe 0,10","fixe 0,30",24 mois,tentative,2023,365,0.0323827,-0.0899012
+"fixe 0,10","fixe 0,30",24 mois,tentative,2024,275,0.155374,0.0504123
+"fixe 0,10","fixe 0,30",24 mois,suite,2021,92,0.139496,-0.407546
+"fixe 0,10","fixe 0,30",24 mois,suite,2022,365,0.131167,-0.308799
+"fixe 0,10","fixe 0,30",24 mois,suite,2023,365,0.0699863,-0.219714
+"fixe 0,10","fixe 0,30",24 mois,suite,2024,275,0.368696,-0.132717
+"fixe 0,10","fixe 0,30","sans 2026, 12 mois",tentative,2021,92,0.0575094,-0.0118792
+"fixe 0,10","fixe 0,30","sans 2026, 12 mois",tentative,2022,365,0.0419011,-0.0670294
+"fixe 0,10","fixe 0,30","sans 2026, 12 mois",tentative,2023,365,0.00937349,-0.1123
+"fixe 0,10","fixe 0,30","sans 2026, 12 mois",tentative,2024,366,0.0831309,-0.0297542
+"fixe 0,10","fixe 0,30","sans 2026, 12 mois",tentative,2025,1,-0.0054,-0.114062
+"fixe 0,10","fixe 0,30","sans 2026, 12 mois",suite,2021,92,0.0512289,-0.104328
+"fixe 0,10","fixe 0,30","sans 2026, 12 mois",suite,2022,365,0.0700618,-0.182911
+"fixe 0,10","fixe 0,30","sans 2026, 12 mois",suite,2023,365,0.00375157,-0.105923
+"fixe 0,10","fixe 0,30","sans 2026, 12 mois",suite,2024,366,0.0799766,-0.079981
+"fixe 0,10","fixe 0,30","sans 2026, 12 mois",suite,2025,1,-0.0108,-0.174231
+"fixe 0,10","coussin 0,20",12 mois,tentative,2021,92,0.0420019,-0.0273867
+"fixe 0,10","coussin 0,20",12 mois,tentative,2022,365,0.0281233,-0.0808072
+"fixe 0,10","coussin 0,20",12 mois,tentative,2023,365,0.00195992,-0.119714
+"fixe 0,10","coussin 0,20",12 mois,tentative,2024,366,0.0302862,-0.0825989
+"fixe 0,10","coussin 0,20",12 mois,tentative,2025,274,0.129216,0.118666
+"fixe 0,10","coussin 0,20",12 mois,suite,2021,92,0.0420019,-0.113555
+"fixe 0,10","coussin 0,20",12 mois,suite,2022,365,0.0430355,-0.209937
+"fixe 0,10","coussin 0,20",12 mois,suite,2023,365,-0.000421999,-0.110096
+"fixe 0,10","coussin 0,20",12 mois,suite,2024,366,0.0302862,-0.129671
+"fixe 0,10","coussin 0,20",12 mois,suite,2025,274,0.182156,-0.124868
+"fixe 0,10","coussin 0,20",24 mois,tentative,2021,92,0.0420019,-0.0273867
+"fixe 0,10","coussin 0,20",24 mois,tentative,2022,365,0.0281233,-0.0808072
+"fixe 0,10","coussin 0,20",24 mois,tentative,2023,365,0.0124354,-0.109849
+"fixe 0,10","coussin 0,20",24 mois,tentative,2024,275,0.188491,0.0835296
+"fixe 0,10","coussin 0,20",24 mois,suite,2021,92,0.0420019,-0.50504
+"fixe 0,10","coussin 0,20",24 mois,suite,2022,365,0.0589044,-0.381062
+"fixe 0,10","coussin 0,20",24 mois,suite,2023,365,0.0312404,-0.25846
+"fixe 0,10","coussin 0,20",24 mois,suite,2024,275,0.188491,-0.312922
+"fixe 0,10","coussin 0,20","sans 2026, 12 mois",tentative,2021,92,0.0420019,-0.0273867
+"fixe 0,10","coussin 0,20","sans 2026, 12 mois",tentative,2022,365,0.0281233,-0.0808072
+"fixe 0,10","coussin 0,20","sans 2026, 12 mois",tentative,2023,365,0.00195992,-0.119714
+"fixe 0,10","coussin 0,20","sans 2026, 12 mois",tentative,2024,366,0.0302862,-0.0825989
+"fixe 0,10","coussin 0,20","sans 2026, 12 mois",tentative,2025,1,-0.0054,-0.114062
+"fixe 0,10","coussin 0,20","sans 2026, 12 mois",suite,2021,92,0.0420019,-0.113555
+"fixe 0,10","coussin 0,20","sans 2026, 12 mois",suite,2022,365,0.0430355,-0.209937
+"fixe 0,10","coussin 0,20","sans 2026, 12 mois",suite,2023,365,-0.000421999,-0.110096
+"fixe 0,10","coussin 0,20","sans 2026, 12 mois",suite,2024,366,0.0302862,-0.129671
+"fixe 0,10","coussin 0,20","sans 2026, 12 mois",suite,2025,1,-0.0054,-0.168831
+"fixe 0,10","relance 0,20 → 0,40",12 mois,tentative,2021,92,0.0387696,-0.030619
+"fixe 0,10","relance 0,20 → 0,40",12 mois,tentative,2022,365,0.0516287,-0.0573017
+"fixe 0,10","relance 0,20 → 0,40",12 mois,tentative,2023,365,0.0152289,-0.106445
+"fixe 0,10","relance 0,20 → 0,40",12 mois,tentative,2024,366,0.0735692,-0.0393159
+"fixe 0,10","relance 0,20 → 0,40",12 mois,tentative,2025,274,0.112982,0.102431
+"fixe 0,10","relance 0,20 → 0,40",12 mois,suite,2021,92,0.0333696,-0.122187
+"fixe 0,10","relance 0,20 → 0,40",12 mois,suite,2022,365,0.0966632,-0.156309
+"fixe 0,10","relance 0,20 → 0,40",12 mois,suite,2023,365,0.00968091,-0.0999935
+"fixe 0,10","relance 0,20 → 0,40",12 mois,suite,2024,366,0.0714966,-0.088461
+"fixe 0,10","relance 0,20 → 0,40",12 mois,suite,2025,274,0.164625,-0.142399
+"fixe 0,10","relance 0,20 → 0,40",24 mois,tentative,2021,92,0.0387696,-0.030619
+"fixe 0,10","relance 0,20 → 0,40",24 mois,tentative,2022,365,0.0516287,-0.0573017
+"fixe 0,10","relance 0,20 → 0,40",24 mois,tentative,2023,365,0.0455026,-0.0767813
+"fixe 0,10","relance 0,20 → 0,40",24 mois,tentative,2024,275,0.159447,0.0544855
+"fixe 0,10","relance 0,20 → 0,40",24 mois,suite,2021,92,0.0279696,-0.519072
+"fixe 0,10","relance 0,20 → 0,40",24 mois,suite,2022,365,0.155862,-0.284104
+"fixe 0,10","relance 0,20 → 0,40",24 mois,suite,2023,365,0.0963658,-0.193335
+"fixe 0,10","relance 0,20 → 0,40",24 mois,suite,2024,275,0.295379,-0.206035
+"fixe 0,10","relance 0,20 → 0,40","sans 2026, 12 mois",tentative,2021,92,0.0387696,-0.030619
+"fixe 0,10","relance 0,20 → 0,40","sans 2026, 12 mois",tentative,2022,365,0.0516287,-0.0573017
+"fixe 0,10","relance 0,20 → 0,40","sans 2026, 12 mois",tentative,2023,365,0.0152289,-0.106445
+"fixe 0,10","relance 0,20 → 0,40","sans 2026, 12 mois",tentative,2024,366,0.0735692,-0.0393159
+"fixe 0,10","relance 0,20 → 0,40","sans 2026, 12 mois",tentative,2025,1,-0.0054,-0.114062
+"fixe 0,10","relance 0,20 → 0,40","sans 2026, 12 mois",suite,2021,92,0.0333696,-0.122187
+"fixe 0,10","relance 0,20 → 0,40","sans 2026, 12 mois",suite,2022,365,0.0966632,-0.156309
+"fixe 0,10","relance 0,20 → 0,40","sans 2026, 12 mois",suite,2023,365,0.00968091,-0.0999935
+"fixe 0,10","relance 0,20 → 0,40","sans 2026, 12 mois",suite,2024,366,0.0714966,-0.088461
+"fixe 0,10","relance 0,20 → 0,40","sans 2026, 12 mois",suite,2025,1,-0.0108,-0.174231
+"fixe 0,15","fixe 0,10",12 mois,tentative,2021,92,0.0491556,-0.020233
+"fixe 0,15","fixe 0,10",12 mois,tentative,2022,365,0.0587207,-0.0502097
+"fixe 0,15","fixe 0,10",12 mois,tentative,2023,365,0.0539869,-0.0676867
+"fixe 0,15","fixe 0,10",12 mois,tentative,2024,366,0.0580481,-0.054837
+"fixe 0,15","fixe 0,10",12 mois,tentative,2025,274,0.00557222,-0.00497797
+"fixe 0,15","fixe 0,10",12 mois,suite,2021,92,0.0557236,-0.0998334
+"fixe 0,15","fixe 0,10",12 mois,suite,2022,365,0.111791,-0.141181
+"fixe 0,15","fixe 0,10",12 mois,suite,2023,365,0.0432165,-0.066458
+"fixe 0,15","fixe 0,10",12 mois,suite,2024,366,0.0657982,-0.0941594
+"fixe 0,15","fixe 0,10",12 mois,suite,2025,274,0.15502,-0.152004
+"fixe 0,15","fixe 0,10",24 mois,tentative,2021,92,0.0491556,-0.020233
+"fixe 0,15","fixe 0,10",24 mois,tentative,2022,365,0.0587207,-0.0502097
+"fixe 0,15","fixe 0,10",24 mois,tentative,2023,365,0.0599619,-0.0623221
+"fixe 0,15","fixe 0,10",24 mois,tentative,2024,275,0.0766967,-0.028265
+"fixe 0,15","fixe 0,10",24 mois,suite,2021,92,0.263168,-0.283873
+"fixe 0,15","fixe 0,10",24 mois,suite,2022,365,0.211078,-0.228888
+"fixe 0,15","fixe 0,10",24 mois,suite,2023,365,0.142146,-0.147554
+"fixe 0,15","fixe 0,10",24 mois,suite,2024,275,0.271579,-0.229835
+"fixe 0,15","fixe 0,10","sans 2026, 12 mois",tentative,2021,92,0.0491556,-0.020233
+"fixe 0,15","fixe 0,10","sans 2026, 12 mois",tentative,2022,365,0.0587207,-0.0502097
+"fixe 0,15","fixe 0,10","sans 2026, 12 mois",tentative,2023,365,0.0539869,-0.0676867
+"fixe 0,15","fixe 0,10","sans 2026, 12 mois",tentative,2024,366,0.0580481,-0.054837
+"fixe 0,15","fixe 0,10","sans 2026, 12 mois",tentative,2025,1,0.0251807,-0.0834813
+"fixe 0,15","fixe 0,10","sans 2026, 12 mois",suite,2021,92,0.0557236,-0.0998334
+"fixe 0,15","fixe 0,10","sans 2026, 12 mois",suite,2022,365,0.111791,-0.141181
+"fixe 0,15","fixe 0,10","sans 2026, 12 mois",suite,2023,365,0.0432165,-0.066458
+"fixe 0,15","fixe 0,10","sans 2026, 12 mois",suite,2024,366,0.0657982,-0.0941594
+"fixe 0,15","fixe 0,10","sans 2026, 12 mois",suite,2025,1,0.034827,-0.128604
+"fixe 0,15","fixe 0,15",12 mois,tentative,2021,92,0.0677707,-0.00161786
+"fixe 0,15","fixe 0,15",12 mois,tentative,2022,365,0.086482,-0.0224484
+"fixe 0,15","fixe 0,15",12 mois,tentative,2023,365,0.0820108,-0.0396628
+"fixe 0,15","fixe 0,15",12 mois,tentative,2024,366,0.0876136,-0.0252715
+"fixe 0,15","fixe 0,15",12 mois,tentative,2025,274,0.00401464,-0.00653554
+"fixe 0,15","fixe 0,15",12 mois,suite,2021,92,0.0771284,-0.0784287
+"fixe 0,15","fixe 0,15",12 mois,suite,2022,365,0.168274,-0.0846985
+"fixe 0,15","fixe 0,15",12 mois,suite,2023,365,0.0711812,-0.0384932
+"fixe 0,15","fixe 0,15",12 mois,suite,2024,366,0.094555,-0.0654026
+"fixe 0,15","fixe 0,15",12 mois,suite,2025,274,0.226838,-0.0801862
+"fixe 0,15","fixe 0,15",24 mois,tentative,2021,92,0.0677707,-0.00161786
+"fixe 0,15","fixe 0,15",24 mois,tentative,2022,365,0.086482,-0.0224484
+"fixe 0,15","fixe 0,15",24 mois,tentative,2023,365,0.0907525,-0.0315314
+"fixe 0,15","fixe 0,15",24 mois,tentative,2024,275,0.114633,0.0096714
+"fixe 0,15","fixe 0,15",24 mois,suite,2021,92,0.364164,-0.182878
+"fixe 0,15","fixe 0,15",24 mois,suite,2022,365,0.317223,-0.122743
+"fixe 0,15","fixe 0,15",24 mois,suite,2023,365,0.211544,-0.0781564
+"fixe 0,15","fixe 0,15",24 mois,suite,2024,275,0.380075,-0.121339
+"fixe 0,15","fixe 0,15","sans 2026, 12 mois",tentative,2021,92,0.0677707,-0.00161786
+"fixe 0,15","fixe 0,15","sans 2026, 12 mois",tentative,2022,365,0.086482,-0.0224484
+"fixe 0,15","fixe 0,15","sans 2026, 12 mois",tentative,2023,365,0.0820108,-0.0396628
+"fixe 0,15","fixe 0,15","sans 2026, 12 mois",tentative,2024,366,0.0876136,-0.0252715
+"fixe 0,15","fixe 0,15","sans 2026, 12 mois",tentative,2025,1,0.0346534,-0.0740086
+"fixe 0,15","fixe 0,15","sans 2026, 12 mois",suite,2021,92,0.0771284,-0.0784287
+"fixe 0,15","fixe 0,15","sans 2026, 12 mois",suite,2022,365,0.168274,-0.0846985
+"fixe 0,15","fixe 0,15","sans 2026, 12 mois",suite,2023,365,0.0711812,-0.0384932
+"fixe 0,15","fixe 0,15","sans 2026, 12 mois",suite,2024,366,0.094555,-0.0654026
+"fixe 0,15","fixe 0,15","sans 2026, 12 mois",suite,2025,1,0.0238534,-0.139578
+"fixe 0,15","fixe 0,20",12 mois,tentative,2021,92,0.0867637,0.0173751
+"fixe 0,15","fixe 0,20",12 mois,tentative,2022,365,0.112725,0.00379427
+"fixe 0,15","fixe 0,20",12 mois,tentative,2023,365,0.107612,-0.0140613
+"fixe 0,15","fixe 0,20",12 mois,tentative,2024,366,0.11096,-0.00192544
+"fixe 0,15","fixe 0,20",12 mois,tentative,2025,274,0.00632085,-0.00422933
+"fixe 0,15","fixe 0,20",12 mois,suite,2021,92,0.0968336,-0.0587235
+"fixe 0,15","fixe 0,20",12 mois,suite,2022,365,0.216572,-0.0364
+"fixe 0,15","fixe 0,20",12 mois,suite,2023,365,0.0967383,-0.0129361
+"fixe 0,15","fixe 0,20",12 mois,suite,2024,366,0.119409,-0.0405482
+"fixe 0,15","fixe 0,20",12 mois,suite,2025,274,0.281836,-0.0251882
+"fixe 0,15","fixe 0,20",24 mois,tentative,2021,92,0.0867637,0.0173751
+"fixe 0,15","fixe 0,20",24 mois,tentative,2022,365,0.112725,0.00379427
+"fixe 0,15","fixe 0,20",24 mois,tentative,2023,365,0.118578,-0.0037062
+"fixe 0,15","fixe 0,20",24 mois,tentative,2024,275,0.139878,0.0349164
+"fixe 0,15","fixe 0,20",24 mois,suite,2021,92,0.534689,-0.0123523
+"fixe 0,15","fixe 0,20",24 mois,suite,2022,365,0.438017,-0.00194968
+"fixe 0,15","fixe 0,20",24 mois,suite,2023,365,0.253253,-0.0364479
+"fixe 0,15","fixe 0,20",24 mois,suite,2024,275,0.464986,-0.036428
+"fixe 0,15","fixe 0,20","sans 2026, 12 mois",tentative,2021,92,0.0867637,0.0173751
+"fixe 0,15","fixe 0,20","sans 2026, 12 mois",tentative,2022,365,0.112725,0.00379427
+"fixe 0,15","fixe 0,20","sans 2026, 12 mois",tentative,2023,365,0.107612,-0.0140613
+"fixe 0,15","fixe 0,20","sans 2026, 12 mois",tentative,2024,366,0.11096,-0.00192544
+"fixe 0,15","fixe 0,20","sans 2026, 12 mois",tentative,2025,1,0.0433117,-0.0653503
+"fixe 0,15","fixe 0,20","sans 2026, 12 mois",suite,2021,92,0.0968336,-0.0587235
+"fixe 0,15","fixe 0,20","sans 2026, 12 mois",suite,2022,365,0.216572,-0.0364
+"fixe 0,15","fixe 0,20","sans 2026, 12 mois",suite,2023,365,0.0967383,-0.0129361
+"fixe 0,15","fixe 0,20","sans 2026, 12 mois",suite,2024,366,0.119409,-0.0405482
+"fixe 0,15","fixe 0,20","sans 2026, 12 mois",suite,2025,1,0.0365729,-0.126858
+"fixe 0,15","fixe 0,25",12 mois,tentative,2021,92,0.106591,0.0372021
+"fixe 0,15","fixe 0,25",12 mois,tentative,2022,365,0.12515,0.0162193
+"fixe 0,15","fixe 0,25",12 mois,tentative,2023,365,0.0916635,-0.0300101
+"fixe 0,15","fixe 0,25",12 mois,tentative,2024,366,0.119227,0.00634148
+"fixe 0,15","fixe 0,25",12 mois,tentative,2025,274,0.00832955,-0.00222063
+"fixe 0,15","fixe 0,25",12 mois,suite,2021,92,0.121227,-0.0343296
+"fixe 0,15","fixe 0,25",12 mois,suite,2022,365,0.237335,-0.0156377
+"fixe 0,15","fixe 0,25",12 mois,suite,2023,365,0.0802273,-0.0294471
+"fixe 0,15","fixe 0,25",12 mois,suite,2024,366,0.134025,-0.0259331
+"fixe 0,15","fixe 0,25",12 mois,suite,2025,274,0.286092,-0.0209323
+"fixe 0,15","fixe 0,25",24 mois,tentative,2021,92,0.106591,0.0372021
+"fixe 0,15","fixe 0,25",24 mois,tentative,2022,365,0.12515,0.0162193
+"fixe 0,15","fixe 0,25",24 mois,tentative,2023,365,0.0994258,-0.0228581
+"fixe 0,15","fixe 0,25",24 mois,tentative,2024,275,0.140764,0.0358026
+"fixe 0,15","fixe 0,25",24 mois,suite,2021,92,0.542686,-0.0043555
+"fixe 0,15","fixe 0,25",24 mois,suite,2022,365,0.457487,0.0175206
+"fixe 0,15","fixe 0,25",24 mois,suite,2023,365,0.240871,-0.0488299
+"fixe 0,15","fixe 0,25",24 mois,suite,2024,275,0.476955,-0.0244588
+"fixe 0,15","fixe 0,25","sans 2026, 12 mois",tentative,2021,92,0.106591,0.0372021
+"fixe 0,15","fixe 0,25","sans 2026, 12 mois",tentative,2022,365,0.12515,0.0162193
+"fixe 0,15","fixe 0,25","sans 2026, 12 mois",tentative,2023,365,0.0916635,-0.0300101
+"fixe 0,15","fixe 0,25","sans 2026, 12 mois",tentative,2024,366,0.119227,0.00634148
+"fixe 0,15","fixe 0,25","sans 2026, 12 mois",tentative,2025,1,0.051385,-0.057277
+"fixe 0,15","fixe 0,25","sans 2026, 12 mois",suite,2021,92,0.121227,-0.0343296
+"fixe 0,15","fixe 0,25","sans 2026, 12 mois",suite,2022,365,0.237335,-0.0156377
+"fixe 0,15","fixe 0,25","sans 2026, 12 mois",suite,2023,365,0.0802273,-0.0294471
+"fixe 0,15","fixe 0,25","sans 2026, 12 mois",suite,2024,366,0.134025,-0.0259331
+"fixe 0,15","fixe 0,25","sans 2026, 12 mois",suite,2025,1,0.0491766,-0.114255
+"fixe 0,15","fixe 0,30",12 mois,tentative,2021,92,0.12564,0.0562518
+"fixe 0,15","fixe 0,30",12 mois,tentative,2022,365,0.120517,0.0115866
+"fixe 0,15","fixe 0,30",12 mois,tentative,2023,365,0.0832002,-0.0384734
+"fixe 0,15","fixe 0,30",12 mois,tentative,2024,366,0.104048,-0.008837
+"fixe 0,15","fixe 0,30",12 mois,tentative,2025,274,-0.000406784,-0.010957
+"fixe 0,15","fixe 0,30",12 mois,suite,2021,92,0.145383,-0.0101735
+"fixe 0,15","fixe 0,30",12 mois,suite,2022,365,0.213634,-0.0393385
+"fixe 0,15","fixe 0,30",12 mois,suite,2023,365,0.0721967,-0.0374778
+"fixe 0,15","fixe 0,30",12 mois,suite,2024,366,0.119759,-0.0401987
+"fixe 0,15","fixe 0,30",12 mois,suite,2025,274,0.299006,-0.00801841
+"fixe 0,15","fixe 0,30",24 mois,tentative,2021,92,0.12564,0.0562518
+"fixe 0,15","fixe 0,30",24 mois,tentative,2022,365,0.120517,0.0115866
+"fixe 0,15","fixe 0,30",24 mois,tentative,2023,365,0.0889212,-0.0333627
+"fixe 0,15","fixe 0,30",24 mois,tentative,2024,275,0.111523,0.00656101
+"fixe 0,15","fixe 0,30",24 mois,suite,2021,92,0.584194,0.0371527
+"fixe 0,15","fixe 0,30",24 mois,suite,2022,365,0.430316,-0.00964989
+"fixe 0,15","fixe 0,30",24 mois,suite,2023,365,0.217518,-0.0721828
+"fixe 0,15","fixe 0,30",24 mois,suite,2024,275,0.49052,-0.0108938
+"fixe 0,15","fixe 0,30","sans 2026, 12 mois",tentative,2021,92,0.12564,0.0562518
+"fixe 0,15","fixe 0,30","sans 2026, 12 mois",tentative,2022,365,0.120517,0.0115866
+"fixe 0,15","fixe 0,30","sans 2026, 12 mois",tentative,2023,365,0.0832002,-0.0384734
+"fixe 0,15","fixe 0,30","sans 2026, 12 mois",tentative,2024,366,0.104048,-0.008837
+"fixe 0,15","fixe 0,30","sans 2026, 12 mois",tentative,2025,1,0.00542011,-0.103242
+"fixe 0,15","fixe 0,30","sans 2026, 12 mois",suite,2021,92,0.145383,-0.0101735
+"fixe 0,15","fixe 0,30","sans 2026, 12 mois",suite,2022,365,0.213634,-0.0393385
+"fixe 0,15","fixe 0,30","sans 2026, 12 mois",suite,2023,365,0.0721967,-0.0374778
+"fixe 0,15","fixe 0,30","sans 2026, 12 mois",suite,2024,366,0.119759,-0.0401987
+"fixe 0,15","fixe 0,30","sans 2026, 12 mois",suite,2025,1,-0.0107799,-0.174211
+"fixe 0,15","coussin 0,20",12 mois,tentative,2021,92,0.0808295,0.0114409
+"fixe 0,15","coussin 0,20",12 mois,tentative,2022,365,0.0602803,-0.0486501
+"fixe 0,15","coussin 0,20",12 mois,tentative,2023,365,0.0310752,-0.0905984
+"fixe 0,15","coussin 0,20",12 mois,tentative,2024,366,0.0558658,-0.0570193
+"fixe 0,15","coussin 0,20",12 mois,tentative,2025,274,0.00500309,-0.0055471
+"fixe 0,15","coussin 0,20",12 mois,suite,2021,92,0.0984689,-0.0570882
+"fixe 0,15","coussin 0,20",12 mois,suite,2022,365,0.0958886,-0.157084
+"fixe 0,15","coussin 0,20",12 mois,suite,2023,365,0.0238999,-0.0857746
+"fixe 0,15","coussin 0,20",12 mois,suite,2024,366,0.0595157,-0.100442
+"fixe 0,15","coussin 0,20",12 mois,suite,2025,274,0.272386,-0.0346379
+"fixe 0,15","coussin 0,20",24 mois,tentative,2021,92,0.0808295,0.0114409
+"fixe 0,15","coussin 0,20",24 mois,tentative,2022,365,0.0602803,-0.0486501
+"fixe 0,15","coussin 0,20",24 mois,tentative,2023,365,0.0367786,-0.0855054
+"fixe 0,15","coussin 0,20",24 mois,tentative,2024,275,0.18588,0.0809182
+"fixe 0,15","coussin 0,20",24 mois,suite,2021,92,0.0984689,-0.448573
+"fixe 0,15","coussin 0,20",24 mois,suite,2022,365,0.107048,-0.332919
+"fixe 0,15","coussin 0,20",24 mois,suite,2023,365,0.103555,-0.186146
+"fixe 0,15","coussin 0,20",24 mois,suite,2024,275,0.220333,-0.281081
+"fixe 0,15","coussin 0,20","sans 2026, 12 mois",tentative,2021,92,0.0808295,0.0114409
+"fixe 0,15","coussin 0,20","sans 2026, 12 mois",tentative,2022,365,0.0602803,-0.0486501
+"fixe 0,15","coussin 0,20","sans 2026, 12 mois",tentative,2023,365,0.0310752,-0.0905984
+"fixe 0,15","coussin 0,20","sans 2026, 12 mois",tentative,2024,366,0.0558658,-0.0570193
+"fixe 0,15","coussin 0,20","sans 2026, 12 mois",tentative,2025,1,0.00879358,-0.0998685
+"fixe 0,15","coussin 0,20","sans 2026, 12 mois",suite,2021,92,0.0984689,-0.0570882
+"fixe 0,15","coussin 0,20","sans 2026, 12 mois",suite,2022,365,0.0958886,-0.157084
+"fixe 0,15","coussin 0,20","sans 2026, 12 mois",suite,2023,365,0.0238999,-0.0857746
+"fixe 0,15","coussin 0,20","sans 2026, 12 mois",suite,2024,366,0.0595157,-0.100442
+"fixe 0,15","coussin 0,20","sans 2026, 12 mois",suite,2025,1,0.00879358,-0.154638
+"fixe 0,15","relance 0,20 → 0,40",12 mois,tentative,2021,92,0.0888247,0.0194361
+"fixe 0,15","relance 0,20 → 0,40",12 mois,tentative,2022,365,0.138399,0.0294688
+"fixe 0,15","relance 0,20 → 0,40",12 mois,tentative,2023,365,0.145775,0.0241019
+"fixe 0,15","relance 0,20 → 0,40",12 mois,tentative,2024,366,0.12177,0.0088849
+"fixe 0,15","relance 0,20 → 0,40",12 mois,tentative,2025,274,0.0137276,0.00317738
+"fixe 0,15","relance 0,20 → 0,40",12 mois,suite,2021,92,0.101301,-0.0542559
+"fixe 0,15","relance 0,20 → 0,40",12 mois,suite,2022,365,0.278963,0.025991
+"fixe 0,15","relance 0,20 → 0,40",12 mois,suite,2023,365,0.134739,0.0250643
+"fixe 0,15","relance 0,20 → 0,40",12 mois,suite,2024,366,0.135379,-0.0245782
+"fixe 0,15","relance 0,20 → 0,40",12 mois,suite,2025,274,0.290084,-0.0169404
+"fixe 0,15","relance 0,20 → 0,40",24 mois,tentative,2021,92,0.0888247,0.0194361
+"fixe 0,15","relance 0,20 → 0,40",24 mois,tentative,2022,365,0.138399,0.0294688
+"fixe 0,15","relance 0,20 → 0,40",24 mois,tentative,2023,365,0.153084,0.0308002
+"fixe 0,15","relance 0,20 → 0,40",24 mois,tentative,2024,275,0.143384,0.0384227
+"fixe 0,15","relance 0,20 → 0,40",24 mois,suite,2021,92,0.670355,0.123314
+"fixe 0,15","relance 0,20 → 0,40",24 mois,suite,2022,365,0.568671,0.128704
+"fixe 0,15","relance 0,20 → 0,40",24 mois,suite,2023,365,0.283851,-0.00584999
+"fixe 0,15","relance 0,20 → 0,40",24 mois,suite,2024,275,0.449483,-0.0519306
+"fixe 0,15","relance 0,20 → 0,40","sans 2026, 12 mois",tentative,2021,92,0.0888247,0.0194361
+"fixe 0,15","relance 0,20 → 0,40","sans 2026, 12 mois",tentative,2022,365,0.138399,0.0294688
+"fixe 0,15","relance 0,20 → 0,40","sans 2026, 12 mois",tentative,2023,365,0.145775,0.0241019
+"fixe 0,15","relance 0,20 → 0,40","sans 2026, 12 mois",tentative,2024,366,0.12177,0.0088849
+"fixe 0,15","relance 0,20 → 0,40","sans 2026, 12 mois",tentative,2025,1,0.0834295,-0.0252325
+"fixe 0,15","relance 0,20 → 0,40","sans 2026, 12 mois",suite,2021,92,0.101301,-0.0542559
+"fixe 0,15","relance 0,20 → 0,40","sans 2026, 12 mois",suite,2022,365,0.278963,0.025991
+"fixe 0,15","relance 0,20 → 0,40","sans 2026, 12 mois",suite,2023,365,0.134739,0.0250643
+"fixe 0,15","relance 0,20 → 0,40","sans 2026, 12 mois",suite,2024,366,0.135379,-0.0245782
+"fixe 0,15","relance 0,20 → 0,40","sans 2026, 12 mois",suite,2025,1,0.0766907,-0.0867406
+"fixe 0,20","fixe 0,10",12 mois,tentative,2021,92,0.0357081,-0.0336805
+"fixe 0,20","fixe 0,10",12 mois,tentative,2022,365,0.0565128,-0.0524176
+"fixe 0,20","fixe 0,10",12 mois,tentative,2023,365,0.0612418,-0.0604318
+"fixe 0,20","fixe 0,10",12 mois,tentative,2024,366,0.0612468,-0.0516383
+"fixe 0,20","fixe 0,10",12 mois,tentative,2025,274,0.0218115,0.0112614
+"fixe 0,20","fixe 0,10",12 mois,suite,2021,92,0.0824068,-0.0731502
+"fixe 0,20","fixe 0,10",12 mois,suite,2022,365,0.12998,-0.122992
+"fixe 0,20","fixe 0,10",12 mois,suite,2023,365,0.0504803,-0.0591942
+"fixe 0,20","fixe 0,10",12 mois,suite,2024,366,0.084687,-0.0752706
+"fixe 0,20","fixe 0,10",12 mois,suite,2025,274,0.174004,-0.13302
+"fixe 0,20","fixe 0,10",24 mois,tentative,2021,92,0.0357081,-0.0336805
+"fixe 0,20","fixe 0,10",24 mois,tentative,2022,365,0.0565128,-0.0524176
+"fixe 0,20","fixe 0,10",24 mois,tentative,2023,365,0.0616195,-0.0606644
+"fixe 0,20","fixe 0,10",24 mois,tentative,2024,275,0.0612829,-0.0436789
+"fixe 0,20","fixe 0,10",24 mois,suite,2021,92,0.303541,-0.2435
+"fixe 0,20","fixe 0,10",24 mois,suite,2022,365,0.233587,-0.20638
+"fixe 0,20","fixe 0,10",24 mois,suite,2023,365,0.157135,-0.132566
+"fixe 0,20","fixe 0,10",24 mois,suite,2024,275,0.295478,-0.205936
+"fixe 0,20","fixe 0,10","sans 2026, 12 mois",tentative,2021,92,0.0357081,-0.0336805
+"fixe 0,20","fixe 0,10","sans 2026, 12 mois",tentative,2022,365,0.0565128,-0.0524176
+"fixe 0,20","fixe 0,10","sans 2026, 12 mois",tentative,2023,365,0.0612418,-0.0604318
+"fixe 0,20","fixe 0,10","sans 2026, 12 mois",tentative,2024,366,0.0612468,-0.0516383
+"fixe 0,20","fixe 0,10","sans 2026, 12 mois",tentative,2025,1,0.0529438,-0.0557182
+"fixe 0,20","fixe 0,10","sans 2026, 12 mois",suite,2021,92,0.0824068,-0.0731502
+"fixe 0,20","fixe 0,10","sans 2026, 12 mois",suite,2022,365,0.12998,-0.122992
+"fixe 0,20","fixe 0,10","sans 2026, 12 mois",suite,2023,365,0.0504803,-0.0591942
+"fixe 0,20","fixe 0,10","sans 2026, 12 mois",suite,2024,366,0.084687,-0.0752706
+"fixe 0,20","fixe 0,10","sans 2026, 12 mois",suite,2025,1,0.0475438,-0.115887
+"fixe 0,20","fixe 0,15",12 mois,tentative,2021,92,0.0519655,-0.0174231
+"fixe 0,20","fixe 0,15",12 mois,tentative,2022,365,0.0830478,-0.0258826
+"fixe 0,20","fixe 0,15",12 mois,tentative,2023,365,0.0931467,-0.0285269
+"fixe 0,20","fixe 0,15",12 mois,tentative,2024,366,0.0903921,-0.022493
+"fixe 0,20","fixe 0,15",12 mois,tentative,2025,274,0.0114631,0.000912929
+"fixe 0,20","fixe 0,15",12 mois,suite,2021,92,0.116972,-0.0385852
+"fixe 0,20","fixe 0,15",12 mois,suite,2022,365,0.19353,-0.0594423
+"fixe 0,20","fixe 0,15",12 mois,suite,2023,365,0.0824577,-0.0272167
+"fixe 0,20","fixe 0,15",12 mois,suite,2024,366,0.123728,-0.0362299
+"fixe 0,20","fixe 0,15",12 mois,suite,2025,274,0.254668,-0.0523559
+"fixe 0,20","fixe 0,15",24 mois,tentative,2021,92,0.0519655,-0.0174231
+"fixe 0,20","fixe 0,15",24 mois,tentative,2022,365,0.0830478,-0.0258826
+"fixe 0,20","fixe 0,15",24 mois,tentative,2023,365,0.0936975,-0.0285865
+"fixe 0,20","fixe 0,15",24 mois,tentative,2024,275,0.0883039,-0.0166578
+"fixe 0,20","fixe 0,15",24 mois,suite,2021,92,0.458224,-0.0888173
+"fixe 0,20","fixe 0,15",24 mois,suite,2022,365,0.372017,-0.0679495
+"fixe 0,20","fixe 0,15",24 mois,suite,2023,365,0.255665,-0.0340355
+"fixe 0,20","fixe 0,15",24 mois,suite,2024,275,0.403628,-0.0977852
+"fixe 0,20","fixe 0,15","sans 2026, 12 mois",tentative,2021,92,0.0519655,-0.0174231
+"fixe 0,20","fixe 0,15","sans 2026, 12 mois",tentative,2022,365,0.0830478,-0.0258826
+"fixe 0,20","fixe 0,15","sans 2026, 12 mois",tentative,2023,365,0.0931467,-0.0285269
+"fixe 0,20","fixe 0,15","sans 2026, 12 mois",tentative,2024,366,0.0903921,-0.022493
+"fixe 0,20","fixe 0,15","sans 2026, 12 mois",tentative,2025,1,0.0800665,-0.0285955
+"fixe 0,20","fixe 0,15","sans 2026, 12 mois",suite,2021,92,0.116972,-0.0385852
+"fixe 0,20","fixe 0,15","sans 2026, 12 mois",suite,2022,365,0.19353,-0.0594423
+"fixe 0,20","fixe 0,15","sans 2026, 12 mois",suite,2023,365,0.0824577,-0.0272167
+"fixe 0,20","fixe 0,15","sans 2026, 12 mois",suite,2024,366,0.123728,-0.0362299
+"fixe 0,20","fixe 0,15","sans 2026, 12 mois",suite,2025,1,0.0692665,-0.0941648
+"fixe 0,20","fixe 0,20",12 mois,tentative,2021,92,0.0693886,0
+"fixe 0,20","fixe 0,20",12 mois,tentative,2022,365,0.10893,0
+"fixe 0,20","fixe 0,20",12 mois,tentative,2023,365,0.121674,0
+"fixe 0,20","fixe 0,20",12 mois,tentative,2024,366,0.112885,0
+"fixe 0,20","fixe 0,20",12 mois,tentative,2025,274,0.0105502,0
+"fixe 0,20","fixe 0,20",12 mois,suite,2021,92,0.155557,0
+"fixe 0,20","fixe 0,20",12 mois,suite,2022,365,0.252972,0
+"fixe 0,20","fixe 0,20",12 mois,suite,2023,365,0.109674,0
+"fixe 0,20","fixe 0,20",12 mois,suite,2024,366,0.159958,0
+"fixe 0,20","fixe 0,20",12 mois,suite,2025,274,0.307024,0
+"fixe 0,20","fixe 0,20",24 mois,tentative,2021,92,0.0693886,0
+"fixe 0,20","fixe 0,20",24 mois,tentative,2022,365,0.10893,0
+"fixe 0,20","fixe 0,20",24 mois,tentative,2023,365,0.122284,0
+"fixe 0,20","fixe 0,20",24 mois,tentative,2024,275,0.104962,0
+"fixe 0,20","fixe 0,20",24 mois,suite,2021,92,0.547042,0
+"fixe 0,20","fixe 0,20",24 mois,suite,2022,365,0.439966,0
+"fixe 0,20","fixe 0,20",24 mois,suite,2023,365,0.289701,0
+"fixe 0,20","fixe 0,20",24 mois,suite,2024,275,0.501414,0
+"fixe 0,20","fixe 0,20","sans 2026, 12 mois",tentative,2021,92,0.0693886,0
+"fixe 0,20","fixe 0,20","sans 2026, 12 mois",tentative,2022,365,0.10893,0
+"fixe 0,20","fixe 0,20","sans 2026, 12 mois",tentative,2023,365,0.121674,0
+"fixe 0,20","fixe 0,20","sans 2026, 12 mois",tentative,2024,366,0.112885,0
+"fixe 0,20","fixe 0,20","sans 2026, 12 mois",tentative,2025,1,0.108662,0
+"fixe 0,20","fixe 0,20","sans 2026, 12 mois",suite,2021,92,0.155557,0
+"fixe 0,20","fixe 0,20","sans 2026, 12 mois",suite,2022,365,0.252972,0
+"fixe 0,20","fixe 0,20","sans 2026, 12 mois",suite,2023,365,0.109674,0
+"fixe 0,20","fixe 0,20","sans 2026, 12 mois",suite,2024,366,0.159958,0
+"fixe 0,20","fixe 0,20","sans 2026, 12 mois",suite,2025,1,0.163431,0
+"fixe 0,20","fixe 0,25",12 mois,tentative,2021,92,0.0888643,0.0194758
+"fixe 0,20","fixe 0,25",12 mois,tentative,2022,365,0.129253,0.020323
+"fixe 0,20","fixe 0,25",12 mois,tentative,2023,365,0.131372,0.00969838
+"fixe 0,20","fixe 0,25",12 mois,tentative,2024,366,0.117584,0.00469873
+"fixe 0,20","fixe 0,25",12 mois,tentative,2025,274,0.0133301,0.00277992
+"fixe 0,20","fixe 0,25",12 mois,suite,2021,92,0.198909,0.0433523
+"fixe 0,20","fixe 0,25",12 mois,suite,2022,365,0.292642,0.0396702
+"fixe 0,20","fixe 0,25",12 mois,suite,2023,365,0.118807,0.00913246
+"fixe 0,20","fixe 0,25",12 mois,suite,2024,366,0.177908,0.0179505
+"fixe 0,20","fixe 0,25",12 mois,suite,2025,274,0.345939,0.0389152
+"fixe 0,20","fixe 0,25",24 mois,tentative,2021,92,0.0888643,0.0194758
+"fixe 0,20","fixe 0,25",24 mois,tentative,2022,365,0.129253,0.020323
+"fixe 0,20","fixe 0,25",24 mois,tentative,2023,365,0.132056,0.00977206
+"fixe 0,20","fixe 0,25",24 mois,tentative,2024,275,0.108104,0.00314224
+"fixe 0,20","fixe 0,25",24 mois,suite,2021,92,0.672075,0.125034
+"fixe 0,20","fixe 0,25",24 mois,suite,2022,365,0.530079,0.0901126
+"fixe 0,20","fixe 0,25",24 mois,suite,2023,365,0.327308,0.0376071
+"fixe 0,20","fixe 0,25",24 mois,suite,2024,275,0.561731,0.0603174
+"fixe 0,20","fixe 0,25","sans 2026, 12 mois",tentative,2021,92,0.0888643,0.0194758
+"fixe 0,20","fixe 0,25","sans 2026, 12 mois",tentative,2022,365,0.129253,0.020323
+"fixe 0,20","fixe 0,25","sans 2026, 12 mois",tentative,2023,365,0.131372,0.00969838
+"fixe 0,20","fixe 0,25","sans 2026, 12 mois",tentative,2024,366,0.117584,0.00469873
+"fixe 0,20","fixe 0,25","sans 2026, 12 mois",tentative,2025,1,0.136358,0.027696
+"fixe 0,20","fixe 0,25","sans 2026, 12 mois",suite,2021,92,0.198909,0.0433523
+"fixe 0,20","fixe 0,25","sans 2026, 12 mois",suite,2022,365,0.292642,0.0396702
+"fixe 0,20","fixe 0,25","sans 2026, 12 mois",suite,2023,365,0.118807,0.00913246
+"fixe 0,20","fixe 0,25","sans 2026, 12 mois",suite,2024,366,0.177908,0.0179505
+"fixe 0,20","fixe 0,25","sans 2026, 12 mois",suite,2025,1,0.13415,-0.0292816
+"fixe 0,20","fixe 0,30",12 mois,tentative,2021,92,0.109856,0.0404676
+"fixe 0,20","fixe 0,30",12 mois,tentative,2022,365,0.111874,0.00294309
+"fixe 0,20","fixe 0,30",12 mois,tentative,2023,365,0.0979239,-0.0237497
+"fixe 0,20","fixe 0,30",12 mois,tentative,2024,366,0.105795,-0.00709057
+"fixe 0,20","fixe 0,30",12 mois,tentative,2025,274,0.0133027,0.0027525
+"fixe 0,20","fixe 0,30",12 mois,suite,2021,92,0.244944,0.0893867
+"fixe 0,20","fixe 0,30",12 mois,suite,2022,365,0.262835,0.00986223
+"fixe 0,20","fixe 0,30",12 mois,suite,2023,365,0.0973321,-0.0123424
+"fixe 0,20","fixe 0,30",12 mois,suite,2024,366,0.153246,-0.00671183
+"fixe 0,20","fixe 0,30",12 mois,suite,2025,274,0.394452,0.0874283
+"fixe 0,20","fixe 0,30",24 mois,tentative,2021,92,0.109856,0.0404676
+"fixe 0,20","fixe 0,30",24 mois,tentative,2022,365,0.111874,0.00294309
+"fixe 0,20","fixe 0,30",24 mois,tentative,2023,365,0.0986551,-0.0236289
+"fixe 0,20","fixe 0,30",24 mois,tentative,2024,275,0.103499,-0.00146263
+"fixe 0,20","fixe 0,30",24 mois,suite,2021,92,0.673659,0.126617
+"fixe 0,20","fixe 0,30",24 mois,suite,2022,365,0.478507,0.0385412
+"fixe 0,20","fixe 0,30",24 mois,suite,2023,365,0.28641,-0.00329047
+"fixe 0,20","fixe 0,30",24 mois,suite,2024,275,0.562827,0.0614135
+"fixe 0,20","fixe 0,30","sans 2026, 12 mois",tentative,2021,92,0.109856,0.0404676
+"fixe 0,20","fixe 0,30","sans 2026, 12 mois",tentative,2022,365,0.111874,0.00294309
+"fixe 0,20","fixe 0,30","sans 2026, 12 mois",tentative,2023,365,0.0979239,-0.0237497
+"fixe 0,20","fixe 0,30","sans 2026, 12 mois",tentative,2024,366,0.105795,-0.00709057
+"fixe 0,20","fixe 0,30","sans 2026, 12 mois",tentative,2025,1,0.0961189,-0.0125431
+"fixe 0,20","fixe 0,30","sans 2026, 12 mois",suite,2021,92,0.244944,0.0893867
+"fixe 0,20","fixe 0,30","sans 2026, 12 mois",suite,2022,365,0.262835,0.00986223
+"fixe 0,20","fixe 0,30","sans 2026, 12 mois",suite,2023,365,0.0973321,-0.0123424
+"fixe 0,20","fixe 0,30","sans 2026, 12 mois",suite,2024,366,0.153246,-0.00671183
+"fixe 0,20","fixe 0,30","sans 2026, 12 mois",suite,2025,1,0.0916362,-0.071795
+"fixe 0,20","coussin 0,20",12 mois,tentative,2021,92,0.058526,-0.0108626
+"fixe 0,20","coussin 0,20",12 mois,tentative,2022,365,0.073259,-0.0356714
+"fixe 0,20","coussin 0,20",12 mois,tentative,2023,365,0.0396414,-0.0820322
+"fixe 0,20","coussin 0,20",12 mois,tentative,2024,366,0.0607539,-0.0521312
+"fixe 0,20","coussin 0,20",12 mois,tentative,2025,274,0.085418,0.0748678
+"fixe 0,20","coussin 0,20",12 mois,suite,2021,92,0.14591,-0.00964737
+"fixe 0,20","coussin 0,20",12 mois,suite,2022,365,0.132044,-0.120928
+"fixe 0,20","coussin 0,20",12 mois,suite,2023,365,0.031476,-0.0781984
+"fixe 0,20","coussin 0,20",12 mois,suite,2024,366,0.078138,-0.0818196
+"fixe 0,20","coussin 0,20",12 mois,suite,2025,274,0.203574,-0.10345
+"fixe 0,20","coussin 0,20",24 mois,tentative,2021,92,0.058526,-0.0108626
+"fixe 0,20","coussin 0,20",24 mois,tentative,2022,365,0.073259,-0.0356714
+"fixe 0,20","coussin 0,20",24 mois,tentative,2023,365,0.0399834,-0.0823005
+"fixe 0,20","coussin 0,20",24 mois,tentative,2024,275,0.149819,0.0448573
+"fixe 0,20","coussin 0,20",24 mois,suite,2021,92,0.14591,-0.401132
+"fixe 0,20","coussin 0,20",24 mois,suite,2022,365,0.143464,-0.296502
+"fixe 0,20","coussin 0,20",24 mois,suite,2023,365,0.106371,-0.183329
+"fixe 0,20","coussin 0,20",24 mois,suite,2024,275,0.227823,-0.273591
+"fixe 0,20","coussin 0,20","sans 2026, 12 mois",tentative,2021,92,0.058526,-0.0108626
+"fixe 0,20","coussin 0,20","sans 2026, 12 mois",tentative,2022,365,0.073259,-0.0356714
+"fixe 0,20","coussin 0,20","sans 2026, 12 mois",tentative,2023,365,0.0396414,-0.0820322
+"fixe 0,20","coussin 0,20","sans 2026, 12 mois",tentative,2024,366,0.0607539,-0.0521312
+"fixe 0,20","coussin 0,20","sans 2026, 12 mois",tentative,2025,1,0.0438654,-0.0647966
+"fixe 0,20","coussin 0,20","sans 2026, 12 mois",suite,2021,92,0.14591,-0.00964737
+"fixe 0,20","coussin 0,20","sans 2026, 12 mois",suite,2022,365,0.132044,-0.120928
+"fixe 0,20","coussin 0,20","sans 2026, 12 mois",suite,2023,365,0.031476,-0.0781984
+"fixe 0,20","coussin 0,20","sans 2026, 12 mois",suite,2024,366,0.078138,-0.0818196
+"fixe 0,20","coussin 0,20","sans 2026, 12 mois",suite,2025,1,0.0438654,-0.119566
+"fixe 0,20","relance 0,20 → 0,40",12 mois,tentative,2021,92,0.0695174,0.000128815
+"fixe 0,20","relance 0,20 → 0,40",12 mois,tentative,2022,365,0.129821,0.0208906
+"fixe 0,20","relance 0,20 → 0,40",12 mois,tentative,2023,365,0.164188,0.042514
+"fixe 0,20","relance 0,20 → 0,40",12 mois,tentative,2024,366,0.115645,0.00275948
+"fixe 0,20","relance 0,20 → 0,40",12 mois,tentative,2025,274,0.0118569,0.00130667
+"fixe 0,20","relance 0,20 → 0,40",12 mois,suite,2021,92,0.166388,0.0108307
+"fixe 0,20","relance 0,20 → 0,40",12 mois,suite,2022,365,0.321888,0.0689156
+"fixe 0,20","relance 0,20 → 0,40",12 mois,suite,2023,365,0.152227,0.0425524
+"fixe 0,20","relance 0,20 → 0,40",12 mois,suite,2024,366,0.179158,0.0192007
+"fixe 0,20","relance 0,20 → 0,40",12 mois,suite,2025,274,0.320085,0.0130613
+"fixe 0,20","relance 0,20 → 0,40",24 mois,tentative,2021,92,0.0695174,0.000128815
+"fixe 0,20","relance 0,20 → 0,40",24 mois,tentative,2022,365,0.129821,0.0208906
+"fixe 0,20","relance 0,20 → 0,40",24 mois,tentative,2023,365,0.164827,0.0425428
+"fixe 0,20","relance 0,20 → 0,40",24 mois,tentative,2024,275,0.104975,1.30838e-05
+"fixe 0,20","relance 0,20 → 0,40",24 mois,suite,2021,92,0.719869,0.172827
+"fixe 0,20","relance 0,20 → 0,40",24 mois,suite,2022,365,0.597876,0.157909
+"fixe 0,20","relance 0,20 → 0,40",24 mois,suite,2023,365,0.355996,0.0662952
+"fixe 0,20","relance 0,20 → 0,40",24 mois,suite,2024,275,0.562214,0.0608004
+"fixe 0,20","relance 0,20 → 0,40","sans 2026, 12 mois",tentative,2021,92,0.0695174,0.000128815
+"fixe 0,20","relance 0,20 → 0,40","sans 2026, 12 mois",tentative,2022,365,0.129821,0.0208906
+"fixe 0,20","relance 0,20 → 0,40","sans 2026, 12 mois",tentative,2023,365,0.164188,0.042514
+"fixe 0,20","relance 0,20 → 0,40","sans 2026, 12 mois",tentative,2024,366,0.115645,0.00275948
+"fixe 0,20","relance 0,20 → 0,40","sans 2026, 12 mois",tentative,2025,1,0.140681,0.0320193
+"fixe 0,20","relance 0,20 → 0,40","sans 2026, 12 mois",suite,2021,92,0.166388,0.0108307
+"fixe 0,20","relance 0,20 → 0,40","sans 2026, 12 mois",suite,2022,365,0.321888,0.0689156
+"fixe 0,20","relance 0,20 → 0,40","sans 2026, 12 mois",suite,2023,365,0.152227,0.0425524
+"fixe 0,20","relance 0,20 → 0,40","sans 2026, 12 mois",suite,2024,366,0.179158,0.0192007
+"fixe 0,20","relance 0,20 → 0,40","sans 2026, 12 mois",suite,2025,1,0.195451,0.0320193
+"fixe 0,25","fixe 0,10",12 mois,tentative,2021,92,0.0036727,-0.0657159
+"fixe 0,25","fixe 0,10",12 mois,tentative,2022,365,0.0525103,-0.0564201
+"fixe 0,25","fixe 0,10",12 mois,tentative,2023,365,0.0634641,-0.0582095
+"fixe 0,25","fixe 0,10",12 mois,tentative,2024,366,0.0419224,-0.0709627
+"fixe 0,25","fixe 0,10",12 mois,tentative,2025,274,0.0399008,0.0293506
+"fixe 0,25","fixe 0,10",12 mois,suite,2021,92,0.106143,-0.0494137
+"fixe 0,25","fixe 0,10",12 mois,suite,2022,365,0.147701,-0.105271
+"fixe 0,25","fixe 0,10",12 mois,suite,2023,365,0.0620869,-0.0475875
+"fixe 0,25","fixe 0,10",12 mois,suite,2024,366,0.106041,-0.0539166
+"fixe 0,25","fixe 0,10",12 mois,suite,2025,274,0.197241,-0.109783
+"fixe 0,25","fixe 0,10",24 mois,tentative,2021,92,0.0036727,-0.0657159
+"fixe 0,25","fixe 0,10",24 mois,tentative,2022,365,0.0525103,-0.0564201
+"fixe 0,25","fixe 0,10",24 mois,tentative,2023,365,0.0634641,-0.0588199
+"fixe 0,25","fixe 0,10",24 mois,tentative,2024,275,0.0569716,-0.0479901
+"fixe 0,25","fixe 0,10",24 mois,suite,2021,92,0.329433,-0.217609
+"fixe 0,25","fixe 0,10",24 mois,suite,2022,365,0.260944,-0.179022
+"fixe 0,25","fixe 0,10",24 mois,suite,2023,365,0.193138,-0.0965621
+"fixe 0,25","fixe 0,10",24 mois,suite,2024,275,0.345017,-0.156397
+"fixe 0,25","fixe 0,10","sans 2026, 12 mois",tentative,2021,92,0.0036727,-0.0657159
+"fixe 0,25","fixe 0,10","sans 2026, 12 mois",tentative,2022,365,0.0525103,-0.0564201
+"fixe 0,25","fixe 0,10","sans 2026, 12 mois",tentative,2023,365,0.0634641,-0.0582095
+"fixe 0,25","fixe 0,10","sans 2026, 12 mois",tentative,2024,366,0.0419224,-0.0709627
+"fixe 0,25","fixe 0,10","sans 2026, 12 mois",tentative,2025,1,0.0375382,-0.0711238
+"fixe 0,25","fixe 0,10","sans 2026, 12 mois",suite,2021,92,0.106143,-0.0494137
+"fixe 0,25","fixe 0,10","sans 2026, 12 mois",suite,2022,365,0.147701,-0.105271
+"fixe 0,25","fixe 0,10","sans 2026, 12 mois",suite,2023,365,0.0620869,-0.0475875
+"fixe 0,25","fixe 0,10","sans 2026, 12 mois",suite,2024,366,0.106041,-0.0539166
+"fixe 0,25","fixe 0,10","sans 2026, 12 mois",suite,2025,1,0.0806273,-0.082804
+"fixe 0,25","fixe 0,15",12 mois,tentative,2021,92,0.00745264,-0.0619359
+"fixe 0,25","fixe 0,15",12 mois,tentative,2022,365,0.0770519,-0.0318785
+"fixe 0,25","fixe 0,15",12 mois,tentative,2023,365,0.0954458,-0.0262278
+"fixe 0,25","fixe 0,15",12 mois,tentative,2024,366,0.0524015,-0.0604836
+"fixe 0,25","fixe 0,15",12 mois,tentative,2025,274,0.0146358,0.00408567
+"fixe 0,25","fixe 0,15",12 mois,suite,2021,92,0.152024,-0.00353332
+"fixe 0,25","fixe 0,15",12 mois,suite,2022,365,0.22142,-0.0315521
+"fixe 0,25","fixe 0,15",12 mois,suite,2023,365,0.103634,-0.00604092
+"fixe 0,25","fixe 0,15",12 mois,suite,2024,366,0.154485,-0.00547232
+"fixe 0,25","fixe 0,15",12 mois,suite,2025,274,0.307976,0.000952119
+"fixe 0,25","fixe 0,15",24 mois,tentative,2021,92,0.00745264,-0.0619359
+"fixe 0,25","fixe 0,15",24 mois,tentative,2022,365,0.0770519,-0.0318785
+"fixe 0,25","fixe 0,15",24 mois,tentative,2023,365,0.0954458,-0.0268381
+"fixe 0,25","fixe 0,15",24 mois,tentative,2024,275,0.0431399,-0.0618218
+"fixe 0,25","fixe 0,15",24 mois,suite,2021,92,0.498816,-0.0482255
+"fixe 0,25","fixe 0,15",24 mois,suite,2022,365,0.400291,-0.0396751
+"fixe 0,25","fixe 0,15",24 mois,suite,2023,365,0.313604,0.0239038
+"fixe 0,25","fixe 0,15",24 mois,suite,2024,275,0.496152,-0.00526123
+"fixe 0,25","fixe 0,15","sans 2026, 12 mois",tentative,2021,92,0.00745264,-0.0619359
+"fixe 0,25","fixe 0,15","sans 2026, 12 mois",tentative,2022,365,0.0770519,-0.0318785
+"fixe 0,25","fixe 0,15","sans 2026, 12 mois",tentative,2023,365,0.0954458,-0.0262278
+"fixe 0,25","fixe 0,15","sans 2026, 12 mois",tentative,2024,366,0.0524015,-0.0604836
+"fixe 0,25","fixe 0,15","sans 2026, 12 mois",tentative,2025,1,0.0530979,-0.0555641
+"fixe 0,25","fixe 0,15","sans 2026, 12 mois",suite,2021,92,0.152024,-0.00353332
+"fixe 0,25","fixe 0,15","sans 2026, 12 mois",suite,2022,365,0.22142,-0.0315521
+"fixe 0,25","fixe 0,15","sans 2026, 12 mois",suite,2023,365,0.103634,-0.00604092
+"fixe 0,25","fixe 0,15","sans 2026, 12 mois",suite,2024,366,0.154485,-0.00547232
+"fixe 0,25","fixe 0,15","sans 2026, 12 mois",suite,2025,1,0.119739,-0.0436924
+"fixe 0,25","fixe 0,20",12 mois,tentative,2021,92,0.011297,-0.0580916
+"fixe 0,25","fixe 0,20",12 mois,tentative,2022,365,0.100657,-0.00827307
+"fixe 0,25","fixe 0,20",12 mois,tentative,2023,365,0.124728,0.00305394
+"fixe 0,25","fixe 0,20",12 mois,tentative,2024,366,0.0553447,-0.0575404
+"fixe 0,25","fixe 0,20",12 mois,tentative,2025,274,0.014594,0.00404387
+"fixe 0,25","fixe 0,20",12 mois,suite,2021,92,0.20785,0.0522933
+"fixe 0,25","fixe 0,20",12 mois,suite,2022,365,0.275942,0.0229697
+"fixe 0,25","fixe 0,20",12 mois,suite,2023,365,0.107432,-0.00224247
+"fixe 0,25","fixe 0,20",12 mois,suite,2024,366,0.18101,0.0210528
+"fixe 0,25","fixe 0,20",12 mois,suite,2025,274,0.36294,0.0559156
+"fixe 0,25","fixe 0,20",24 mois,tentative,2021,92,0.011297,-0.0580916
+"fixe 0,25","fixe 0,20",24 mois,tentative,2022,365,0.100657,-0.00827307
+"fixe 0,25","fixe 0,20",24 mois,tentative,2023,365,0.124728,0.00244359
+"fixe 0,25","fixe 0,20",24 mois,tentative,2024,275,0.0334657,-0.071496
+"fixe 0,25","fixe 0,20",24 mois,suite,2021,92,0.627411,0.0803699
+"fixe 0,25","fixe 0,20",24 mois,suite,2022,365,0.471356,0.0313895
+"fixe 0,25","fixe 0,20",24 mois,suite,2023,365,0.294091,0.00439033
+"fixe 0,25","fixe 0,20",24 mois,suite,2024,275,0.607666,0.106252
+"fixe 0,25","fixe 0,20","sans 2026, 12 mois",tentative,2021,92,0.011297,-0.0580916
+"fixe 0,25","fixe 0,20","sans 2026, 12 mois",tentative,2022,365,0.100657,-0.00827307
+"fixe 0,25","fixe 0,20","sans 2026, 12 mois",tentative,2023,365,0.124728,0.00305394
+"fixe 0,25","fixe 0,20","sans 2026, 12 mois",tentative,2024,366,0.0553447,-0.0575404
+"fixe 0,25","fixe 0,20","sans 2026, 12 mois",tentative,2025,1,0.038492,-0.0701701
+"fixe 0,25","fixe 0,20","sans 2026, 12 mois",suite,2021,92,0.20785,0.0522933
+"fixe 0,25","fixe 0,20","sans 2026, 12 mois",suite,2022,365,0.275942,0.0229697
+"fixe 0,25","fixe 0,20","sans 2026, 12 mois",suite,2023,365,0.107432,-0.00224247
+"fixe 0,25","fixe 0,20","sans 2026, 12 mois",suite,2024,366,0.18101,0.0210528
+"fixe 0,25","fixe 0,20","sans 2026, 12 mois",suite,2025,1,0.121096,-0.0423355
+"fixe 0,25","fixe 0,25",12 mois,tentative,2021,92,0.0153738,-0.0540148
+"fixe 0,25","fixe 0,25",12 mois,tentative,2022,365,0.117349,0.00841841
+"fixe 0,25","fixe 0,25",12 mois,tentative,2023,365,0.131865,0.0101911
+"fixe 0,25","fixe 0,25",12 mois,tentative,2024,366,0.0349578,-0.0779273
+"fixe 0,25","fixe 0,25",12 mois,tentative,2025,274,0.0165566,0.00600642
+"fixe 0,25","fixe 0,25",12 mois,suite,2021,92,0.272485,0.116928
+"fixe 0,25","fixe 0,25",12 mois,suite,2022,365,0.310793,0.057821
+"fixe 0,25","fixe 0,25",12 mois,suite,2023,365,0.114691,0.00501644
+"fixe 0,25","fixe 0,25",12 mois,suite,2024,366,0.189711,0.0297531
+"fixe 0,25","fixe 0,25",12 mois,suite,2025,274,0.424215,0.117191
+"fixe 0,25","fixe 0,25",24 mois,tentative,2021,92,0.0153738,-0.0540148
+"fixe 0,25","fixe 0,25",24 mois,tentative,2022,365,0.117349,0.00841841
+"fixe 0,25","fixe 0,25",24 mois,tentative,2023,365,0.131865,0.00958076
+"fixe 0,25","fixe 0,25",24 mois,tentative,2024,275,0.0109081,-0.0940537
+"fixe 0,25","fixe 0,25",24 mois,suite,2021,92,0.742747,0.195705
+"fixe 0,25","fixe 0,25",24 mois,suite,2022,365,0.528495,0.0885292
+"fixe 0,25","fixe 0,25",24 mois,suite,2023,365,0.323516,0.0338153
+"fixe 0,25","fixe 0,25",24 mois,suite,2024,275,0.652255,0.150841
+"fixe 0,25","fixe 0,25","sans 2026, 12 mois",tentative,2021,92,0.0153738,-0.0540148
+"fixe 0,25","fixe 0,25","sans 2026, 12 mois",tentative,2022,365,0.117349,0.00841841
+"fixe 0,25","fixe 0,25","sans 2026, 12 mois",tentative,2023,365,0.131865,0.0101911
+"fixe 0,25","fixe 0,25","sans 2026, 12 mois",tentative,2024,366,0.0349578,-0.0779273
+"fixe 0,25","fixe 0,25","sans 2026, 12 mois",tentative,2025,1,0.0471968,-0.0614652
+"fixe 0,25","fixe 0,25","sans 2026, 12 mois",suite,2021,92,0.272485,0.116928
+"fixe 0,25","fixe 0,25","sans 2026, 12 mois",suite,2022,365,0.310793,0.057821
+"fixe 0,25","fixe 0,25","sans 2026, 12 mois",suite,2023,365,0.114691,0.00501644
+"fixe 0,25","fixe 0,25","sans 2026, 12 mois",suite,2024,366,0.189711,0.0297531
+"fixe 0,25","fixe 0,25","sans 2026, 12 mois",suite,2025,1,0.147801,-0.0156305
+"fixe 0,25","fixe 0,30",12 mois,tentative,2021,92,0.0196489,-0.0497397
+"fixe 0,25","fixe 0,30",12 mois,tentative,2022,365,0.106774,-0.0021562
+"fixe 0,25","fixe 0,30",12 mois,tentative,2023,365,0.0767445,-0.0449291
+"fixe 0,25","fixe 0,30",12 mois,tentative,2024,366,0.0292149,-0.0836702
+"fixe 0,25","fixe 0,30",12 mois,tentative,2025,274,0.0164424,0.00589223
+"fixe 0,25","fixe 0,30",12 mois,suite,2021,92,0.338823,0.183266
+"fixe 0,25","fixe 0,30",12 mois,suite,2022,365,0.203108,-0.0498646
+"fixe 0,25","fixe 0,30",12 mois,suite,2023,365,0.0670038,-0.0426707
+"fixe 0,25","fixe 0,30",12 mois,suite,2024,366,0.172949,0.0129914
+"fixe 0,25","fixe 0,30",12 mois,suite,2025,274,0.50747,0.200446
+"fixe 0,25","fixe 0,30",24 mois,tentative,2021,92,0.0196489,-0.0497397
+"fixe 0,25","fixe 0,30",24 mois,tentative,2022,365,0.106774,-0.0021562
+"fixe 0,25","fixe 0,30",24 mois,tentative,2023,365,0.0767445,-0.0455394
+"fixe 0,25","fixe 0,30",24 mois,tentative,2024,275,0.00483694,-0.100125
+"fixe 0,25","fixe 0,30",24 mois,suite,2021,92,0.466653,-0.0803884
+"fixe 0,25","fixe 0,30",24 mois,suite,2022,365,0.234291,-0.205675
+"fixe 0,25","fixe 0,30",24 mois,suite,2023,365,0.287102,-0.00259823
+"fixe 0,25","fixe 0,30",24 mois,suite,2024,275,0.750407,0.248993
+"fixe 0,25","fixe 0,30","sans 2026, 12 mois",tentative,2021,92,0.0196489,-0.0497397
+"fixe 0,25","fixe 0,30","sans 2026, 12 mois",tentative,2022,365,0.106774,-0.0021562
+"fixe 0,25","fixe 0,30","sans 2026, 12 mois",tentative,2023,365,0.0767445,-0.0449291
+"fixe 0,25","fixe 0,30","sans 2026, 12 mois",tentative,2024,366,0.0292149,-0.0836702
+"fixe 0,25","fixe 0,30","sans 2026, 12 mois",tentative,2025,1,0.0559568,-0.0527052
+"fixe 0,25","fixe 0,30","sans 2026, 12 mois",suite,2021,92,0.338823,0.183266
+"fixe 0,25","fixe 0,30","sans 2026, 12 mois",suite,2022,365,0.203108,-0.0498646
+"fixe 0,25","fixe 0,30","sans 2026, 12 mois",suite,2023,365,0.0670038,-0.0426707
+"fixe 0,25","fixe 0,30","sans 2026, 12 mois",suite,2024,366,0.172949,0.0129914
+"fixe 0,25","fixe 0,30","sans 2026, 12 mois",suite,2025,1,0.164789,0.0013582
+"fixe 0,25","coussin 0,20",12 mois,tentative,2021,92,0.0104067,-0.0589819
+"fixe 0,25","coussin 0,20",12 mois,tentative,2022,365,0.0732337,-0.0356967
+"fixe 0,25","coussin 0,20",12 mois,tentative,2023,365,0.0416554,-0.0800182
+"fixe 0,25","coussin 0,20",12 mois,tentative,2024,366,0.0271909,-0.0856942
+"fixe 0,25","coussin 0,20",12 mois,tentative,2025,274,0.0827381,0.0721879
+"fixe 0,25","coussin 0,20",12 mois,suite,2021,92,0.20846,0.0529033
+"fixe 0,25","coussin 0,20",12 mois,suite,2022,365,0.139222,-0.11375
+"fixe 0,25","coussin 0,20",12 mois,suite,2023,365,0.0360189,-0.0736555
+"fixe 0,25","coussin 0,20",12 mois,suite,2024,366,0.0737532,-0.0862044
+"fixe 0,25","coussin 0,20",12 mois,suite,2025,274,0.254121,-0.0529033
+"fixe 0,25","coussin 0,20",24 mois,tentative,2021,92,0.0104067,-0.0589819
+"fixe 0,25","coussin 0,20",24 mois,tentative,2022,365,0.0732337,-0.0356967
+"fixe 0,25","coussin 0,20",24 mois,tentative,2023,365,0.0416554,-0.0806285
+"fixe 0,25","coussin 0,20",24 mois,tentative,2024,275,0.0565139,-0.0484478
+"fixe 0,25","coussin 0,20",24 mois,suite,2021,92,0.20846,-0.338581
+"fixe 0,25","coussin 0,20",24 mois,suite,2022,365,0.141423,-0.298543
+"fixe 0,25","coussin 0,20",24 mois,suite,2023,365,0.0467675,-0.242933
+"fixe 0,25","coussin 0,20",24 mois,suite,2024,275,0.220522,-0.280892
+"fixe 0,25","coussin 0,20","sans 2026, 12 mois",tentative,2021,92,0.0104067,-0.0589819
+"fixe 0,25","coussin 0,20","sans 2026, 12 mois",tentative,2022,365,0.0732337,-0.0356967
+"fixe 0,25","coussin 0,20","sans 2026, 12 mois",tentative,2023,365,0.0416554,-0.0800182
+"fixe 0,25","coussin 0,20","sans 2026, 12 mois",tentative,2024,366,0.0271909,-0.0856942
+"fixe 0,25","coussin 0,20","sans 2026, 12 mois",tentative,2025,1,0.030148,-0.078514
+"fixe 0,25","coussin 0,20","sans 2026, 12 mois",suite,2021,92,0.20846,0.0529033
+"fixe 0,25","coussin 0,20","sans 2026, 12 mois",suite,2022,365,0.139222,-0.11375
+"fixe 0,25","coussin 0,20","sans 2026, 12 mois",suite,2023,365,0.0360189,-0.0736555
+"fixe 0,25","coussin 0,20","sans 2026, 12 mois",suite,2024,366,0.0737532,-0.0862044
+"fixe 0,25","coussin 0,20","sans 2026, 12 mois",suite,2025,1,0.030148,-0.133283
+"fixe 0,25","relance 0,20 → 0,40",12 mois,tentative,2021,92,0.0121304,-0.0572581
+"fixe 0,25","relance 0,20 → 0,40",12 mois,tentative,2022,365,0.108121,-0.000809114
+"fixe 0,25","relance 0,20 → 0,40",12 mois,tentative,2023,365,0.164204,0.0425304
+"fixe 0,25","relance 0,20 → 0,40",12 mois,tentative,2024,366,0.0504114,-0.0624737
+"fixe 0,25","relance 0,20 → 0,40",12 mois,tentative,2025,274,0.0145213,0.00397112
+"fixe 0,25","relance 0,20 → 0,40",12 mois,suite,2021,92,0.210445,0.0548876
+"fixe 0,25","relance 0,20 → 0,40",12 mois,suite,2022,365,0.336169,0.0831971
+"fixe 0,25","relance 0,20 → 0,40",12 mois,suite,2023,365,0.148158,0.0384833
+"fixe 0,25","relance 0,20 → 0,40",12 mois,suite,2024,366,0.195414,0.035456
+"fixe 0,25","relance 0,20 → 0,40",12 mois,suite,2025,274,0.34296,0.0359356
+"fixe 0,25","relance 0,20 → 0,40",24 mois,tentative,2021,92,0.0121304,-0.0572581
+"fixe 0,25","relance 0,20 → 0,40",24 mois,tentative,2022,365,0.108121,-0.000809114
+"fixe 0,25","relance 0,20 → 0,40",24 mois,tentative,2023,365,0.164204,0.0419201
+"fixe 0,25","relance 0,20 → 0,40",24 mois,tentative,2024,275,0.0302552,-0.0747066
+"fixe 0,25","relance 0,20 → 0,40",24 mois,suite,2021,92,0.781196,0.234154
+"fixe 0,25","relance 0,20 → 0,40",24 mois,suite,2022,365,0.606468,0.166502
+"fixe 0,25","relance 0,20 → 0,40",24 mois,suite,2023,365,0.338776,0.0490754
+"fixe 0,25","relance 0,20 → 0,40",24 mois,suite,2024,275,0.578758,0.0773443
+"fixe 0,25","relance 0,20 → 0,40","sans 2026, 12 mois",tentative,2021,92,0.0121304,-0.0572581
+"fixe 0,25","relance 0,20 → 0,40","sans 2026, 12 mois",tentative,2022,365,0.108121,-0.000809114
+"fixe 0,25","relance 0,20 → 0,40","sans 2026, 12 mois",tentative,2023,365,0.164204,0.0425304
+"fixe 0,25","relance 0,20 → 0,40","sans 2026, 12 mois",tentative,2024,366,0.0504114,-0.0624737
+"fixe 0,25","relance 0,20 → 0,40","sans 2026, 12 mois",tentative,2025,1,0.038492,-0.0701701
+"fixe 0,25","relance 0,20 → 0,40","sans 2026, 12 mois",suite,2021,92,0.210445,0.0548876
+"fixe 0,25","relance 0,20 → 0,40","sans 2026, 12 mois",suite,2022,365,0.336169,0.0831971
+"fixe 0,25","relance 0,20 → 0,40","sans 2026, 12 mois",suite,2023,365,0.148158,0.0384833
+"fixe 0,25","relance 0,20 → 0,40","sans 2026, 12 mois",suite,2024,366,0.195414,0.035456
+"fixe 0,25","relance 0,20 → 0,40","sans 2026, 12 mois",suite,2025,1,0.045227,-0.118204
+"fixe 0,30","fixe 0,10",12 mois,tentative,2021,92,-0.0054,-0.0747886
+"fixe 0,30","fixe 0,10",12 mois,tentative,2022,365,0.03599,-0.0729404
+"fixe 0,30","fixe 0,10",12 mois,tentative,2023,365,0.0510981,-0.0705755
+"fixe 0,30","fixe 0,10",12 mois,tentative,2024,366,0.0503071,-0.062578
+"fixe 0,30","fixe 0,10",12 mois,tentative,2025,274,0.0481959,0.0376457
+"fixe 0,30","fixe 0,10",12 mois,suite,2021,92,0.104019,-0.0515384
+"fixe 0,30","fixe 0,10",12 mois,suite,2022,365,0.148995,-0.103978
+"fixe 0,30","fixe 0,10",12 mois,suite,2023,365,0.0671881,-0.0424863
+"fixe 0,30","fixe 0,10",12 mois,suite,2024,366,0.110718,-0.0492392
+"fixe 0,30","fixe 0,10",12 mois,suite,2025,274,0.202543,-0.104481
+"fixe 0,30","fixe 0,10",24 mois,tentative,2021,92,-0.0054,-0.0747886
+"fixe 0,30","fixe 0,10",24 mois,tentative,2022,365,0.03599,-0.0729404
+"fixe 0,30","fixe 0,10",24 mois,tentative,2023,365,0.0510981,-0.0711859
+"fixe 0,30","fixe 0,10",24 mois,tentative,2024,275,0.0673898,-0.037572
+"fixe 0,30","fixe 0,10",24 mois,suite,2021,92,0.365305,-0.181736
+"fixe 0,30","fixe 0,10",24 mois,suite,2022,365,0.269297,-0.170669
+"fixe 0,30","fixe 0,10",24 mois,suite,2023,365,0.19993,-0.0897706
+"fixe 0,30","fixe 0,10",24 mois,suite,2024,275,0.351288,-0.150125
+"fixe 0,30","fixe 0,10","sans 2026, 12 mois",tentative,2021,92,-0.0054,-0.0747886
+"fixe 0,30","fixe 0,10","sans 2026, 12 mois",tentative,2022,365,0.03599,-0.0729404
+"fixe 0,30","fixe 0,10","sans 2026, 12 mois",tentative,2023,365,0.0510981,-0.0705755
+"fixe 0,30","fixe 0,10","sans 2026, 12 mois",tentative,2024,366,0.0503071,-0.062578
+"fixe 0,30","fixe 0,10","sans 2026, 12 mois",tentative,2025,1,0.0375382,-0.0711238
+"fixe 0,30","fixe 0,10","sans 2026, 12 mois",suite,2021,92,0.104019,-0.0515384
+"fixe 0,30","fixe 0,10","sans 2026, 12 mois",suite,2022,365,0.148995,-0.103978
+"fixe 0,30","fixe 0,10","sans 2026, 12 mois",suite,2023,365,0.0671881,-0.0424863
+"fixe 0,30","fixe 0,10","sans 2026, 12 mois",suite,2024,366,0.110718,-0.0492392
+"fixe 0,30","fixe 0,10","sans 2026, 12 mois",suite,2025,1,0.0806273,-0.082804
+"fixe 0,30","fixe 0,15",12 mois,tentative,2021,92,-0.0054,-0.0747886
+"fixe 0,30","fixe 0,15",12 mois,tentative,2022,365,0.0535567,-0.0553737
+"fixe 0,30","fixe 0,15",12 mois,tentative,2023,365,0.077295,-0.0443786
+"fixe 0,30","fixe 0,15",12 mois,tentative,2024,366,0.0627979,-0.0500872
+"fixe 0,30","fixe 0,15",12 mois,tentative,2025,274,0.0179205,0.00737033
+"fixe 0,30","fixe 0,15",12 mois,suite,2021,92,0.151695,-0.00386198
+"fixe 0,30","fixe 0,15",12 mois,suite,2022,365,0.208013,-0.0449592
+"fixe 0,30","fixe 0,15",12 mois,suite,2023,365,0.125118,0.0154431
+"fixe 0,30","fixe 0,15",12 mois,suite,2024,366,0.164017,0.00405961
+"fixe 0,30","fixe 0,15",12 mois,suite,2025,274,0.315103,0.00807945
+"fixe 0,30","fixe 0,15",24 mois,tentative,2021,92,-0.0054,-0.0747886
+"fixe 0,30","fixe 0,15",24 mois,tentative,2022,365,0.0535567,-0.0553737
+"fixe 0,30","fixe 0,15",24 mois,tentative,2023,365,0.077295,-0.044989
+"fixe 0,30","fixe 0,15",24 mois,tentative,2024,275,0.055473,-0.0494887
+"fixe 0,30","fixe 0,15",24 mois,suite,2021,92,0.500699,-0.0463423
+"fixe 0,30","fixe 0,15",24 mois,suite,2022,365,0.395232,-0.0447338
+"fixe 0,30","fixe 0,15",24 mois,suite,2023,365,0.339254,0.0495533
+"fixe 0,30","fixe 0,15",24 mois,suite,2024,275,0.506681,0.00526764
+"fixe 0,30","fixe 0,15","sans 2026, 12 mois",tentative,2021,92,-0.0054,-0.0747886
+"fixe 0,30","fixe 0,15","sans 2026, 12 mois",tentative,2022,365,0.0535567,-0.0553737
+"fixe 0,30","fixe 0,15","sans 2026, 12 mois",tentative,2023,365,0.077295,-0.0443786
+"fixe 0,30","fixe 0,15","sans 2026, 12 mois",tentative,2024,366,0.0627979,-0.0500872
+"fixe 0,30","fixe 0,15","sans 2026, 12 mois",tentative,2025,1,0.0530979,-0.0555641
+"fixe 0,30","fixe 0,15","sans 2026, 12 mois",suite,2021,92,0.151695,-0.00386198
+"fixe 0,30","fixe 0,15","sans 2026, 12 mois",suite,2022,365,0.208013,-0.0449592
+"fixe 0,30","fixe 0,15","sans 2026, 12 mois",suite,2023,365,0.125118,0.0154431
+"fixe 0,30","fixe 0,15","sans 2026, 12 mois",suite,2024,366,0.164017,0.00405961
+"fixe 0,30","fixe 0,15","sans 2026, 12 mois",suite,2025,1,0.112442,-0.0509895
+"fixe 0,30","fixe 0,20",12 mois,tentative,2021,92,-0.0054,-0.0747886
+"fixe 0,30","fixe 0,20",12 mois,tentative,2022,365,0.068349,-0.0405814
+"fixe 0,30","fixe 0,20",12 mois,tentative,2023,365,0.101217,-0.020457
+"fixe 0,30","fixe 0,20",12 mois,tentative,2024,366,0.0642112,-0.0486739
+"fixe 0,30","fixe 0,20",12 mois,tentative,2025,274,0.0189713,0.00842108
+"fixe 0,30","fixe 0,20",12 mois,suite,2021,92,0.20401,0.048453
+"fixe 0,30","fixe 0,20",12 mois,suite,2022,365,0.270585,0.0176123
+"fixe 0,30","fixe 0,20",12 mois,suite,2023,365,0.13463,0.0249552
+"fixe 0,30","fixe 0,20",12 mois,suite,2024,366,0.20225,0.0422925
+"fixe 0,30","fixe 0,20",12 mois,suite,2025,274,0.370248,0.0632243
+"fixe 0,30","fixe 0,20",24 mois,tentative,2021,92,-0.0054,-0.0747886
+"fixe 0,30","fixe 0,20",24 mois,tentative,2022,365,0.068349,-0.0405814
+"fixe 0,30","fixe 0,20",24 mois,tentative,2023,365,0.101217,-0.0210673
+"fixe 0,30","fixe 0,20",24 mois,tentative,2024,275,0.042515,-0.0624467
+"fixe 0,30","fixe 0,20",24 mois,suite,2021,92,0.616783,0.0697417
+"fixe 0,30","fixe 0,20",24 mois,suite,2022,365,0.480759,0.0407929
+"fixe 0,30","fixe 0,20",24 mois,suite,2023,365,0.378575,0.088874
+"fixe 0,30","fixe 0,20",24 mois,suite,2024,275,0.664793,0.16338
+"fixe 0,30","fixe 0,20","sans 2026, 12 mois",tentative,2021,92,-0.0054,-0.0747886
+"fixe 0,30","fixe 0,20","sans 2026, 12 mois",tentative,2022,365,0.068349,-0.0405814
+"fixe 0,30","fixe 0,20","sans 2026, 12 mois",tentative,2023,365,0.101217,-0.020457
+"fixe 0,30","fixe 0,20","sans 2026, 12 mois",tentative,2024,366,0.0642112,-0.0486739
+"fixe 0,30","fixe 0,20","sans 2026, 12 mois",tentative,2025,1,0.038492,-0.0701701
+"fixe 0,30","fixe 0,20","sans 2026, 12 mois",suite,2021,92,0.20401,0.048453
+"fixe 0,30","fixe 0,20","sans 2026, 12 mois",suite,2022,365,0.270585,0.0176123
+"fixe 0,30","fixe 0,20","sans 2026, 12 mois",suite,2023,365,0.13463,0.0249552
+"fixe 0,30","fixe 0,20","sans 2026, 12 mois",suite,2024,366,0.20225,0.0422925
+"fixe 0,30","fixe 0,20","sans 2026, 12 mois",suite,2025,1,0.121096,-0.0423355
+"fixe 0,30","fixe 0,25",12 mois,tentative,2021,92,-0.0054,-0.0747886
+"fixe 0,30","fixe 0,25",12 mois,tentative,2022,365,0.0800566,-0.0288739
+"fixe 0,30","fixe 0,25",12 mois,tentative,2023,365,0.108326,-0.0133478
+"fixe 0,30","fixe 0,25",12 mois,tentative,2024,366,0.0341223,-0.0787628
+"fixe 0,30","fixe 0,25",12 mois,tentative,2025,274,0.0232687,0.0127186
+"fixe 0,30","fixe 0,25",12 mois,suite,2021,92,0.265419,0.109862
+"fixe 0,30","fixe 0,25",12 mois,suite,2022,365,0.313998,0.0610255
+"fixe 0,30","fixe 0,25",12 mois,suite,2023,365,0.133281,0.0236068
+"fixe 0,30","fixe 0,25",12 mois,suite,2024,366,0.200187,0.040229
+"fixe 0,30","fixe 0,25",12 mois,suite,2025,274,0.496095,0.189071
+"fixe 0,30","fixe 0,25",24 mois,tentative,2021,92,-0.0054,-0.0747886
+"fixe 0,30","fixe 0,25",24 mois,tentative,2022,365,0.0800566,-0.0288739
+"fixe 0,30","fixe 0,25",24 mois,tentative,2023,365,0.108326,-0.0139581
+"fixe 0,30","fixe 0,25",24 mois,tentative,2024,275,0.0187553,-0.0862065
+"fixe 0,30","fixe 0,25",24 mois,suite,2021,92,0.736209,0.189167
+"fixe 0,30","fixe 0,25",24 mois,suite,2022,365,0.535616,0.0956502
+"fixe 0,30","fixe 0,25",24 mois,suite,2023,365,0.346183,0.0564823
+"fixe 0,30","fixe 0,25",24 mois,suite,2024,275,0.757686,0.256272
+"fixe 0,30","fixe 0,25","sans 2026, 12 mois",tentative,2021,92,-0.0054,-0.0747886
+"fixe 0,30","fixe 0,25","sans 2026, 12 mois",tentative,2022,365,0.0800566,-0.0288739
+"fixe 0,30","fixe 0,25","sans 2026, 12 mois",tentative,2023,365,0.108326,-0.0133478
+"fixe 0,30","fixe 0,25","sans 2026, 12 mois",tentative,2024,366,0.0341223,-0.0787628
+"fixe 0,30","fixe 0,25","sans 2026, 12 mois",tentative,2025,1,0.0471968,-0.0614652
+"fixe 0,30","fixe 0,25","sans 2026, 12 mois",suite,2021,92,0.265419,0.109862
+"fixe 0,30","fixe 0,25","sans 2026, 12 mois",suite,2022,365,0.313998,0.0610255
+"fixe 0,30","fixe 0,25","sans 2026, 12 mois",suite,2023,365,0.133281,0.0236068
+"fixe 0,30","fixe 0,25","sans 2026, 12 mois",suite,2024,366,0.200187,0.040229
+"fixe 0,30","fixe 0,25","sans 2026, 12 mois",suite,2025,1,0.142401,-0.0210305
+"fixe 0,30","fixe 0,30",12 mois,tentative,2021,92,-0.0054,-0.0747886
+"fixe 0,30","fixe 0,30",12 mois,tentative,2022,365,0.0453278,-0.0636026
+"fixe 0,30","fixe 0,30",12 mois,tentative,2023,365,0.0785253,-0.0431483
+"fixe 0,30","fixe 0,30",12 mois,tentative,2024,366,0.0133347,-0.0995504
+"fixe 0,30","fixe 0,30",12 mois,tentative,2025,274,0.0192436,0.00869339
+"fixe 0,30","fixe 0,30",12 mois,suite,2021,92,0.25727,0.101713
+"fixe 0,30","fixe 0,30",12 mois,suite,2022,365,0.170565,-0.0824076
+"fixe 0,30","fixe 0,30",12 mois,suite,2023,365,0.0716938,-0.0379807
+"fixe 0,30","fixe 0,30",12 mois,suite,2024,366,0.193655,0.0336978
+"fixe 0,30","fixe 0,30",12 mois,suite,2025,274,0.555581,0.248557
+"fixe 0,30","fixe 0,30",24 mois,tentative,2021,92,-0.0054,-0.0747886
+"fixe 0,30","fixe 0,30",24 mois,tentative,2022,365,0.0453278,-0.0636026
+"fixe 0,30","fixe 0,30",24 mois,tentative,2023,365,0.0785253,-0.0437587
+"fixe 0,30","fixe 0,30",24 mois,tentative,2024,275,-0.000768476,-0.10573
+"fixe 0,30","fixe 0,30",24 mois,suite,2021,92,0.383692,-0.16335
+"fixe 0,30","fixe 0,30",24 mois,suite,2022,365,0.201404,-0.238562
+"fixe 0,30","fixe 0,30",24 mois,suite,2023,365,0.284852,-0.00484834
+"fixe 0,30","fixe 0,30",24 mois,suite,2024,275,0.798122,0.296708
+"fixe 0,30","fixe 0,30","sans 2026, 12 mois",tentative,2021,92,-0.0054,-0.0747886
+"fixe 0,30","fixe 0,30","sans 2026, 12 mois",tentative,2022,365,0.0453278,-0.0636026
+"fixe 0,30","fixe 0,30","sans 2026, 12 mois",tentative,2023,365,0.0785253,-0.0431483
+"fixe 0,30","fixe 0,30","sans 2026, 12 mois",tentative,2024,366,0.0133347,-0.0995504
+"fixe 0,30","fixe 0,30","sans 2026, 12 mois",tentative,2025,1,0.0559568,-0.0527052
+"fixe 0,30","fixe 0,30","sans 2026, 12 mois",suite,2021,92,0.25727,0.101713
+"fixe 0,30","fixe 0,30","sans 2026, 12 mois",suite,2022,365,0.170565,-0.0824076
+"fixe 0,30","fixe 0,30","sans 2026, 12 mois",suite,2023,365,0.0716938,-0.0379807
+"fixe 0,30","fixe 0,30","sans 2026, 12 mois",suite,2024,366,0.193655,0.0336978
+"fixe 0,30","fixe 0,30","sans 2026, 12 mois",suite,2025,1,0.164789,0.0013582
+"fixe 0,30","coussin 0,20",12 mois,tentative,2021,92,-0.0054,-0.0747886
+"fixe 0,30","coussin 0,20",12 mois,tentative,2022,365,0.0474931,-0.0614373
+"fixe 0,30","coussin 0,20",12 mois,tentative,2023,365,0.0329217,-0.0887519
+"fixe 0,30","coussin 0,20",12 mois,tentative,2024,366,0.0300262,-0.0828589
+"fixe 0,30","coussin 0,20",12 mois,tentative,2025,274,0.0935524,0.0830022
+"fixe 0,30","coussin 0,20",12 mois,suite,2021,92,0.192235,0.0366776
+"fixe 0,30","coussin 0,20",12 mois,suite,2022,365,0.135893,-0.117079
+"fixe 0,30","coussin 0,20",12 mois,suite,2023,365,0.0386165,-0.071058
+"fixe 0,30","coussin 0,20",12 mois,suite,2024,366,0.0757142,-0.0842434
+"fixe 0,30","coussin 0,20",12 mois,suite,2025,274,0.244468,-0.0625558
+"fixe 0,30","coussin 0,20",24 mois,tentative,2021,92,-0.0054,-0.0747886
+"fixe 0,30","coussin 0,20",24 mois,tentative,2022,365,0.0474931,-0.0614373
+"fixe 0,30","coussin 0,20",24 mois,tentative,2023,365,0.0329217,-0.0893623
+"fixe 0,30","coussin 0,20",24 mois,tentative,2024,275,0.0706404,-0.0343213
+"fixe 0,30","coussin 0,20",24 mois,suite,2021,92,0.192235,-0.354807
+"fixe 0,30","coussin 0,20",24 mois,suite,2022,365,0.138094,-0.301873
+"fixe 0,30","coussin 0,20",24 mois,suite,2023,365,0.0525745,-0.237126
+"fixe 0,30","coussin 0,20",24 mois,suite,2024,275,0.222969,-0.278445
+"fixe 0,30","coussin 0,20","sans 2026, 12 mois",tentative,2021,92,-0.0054,-0.0747886
+"fixe 0,30","coussin 0,20","sans 2026, 12 mois",tentative,2022,365,0.0474931,-0.0614373
+"fixe 0,30","coussin 0,20","sans 2026, 12 mois",tentative,2023,365,0.0329217,-0.0887519
+"fixe 0,30","coussin 0,20","sans 2026, 12 mois",tentative,2024,366,0.0300262,-0.0828589
+"fixe 0,30","coussin 0,20","sans 2026, 12 mois",tentative,2025,1,0.030148,-0.078514
+"fixe 0,30","coussin 0,20","sans 2026, 12 mois",suite,2021,92,0.192235,0.0366776
+"fixe 0,30","coussin 0,20","sans 2026, 12 mois",suite,2022,365,0.135893,-0.117079
+"fixe 0,30","coussin 0,20","sans 2026, 12 mois",suite,2023,365,0.0386165,-0.071058
+"fixe 0,30","coussin 0,20","sans 2026, 12 mois",suite,2024,366,0.0757142,-0.0842434
+"fixe 0,30","coussin 0,20","sans 2026, 12 mois",suite,2025,1,0.030148,-0.133283
+"fixe 0,30","relance 0,20 → 0,40",12 mois,tentative,2021,92,-0.0054,-0.0747886
+"fixe 0,30","relance 0,20 → 0,40",12 mois,tentative,2022,365,0.0648309,-0.0440995
+"fixe 0,30","relance 0,20 → 0,40",12 mois,tentative,2023,365,0.12688,0.00520611
+"fixe 0,30","relance 0,20 → 0,40",12 mois,tentative,2024,366,0.0271253,-0.0857598
+"fixe 0,30","relance 0,20 → 0,40",12 mois,tentative,2025,274,0.023087,0.0125368
+"fixe 0,30","relance 0,20 → 0,40",12 mois,suite,2021,92,0.216266,0.0607088
+"fixe 0,30","relance 0,20 → 0,40",12 mois,suite,2022,365,0.342167,0.0891949
+"fixe 0,30","relance 0,20 → 0,40",12 mois,suite,2023,365,0.180801,0.0711265
+"fixe 0,30","relance 0,20 → 0,40",12 mois,suite,2024,366,0.202074,0.042116
+"fixe 0,30","relance 0,20 → 0,40",12 mois,suite,2025,274,0.357721,0.0506967
+"fixe 0,30","relance 0,20 → 0,40",24 mois,tentative,2021,92,-0.0054,-0.0747886
+"fixe 0,30","relance 0,20 → 0,40",24 mois,tentative,2022,365,0.0648309,-0.0440995
+"fixe 0,30","relance 0,20 → 0,40",24 mois,tentative,2023,365,0.12688,0.00459577
+"fixe 0,30","relance 0,20 → 0,40",24 mois,tentative,2024,275,0.0168955,-0.0880662
+"fixe 0,30","relance 0,20 → 0,40",24 mois,suite,2021,92,0.78238,0.235339
+"fixe 0,30","relance 0,20 → 0,40",24 mois,suite,2022,365,0.629116,0.18915
+"fixe 0,30","relance 0,20 → 0,40",24 mois,suite,2023,365,0.452807,0.163106
+"fixe 0,30","relance 0,20 → 0,40",24 mois,suite,2024,275,0.652643,0.151229
+"fixe 0,30","relance 0,20 → 0,40","sans 2026, 12 mois",tentative,2021,92,-0.0054,-0.0747886
+"fixe 0,30","relance 0,20 → 0,40","sans 2026, 12 mois",tentative,2022,365,0.0648309,-0.0440995
+"fixe 0,30","relance 0,20 → 0,40","sans 2026, 12 mois",tentative,2023,365,0.12688,0.00520611
+"fixe 0,30","relance 0,20 → 0,40","sans 2026, 12 mois",tentative,2024,366,0.0271253,-0.0857598
+"fixe 0,30","relance 0,20 → 0,40","sans 2026, 12 mois",tentative,2025,1,0.038492,-0.0701701
+"fixe 0,30","relance 0,20 → 0,40","sans 2026, 12 mois",suite,2021,92,0.216266,0.0607088
+"fixe 0,30","relance 0,20 → 0,40","sans 2026, 12 mois",suite,2022,365,0.342167,0.0891949
+"fixe 0,30","relance 0,20 → 0,40","sans 2026, 12 mois",suite,2023,365,0.180801,0.0711265
+"fixe 0,30","relance 0,20 → 0,40","sans 2026, 12 mois",suite,2024,366,0.202074,0.042116
+"fixe 0,30","relance 0,20 → 0,40","sans 2026, 12 mois",suite,2025,1,0.0309437,-0.132488
+"coussin 0,15","fixe 0,10",12 mois,tentative,2021,92,0.0108523,-0.0585363
+"coussin 0,15","fixe 0,10",12 mois,tentative,2022,365,0.0457817,-0.0631487
+"coussin 0,15","fixe 0,10",12 mois,tentative,2023,365,0.0440731,-0.0776005
+"coussin 0,15","fixe 0,10",12 mois,tentative,2024,366,0.0311981,-0.081687
+"coussin 0,15","fixe 0,10",12 mois,tentative,2025,274,0.0763063,0.0657561
+"coussin 0,15","fixe 0,10",12 mois,suite,2021,92,0.00733059,-0.148226
+"coussin 0,15","fixe 0,10",12 mois,suite,2022,365,0.042922,-0.21005
+"coussin 0,15","fixe 0,10",12 mois,suite,2023,365,0.0421646,-0.0675099
+"coussin 0,15","fixe 0,10",12 mois,suite,2024,366,0.0303675,-0.12959
+"coussin 0,15","fixe 0,10",12 mois,suite,2025,274,0.0832926,-0.223731
+"coussin 0,15","fixe 0,10",24 mois,tentative,2021,92,0.0108523,-0.0585363
+"coussin 0,15","fixe 0,10",24 mois,tentative,2022,365,0.0457817,-0.0631487
+"coussin 0,15","fixe 0,10",24 mois,tentative,2023,365,0.044295,-0.0779889
+"coussin 0,15","fixe 0,10",24 mois,tentative,2024,275,0.0472137,-0.0577481
+"coussin 0,15","fixe 0,10",24 mois,suite,2021,92,0.095771,-0.451271
+"coussin 0,15","fixe 0,10",24 mois,suite,2022,365,0.0713847,-0.368582
+"coussin 0,15","fixe 0,10",24 mois,suite,2023,365,0.0422836,-0.247417
+"coussin 0,15","fixe 0,10",24 mois,suite,2024,275,0.206734,-0.29468
+"coussin 0,15","fixe 0,10","sans 2026, 12 mois",tentative,2021,92,0.0108523,-0.0585363
+"coussin 0,15","fixe 0,10","sans 2026, 12 mois",tentative,2022,365,0.0457817,-0.0631487
+"coussin 0,15","fixe 0,10","sans 2026, 12 mois",tentative,2023,365,0.0440731,-0.0776005
+"coussin 0,15","fixe 0,10","sans 2026, 12 mois",tentative,2024,366,0.0311981,-0.081687
+"coussin 0,15","fixe 0,10","sans 2026, 12 mois",tentative,2025,1,0.0157054,-0.0929566
+"coussin 0,15","fixe 0,10","sans 2026, 12 mois",suite,2021,92,0.00733059,-0.148226
+"coussin 0,15","fixe 0,10","sans 2026, 12 mois",suite,2022,365,0.042922,-0.21005
+"coussin 0,15","fixe 0,10","sans 2026, 12 mois",suite,2023,365,0.0421646,-0.0675099
+"coussin 0,15","fixe 0,10","sans 2026, 12 mois",suite,2024,366,0.0303675,-0.12959
+"coussin 0,15","fixe 0,10","sans 2026, 12 mois",suite,2025,1,0.0103054,-0.153126
+"coussin 0,15","fixe 0,15",12 mois,tentative,2021,92,0.0165151,-0.0528735
+"coussin 0,15","fixe 0,15",12 mois,tentative,2022,365,0.0668208,-0.0421096
+"coussin 0,15","fixe 0,15",12 mois,tentative,2023,365,0.0666074,-0.0550662
+"coussin 0,15","fixe 0,15",12 mois,tentative,2024,366,0.0473065,-0.0655786
+"coussin 0,15","fixe 0,15",12 mois,tentative,2025,274,0.105091,0.0945407
+"coussin 0,15","fixe 0,15",12 mois,suite,2021,92,0.0119955,-0.143562
+"coussin 0,15","fixe 0,15",12 mois,suite,2022,365,0.0633145,-0.189658
+"coussin 0,15","fixe 0,15",12 mois,suite,2023,365,0.0646989,-0.0449755
+"coussin 0,15","fixe 0,15",12 mois,suite,2024,366,0.0451376,-0.11482
+"coussin 0,15","fixe 0,15",12 mois,suite,2025,274,0.12008,-0.186944
+"coussin 0,15","fixe 0,15",24 mois,tentative,2021,92,0.0165151,-0.0528735
+"coussin 0,15","fixe 0,15",24 mois,tentative,2022,365,0.0668208,-0.0421096
+"coussin 0,15","fixe 0,15",24 mois,tentative,2023,365,0.0669071,-0.0553768
+"coussin 0,15","fixe 0,15",24 mois,tentative,2024,275,0.0695066,-0.0354551
+"coussin 0,15","fixe 0,15",24 mois,suite,2021,92,0.00970638,-0.537335
+"coussin 0,15","fixe 0,15",24 mois,suite,2022,365,0.0628263,-0.37714
+"coussin 0,15","fixe 0,15",24 mois,suite,2023,365,0.0648359,-0.224865
+"coussin 0,15","fixe 0,15",24 mois,suite,2024,275,0.226748,-0.274666
+"coussin 0,15","fixe 0,15","sans 2026, 12 mois",tentative,2021,92,0.0165151,-0.0528735
+"coussin 0,15","fixe 0,15","sans 2026, 12 mois",tentative,2022,365,0.0668208,-0.0421096
+"coussin 0,15","fixe 0,15","sans 2026, 12 mois",tentative,2023,365,0.0666074,-0.0550662
+"coussin 0,15","fixe 0,15","sans 2026, 12 mois",tentative,2024,366,0.0473065,-0.0655786
+"coussin 0,15","fixe 0,15","sans 2026, 12 mois",tentative,2025,1,0.0204607,-0.0882013
+"coussin 0,15","fixe 0,15","sans 2026, 12 mois",suite,2021,92,0.0119955,-0.143562
+"coussin 0,15","fixe 0,15","sans 2026, 12 mois",suite,2022,365,0.0633145,-0.189658
+"coussin 0,15","fixe 0,15","sans 2026, 12 mois",suite,2023,365,0.0646989,-0.0449755
+"coussin 0,15","fixe 0,15","sans 2026, 12 mois",suite,2024,366,0.0451376,-0.11482
+"coussin 0,15","fixe 0,15","sans 2026, 12 mois",suite,2025,1,0.0150607,-0.148371
+"coussin 0,15","fixe 0,20",12 mois,tentative,2021,92,0.0223599,-0.0470287
+"coussin 0,15","fixe 0,20",12 mois,tentative,2022,365,0.0875618,-0.0213686
+"coussin 0,15","fixe 0,20",12 mois,tentative,2023,365,0.0882463,-0.0334273
+"coussin 0,15","fixe 0,20",12 mois,tentative,2024,366,0.0617601,-0.051125
+"coussin 0,15","fixe 0,20",12 mois,tentative,2025,274,0.123745,0.113195
+"coussin 0,15","fixe 0,20",12 mois,suite,2021,92,0.0171946,-0.138362
+"coussin 0,15","fixe 0,20",12 mois,suite,2022,365,0.0840555,-0.168917
+"coussin 0,15","fixe 0,20",12 mois,suite,2023,365,0.0863378,-0.0233367
+"coussin 0,15","fixe 0,20",12 mois,suite,2024,366,0.0594437,-0.100514
+"coussin 0,15","fixe 0,20",12 mois,suite,2025,274,0.138835,-0.168189
+"coussin 0,15","fixe 0,20",24 mois,tentative,2021,92,0.0223599,-0.0470287
+"coussin 0,15","fixe 0,20",24 mois,tentative,2022,365,0.0875618,-0.0213686
+"coussin 0,15","fixe 0,20",24 mois,tentative,2023,365,0.0886085,-0.0336755
+"coussin 0,15","fixe 0,20",24 mois,tentative,2024,275,0.0880931,-0.0168687
+"coussin 0,15","fixe 0,20",24 mois,suite,2021,92,0.0171946,-0.529847
+"coussin 0,15","fixe 0,20",24 mois,suite,2022,365,0.0840555,-0.355911
+"coussin 0,15","fixe 0,20",24 mois,suite,2023,365,0.0865372,-0.203163
+"coussin 0,15","fixe 0,20",24 mois,suite,2024,275,0.230408,-0.271005
+"coussin 0,15","fixe 0,20","sans 2026, 12 mois",tentative,2021,92,0.0223599,-0.0470287
+"coussin 0,15","fixe 0,20","sans 2026, 12 mois",tentative,2022,365,0.0875618,-0.0213686
+"coussin 0,15","fixe 0,20","sans 2026, 12 mois",tentative,2023,365,0.0882463,-0.0334273
+"coussin 0,15","fixe 0,20","sans 2026, 12 mois",tentative,2024,366,0.0617601,-0.051125
+"coussin 0,15","fixe 0,20","sans 2026, 12 mois",tentative,2025,1,0.0242187,-0.0844433
+"coussin 0,15","fixe 0,20","sans 2026, 12 mois",suite,2021,92,0.0171946,-0.138362
+"coussin 0,15","fixe 0,20","sans 2026, 12 mois",suite,2022,365,0.0840555,-0.168917
+"coussin 0,15","fixe 0,20","sans 2026, 12 mois",suite,2023,365,0.0863378,-0.0233367
+"coussin 0,15","fixe 0,20","sans 2026, 12 mois",suite,2024,366,0.0594437,-0.100514
+"coussin 0,15","fixe 0,20","sans 2026, 12 mois",suite,2025,1,0.0188187,-0.144613
+"coussin 0,15","fixe 0,25",12 mois,tentative,2021,92,0.0280529,-0.0413357
+"coussin 0,15","fixe 0,25",12 mois,tentative,2022,365,0.0882613,-0.0206691
+"coussin 0,15","fixe 0,25",12 mois,tentative,2023,365,0.0648448,-0.0568288
+"coussin 0,15","fixe 0,25",12 mois,tentative,2024,366,0.0441569,-0.0687282
+"coussin 0,15","fixe 0,25",12 mois,tentative,2025,274,0.10473,0.0941795
+"coussin 0,15","fixe 0,25",12 mois,suite,2021,92,0.0228877,-0.132669
+"coussin 0,15","fixe 0,25",12 mois,suite,2022,365,0.084755,-0.168217
+"coussin 0,15","fixe 0,25",12 mois,suite,2023,365,0.0629363,-0.0467381
+"coussin 0,15","fixe 0,25",12 mois,suite,2024,366,0.0596502,-0.100307
+"coussin 0,15","fixe 0,25",12 mois,suite,2025,274,0.132456,-0.174568
+"coussin 0,15","fixe 0,25",24 mois,tentative,2021,92,0.0280529,-0.0413357
+"coussin 0,15","fixe 0,25",24 mois,tentative,2022,365,0.0882613,-0.0206691
+"coussin 0,15","fixe 0,25",24 mois,tentative,2023,365,0.0651807,-0.0571032
+"coussin 0,15","fixe 0,25",24 mois,tentative,2024,275,0.05896,-0.0460018
+"coussin 0,15","fixe 0,25",24 mois,suite,2021,92,0.0228877,-0.524154
+"coussin 0,15","fixe 0,25",24 mois,suite,2022,365,0.084755,-0.355211
+"coussin 0,15","fixe 0,25",24 mois,suite,2023,365,0.0631095,-0.226591
+"coussin 0,15","fixe 0,25",24 mois,suite,2024,275,0.235231,-0.266182
+"coussin 0,15","fixe 0,25","sans 2026, 12 mois",tentative,2021,92,0.0280529,-0.0413357
+"coussin 0,15","fixe 0,25","sans 2026, 12 mois",tentative,2022,365,0.0882613,-0.0206691
+"coussin 0,15","fixe 0,25","sans 2026, 12 mois",tentative,2023,365,0.0648448,-0.0568288
+"coussin 0,15","fixe 0,25","sans 2026, 12 mois",tentative,2024,366,0.0441569,-0.0687282
+"coussin 0,15","fixe 0,25","sans 2026, 12 mois",tentative,2025,1,-0.0054,-0.114062
+"coussin 0,15","fixe 0,25","sans 2026, 12 mois",suite,2021,92,0.0228877,-0.132669
+"coussin 0,15","fixe 0,25","sans 2026, 12 mois",suite,2022,365,0.084755,-0.168217
+"coussin 0,15","fixe 0,25","sans 2026, 12 mois",suite,2023,365,0.0629363,-0.0467381
+"coussin 0,15","fixe 0,25","sans 2026, 12 mois",suite,2024,366,0.0596502,-0.100307
+"coussin 0,15","fixe 0,25","sans 2026, 12 mois",suite,2025,1,-0.0108,-0.174231
+"coussin 0,15","fixe 0,30",12 mois,tentative,2021,92,0.0331694,-0.0362192
+"coussin 0,15","fixe 0,30",12 mois,tentative,2022,365,0.0763445,-0.032586
+"coussin 0,15","fixe 0,30",12 mois,tentative,2023,365,0.0189263,-0.102747
+"coussin 0,15","fixe 0,30",12 mois,tentative,2024,366,0.0363089,-0.0765762
+"coussin 0,15","fixe 0,30",12 mois,tentative,2025,274,0.124089,0.113539
+"coussin 0,15","fixe 0,30",12 mois,suite,2021,92,0.0280042,-0.127553
+"coussin 0,15","fixe 0,30",12 mois,suite,2022,365,0.0728382,-0.180134
+"coussin 0,15","fixe 0,30",12 mois,suite,2023,365,0.0170178,-0.0926566
+"coussin 0,15","fixe 0,30",12 mois,suite,2024,366,0.0425173,-0.11744
+"coussin 0,15","fixe 0,30",12 mois,suite,2025,274,0.130583,-0.176441
+"coussin 0,15","fixe 0,30",24 mois,tentative,2021,92,0.0331694,-0.0362192
+"coussin 0,15","fixe 0,30",24 mois,tentative,2022,365,0.0763445,-0.032586
+"coussin 0,15","fixe 0,30",24 mois,tentative,2023,365,0.0189263,-0.103358
+"coussin 0,15","fixe 0,30",24 mois,tentative,2024,275,0.0464755,-0.0584862
+"coussin 0,15","fixe 0,30",24 mois,suite,2021,92,0.0280042,-0.519037
+"coussin 0,15","fixe 0,30",24 mois,suite,2022,365,0.0728382,-0.367128
+"coussin 0,15","fixe 0,30",24 mois,suite,2023,365,0.0168551,-0.272845
+"coussin 0,15","fixe 0,30",24 mois,suite,2024,275,0.198478,-0.302936
+"coussin 0,15","fixe 0,30","sans 2026, 12 mois",tentative,2021,92,0.0331694,-0.0362192
+"coussin 0,15","fixe 0,30","sans 2026, 12 mois",tentative,2022,365,0.0763445,-0.032586
+"coussin 0,15","fixe 0,30","sans 2026, 12 mois",tentative,2023,365,0.0189263,-0.102747
+"coussin 0,15","fixe 0,30","sans 2026, 12 mois",tentative,2024,366,0.0363089,-0.0765762
+"coussin 0,15","fixe 0,30","sans 2026, 12 mois",tentative,2025,1,-0.0054,-0.114062
+"coussin 0,15","fixe 0,30","sans 2026, 12 mois",suite,2021,92,0.0280042,-0.127553
+"coussin 0,15","fixe 0,30","sans 2026, 12 mois",suite,2022,365,0.0728382,-0.180134
+"coussin 0,15","fixe 0,30","sans 2026, 12 mois",suite,2023,365,0.0170178,-0.0926566
+"coussin 0,15","fixe 0,30","sans 2026, 12 mois",suite,2024,366,0.0425173,-0.11744
+"coussin 0,15","fixe 0,30","sans 2026, 12 mois",suite,2025,1,-0.0108,-0.174231
+"coussin 0,15","coussin 0,20",12 mois,tentative,2021,92,0.0224029,-0.0469857
+"coussin 0,15","coussin 0,20",12 mois,tentative,2022,365,0.047262,-0.0616684
+"coussin 0,15","coussin 0,20",12 mois,tentative,2023,365,0.0253894,-0.0962842
+"coussin 0,15","coussin 0,20",12 mois,tentative,2024,366,0.0247689,-0.0881162
+"coussin 0,15","coussin 0,20",12 mois,tentative,2025,274,0.123405,0.112855
+"coussin 0,15","coussin 0,20",12 mois,suite,2021,92,0.0224029,-0.133154
+"coussin 0,15","coussin 0,20",12 mois,suite,2022,365,0.047262,-0.20571
+"coussin 0,15","coussin 0,20",12 mois,suite,2023,365,0.0253894,-0.084285
+"coussin 0,15","coussin 0,20",12 mois,suite,2024,366,0.0247689,-0.135189
+"coussin 0,15","coussin 0,20",12 mois,suite,2025,274,0.123405,-0.183619
+"coussin 0,15","coussin 0,20",24 mois,tentative,2021,92,0.0224029,-0.0469857
+"coussin 0,15","coussin 0,20",24 mois,tentative,2022,365,0.047262,-0.0616684
+"coussin 0,15","coussin 0,20",24 mois,tentative,2023,365,0.025507,-0.096777
+"coussin 0,15","coussin 0,20",24 mois,tentative,2024,275,0.156982,0.0520201
+"coussin 0,15","coussin 0,20",24 mois,suite,2021,92,0.0224029,-0.524639
+"coussin 0,15","coussin 0,20",24 mois,suite,2022,365,0.047262,-0.392704
+"coussin 0,15","coussin 0,20",24 mois,suite,2023,365,0.025507,-0.264194
+"coussin 0,15","coussin 0,20",24 mois,suite,2024,275,0.156982,-0.344432
+"coussin 0,15","coussin 0,20","sans 2026, 12 mois",tentative,2021,92,0.0224029,-0.0469857
+"coussin 0,15","coussin 0,20","sans 2026, 12 mois",tentative,2022,365,0.047262,-0.0616684
+"coussin 0,15","coussin 0,20","sans 2026, 12 mois",tentative,2023,365,0.0253894,-0.0962842
+"coussin 0,15","coussin 0,20","sans 2026, 12 mois",tentative,2024,366,0.0247689,-0.0881162
+"coussin 0,15","coussin 0,20","sans 2026, 12 mois",tentative,2025,1,-0.0054,-0.114062
+"coussin 0,15","coussin 0,20","sans 2026, 12 mois",suite,2021,92,0.0224029,-0.133154
+"coussin 0,15","coussin 0,20","sans 2026, 12 mois",suite,2022,365,0.047262,-0.20571
+"coussin 0,15","coussin 0,20","sans 2026, 12 mois",suite,2023,365,0.0253894,-0.084285
+"coussin 0,15","coussin 0,20","sans 2026, 12 mois",suite,2024,366,0.0247689,-0.135189
+"coussin 0,15","coussin 0,20","sans 2026, 12 mois",suite,2025,1,-0.0054,-0.168831
+"coussin 0,15","relance 0,20 → 0,40",12 mois,tentative,2021,92,0.0223599,-0.0470287
+"coussin 0,15","relance 0,20 → 0,40",12 mois,tentative,2022,365,0.102008,-0.0069223
+"coussin 0,15","relance 0,20 → 0,40",12 mois,tentative,2023,365,0.112094,-0.0095795
+"coussin 0,15","relance 0,20 → 0,40",12 mois,tentative,2024,366,0.0448461,-0.068039
+"coussin 0,15","relance 0,20 → 0,40",12 mois,tentative,2025,274,0.0969801,0.0864299
+"coussin 0,15","relance 0,20 → 0,40",12 mois,suite,2021,92,0.0171946,-0.138362
+"coussin 0,15","relance 0,20 → 0,40",12 mois,suite,2022,365,0.0985018,-0.15447
+"coussin 0,15","relance 0,20 → 0,40",12 mois,suite,2023,365,0.110186,0.000511168
+"coussin 0,15","relance 0,20 → 0,40",12 mois,suite,2024,366,0.0631051,-0.0968526
+"coussin 0,15","relance 0,20 → 0,40",12 mois,suite,2025,274,0.124372,-0.182652
+"coussin 0,15","relance 0,20 → 0,40",24 mois,tentative,2021,92,0.0223599,-0.0470287
+"coussin 0,15","relance 0,20 → 0,40",24 mois,tentative,2022,365,0.102008,-0.0069223
+"coussin 0,15","relance 0,20 → 0,40",24 mois,tentative,2023,365,0.112603,-0.00968133
+"coussin 0,15","relance 0,20 → 0,40",24 mois,tentative,2024,275,0.0608519,-0.0441098
+"coussin 0,15","relance 0,20 → 0,40",24 mois,suite,2021,92,0.0171946,-0.529847
+"coussin 0,15","relance 0,20 → 0,40",24 mois,suite,2022,365,0.0985018,-0.341464
+"coussin 0,15","relance 0,20 → 0,40",24 mois,suite,2023,365,0.110531,-0.179169
+"coussin 0,15","relance 0,20 → 0,40",24 mois,suite,2024,275,0.232552,-0.268862
+"coussin 0,15","relance 0,20 → 0,40","sans 2026, 12 mois",tentative,2021,92,0.0223599,-0.0470287
+"coussin 0,15","relance 0,20 → 0,40","sans 2026, 12 mois",tentative,2022,365,0.102008,-0.0069223
+"coussin 0,15","relance 0,20 → 0,40","sans 2026, 12 mois",tentative,2023,365,0.112094,-0.0095795
+"coussin 0,15","relance 0,20 → 0,40","sans 2026, 12 mois",tentative,2024,366,0.0448461,-0.068039
+"coussin 0,15","relance 0,20 → 0,40","sans 2026, 12 mois",tentative,2025,1,-0.0054,-0.114062
+"coussin 0,15","relance 0,20 → 0,40","sans 2026, 12 mois",suite,2021,92,0.0171946,-0.138362
+"coussin 0,15","relance 0,20 → 0,40","sans 2026, 12 mois",suite,2022,365,0.0985018,-0.15447
+"coussin 0,15","relance 0,20 → 0,40","sans 2026, 12 mois",suite,2023,365,0.110186,0.000511168
+"coussin 0,15","relance 0,20 → 0,40","sans 2026, 12 mois",suite,2024,366,0.0631051,-0.0968526
+"coussin 0,15","relance 0,20 → 0,40","sans 2026, 12 mois",suite,2025,1,-0.0108,-0.174231
+"coussin 0,20","fixe 0,10",12 mois,tentative,2021,92,0.00771937,-0.0616692
+"coussin 0,20","fixe 0,10",12 mois,tentative,2022,365,0.0369225,-0.072008
+"coussin 0,20","fixe 0,10",12 mois,tentative,2023,365,0.0383125,-0.0833611
+"coussin 0,20","fixe 0,10",12 mois,tentative,2024,366,0.0336403,-0.0792448
+"coussin 0,20","fixe 0,10",12 mois,tentative,2025,274,0.0447599,0.0342098
+"coussin 0,20","fixe 0,10",12 mois,suite,2021,92,0.00413893,-0.151418
+"coussin 0,20","fixe 0,10",12 mois,suite,2022,365,0.0392332,-0.213739
+"coussin 0,20","fixe 0,10",12 mois,suite,2023,365,0.0363152,-0.0733592
+"coussin 0,20","fixe 0,10",12 mois,suite,2024,366,0.0387738,-0.121184
+"coussin 0,20","fixe 0,10",12 mois,suite,2025,274,0.105044,-0.20198
+"coussin 0,20","fixe 0,10",24 mois,tentative,2021,92,0.00771937,-0.0616692
+"coussin 0,20","fixe 0,10",24 mois,tentative,2022,365,0.0369225,-0.072008
+"coussin 0,20","fixe 0,10",24 mois,tentative,2023,365,0.0383125,-0.0839715
+"coussin 0,20","fixe 0,10",24 mois,tentative,2024,275,0.0540887,-0.050873
+"coussin 0,20","fixe 0,10",24 mois,suite,2021,92,0.0860446,-0.460997
+"coussin 0,20","fixe 0,10",24 mois,suite,2022,365,0.0560629,-0.383903
+"coussin 0,20","fixe 0,10",24 mois,suite,2023,365,0.0363152,-0.253385
+"coussin 0,20","fixe 0,10",24 mois,suite,2024,275,0.241975,-0.259439
+"coussin 0,20","fixe 0,10","sans 2026, 12 mois",tentative,2021,92,0.00771937,-0.0616692
+"coussin 0,20","fixe 0,10","sans 2026, 12 mois",tentative,2022,365,0.0369225,-0.072008
+"coussin 0,20","fixe 0,10","sans 2026, 12 mois",tentative,2023,365,0.0383125,-0.0833611
+"coussin 0,20","fixe 0,10","sans 2026, 12 mois",tentative,2024,366,0.0336403,-0.0792448
+"coussin 0,20","fixe 0,10","sans 2026, 12 mois",tentative,2025,1,0.0245518,-0.0841103
+"coussin 0,20","fixe 0,10","sans 2026, 12 mois",suite,2021,92,0.00413893,-0.151418
+"coussin 0,20","fixe 0,10","sans 2026, 12 mois",suite,2022,365,0.0392332,-0.213739
+"coussin 0,20","fixe 0,10","sans 2026, 12 mois",suite,2023,365,0.0363152,-0.0733592
+"coussin 0,20","fixe 0,10","sans 2026, 12 mois",suite,2024,366,0.0387738,-0.121184
+"coussin 0,20","fixe 0,10","sans 2026, 12 mois",suite,2025,1,0.0550277,-0.108404
+"coussin 0,20","fixe 0,15",12 mois,tentative,2021,92,0.0123541,-0.0570345
+"coussin 0,20","fixe 0,15",12 mois,tentative,2022,365,0.0540476,-0.0548829
+"coussin 0,20","fixe 0,15",12 mois,tentative,2023,365,0.0587997,-0.0628739
+"coussin 0,20","fixe 0,15",12 mois,tentative,2024,366,0.0451903,-0.0676948
+"coussin 0,20","fixe 0,15",12 mois,tentative,2025,274,0.0382405,0.0276903
+"coussin 0,20","fixe 0,15",12 mois,suite,2021,92,0.00783452,-0.147722
+"coussin 0,20","fixe 0,15",12 mois,suite,2022,365,0.053009,-0.199963
+"coussin 0,20","fixe 0,15",12 mois,suite,2023,365,0.0568024,-0.052872
+"coussin 0,20","fixe 0,15",12 mois,suite,2024,366,0.0421952,-0.117762
+"coussin 0,20","fixe 0,15",12 mois,suite,2025,274,0.138675,-0.168349
+"coussin 0,20","fixe 0,15",24 mois,tentative,2021,92,0.0123541,-0.0570345
+"coussin 0,20","fixe 0,15",24 mois,tentative,2022,365,0.0540476,-0.0548829
+"coussin 0,20","fixe 0,15",24 mois,tentative,2023,365,0.0587997,-0.0634843
+"coussin 0,20","fixe 0,15",24 mois,tentative,2024,275,0.0496264,-0.0553354
+"coussin 0,20","fixe 0,15",24 mois,suite,2021,92,0.00701278,-0.540029
+"coussin 0,20","fixe 0,15",24 mois,suite,2022,365,0.053009,-0.386957
+"coussin 0,20","fixe 0,15",24 mois,suite,2023,365,0.0568024,-0.232898
+"coussin 0,20","fixe 0,15",24 mois,suite,2024,275,0.273973,-0.22744
+"coussin 0,20","fixe 0,15","sans 2026, 12 mois",tentative,2021,92,0.0123541,-0.0570345
+"coussin 0,20","fixe 0,15","sans 2026, 12 mois",tentative,2022,365,0.0540476,-0.0548829
+"coussin 0,20","fixe 0,15","sans 2026, 12 mois",tentative,2023,365,0.0587997,-0.0628739
+"coussin 0,20","fixe 0,15","sans 2026, 12 mois",tentative,2024,366,0.0451903,-0.0676948
+"coussin 0,20","fixe 0,15","sans 2026, 12 mois",tentative,2025,1,0.0363639,-0.0722981
+"coussin 0,20","fixe 0,15","sans 2026, 12 mois",suite,2021,92,0.00783452,-0.147722
+"coussin 0,20","fixe 0,15","sans 2026, 12 mois",suite,2022,365,0.053009,-0.199963
+"coussin 0,20","fixe 0,15","sans 2026, 12 mois",suite,2023,365,0.0568024,-0.052872
+"coussin 0,20","fixe 0,15","sans 2026, 12 mois",suite,2024,366,0.0421952,-0.117762
+"coussin 0,20","fixe 0,15","sans 2026, 12 mois",suite,2025,1,0.0255639,-0.137867
+"coussin 0,20","fixe 0,20",12 mois,tentative,2021,92,0.017806,-0.0515826
+"coussin 0,20","fixe 0,20",12 mois,tentative,2022,365,0.0694687,-0.0394618
+"coussin 0,20","fixe 0,20",12 mois,tentative,2023,365,0.077045,-0.0446286
+"coussin 0,20","fixe 0,20",12 mois,tentative,2024,366,0.0577638,-0.0551213
+"coussin 0,20","fixe 0,20",12 mois,tentative,2025,274,0.0441155,0.0335653
+"coussin 0,20","fixe 0,20",12 mois,suite,2021,92,0.0124647,-0.143092
+"coussin 0,20","fixe 0,20",12 mois,suite,2022,365,0.0702605,-0.182712
+"coussin 0,20","fixe 0,20",12 mois,suite,2023,365,0.0750477,-0.0346267
+"coussin 0,20","fixe 0,20",12 mois,suite,2024,366,0.0550113,-0.104946
+"coussin 0,20","fixe 0,20",12 mois,suite,2025,274,0.143307,-0.163718
+"coussin 0,20","fixe 0,20",24 mois,tentative,2021,92,0.017806,-0.0515826
+"coussin 0,20","fixe 0,20",24 mois,tentative,2022,365,0.0694687,-0.0394618
+"coussin 0,20","fixe 0,20",24 mois,tentative,2023,365,0.077045,-0.045239
+"coussin 0,20","fixe 0,20",24 mois,tentative,2024,275,0.061551,-0.0434108
+"coussin 0,20","fixe 0,20",24 mois,suite,2021,92,0.0124647,-0.534577
+"coussin 0,20","fixe 0,20",24 mois,suite,2022,365,0.0702605,-0.369706
+"coussin 0,20","fixe 0,20",24 mois,suite,2023,365,0.0750477,-0.214653
+"coussin 0,20","fixe 0,20",24 mois,suite,2024,275,0.229554,-0.271859
+"coussin 0,20","fixe 0,20","sans 2026, 12 mois",tentative,2021,92,0.017806,-0.0515826
+"coussin 0,20","fixe 0,20","sans 2026, 12 mois",tentative,2022,365,0.0694687,-0.0394618
+"coussin 0,20","fixe 0,20","sans 2026, 12 mois",tentative,2023,365,0.077045,-0.0446286
+"coussin 0,20","fixe 0,20","sans 2026, 12 mois",tentative,2024,366,0.0577638,-0.0551213
+"coussin 0,20","fixe 0,20","sans 2026, 12 mois",tentative,2025,1,0.04589,-0.062772
+"coussin 0,20","fixe 0,20","sans 2026, 12 mois",suite,2021,92,0.0124647,-0.143092
+"coussin 0,20","fixe 0,20","sans 2026, 12 mois",suite,2022,365,0.0702605,-0.182712
+"coussin 0,20","fixe 0,20","sans 2026, 12 mois",suite,2023,365,0.0750477,-0.0346267
+"coussin 0,20","fixe 0,20","sans 2026, 12 mois",suite,2024,366,0.0550113,-0.104946
+"coussin 0,20","fixe 0,20","sans 2026, 12 mois",suite,2025,1,0.04049,-0.122941
+"coussin 0,20","fixe 0,25",12 mois,tentative,2021,92,0.0230949,-0.0462936
+"coussin 0,20","fixe 0,25",12 mois,tentative,2022,365,0.0804798,-0.0284506
+"coussin 0,20","fixe 0,25",12 mois,tentative,2023,365,0.0787271,-0.0429465
+"coussin 0,20","fixe 0,25",12 mois,tentative,2024,366,0.0606431,-0.052242
+"coussin 0,20","fixe 0,25",12 mois,tentative,2025,274,0.0486876,0.0381374
+"coussin 0,20","fixe 0,25",12 mois,suite,2021,92,0.0177536,-0.137803
+"coussin 0,20","fixe 0,25",12 mois,suite,2022,365,0.0822396,-0.170733
+"coussin 0,20","fixe 0,25",12 mois,suite,2023,365,0.0767298,-0.0329446
+"coussin 0,20","fixe 0,25",12 mois,suite,2024,366,0.0657482,-0.0942094
+"coussin 0,20","fixe 0,25",12 mois,suite,2025,274,0.146077,-0.160947
+"coussin 0,20","fixe 0,25",24 mois,tentative,2021,92,0.0230949,-0.0462936
+"coussin 0,20","fixe 0,25",24 mois,tentative,2022,365,0.0804798,-0.0284506
+"coussin 0,20","fixe 0,25",24 mois,tentative,2023,365,0.0787271,-0.0435569
+"coussin 0,20","fixe 0,25",24 mois,tentative,2024,275,0.0702799,-0.0346818
+"coussin 0,20","fixe 0,25",24 mois,suite,2021,92,0.0177536,-0.529288
+"coussin 0,20","fixe 0,25",24 mois,suite,2022,365,0.0822396,-0.357727
+"coussin 0,20","fixe 0,25",24 mois,suite,2023,365,0.0767298,-0.212971
+"coussin 0,20","fixe 0,25",24 mois,suite,2024,275,0.201981,-0.299432
+"coussin 0,20","fixe 0,25","sans 2026, 12 mois",tentative,2021,92,0.0230949,-0.0462936
+"coussin 0,20","fixe 0,25","sans 2026, 12 mois",tentative,2022,365,0.0804798,-0.0284506
+"coussin 0,20","fixe 0,25","sans 2026, 12 mois",tentative,2023,365,0.0787271,-0.0429465
+"coussin 0,20","fixe 0,25","sans 2026, 12 mois",tentative,2024,366,0.0606431,-0.052242
+"coussin 0,20","fixe 0,25","sans 2026, 12 mois",tentative,2025,1,0.0559021,-0.0527599
+"coussin 0,20","fixe 0,25","sans 2026, 12 mois",suite,2021,92,0.0177536,-0.137803
+"coussin 0,20","fixe 0,25","sans 2026, 12 mois",suite,2022,365,0.0822396,-0.170733
+"coussin 0,20","fixe 0,25","sans 2026, 12 mois",suite,2023,365,0.0767298,-0.0329446
+"coussin 0,20","fixe 0,25","sans 2026, 12 mois",suite,2024,366,0.0657482,-0.0942094
+"coussin 0,20","fixe 0,25","sans 2026, 12 mois",suite,2025,1,0.0505021,-0.112929
+"coussin 0,20","fixe 0,30",12 mois,tentative,2021,92,0.0280138,-0.0413748
+"coussin 0,20","fixe 0,30",12 mois,tentative,2022,365,0.0899378,-0.0189926
+"coussin 0,20","fixe 0,30",12 mois,tentative,2023,365,0.0755742,-0.0460994
+"coussin 0,20","fixe 0,30",12 mois,tentative,2024,366,0.0408673,-0.0720178
+"coussin 0,20","fixe 0,30",12 mois,tentative,2025,274,0.0463124,0.0357622
+"coussin 0,20","fixe 0,30",12 mois,suite,2021,92,0.0226725,-0.132885
+"coussin 0,20","fixe 0,30",12 mois,suite,2022,365,0.0927648,-0.160207
+"coussin 0,20","fixe 0,30",12 mois,suite,2023,365,0.073577,-0.0360975
+"coussin 0,20","fixe 0,30",12 mois,suite,2024,366,0.0412371,-0.11872
+"coussin 0,20","fixe 0,30",12 mois,suite,2025,274,0.145828,-0.161197
+"coussin 0,20","fixe 0,30",24 mois,tentative,2021,92,0.0280138,-0.0413748
+"coussin 0,20","fixe 0,30",24 mois,tentative,2022,365,0.0899378,-0.0189926
+"coussin 0,20","fixe 0,30",24 mois,tentative,2023,365,0.0755742,-0.0467097
+"coussin 0,20","fixe 0,30",24 mois,tentative,2024,275,0.0422797,-0.0626821
+"coussin 0,20","fixe 0,30",24 mois,suite,2021,92,0.0226725,-0.524369
+"coussin 0,20","fixe 0,30",24 mois,suite,2022,365,0.0927648,-0.347201
+"coussin 0,20","fixe 0,30",24 mois,suite,2023,365,0.073577,-0.216124
+"coussin 0,20","fixe 0,30",24 mois,suite,2024,275,0.170352,-0.331062
+"coussin 0,20","fixe 0,30","sans 2026, 12 mois",tentative,2021,92,0.0280138,-0.0413748
+"coussin 0,20","fixe 0,30","sans 2026, 12 mois",tentative,2022,365,0.0899378,-0.0189926
+"coussin 0,20","fixe 0,30","sans 2026, 12 mois",tentative,2023,365,0.0755742,-0.0460994
+"coussin 0,20","fixe 0,30","sans 2026, 12 mois",tentative,2024,366,0.0408673,-0.0720178
+"coussin 0,20","fixe 0,30","sans 2026, 12 mois",tentative,2025,1,-0.0054,-0.114062
+"coussin 0,20","fixe 0,30","sans 2026, 12 mois",suite,2021,92,0.0226725,-0.132885
+"coussin 0,20","fixe 0,30","sans 2026, 12 mois",suite,2022,365,0.0927648,-0.160207
+"coussin 0,20","fixe 0,30","sans 2026, 12 mois",suite,2023,365,0.073577,-0.0360975
+"coussin 0,20","fixe 0,30","sans 2026, 12 mois",suite,2024,366,0.0412371,-0.11872
+"coussin 0,20","fixe 0,30","sans 2026, 12 mois",suite,2025,1,-0.0162,-0.179631
+"coussin 0,20","coussin 0,20",12 mois,tentative,2021,92,0.0180441,-0.0513445
+"coussin 0,20","coussin 0,20",12 mois,tentative,2022,365,0.0430321,-0.0658983
+"coussin 0,20","coussin 0,20",12 mois,tentative,2023,365,0.0212942,-0.100379
+"coussin 0,20","coussin 0,20",12 mois,tentative,2024,366,0.0238629,-0.0890222
+"coussin 0,20","coussin 0,20",12 mois,tentative,2025,274,0.115639,0.105089
+"coussin 0,20","coussin 0,20",12 mois,suite,2021,92,0.0180441,-0.137513
+"coussin 0,20","coussin 0,20",12 mois,suite,2022,365,0.0458058,-0.207167
+"coussin 0,20","coussin 0,20",12 mois,suite,2023,365,0.0212942,-0.0883802
+"coussin 0,20","coussin 0,20",12 mois,suite,2024,366,0.0238629,-0.136095
+"coussin 0,20","coussin 0,20",12 mois,suite,2025,274,0.115639,-0.191385
+"coussin 0,20","coussin 0,20",24 mois,tentative,2021,92,0.0180441,-0.0513445
+"coussin 0,20","coussin 0,20",24 mois,tentative,2022,365,0.0430321,-0.0658983
+"coussin 0,20","coussin 0,20",24 mois,tentative,2023,365,0.0212942,-0.10099
+"coussin 0,20","coussin 0,20",24 mois,tentative,2024,275,0.150048,0.0450861
+"coussin 0,20","coussin 0,20",24 mois,suite,2021,92,0.0180441,-0.528998
+"coussin 0,20","coussin 0,20",24 mois,suite,2022,365,0.0458058,-0.39416
+"coussin 0,20","coussin 0,20",24 mois,suite,2023,365,0.0212942,-0.268406
+"coussin 0,20","coussin 0,20",24 mois,suite,2024,275,0.150048,-0.351366
+"coussin 0,20","coussin 0,20","sans 2026, 12 mois",tentative,2021,92,0.0180441,-0.0513445
+"coussin 0,20","coussin 0,20","sans 2026, 12 mois",tentative,2022,365,0.0430321,-0.0658983
+"coussin 0,20","coussin 0,20","sans 2026, 12 mois",tentative,2023,365,0.0212942,-0.100379
+"coussin 0,20","coussin 0,20","sans 2026, 12 mois",tentative,2024,366,0.0238629,-0.0890222
+"coussin 0,20","coussin 0,20","sans 2026, 12 mois",tentative,2025,1,0.0160599,-0.0926021
+"coussin 0,20","coussin 0,20","sans 2026, 12 mois",suite,2021,92,0.0180441,-0.137513
+"coussin 0,20","coussin 0,20","sans 2026, 12 mois",suite,2022,365,0.0458058,-0.207167
+"coussin 0,20","coussin 0,20","sans 2026, 12 mois",suite,2023,365,0.0212942,-0.0883802
+"coussin 0,20","coussin 0,20","sans 2026, 12 mois",suite,2024,366,0.0238629,-0.136095
+"coussin 0,20","coussin 0,20","sans 2026, 12 mois",suite,2025,1,0.0160599,-0.147371
+"coussin 0,20","relance 0,20 → 0,40",12 mois,tentative,2021,92,0.017806,-0.0515826
+"coussin 0,20","relance 0,20 → 0,40",12 mois,tentative,2022,365,0.078932,-0.0299984
+"coussin 0,20","relance 0,20 → 0,40",12 mois,tentative,2023,365,0.100437,-0.0212364
+"coussin 0,20","relance 0,20 → 0,40",12 mois,tentative,2024,366,0.0668101,-0.046075
+"coussin 0,20","relance 0,20 → 0,40",12 mois,tentative,2025,274,0.0506678,0.0401176
+"coussin 0,20","relance 0,20 → 0,40",12 mois,suite,2021,92,0.0124647,-0.143092
+"coussin 0,20","relance 0,20 → 0,40",12 mois,suite,2022,365,0.080131,-0.172841
+"coussin 0,20","relance 0,20 → 0,40",12 mois,suite,2023,365,0.0984399,-0.0112345
+"coussin 0,20","relance 0,20 → 0,40",12 mois,suite,2024,366,0.0736961,-0.0862615
+"coussin 0,20","relance 0,20 → 0,40",12 mois,suite,2025,274,0.135293,-0.171731
+"coussin 0,20","relance 0,20 → 0,40",24 mois,tentative,2021,92,0.017806,-0.0515826
+"coussin 0,20","relance 0,20 → 0,40",24 mois,tentative,2022,365,0.078932,-0.0299984
+"coussin 0,20","relance 0,20 → 0,40",24 mois,tentative,2023,365,0.100437,-0.0218468
+"coussin 0,20","relance 0,20 → 0,40",24 mois,tentative,2024,275,0.0806631,-0.0242986
+"coussin 0,20","relance 0,20 → 0,40",24 mois,suite,2021,92,0.0124647,-0.534577
+"coussin 0,20","relance 0,20 → 0,40",24 mois,suite,2022,365,0.080131,-0.359835
+"coussin 0,20","relance 0,20 → 0,40",24 mois,suite,2023,365,0.0984399,-0.191261
+"coussin 0,20","relance 0,20 → 0,40",24 mois,suite,2024,275,0.250265,-0.251149
+"coussin 0,20","relance 0,20 → 0,40","sans 2026, 12 mois",tentative,2021,92,0.017806,-0.0515826
+"coussin 0,20","relance 0,20 → 0,40","sans 2026, 12 mois",tentative,2022,365,0.078932,-0.0299984
+"coussin 0,20","relance 0,20 → 0,40","sans 2026, 12 mois",tentative,2023,365,0.100437,-0.0212364
+"coussin 0,20","relance 0,20 → 0,40","sans 2026, 12 mois",tentative,2024,366,0.0668101,-0.046075
+"coussin 0,20","relance 0,20 → 0,40","sans 2026, 12 mois",tentative,2025,1,0.0874027,-0.0212593
+"coussin 0,20","relance 0,20 → 0,40","sans 2026, 12 mois",suite,2021,92,0.0124647,-0.143092
+"coussin 0,20","relance 0,20 → 0,40","sans 2026, 12 mois",suite,2022,365,0.080131,-0.172841
+"coussin 0,20","relance 0,20 → 0,40","sans 2026, 12 mois",suite,2023,365,0.0984399,-0.0112345
+"coussin 0,20","relance 0,20 → 0,40","sans 2026, 12 mois",suite,2024,366,0.0736961,-0.0862615
+"coussin 0,20","relance 0,20 → 0,40","sans 2026, 12 mois",suite,2025,1,0.0820027,-0.0814286

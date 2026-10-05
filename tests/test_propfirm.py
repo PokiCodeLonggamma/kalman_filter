@@ -12,7 +12,7 @@ from envelope import risk_weights, stop_trades
 from envelope.portfolio import Leg, portfolio_paths
 from estimand.stoploss import TRADE_COLUMNS
 from propfirm import (EN_COURS, INF, PERTE_JOUR, Coussin, Fixe, Frein, Regles, Simulation, Sprint, challenge,
-                      departs_minuit, financement, issue_phase, resume, simuler, valeur)
+                      departs_minuit, financement, issue_phase, resume, simuler, suite, valeur)
 
 H = pd.Timedelta(minutes=30)
 COLS = ["capital_valorise", "solde_realise", "capital_pessimiste", "exposition_brute", "positions"]
@@ -315,6 +315,30 @@ def test_financement_et_valeur_d_une_tentative():
     assert np.allclose(v.valeur.iloc[1:], -0.0054)            # pas de compte financé
     court = valeur(sim_c, sim_f, frais=0.0054, part=0.8, horizon_jours=3.5)
     assert np.isclose(court.valeur.iat[0], 0.8 * 0.03)        # seul le retrait du 4e minuit tient dans l'horizon
+
+
+def test_suite_de_tentatives_rachete_au_minuit_qui_suit_chaque_echec_ou_perte_du_compte_finance():
+    h, f = 3_600 * 10**9, 0.0054
+    d = departs_minuit("2021-01-04", "2021-01-12")            # 8 minuits CET, 24 h d'écart
+    t_obj = np.full((2, 8), INF, dtype=np.int64)
+    t_obj[0, 1], t_obj[1, 2] = d[1] + 5 * h, d[2] + 3 * h     # départ 1 : P1, P2 au départ 2 → financé au départ 3
+    sim_c = _simulation(d, t_obj)
+    sim_c.t_perte_jour[("solde", "pessimiste")][0] = d[0] + 5 * h
+    sim_c.ref_breche[("solde", "pessimiste")][0] = 1.0        # départ 0 : échec en P1 → rachat au départ 1
+    sim_f = _simulation(d, np.zeros((0, 8), dtype=np.int64))
+    sim_f.t_perte_max["pessimiste"][3] = d[5] + 2 * h         # compte financé perdu le 6e jour → rachat au départ 6
+    sim_f.retraits = pd.DataFrame({"depart": [3, 3], "t": [d[4], d[5]], "montant": [0.03, 0.02]})
+    s = suite(sim_c, sim_f, frais=f, part=0.8, horizon_jours=30)
+    assert list(s.n_tentatives.iloc[:3]) == [3, 2, 1]         # le départ 6 reste en cours : la suite s'arrête
+    assert list(s.n_finances.iloc[:3]) == [1, 1, 0]
+    assert np.isclose(s.valeur.iat[0], -3 * f + f + 0.8 * 0.05)
+    assert np.isclose(s.valeur.iat[1], -2 * f + f + 0.8 * 0.05)
+    assert np.isclose(s.valeur.iat[2], -f)                    # P1 du départ 2 jamais atteinte
+    court = suite(sim_c, sim_f, frais=f, part=0.8, horizon_jours=4.5)
+    assert court.n_tentatives.iat[0] == 2 and np.isclose(court.valeur.iat[0], -f + 0.8 * 0.03)
+    coupe = suite(sim_c, sim_f, frais=f, part=0.8, horizon_jours=30, coupure=d[5])
+    assert len(coupe) == 5 and coupe.n_tentatives.iat[0] == 2   # compte financé encore ouvert à la coupure
+    assert np.isclose(coupe.valeur.iat[0], -f + 0.8 * 0.05)
 
 
 def _options(xa, xb, lev):

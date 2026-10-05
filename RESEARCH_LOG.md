@@ -2271,3 +2271,61 @@ reproduction de résultats publiés et parité du noyau, sans aucune performance
 - [ ] **VALIDÉ**
 - [x] **Mesures faites ; choix de la taille et suite (D05.7, D05.1) à décider par le porteur.** Commit local, non
   poussé.
+
+### [DÉCISION] — « Burn & Churn », une taille propre à chaque phase ; GO de D05.6bis (2026-10-05)
+- **Compte financé, nature acceptée par le porteur (« Burn & Churn ») :** extraire le plus possible avant la perte
+  totale de 10 %, au risque de 0,20 ou 0,25 ; pas de survie recherchée.
+- **Objectifs découplés :**
+  - challenge (P1 + P2) : réussite la plus haute possible avec un délai raisonnable, moins de 120 jours (la cible
+    précédente était un délai médian de 90 à 180 jours) ;
+  - compte financé : valeur la plus haute.
+- **Combinaisons à mesurer :**
+  - A : coussin r0 0,15 ou 0,20 en challenge ; fixe 0,20 puis 0,25 en compte financé ;
+  - B : fixe 0,15 en challenge ; fixe 0,20 puis 0,25 en compte financé.
+  - Mesures propres de l'agent autorisées dans le même calcul. Valeur d'une tentative à 12 et 24 mois, contre le risque
+    fixe 0,20 dans les deux phases (+9 218 €).
+- **D05.7 et D05.1 en pause** jusqu'au verrouillage de la taille.
+- **Chiffres du porteur vérifiés :** fixe 0,15 à 60,4 % en 100 jours (D05.6) et +9 218 € (D05.5), conformes. Le
+  challenge du combo A dépasse 120 jours de délai médian (137 et 174 jours, D05.6).
+- **Push :** aucun ; commit local.
+
+### [EXP-D05.6bis] — Une taille propre à chaque phase : challenge et compte financé (« hybride »)
+- **Date :** 2026-10-05
+- **Étape :** D05, étape 3 bis. GO du porteur.
+- **Actifs & Période :** ceux de D05.4 ; 5 bps (or 4 bps).
+
+#### 0. Cadrage (fixé avant le calcul, `experiments/D05_6bis/run_D05_6bis.py`)
+- **QUESTION :** une taille propre à chaque phase bat-elle le risque fixe 0,20 dans les deux phases ?
+- **MÉTHODE :**
+  - Une simulation par taille de challenge et par taille de compte financé, reliées par `valeur` et par `suite` (7 × 7
+    combinaisons).
+  - Challenge : fixe 0,10 à 0,30 ; coussin r0 0,15 et 0,20. Compte financé : fixe 0,10 à 0,30 ; coussin r0 0,20 ;
+    relance (0,20 ; 0,40 à −5 % ; 0,20 de nouveau au-dessus de −2 %).
+  - 0,30 ajouté après un premier calcul, le meilleur r de la suite étant au bord de la grille (0,25).
+  - Nouvelle mesure, `propfirm.suite` : un seul compte à la fois, nouvelle tentative de 540 € au minuit qui suit chaque
+    échec du challenge ou chaque perte du compte financé (lecture « Burn & Churn »).
+- **CRITÈRE DE LECTURE (sans seuil) :** valeur à 12 et 24 mois, et sans 2026, par tentative et par suite ; écart apparié
+  à la référence avec IC par blocs de mois ; queues ; écart par année de départ.
+
+#### Résultats (`experiments/D05_6bis/rapport_D05_6bis.md`)
+- **Contrôle passé :** les tailles fixes et le coussin dans les deux phases redonnent D05.5 et D05.6.
+- [OBS] **Ni A ni B ne battent la référence.**
+  - A : −0,8 à −3,2 k€ par tentative à 12 mois (jusqu'à −4,8 k€ sans 2026) ; en suite, environ −11 k€ en 12 mois et
+    −30 k€ en 24 mois (challenges bloqués).
+  - B : égal par tentative (−274 € et +7 € à 12 mois, IC autour de zéro) ; −1,7 à −3,2 k€ en suite.
+- [OBS] **Bat la référence partout (tentative et suite, 12 et 24 mois, sans 2026, IC sans zéro, chaque année de
+  départ) : challenge à 0,20, compte financé plus agressif.**
+  - Compte financé fixe 0,25 : +1,0 à +1,2 k€ par tentative ; +2,4 à +6,8 k€ en suite.
+  - Compte financé en relance : +1,7 à +2,1 k€ par tentative ; +3,6 à +10,4 k€ en suite.
+  - Fixe 0,30 en compte financé fait moins bien que 0,25 ; le coussin y coûte 2,9 à 5,3 k€.
+- [OBS] **En suite, un challenge plus rapide paie :** à 0,25 ou 0,30, il bat 0,20 à compte financé égal ; jusqu'à
+  +17,5 k€ en 24 mois (0,30 × relance) ; optimum non atteint à 0,30. Par tentative, ces challenges perdent 0,8 à
+  6,9 k€.
+- [OBS] **Démarré à un minuit quelconque, le compte financé à 0,25 ou en relance retire moins qu'à 0,20** (16,1 et
+  15,7 k€ contre 18,0 k€ en 12 mois). Démarré juste après une réussite, il retire plus.
+- [HYP] **Le challenge sert de filtre de période :** il réussit dans les bonnes périodes de RE-1, que le compte financé
+  agressif exploite ensuite. À tester en D05.7, où des blocs courts coupent la persistance des périodes.
+
+#### Décision
+- [ ] **VALIDÉ**
+- [x] **Mesures faites ; verrouillage de la taille à décider par le porteur.** Commit local, non poussé.
