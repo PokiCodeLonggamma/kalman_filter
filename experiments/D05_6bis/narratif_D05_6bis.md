@@ -156,3 +156,51 @@ experiments/D05_6bis/run_D05_6bis.py --calcul` (136 s).*
   en parallèle, pas de remise sur un nouvel essai.
 - **Mêmes limites de coûts et de règles de la firme que D05.5.** Les 8 métriques par trade sont celles de D05.4 : les
   trades ne changent pas, seules les tailles changent.
+
+## 7. Roster final du porteur (décision du 2026-10-05)
+
+*Le porteur garde la relance et retient trois pistes : 1, challenge 0,20 × compte financé 0,25 ; 2, challenge 0,25 ×
+0,25 ; 3, relance en compte financé avec un challenge à 0,20, 0,25 ou 0,30. Calcul : `run_D05_6bis.py --roster`
+(90 s) ; contrôle passé (les lectures communes redonnent le calcul principal). Lecture ajoutée : sans 2026 à
+24 mois (824 départs), qui sert de base à D05.7.*
+
+| Piste | Challenge × compte financé | Réussite ; délai médian | Tentative, 12 mois | Tentative, 24 mois | Suite, 12 mois | Suite, 24 mois | Sans 2026, 24 mois : tentative ; suite |
+|---|---|---|---|---|---|---|---|
+| Référence | 0,20 × 0,20 | 58,8 % ; 68 j | +9 218 € | +10 906 € | +19 791 € | +41 435 € | +11 042 € ; +38 478 € |
+| 1 · compromis sûr | 0,20 × 0,25 | 58,8 % ; 68 j | +10 259 € | +12 150 € | +22 461 € | +48 246 € | +12 596 € ; +45 542 € |
+| 2 · Burn & Churn pur | 0,25 × 0,25 | 51,0 % ; 41 j | +7 504 € | +8 694 € | +25 037 € | +50 929 € | +11 210 € ; +46 112 € |
+| 3a · relance | 0,20 × relance | 58,8 % ; 68 j | +10 895 € | +13 018 € | +23 368 € | +51 869 € | +13 856 € ; +50 347 € |
+| 3b · relance | 0,25 × relance | 51,0 % ; 41 j | +8 409 € | +9 921 € | +24 736 € | +52 511 € | +12 197 € ; +50 646 € |
+| 3c · relance | 0,30 × relance | 45,2 % ; 32 j | +5 864 € | +6 757 € | +26 180 € | +58 920 € | +8 430 € ; +56 742 € |
+
+Écarts appariés entre pistes, moyenne [IC 95 %] (années de départ où l'écart est positif) :
+
+| Changement | Tentative, 12 mois | Suite, 12 mois | Suite, 24 mois | Sans 2026, suite, 24 mois |
+|---|---|---|---|---|
+| 1 − réf. : compte financé 0,25 au lieu de 0,20 | +1 042 € [+481 ; +1 617] (5/5) | +2 670 € [+2 025 ; +3 342] (5/5) | +6 810 € [+5 300 ; +8 418] (4/4) | +7 064 € [+5 374 ; +8 868] (4/4) |
+| 2 − 1 : challenge 0,25 au lieu de 0,20 | −2 755 € [−4 609 ; −1 086] (2/5) | +2 576 € [+1 436 ; +3 762] (4/5) | +2 683 € [+1 026 ; +4 394] (2/4) | +570 € [−726 ; +2 014] (2/4) |
+| 3a − 1 : relance au lieu de 0,25 | +636 € [−253 ; +1 652] (2/5) | +907 € [−454 ; +2 260] (3/5) | +3 623 € [+1 809 ; +5 516] (4/4) | +4 805 € [+2 998 ; +6 502] (3/4) |
+| 3b − 2 : relance au lieu de 0,25 (challenge 0,25) | +905 € [+23 ; +1 865] (2/5) | −301 € [−2 028 ; +1 346] (3/5) | +1 582 € [−960 ; +4 006] (3/4) | +4 534 € [+2 150 ; +6 604] (3/4) |
+| 3b − 3a : challenge 0,25 au lieu de 0,20 (relance) | −2 486 € [−4 087 ; −960] (2/5) | +1 368 € [+772 ; +1 988] (4/5) | +642 € [−386 ; +1 691] (3/4) | +300 € [−936 ; +1 583] (2/4) |
+| 3c − 3b : challenge 0,30 au lieu de 0,25 (relance) | −2 545 € [−5 033 ; −624] (1/5) | +1 445 € [+639 ; +2 351] (5/5) | +6 410 € [+4 676 ; +8 132] (4/4) | +6 096 € [+4 163 ; +8 096] (4/4) |
+
+- `[OBS]` **Un seul changement gagne dans toutes les lectures et chaque année : passer le compte financé de 0,20 à
+  0,25** (piste 1).
+- `[OBS]` **Le challenge rapide se lit en deux temps.**
+  - De 0,20 à 0,25 : il perd par tentative (−1,4 à −3,5 k€ selon la lecture). En suite, il gagne à 12 mois (+1,1 à
+    +2,6 k€), mais à 24 mois l'écart devient fragile : +0,3 à +2,7 k€, positif deux ou trois années sur quatre, IC
+    avec zéro dans trois cas sur quatre.
+  - De 0,25 à 0,30 (avec la relance) : il perd aussi par tentative (−2,5 à −3,8 k€), mais gagne nettement en suite,
+    surtout à 24 mois (+6,1 à +6,4 k€, chaque année de départ).
+- `[OBS]` **La relance au lieu de 0,25 :**
+  - par tentative, avec un challenge à 0,20, elle ne se distingue pas (+0,6 à +1,3 k€, IC avec zéro) ; avec un
+    challenge à 0,25, +0,9 à +1,2 k€, IC de justesse au-dessus de zéro ;
+  - en suite à 24 mois, avec un challenge à 0,20, elle gagne +3,6 à +4,8 k€.
+- `[OBS]` **Le « +25 à +26 k€ » des pistes rapides en suite à 12 mois se décompose.** Sur les +5,2 k€ de la piste 2
+  au-dessus de la référence, +2,7 k€ viennent du compte financé à 0,25 (piste 1) et +2,6 k€ du challenge rapide.
+- `[OBS]` **Classement selon la façon d'opérer :**
+  - par tentative : pistes 1 et 3a en tête, à égalité dans le bruit ; les challenges rapides (2, 3b, 3c) perdent ;
+  - en suite : 3c en tête (+58,9 k€ en 24 mois ; P10 +33,7 k€), puis 3a, 3b et 2 (+50,9 à +52,5 k€), puis 1
+    (+48,2 k€).
+- `[HYP]` **Les gains du challenge rapide et de la relance, en suite, sont ceux que D05.7 doit éprouver :** ils
+  peuvent tenir à l'enchaînement des bonnes périodes de 2021 à 2025.

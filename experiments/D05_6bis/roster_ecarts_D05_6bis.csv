@@ -1,0 +1,49 @@
+piste,contre,changement,lecture,mesure,n_departs,ecart,ic_bas,ic_haut,p_mieux,p_moins,annees,annees_positives,pire_annee,meilleure_annee
+Piste 1,Référence,"compte financé 0,25 au lieu de 0,20 (challenge 0,20)",12 mois,tentative,1462,0.0104179,0.00481388,0.016175,0.461012,0.0362517,5,5,0.00277992,0.020323
+Piste 1,Référence,"compte financé 0,25 au lieu de 0,20 (challenge 0,20)",12 mois,suite,1462,0.0266991,0.0202526,0.03342,0.722298,0.128591,5,5,0.00913246,0.0433523
+Piste 1,Référence,"compte financé 0,25 au lieu de 0,20 (challenge 0,20)",24 mois,tentative,1097,0.0124344,0.00570141,0.0191683,0.471285,0.0145852,4,4,0.00314224,0.020323
+Piste 1,Référence,"compte financé 0,25 au lieu de 0,20 (challenge 0,20)",24 mois,suite,1097,0.0681022,0.052996,0.0841772,0.919781,0.0802188,4,4,0.0376071,0.125034
+Piste 1,Référence,"compte financé 0,25 au lieu de 0,20 (challenge 0,20)","sans 2026, 12 mois",tentative,1189,0.0121926,0.00525283,0.0191981,0.500421,0.0235492,5,5,0.00469873,0.027696
+Piste 1,Référence,"compte financé 0,25 au lieu de 0,20 (challenge 0,20)","sans 2026, 12 mois",suite,1189,0.0238368,0.0178682,0.0298998,0.708158,0.108495,5,4,-0.0292816,0.0433523
+Piste 1,Référence,"compte financé 0,25 au lieu de 0,20 (challenge 0,20)","sans 2026, 24 mois",tentative,824,0.015538,0.00915818,0.0220964,0.468447,0.00242718,4,4,0.00977206,0.020323
+Piste 1,Référence,"compte financé 0,25 au lieu de 0,20 (challenge 0,20)","sans 2026, 24 mois",suite,824,0.070643,0.05374,0.0886816,0.961165,0.038835,4,4,0.0376071,0.125034
+Piste 2,Piste 1,"challenge 0,25 au lieu de 0,20 (compte financé 0,25)",12 mois,tentative,1462,-0.0275537,-0.0460904,-0.0108641,0.177839,0.229138,5,2,-0.0826261,0.0032265
+Piste 2,Piste 1,"challenge 0,25 au lieu de 0,20 (compte financé 0,25)",12 mois,suite,1462,0.0257586,0.0143645,0.0376164,0.522572,0.454172,5,4,-0.00411602,0.0782761
+Piste 2,Piste 1,"challenge 0,25 au lieu de 0,20 (compte financé 0,25)",24 mois,tentative,1097,-0.0345533,-0.0573089,-0.0138075,0.195077,0.238833,4,0,-0.0971959,-0.000191299
+Piste 2,Piste 1,"challenge 0,25 au lieu de 0,20 (compte financé 0,25)",24 mois,suite,1097,0.0268312,0.0102623,0.0439388,0.553327,0.446673,4,2,-0.00379181,0.0905236
+Piste 2,Piste 1,"challenge 0,25 au lieu de 0,20 (compte financé 0,25)","sans 2026, 12 mois",tentative,1189,-0.0346987,-0.0576786,-0.0145146,0.18587,0.260723,5,1,-0.0891613,0.000492721
+Piste 2,Piste 1,"challenge 0,25 au lieu de 0,20 (compte financé 0,25)","sans 2026, 12 mois",suite,1189,0.013646,0.00398802,0.0242812,0.418839,0.55677,5,4,-0.00411602,0.0735756
+Piste 2,Piste 1,"challenge 0,25 au lieu de 0,20 (compte financé 0,25)","sans 2026, 24 mois",tentative,824,-0.0138663,-0.0307644,0.00107401,0.252427,0.167476,4,0,-0.124834,-0.000191299
+Piste 2,Piste 1,"challenge 0,25 au lieu de 0,20 (compte financé 0,25)","sans 2026, 24 mois",suite,824,0.00570102,-0.00726279,0.0201361,0.45267,0.54733,4,2,-0.00379181,0.0788989
+Piste 3a,Piste 1,"relance au lieu de 0,25 (challenge 0,20)",12 mois,tentative,1462,0.00635534,-0.00252994,0.0165213,0.192202,0.28933,5,2,-0.0193469,0.0328156
+Piste 3a,Piste 1,"relance au lieu de 0,25 (challenge 0,20)",12 mois,suite,1462,0.00906602,-0.00453972,0.0226031,0.388509,0.475376,5,3,-0.0325215,0.03342
+Piste 3a,Piste 1,"relance au lieu de 0,25 (challenge 0,20)",24 mois,tentative,1097,0.00868554,-0.00291278,0.0218567,0.175934,0.297174,4,2,-0.0193469,0.0327707
+Piste 3a,Piste 1,"relance au lieu de 0,25 (challenge 0,20)",24 mois,suite,1097,0.0362323,0.0180917,0.0551559,0.604376,0.395624,4,4,0.00048298,0.0677967
+Piste 3a,Piste 1,"relance au lieu de 0,25 (challenge 0,20)","sans 2026, 12 mois",tentative,1189,0.0081577,-0.00253528,0.021003,0.207738,0.297729,5,3,-0.0193469,0.0328156
+Piste 3a,Piste 1,"relance au lieu de 0,25 (challenge 0,20)","sans 2026, 12 mois",suite,1189,0.0171571,0.00285436,0.0316643,0.417998,0.414634,5,4,-0.0325215,0.0613009
+Piste 3a,Piste 1,"relance au lieu de 0,25 (challenge 0,20)","sans 2026, 24 mois",tentative,824,0.0125974,-0.00268844,0.030011,0.201456,0.269417,4,2,-0.0193469,0.0327707
+Piste 3a,Piste 1,"relance au lieu de 0,25 (challenge 0,20)","sans 2026, 24 mois",suite,824,0.0480451,0.0299847,0.0650202,0.700243,0.299757,4,3,-0.0124011,0.0677967
+Piste 3b,Piste 2,"relance au lieu de 0,25 (challenge 0,25)",12 mois,tentative,1462,0.00905319,0.000232814,0.0186484,0.180575,0.192202,5,2,-0.00922753,0.0323393
+Piste 3b,Piste 2,"relance au lieu de 0,25 (challenge 0,25)",12 mois,suite,1462,-0.00301424,-0.0202815,0.0134569,0.364569,0.483584,5,3,-0.0812557,0.0334668
+Piste 3b,Piste 2,"relance au lieu de 0,25 (challenge 0,25)",24 mois,tentative,1097,0.0122679,0.000953429,0.0244373,0.175023,0.163172,4,2,-0.00922753,0.0323393
+Piste 3b,Piste 2,"relance au lieu de 0,25 (challenge 0,25)",24 mois,suite,1097,0.0158211,-0.00959599,0.0400613,0.596171,0.403829,4,3,-0.0734967,0.0779728
+Piste 3b,Piste 2,"relance au lieu de 0,25 (challenge 0,25)","sans 2026, 12 mois",tentative,1189,0.0115936,0.00121849,0.0229866,0.195963,0.165685,5,2,-0.00922753,0.0323393
+Piste 3b,Piste 2,"relance au lieu de 0,25 (challenge 0,25)","sans 2026, 12 mois",suite,1189,0.0149324,-0.000121087,0.0308215,0.43566,0.377628,5,3,-0.102574,0.0334668
+Piste 3b,Piste 2,"relance au lieu de 0,25 (challenge 0,25)","sans 2026, 24 mois",tentative,824,0.0098755,-0.00469472,0.0259961,0.182039,0.208738,4,1,-0.00922753,0.0323393
+Piste 3b,Piste 2,"relance au lieu de 0,25 (challenge 0,25)","sans 2026, 24 mois",suite,824,0.0453435,0.0215022,0.0660438,0.705097,0.294903,4,3,-0.102166,0.0779728
+Piste 3b,Piste 3a,"challenge 0,25 au lieu de 0,20 (relance)",12 mois,tentative,1462,-0.0248559,-0.040872,-0.00959501,0.204514,0.212722,5,2,-0.0652332,0.00266445
+Piste 3b,Piste 3a,"challenge 0,25 au lieu de 0,20 (relance)",12 mois,suite,1462,0.0136783,0.00772196,0.019882,0.556088,0.424077,5,4,-0.00406914,0.0440569
+Piste 3b,Piste 3a,"challenge 0,25 au lieu de 0,20 (relance)",24 mois,tentative,1097,-0.030971,-0.0510326,-0.0126233,0.21969,0.226983,4,0,-0.0747196,-0.000622697
+Piste 3b,Piste 3a,"challenge 0,25 au lieu de 0,20 (relance)",24 mois,suite,1097,0.00642002,-0.00385689,0.0169082,0.437557,0.562443,4,3,-0.0172198,0.0613269
+Piste 3b,Piste 3a,"challenge 0,25 au lieu de 0,20 (relance)","sans 2026, 12 mois",tentative,1189,-0.0312629,-0.0518384,-0.0133022,0.21783,0.241379,5,1,-0.102189,1.64202e-05
+Piste 3b,Piste 3a,"challenge 0,25 au lieu de 0,20 (relance)","sans 2026, 12 mois",suite,1189,0.0114213,0.00453003,0.018367,0.496215,0.482759,5,3,-0.150224,0.0440569
+Piste 3b,Piste 3a,"challenge 0,25 au lieu de 0,20 (relance)","sans 2026, 24 mois",tentative,824,-0.0165882,-0.0366841,-0.000633164,0.246359,0.175971,4,0,-0.120685,-0.000622697
+Piste 3b,Piste 3a,"challenge 0,25 au lieu de 0,20 (relance)","sans 2026, 24 mois",suite,824,0.00299935,-0.0093623,0.0158283,0.432039,0.567961,4,2,-0.0172198,0.0613269
+Piste 3c,Piste 3b,"challenge 0,30 au lieu de 0,25 (relance)",12 mois,tentative,1462,-0.0254534,-0.0503333,-0.00623638,0.142955,0.170999,5,1,-0.0432904,0.00856565
+Piste 3c,Piste 3b,"challenge 0,30 au lieu de 0,25 (relance)",12 mois,suite,1462,0.0144471,0.00639468,0.0235105,0.534884,0.426813,5,5,0.00582118,0.0326432
+Piste 3c,Piste 3b,"challenge 0,30 au lieu de 0,25 (relance)",24 mois,tentative,1097,-0.0316418,-0.0628861,-0.00720015,0.149499,0.175023,4,0,-0.0432904,-0.0133597
+Piste 3c,Piste 3b,"challenge 0,30 au lieu de 0,25 (relance)",24 mois,suite,1097,0.0640974,0.0467568,0.0813161,0.765725,0.234275,4,4,0.00118423,0.114031
+Piste 3c,Piste 3b,"challenge 0,30 au lieu de 0,25 (relance)","sans 2026, 12 mois",tentative,1189,-0.0332715,-0.0625044,-0.00929157,0.142136,0.195122,5,0,-0.0432904,0
+Piste 3c,Piste 3b,"challenge 0,30 au lieu de 0,25 (relance)","sans 2026, 12 mois",suite,1189,0.0143505,0.00631474,0.0233281,0.574432,0.378469,5,4,-0.0142834,0.0326432
+Piste 3c,Piste 3b,"challenge 0,30 au lieu de 0,25 (relance)","sans 2026, 24 mois",tentative,824,-0.0376665,-0.0781751,-0.00493733,0.15534,0.197816,4,0,-0.0432904,0
+Piste 3c,Piste 3b,"challenge 0,30 au lieu de 0,25 (relance)","sans 2026, 24 mois",suite,824,0.0609558,0.0416318,0.0809598,0.776699,0.223301,4,4,0.00118423,0.115487

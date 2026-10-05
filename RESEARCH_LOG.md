@@ -2329,3 +2329,27 @@ reproduction de résultats publiés et parité du noyau, sans aucune performance
 #### Décision
 - [ ] **VALIDÉ**
 - [x] **Mesures faites ; verrouillage de la taille à décider par le porteur.** Commit local, non poussé.
+
+### [DÉCISION] — Relance gardée ; roster final de trois pistes ; D05.7 sur ce roster, après GO (2026-10-05)
+- **Relance gardée par le porteur,** malgré une éventuelle règle de comportement de la firme : la perte du porteur est
+  plafonnée au prix du challenge (convexité).
+- **Roster final :**
+  - piste 1, compromis sûr : challenge 0,20 × compte financé 0,25 ;
+  - piste 2, Burn & Churn pur : 0,25 × 0,25 ;
+  - piste 3, convexité : relance en compte financé, avec un challenge à 0,20, 0,25 ou 0,30 ;
+  - la référence (0,20 × 0,20) reste l'ancre.
+- **Récap demandé (`run_D05_6bis.py --roster`, contrôle passé ; lecture ajoutée sans 2026 à 24 mois, base de D05.7) :**
+  - seul le compte financé à 0,25 (piste 1) gagne dans toutes les lectures et chaque année de départ ;
+  - le challenge rapide perd par tentative. En suite, il gagne à 12 mois ; à 24 mois, il devient fragile de 0,20 à
+    0,25 (+0,3 à +2,7 k€) et reste net de 0,25 à 0,30 (+6,1 à +6,4 k€) ;
+  - la relance au lieu de 0,25 : dans le bruit par tentative avec un challenge à 0,20 ; +3,6 à +4,8 k€ en suite à
+    24 mois ;
+  - en suite à 24 mois, 3c est en tête (+58,9 k€), devant 3a, 3b et 2 (+50,9 à +52,5 k€) puis 1 (+48,2 k€) ; par
+    tentative, 1 et 3a sont en tête.
+- **Relecture du porteur corrigée :**
+  - le combo B n'a pas de coussin (fixe 0,15) : égal à la référence par tentative, −1,7 à −3,2 k€ en suite ;
+  - « +25 à +26 k€ » sont les valeurs des suites à 12 mois des pistes rapides. Sur les +5,2 k€ de la piste 2 au-dessus
+    de la référence, +2,7 k€ viennent du compte financé à 0,25 ;
+  - un challenge plus agressif perd par tentative ; il ne gagne qu'en suite.
+- **D05.7 :** tirage par blocs sans 2026 sur ce roster ; cadrage soumis au porteur, GO attendu.
+- **Push :** aucun ; commit local.

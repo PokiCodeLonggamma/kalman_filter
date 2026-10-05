@@ -157,6 +157,54 @@ experiments/D05_6bis/run_D05_6bis.py --calcul` (136 s).*
 - **Mêmes limites de coûts et de règles de la firme que D05.5.** Les 8 métriques par trade sont celles de D05.4 : les
   trades ne changent pas, seules les tailles changent.
 
+## 7. Roster final du porteur (décision du 2026-10-05)
+
+*Le porteur garde la relance et retient trois pistes : 1, challenge 0,20 × compte financé 0,25 ; 2, challenge 0,25 ×
+0,25 ; 3, relance en compte financé avec un challenge à 0,20, 0,25 ou 0,30. Calcul : `run_D05_6bis.py --roster`
+(90 s) ; contrôle passé (les lectures communes redonnent le calcul principal). Lecture ajoutée : sans 2026 à
+24 mois (824 départs), qui sert de base à D05.7.*
+
+| Piste | Challenge × compte financé | Réussite ; délai médian | Tentative, 12 mois | Tentative, 24 mois | Suite, 12 mois | Suite, 24 mois | Sans 2026, 24 mois : tentative ; suite |
+|---|---|---|---|---|---|---|---|
+| Référence | 0,20 × 0,20 | 58,8 % ; 68 j | +9 218 € | +10 906 € | +19 791 € | +41 435 € | +11 042 € ; +38 478 € |
+| 1 · compromis sûr | 0,20 × 0,25 | 58,8 % ; 68 j | +10 259 € | +12 150 € | +22 461 € | +48 246 € | +12 596 € ; +45 542 € |
+| 2 · Burn & Churn pur | 0,25 × 0,25 | 51,0 % ; 41 j | +7 504 € | +8 694 € | +25 037 € | +50 929 € | +11 210 € ; +46 112 € |
+| 3a · relance | 0,20 × relance | 58,8 % ; 68 j | +10 895 € | +13 018 € | +23 368 € | +51 869 € | +13 856 € ; +50 347 € |
+| 3b · relance | 0,25 × relance | 51,0 % ; 41 j | +8 409 € | +9 921 € | +24 736 € | +52 511 € | +12 197 € ; +50 646 € |
+| 3c · relance | 0,30 × relance | 45,2 % ; 32 j | +5 864 € | +6 757 € | +26 180 € | +58 920 € | +8 430 € ; +56 742 € |
+
+Écarts appariés entre pistes, moyenne [IC 95 %] (années de départ où l'écart est positif) :
+
+| Changement | Tentative, 12 mois | Suite, 12 mois | Suite, 24 mois | Sans 2026, suite, 24 mois |
+|---|---|---|---|---|
+| 1 − réf. : compte financé 0,25 au lieu de 0,20 | +1 042 € [+481 ; +1 617] (5/5) | +2 670 € [+2 025 ; +3 342] (5/5) | +6 810 € [+5 300 ; +8 418] (4/4) | +7 064 € [+5 374 ; +8 868] (4/4) |
+| 2 − 1 : challenge 0,25 au lieu de 0,20 | −2 755 € [−4 609 ; −1 086] (2/5) | +2 576 € [+1 436 ; +3 762] (4/5) | +2 683 € [+1 026 ; +4 394] (2/4) | +570 € [−726 ; +2 014] (2/4) |
+| 3a − 1 : relance au lieu de 0,25 | +636 € [−253 ; +1 652] (2/5) | +907 € [−454 ; +2 260] (3/5) | +3 623 € [+1 809 ; +5 516] (4/4) | +4 805 € [+2 998 ; +6 502] (3/4) |
+| 3b − 2 : relance au lieu de 0,25 (challenge 0,25) | +905 € [+23 ; +1 865] (2/5) | −301 € [−2 028 ; +1 346] (3/5) | +1 582 € [−960 ; +4 006] (3/4) | +4 534 € [+2 150 ; +6 604] (3/4) |
+| 3b − 3a : challenge 0,25 au lieu de 0,20 (relance) | −2 486 € [−4 087 ; −960] (2/5) | +1 368 € [+772 ; +1 988] (4/5) | +642 € [−386 ; +1 691] (3/4) | +300 € [−936 ; +1 583] (2/4) |
+| 3c − 3b : challenge 0,30 au lieu de 0,25 (relance) | −2 545 € [−5 033 ; −624] (1/5) | +1 445 € [+639 ; +2 351] (5/5) | +6 410 € [+4 676 ; +8 132] (4/4) | +6 096 € [+4 163 ; +8 096] (4/4) |
+
+- `[OBS]` **Un seul changement gagne dans toutes les lectures et chaque année : passer le compte financé de 0,20 à
+  0,25** (piste 1).
+- `[OBS]` **Le challenge rapide se lit en deux temps.**
+  - De 0,20 à 0,25 : il perd par tentative (−1,4 à −3,5 k€ selon la lecture). En suite, il gagne à 12 mois (+1,1 à
+    +2,6 k€), mais à 24 mois l'écart devient fragile : +0,3 à +2,7 k€, positif deux ou trois années sur quatre, IC
+    avec zéro dans trois cas sur quatre.
+  - De 0,25 à 0,30 (avec la relance) : il perd aussi par tentative (−2,5 à −3,8 k€), mais gagne nettement en suite,
+    surtout à 24 mois (+6,1 à +6,4 k€, chaque année de départ).
+- `[OBS]` **La relance au lieu de 0,25 :**
+  - par tentative, avec un challenge à 0,20, elle ne se distingue pas (+0,6 à +1,3 k€, IC avec zéro) ; avec un
+    challenge à 0,25, +0,9 à +1,2 k€, IC de justesse au-dessus de zéro ;
+  - en suite à 24 mois, avec un challenge à 0,20, elle gagne +3,6 à +4,8 k€.
+- `[OBS]` **Le « +25 à +26 k€ » des pistes rapides en suite à 12 mois se décompose.** Sur les +5,2 k€ de la piste 2
+  au-dessus de la référence, +2,7 k€ viennent du compte financé à 0,25 (piste 1) et +2,6 k€ du challenge rapide.
+- `[OBS]` **Classement selon la façon d'opérer :**
+  - par tentative : pistes 1 et 3a en tête, à égalité dans le bruit ; les challenges rapides (2, 3b, 3c) perdent ;
+  - en suite : 3c en tête (+58,9 k€ en 24 mois ; P10 +33,7 k€), puis 3a, 3b et 2 (+50,9 à +52,5 k€), puis 1
+    (+48,2 k€).
+- `[HYP]` **Les gains du challenge rapide et de la relance, en suite, sont ceux que D05.7 doit éprouver :** ils
+  peuvent tenir à l'enchaînement des bonnes périodes de 2021 à 2025.
+
 
 ---
 
@@ -450,4 +498,119 @@ Calcul du 2026-10-05 15:51 UTC, commit `b5cecb5`, 136 s.
 ## A7. Figure
 
 ![Matrices](figures/D05_6bis_matrices.png)
+
+## A8. Roster final du porteur (`--roster`) : trois pistes et la référence
+
+Calcul du 2026-10-05 16:54 UTC, commit `6fc12d2`, 90 s. Contrôle passé : les lectures communes redonnent `--calcul` (36 valeurs).
+
+### Valeur d'une tentative
+
+| Piste | Challenge | Compte financé | Lecture | Départs | Valeur moyenne [IC 95 %] | Médiane ; P10 ; P90 | ≥ 1 retrait |
+|---|---|---|---|---|---|---|---|
+| Référence | fixe 0,20 | fixe 0,20 | 12 mois | 1 462 | +9 218 € [+5 833 € ; +12 821 €] | −540 € ; −540 € ; +35 004 € | 49,7 % |
+| Référence | fixe 0,20 | fixe 0,20 | 24 mois | 1 097 | +10 906 € [+6 894 € ; +15 335 €] | −540 € ; −540 € ; +37 551 € | 48,6 % |
+| Référence | fixe 0,20 | fixe 0,20 | sans 2026, 12 mois | 1 189 | +11 100 € [+7 145 € ; +15 608 €] | +4 001 € ; −540 € ; +37 551 € | 52,4 % |
+| Référence | fixe 0,20 | fixe 0,20 | sans 2026, 24 mois | 824 | +11 042 € [+5 813 € ; +16 764 €] | −540 € ; −540 € ; +37 551 € | 47,1 % |
+| Piste 1 | fixe 0,20 | fixe 0,25 | 12 mois | 1 462 | +10 259 € [+6 501 € ; +14 232 €] | −540 € ; −540 € ; +38 308 € | 47,9 % |
+| Piste 1 | fixe 0,20 | fixe 0,25 | 24 mois | 1 097 | +12 150 € [+7 524 € ; +17 172 €] | −540 € ; −540 € ; +40 313 € | 47,1 % |
+| Piste 1 | fixe 0,20 | fixe 0,25 | sans 2026, 12 mois | 1 189 | +12 319 € [+7 939 € ; +17 232 €] | +2 286 € ; −540 € ; +40 313 € | 50,2 % |
+| Piste 1 | fixe 0,20 | fixe 0,25 | sans 2026, 24 mois | 824 | +12 596 € [+6 942 € ; +18 854 €] | −540 € ; −540 € ; +40 313 € | 46,8 % |
+| Piste 2 | fixe 0,25 | fixe 0,25 | 12 mois | 1 462 | +7 504 € [+4 065 € ; +11 348 €] | −540 € ; −540 € ; +35 581 € | 35,4 % |
+| Piste 2 | fixe 0,25 | fixe 0,25 | 24 mois | 1 097 | +8 694 € [+4 348 € ; +13 565 €] | −540 € ; −540 € ; +40 313 € | 31,3 % |
+| Piste 2 | fixe 0,25 | fixe 0,25 | sans 2026, 12 mois | 1 189 | +8 849 € [+4 867 € ; +13 672 €] | −540 € ; −540 € ; +38 308 € | 33,8 % |
+| Piste 2 | fixe 0,25 | fixe 0,25 | sans 2026, 24 mois | 824 | +11 210 € [+5 639 € ; +17 436 €] | −540 € ; −540 € ; +41 988 € | 38,8 % |
+| Piste 3a | fixe 0,20 | relance 0,20 → 0,40 | 12 mois | 1 462 | +10 895 € [+6 639 € ; +15 578 €] | −540 € ; −540 € ; +46 378 € | 48,1 % |
+| Piste 3a | fixe 0,20 | relance 0,20 → 0,40 | 24 mois | 1 097 | +13 018 € [+7 694 € ; +18 868 €] | −540 € ; −540 € ; +52 414 € | 47,3 % |
+| Piste 3a | fixe 0,20 | relance 0,20 → 0,40 | sans 2026, 12 mois | 1 189 | +13 135 € [+8 075 € ; +19 101 €] | +1 660 € ; −540 € ; +49 074 € | 50,5 % |
+| Piste 3a | fixe 0,20 | relance 0,20 → 0,40 | sans 2026, 24 mois | 824 | +13 856 € [+6 958 € ; +21 394 €] | −540 € ; −540 € ; +52 414 € | 47,1 % |
+| Piste 3b | fixe 0,25 | relance 0,20 → 0,40 | 12 mois | 1 462 | +8 409 € [+4 469 € ; +12 920 €] | −540 € ; −540 € ; +44 550 € | 37,1 % |
+| Piste 3b | fixe 0,25 | relance 0,20 → 0,40 | 24 mois | 1 097 | +9 921 € [+4 955 € ; +15 597 €] | −540 € ; −540 € ; +50 295 € | 33,8 % |
+| Piste 3b | fixe 0,25 | relance 0,20 → 0,40 | sans 2026, 12 mois | 1 189 | +10 009 € [+5 396 € ; +15 511 €] | −540 € ; −540 € ; +46 378 € | 36,2 % |
+| Piste 3b | fixe 0,25 | relance 0,20 → 0,40 | sans 2026, 24 mois | 824 | +12 197 € [+5 815 € ; +19 683 €] | −540 € ; −540 € ; +51 490 € | 39,1 % |
+| Piste 3c | fixe 0,30 | relance 0,20 → 0,40 | 12 mois | 1 462 | +5 864 € [+3 165 € ; +9 155 €] | −540 € ; −540 € ; +23 091 € | 31,3 % |
+| Piste 3c | fixe 0,30 | relance 0,20 → 0,40 | 24 mois | 1 097 | +6 757 € [+3 003 € ; +11 076 €] | −540 € ; −540 € ; +36 130 € | 25,9 % |
+| Piste 3c | fixe 0,30 | relance 0,20 → 0,40 | sans 2026, 12 mois | 1 189 | +6 682 € [+3 222 € ; +10 894 €] | −540 € ; −540 € ; +27 854 € | 27,8 % |
+| Piste 3c | fixe 0,30 | relance 0,20 → 0,40 | sans 2026, 24 mois | 824 | +8 430 € [+3 625 € ; +14 017 €] | −540 € ; −540 € ; +50 295 € | 28,4 % |
+
+### Valeur d'une suite de tentatives
+
+| Piste | Challenge | Compte financé | Lecture | Départs | Valeur moyenne [IC 95 %] | Médiane ; P10 ; P90 | Tentatives ; comptes financés |
+|---|---|---|---|---|---|---|---|
+| Référence | fixe 0,20 | fixe 0,20 | 12 mois | 1 462 | +19 791 € [+15 501 € ; +24 062 €] | +18 091 € ; −2 160 € ; +43 754 € | 3,2 ; 1,3 |
+| Référence | fixe 0,20 | fixe 0,20 | 24 mois | 1 097 | +41 435 € [+36 870 € ; +45 986 €] | +42 134 € ; +19 578 € ; +57 655 € | 5,6 ; 2,2 |
+| Référence | fixe 0,20 | fixe 0,20 | sans 2026, 12 mois | 1 189 | +17 274 € [+12 643 € ; +21 946 €] | +17 030 € ; −2 160 € ; +41 727 € | 3,1 ; 1,0 |
+| Référence | fixe 0,20 | fixe 0,20 | sans 2026, 24 mois | 824 | +38 478 € [+33 740 € ; +43 126 €] | +41 594 € ; +19 038 € ; +55 102 € | 5,8 ; 1,8 |
+| Piste 1 | fixe 0,20 | fixe 0,25 | 12 mois | 1 462 | +22 461 € [+17 867 € ; +26 980 €] | +21 750 € ; −2 160 € ; +47 396 € | 3,5 ; 1,4 |
+| Piste 1 | fixe 0,20 | fixe 0,25 | 24 mois | 1 097 | +48 246 € [+42 941 € ; +53 499 €] | +48 258 € ; +23 038 € ; +71 910 € | 6,0 ; 2,3 |
+| Piste 1 | fixe 0,20 | fixe 0,25 | sans 2026, 12 mois | 1 189 | +19 658 € [+14 603 € ; +24 666 €] | +19 590 € ; −2 160 € ; +46 856 € | 3,4 ; 1,1 |
+| Piste 1 | fixe 0,20 | fixe 0,25 | sans 2026, 24 mois | 824 | +45 542 € [+39 757 € ; +51 512 €] | +47 178 € ; +22 498 € ; +71 192 € | 6,1 ; 1,8 |
+| Piste 2 | fixe 0,25 | fixe 0,25 | 12 mois | 1 462 | +25 037 € [+20 028 € ; +30 097 €] | +24 496 € ; −2 700 € ; +46 856 € | 4,4 ; 1,9 |
+| Piste 2 | fixe 0,25 | fixe 0,25 | 24 mois | 1 097 | +50 929 € [+44 410 € ; +57 341 €] | +45 902 € ; +21 256 € ; +75 177 € | 7,9 ; 3,8 |
+| Piste 2 | fixe 0,25 | fixe 0,25 | sans 2026, 12 mois | 1 189 | +21 022 € [+15 574 € ; +26 149 €] | +22 807 € ; −2 700 € ; +46 316 € | 4,4 ; 1,7 |
+| Piste 2 | fixe 0,25 | fixe 0,25 | sans 2026, 24 mois | 824 | +46 112 € [+39 689 € ; +52 827 €] | +44 156 € ; +21 256 € ; +73 510 € | 8,3 ; 3,5 |
+| Piste 3a | fixe 0,20 | relance 0,20 → 0,40 | 12 mois | 1 462 | +23 368 € [+18 010 € ; +28 685 €] | +20 107 € ; −2 160 € ; +55 559 € | 3,4 ; 1,4 |
+| Piste 3a | fixe 0,20 | relance 0,20 → 0,40 | 24 mois | 1 097 | +51 869 € [+45 816 € ; +57 749 €] | +55 188 € ; +22 251 € ; +76 207 € | 6,0 ; 2,3 |
+| Piste 3a | fixe 0,20 | relance 0,20 → 0,40 | sans 2026, 12 mois | 1 189 | +21 373 € [+15 413 € ; +27 477 €] | +19 909 € ; −2 160 € ; +55 559 € | 3,4 ; 1,1 |
+| Piste 3a | fixe 0,20 | relance 0,20 → 0,40 | sans 2026, 24 mois | 824 | +50 347 € [+43 276 € ; +57 146 €] | +54 479 € ; +21 711 € ; +73 375 € | 6,2 ; 1,9 |
+| Piste 3b | fixe 0,25 | relance 0,20 → 0,40 | 12 mois | 1 462 | +24 736 € [+19 400 € ; +30 046 €] | +21 463 € ; −2 700 € ; +55 801 € | 4,2 ; 1,9 |
+| Piste 3b | fixe 0,25 | relance 0,20 → 0,40 | 24 mois | 1 097 | +52 511 € [+45 842 € ; +58 964 €] | +54 642 € ; +20 682 € ; +77 998 € | 7,6 ; 3,7 |
+| Piste 3b | fixe 0,25 | relance 0,20 → 0,40 | sans 2026, 12 mois | 1 189 | +22 515 € [+16 304 € ; +28 636 €] | +20 303 € ; −2 700 € ; +55 801 € | 4,2 ; 1,7 |
+| Piste 3b | fixe 0,25 | relance 0,20 → 0,40 | sans 2026, 24 mois | 824 | +50 646 € [+42 879 € ; +58 424 €] | +53 939 € ; +20 682 € ; +77 725 € | 8,1 ; 3,5 |
+| Piste 3c | fixe 0,30 | relance 0,20 → 0,40 | 12 mois | 1 462 | +26 180 € [+21 188 € ; +31 167 €] | +22 771 € ; +1 332 € ; +55 261 € | 4,9 ; 2,1 |
+| Piste 3c | fixe 0,30 | relance 0,20 → 0,40 | 24 mois | 1 097 | +58 920 € [+53 341 € ; +64 280 €] | +61 891 € ; +33 659 € ; +79 652 € | 8,3 ; 3,7 |
+| Piste 3c | fixe 0,30 | relance 0,20 → 0,40 | sans 2026, 12 mois | 1 189 | +23 950 € [+18 336 € ; +29 522 €] | +20 449 € ; −70 € ; +52 232 € | 4,9 ; 1,9 |
+| Piste 3c | fixe 0,30 | relance 0,20 → 0,40 | sans 2026, 24 mois | 824 | +56 742 € [+50 548 € ; +62 664 €] | +58 228 € ; +33 119 € ; +79 112 € | 8,7 ; 3,4 |
+
+## A9. Roster final : écarts appariés entre pistes (mêmes départs)
+
+| Piste | Contre | Changement | Mesure | Lecture | Écart moyen [IC 95 %] | Départs : mieux ; moins bien | Années de départ positives ; pire ; meilleure |
+|---|---|---|---|---|---|---|---|
+| Piste 1 | Référence | compte financé 0,25 au lieu de 0,20 (challenge 0,20) | tentative | 12 mois | +1 042 € [+481 € ; +1 617 €] | 46,1 % ; 3,6 % | 5/5 ; +278 € ; +2 032 € |
+| Piste 1 | Référence | compte financé 0,25 au lieu de 0,20 (challenge 0,20) | suite | 12 mois | +2 670 € [+2 025 € ; +3 342 €] | 72,2 % ; 12,9 % | 5/5 ; +913 € ; +4 335 € |
+| Piste 1 | Référence | compte financé 0,25 au lieu de 0,20 (challenge 0,20) | tentative | 24 mois | +1 243 € [+570 € ; +1 917 €] | 47,1 % ; 1,5 % | 4/4 ; +314 € ; +2 032 € |
+| Piste 1 | Référence | compte financé 0,25 au lieu de 0,20 (challenge 0,20) | suite | 24 mois | +6 810 € [+5 300 € ; +8 418 €] | 92,0 % ; 8,0 % | 4/4 ; +3 761 € ; +12 503 € |
+| Piste 1 | Référence | compte financé 0,25 au lieu de 0,20 (challenge 0,20) | tentative | sans 2026, 12 mois | +1 219 € [+525 € ; +1 920 €] | 50,0 % ; 2,4 % | 5/5 ; +470 € ; +2 770 € |
+| Piste 1 | Référence | compte financé 0,25 au lieu de 0,20 (challenge 0,20) | suite | sans 2026, 12 mois | +2 384 € [+1 787 € ; +2 990 €] | 70,8 % ; 10,8 % | 4/5 ; −2 928 € ; +4 335 € |
+| Piste 1 | Référence | compte financé 0,25 au lieu de 0,20 (challenge 0,20) | tentative | sans 2026, 24 mois | +1 554 € [+916 € ; +2 210 €] | 46,8 % ; 0,2 % | 4/4 ; +977 € ; +2 032 € |
+| Piste 1 | Référence | compte financé 0,25 au lieu de 0,20 (challenge 0,20) | suite | sans 2026, 24 mois | +7 064 € [+5 374 € ; +8 868 €] | 96,1 % ; 3,9 % | 4/4 ; +3 761 € ; +12 503 € |
+| Piste 2 | Piste 1 | challenge 0,25 au lieu de 0,20 (compte financé 0,25) | tentative | 12 mois | −2 755 € [−4 609 € ; −1 086 €] | 17,8 % ; 22,9 % | 2/5 ; −8 263 € ; +323 € |
+| Piste 2 | Piste 1 | challenge 0,25 au lieu de 0,20 (compte financé 0,25) | suite | 12 mois | +2 576 € [+1 436 € ; +3 762 €] | 52,3 % ; 45,4 % | 4/5 ; −412 € ; +7 828 € |
+| Piste 2 | Piste 1 | challenge 0,25 au lieu de 0,20 (compte financé 0,25) | tentative | 24 mois | −3 455 € [−5 731 € ; −1 381 €] | 19,5 % ; 23,9 % | 0/4 ; −9 720 € ; −19 € |
+| Piste 2 | Piste 1 | challenge 0,25 au lieu de 0,20 (compte financé 0,25) | suite | 24 mois | +2 683 € [+1 026 € ; +4 394 €] | 55,3 % ; 44,7 % | 2/4 ; −379 € ; +9 052 € |
+| Piste 2 | Piste 1 | challenge 0,25 au lieu de 0,20 (compte financé 0,25) | tentative | sans 2026, 12 mois | −3 470 € [−5 768 € ; −1 451 €] | 18,6 % ; 26,1 % | 1/5 ; −8 916 € ; +49 € |
+| Piste 2 | Piste 1 | challenge 0,25 au lieu de 0,20 (compte financé 0,25) | suite | sans 2026, 12 mois | +1 365 € [+399 € ; +2 428 €] | 41,9 % ; 55,7 % | 4/5 ; −412 € ; +7 358 € |
+| Piste 2 | Piste 1 | challenge 0,25 au lieu de 0,20 (compte financé 0,25) | tentative | sans 2026, 24 mois | −1 387 € [−3 076 € ; +107 €] | 25,2 % ; 16,7 % | 0/4 ; −12 483 € ; −19 € |
+| Piste 2 | Piste 1 | challenge 0,25 au lieu de 0,20 (compte financé 0,25) | suite | sans 2026, 24 mois | +570 € [−726 € ; +2 014 €] | 45,3 % ; 54,7 % | 2/4 ; −379 € ; +7 890 € |
+| Piste 3a | Piste 1 | relance au lieu de 0,25 (challenge 0,20) | tentative | 12 mois | +636 € [−253 € ; +1 652 €] | 19,2 % ; 28,9 % | 2/5 ; −1 935 € ; +3 282 € |
+| Piste 3a | Piste 1 | relance au lieu de 0,25 (challenge 0,20) | suite | 12 mois | +907 € [−454 € ; +2 260 €] | 38,9 % ; 47,5 % | 3/5 ; −3 252 € ; +3 342 € |
+| Piste 3a | Piste 1 | relance au lieu de 0,25 (challenge 0,20) | tentative | 24 mois | +869 € [−291 € ; +2 186 €] | 17,6 % ; 29,7 % | 2/4 ; −1 935 € ; +3 277 € |
+| Piste 3a | Piste 1 | relance au lieu de 0,25 (challenge 0,20) | suite | 24 mois | +3 623 € [+1 809 € ; +5 516 €] | 60,4 % ; 39,6 % | 4/4 ; +48 € ; +6 780 € |
+| Piste 3a | Piste 1 | relance au lieu de 0,25 (challenge 0,20) | tentative | sans 2026, 12 mois | +816 € [−254 € ; +2 100 €] | 20,8 % ; 29,8 % | 3/5 ; −1 935 € ; +3 282 € |
+| Piste 3a | Piste 1 | relance au lieu de 0,25 (challenge 0,20) | suite | sans 2026, 12 mois | +1 716 € [+285 € ; +3 166 €] | 41,8 % ; 41,5 % | 4/5 ; −3 252 € ; +6 130 € |
+| Piste 3a | Piste 1 | relance au lieu de 0,25 (challenge 0,20) | tentative | sans 2026, 24 mois | +1 260 € [−269 € ; +3 001 €] | 20,1 % ; 26,9 % | 2/4 ; −1 935 € ; +3 277 € |
+| Piste 3a | Piste 1 | relance au lieu de 0,25 (challenge 0,20) | suite | sans 2026, 24 mois | +4 805 € [+2 998 € ; +6 502 €] | 70,0 % ; 30,0 % | 3/4 ; −1 240 € ; +6 780 € |
+| Piste 3b | Piste 2 | relance au lieu de 0,25 (challenge 0,25) | tentative | 12 mois | +905 € [+23 € ; +1 865 €] | 18,1 % ; 19,2 % | 2/5 ; −923 € ; +3 234 € |
+| Piste 3b | Piste 2 | relance au lieu de 0,25 (challenge 0,25) | suite | 12 mois | −301 € [−2 028 € ; +1 346 €] | 36,5 % ; 48,4 % | 3/5 ; −8 126 € ; +3 347 € |
+| Piste 3b | Piste 2 | relance au lieu de 0,25 (challenge 0,25) | tentative | 24 mois | +1 227 € [+95 € ; +2 444 €] | 17,5 % ; 16,3 % | 2/4 ; −923 € ; +3 234 € |
+| Piste 3b | Piste 2 | relance au lieu de 0,25 (challenge 0,25) | suite | 24 mois | +1 582 € [−960 € ; +4 006 €] | 59,6 % ; 40,4 % | 3/4 ; −7 350 € ; +7 797 € |
+| Piste 3b | Piste 2 | relance au lieu de 0,25 (challenge 0,25) | tentative | sans 2026, 12 mois | +1 159 € [+122 € ; +2 299 €] | 19,6 % ; 16,6 % | 2/5 ; −923 € ; +3 234 € |
+| Piste 3b | Piste 2 | relance au lieu de 0,25 (challenge 0,25) | suite | sans 2026, 12 mois | +1 493 € [−12 € ; +3 082 €] | 43,6 % ; 37,8 % | 3/5 ; −10 257 € ; +3 347 € |
+| Piste 3b | Piste 2 | relance au lieu de 0,25 (challenge 0,25) | tentative | sans 2026, 24 mois | +988 € [−469 € ; +2 600 €] | 18,2 % ; 20,9 % | 1/4 ; −923 € ; +3 234 € |
+| Piste 3b | Piste 2 | relance au lieu de 0,25 (challenge 0,25) | suite | sans 2026, 24 mois | +4 534 € [+2 150 € ; +6 604 €] | 70,5 % ; 29,5 % | 3/4 ; −10 217 € ; +7 797 € |
+| Piste 3b | Piste 3a | challenge 0,25 au lieu de 0,20 (relance) | tentative | 12 mois | −2 486 € [−4 087 € ; −960 €] | 20,5 % ; 21,3 % | 2/5 ; −6 523 € ; +266 € |
+| Piste 3b | Piste 3a | challenge 0,25 au lieu de 0,20 (relance) | suite | 12 mois | +1 368 € [+772 € ; +1 988 €] | 55,6 % ; 42,4 % | 4/5 ; −407 € ; +4 406 € |
+| Piste 3b | Piste 3a | challenge 0,25 au lieu de 0,20 (relance) | tentative | 24 mois | −3 097 € [−5 103 € ; −1 262 €] | 22,0 % ; 22,7 % | 0/4 ; −7 472 € ; −62 € |
+| Piste 3b | Piste 3a | challenge 0,25 au lieu de 0,20 (relance) | suite | 24 mois | +642 € [−386 € ; +1 691 €] | 43,8 % ; 56,2 % | 3/4 ; −1 722 € ; +6 133 € |
+| Piste 3b | Piste 3a | challenge 0,25 au lieu de 0,20 (relance) | tentative | sans 2026, 12 mois | −3 126 € [−5 184 € ; −1 330 €] | 21,8 % ; 24,1 % | 1/5 ; −10 219 € ; +2 € |
+| Piste 3b | Piste 3a | challenge 0,25 au lieu de 0,20 (relance) | suite | sans 2026, 12 mois | +1 142 € [+453 € ; +1 837 €] | 49,6 % ; 48,3 % | 3/5 ; −15 022 € ; +4 406 € |
+| Piste 3b | Piste 3a | challenge 0,25 au lieu de 0,20 (relance) | tentative | sans 2026, 24 mois | −1 659 € [−3 668 € ; −63 €] | 24,6 % ; 17,6 % | 0/4 ; −12 068 € ; −62 € |
+| Piste 3b | Piste 3a | challenge 0,25 au lieu de 0,20 (relance) | suite | sans 2026, 24 mois | +300 € [−936 € ; +1 583 €] | 43,2 % ; 56,8 % | 2/4 ; −1 722 € ; +6 133 € |
+| Piste 3c | Piste 3b | challenge 0,30 au lieu de 0,25 (relance) | tentative | 12 mois | −2 545 € [−5 033 € ; −624 €] | 14,3 % ; 17,1 % | 1/5 ; −4 329 € ; +857 € |
+| Piste 3c | Piste 3b | challenge 0,30 au lieu de 0,25 (relance) | suite | 12 mois | +1 445 € [+639 € ; +2 351 €] | 53,5 % ; 42,7 % | 5/5 ; +582 € ; +3 264 € |
+| Piste 3c | Piste 3b | challenge 0,30 au lieu de 0,25 (relance) | tentative | 24 mois | −3 164 € [−6 289 € ; −720 €] | 14,9 % ; 17,5 % | 0/4 ; −4 329 € ; −1 336 € |
+| Piste 3c | Piste 3b | challenge 0,30 au lieu de 0,25 (relance) | suite | 24 mois | +6 410 € [+4 676 € ; +8 132 €] | 76,6 % ; 23,4 % | 4/4 ; +118 € ; +11 403 € |
+| Piste 3c | Piste 3b | challenge 0,30 au lieu de 0,25 (relance) | tentative | sans 2026, 12 mois | −3 327 € [−6 250 € ; −929 €] | 14,2 % ; 19,5 % | 0/5 ; −4 329 € ; +0 € |
+| Piste 3c | Piste 3b | challenge 0,30 au lieu de 0,25 (relance) | suite | sans 2026, 12 mois | +1 435 € [+631 € ; +2 333 €] | 57,4 % ; 37,8 % | 4/5 ; −1 428 € ; +3 264 € |
+| Piste 3c | Piste 3b | challenge 0,30 au lieu de 0,25 (relance) | tentative | sans 2026, 24 mois | −3 767 € [−7 818 € ; −494 €] | 15,5 % ; 19,8 % | 0/4 ; −4 329 € ; +0 € |
+| Piste 3c | Piste 3b | challenge 0,30 au lieu de 0,25 (relance) | suite | sans 2026, 24 mois | +6 096 € [+4 163 € ; +8 096 €] | 77,7 % ; 22,3 % | 4/4 ; +118 € ; +11 549 € |
 

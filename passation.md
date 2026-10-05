@@ -739,7 +739,7 @@ d'extraction, couverture, construction. Tous les chargements tronquent avant le 
 | Dossier local | `C:\Users\poek9\Projet Claude\#KalmanFilter` (le `#` impose des guillemets) |
 | GitHub | https://github.com/PokiCodeLonggamma/kalman_filter, **public**, branche `main` |
 | `origin/main` | `8ea8a93` (prompt Sniper et passation, après D05.4 `bec1679`), poussé le 2026-10-05 avec l'accord du porteur ; vérifier par `git log --oneline -5` |
-| Commits locaux non poussés | `b5cecb5` (D05.5 et D05.6 : compte financé, taille selon l'état du compte), puis D05.6bis (taille propre à chaque phase) ; push sur accord du porteur |
+| Commits locaux non poussés | `b5cecb5` (D05.5 et D05.6), `6fc12d2` (D05.6bis), puis le roster final de D05.6bis ; push sur accord du porteur |
 | Identité git | `PokiCodeLonggamma <250868839+PokiCodeLonggamma@users.noreply.github.com>` |
 | Tests | 375 réussis, 2 ignorés (244 à la validation, +5 en D02.0, +53 en D02, +19 en D02.1, +11 en D03, +5 en D03.1, +13 en D04, +4 en D04.1, +12 en D05.4, +8 en D05.5-D05.6, +1 en D05.6bis) |
 | Système | Windows 11, Git Bash et PowerShell, application Claude Code de bureau, navigateur intégré |
@@ -776,7 +776,7 @@ d'extraction, couverture, construction. Tous les chargements tronquent avant le 
 | Trois directions | `d910b92` (prompts d'initialisation et décision), `5f7b4e9` (suivi central) |
 | D05.4 | `bec1679` (simulateur de challenge, `src/propfirm/`, cadrage Prop Firm), `8ea8a93` (prompt Sniper, passation) |
 | D05.5, D05.6 | `b5cecb5` (compte financé, taille selon l'état du compte ; `experiments/D05_5/`, `experiments/D05_6/`) |
-| D05.6bis | le commit de la taille propre à chaque phase (`experiments/D05_6bis/`, `propfirm.suite`) |
+| D05.6bis | `6fc12d2` (taille propre à chaque phase, `propfirm.suite`), puis le commit du roster final (`run_D05_6bis.py --roster`) |
 
 ---
 
@@ -819,8 +819,11 @@ d'extraction, couverture, construction. Tous les chargements tronquent avant le 
    (`experiments/D05_6bis/rapport_D05_6bis.md`, `propfirm.suite`) : ni le combo A (coussin en challenge) ni le combo
    B (fixe 0,15) ne battent la référence (fixe 0,20 partout) ; challenge 0,20 avec compte financé à 0,25 ou en relance
    la battent partout (+1,0 à +2,1 k€ par tentative) ; en suite de tentatives (un compte à la fois), un challenge plus
-   rapide paie (optimum non atteint à 0,30). Verrouillage de la taille, puis D05.7 (tirage par blocs) et D05.1
-   (profil, GLE), à décider par le porteur.
+   rapide paie (optimum non atteint à 0,30). Décision du porteur : relance gardée, roster final de trois pistes
+   (1 : 0,20 × 0,25 ; 2 : 0,25 × 0,25 ; 3 : relance avec un challenge à 0,20, 0,25 ou 0,30) ; récap
+   `run_D05_6bis.py --roster` (seul le compte financé à 0,25 gagne partout ; challenge rapide et relance ne gagnent
+   qu'en suite). Prochaine étape : D05.7, tirage par blocs d'une semaine sans 2026 sur ce roster (cadrage soumis, GO
+   du porteur attendu) ; puis D05.1 (profil, GLE).
 2. **Nouvelle session :** lire ce document, puis :
    - `CLAUDE.md`, `RESEARCH_PHILOSOPHY.md`, `PROJECT_PLAN.md` ;
    - `RE1_FONDS_PROPRES_LIVRE_BLANC.md` (version finale de RE-1 et son exploitation) ;

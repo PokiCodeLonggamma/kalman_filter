@@ -2,7 +2,11 @@
 valeur d'une tentative et d'une suite de tentatives, RE-1 version finale sur les six actifs. GO du porteur du 2026-10-05
 (combos A et B ; mesures propres : « si oui, ajoute-les à ce run »).
 
-Usage, depuis la racine du dépôt : python experiments/D05_6bis/run_D05_6bis.py --calcul | --rapport
+Usage, depuis la racine du dépôt : python experiments/D05_6bis/run_D05_6bis.py --calcul | --roster | --rapport
+
+`--roster` (demande du porteur du 2026-10-05, après lecture) : roster final de trois pistes et la référence ; écarts
+appariés entre pistes ; lecture supplémentaire sans 2026 à 24 mois, base de D05.7. Contrôle bloquant : les trois
+lectures communes redonnent `--calcul`.
 
 Cadrage (fixé avant le calcul ; lecture sans seuil de décision)
 - QUESTION : une taille propre à chaque phase bat-elle le risque fixe 0,20 %/ATR dans les deux phases (+9 218 € par
@@ -79,6 +83,17 @@ SELECTION = [REF, ("fixe 0,15", "fixe 0,20"), ("fixe 0,15", "fixe 0,25"), ("cous
              ("coussin 0,20", "fixe 0,20"), ("fixe 0,20", "fixe 0,25"), ("fixe 0,20", "fixe 0,30"),
              ("fixe 0,20", "relance 0,20 → 0,40"), ("fixe 0,25", "fixe 0,25"), ("fixe 0,25", "relance 0,20 → 0,40"),
              ("fixe 0,30", "fixe 0,30"), ("fixe 0,30", "relance 0,20 → 0,40")]    # affichage des annexes A5-A6
+MOTIF_ROSTER = "EXP-D05.6bis, roster final (porteur, 2026-10-05)"
+ROSTER = (("Référence", "fixe 0,20", "fixe 0,20"), ("Piste 1", "fixe 0,20", "fixe 0,25"),
+          ("Piste 2", "fixe 0,25", "fixe 0,25"), ("Piste 3a", "fixe 0,20", "relance 0,20 → 0,40"),
+          ("Piste 3b", "fixe 0,25", "relance 0,20 → 0,40"), ("Piste 3c", "fixe 0,30", "relance 0,20 → 0,40"))
+COMPARAISONS = (("Piste 1", "Référence", "compte financé 0,25 au lieu de 0,20 (challenge 0,20)"),
+                ("Piste 2", "Piste 1", "challenge 0,25 au lieu de 0,20 (compte financé 0,25)"),
+                ("Piste 3a", "Piste 1", "relance au lieu de 0,25 (challenge 0,20)"),
+                ("Piste 3b", "Piste 2", "relance au lieu de 0,25 (challenge 0,25)"),
+                ("Piste 3b", "Piste 3a", "challenge 0,25 au lieu de 0,20 (relance)"),
+                ("Piste 3c", "Piste 3b", "challenge 0,30 au lieu de 0,25 (relance)"))
+LECTURES_ROSTER = LECTURES + (("sans 2026, 24 mois", 730, D054.COUPURE),)
 NOM_D056 = {"fixe 0,10": "r fixe 0.10", "fixe 0,15": "r fixe 0.15", "fixe 0,20": "r fixe 0.20",
             "fixe 0,25": "r fixe 0.25", "coussin 0,15": "C · coussin r0 0.15", "coussin 0,20": "C · coussin r0 0.20"}
 
@@ -178,6 +193,70 @@ def run_calcul() -> None:
     figures()
     write_rapport()
     print(f"D05.6bis : fait en {ctrl['duree_s']} s ; sorties dans {HERE}")
+
+
+def run_roster() -> None:
+    t0 = time.time()
+    res = pd.read_csv(HERE / "resultats_D05_6bis.csv")
+    tc, tf = dict(CHALLENGE), dict(FINANCE)
+    with levee(MOTIF_ROSTER):
+        assets = D041.load_all()
+        departs = departs_minuit(A, B, FTMO_SWING.fuseau)
+        lg = D054.legs(assets, 25.0)
+        atr = [assets[leg.name]["atr_bps"][leg.trades.signal_bar.to_numpy()] for leg in lg]
+        opts = dict(levier=LEVIER_FTMO_SWING, plafonner=True, atr=atr)
+        sims_c = {n: simuler(lg, departs, taille=tc[n], **opts) for n in dict.fromkeys(c for _, c, _ in ROSTER)}
+        sims_f = {n: simuler(lg, departs, D055.FINANCE, taille=tf[n], retrait_jours=D055.RETRAIT_JOURS, **opts)
+                  for n in dict.fromkeys(f for _, _, f in ROSTER)}
+    print(f"roster simulé ({time.time() - t0:.0f} s)", flush=True)
+    per, rows, comps, ctrl = {}, [], [], {}
+    for piste, cn, fn in ROSTER:
+        for lect, h, coup in LECTURES_ROSTER:
+            kw = dict(frais=D055.FRAIS, part=D055.PART, horizon_jours=h, coupure=coup)
+            per[(piste, lect, "tentative")] = D055.suivis(valeur(sims_c[cn], sims_f[fn], **kw), h, coup)
+            per[(piste, lect, "suite")] = D055.suivis(suite(sims_c[cn], sims_f[fn], **kw), h, coup)
+            for mes in MESURES:
+                df = per[(piste, lect, mes)]
+                x = df.valeur.to_numpy()
+                if lect != LECTURES_ROSTER[-1][0]:
+                    ref = res[(res.challenge == cn) & (res.finance == fn) & (res.lecture == lect)
+                              & (res.mesure == mes)].valeur.iat[0]
+                    if not np.isclose(x.mean(), ref, rtol=1e-5):
+                        stop(f"roster, {piste}, {lect}, {mes} : ne redonne pas --calcul")
+                    ctrl[f"{piste}_{lect}_{mes}_egal_calcul"] = round(float(x.mean()), 6)
+                lo, hi = ic_blocs(x, df.depart)
+                row = {"piste": piste, "challenge": cn, "finance": fn, "lecture": lect, "mesure": mes,
+                       "n_departs": len(df), "valeur": float(x.mean()), "ic_bas": lo, "ic_haut": hi,
+                       "mediane": float(np.median(x)), "p10": float(np.quantile(x, 0.1)),
+                       "p90": float(np.quantile(x, 0.9))}
+                if mes == "tentative":
+                    row.update(p_retrait=float((df.n_retraits > 0).mean()))
+                else:
+                    row.update(tentatives=float(df.n_tentatives.mean()), finances=float(df.n_finances.mean()))
+                rows.append(row)
+    for a, b, quoi in COMPARAISONS:
+        for lect, _, _ in LECTURES_ROSTER:
+            for mes in MESURES:
+                da, db = per[(a, lect, mes)], per[(b, lect, mes)]
+                if not da.depart.equals(db.depart):
+                    stop(f"roster, {a} contre {b}, {lect} : départs différents")
+                dx = da.valeur.to_numpy() - db.valeur.to_numpy()
+                lo, hi = ic_blocs(dx, da.depart)
+                an = da.depart.dt.year.to_numpy()
+                par_an = np.array([dx[an == y].mean() for y in np.unique(an)])
+                comps.append({"piste": a, "contre": b, "changement": quoi, "lecture": lect, "mesure": mes,
+                              "n_departs": len(dx), "ecart": float(dx.mean()), "ic_bas": lo, "ic_haut": hi,
+                              "p_mieux": float((dx > 1e-12).mean()), "p_moins": float((dx < -1e-12).mean()),
+                              "annees": len(par_an), "annees_positives": int((par_an > 0).sum()),
+                              "pire_annee": float(par_an.min()), "meilleure_annee": float(par_an.max())})
+    pd.DataFrame(rows).to_csv(HERE / "roster_D05_6bis.csv", index=False, float_format="%.6g")
+    pd.DataFrame(comps).to_csv(HERE / "roster_ecarts_D05_6bis.csv", index=False, float_format="%.6g")
+    ctrl = {"date": pd.Timestamp.now(tz="UTC").strftime("%Y-%m-%d %H:%M UTC"), "commit": D04.git_head(),
+            "motif": MOTIF_ROSTER, **ctrl, "duree_s": round(time.time() - t0)}
+    (HERE / "controles_roster_D05_6bis.json").write_text(json.dumps(D01.jsonable(ctrl), ensure_ascii=False, indent=1),
+                                                         encoding="utf-8")
+    write_rapport()
+    print(f"roster D05.6bis : fait en {ctrl['duree_s']} s")
 
 
 def _matrice(res: pd.DataFrame, lect: str, mes: str, col: str) -> pd.DataFrame:
@@ -309,6 +388,32 @@ def write_rapport() -> None:
                     table(["Challenge", "Compte financé"] + [f"{a} ({int(g[g.annee == a].n_departs.iat[0])} départs)"
                                                             for a in ans], lignes)]
     out += ["", "## A7. Figure", "", "![Matrices](figures/D05_6bis_matrices.png)", ""]
+    if (HERE / "roster_D05_6bis.csv").exists():
+        ro = pd.read_csv(HERE / "roster_D05_6bis.csv")
+        ec = pd.read_csv(HERE / "roster_ecarts_D05_6bis.csv")
+        cr = json.loads((HERE / "controles_roster_D05_6bis.json").read_text(encoding="utf-8"))
+        out += ["## A8. Roster final du porteur (`--roster`) : trois pistes et la référence", "",
+                f"Calcul du {cr['date']}, commit `{cr['commit']}`, {cr['duree_s']} s. Contrôle passé : les lectures "
+                f"communes redonnent `--calcul` ({sum(k.endswith('_egal_calcul') for k in cr)} valeurs).", ""]
+        for mes, titre in (("tentative", "une tentative"), ("suite", "une suite de tentatives")):
+            g = ro[ro.mesure == mes]
+            out += [f"### Valeur d'{titre}", "",
+                    table(["Piste", "Challenge", "Compte financé", "Lecture", "Départs", "Valeur moyenne [IC 95 %]",
+                           "Médiane ; P10 ; P90",
+                           "≥ 1 retrait" if mes == "tentative" else "Tentatives ; comptes financés"],
+                          [[x.piste, x.challenge, x.finance, x.lecture, n_fr(x.n_departs),
+                            f"{eur(x.valeur)} [{eur(x.ic_bas)} ; {eur(x.ic_haut)}]",
+                            f"{eur(x.mediane)} ; {eur(x.p10)} ; {eur(x.p90)}",
+                            pct(x.p_retrait, 1) if mes == "tentative" else f"{fr(x.tentatives, 1)} ; {fr(x.finances, 1)}"]
+                           for _, x in g.iterrows()]), ""]
+        out += ["## A9. Roster final : écarts appariés entre pistes (mêmes départs)", "",
+                table(["Piste", "Contre", "Changement", "Mesure", "Lecture", "Écart moyen [IC 95 %]",
+                       "Départs : mieux ; moins bien", "Années de départ positives ; pire ; meilleure"],
+                      [[x.piste, x.contre, x.changement, x.mesure, x.lecture,
+                        f"{eur(x.ecart)} [{eur(x.ic_bas)} ; {eur(x.ic_haut)}]",
+                        f"{pct(x.p_mieux, 1)} ; {pct(x.p_moins, 1)}",
+                        f"{x.annees_positives}/{x.annees} ; {eur(x.pire_annee)} ; {eur(x.meilleure_annee)}"]
+                       for _, x in ec.iterrows()]), ""]
     (HERE / "rapport_D05_6bis.md").write_text("\n".join(out) + "\n", encoding="utf-8")
 
 
@@ -316,11 +421,14 @@ def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     g = ap.add_mutually_exclusive_group(required=True)
     g.add_argument("--calcul", action="store_true")
+    g.add_argument("--roster", action="store_true")
     g.add_argument("--rapport", action="store_true")
     args = ap.parse_args()
     warnings.simplefilter("ignore")
     if args.calcul:
         run_calcul()
+    elif args.roster:
+        run_roster()
     else:
         figures()
         write_rapport()
