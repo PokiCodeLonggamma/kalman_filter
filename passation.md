@@ -738,8 +738,8 @@ d'extraction, couverture, construction. Tous les chargements tronquent avant le 
 |---|---|
 | Dossier local | `C:\Users\poek9\Projet Claude\#KalmanFilter` (le `#` impose des guillemets) |
 | GitHub | https://github.com/PokiCodeLonggamma/kalman_filter, **public**, branche `main` |
-| `origin/main` | `5f4cc65` (roster final de D05.6bis, après D05.5-D05.6 `b5cecb5` et D05.6bis `6fc12d2`), poussé le 2026-10-05 avec l'accord du porteur ; vérifier par `git log --oneline -5` |
-| Commits locaux non poussés | `74464dc` (D05.7), puis D05.8 et la clôture de la séquence taille ; push sur accord du porteur. La phrase du porteur dans `prompts/init_d3_sniper.md` (cTrader) reste hors des commits (session parallèle) |
+| `origin/main` | `ee1ee00` (D05.8 et clôture de la séquence taille, après D05.7 `74464dc`), poussé le 2026-10-05 avec l'accord du porteur ; vérifier par `git log --oneline -5` |
+| Commits locaux non poussés | la note de profil des actifs de D05.1 ; push sur accord du porteur. La phrase du porteur dans `prompts/init_d3_sniper.md` (cTrader) reste hors des commits (session parallèle) |
 | Identité git | `PokiCodeLonggamma <250868839+PokiCodeLonggamma@users.noreply.github.com>` |
 | Tests | 381 réussis, 2 ignorés (244 à la validation, +5 en D02.0, +53 en D02, +19 en D02.1, +11 en D03, +5 en D03.1, +13 en D04, +4 en D04.1, +12 en D05.4, +8 en D05.5-D05.6, +1 en D05.6bis, +5 en D05.7, +1 en D05.8) |
 | Système | Windows 11, Git Bash et PowerShell, application Claude Code de bureau, navigateur intégré |
@@ -778,7 +778,8 @@ d'extraction, couverture, construction. Tous les chargements tronquent avant le 
 | D05.5, D05.6 | `b5cecb5` (compte financé, taille selon l'état du compte ; `experiments/D05_5/`, `experiments/D05_6/`) |
 | D05.6bis | `6fc12d2` (taille propre à chaque phase, `propfirm.suite`), `5f4cc65` (roster final, `run_D05_6bis.py --roster`) |
 | D05.7 | `74464dc` (tirage par blocs, `src/propfirm/blocs.py`, `experiments/D05_7/`) |
-| D05.8 | le commit du moment d'achat du challenge (`experiments/D05_8/`, `propfirm.suite` avec `permis`) |
+| D05.8 | `ee1ee00` (moment d'achat du challenge, `experiments/D05_8/`, `propfirm.suite` avec `permis`) |
+| D05.1 | le commit de la note de profil des actifs (`experiments/D05_1/`) |
 
 ---
 
@@ -831,7 +832,11 @@ d'extraction, couverture, construction. Tous les chargements tronquent avant le 
    (challenge 0,20 × compte financé 0,25, un compte à la fois, budget de tentatives contrôlé), piste 2 archivée.
    EXP-D05.8 (`experiments/D05_8/rapport_D05_8.md`), moment d'achat du challenge : la tendance haussière n'aide pas ;
    la sortie de compression de la volatilité ne démontre pas de gain ; aucun filtre recommandé. Séquence taille close
-   (D05.4 à D05.8). Prochaine étape : D05.1 (profil des actifs, puis export cTrader de GLE fourni par le porteur).
+   (D05.4 à D05.8). Décisions du porteur : aucun filtre d'achat ; push de D05.7 et D05.8 (origin = `ee1ee00`).
+   EXP-D05.1, note de profil des actifs pour RE-1 hors crypto (`experiments/D05_1/profil_actifs_D05_1.md`) : signal
+   transposé, rente non (D01.7) ; ratio vital brut / frais ; grille de 13 axes sans seuil. Prochaine étape :
+   validation de la grille et liste des candidats par le porteur, puis extracteur cTrader Open API (OAuth configurée
+   avec le porteur).
 2. **Nouvelle session :** lire ce document, puis :
    - `CLAUDE.md`, `RESEARCH_PHILOSOPHY.md`, `PROJECT_PLAN.md` ;
    - `RE1_FONDS_PROPRES_LIVRE_BLANC.md` (version finale de RE-1 et son exploitation) ;

@@ -2461,3 +2461,39 @@ reproduction de résultats publiés et parité du noyau, sans aucune performance
 - **Repères pour les projections :** médianes des histoires recomposées de D05.7, plus prudentes que l'historique réel.
 - **Suite :** D05.1 (profil des actifs, puis export cTrader de GLE fourni par le porteur) ; idée du porteur : des actifs
   de la finance traditionnelle pour les hivers crypto.
+
+### [DÉCISION] — Aucun filtre d'achat ; push de D05.7 et D05.8 ; ouverture de D05.1, actifs TradFi (2026-10-05)
+- **Décisions du porteur, après lecture de D05.8 :**
+  - filtre d'achat du challenge : aucun ; rachat au minuit qui suit la fin du compte précédent ;
+  - push de `74464dc` (D05.7) et `ee1ee00` (D05.8) : fait, origin/main = `ee1ee00` ;
+  - D05.1 : univers étendu à la finance traditionnelle, GLE n'étant qu'un candidat parmi d'autres (US100, GBPJPY…) ;
+    d'abord un profil théorique des actifs pour RE-1, avant toute donnée nouvelle ; ensuite, après validation, un
+    extracteur Python → cTrader Open API (OAuth à configurer avec le porteur) → barres de 30 min 2020-2025 (OHLC, écart,
+    volume) → CSV ou Parquet.
+- **Relecture des énoncés du porteur :**
+  - « Always in the Market » : un compte toujours actif (rachat immédiat), pas une position permanente ; RE-1 reste à
+    plat entre ses trades.
+  - US100 et GBPJPY ont déjà été mesurés en D01.7 (Saxo, 2020-2025) : −0,097 et −0,303 ATR à 4 bps.
+- **Push :** fait pour ces deux commits ; la suite reste en commits locaux.
+
+### [EXP-D05.1, cadrage] — Profil des actifs pour RE-1 hors crypto (note, aucun calcul)
+- **Date :** 2026-10-05
+- **Livrable :** `experiments/D05_1/profil_actifs_D05_1.md`.
+- **Méthode :** relecture des mesures existantes (A01 à D05.7, K7 à K18, livre blanc) ; grille de lecture sans seuil.
+- **Contenu :**
+  - [OBS] ADN de RE-1 : cassure d'une compression courte, tenue 13 h ; queue droite (1 % des trades, environ deux grands
+    gagnants par an, 84 % de la somme nette sur BTC) ; les deux sens ; avantage dépendant de l'époque.
+  - [OBS] Signal transposé sur les 13 séries hors crypto, rente non : brut de −0,17 à +0,42 ATR (médiane +0,15), aucun
+    IC > 0.
+  - Ratio vital brut / frais : cryptos 3,6 à 4,2 ; indices, or, argent et GBPJPY 0,2 à 1,0. Points morts du coût
+    aller-retour : BTC ≈ 18 bps, indices 2 à 5 bps, GBPJPY ≈ 1 bp.
+  - Empreinte : z26 (mouvement de 26 barres en ATR14(t)) plutôt que le rendement de 30 min ; kurtosis de sauts contre
+    kurtosis d'expansion ; repère gaussien (10 ATR en 13 h ≈ une fois par an, 15 ATR jamais) ; fréquences et quantiles
+    plutôt que moments.
+  - Structure : VR(q) et ratio d'efficacité ; chocs continus contre chocs d'un bloc ; saisonnalité horaire ;
+    indépendance vis-à-vis des cryptos.
+  - Opérationnel : écart aux heures des entrées ; swap absent de tous les tests, cryptos comprises ; glissement des
+    stops ; cadence selon les séances ; plafond de 1x sous 20 à 25 bps d'ATR ; roulements des CFD sur futures.
+  - [HYP] Par classe : énergie en CFD continu la plus proche du profil sur le papier ; indices suspendus au coût réel de
+    la firme ; change sans queue d'expansion ; actions proches des ETF de séance.
+- **Décision :** en attente du porteur (grille, liste des candidats, période et statut de 2026). Commit local.
