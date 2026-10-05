@@ -2526,6 +2526,11 @@ reproduction de résultats publiés et parité du noyau, sans aucune performance
     téléchargement à rebours par fenêtres, avec hasMore ; réserve 2026 par `reserve.levee` ; écriture au schéma de
     `load_ohlc` ; 18 tests (399 au total).
   - `experiments/D05_1/donnees_D05_1.py` (--connexion, --symboles, --telechargement) : non lancé.
-- **En attente :** application à créer par le porteur sur le portail, accord de Spotware, URL de retour, Client ID et
-  Secret posés par `setx` ; puis --connexion et --symboles (sur GO) ; noms exacts validés ; téléchargement (sur GO).
+- **Application (2026-10-05) :** « AKF-TSO Research Data » créée par le porteur, accès « Access info on your accounts »
+  (lecture seule, ses comptes) et URL de retour `http://localhost:47322/akf-ctrader` ; description ramenée à 175
+  caractères (300 au plus). Client ID et Secret posés par le porteur (`setx`), lisibles par le module.
+  [OBS] Connexion JSON à demo.ctraderapi.com:5036 établie ; ProtoOAApplicationAuthReq refusé :
+  CH_CLIENT_AUTH_FAILURE (« OA client is not in active state ») : statut « Submitted », accord de Spotware attendu.
+- **En attente :** accord de Spotware ; puis --connexion et --symboles (sur GO) ; noms exacts validés ;
+  téléchargement (sur GO).
 - **Push :** aucun ; commit local.
