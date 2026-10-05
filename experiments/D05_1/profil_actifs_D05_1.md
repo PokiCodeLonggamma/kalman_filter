@@ -178,7 +178,10 @@ du bruit récent.
   n'en dépend pas).
 - Point mort du coût = B × coût du test / C : le coût aller-retour (écart, commission, glissement) qui annulerait le
   brut mesuré. Opération sur les chiffres publiés ; incertaine, car le brut a un IC d'environ ±0,3 ATR.
-- `[OBS]` Les actifs nets positifs ont un rapport de 3,6 à 4,2 (cryptos). Tous les autres sont vers 1 ou en dessous.
+- `[OBS]` Dans ce tableau, seules les cryptos sont nettes positives, avec un rapport de 3,6 à 4,2 ; tous les autres
+  actifs sont vers 1 ou en dessous.
+- `[OBS]` Hors tableau, les ETF de séance USO, URA et GDX ont un rapport de 2,6 à 6,0. Mais leur brut vient des nuits,
+  sur environ 140 trades chacun (K8 à K10) ; TLT et SMH ont un brut négatif.
 - `[HYP]` Hors crypto, le levier est le coût réel chez la firme, pas le signal (K11). Première mesure utile de
   l'extracteur cTrader : écart par heure, commission et swap, contre ces points morts.
 
