@@ -2611,3 +2611,10 @@ reproduction de résultats publiés et parité du noyau, sans aucune performance
 #### Décision
 - [x] **Mesure faite ; lecture au porteur.** Commit local.
 
+
+### [DÉCISION] — Correction horaire mise de côté ; attente de l'accord de Spotware (2026-10-06)
+- **Décision du porteur :** « Oublie la correction des horaires, on attend le mail. » La correction horaire (§7 du
+  narratif de la grille) n'entre pas dans la lecture ; aucun calcul en attendant.
+- **État :** application Open API « Submitted » (ID 42882) ; aucun courriel de Spotware au 2026-10-06. Commits locaux
+  non poussés : `2eb5e81` (correction), `94616c2` (enseignements I-M21 et K19) et celui-ci.
+- **Suite :** à l'accord de Spotware, --connexion (sur GO), puis --symboles et le téléchargement.
