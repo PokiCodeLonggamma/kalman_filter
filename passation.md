@@ -739,9 +739,9 @@ d'extraction, couverture, construction. Tous les chargements tronquent avant le 
 | Dossier local | `C:\Users\poek9\Projet Claude\#KalmanFilter` (le `#` impose des guillemets) |
 | GitHub | https://github.com/PokiCodeLonggamma/kalman_filter, **public**, branche `main` |
 | `origin/main` | `5f4cc65` (roster final de D05.6bis, après D05.5-D05.6 `b5cecb5` et D05.6bis `6fc12d2`), poussé le 2026-10-05 avec l'accord du porteur ; vérifier par `git log --oneline -5` |
-| Commits locaux non poussés | D05.7 (tirage par blocs) ; push sur accord du porteur. La phrase du porteur dans `prompts/init_d3_sniper.md` (cTrader) reste hors des commits (session parallèle) |
+| Commits locaux non poussés | `74464dc` (D05.7), puis D05.8 et la clôture de la séquence taille ; push sur accord du porteur. La phrase du porteur dans `prompts/init_d3_sniper.md` (cTrader) reste hors des commits (session parallèle) |
 | Identité git | `PokiCodeLonggamma <250868839+PokiCodeLonggamma@users.noreply.github.com>` |
-| Tests | 380 réussis, 2 ignorés (244 à la validation, +5 en D02.0, +53 en D02, +19 en D02.1, +11 en D03, +5 en D03.1, +13 en D04, +4 en D04.1, +12 en D05.4, +8 en D05.5-D05.6, +1 en D05.6bis, +5 en D05.7) |
+| Tests | 381 réussis, 2 ignorés (244 à la validation, +5 en D02.0, +53 en D02, +19 en D02.1, +11 en D03, +5 en D03.1, +13 en D04, +4 en D04.1, +12 en D05.4, +8 en D05.5-D05.6, +1 en D05.6bis, +5 en D05.7, +1 en D05.8) |
 | Système | Windows 11, Git Bash et PowerShell, application Claude Code de bureau, navigateur intégré |
 | Python | 3.11 ; numpy, pandas, matplotlib (`pyproject.toml`) |
 | Mémoire de l'assistant | `C:\Users\poek9\.claude\projects\C--Users-poek9-Projet-Claude--KalmanFilter\memory\` |
@@ -777,7 +777,8 @@ d'extraction, couverture, construction. Tous les chargements tronquent avant le 
 | D05.4 | `bec1679` (simulateur de challenge, `src/propfirm/`, cadrage Prop Firm), `8ea8a93` (prompt Sniper, passation) |
 | D05.5, D05.6 | `b5cecb5` (compte financé, taille selon l'état du compte ; `experiments/D05_5/`, `experiments/D05_6/`) |
 | D05.6bis | `6fc12d2` (taille propre à chaque phase, `propfirm.suite`), `5f4cc65` (roster final, `run_D05_6bis.py --roster`) |
-| D05.7 | le commit du tirage par blocs (`src/propfirm/blocs.py`, `experiments/D05_7/`) |
+| D05.7 | `74464dc` (tirage par blocs, `src/propfirm/blocs.py`, `experiments/D05_7/`) |
+| D05.8 | le commit du moment d'achat du challenge (`experiments/D05_8/`, `propfirm.suite` avec `permis`) |
 
 ---
 
@@ -826,8 +827,11 @@ d'extraction, couverture, construction. Tous les chargements tronquent avant le 
    qu'en suite). EXP-D05.7 (`experiments/D05_7/rapport_D05_7.md`, `propfirm.blocs`), tirage par blocs d'une et de
    quatre semaines sans 2026, 200 histoires chacun : la vitesse du challenge survit en suite (80 à 94 % des
    histoires) ; la relance et le compte financé à 0,25 ne survivent pas (médianes proches de zéro) ; l'histoire
-   réelle était favorable à toutes les pistes (78e à 96e centile). Choix de la taille, puis D05.1 (profil, GLE), à
-   décider par le porteur.
+   réelle était favorable à toutes les pistes (78e à 96e centile). Décision du porteur : piste 1 verrouillée
+   (challenge 0,20 × compte financé 0,25, un compte à la fois, budget de tentatives contrôlé), piste 2 archivée.
+   EXP-D05.8 (`experiments/D05_8/rapport_D05_8.md`), moment d'achat du challenge : la tendance haussière n'aide pas ;
+   la sortie de compression de la volatilité ne démontre pas de gain ; aucun filtre recommandé. Séquence taille close
+   (D05.4 à D05.8). Prochaine étape : D05.1 (profil des actifs, puis export cTrader de GLE fourni par le porteur).
 2. **Nouvelle session :** lire ce document, puis :
    - `CLAUDE.md`, `RESEARCH_PHILOSOPHY.md`, `PROJECT_PLAN.md` ;
    - `RE1_FONDS_PROPRES_LIVRE_BLANC.md` (version finale de RE-1 et son exploitation) ;
@@ -835,7 +839,7 @@ d'extraction, couverture, construction. Tous les chargements tronquent avant le 
    - les dernières entrées de `RESEARCH_LOG.md` ;
    - `src/strategy/re1.py` ;
    - `experiments/D01_7/narratif_D01_7.md`.
-3. **Vérifier l'état :** `git status`, `git log --oneline -5`, `python -m pytest -q` (attendu : 380 réussis, 2 ignorés).
+3. **Vérifier l'état :** `git status`, `git log --oneline -5`, `python -m pytest -q` (attendu : 381 réussis, 2 ignorés).
 4. **Rendre au porteur un compte rendu court**, balisé :
    - compréhension du projet et de RE-1 ;
    - règles ;

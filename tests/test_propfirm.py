@@ -341,6 +341,25 @@ def test_suite_de_tentatives_rachete_au_minuit_qui_suit_chaque_echec_ou_perte_du
     assert np.isclose(coupe.valeur.iat[0], -f + 0.8 * 0.05)
 
 
+def test_suite_n_achete_le_challenge_qu_aux_minuits_permis():
+    h, f = 3_600 * 10**9, 0.0054
+    d = departs_minuit("2021-01-04", "2021-01-12")
+    t_obj = np.full((2, 8), INF, dtype=np.int64)
+    t_obj[0, 1], t_obj[1, 2] = d[1] + 5 * h, d[2] + 3 * h     # départ 1 : P1, P2 au départ 2 → financé au départ 3
+    sim_c = _simulation(d, t_obj)
+    sim_c.t_perte_jour[("solde", "pessimiste")][0] = d[0] + 5 * h
+    sim_c.ref_breche[("solde", "pessimiste")][0] = 1.0        # départ 0 : échec en P1
+    sim_f = _simulation(d, np.zeros((0, 8), dtype=np.int64))
+    sim_f.t_perte_max["pessimiste"][3] = d[5] + 2 * h
+    sim_f.retraits = pd.DataFrame({"depart": [3, 3], "t": [d[4], d[5]], "montant": [0.03, 0.02]})
+    permis = np.array([True, False, False, True, True, True, True, True])
+    s = suite(sim_c, sim_f, frais=f, part=0.8, horizon_jours=30, permis=permis)
+    assert s.n_tentatives.iat[0] == 2 and np.isclose(s.valeur.iat[0], -2 * f)   # rachat au minuit permis 3, pas 1
+    assert s.n_tentatives.iat[1] == 1 and np.isclose(s.valeur.iat[1], -f)       # la première tentative attend aussi
+    tous = suite(sim_c, sim_f, frais=f, part=0.8, horizon_jours=30, permis=np.ones(8, dtype=bool))
+    assert tous.equals(suite(sim_c, sim_f, frais=f, part=0.8, horizon_jours=30))
+
+
 def _options(xa, xb, lev):
     return {"levier": lev, "plafonner": True, "taille": Frein(haut=40.0, bas=20.0, seuil=0.99, retour=1.0),
             "atr": [xa, xb], "retrait_jours": 14}

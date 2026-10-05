@@ -156,13 +156,16 @@ def valeur(sim_c: Simulation, sim_f: Simulation, ref: str = "solde", mode: str =
 
 
 def suite(sim_c: Simulation, sim_f: Simulation, ref: str = "solde", mode: str = "pessimiste", frais: float = 0.0054,
-          part: float = 0.8, horizon_jours: float = 365.0, coupure: int | None = None) -> pd.DataFrame:
+          part: float = 0.8, horizon_jours: float = 365.0, coupure: int | None = None,
+          permis: np.ndarray | None = None) -> pd.DataFrame:
     """EXP-D05.6bis — suite de tentatives, un seul compte à la fois : une tentative au départ, puis une nouvelle au
     premier minuit qui suit l'échec du challenge ou la rupture du compte financé. Chaque tentative coûte `frais` à son
     départ, remboursés à son premier retrait. Ne comptent que les tentatives démarrées et les retraits reçus dans
     `horizon_jours` depuis le départ (et avant la coupure) ; la suite s'arrête sur un challenge en cours ou un compte
     financé ouvert à l'horizon. Une ligne par départ, en fraction du capital du compte : valeur (somme nette reçue),
-    nombre de tentatives et de comptes financés."""
+    nombre de tentatives et de comptes financés.
+    EXP-D05.8, `permis` (un booléen par départ) : une tentative, la première comprise, ne démarre qu'au premier minuit
+    permis."""
     if not np.array_equal(sim_c.departs, sim_f.departs):
         raise ValueError("suite : challenge et compte financé sur les mêmes départs")
     d, n = sim_c.departs, len(sim_c.departs)
@@ -174,10 +177,15 @@ def suite(sim_c: Simulation, sim_f: Simulation, ref: str = "solde", mode: str = 
     rd, rt, rm = r.depart.to_numpy(dtype=np.int64), r.t.to_numpy(dtype=np.int64), r.montant.to_numpy(dtype=float)
     lo, hi = np.searchsorted(rd, np.arange(n), side="left"), np.searchsorted(rd, np.arange(n), side="right")
     h = int(round(horizon_jours * JOUR))
+    prochain = np.arange(n + 1)                               # premier minuit permis à partir de chaque départ
+    if permis is not None:
+        permis = np.asarray(permis, dtype=bool)
+        for i in range(n - 1, -1, -1):
+            prochain[i] = i if permis[i] else prochain[i + 1]
     val, n_t, n_f = np.zeros(n), np.zeros(n, dtype=np.int64), np.zeros(n, dtype=np.int64)
     for s0 in range(n):
         lim = d[s0] + h if coupure is None else min(d[s0] + h, coupure)
-        k = s0
+        k = prochain[s0]
         while k < n and d[k] <= lim:
             val[s0] -= frais
             n_t[s0] += 1
@@ -194,7 +202,7 @@ def suite(sim_c: Simulation, sim_f: Simulation, ref: str = "solde", mode: str = 
                 fin = fin_f[k3]
             if fin > lim:                                     # INF compris
                 break
-            k = max(int(np.searchsorted(d, fin, side="left")), k + 1)
+            k = prochain[max(int(np.searchsorted(d, fin, side="left")), k + 1)]
     out = pd.DataFrame({"depart": _depart_local(sim_c), "valeur": val, "n_tentatives": n_t, "n_finances": n_f})
     if coupure is not None:
         out = out[d < coupure].reset_index(drop=True)

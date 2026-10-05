@@ -2400,3 +2400,64 @@ reproduction de résultats publiés et parité du noyau, sans aucune performance
 #### Décision
 - [ ] **VALIDÉ**
 - [x] **Mesures faites ; choix de la taille à décider par le porteur.** Commit local, non poussé.
+
+### [DÉCISION] — Piste 1 verrouillée ; fin des recherches sur la taille ; piste 2 archivée ; GO du test du moment d'achat (2026-10-05)
+- **Taille verrouillée par le porteur : piste 1, challenge 0,20 %/ATR × compte financé 0,25 %/ATR.**
+  - Raisons du porteur : discipline budgétaire et psychologique au démarrage ; un compte à la fois, budget de
+    tentatives contrôlé, sans rachat aveugle ; réussite du challenge protégée.
+- **Relecture de l'agent.** Une fois les semaines mélangées (D05.7), la piste 1 égale la référence en médiane par
+  tentative, mais fait moins bien qu'elle dans 52 à 56 % des histoires. Elle ne garantit donc pas de faire au moins
+  aussi bien. Correction d'une formule de l'agent (« jamais moins bonne que la référence ») : vrai en médiane, pas
+  histoire par histoire.
+- **Piste 2 (0,25 × 0,25) archivée comme option de croissance,** à reprendre plus tard avec un Burn & Churn limité.
+- **Idée du porteur pour après D05.1 :** les hivers crypto font échouer les challenges. Ajouter des actions ou
+  d'autres actifs de la finance traditionnelle pourrait créer des occasions quand la crypto stagne, et relever la
+  réussite.
+- **Fin des recherches sur la taille des positions en prop firm.**
+- **GO d'une dernière mesure, EXP-D05.8 :** acheter le challenge à un moment choisi plutôt qu'un jour quelconque
+  (sortie de compression de l'ATR moyen du panier crypto, ou tendance haussière simple), sur les pistes 1 et 2 ;
+  puis clôture de la séquence.
+
+### [EXP-D05.8] — Moment d'achat du challenge : sortie de compression de la volatilité, tendance haussière
+- **Date :** 2026-10-05
+- **Étape :** D05, étape 5 (dernière mesure de la séquence taille). GO du porteur ; référence ajoutée à sa demande.
+- **Actifs & Période :** ceux de D05.4 ; indicateurs sur les cinq cryptos ; 5 bps (or 4 bps).
+
+#### 0. Cadrage (fixé avant le calcul, `experiments/D05_8/run_D05_8.py`)
+- **QUESTION :** acheter le challenge seulement quand la volatilité du panier crypto sort d'une compression (V), ou
+  quand le panier est en tendance haussière (T), améliore-t-il la réussite et la valeur ?
+- **MÉTHODE :**
+  - V : ATR moyen sur 7 jours au-dessus de sa moyenne sur 30 jours, cette moyenne étant sous la médiane de l'année.
+  - T : indice du panier au-dessus de sa moyenne sur 50 jours.
+  - Indicateurs causaux, calculés à chaque minuit.
+  - Lectures par tentative (jours ouverts contre tous) et en suite : un compte à la fois, rachat seulement les jours
+    ouverts (`propfirm.suite`, `permis`).
+  - Pistes : référence, piste 1, piste 2.
+- **CRITÈRE DE LECTURE (sans seuil) :** écarts avec IC par blocs de mois ; réussite ; challenges achetés ; écart par
+  année de départ.
+
+#### Résultats (`experiments/D05_8/rapport_D05_8.md`)
+- **Contrôles passés :** causalité des indicateurs ; sans filtre, les pistes redonnent le roster de D05.6bis.
+- [OBS] **T n'aide pas :** +0,0 à +0,7 k€ par tentative ; −1,7 à −6,1 k€ en suite (IC sous zéro).
+- [OBS] **V : +3,2 à +4,7 k€ par tentative, IC avec zéro.**
+  - Le gain vient des départs de 2023 et 2024 ; ceux de 2025 perdent.
+  - En suite, l'attente coûte −0,7 à −1,9 k€ (référence, piste 1) et jusqu'à −9,3 k€ (piste 2).
+  - V économise 20 % des challenges ; la valeur par challenge acheté monte de 14 à 19 % (piste 1).
+- [OBS] **Avec une règle d'attente, la piste 1 dépasse la piste 2 en suite** à 24 mois et sans 2026 ; sans filtre, la
+  piste 2 restait devant.
+- [HYP] RE-1 joue dans les deux sens : la tendance haussière ne choisit pas ses périodes. Le gain de V tient à
+  quelques épisodes.
+
+#### Décision
+- [ ] **VALIDÉ**
+- [x] **Mesures faites ; filtre de moment d'achat à décider par le porteur.** Recommandation de l'agent : aucun
+  filtre. Commit local, non poussé.
+
+### [DÉCISION] — Clôture de la séquence taille (D05.4 à D05.8), à la demande du porteur (2026-10-05)
+- **Configuration retenue :** piste 1, challenge 0,20 %/ATR × compte financé 0,25 %/ATR ; un compte à la fois, budget de
+  tentatives contrôlé.
+- **Archivé :** piste 2 (0,25 × 0,25), option de croissance ; relance ; coussin, frein, sprint ; filtres de moment
+  d'achat V et T (D05.8).
+- **Repères pour les projections :** médianes des histoires recomposées de D05.7, plus prudentes que l'historique réel.
+- **Suite :** D05.1 (profil des actifs, puis export cTrader de GLE fourni par le porteur) ; idée du porteur : des actifs
+  de la finance traditionnelle pour les hivers crypto.
