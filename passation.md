@@ -739,7 +739,7 @@ d'extraction, couverture, construction. Tous les chargements tronquent avant le 
 | Dossier local | `C:\Users\poek9\Projet Claude\#KalmanFilter` (le `#` impose des guillemets) |
 | GitHub | https://github.com/PokiCodeLonggamma/kalman_filter, **public**, branche `main` |
 | `origin/main` | `5650153` (D04.2), poussé le 2026-10-05 avec l'accord du porteur ; vérifier par `git log --oneline -5` |
-| Commits locaux non poussés | le livre blanc « Fonds propres » ; push sur accord du porteur |
+| Commits locaux non poussés | le livre blanc (`1ba18d6`) et les trois directions (prompts) ; push sur accord du porteur |
 | Identité git | `PokiCodeLonggamma <250868839+PokiCodeLonggamma@users.noreply.github.com>` |
 | Tests | 354 réussis, 2 ignorés (244 à la validation, +5 en D02.0, +53 en D02, +19 en D02.1, +11 en D03, +5 en D03.1, +13 en D04, +4 en D04.1) |
 | Système | Windows 11, Git Bash et PowerShell, application Claude Code de bureau, navigateur intégré |
@@ -772,7 +772,8 @@ d'extraction, couverture, construction. Tous les chargements tronquent avant le 
 | D04 | `4c549ba` (pré-enregistrement, version finale, réserve levée par interrupteur), `9aa265f`, `edbd25e`, `c4207f8` (incidents), `c46a7ca` (résultats) |
 | D04.1 | `deb86f1` (portefeuille complet, pire journée) |
 | D04.2 | `5650153` (portefeuille en OFAT, composition et levier) |
-| Livre blanc « Fonds propres » | le commit du livre blanc (branche close) |
+| Livre blanc « Fonds propres » | `1ba18d6` (branche close) |
+| Trois directions | le commit des prompts d'initialisation (`prompts/`) et de la décision |
 
 ---
 
@@ -800,6 +801,9 @@ d'extraction, couverture, construction. Tous les chargements tronquent avant le 
    par trade (≈ 21 fois) : −3,19 % à 0,15 %/ATR, MDD −26,3 %. Décision du porteur (2026-10-05) : six
    actifs gardés, projet séparé en deux ; la branche « Fonds propres » est close par
    `RE1_FONDS_PROPRES_LIVRE_BLANC.md` (cahier des charges du bot). Prochain cycle : contraintes Prop Firm.
+   Trois directions (même jour) : Fonds propres (session papier et workstation, en worktree sur sa
+   branche), Prop Firm (sur `main`, avec le porteur), Sniper manuel (dépôt privé séparé) ; prompts dans
+   `prompts/`.
 2. **Nouvelle session :** lire ce document, puis :
    - `CLAUDE.md`, `RESEARCH_PHILOSOPHY.md`, `PROJECT_PLAN.md` ;
    - `RE1_FONDS_PROPRES_LIVRE_BLANC.md` (version finale de RE-1 et son exploitation) ;

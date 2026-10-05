@@ -2039,3 +2039,38 @@ reproduction de résultats publiés et parité du noyau, sans aucune performance
   - « glissement mortel des stops F3 » : 0,5 ATR sur les stops de F3 divise par deux l'espérance de BTC. Appliqué à tous
     les stops de la version finale, un glissement d'environ 0,5 ATR l'annule.
 - **Push :** aucun ; commit local.
+
+### [DÉCISION] — Trois directions du projet ; sessions « Fonds propres » (papier) et « Sniper » (2026-10-05)
+- **Directions du porteur :**
+  1. **Fonds propres** (ce dépôt) : maximiser la rentabilité à risque mesuré. RE-1 VF est gelée (livre blanc) ; étape
+     suivante : paper trading et workstation de suivi et d'exécution, dans une session dédiée.
+  2. **Prop Firm** (ce dépôt) : valider les challenges en générant un peu de rendement ; cycle de recherche mené avec le
+     porteur.
+  3. **Sniper manuel** (dépôt séparé, privé) : signaux rares et forts pour des trades manuels, « chasseur de cygnes
+     noirs » ; la stratégie peut y être entièrement repensée.
+- **Direction 1, choix du porteur :**
+  - simulateur interne sur flux réels, puis compte démo ou testnet ;
+  - workstation sur NautilusTrader, sous porte de parité (les trades de la version finale reproduits un par un) ; en
+    cas d'échec, moteur du dépôt et tableau de bord autre que Streamlit ;
+  - plateforme crypto de production à comparer en session ;
+  - PC Windows pendant le papier, serveur ensuite ; alertes Telegram ;
+  - risque par trade choisi par le porteur sur la matrice du livre blanc (0,25 ou 0,30 %/ATR envisagés) ;
+  - ajout d'actifs possible par un test de portabilité pré-enregistré.
+- **Direction 3, choix du porteur :**
+  - aucune automatisation des ordres : chaque signal donne ses niveaux (entrée à cours limité, stop), que le porteur
+    pose lui-même ;
+  - frais non pris en compte (stratégie manuelle) ; unité de temps libre (1 h ou autre) ;
+  - pool à décider ensemble à partir des moteurs de performance, cryptos d'abord (liquides et illiquides) ;
+  - toutes méthodes autorisées (ML, Optuna, autres), dans cet ordre : exploration libre, cadrage de la méthode à plus
+    forte valeur ajoutée, méthode optimale sous protocole ;
+  - recherches complexes (papiers SSRN récents) : prompt rédigé par l'agent, transmis par le porteur à Perplexity ;
+  - alertes Telegram.
+- **Rappels de l'agent :**
+  - « RE-1 détecte les cygnes noirs » reste une hypothèse : D03 n'a trouvé aucune variable connue à t qui sépare les
+    meilleurs trades (Q16, I-M20) ; le chantier Sniper commence par la tester ;
+  - ETH, XRP et 2026 sont lus : la réserve du Sniper devra venir de données jamais lues (nouveaux actifs, période à
+    venir) ;
+  - deux sessions travaillent sur ce dépôt : la direction 1 avance dans un worktree, sur sa branche, et ne modifie pas
+    les documents partagés de `main`.
+- **Prompts d'initialisation :** `prompts/init_d1_fonds_propres_papier.md` et `prompts/init_d3_sniper.md`.
+- **Push :** aucun ; commit local.
