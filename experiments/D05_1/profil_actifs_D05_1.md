@@ -325,4 +325,7 @@ du bruit récent.
   sous la médiane d'ATR, sur chaque série (effet de la division par ATR14(t), I-M20).
 - **Nouveau point :** en ATR de 30 min, US100 et US30 ont une queue de 13 h aussi épaisse que BTC. Leur saison horaire,
   2,4 à 2,6 fois plus marquée, peut en expliquer une part : une mesure corrigée de la saison est proposée.
+- **Correction horaire (2026-10-06) :** une fois la saison retirée, la queue de US100 et US30 perd deux tiers ; celle
+  de BTC (35 ‰) vaut 2,1 à 2,7 fois celle de chaque candidat (13 à 17 ‰). Les expansions de 13 h hors heure fixe sont
+  deux à trois fois plus rares sur les candidats que sur BTC.
 

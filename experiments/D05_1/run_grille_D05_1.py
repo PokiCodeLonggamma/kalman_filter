@@ -16,8 +16,21 @@ Cadrage (fixé avant le calcul) :
   2020-2025 seulement ; aucun classement ni seuil (grille de lecture, le porteur lit) ; BTC 2020-2025 est la période de
   construction de RE-1. WTI, Brent et GLE seront mesurés sur les données FTMO.
 
-Usage : python experiments/D05_1/run_grille_D05_1.py --calcul
-Sorties : grille_D05_1.csv (une ligne par actif) et grille_D05_1.json (cadrage, sources, ATR par année, saison horaire).
+Correction de la saison horaire (GO du porteur du 2026-10-06), cadrage fixé avant le calcul :
+- QUESTION : la queue de 13 h des indices et de l'or tient-elle une fois retirée la saison horaire ?
+- PERTINENCE : en ATR brut, US100 et US30 égalent BTC avec une saison horaire 2,4 à 2,6 fois plus marquée ; une marche
+  gaussienne à saison pure (une barre par jour six fois plus agitée) donne déjà 49 fenêtres à 10 ATR ou plus pour
+  1 000 en ATR brut (test du module).
+- CE QUE LE PROTOCOLE MESURE : z26 corrigé = mouvement de 13 h / (ATR désaisonnalisé de t × racine de la moyenne des
+  facteurs² de la fenêtre) ; facteur causal par demi-heure en heure locale, sur les 40 jours précédents ; fuseaux fixés
+  avant le calcul : UTC (cryptos), New York (US100, US30, or), Francfort (GER40), Londres (GBPJPY) ; z26 brut sur les
+  mêmes fenêtres ; même repère gaussien.
+- CE QU'IL NE PERMET PAS DE CONCLURE : aucune rentabilité ; RE-1 utilise l'ATR14 brut pour ses stops et sa taille ;
+  40 jours et demi-heure locale sont conventionnels, non optimisés ; mêmes limites de source que la grille.
+
+Usage : python experiments/D05_1/run_grille_D05_1.py --calcul | --saison
+Sorties : grille_D05_1.csv (une ligne par actif) et grille_D05_1.json (cadrage, sources, ATR par année, saison horaire) ;
+grille_saison_D05_1.csv (correction horaire).
 """
 from __future__ import annotations
 
@@ -48,6 +61,9 @@ ACTIFS = {
     "GER40": ("candidat", "CFD Germany 40 Saxo (bid)", RAW / "saxo_ger40_30m.csv"),
     "GBPJPY": ("candidat", "GBP/JPY au comptant Saxo (bid)", RAW / "saxo_gbpjpy_30m.csv"),
 }
+FUSEAUX = {"BTC": "UTC", "SOL": "UTC", "XAU": "America/New_York", "US100": "America/New_York",
+           "US30": "America/New_York", "GER40": "Europe/Berlin", "GBPJPY": "Europe/London"}
+JOURS_SAISON = 40
 
 
 def calcul() -> None:
@@ -82,11 +98,30 @@ def calcul() -> None:
         print(df[cols].round(3).to_string(index=False))
 
 
+def correction_horaire() -> None:
+    lignes = []
+    for code, (role, _, csv) in ACTIFS.items():
+        _, bars = load_asset(csv)
+        bars = bars[bars.time >= DEBUT].reset_index(drop=True)
+        lignes.append({"actif": code, "role": role,
+                       **grille.profil_saison(bars, fuseau=FUSEAUX[code], jours=JOURS_SAISON)})
+        print(f"{code:6s} fait", flush=True)
+    df = pd.DataFrame(lignes)
+    df.to_csv(HERE / "grille_saison_D05_1.csv", index=False, lineterminator="\n", float_format="%.6g")
+    cols = ["actif", "fenetres_s", "brut_pour_mille_10", "s_pour_mille_10", "brut_par_an_15", "s_par_an_15",
+            "brut_par_an_20", "s_par_an_20", "s_haut_pour_mille_10", "s_bas_pour_mille_10", "brut_ecart_type", "s_ecart_type", "fac_p01",
+            "fac_p99", "atr_s_sur_atr_p50"]
+    with pd.option_context("display.width", 250, "display.max_columns", 30):
+        print(df[cols].round(3).to_string(index=False))
+
+
 def main() -> None:
     p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    p.add_argument("--calcul", action="store_true", required=True)
-    p.parse_args()
-    calcul()
+    g = p.add_mutually_exclusive_group(required=True)
+    g.add_argument("--calcul", action="store_true")
+    g.add_argument("--saison", action="store_true")
+    a = p.parse_args()
+    calcul() if a.calcul else correction_horaire()
 
 
 if __name__ == "__main__":

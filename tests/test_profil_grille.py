@@ -142,3 +142,69 @@ def test_profil_complet_d_une_serie_continue():
     for k in ("atr_bps_p50", "pour_mille_5", "vr_26", "efficacite_p50", "expansion_p50", "saison_max_min",
               "z_p99", "calme_tous"):
         assert np.isfinite(p[k]), k
+
+
+# ── Correction de la saison horaire ─────────────────────────────────────────────
+def _plates(temps, a):
+    """Barres plates (open = close = 100) dont le TR vaut 2·a : TR en bps = 200·a."""
+    a = np.asarray(a, dtype=float)
+    return pd.DataFrame({"time": temps, "open": 100.0, "high": 100.0 + a, "low": 100.0 - a, "close": 100.0})
+
+
+def test_facteur_saisonnier_causal_par_demi_heure():
+    temps = pd.date_range("2024-01-01", periods=48 * 60, freq="30min", tz="UTC")
+    pic = (temps.hour == 13) & (temps.minute == 30)                     # TR quatre fois plus grand à 13:30
+    b = _plates(temps, np.where(pic, 0.04, 0.01))
+    fac = grille.facteur_saison(b, fuseau="UTC", jours=40)
+    jour50 = temps >= pd.Timestamp("2024-02-20", tz="UTC")
+    assert fac[jour50 & pic] == pytest.approx(np.full((jour50 & pic).sum(), 8.0 / (47 * 2 + 8) * 48), rel=1e-9)
+    assert fac[jour50 & ~pic] == pytest.approx(np.full((jour50 & ~pic).sum(), 2.0 / (47 * 2 + 8) * 48), rel=1e-9)
+    assert np.isnan(fac[0])                                             # aucun passé : pas de facteur
+    futur = b.copy()
+    futur.loc[48 * 55:, "high"] += 1.0                                  # changer le futur ne change pas le passé
+    assert np.array_equal(grille.facteur_saison(futur, "UTC", 40)[:48 * 55], fac[:48 * 55], equal_nan=True)
+
+
+def test_facteur_saisonnier_en_heure_locale_suit_le_changement_d_heure():
+    temps = pd.date_range("2024-01-15", "2024-05-15", freq="30min", tz="UTC", inclusive="left")
+    local = temps.tz_convert("America/New_York")
+    pic = (local.hour == 9) & (local.minute == 30)                      # ouverture de New York, 14:30 puis 13:30 UTC
+    b = _plates(temps, np.where(pic, 0.04, 0.01))
+    fac = grille.facteur_saison(b, fuseau="America/New_York", jours=40)
+    mai = temps >= pd.Timestamp("2024-05-01", tz="UTC")
+    assert fac[mai & pic] == pytest.approx(np.full((mai & pic).sum(), 8.0 / 102 * 48), rel=1e-9)
+
+
+def test_z26_saisonnier_formule():
+    temps = pd.date_range("2024-01-01", periods=400, freq="30min", tz="UTC")
+    b = barres(np.linspace(100, 110, 400), temps=temps, ecart=0.05)
+    fac = np.linspace(0.5, 1.5, 400)
+    atr_s = np.full(400, 7.0)
+    t = np.array([100, 126])
+    z = grille.z_saison(b, fac, atr_s, t)
+    o, c = b.open.to_numpy(), b.close.to_numpy()
+    k = 126
+    attendu = (o[k + 27] - o[k + 1]) / c[k] * 1e4 / (7.0 * np.sqrt(np.mean(fac[k + 1:k + 27] ** 2)))
+    assert z[1] == pytest.approx(attendu)
+
+
+def _marche_saison(m, temps, graine=7, sous=16):
+    """Marche gaussienne de 30 min (sous-pas pour high et low) dont la barre i a une volatilité multipliée par m[i]."""
+    rng = np.random.default_rng(graine)
+    n = len(m)
+    pas = rng.normal(0.0, 0.001, (n, sous)) * np.asarray(m, dtype=float)[:, None] / np.sqrt(sous)
+    chemin = 100 * np.exp(np.cumsum(pas.ravel())).reshape(n, sous)
+    debut = np.concatenate(([100.0], chemin[:-1, -1]))
+    return pd.DataFrame({"time": temps, "open": debut, "high": np.maximum(chemin.max(axis=1), debut),
+                         "low": np.minimum(chemin.min(axis=1), debut), "close": chemin[:, -1]})
+
+
+def test_correction_ramene_une_saison_pure_vers_la_marche_sans_saison():
+    temps = pd.date_range("2024-01-01", periods=48 * 300, freq="30min", tz="UTC")
+    pic = (temps.hour == 13) & (temps.minute == 30)                     # une barre par jour six fois plus agitée
+    sans = grille.profil_saison(_marche_saison(np.ones(len(temps)), temps), fuseau="UTC", jours=40)
+    avec = grille.profil_saison(_marche_saison(np.where(pic, 6.0, 1.0), temps), fuseau="UTC", jours=40)
+    assert avec["fenetres_s"] > 400
+    assert avec["brut_ecart_type"] > 1.15 * sans["brut_ecart_type"]    # la saison gonfle le z26 brut
+    assert avec["s_ecart_type"] == pytest.approx(sans["brut_ecart_type"], rel=0.1)   # corrigé : comme sans saison
+    assert sans["s_ecart_type"] == pytest.approx(sans["brut_ecart_type"], rel=0.05)  # sans saison : presque rien

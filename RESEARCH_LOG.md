@@ -2578,3 +2578,36 @@ reproduction de résultats publiés et parité du noyau, sans aucune performance
 #### Décision
 - [x] **Mesure faite, descriptive ; lecture au porteur.** Proposé sur GO : z26 corrigé de la saison horaire ; données
   FTMO (coûts, swaps ; WTI, Brent, GLE). Commit local.
+
+### [EXP-D05.1, correction horaire] — Queue de 13 h corrigée de la saison horaire
+- **Date :** 2026-10-06 ; GO du porteur (« GO pour la correction horaire »).
+- **Code :** `profil.grille` (`facteur_saison`, `atr_desaisonnalise`, `z_saison`, `profil_saison` ; 4 tests de plus) ;
+  `experiments/D05_1/run_grille_D05_1.py --saison`.
+
+#### 0. Cadrage (fixé avant le calcul)
+- **QUESTION :** la queue de 13 h des indices et de l'or tient-elle une fois retirée la saison horaire ?
+- **PERTINENCE :** en ATR brut, US100 et US30 égalent BTC, avec une saison horaire 2,4 à 2,6 fois plus marquée. Une
+  marche gaussienne à saison pure (une barre par jour six fois plus agitée) donne déjà 49 fenêtres à 10 ATR ou plus pour
+  1 000 en ATR brut, contre 5,7 une fois corrigée (test du module).
+- **CE QUE LE PROTOCOLE MESURE :** z26 corrigé = mouvement de 13 h / (ATR désaisonnalisé de t × racine de la moyenne des
+  facteurs² de la fenêtre) ; facteur causal par demi-heure en heure locale, sur les 40 jours précédents ; fuseaux fixés :
+  UTC (cryptos), New York (US100, US30, or), Francfort (GER40), Londres (GBPJPY) ; z26 brut sur les mêmes fenêtres ;
+  même repère gaussien.
+- **CE QU'IL NE PERMET PAS DE CONCLURE :** aucune rentabilité ; RE-1 utilise l'ATR14 brut pour ses stops et sa taille ;
+  40 jours et demi-heure locale sont conventionnels, non optimisés ; mêmes limites de source que la grille.
+
+#### Résultats (`experiments/D05_1/narratif_grille_D05_1.md`, §7 ; `grille_saison_D05_1.csv`)
+- [OBS] **Fenêtres à 10 ATR ou plus pour 1 000, brut → corrigé :** BTC 40,2 → 34,7 ; SOL 22,1 → 19,5 ; or 30,8 → 15,1 ;
+  US100 51,2 → 16,8 ; US30 43,3 → 13,7 ; GER40 25,7 → 13,0 ; GBPJPY 21,7 → 15,2 (repère gaussien 1,75).
+- [OBS] **À 15 ATR ou plus par an, corrigé :** BTC 7,0, SOL 3,1, US100 1,6, GBPJPY 1,3, US30 1,1, or 1,0, GER40 0,8.
+- [OBS] **Après correction, BTC garde 2,1 à 2,7 fois la queue de chaque candidat.** Les indices penchent à la baisse
+  (US100 : 5,2 hausses pour 11,6 baisses ‰).
+- [HYP] La queue brute des indices est surtout l'ouverture au comptant, rapportée à un ATR de nuit. Les expansions de
+  13 h hors heure fixe sont deux à trois fois plus rares sur les candidats que sur BTC.
+- **Méthode :** fréquences moyennées sur les 26 alignements des fenêtres. Un alignement unique déplaçait les comptes
+  rares (BTC, 20 ATR ou plus : 2,2 ou 4,0 par an selon le départ) ; les comptes à 10 ATR de la grille restent à 10 %
+  près.
+
+#### Décision
+- [x] **Mesure faite ; lecture au porteur.** Commit local.
+

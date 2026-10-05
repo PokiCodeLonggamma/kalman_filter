@@ -129,6 +129,73 @@ def independance(q: pd.Series, ref: pd.Series, part: float = 0.05) -> dict:
             "jours_extremes_communs": len(commun) / n}
 
 
+def facteur_saison(bars: pd.DataFrame, fuseau: str = "UTC", jours: int = 40, min_obs: int = 10) -> np.ndarray:
+    """Facteur saisonnier causal de chaque barre : TR moyen (bps) de sa demi-heure en heure locale (`fuseau`) sur les
+    `jours` précédents, barre exclue, rapporté au TR moyen de toutes les barres sur la même période. NaN faute de passé
+    (moins de `min_obs` barres)."""
+    tr = _tr_bps(bars)
+    idx = pd.DatetimeIndex(bars.time)
+    loc = idx.tz_convert(fuseau)
+    case = np.asarray(loc.hour * 2 + (loc.minute >= 30))
+    fen = f"{jours}D"
+    tous = pd.Series(tr, index=idx).rolling(fen, closed="left", min_periods=min_obs).mean().to_numpy()
+    moy = np.full(len(tr), np.nan)
+    for k in np.unique(case):
+        m = case == k
+        moy[m] = pd.Series(tr[m], index=idx[m]).rolling(fen, closed="left", min_periods=min_obs).mean().to_numpy()
+    return moy / tous
+
+
+def atr_desaisonnalise(bars: pd.DataFrame, fac, n: int = 14) -> np.ndarray:
+    """Moyenne de Wilder (alpha = 1/n) du TR en bps divisé par le facteur saisonnier : le niveau de volatilité hors
+    saison horaire, connu à la clôture de t."""
+    tr_s = _tr_bps(bars) / np.asarray(fac, dtype=float)
+    return pd.Series(tr_s).ewm(alpha=1 / n, adjust=False, ignore_na=True).mean().to_numpy()
+
+
+def z_saison(bars: pd.DataFrame, fac, atr_s, t: np.ndarray, h: int = H) -> np.ndarray:
+    """Mouvement de l'ouverture de t + 1 à celle de t + 27 (bps de close[t]) / (ATR désaisonnalisé de t × racine de la
+    moyenne des facteurs² des barres t + 1 à t + h). Sous une marche à saison pure, même loi que z26 sans saison."""
+    o, c = bars.open.to_numpy(dtype=float), bars.close.to_numpy(dtype=float)
+    f2 = np.asarray(fac, dtype=float) ** 2
+    ok = np.isfinite(f2)
+    cs = np.concatenate(([0.0], np.cumsum(np.where(ok, f2, 0.0))))
+    cn = np.concatenate(([0], np.cumsum(~ok)))
+    manque = cn[t + h + 1] - cn[t + 1]
+    moy_f2 = np.where(manque == 0, (cs[t + h + 1] - cs[t + 1]) / h, np.nan)
+    return (o[t + h + 1] - o[t + 1]) / c[t] * 1e4 / (np.asarray(atr_s, dtype=float)[t] * np.sqrt(moy_f2))
+
+
+def profil_saison(bars: pd.DataFrame, fuseau: str = "UTC", jours: int = 40, h: int = H, amorce: int = AMORCE,
+                  seuils=SEUILS) -> dict:
+    """Queue de 13 h corrigée de la saison horaire (`z_saison`), à côté du z26 brut, sur toutes les fenêtres glissantes
+    où la correction existe (amorce comptée depuis le premier ATR désaisonnalisé). Les fréquences sont des moyennes sur
+    les h alignements possibles des fenêtres disjointes : un alignement unique déplace les comptes rares (BTC, 20 ATR
+    ou plus : 2,2 ou 4,0 par an selon le départ). « Par an » : fréquence × fenêtres disjointes par an."""
+    b = bars.reset_index(drop=True)
+    fac = facteur_saison(b, fuseau, jours)
+    atr_s = atr_desaisonnalise(b, fac)
+    premier = int(np.flatnonzero(np.isfinite(atr_s))[0])
+    t = np.arange(amorce + premier, len(b) - h - 1)
+    zs, zb = z_saison(b, fac, atr_s, t, h), z_fenetres(b, atr(b), t, h)
+    ok = np.isfinite(zs) & np.isfinite(zb)
+    t, zs, zb = t[ok], zs[ok], zb[ok]
+    ans = (b.time.iat[t[-1]] - b.time.iat[t[0]]) / pd.Timedelta(days=365.25)
+    disjointes = len(t) / h
+    a_bps = atr(b) / b.close.to_numpy(dtype=float) * 1e4
+    out = {"fuseau": fuseau, "jours": jours, "fenetres_s": disjointes, "s_ans": ans,
+           "s_ecart_type": float(np.std(zs)), "brut_ecart_type": float(np.std(zb)),
+           "fac_p01": float(np.nanquantile(fac, 0.01)), "fac_p99": float(np.nanquantile(fac, 0.99)),
+           "atr_s_sur_atr_p50": float(np.nanmedian(atr_s[t] / a_bps[t]))}
+    for nom, z in (("s", zs), ("brut", zb)):
+        for k in seuils:
+            haut, bas = float(np.mean(z >= k)), float(np.mean(z <= -k))
+            out[f"{nom}_haut_pour_mille_{k}"], out[f"{nom}_bas_pour_mille_{k}"] = 1000 * haut, 1000 * bas
+            out[f"{nom}_pour_mille_{k}"] = 1000 * (haut + bas)
+            out[f"{nom}_par_an_{k}"] = (haut + bas) * disjointes / ans
+    return out
+
+
 def _secondes(temps: pd.Series) -> np.ndarray:
     return ((temps - pd.Timestamp("1970-01-01", tz="UTC")) // pd.Timedelta(seconds=1)).to_numpy(dtype="int64")
 

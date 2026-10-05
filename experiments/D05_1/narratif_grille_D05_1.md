@@ -12,6 +12,17 @@ experiments/D05_1/run_grille_D05_1.py --calcul` (une minute). Données : `grille
 - *Aucun coût, aucun trade, aucun classement : grille de lecture, sans seuil. WTI, Brent et GLE attendent les données
   FTMO.*
 
+## Mise à jour du 2026-10-06 : correction de la saison horaire (§7)
+
+- **Une fois la saison horaire retirée, la queue des indices perd environ deux tiers :** US100 passe de 51 à 17
+  fenêtres à 10 ATR ou plus pour 1 000, US30 de 43 à 14. GER40 et l'or en perdent la moitié, GBPJPY 30 %, les cryptos
+  12 à 14 %.
+- **Corrigée, la queue de BTC (35 ‰) vaut 2,1 à 2,7 fois celle de chaque candidat (13 à 17 ‰).** SOL (20 ‰) reste un
+  peu au-dessus des candidats, qui se resserrent entre eux.
+- **Les expansions des indices hors heure fixe sont surtout des baisses :** US100, 5,2 hausses pour 11,6 baisses ‰.
+- **Correction de méthode :** les fréquences sont désormais des moyennes sur les 26 alignements des fenêtres. Un
+  alignement unique déplaçait les comptes rares : BTC à 20 ATR ou plus, 2,2 ou 4,0 par an selon le départ.
+
 ## Verdict
 
 - **En ATR de 30 min, toutes les séries ont une queue de 13 h bien plus épaisse qu'une marche gaussienne :** 11 à 28 fois
@@ -97,11 +108,46 @@ experiments/D05_1/run_grille_D05_1.py --calcul` (une minute). Données : `grille
 - **La naissance au calme, telle que définie, est universelle.** C'est l'effet de la division par ATR14(t) (I-M20) :
   l'axe ne distingue rien sous cette forme.
 
+## 7. Correction de la saison horaire (2026-10-06)
+
+*GO du porteur du 2026-10-06. Calcul : `run_grille_D05_1.py --saison` ; données : `grille_saison_D05_1.csv`.*
+
+*Méthode (`profil.grille`, 4 tests de plus) :*
+- *Facteur saisonnier causal de chaque barre : TR moyen de sa demi-heure en heure locale sur les 40 jours précédents,
+  rapporté au TR moyen de toutes les barres sur la même période.*
+- *Fuseaux fixés avant le calcul : UTC (cryptos), New York (US100, US30, or), Francfort (GER40), Londres (GBPJPY).*
+- *z26 corrigé = mouvement de 13 h / (ATR désaisonnalisé de t × racine de la moyenne des facteurs² de la fenêtre).
+  Sous une marche à saison pure, il suit la même loi qu'un z26 sans saison.*
+- *Contrôle du module : une marche gaussienne dont une barre par jour est six fois plus agitée donne 49 fenêtres à
+  10 ATR ou plus pour 1 000 en ATR brut, et 5,7 une fois corrigée.*
+- *Toutes les fenêtres glissantes (les 26 alignements) ; « par an » = fréquence × fenêtres disjointes par an.*
+
+| Actif | ≥ 10 ATR pour 1 000 : brut → corrigé | ≥ 15 ATR par an : brut → corrigé | ≥ 20 ATR par an : brut → corrigé | Corrigé : hausses / baisses à 10 ATR ou plus (‰) |
+|---|---|---|---|---|
+| Repère gaussien | 1,75 | ≈ 0 | 0 | — |
+| BTC | 40,2 → 34,7 | 8,1 → 7,0 | 3,0 → 2,2 | 18,7 / 16,0 |
+| SOL | 22,1 → 19,5 | 3,7 → 3,1 | 1,0 → 1,0 | 11,9 / 7,7 |
+| Or | 30,8 → 15,1 | 3,1 → 1,0 | 0,9 → 0,3 | 7,8 / 7,4 |
+| US100 | 51,2 → 16,8 | 5,9 → 1,6 | 1,7 → 0,3 | 5,2 / 11,6 |
+| US30 | 43,3 → 13,7 | 5,4 → 1,1 | 1,7 → 0,3 | 4,5 / 9,3 |
+| GER40 | 25,7 → 13,0 | 1,7 → 0,8 | 0,4 → 0,1 | 3,5 / 9,5 |
+| GBPJPY | 21,7 → 15,2 | 2,0 → 1,3 | 0,5 → 0,4 | 6,8 / 8,4 |
+
+- `[OBS]` **Part retirée par la correction :** US100 67 %, US30 68 %, GER40 49 %, or 51 %, GBPJPY 30 %, SOL 12 %,
+  BTC 14 %.
+- `[OBS]` **Après correction, BTC garde 2,1 à 2,7 fois la queue de chaque candidat ;** à 15 ATR ou plus, 7,0 par an
+  contre 0,8 à 1,6.
+- `[HYP]` **La queue brute des indices est surtout l'ouverture au comptant, mesurée contre un ATR de nuit.** Les
+  expansions de 13 h hors heure fixe, celles du « phénomène crypto », sont deux à trois fois plus rares sur les
+  candidats que sur BTC.
+- `[HYP]` **RE-1 mesure en ATR brut.** Sur les indices, la saison se traduit donc surtout en mouvements à heure fixe
+  autour de ses stops ; seul le backtest dira ce que RE-1 en tire.
+- `[OBS]` **Méthode :** les comptes de §1 sont sur un seul alignement. À 10 ATR pour 1 000, ils restent à 10 % près des
+  moyennes sur tous les alignements. Les comptes rares par an (15 et 20 ATR) sont à relire avec le tableau ci-dessus.
+
 ## 5. Suite proposée (sur GO)
 
-- **z26 corrigé de la saison horaire :** le mouvement divisé par l'ATR attendu sur la fenêtre d'après le profil horaire
-  de l'actif. Il sépare l'ouverture au comptant des expansions qui n'arrivent pas à heure fixe. Mêmes données, une
-  minute de calcul.
+- **z26 corrigé de la saison horaire :** fait (§7).
 - **Données FTMO** (après l'accord de Spotware) : coût et swap en ATR, et WTI, Brent et GLE sur la même grille.
 - Puis RE-1 sur les candidats retenus par le porteur, et l'inclusion dans le portefeuille contre les pistes 1 et 2.
 

@@ -738,10 +738,10 @@ d'extraction, couverture, construction. Tous les chargements tronquent avant le 
 |---|---|
 | Dossier local | `C:\Users\poek9\Projet Claude\#KalmanFilter` (le `#` impose des guillemets) |
 | GitHub | https://github.com/PokiCodeLonggamma/kalman_filter, **public**, branche `main` |
-| `origin/main` | `c5618b8` (extracteur cTrader et application Open API de D05.1), poussé le 2026-10-05 avec l'accord du porteur ; vérifier par `git log --oneline -5` |
-| Commits locaux non poussés | la mesure de la grille de D05.1 (`profil.grille`, `run_grille_D05_1.py`) ; push sur accord du porteur. La phrase du porteur dans `prompts/init_d3_sniper.md` (cTrader) reste hors des commits (session parallèle) |
+| `origin/main` | `b020961` (mesure de la grille de D05.1), poussé le 2026-10-05 avec l'accord du porteur ; vérifier par `git log --oneline -5` |
+| Commits locaux non poussés | la correction horaire de la grille de D05.1 ; push sur accord du porteur. La phrase du porteur dans `prompts/init_d3_sniper.md` (cTrader) reste hors des commits (session parallèle) |
 | Identité git | `PokiCodeLonggamma <250868839+PokiCodeLonggamma@users.noreply.github.com>` |
-| Tests | 412 réussis, 2 ignorés (244 à la validation, +5 en D02.0, +53 en D02, +19 en D02.1, +11 en D03, +5 en D03.1, +13 en D04, +4 en D04.1, +12 en D05.4, +8 en D05.5-D05.6, +1 en D05.6bis, +5 en D05.7, +1 en D05.8, +31 en D05.1) |
+| Tests | 416 réussis, 2 ignorés (244 à la validation, +5 en D02.0, +53 en D02, +19 en D02.1, +11 en D03, +5 en D03.1, +13 en D04, +4 en D04.1, +12 en D05.4, +8 en D05.5-D05.6, +1 en D05.6bis, +5 en D05.7, +1 en D05.8, +35 en D05.1) |
 | Système | Windows 11, Git Bash et PowerShell, application Claude Code de bureau, navigateur intégré |
 | Python | 3.11 ; numpy, pandas, matplotlib (`pyproject.toml`) |
 | Mémoire de l'assistant | `C:\Users\poek9\.claude\projects\C--Users-poek9-Projet-Claude--KalmanFilter\memory\` |
@@ -841,8 +841,9 @@ d'extraction, couverture, construction. Tous les chargements tronquent avant le 
    OAuth) et `experiments/D05_1/donnees_D05_1.py`. Application Open API créée (lecture seule), en attente de l'accord de Spotware. Grille mesurée sans RE-1 ni coût
    (`experiments/D05_1/narratif_grille_D05_1.md`) : US100 et US30 ont une queue de 13 h en ATR aussi épaisse que BTC, mais une
    saison horaire plus marquée ; persistance et naissance au calme sans pouvoir distinctif ; quatre points de la note
-   corrigés. Prochaine étape : accord de Spotware, puis --connexion, --symboles et téléchargement, chacun sur GO ;
-   proposé : z26 corrigé de la saison.
+   corrigés. Correction horaire (2026-10-06) : la queue des indices tient surtout à l'ouverture au comptant ; corrigée,
+   celle de BTC vaut 2,1 à 2,7 fois celle de chaque candidat. Prochaine étape : accord de Spotware, puis --connexion,
+   --symboles et téléchargement, chacun sur GO.
 2. **Nouvelle session :** lire ce document, puis :
    - `CLAUDE.md`, `RESEARCH_PHILOSOPHY.md`, `PROJECT_PLAN.md` ;
    - `RE1_FONDS_PROPRES_LIVRE_BLANC.md` (version finale de RE-1 et son exploitation) ;
@@ -850,7 +851,7 @@ d'extraction, couverture, construction. Tous les chargements tronquent avant le 
    - les dernières entrées de `RESEARCH_LOG.md` ;
    - `src/strategy/re1.py` ;
    - `experiments/D01_7/narratif_D01_7.md`.
-3. **Vérifier l'état :** `git status`, `git log --oneline -5`, `python -m pytest -q` (attendu : 412 réussis, 2 ignorés).
+3. **Vérifier l'état :** `git status`, `git log --oneline -5`, `python -m pytest -q` (attendu : 416 réussis, 2 ignorés).
 4. **Rendre au porteur un compte rendu court**, balisé :
    - compréhension du projet et de RE-1 ;
    - règles ;
