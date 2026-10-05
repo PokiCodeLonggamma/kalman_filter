@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using cAlgo.API;
 using cAlgo.API.Internals;
+using File = System.IO.File;   // cAlgo.API a aussi un type File : on désigne celui de .NET
 
 namespace cAlgo.Robots
 {
