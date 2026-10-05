@@ -2534,3 +2534,47 @@ reproduction de résultats publiés et parité du noyau, sans aucune performance
 - **En attente :** accord de Spotware ; puis --connexion et --symboles (sur GO) ; noms exacts validés ;
   téléchargement (sur GO).
 - **Push :** aucun ; commit local.
+
+### [EXP-D05.1, grille] — Mesure de la grille de profil, sans RE-1 ni coût (ancres, or, candidats Saxo, 2020-2025)
+- **Date :** 2026-10-05 ; GO du porteur (« GO pour la mesure de la grille »), pendant l'attente de l'accord de Spotware.
+- **Actifs & Période :** BTC (Bitstamp) et SOL (Coinbase) en ancres ; or (HistData) en repère TradFi du portefeuille ;
+  candidats US100, US30, GER40 et GBPJPY (séries Saxo de D01.7) ; du 2020-01-01 au 2025-12-31 (SOL dès 2021-06-17).
+- **Code :** `src/profil/grille.py` (13 tests) ; `experiments/D05_1/run_grille_D05_1.py --calcul`.
+
+#### 0. Cadrage (fixé avant le calcul)
+- **QUESTION :** les candidats montrent-ils, en structure de marché, l'empreinte des marchés où RE-1 gagne (expansions
+  de 13 h nées du calme, des deux côtés, en continu ; persistance aux heures ; indépendance vis-à-vis des cryptos) ?
+- **PERTINENCE :** grille de la note de profil, validée par le porteur ; mesure descriptive avant les données FTMO, dont
+  viendront les coûts.
+- **CE QUE LE PROTOCOLE MESURE :** les axes calculables sur les barres : échelle et plafond de 1x ; queue d'expansion et
+  repère gaussien ; naissance au calme ; sauts ou expansions ; persistance ; symétrie ; saison horaire ; continuité ;
+  gaps ; indépendance vis-à-vis de BTC ; activité pendant le creux du portefeuille de RE-1 (2023-07-13 → 2024-01-27).
+  Fenêtres disjointes de 26 barres ; z26 = (open[t + 27] − open[t + 1]) / ATR14(t).
+- **CE QU'IL NE PERMET PAS DE CONCLURE :** aucune rentabilité (ni RE-1, ni coûts) ; source Saxo (prix vendeur), pas
+  FTMO ; 2020-2025 seulement ; aucun classement ni seuil ; BTC 2020-2025 est la période de construction de RE-1. WTI,
+  Brent et GLE seront mesurés sur les données FTMO.
+
+#### Résultats (`experiments/D05_1/narratif_grille_D05_1.md`)
+- [OBS] **Queue de 13 h en ATR(t) :** 11 à 28 fois le repère gaussien (1,75 fenêtre sur 1 000 à |z26| ≥ 10). Pour
+  1 000 fenêtres : US100 49,3, BTC 41,6, US30 41,5, or 31,2, GER40 28,4, SOL 22,9, GBPJPY 19,4. Par an, à 15 ATR ou
+  plus : BTC 7,8, US100 6,2, US30 6,0, SOL 4,0, or 3,7, GBPJPY 2,0, GER40 1,3.
+- [OBS] **Saison horaire** (TR de l'heure la plus agitée / la plus calme) : BTC 1,7, SOL 1,5, GBPJPY 2,2, GER40 3,2,
+  or 3,5, US30 4,1, US100 4,4. [HYP] Une part de la queue des indices vient de l'ouverture au comptant à heure fixe.
+- [OBS] **Axes sans pouvoir distinctif :** VR(26) de 0,89 à 0,98 (BTC le plus bas) ; 77 à 81 % des grandes fenêtres
+  nées sous la médiane d'ATR, partout ; plus gros pas de 30 à 38 % du mouvement, partout.
+- [OBS] **Calendrier et gaps :** 58 à 64 % des fenêtres des indices et de l'or traversent une coupure (GBPJPY 11 %,
+  cryptos 0) ; gaps de 4 ATR ou plus : 1,0 à 2,8 par an hors cryptos.
+- [OBS] **Plafond de 1x à r = 0,20 :** 43 % (US100) à 92 % (GBPJPY) des barres hors cryptos ; BTC 6 %.
+- [OBS] **Lien avec BTC** (corrélation des |r| quotidiens ; jours extrêmes communs, 5 % si indépendants) : GBPJPY 0,10
+  et 8,5 % ; or 0,16 et 16 % ; indices 0,31 à 0,34 et 17 à 22 % ; SOL 0,57 et 41 %.
+- [OBS] **Creux du portefeuille de RE-1 (2023-07-13 → 2024-01-27) :** fenêtres à 10 ATR ou plus, rapportées à la
+  moyenne : BTC 1,64, SOL 1,20, or 1,34, GBPJPY 1,36, US100 0,91, US30 0,69, GER40 0,65.
+- [OBS] **Asymétrie à 10 ATR ou plus (hausses / baisses) :** BTC 93 / 75 ; US100 56 / 76 ; US30 44 / 67 ; GER40 22 / 46 ;
+  or et GBPJPY symétriques.
+- **Corrections de la note de profil** (addendum, §10) : le VR ne marque pas les marchés de RE-1 ; « un hiver est un
+  marché sans expansion » n'est pas soutenu ; GBPJPY a une queue d'expansion, la plus mince ; la naissance au calme,
+  telle que définie, est universelle.
+
+#### Décision
+- [x] **Mesure faite, descriptive ; lecture au porteur.** Proposé sur GO : z26 corrigé de la saison horaire ; données
+  FTMO (coûts, swaps ; WTI, Brent, GLE). Commit local.

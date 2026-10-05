@@ -6,6 +6,9 @@ opérations faites sur ces chiffres (repère gaussien, §2 ; points morts, §4.1
 seuil (PHILOSOPHY §3.1) : les ancres sont des valeurs mesurées, pas des critères. Le porteur choisit les candidats ; le
 backtest de RE-1 gelée juge.*
 
+*Addendum du 2026-10-05 : la mesure de la grille (`narratif_grille_D05_1.md`) corrige quatre points de cette note ;
+voir §10.*
+
 ## 0. En bref
 
 - **RE-1 ne suit pas une tendance : elle prend la cassure d'une compression courte et la tient 13 h.** Jambe de moins
@@ -307,3 +310,19 @@ du bruit récent.
 - **La référence crypto est elle-même haute :** l'histoire réelle se place entre les 78e et 96e centiles des histoires
   recomposées (D05.7).
 - **Repère gaussien :** un ordre de grandeur, pas un modèle des données.
+
+## 10. Addendum : ce que la mesure de la grille a corrigé (2026-10-05)
+
+*Source : `narratif_grille_D05_1.md` (BTC, SOL, or, US100, US30, GER40, GBPJPY ; 2020-2025 ; sans RE-1 ni coût).*
+
+- **VR au-dessus de 1 (§3.1, §5) n'est pas un marqueur des marchés de RE-1 :** VR(26) de 0,89 à 0,98 partout, BTC le
+  plus bas.
+- **« Un hiver de RE-1 est un marché sans expansion » (§1) n'est pas soutenu :** pendant le creux du portefeuille
+  (2023-07 → 2024-01), BTC a eu 1,6 fois plus de fenêtres à 10 ATR ou plus qu'en moyenne.
+- **« Change : pas de queue d'expansion à 30 min » (§6) est trop fort :** GBPJPY a une queue (19 fenêtres à 10 ATR ou
+  plus pour 1 000, 11 fois le repère gaussien), la plus mince de l'échantillon.
+- **La naissance au calme (§2.2, §5), telle que définie, ne distingue rien :** 77 à 81 % des grandes fenêtres naissent
+  sous la médiane d'ATR, sur chaque série (effet de la division par ATR14(t), I-M20).
+- **Nouveau point :** en ATR de 30 min, US100 et US30 ont une queue de 13 h aussi épaisse que BTC. Leur saison horaire,
+  2,4 à 2,6 fois plus marquée, peut en expliquer une part : une mesure corrigée de la saison est proposée.
+
