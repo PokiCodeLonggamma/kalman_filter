@@ -2497,3 +2497,35 @@ reproduction de résultats publiés et parité du noyau, sans aucune performance
   - [HYP] Par classe : énergie en CFD continu la plus proche du profil sur le papier ; indices suspendus au coût réel de
     la firme ; change sans queue d'expansion ; actions proches des ETF de séance.
 - **Décision :** en attente du porteur (grille, liste des candidats, période et statut de 2026). Commit local.
+
+### [DÉCISION] — D05.1 : D01.7 écarté comme filtre ; candidats, période et firme ; objectif : l'inclusion dans le portefeuille ; extracteur cTrader (2026-10-05)
+- **Décisions du porteur :**
+  - les conclusions de D01.7 ne servent pas à choisir les actifs. Motif du porteur : en prop firm (taille hybride,
+    « Burn & Churn »), un actif à espérance brute légèrement négative peut augmenter la réussite d'un challenge, en
+    ajoutant de la variance décorrélée des cryptos pendant les hivers ;
+  - mission : trouver des actifs qui reproduisent le phénomène « crypto » de RE-1 (cassure de compression, puis
+    expansion directionnelle sur 13 h) ;
+  - grille validée ; candidats : GLE, WTI, Brent, US100, US30, GER40 et GBPJPY ; fiches des six actifs actuels pour
+    leurs coûts réels et leurs swaps ;
+  - période : de 2020-01 à aujourd'hui, 2026 incluse ; firme : FTMO (compte d'essai sur cTrader), dont les coûts, écarts
+    et swaps feront foi ;
+  - objectif de D05.1 : modéliser l'inclusion de ces actifs dans le portefeuille global et voir si la nouvelle
+    configuration bat la piste 1 ou la piste 2 sur un challenge FTMO ;
+  - push de `4a96066` et `3f6672d` : fait (origin/main = `3f6672d`).
+- **Relecture de l'agent (à mesurer, pas un veto) :**
+  - [HYP] Modèle de premier passage (brownien, sans limite de temps) : la réussite ne dépend que de μ/σ². Un compte sans
+    avantage réussit P1 dans 10/19 ≈ 53 % des cas, P1 + P2 dans ≈ 35 %. Une variance indépendante sans dérive rapproche
+    la réussite de ces valeurs : elle ne l'augmente que si l'on part d'en dessous, si l'actif couvre (corrélation
+    négative les jours de pertes crypto, comme l'or) ou, en suite de tentatives, par la vitesse de résolution.
+  - Le témoin naturel est la piste 2, qui ajoute de la variance par r avec la dérive de RE-1.
+  - GBPJPY : D01.7 l'avait trouvé sans suite à 30 min ; la mesure de persistance de la grille tranchera.
+- **Fait `[CODE]` :**
+  - `src/marketdata/ctrader.py` : JSON sur WebSocket (port 5036) ; OAuth (URL d'autorisation en lecture seule, point
+    jeton, connexion du porteur par serveur de retour local) ; client apparié par clientMsgId, avec battement, limite
+    de débit et cadence de l'historique ; comptes, symboles par nom exact, fiches ; barres relatives → prix ;
+    téléchargement à rebours par fenêtres, avec hasMore ; réserve 2026 par `reserve.levee` ; écriture au schéma de
+    `load_ohlc` ; 18 tests (399 au total).
+  - `experiments/D05_1/donnees_D05_1.py` (--connexion, --symboles, --telechargement) : non lancé.
+- **En attente :** application à créer par le porteur sur le portail, accord de Spotware, URL de retour, Client ID et
+  Secret posés par `setx` ; puis --connexion et --symboles (sur GO) ; noms exacts validés ; téléchargement (sur GO).
+- **Push :** aucun ; commit local.
