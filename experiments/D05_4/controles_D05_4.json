@@ -1,0 +1,45 @@
+{
+ "date": "2026-10-05 14:00 UTC",
+ "commit": "5f7b4e9",
+ "motif": "EXP-D05.4 (porteur, 2026-10-05)",
+ "ETH_identique_a_D04": {
+  "trades": 1525,
+  "esperance_atr": 0.183415
+ },
+ "XRP_identique_a_D04": {
+  "trades": 1689,
+  "esperance_atr": 0.262972
+ },
+ "jambe_seule_ETH_pertes_journalieres_identiques": 983,
+ "departs": {
+  "n": 1826,
+  "premier": "2021-09-30 22:00:00+00:00",
+  "dernier": "2026-09-29 22:00:00+00:00"
+ },
+ "portfolio_paths_et_D04_2_r5": {
+  "etats": 63148,
+  "pnl": 0.569975,
+  "mdd": -0.106602
+ },
+ "portfolio_paths_et_D04_2_r10": {
+  "etats": 63148,
+  "pnl": 1.389451,
+  "mdd": -0.197639
+ },
+ "portfolio_paths_et_D04_2_r15": {
+  "etats": 63148,
+  "pnl": 2.478037,
+  "mdd": -0.262783
+ },
+ "portfolio_paths_et_D04_2_r20": {
+  "etats": 63148,
+  "pnl": 3.870368,
+  "mdd": -0.32089
+ },
+ "portfolio_paths_et_D04_2_r25": {
+  "etats": 63148,
+  "pnl": 5.841937,
+  "mdd": -0.373972
+ },
+ "duree_s": 188
+}

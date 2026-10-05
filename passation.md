@@ -739,9 +739,9 @@ d'extraction, couverture, construction. Tous les chargements tronquent avant le 
 | Dossier local | `C:\Users\poek9\Projet Claude\#KalmanFilter` (le `#` impose des guillemets) |
 | GitHub | https://github.com/PokiCodeLonggamma/kalman_filter, **public**, branche `main` |
 | `origin/main` | `5650153` (D04.2), poussé le 2026-10-05 avec l'accord du porteur ; vérifier par `git log --oneline -5` |
-| Commits locaux non poussés | le livre blanc (`1ba18d6`) et les trois directions (prompts) ; push sur accord du porteur |
+| Commits locaux non poussés | le livre blanc (`1ba18d6`), les trois directions (`d910b92`, `5f7b4e9`) et D05.4 (simulateur de challenge) ; push sur accord du porteur |
 | Identité git | `PokiCodeLonggamma <250868839+PokiCodeLonggamma@users.noreply.github.com>` |
-| Tests | 354 réussis, 2 ignorés (244 à la validation, +5 en D02.0, +53 en D02, +19 en D02.1, +11 en D03, +5 en D03.1, +13 en D04, +4 en D04.1) |
+| Tests | 366 réussis, 2 ignorés (244 à la validation, +5 en D02.0, +53 en D02, +19 en D02.1, +11 en D03, +5 en D03.1, +13 en D04, +4 en D04.1, +12 en D05.4) |
 | Système | Windows 11, Git Bash et PowerShell, application Claude Code de bureau, navigateur intégré |
 | Python | 3.11 ; numpy, pandas, matplotlib (`pyproject.toml`) |
 | Mémoire de l'assistant | `C:\Users\poek9\.claude\projects\C--Users-poek9-Projet-Claude--KalmanFilter\memory\` |
@@ -773,7 +773,8 @@ d'extraction, couverture, construction. Tous les chargements tronquent avant le 
 | D04.1 | `deb86f1` (portefeuille complet, pire journée) |
 | D04.2 | `5650153` (portefeuille en OFAT, composition et levier) |
 | Livre blanc « Fonds propres » | `1ba18d6` (branche close) |
-| Trois directions | le commit des prompts d'initialisation (`prompts/`) et de la décision |
+| Trois directions | `d910b92` (prompts d'initialisation et décision), `5f7b4e9` (suivi central) |
+| D05.4 | le commit du simulateur de challenge (`src/propfirm/`, `experiments/D05_4/`) et du cadrage Prop Firm |
 
 ---
 
@@ -803,7 +804,10 @@ d'extraction, couverture, construction. Tous les chargements tronquent avant le 
    `RE1_FONDS_PROPRES_LIVRE_BLANC.md` (cahier des charges du bot). Prochain cycle : contraintes Prop Firm.
    Trois directions (même jour) : Fonds propres (session papier et workstation, en worktree sur sa
    branche), Prop Firm (sur `main`, avec le porteur), Sniper manuel (dépôt privé séparé) ; prompts dans
-   `prompts/`.
+   `prompts/`. Cycle Prop Firm : plan du porteur critiqué puis recadré (étalon FTMO Swing, D05.3 annulé, D05.1
+   reporté) ; EXP-D05.4 (`experiments/D05_4/rapport_D05_4.md`, module `src/propfirm/`) : réussite P1 + P2 de 88 %
+   (0,05 %/ATR, 571 j médians) à 51 % (0,25, 41 j) ; échecs par la perte totale statique ; marge 1:2 sans effet notable
+   jusqu'à 0,15. Choix de r et suite du cycle à décider par le porteur.
 2. **Nouvelle session :** lire ce document, puis :
    - `CLAUDE.md`, `RESEARCH_PHILOSOPHY.md`, `PROJECT_PLAN.md` ;
    - `RE1_FONDS_PROPRES_LIVRE_BLANC.md` (version finale de RE-1 et son exploitation) ;
@@ -811,7 +815,7 @@ d'extraction, couverture, construction. Tous les chargements tronquent avant le 
    - les dernières entrées de `RESEARCH_LOG.md` ;
    - `src/strategy/re1.py` ;
    - `experiments/D01_7/narratif_D01_7.md`.
-3. **Vérifier l'état :** `git status`, `git log --oneline -5`, `python -m pytest -q` (attendu : 354 réussis, 2 ignorés).
+3. **Vérifier l'état :** `git status`, `git log --oneline -5`, `python -m pytest -q` (attendu : 366 réussis, 2 ignorés).
 4. **Rendre au porteur un compte rendu court**, balisé :
    - compréhension du projet et de RE-1 ;
    - règles ;

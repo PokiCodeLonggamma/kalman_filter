@@ -2074,3 +2074,108 @@ reproduction de résultats publiés et parité du noyau, sans aucune performance
     les documents partagés de `main`.
 - **Prompts d'initialisation :** `prompts/init_d1_fonds_propres_papier.md` et `prompts/init_d3_sniper.md`.
 - **Push :** aucun ; commit local.
+
+### [DÉCISION] — Cycle Prop Firm (D05) : critique du plan du porteur, recadrage (2026-10-05)
+- **Plan du porteur (prompt « EXP-D05 ») :**
+  - D05.1, univers TradFi : US100 ou GER40, GBPJPY, WTI ; glissement du stop catastrophe sur les gaps ;
+  - D05.2, boucliers : coupe-circuit intrabarre à −3,5 % depuis minuit, plafond d'exposition ;
+  - D05.3, gestion active : break-even à +1,5 ATR, sortie de 30 % à +2 ATR ;
+  - D05.4 : simulateur de challenge ;
+  - D05.5 : Monte Carlo, 10 000 chemins.
+- **Critique de l'agent (sans calcul, sur rapports existants) :**
+  - TradFi déjà lue en EXP-D01.7 (RE-1 avant sa version finale), sans IC > 0 à 4 bps : GER40 −0,005, US100 −0,097,
+    GBPJPY −0,303 ATR. WTI retiré par le porteur le 2026-09-30 (HistData arrêté au 2023-12-01). Choisir parmi ces actifs
+    serait une sélection après lecture.
+  - D05.3 déjà mesuré (EXP-C03) : un break-even déclenché à 1,5 ATR ou moins ampute la queue droite. La sortie
+    partielle équivaut à 30 % de take-profit à +2 ATR, qui reste sous RE-1 même en borne optimiste.
+  - La contrainte qui lie est la perte totale statique (MDD −10,7 % dès 0,05 %/ATR), pas la perte du jour (≈ 21 × r).
+  - Le coupe-circuit à −3,5 % ne jouerait pas sous r ≈ 0,15. Plafond d'exposition et marge risquent de toucher d'abord
+    les grands gagnants, nés à ATR bas avec une grosse taille.
+  - Un Monte Carlo par trades i.i.d. casse les pires journées, où les pertes tombent ensemble.
+  - Le simulateur doit venir d'abord : il juge chaque levier contre une simple baisse de r.
+- **Décisions du porteur :**
+  - **Étalon : compte FTMO Swing.**
+    - Commission crypto nulle, écarts serrés, swap faible.
+    - Levier 1:2 sur les cryptos et 1:30 sur l'or ; positions du week-end permises.
+    - Perte du jour mesurée sur l'équité, latents inclus, remise à zéro à 00:00 CET/CEST.
+    - Objectifs de 9 % puis 5 % ; perte totale de 10 %, statique ; au moins 4 jours ; aucune règle de régularité.
+  - **Pas de prompt Perplexity.**
+  - **D05.3 annulé** ; le moteur reste strictement gelé.
+  - **Marge :** une entrée qui dépasserait la marge du compte est réduite à la marge restante.
+  - **D05.1 recadré pour plus tard (« ADN cinématique ») :**
+    - profil des actifs où RE-1 gagne : leptokurticité, ratio tendance/range, régimes de volatilité ;
+    - puis test TradFi sur des données cTrader 2023-2026, avec parmi les candidats l'action Société Générale (GLE).
+  - **GO de l'étape 1 :** simulateur de challenge (EXP-D05.4), sur le cadrage de l'agent.
+- **Relecture des énoncés du porteur :**
+  - « tests de D01.7 obsolètes (ancienne version de RE-1) » : vrai pour la version, qui n'avait pas le stop
+    catastrophe. Le coût exprimé en ATR ne dépend pas de la version : de 0,24 à 0,42 ATR pour un ATR de 11 à 34 bps.
+  - « actifs où RE-1 gagne : BTC, SOL, XAU » : l'or est ≈ 0 avant 2026 (D01, D04), alors qu'ETH et XRP gagnent (D04).
+  - Objectif de P1 à 9 % : à ma connaissance, FTMO demande 10 % ; le porteur garde 9 % (paramètre du simulateur).
+- **Push :** aucun ; commit local.
+
+### [EXP-D05.4] — Simulateur de challenge de prop firm : RE-1 version finale, étalon FTMO Swing
+- **Date :** 2026-10-05
+- **Étape :** D05, étape 1. GO du porteur ; cadrage de l'agent validé.
+- **Actifs & Période :** trades de D04.1 (six actifs, entrées du 2021-10-01 au 2026-10-01 exclu ; réserve levée par
+  `reserve.levee`) ; 5 bps (or 4 bps).
+
+#### 0. Cadrage (fixé avant le calcul, `experiments/D05_4/run_D05_4.py`)
+- **QUESTION :** avec RE-1 VF telle quelle, selon r :
+  - probabilité de réussir P1 (+9 %) puis P2 (+5 %) sans franchir −5 % sur une journée ni −10 % au total ;
+  - délai ;
+  - règle qui fait échouer.
+- **MÉTHODE :** module `src/propfirm/` (12 tests).
+  - Un compte à plat de 100 000 $ démarre à chaque minuit CET/CEST : 1 826 départs.
+  - Les départs avancent ensemble sur les événements de `portfolio_paths`.
+  - Marge 1:2 (cryptos) et 1:30 (or), plafonnée selon la règle du porteur.
+  - Pertes jugées sur la borne pessimiste ; perte du jour depuis le solde de minuit (FTMO).
+  - Un facteur : r ∈ {0,05 ; 0,10 ; 0,15 ; 0,20 ; 0,25} %/ATR.
+  - En regard : sans plafond de marge, référence max(solde, équité), capital valorisé, données coupées au 2026-01-01.
+- **CRITÈRE DE LECTURE (sans seuil) :** parts de réussite, d'échec et de challenges en cours ; délais ; par r et par
+  année ; IC par blocs de mois de départ.
+- **Conventions :**
+  - réussite = capital valorisé − frais de sortie ≥ objectif, avec au moins 4 jours ; tout est alors clôturé ;
+  - P2 démarre au minuit suivant ;
+  - correction de la borne pessimiste : la perte du stop est cumulée aux extrêmes des autres positions.
+
+#### Résultats (`experiments/D05_4/rapport_D05_4.md`)
+- **Contrôles passés :**
+  - ETH et XRP identiques à D04 ;
+  - pour chaque r, sans plafond ni correction, le départ du 2021-10-01 redonne `portfolio_paths` (63 148 états) et
+    D04.2 (PnL, MDD) ;
+  - vérification indépendante sur le chemin global : 0,0 / 9,5 / 22,9 / 29,6 / 33,4 % d'échecs par la perte totale en
+    P1, contre 0,0 / 9,5 / 23,1 / 29,6 / 33,7 % pour le moteur.
+- [OBS] **Réussite P1 + P2 de 0,05 à 0,25 %/ATR :**
+
+  | r (%/ATR) | 0,05 | 0,10 | 0,15 | 0,20 | 0,25 |
+  |---|---|---|---|---|---|
+  | Réussite P1 + P2 | 88,2 % | 78,5 % | 60,4 % | 58,8 % | 51,0 % |
+  | IC à 95 % | [79,7 ; 95,0] | [69,7 ; 86,7] | [49,5 ; 71,4] | [47,9 ; 69,3] | [40,2 ; 61,2] |
+  | Délai médian | 571 j | 173 j | 100 j | 68 j | 41 j |
+
+  Les échecs viennent presque tous de la perte totale statique (46,8 % des départs à 0,25). La perte du jour ne fait
+  échouer aucun départ jusqu'à 0,20, et 0,7 % à 0,25.
+- [OBS] **À horizon fixé, sur les mêmes 1 462 départs, le meilleur r change :**
+  - en 90 jours, au mieux 38,9 % (r = 0,25) ;
+  - en 180 jours, 52,0 % (r = 0,20) ;
+  - en un an, 67,6 % (r = 0,10).
+- [OBS] **La marge 1:2 pèse peu.**
+  - Jusqu'à 0,15, au plus 1,6 % des trades sont réduits.
+  - À 0,25, 7,5 % des trades sont réduits et 1,0 % sautés, dont 6 et 2 des 48 meilleurs. Le PnL du 2021-10 au
+    2026-09 passe de +584 % à +538 %.
+  - Effet sur la réussite : de −0,3 à +4,5 points.
+- [OBS] **Fragilité :**
+  - sans 2026, la réussite vaut 43,3 / 61,7 / 53,6 / 52,3 / 44,2 % ;
+  - à 0,10, elle va de 55,9 % (départs de 2023) à 100 % (2021, 2024) selon l'année de départ ;
+  - à 0,05, il n'y a aucun échec, mais la pire baisse depuis un minuit atteint −9,55 % (départ du 2023-07-27).
+- [OBS] **Correction de la borne pessimiste :**
+  - 161 à 164 journées UTC changent sur 1 775 (au plus −1,08 point à 0,25, le 2023-03-03) ;
+  - les pires journées de D04.1 et D04.2 sont inchangées.
+- [HYP] **L'issue dépend surtout du moment du départ** par rapport aux longues phases plates ou baissières de RE-1.
+  Un levier n'a de valeur que s'il déplace la frontière probabilité / délai au-delà d'une simple baisse de r. Le
+  coupe-circuit journalier est sans objet : la perte du jour ne lie pas.
+
+#### Décision
+- [ ] **VALIDÉ**
+- [x] **Mesures faites ; choix de r (règle 70/30) et suite du cycle à décider par le porteur.** Commit local, non
+  poussé.
