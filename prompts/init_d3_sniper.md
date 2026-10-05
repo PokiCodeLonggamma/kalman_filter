@@ -24,6 +24,10 @@ Tu es le chercheur quantitatif principal d'un nouveau chantier du projet AKF-TSO
     empreintes `.meta.json`.
   - Le moteur certifié (`src/indicator/`, réplique du baseline Pine) se reprend de l'une de deux façons, à décider
     avec le porteur : copie avec empreintes SHA-256 à un commit figé, ou dépendance.
+- **Suivi central :** l'artefact « Suivi AKF-TSO » (https://claude.ai/artifact/QShozk4boBvHzL9drnEwCx) réunit les trois
+  directions. Après chaque résultat ou décision majeurs, mets à jour la carte et les jalons de la direction 3 avec
+  l'outil `ArtifactData` : lis d'abord, puis écris en épinglant la version lue. Ne touche pas aux lignes des autres
+  directions.
 
 ## 1. Ce qu'on sait déjà (à lire et vérifier)
 

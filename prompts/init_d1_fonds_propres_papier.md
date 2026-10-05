@@ -27,6 +27,10 @@ Style de réponse : en français, court et dense, balisé `[CODE]` / `[OBS]` / `
   `BEST_RESULTS.md`, `RESEARCH_INSIGHTS.md`). Tu tiens ton propre journal ; propose son emplacement, par exemple
   `live/JOURNAL.md`.
 - **Fusion :** le report dans les documents partagés et la fusion dans `main` se font sur GO du porteur.
+- **Suivi central :** l'artefact « Suivi AKF-TSO » (https://claude.ai/artifact/QShozk4boBvHzL9drnEwCx) réunit les trois
+  directions. Après chaque résultat ou décision majeurs, mets à jour la carte et les jalons de la direction 1 avec
+  l'outil `ArtifactData` : lis d'abord, puis écris en épinglant la version lue. Ne touche pas aux lignes des autres
+  directions.
 
 ## 2. À lire avant toute action
 
