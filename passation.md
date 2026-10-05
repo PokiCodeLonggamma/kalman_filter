@@ -738,8 +738,8 @@ d'extraction, couverture, construction. Tous les chargements tronquent avant le 
 |---|---|
 | Dossier local | `C:\Users\poek9\Projet Claude\#KalmanFilter` (le `#` impose des guillemets) |
 | GitHub | https://github.com/PokiCodeLonggamma/kalman_filter, **public**, branche `main` |
-| `origin/main` | `5650153` (D04.2), poussé le 2026-10-05 avec l'accord du porteur ; vérifier par `git log --oneline -5` |
-| Commits locaux non poussés | le livre blanc (`1ba18d6`), les trois directions (`d910b92`, `5f7b4e9`) et D05.4 (simulateur de challenge) ; push sur accord du porteur |
+| `origin/main` | tout `main` jusqu'au commit du prompt Sniper (livre blanc `1ba18d6`, trois directions `d910b92` et `5f7b4e9`, D05.4 `bec1679`), poussé le 2026-10-05 avec l'accord du porteur ; vérifier par `git log --oneline -5` |
+| Commits locaux non poussés | aucun ; push sur accord du porteur |
 | Identité git | `PokiCodeLonggamma <250868839+PokiCodeLonggamma@users.noreply.github.com>` |
 | Tests | 366 réussis, 2 ignorés (244 à la validation, +5 en D02.0, +53 en D02, +19 en D02.1, +11 en D03, +5 en D03.1, +13 en D04, +4 en D04.1, +12 en D05.4) |
 | Système | Windows 11, Git Bash et PowerShell, application Claude Code de bureau, navigateur intégré |

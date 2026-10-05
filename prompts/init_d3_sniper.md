@@ -157,3 +157,18 @@ Un compte rendu court et balisé, qui contient :
 - tes questions.
 
 Rien n'est lancé avant le GO.
+
+# INITIALISATION DE SESSION : Projet "Black Swan Sniper" (Trading Manuel)
+
+**Contexte :** 
+Nous avons développé par le passé un modèle systématique basé sur un Filtre de Kalman adaptatif (stratégie "AKF-TSO"). Ce modèle a prouvé une chose : sa rentabilité repose exclusivement sur sa capacité à capter des "Cygnes Noirs" (des explosions paraboliques de volatilité qui représentent 1 % des trades mais 100 % des profits).
+
+**Objectif de cette nouvelle session :**
+Nous voulons créer un **générateur de signaux pour du trading manuel**. L'objectif n'est PLUS d'automatiser un robot qui prend tous les trades pour absorber la variance. L'objectif est d'optimiser, par tous les moyens algorithmiques possibles, la **détection pure des cygnes noirs** sur un vaste pool d'actifs (Crypto, Forex, Indices, Commodités).
+
+**Directives du Projet "Sniper" :**
+1. **Pas de contrainte d'automatisation :** Le système servira de "Screener" pour m'envoyer des alertes rares mais à très haute conviction. Je validerai l'exécution manuellement.
+2. **Refonte et Optimisation Autorisées :** Contrairement au projet précédent, tu as carte blanche pour optimiser le moteur. Machine Learning (SVM, Random Forest), Optimisation génétique (Optuna), clustering de volatilité, analyse du carnet d'ordres, utilisation de filtres macro-économiques. Tout est permis pour filtrer le bruit et maximiser le "Win Rate" sur les mouvements extrêmes.
+3. **Élargissement de l'Univers :** Nous chasserons sur un grand nombre d'actifs simultanément pour compenser la rareté des signaux filtrés.
+
+Rappel, pour S2 ou autre, tu peux me demander un prompt pour perplexity.
