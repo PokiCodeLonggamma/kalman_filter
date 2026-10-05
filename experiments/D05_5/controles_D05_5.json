@@ -1,0 +1,26 @@
+{
+ "date": "2026-10-05 15:06 UTC",
+ "commit": "8ea8a93",
+ "motif": "EXP-D05.5 (porteur, 2026-10-05)",
+ "challenge_egal_D05_4_r5": {
+  "p_reussite": 0.882256,
+  "jours_total_med": 570.708
+ },
+ "challenge_egal_D05_4_r10": {
+  "p_reussite": 0.785323,
+  "jours_total_med": 173.062
+ },
+ "challenge_egal_D05_4_r15": {
+  "p_reussite": 0.603505,
+  "jours_total_med": 99.854
+ },
+ "challenge_egal_D05_4_r20": {
+  "p_reussite": 0.588171,
+  "jours_total_med": 67.729
+ },
+ "challenge_egal_D05_4_r25": {
+  "p_reussite": 0.510405,
+  "jours_total_med": 41.448
+ },
+ "duree_s": 113
+}

@@ -2179,3 +2179,95 @@ reproduction de résultats publiés et parité du noyau, sans aucune performance
 - [ ] **VALIDÉ**
 - [x] **Mesures faites ; choix de r (règle 70/30) et suite du cycle à décider par le porteur.** Commit local, non
   poussé.
+
+### [DÉCISION] — Cible du porteur, règles du compte financé, variantes de taille ; GO de D05.5 et D05.6 (2026-10-05)
+- **Règle 70/30, précisée par le porteur :** la variable visée est le temps. Délai médian de P1 + P2 entre 3 et 6 mois
+  (90 à 180 jours), avec une réussite d'au moins 60 à 65 %.
+- **Compte financé (règles FTMO standard confirmées) :** 80 % des gains pour le porteur, retrait tous les 14 jours,
+  540 € remboursés au premier retrait, perte totale de 10 % du solde initial, statique. GO pour la valeur d'une
+  tentative (D05.5).
+- **D05.6, trois variantes de taille, une à la fois, comparées à un r fixe :**
+  - A, frein : 0,20 %/ATR ; 0,10 à −5 % ; de nouveau 0,20 au-dessus de −2 % ;
+  - B, sprint : 0,10 ; 0,20 à +3 % ; de nouveau 0,10 sous +1 % ;
+  - C, coussin : taille proportionnelle à la marge restante avant le plancher de −10 %.
+- **Ensuite, après lecture de D05.5 et D05.6 :**
+  - D05.7 : tirage par blocs de semaines, sans 2026 ;
+  - D05.1 : profil des actifs, puis test sur un export cTrader de l'action Société Générale (GLE), fourni par le
+    porteur.
+- **Push :** aucun ; commit local.
+
+### [EXP-D05.5] — Phase financée : valeur d'une tentative de challenge FTMO
+- **Date :** 2026-10-05
+- **Étape :** D05, étape 2. GO du porteur.
+- **Actifs & Période :** ceux de D05.4 ; 5 bps (or 4 bps).
+
+#### 0. Cadrage (fixé avant le calcul, `experiments/D05_5/run_D05_5.py`)
+- **QUESTION :** que vaut une tentative de challenge une fois le compte financé, selon r ?
+- **MÉTHODE :**
+  - Challenge de D05.4.
+  - Le compte financé démarre au minuit qui suit la réussite de P2, avec les mêmes règles de perte et de marge.
+  - Tous les 14 jours, il retire min(solde, équité) − 1 ; les positions restent ouvertes. Il s'arrête à sa première
+    rupture.
+  - Valeur = −540 € + (540 € + 80 % des retraits) s'il y a au moins un retrait.
+  - Même r dans les deux phases ; horizons de 12 et 24 mois, et sans 2026.
+- **CRITÈRE DE LECTURE (sans seuil) :** valeur moyenne avec IC par blocs de mois ; part des tentatives avec au moins un
+  retrait ; vie et retraits des comptes financés.
+
+#### Résultats (`experiments/D05_5/rapport_D05_5.md`)
+- **Contrôle passé :** le challenge redonne D05.4 pour chaque r.
+- [OBS] **Valeur d'une tentative à 12 mois** (1 462 départs) :
+
+  | r (%/ATR) | 0,05 | 0,10 | 0,15 | 0,20 | 0,25 |
+  |---|---|---|---|---|---|
+  | Valeur à 12 mois | −273 € | +3 336 € | +6 902 € | **+9 218 €** | +7 504 € |
+  | IC à 95 % | | | | [+5 833 ; +12 821] | |
+
+  - À 24 mois, le maximum est +10 906 € ; sans 2026, +11 100 € ; tous deux à r = 0,20.
+  - De 0,10 à 0,20, environ une tentative sur deux touche au moins un retrait.
+- [OBS] **Comptes financés suivis 12 mois :**
+  - de 0,10 à 0,25, 71 à 99 % sont perdus dans l'année, après avoir retiré 16 à 22 % du compte ;
+  - à 0,05, aucun n'est jamais perdu, et ils retirent 10,6 % par an.
+- [HYP] **Le gain du porteur est convexe :** sa perte est plafonnée à 540 €, et ses gains retirés ne reviennent jamais
+  au compte. La valeur favorise donc 0,20, hors de la cible du porteur (58,8 % en 68 jours).
+
+#### Décision
+- [ ] **VALIDÉ**
+- [x] **Mesures faites ; à arbitrer par le porteur avec D05.6.** Commit local, non poussé.
+
+### [EXP-D05.6] — Taille selon l'état du compte : variantes A, B et C contre un risque fixe
+- **Date :** 2026-10-05
+- **Étape :** D05, étape 3. GO du porteur.
+- **Actifs & Période :** ceux de D05.4 ; 5 bps (or 4 bps).
+
+#### 0. Cadrage (fixé avant le calcul, `experiments/D05_6/run_D05_6.py`)
+- **QUESTION :** A (frein), B (sprint) et C (coussin) font-ils mieux qu'un risque fixe, en réussite, en délai et en
+  valeur ?
+- **MÉTHODE :**
+  - `propfirm.simuler` avec une taille fonction de l'état du compte : poids = min(1, risque / ATR14) ; seuils sur le
+    capital valorisé de chaque compte.
+  - Même règle en challenge et en compte financé.
+  - Références : risque fixe de 0,05 à 0,25 ; C à r0 = 0,10, 0,15, 0,20 et 0,25.
+  - Comparaison au risque fixe au même délai médian, par interpolation linéaire.
+- **CRITÈRE DE LECTURE :** réussite, causes d'échec, délais, valeur à 12 mois ; tous les départs et sans 2026 ; cible du
+  porteur.
+
+#### Résultats (`experiments/D05_6/rapport_D05_6.md`)
+- **Contrôle passé :** chaque risque fixe redonne D05.4 et D05.5.
+- [OBS] **A, frein :** 61,2 % en 79 jours, +1,9 point au même délai (sans 2026 : +0,9) ; valeur +3 768 €, soit
+  −4 653 € au même délai.
+- [OBS] **B, sprint :** 69,1 % en 158 jours, −5,7 points au même délai (sans 2026 : −4,9) ; valeur +3 459 €.
+- [OBS] **C, coussin :**
+  - aucun échec par la perte totale, par construction ;
+  - réussite de 93 à 98 %, soit +17 à +24 points au même délai, mais P90 du délai de 682 à 1 081 jours ;
+  - sans 2026, 38 à 43 % des comptes restent en cours et la réussite retombe à 57-61 % ;
+  - valeur de +2 171 à +4 484 €.
+- [OBS] **Cible du porteur (délai médian de 90 à 180 jours, réussite d'au moins 60 à 65 %) :**
+  - tous les départs : risque fixe à 0,10 (78,5 %, 173 j) et 0,15 (60,4 %, 100 j), B, C à r0 de 0,15 à 0,25 ;
+  - sans 2026 : seul C à r0 = 0,20 (60,9 %, 111 j, 38,6 % en cours).
+- [HYP] **Le coussin protège la réussite, le risque fixe haut maximise la valeur.** Une taille propre à chaque phase
+  (C en challenge, risque fixe haut en compte financé) est le facteur suivant à mesurer.
+
+#### Décision
+- [ ] **VALIDÉ**
+- [x] **Mesures faites ; choix de la taille et suite (D05.7, D05.1) à décider par le porteur.** Commit local, non
+  poussé.

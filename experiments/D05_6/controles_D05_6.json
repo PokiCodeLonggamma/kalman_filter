@@ -1,0 +1,46 @@
+{
+ "date": "2026-10-05 15:09 UTC",
+ "commit": "8ea8a93",
+ "motif": "EXP-D05.6 (porteur, 2026-10-05)",
+ "r fixe 0.05_toute_egal_D05_4_D05_5": {
+  "p_reussite": 0.882256,
+  "valeur_12m": -0.002735
+ },
+ "r fixe 0.05_sans_2026_egal_D05_4_D05_5": {
+  "p_reussite": 0.432711,
+  "valeur_12m": -0.005298
+ },
+ "r fixe 0.10_toute_egal_D05_4_D05_5": {
+  "p_reussite": 0.785323,
+  "valeur_12m": 0.033355
+ },
+ "r fixe 0.10_sans_2026_egal_D05_4_D05_5": {
+  "p_reussite": 0.616871,
+  "valeur_12m": 0.023398
+ },
+ "r fixe 0.15_toute_egal_D05_4_D05_5": {
+  "p_reussite": 0.603505,
+  "valeur_12m": 0.069016
+ },
+ "r fixe 0.15_sans_2026_egal_D05_4_D05_5": {
+  "p_reussite": 0.535737,
+  "valeur_12m": 0.083966
+ },
+ "r fixe 0.20_toute_egal_D05_4_D05_5": {
+  "p_reussite": 0.588171,
+  "valeur_12m": 0.092176
+ },
+ "r fixe 0.20_sans_2026_egal_D05_4_D05_5": {
+  "p_reussite": 0.522859,
+  "valeur_12m": 0.111
+ },
+ "r fixe 0.25_toute_egal_D05_4_D05_5": {
+  "p_reussite": 0.510405,
+  "valeur_12m": 0.07504
+ },
+ "r fixe 0.25_sans_2026_egal_D05_4_D05_5": {
+  "p_reussite": 0.44237,
+  "valeur_12m": 0.088494
+ },
+ "duree_s": 175
+}

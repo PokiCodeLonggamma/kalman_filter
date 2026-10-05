@@ -11,8 +11,8 @@ import pandas as pd
 from envelope import risk_weights, stop_trades
 from envelope.portfolio import Leg, portfolio_paths
 from estimand.stoploss import TRADE_COLUMNS
-from propfirm import (EN_COURS, INF, PERTE_JOUR, Regles, Simulation, challenge, departs_minuit, issue_phase, resume,
-                      simuler)
+from propfirm import (EN_COURS, INF, PERTE_JOUR, Coussin, Fixe, Frein, Regles, Simulation, Sprint, challenge,
+                      departs_minuit, financement, issue_phase, resume, simuler, valeur)
 
 H = pd.Timedelta(minutes=30)
 COLS = ["capital_valorise", "solde_realise", "capital_pessimiste", "exposition_brute", "positions"]
@@ -234,3 +234,117 @@ def test_resume_parts_delais_et_intervalle():
     assert np.isclose(sum(r[f"p_{k}"] for k in parts), 1.0)
     assert r["jours_total_med"] == 20.0 and r["jours_p1_med"] == 6.0      # parmi les réussites
     assert r["ic_bas"] <= r["p_reussite"] <= r["ic_haut"]
+
+
+# ── EXP-D05.5 et D05.6 : taille selon l'état du compte, retraits du compte financé, valeur d'une tentative ──────────
+DEP0 = "2021-01-03 23:00+00:00"                               # minuit CET du 4 janvier
+
+
+def _jambe_atr(barres_synthetiques, signaux_synthetiques, seed, n=4000, start="2021-01-01", cost=5.0):
+    bars = barres_synthetiques(n, seed=seed, start=start)
+    t, s, level = signaux_synthetiques(bars, 400, seed=seed + 1)
+    tr = stop_trades(bars, t, s, 26, level, dynamic=False)
+    atr = np.random.default_rng(seed).uniform(15.0, 90.0, len(bars))[tr.signal_bar.to_numpy()]
+    return Leg(f"A{seed}", bars, tr, risk_weights(atr, 25.0), cost), atr
+
+
+def _jambe_main(prix, specs, atr=100.0):
+    bars = _barres(prix, "2021-01-04 09:00")
+    tr = _trades(bars, specs)
+    return Leg("A", bars, tr, np.ones(len(tr)), 0.0), np.full(len(tr), atr)
+
+
+def test_taille_fixe_par_atr_redonne_les_poids_des_jambes(barres_synthetiques, signaux_synthetiques):
+    (a, xa), (b, xb) = (_jambe_atr(barres_synthetiques, signaux_synthetiques, seed=s) for s in (9, 11))
+    dep, lev = departs_minuit("2021-01-01", "2021-03-01"), {a.name: 2.0, b.name: 2.0}
+    ref = simuler([a, b], dep, SERRE, levier=lev, plafonner=True, suivi=0)
+    fixe = simuler([a, b], dep, SERRE, levier=lev, plafonner=True, suivi=0, taille=Fixe(25.0), atr=[xa, xb])
+    assert all(_temps(ref, i) == _temps(fixe, i) for i in range(len(dep)))
+    assert np.allclose(ref.chemin.to_numpy(float), fixe.chemin.to_numpy(float), rtol=1e-12, equal_nan=True)
+
+
+def test_frein_divise_le_risque_sous_moins_5_pct_et_le_retablit_au_dessus_de_moins_2_pct():
+    leg, atr = _jambe_main([100, 100, 100, 70, 70, 70, 84, 84, 84, 109.2, 109.2, 109.2, 109.2],
+                           [(1, 3, 1), (4, 6, 1), (7, 9, 1), (10, 12, 1)])
+    sim = simuler([leg], [_ns(DEP0)], taille=Frein(haut=20.0, bas=10.0, seuil=0.95, retour=0.98), atr=[atr], suivi=0)
+    assert np.allclose(sim.tailles.poids, [0.2, 0.1, 0.1, 0.2])      # 0,94 → bas ; 0,959 → bas ; 0,988 → haut
+
+
+def test_sprint_accelere_au_dessus_de_plus_3_pct_et_ralentit_sous_plus_1_pct():
+    leg, atr = _jambe_main([100, 100, 100, 140, 140, 140, 112, 112, 112, 112], [(1, 3, 1), (4, 6, 1), (7, 9, 1)])
+    sim = simuler([leg], [_ns(DEP0)], taille=Sprint(bas=10.0, haut=20.0, seuil=1.03, retour=1.01), atr=[atr], suivi=0)
+    assert np.allclose(sim.tailles.poids, [0.1, 0.2, 0.1])           # 1,04 → haut ; 0,998 → bas
+
+
+def test_coussin_proportionnel_a_la_distance_au_plancher():
+    leg, atr = _jambe_main([100, 100, 100, 75, 75, 75, 75], [(1, 3, 1), (4, 6, 1)])
+    sim = simuler([leg], [_ns(DEP0)], taille=Coussin(r0=20.0), atr=[atr], suivi=0)
+    assert np.allclose(sim.tailles.poids, [0.2, 0.1])                # coussin 10 % puis 5 % au-dessus de 0,90
+
+
+def test_retrait_tous_les_14_jours_au_plus_bas_du_solde_et_de_l_equite():
+    """Au 14e minuit, retrait de min(solde, équité) − 1 ; la position ouverte garde son latent ; le solde final revient
+    au capital initial."""
+    prix = np.full(48 * 20, 100.0)
+    prix[5:] = 105.0                                          # trade 1 : +5 %
+    prix[610:] = 105.0 * 0.98                                 # trade 2 ouvert à 105 : latent −2 % au 14e minuit
+    bars = _barres(prix, "2021-01-04 23:00")                  # barre 0 : minuit CET du 5 janvier
+    leg = Leg("A", bars, _trades(bars, [(2, 10, 1), (600, 700, 1)]), np.ones(2), 0.0)
+    sim = simuler([leg], [_ns("2021-01-04 23:00+00:00")], Regles(objectifs=()), suivi=0, retrait_jours=14)
+    r = sim.retraits
+    assert len(r) == 1 and r.depart.iat[0] == 0 and r.t.iat[0] == _ns("2021-01-18 23:00+00:00")   # minuit du 19
+    assert np.isclose(r.montant.iat[0], 1.05 + 1.05 * (0.98 - 1.0) - 1.0)
+    assert np.isclose(sim.chemin.solde_realise.iat[-1], 1.0)
+
+
+def test_financement_et_valeur_d_une_tentative():
+    h = 3_600 * 10**9
+    d = departs_minuit("2021-01-04", "2021-01-09")            # 5 minuits CET
+    t_obj = np.full((2, 5), INF, dtype=np.int64)
+    t_obj[0, 0], t_obj[1, 1] = d[0] + 5 * h, d[1] + 3 * h     # départ 0 : P1, puis P2 au départ 1 → financé au départ 2
+    sim_c = _simulation(d, t_obj)
+    sim_c.t_perte_jour[("solde", "pessimiste")][3] = d[3] + h
+    sim_c.ref_breche[("solde", "pessimiste")][3] = 1.0        # départ 3 : échec en P1
+    sim_f = _simulation(d, np.zeros((0, 5), dtype=np.int64))
+    sim_f.t_perte_max["pessimiste"][2] = d[4] + 2 * h         # compte financé du départ 2 perdu le 5e jour
+    sim_f.retraits = pd.DataFrame({"depart": [2, 2, 2], "t": [d[3], d[4], d[4] + 3 * h], "montant": [0.03, 0.02, 0.05]})
+    f = financement(sim_f)
+    assert f.n_retraits.iat[2] == 2 and np.isclose(f.retire.iat[2], 0.05) and f.issue.iat[2] == "perte_max"
+    v = valeur(sim_c, sim_f, frais=0.0054, part=0.8)
+    assert np.isclose(v.valeur.iat[0], 0.8 * 0.05)           # frais remboursés au premier retrait
+    assert np.allclose(v.valeur.iloc[1:], -0.0054)            # pas de compte financé
+    court = valeur(sim_c, sim_f, frais=0.0054, part=0.8, horizon_jours=3.5)
+    assert np.isclose(court.valeur.iat[0], 0.8 * 0.03)        # seul le retrait du 4e minuit tient dans l'horizon
+
+
+def _options(xa, xb, lev):
+    return {"levier": lev, "plafonner": True, "taille": Frein(haut=40.0, bas=20.0, seuil=0.99, retour=1.0),
+            "atr": [xa, xb], "retrait_jours": 14}
+
+
+def test_departs_vectorises_avec_taille_dynamique_et_retraits(barres_synthetiques, signaux_synthetiques):
+    (a, xa), (b, xb) = (_jambe_atr(barres_synthetiques, signaux_synthetiques, seed=s) for s in (9, 11))
+    dep, opts = departs_minuit("2021-01-01", "2021-03-01"), _options(xa, xb, {"A9": 2.0, "A11": 2.0})
+    regles = Regles(objectifs=(0.02,), perte_jour=0.01, perte_max=0.02, jours_min=2)
+    multi = simuler([a, b], dep, regles, **opts)
+    assert len(multi.retraits) > 0
+    for i in (0, 7, 23, 40):
+        seul = simuler([a, b], dep[i:i + 1], regles, **opts)
+        rm = multi.retraits[multi.retraits.depart == i]
+        assert _temps(multi, i) == _temps(seul, 0)
+        assert np.array_equal(rm.t.to_numpy(), seul.retraits.t.to_numpy())
+        assert np.array_equal(rm.montant.to_numpy(), seul.retraits.montant.to_numpy())
+
+
+def test_aucun_prix_futur_avec_taille_dynamique_et_retraits(barres_synthetiques, signaux_synthetiques):
+    (a, xa), (b, xb) = (_jambe_atr(barres_synthetiques, signaux_synthetiques, seed=s) for s in (9, 11))
+    dep, opts = departs_minuit("2021-01-01", "2021-03-01"), _options(xa, xb, {"A9": 2.0, "A11": 2.0})
+    ref = simuler([a, b], dep, SERRE, suivi=0, **opts)
+    c = pd.Timestamp(b.bars.time.iat[3500]).value             # les retraits tombent entre les barres 2 878 et 3 982
+    bars = b.bars.copy()
+    bars.loc[3500:, ["close", "low", "high"]] *= 1.7
+    mod = simuler([a, Leg(b.name, bars, b.trades, b.weight, b.cost)], dep, SERRE, suivi=0, **opts)
+    for i in range(len(dep)):
+        assert [x if x < c else -1 for x in _temps(ref, i)] == [y if y < c else -1 for y in _temps(mod, i)]
+    early = ref.retraits[ref.retraits.t < c]
+    assert len(early) and early.reset_index(drop=True).equals(mod.retraits[mod.retraits.t < c].reset_index(drop=True))

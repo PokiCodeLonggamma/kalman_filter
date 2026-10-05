@@ -18,11 +18,17 @@ capital valorisé du départ. Sans plafond ni correction, le départ qui voit to
     référence = solde réalisé (FTMO) ou max(solde, capital valorisé) ;
   - perte totale : un état ≤ 1 − `perte_max` ;
   - deux lectures : borne pessimiste (extrêmes de la barre) et capital valorisé (clôtures).
+- EXP-D05.6, taille selon l'état du compte (`taille`, avec l'ATR14 de chaque trade, `atr`) : à l'entrée, poids =
+  min(1, risque / ATR), le risque (bps du capital par ATR) dépendant du capital valorisé du départ ; les bascules de
+  `Frein` et `Sprint` se font à chaque état, sur le capital valorisé.
+- EXP-D05.5, compte financé (`retrait_jours`) : tous les `retrait_jours` jours depuis le départ, au minuit local,
+  retrait de min(solde, capital valorisé) − 1 s'il est positif ; les positions restent ouvertes.
 Aucun prix postérieur à l'instant évalué n'est lu.
 """
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import ClassVar
 
 import numpy as np
 import pandas as pd
@@ -32,6 +38,7 @@ from estimand.excursions import BPS
 
 INF = np.iinfo(np.int64).max
 HALF = 30 * 60 * 10**9
+JOUR_NS = 86_400 * 10**9
 MARK, EXIT, ENTRY = 0, 1, 2
 MODES = ("pessimiste", "valorise")
 REFS = ("solde", "max")
@@ -50,6 +57,69 @@ FTMO_SWING = Regles()
 LEVIER_FTMO_SWING = {"BTC": 2.0, "ETH": 2.0, "SOL": 2.0, "AVAX": 2.0, "XRP": 2.0, "XAU": 30.0}
 
 
+@dataclass(frozen=True)
+class Fixe:
+    """Risque constant, en bps du capital par ATR14 (redonne `risk_weights`)."""
+    r: float
+    mode_initial: ClassVar[bool] = False
+
+    def risque(self, val: np.ndarray, mode: np.ndarray) -> np.ndarray:
+        return np.full(val.shape, float(self.r))
+
+    def basculer(self, val: np.ndarray, mode: np.ndarray) -> None:
+        pass
+
+
+@dataclass(frozen=True)
+class Frein:
+    """Variante A du porteur : risque haut ; bas quand le capital valorisé tombe à `seuil` ; haut de nouveau au-dessus
+    de `retour`."""
+    haut: float = 20.0
+    bas: float = 10.0
+    seuil: float = 0.95
+    retour: float = 0.98
+    mode_initial: ClassVar[bool] = True                      # mode = risque haut
+
+    def risque(self, val: np.ndarray, mode: np.ndarray) -> np.ndarray:
+        return np.where(mode, self.haut, self.bas)
+
+    def basculer(self, val: np.ndarray, mode: np.ndarray) -> None:
+        mode[val <= self.seuil] = False
+        mode[val > self.retour] = True
+
+
+@dataclass(frozen=True)
+class Sprint:
+    """Variante B du porteur : risque bas ; haut quand le capital valorisé atteint `seuil` ; bas de nouveau sous
+    `retour`."""
+    bas: float = 10.0
+    haut: float = 20.0
+    seuil: float = 1.03
+    retour: float = 1.01
+    mode_initial: ClassVar[bool] = False                     # mode = risque haut
+
+    def risque(self, val: np.ndarray, mode: np.ndarray) -> np.ndarray:
+        return np.where(mode, self.haut, self.bas)
+
+    def basculer(self, val: np.ndarray, mode: np.ndarray) -> None:
+        mode[val >= self.seuil] = True
+        mode[val < self.retour] = False
+
+
+@dataclass(frozen=True)
+class Coussin:
+    """Variante C : risque proportionnel à la distance au plancher statique, `r0` quand le capital vaut 1."""
+    r0: float
+    plancher: float = 0.90
+    mode_initial: ClassVar[bool] = False
+
+    def risque(self, val: np.ndarray, mode: np.ndarray) -> np.ndarray:
+        return self.r0 * np.clip((val - self.plancher) / (1.0 - self.plancher), 0.0, None)
+
+    def basculer(self, val: np.ndarray, mode: np.ndarray) -> None:
+        pass
+
+
 @dataclass
 class Simulation:
     departs: np.ndarray                      # ns UTC, croissants
@@ -59,7 +129,8 @@ class Simulation:
     t_perte_jour: dict                       # (référence, mode) → (départs,)
     ref_breche: dict                         # (référence, mode) → référence de minuit au premier franchissement
     chemin: pd.DataFrame | None              # départ suivi : un état par instant (colonnes de `portfolio_paths`, marge)
-    tailles: pd.DataFrame | None             # départ suivi : une ligne par entrée (demande, obtenu)
+    tailles: pd.DataFrame | None             # départ suivi : une ligne par entrée (poids, demande, obtenu)
+    retraits: pd.DataFrame | None = None     # compte financé : (départ, instant du minuit, montant), triés
 
 
 def departs_minuit(debut, fin, fuseau: str = "Europe/Prague") -> np.ndarray:
@@ -69,8 +140,14 @@ def departs_minuit(debut, fin, fuseau: str = "Europe/Prague") -> np.ndarray:
 
 
 def _jours(t: np.ndarray, fuseau: str) -> np.ndarray:
-    loc = pd.to_datetime(t, utc=True).tz_convert(fuseau)
-    return np.asarray(loc.year * 10000 + loc.month * 100 + loc.day, dtype=np.int64)
+    """Jour local (nombre de jours depuis 1970-01-01) de chaque instant."""
+    loc = pd.to_datetime(np.asarray(t, dtype=np.int64), utc=True).tz_convert(fuseau).tz_localize(None)
+    return (loc.normalize().asi8 // JOUR_NS).astype(np.int64)
+
+
+def _minuits(jours: np.ndarray, fuseau: str) -> np.ndarray:
+    """Minuit local de chaque jour (nombre de jours depuis 1970-01-01), en ns UTC."""
+    return pd.to_datetime(np.asarray(jours, dtype=np.int64) * JOUR_NS).tz_localize(fuseau).tz_convert("UTC").asi8.copy()
 
 
 def _evenements(legs: list[Leg]) -> list[np.ndarray]:
@@ -103,9 +180,12 @@ def _evenements(legs: list[Leg]) -> list[np.ndarray]:
 
 
 def simuler(legs: list[Leg], departs, regles: Regles = FTMO_SWING, levier: dict | None = None,
-            plafonner: bool = False, correction_stop: bool = True, suivi: int | None = None) -> Simulation:
+            plafonner: bool = False, correction_stop: bool = True, suivi: int | None = None, taille=None,
+            atr: list | None = None, retrait_jours: int | None = None) -> Simulation:
     """Premiers instants d'objectif, de perte du jour et de perte totale de chaque départ ; chemin et tailles du départ
-    `suivi`. `levier` (nom de jambe → levier) sert à mesurer la marge, et à la plafonner si `plafonner`."""
+    `suivi`. `levier` (nom de jambe → levier) sert à mesurer la marge, et à la plafonner si `plafonner`. `taille`
+    (`Fixe`, `Frein`, `Sprint`, `Coussin`) remplace les poids des jambes ; `atr` : ATR14 en bps de chaque trade, une
+    série par jambe. `retrait_jours` : retraits du compte financé."""
     departs = np.asarray(departs, dtype=np.int64)
     if not len(departs) or (np.diff(departs) <= 0).any():
         raise ValueError("simuler : départs croissants exigés")
@@ -115,6 +195,13 @@ def simuler(legs: list[Leg], departs, regles: Regles = FTMO_SWING, levier: dict 
     lev = None if levier is None else [float(levier[leg.name]) for leg in legs]
     ev_t, ev_k, ev_l, ev_j, ev_p, ev_a = _evenements(legs)
     trades = [leg.trades.reset_index(drop=True) for leg in legs]
+    if taille is not None:
+        if atr is None or len(atr) != nl or any(len(a) != len(tr) for a, tr in zip(atr, trades)):
+            raise ValueError("simuler : `atr` exigé avec `taille` (bps, une valeur par trade, une série par jambe)")
+        atr_l = [np.asarray(a, dtype=float) for a in atr]
+        mode = np.full(ns, bool(taille.mode_initial))
+    jour_dep = _jours(departs, regles.fuseau)
+    retraits = []
     p_in = [tr.entry_price.to_numpy(dtype=float) for tr in trades]
     s_in = [tr.side.to_numpy(dtype=float) for tr in trades]
     gain = [(tr.ret_gross_bps.to_numpy(dtype=float) - float(leg.cost)) / BPS for tr, leg in zip(trades, legs)]
@@ -182,7 +269,17 @@ def simuler(legs: list[Leg], departs, regles: Regles = FTMO_SWING, levier: dict 
     jour = None
     for g in range(len(uniq)):
         tm = int(uniq[g])
-        if jour_etat[g] != jour:                              # minuit local : références du jour
+        if jour_etat[g] != jour:                              # minuit local : retraits, puis références du jour
+            if retrait_jours and jour is not None:
+                k_now = (jour_etat[g] - jour_dep) // retrait_jours
+                du = (jour_etat[g] > jour_dep) & (k_now > (jour - jour_dep) // retrait_jours) & (k_now >= 1)
+                x = np.where(du, np.maximum(np.minimum(cap, val_prec) - 1.0, 0.0), 0.0)
+                paye = np.flatnonzero(x > 0.0)
+                if len(paye):
+                    cap -= x
+                    val_prec = val_prec - x
+                    retraits.append((paye, _minuits(jour_dep[paye] + retrait_jours * k_now[paye], regles.fuseau),
+                                     x[paye]))
             jour = jour_etat[g]
             ref = {"solde": cap.copy(), "max": np.maximum(cap, val_prec)}
             plancher = {r: ref[r] - regles.perte_jour for r in REFS}
@@ -205,6 +302,8 @@ def simuler(legs: list[Leg], departs, regles: Regles = FTMO_SWING, levier: dict 
                         fr[li] = 0.0
             val, pes = somme(f, cap), somme(gq, cap)
             controler(tm, val, pes, somme(fr, np.zeros(ns)))
+            if taille is not None:
+                taille.basculer(val, mode)
             if suivi is not None:
                 noter(tm, val, pes)
             val_prec = val
@@ -216,12 +315,17 @@ def simuler(legs: list[Leg], departs, regles: Regles = FTMO_SWING, levier: dict 
                 ouvert[li] = False
             if entrees:
                 val = somme(latents(), cap)
+                if taille is not None:
+                    taille.basculer(val, mode)
+                    risque = taille.risque(val, mode)
                 n_dem = int(np.searchsorted(departs, tm, side="right"))      # départs déjà commencés
-                dem = []
+                dem, ws = [], []
                 for i in entrees:
-                    d = poids[jam[i]][trd[i]] * val
+                    w = poids[jam[i]][trd[i]] if taille is None else np.minimum(1.0, risque / atr_l[jam[i]][trd[i]])
+                    d = w * val
                     d[n_dem:] = 0.0
                     dem.append(d)
+                    ws.append(w)
                 obt = dem
                 if plafonner:
                     utilisee = somme([last[li] / p0[li] / lev[li] if ouvert[li] else 0.0 for li in range(nl)],
@@ -242,21 +346,30 @@ def simuler(legs: list[Leg], departs, regles: Regles = FTMO_SWING, levier: dict 
                     p0[li] = last[li] = adv[li] = p_in[li][j]
                     engage |= obt[q] > 0.0
                     if suivi is not None:
-                        tailles.append((legs[li].name, j, tm, poids[li][j], dem[q][suivi], obt[q][suivi], val[suivi]))
+                        w = ws[q][suivi] if np.ndim(ws[q]) else ws[q]
+                        tailles.append((legs[li].name, j, tm, float(w), dem[q][suivi], obt[q][suivi], val[suivi]))
                 nouveau = engage & (dernier != jour_entree[g])
                 n_jours[nouveau] += 1
                 dernier[nouveau] = jour_entree[g]
             val = somme(latents(), cap)
             controler(tm, val, val, somme([cout[li] if ouvert[li] else 0.0 for li in range(nl)], np.zeros(ns)))
+            if taille is not None:
+                taille.basculer(val, mode)
             if suivi is not None:
                 noter(tm, val, val)
             val_prec = val
 
-    chemin = taille = None
+    chemin = taille_df = None
     if suivi is not None:
         cols = ["capital_valorise", "solde_realise", "capital_pessimiste", "exposition_brute", "positions", "marge"]
         df = pd.DataFrame(lignes, columns=["time"] + cols)
         chemin = df.set_index(pd.to_datetime(df.pop("time"), utc=True))
-        taille = pd.DataFrame(tailles, columns=["jambe", "trade", "entree", "poids", "demande", "obtenu", "capital"])
-        taille["entree"] = pd.to_datetime(taille.entree, utc=True)
-    return Simulation(departs, regles, t_obj, t_max, t_jour, ref_b, chemin, taille)
+        taille_df = pd.DataFrame(tailles, columns=["jambe", "trade", "entree", "poids", "demande", "obtenu", "capital"])
+        taille_df["entree"] = pd.to_datetime(taille_df.entree, utc=True)
+    retire = None
+    if retrait_jours:
+        cols = [np.concatenate([r[k] for r in retraits]) if retraits else np.array([], dtype=dt)
+                for k, dt in enumerate((np.int64, np.int64, float))]
+        retire = (pd.DataFrame({"depart": cols[0].astype(np.int64), "t": cols[1].astype(np.int64), "montant": cols[2]})
+                  .sort_values(["depart", "t"], kind="stable").reset_index(drop=True))
+    return Simulation(departs, regles, t_obj, t_max, t_jour, ref_b, chemin, taille_df, retire)
