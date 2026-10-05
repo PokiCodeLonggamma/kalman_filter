@@ -185,6 +185,14 @@ Elle se mesure séparément par sens et par type de signal (rang 1 ou répétiti
 - Classés en ATR, les 104 meilleurs trades naissent à ATR bas (médiane 37 bps contre 48) ; classés en bps, à ATR haut (75 bps). Les deux classements n'ont que 53 trades en commun.
 - **Règle :** tout profil des meilleurs ou des pires trades se lit selon deux classements, en ATR (poids dans le capital) et en bps (mouvement du marché), avant d'en tirer un filtre.
 
+### I-M21 — Une fréquence d'événements rares sur fenêtres disjointes dépend de l'alignement : la moyenner sur tous les alignements `[MÉTHODE]` `[OBS]`
+*Source : EXP-D05.1 (correction horaire).*
+
+- Sur BTC 2020-2025, les fenêtres de 26 barres à 20 ATR ou plus passent de 2,2 à 4,0 par an selon la barre de départ
+  du découpage. À 10 ATR, l'écart reste sous 10 %.
+- **Règle :** compter les événements rares sur toutes les fenêtres glissantes, puis rapporter la fréquence au nombre de
+  fenêtres disjointes ; dire à partir de quel seuil l'alignement compte.
+
 ---
 
 ## 2. Cinématique du moteur v2.1
@@ -391,6 +399,17 @@ porteur).*
 - `[OBS]` Une journée de −5,14 % (2026-01-26) n'est qu'un gain latent rendu : positive sur le solde réalisé.
 - `[HYP]` La diversification de RE-1 entre cryptos réduit peu le risque d'une journée ; la perte journalière dépend du
   nombre de positions crypto ouvertes ensemble et de la taille par trade.
+
+### K19 — Hors crypto, la queue de 13 h en ATR brut est surtout la saison horaire
+*Source : EXP-D05.1 (grille et correction horaire ; séries Saxo et HistData, 2020-2025).*
+
+- `[OBS]` En ATR brut, US100 et US30 ont autant de fenêtres de 13 h à 10 ATR ou plus que BTC (51 et 43 pour 1 000,
+  contre 40). Une fois la saison horaire retirée : 17 et 14, contre 35 ; GER40 13, or 15, GBPJPY 15, SOL 20.
+- `[OBS]` La persistance (VR(26) de 0,89 à 0,98, BTC le plus bas) et la naissance au calme (77 à 81 % partout) ne
+  distinguent pas les marchés de RE-1.
+- `[HYP]` Les expansions de 13 h hors heure fixe, le « phénomène crypto », sont deux à trois fois plus rares sur les
+  candidats TradFi que sur BTC. Leur queue brute est l'ouverture au comptant rapportée à un ATR de nuit.
+
 
 ## 3. Trois phénomènes captés par le déclencheur
 *Hypothèse de travail du porteur, 2026-09-28. Chiffres vérifiés : EXP-A01, annexe I.*
