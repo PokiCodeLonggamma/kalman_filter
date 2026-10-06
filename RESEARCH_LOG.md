@@ -2745,3 +2745,13 @@ reproduction de résultats publiés et parité du noyau, sans aucune performance
   2026-10-02.
 - **À cadrer dans la session suivante** (`passation_D05_1.md` §7) : actifs, espace de R0, objectif, walk-forward, nombre
   d'essais, frictions FTMO, écart apparié contre RE-1 figée. Aucun calcul lancé.
+
+
+### [DÉCISION] — Push de D05.1 ; simplicité ; démo de la piste 1 (2026-10-06)
+- **Porteur :**
+  - « GO pour le push » ;
+  - les éléments à cadrer avant le calcul vont dans le prompt de reprise (`passation_D05_1.md` §8) ;
+  - « ne complexifions pas trop, notre version gelée avec la Piste 1 pourrait déjà être testée en prop firm (on le fera
+    en démo dès que j'ai reçu le mail) ».
+- **Note :** l'application Open API est en lecture seule (scope « accounts ») ; une démo pilotée par l'Open API demandera
+  le scope « trading » et un nouveau consentement.

@@ -218,6 +218,11 @@ et `experiments/D05_6bis/rapport_D05_6bis.md`.*
 
 ## 7. Suite (décisions du porteur, puis GO)
 
+0. **Simplicité d'abord (porteur, 2026-10-06) :** « ne complexifions pas trop ». RE-1 gelée avec la piste 1 peut déjà
+   être testée en prop firm. Le porteur la testera **en démo dès l'accord de Spotware**.
+   - Point technique : l'application Open API actuelle est en lecture seule (scope « accounts »). Trader en démo par
+     l'Open API demandera le scope « trading » et un nouveau consentement du porteur.
+   - Les étapes ci-dessous ne doivent pas retarder ce test.
 1. **Baseline cTrader (étape 1).**
    - Points à acter :
      - levier de référence : le compte Swing réel (1:1 et 1:15), confirmé par FTMO, ou l'étalon de D05.4 (1:2 et 1:30),
@@ -261,6 +266,32 @@ et `experiments/D05_6bis/rapport_D05_6bis.md`.*
 > Bonjour. Tu reprends la direction Prop Firm (D05) d'AKF-TSO, chantier D05.1, dans
 > `C:\Users\poek9\Projet Claude\#KalmanFilter` (branche `main`). Lis d'abord `CLAUDE.md`, puis `passation_D05_1.md`,
 > puis `experiments/D05_1/narratif_frictions_D05_1.md` et `experiments/D05_1/rapport_profil_D05_1.md`. Les données sont
-> prêtes : tu ne t'occupes que de la stratégie. Vérifie l'état (git log, tests) sans rien modifier, et rends-moi un
-> compte rendu court : ce que tu as compris de l'objectif stratégique (sauver la piste 2), ce qui est acquis, et les
-> décisions à prendre avant la Baseline cTrader (§7). Ne lance aucun calcul avant mon GO.
+> prêtes : tu ne t'occupes que de la stratégie.
+>
+> Ne complexifions pas : RE-1 gelée avec la piste 1 peut déjà être testée en prop firm. Je la testerai en démo dès
+> l'accord de Spotware. L'objectif de D05.1 reste de sauver la piste 2 par le portefeuille, sans retarder ce test.
+>
+> Vérifie l'état (git log, tests) sans rien modifier. Rends-moi un compte rendu court : ce que tu as compris, ce qui est
+> acquis, et ta proposition de cadrage pour chacun des points ci-dessous. Ne lance aucun calcul avant mon GO.
+>
+> Éléments à cadrer avant tout calcul :
+> 1. **Baseline cTrader** (`run_frictions_D05_1.py --baseline`, jamais lancé) :
+>    - levier de référence : compte Swing réel (cryptos 1:1, or 1:15) ou étalon de D05.4 (1:2, 1:30) ;
+>    - source de l'or : HistData ou barres FTMO (expliquer d'abord l'écart de brut, +0,36 contre +0,14 ATR) ;
+>    - lecture : réussite et délai du challenge des pistes 1 et 2, marche par marche.
+> 2. **META :** profil sur l'historique FTMO court (depuis 2025-01) ou autre source de prix.
+> 3. **R0 par actif via Optuna** (H, seuils et frontière figés) :
+>    - actifs concernés ;
+>    - espace de R0 ;
+>    - fonction objectif ;
+>    - découpage walk-forward IS/OOS ;
+>    - nombre d'essais, compté ;
+>    - frictions FTMO incluses ;
+>    - écart apparié contre RE-1 figée sur le même actif ;
+>    - repère : WFO-R0 de D02 ;
+>    - Optuna à ajouter à `pyproject.toml`, avec des tests.
+> 4. **Inclusion TradFi (étape 3) :**
+>    - fenêtre commune ;
+>    - allocation (même risque ou modulé par la queue) ;
+>    - limite d'exposition simultanée ;
+>    - lecture : réussite du challenge de la piste 2, délai, perte du jour, valeur en suite.
