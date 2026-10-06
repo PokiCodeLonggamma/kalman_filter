@@ -87,3 +87,72 @@ def test_couts_trades_somme_des_trois_parts():
     assert np.allclose(c.ecart, 4.0) and np.allclose(c.commission, 0.5)
     assert c.nuits.tolist() == [1, 0] and c.swap.iat[0] == pytest.approx(0.02 / 100.0 * 1e4)
     assert np.allclose(c.total, c.ecart + c.commission + c.swap)
+
+
+# ── Pauses de cotation FTMO (cryptos sur les séries des courtiers de D05) ──────────
+from marketdata.ftmo import pauses_cotation  # noqa: E402
+from propfirm.frictions import ajuster_pauses  # noqa: E402
+
+
+def test_pauses_cotation_entre_deux_barres_non_consecutives():
+    t = pd.DatetimeIndex(["2025-03-01 10:00", "2025-03-01 10:30", "2025-03-01 14:00", "2025-03-01 14:30"], tz="UTC")
+    p = pauses_cotation(t)
+    assert len(p) == 1
+    assert p.debut.iat[0] == pd.Timestamp("2025-03-01 11:00", tz="UTC").value
+    assert p.fin.iat[0] == pd.Timestamp("2025-03-01 14:00", tz="UTC").value
+
+
+def _continu(n=40, start="2025-03-01 00:00"):
+    p = 100.0 + np.arange(n, dtype=float)
+    return pd.DataFrame({"time": pd.date_range(start, periods=n, freq="30min", tz="UTC"), "open": p, "high": p + 0.5,
+                         "low": p - 0.5, "close": p})
+
+
+def _tr(bars, specs):
+    """specs : (entrée, sortie, sens, stop)."""
+    rows = []
+    for e, x, s, st in specs:
+        p0, p1 = bars.open.iat[e], (bars.open.iat[x] - 0.2 if st else bars.open.iat[x])
+        rows.append({"entry_bar": e, "exit_bar": x, "side": s, "entry_price": p0, "exit_price": p1, "stop": st,
+                     "gap": False, "ret_gross_bps": s * (p1 / p0 - 1.0) * 1e4, "signal_bar": e - 1})
+    return pd.DataFrame(rows)[TRADE_COLUMNS]
+
+
+def _pause(bars, a, b):
+    """Pause couvrant les barres a à b − 1 (réouverture à la barre b)."""
+    return pd.DataFrame({"debut": [bars.time.iat[a].value], "fin": [bars.time.iat[b].value]})
+
+
+def test_sans_pause_les_trades_sont_inchanges():
+    bars = _continu()
+    tr = _tr(bars, [(2, 8, 1, False), (10, 15, -1, True)])
+    out, r = ajuster_pauses(tr, bars, pd.DataFrame({"debut": [], "fin": []}))
+    assert out.equals(tr) and r["entrees_abandonnees"] == 0 and r["sorties_a_la_reouverture"] == 0
+
+
+def test_entree_pendant_une_pause_abandonnee():
+    bars = _continu()
+    tr = _tr(bars, [(5, 12, 1, False), (20, 26, 1, False)])
+    out, r = ajuster_pauses(tr, bars, _pause(bars, 4, 7))
+    assert len(out) == 1 and out.entry_bar.iat[0] == 20 and r["entrees_abandonnees"] == 1
+
+
+@pytest.mark.parametrize("stop", [False, True])
+def test_sortie_ou_stop_pendant_une_pause_executes_a_la_reouverture(stop):
+    bars = _continu()
+    tr = _tr(bars, [(2, 9, -1, stop)])
+    out, r = ajuster_pauses(tr, bars, _pause(bars, 8, 12))
+    assert out.exit_bar.iat[0] == 12 and out.exit_price.iat[0] == bars.open.iat[12]
+    assert not out.stop.iat[0] and out.gap.iat[0]
+    assert out.ret_gross_bps.iat[0] == pytest.approx(-1.0 * (bars.open.iat[12] / bars.open.iat[2] - 1.0) * 1e4)
+    assert r["sorties_a_la_reouverture"] == 1
+
+
+def test_sortie_retardee_puis_entree_suivante_a_la_reouverture():
+    """Une entrée pendant la pause est abandonnée ; celle de la barre de réouverture suit la sortie retardée."""
+    bars = _continu()
+    tr = _tr(bars, [(2, 9, 1, False), (10, 16, 1, False), (12, 18, 1, False)])
+    out, r = ajuster_pauses(tr, bars, _pause(bars, 8, 12))
+    assert out.entry_bar.tolist() == [2, 12] and out.exit_bar.tolist() == [12, 18]
+    assert r["entrees_abandonnees"] == 1 and r["sorties_a_la_reouverture"] == 1
+    assert r["chevauchements_abandonnes"] == 0

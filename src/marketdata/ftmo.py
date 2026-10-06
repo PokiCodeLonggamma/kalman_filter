@@ -124,3 +124,12 @@ def profil_ecarts(ecarts: pd.Series, fuseau: str) -> pd.DataFrame:
     p = p.reindex(range(48))
     p["n"] = p.n.fillna(0).astype(int)
     return p
+
+
+def pauses_cotation(times, pas: str = "30min") -> pd.DataFrame:
+    """Pauses de cotation d'une série de barres : [fin de la dernière barre, ouverture de la suivante), en ns UTC,
+    pour chaque saut de plus d'un `pas`."""
+    t = pd.DatetimeIndex(times).asi8
+    w = pd.Timedelta(pas).value
+    k = np.flatnonzero(np.diff(t) > w)
+    return pd.DataFrame({"debut": t[k] + w, "fin": t[k + 1]})

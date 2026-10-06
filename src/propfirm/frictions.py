@@ -102,3 +102,52 @@ def couts_trades(trades: pd.DataFrame, bars: pd.DataFrame, fiche: pd.Series, pro
     taux = np.where(side == 1, float(fiche["swap_long"]), float(fiche["swap_short"]))
     sw = n * swap_bps(fiche["swap_type"], taux, p0, float(fiche["pip_size"]), int(fiche["digits"]))
     return pd.DataFrame({"ecart": ec, "commission": com, "swap": sw, "nuits": n, "total": ec + com + sw})
+
+
+def ajuster_pauses(trades: pd.DataFrame, bars: pd.DataFrame, pauses: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
+    """Trades d'une série continue (cryptos des courtiers de D05) exécutés sur le calendrier de cotation de FTMO :
+    - entrée dont la barre s'ouvre pendant une pause : signal abandonné (aucun ordre possible) ;
+    - sortie (horizon ou stop) dont la barre s'ouvre pendant une pause : exécutée à l'ouverture de la première barre de
+      la réouverture (stop non déclenché, sortie sur gap) ; [HYP] un stop franchi pendant la pause est exécuté à la
+      réouverture même si le prix est revenu ;
+    - trade suivant du même actif chevauché par une sortie retardée : abandonné (une position à la fois).
+    `pauses` : colonnes `debut`, `fin` (ns UTC, `marketdata.ftmo.pauses_cotation`)."""
+    t = pd.DatetimeIndex(bars.time).asi8
+    deb, fin = pauses.debut.to_numpy(dtype=np.int64), pauses.fin.to_numpy(dtype=np.int64)
+    o = np.argsort(deb)
+    deb, fin = deb[o], fin[o]
+
+    def pause(x: int) -> int:
+        i = int(np.searchsorted(deb, x, side="right")) - 1
+        return i if i >= 0 and x < fin[i] else -1
+
+    tr = trades.reset_index(drop=True)
+    garde, rows = [], []
+    n_e = n_x = n_c = n_fin = 0
+    prec_x, prec_stop = None, False
+    opn = bars.open.to_numpy(dtype=float)
+    for j in range(len(tr)):
+        r = tr.iloc[j].copy()
+        e, x = int(r.entry_bar), int(r.exit_bar)
+        if pause(t[e]) >= 0:
+            n_e += 1
+            continue
+        if prec_x is not None and (e <= prec_x if prec_stop else e < prec_x):
+            n_c += 1
+            continue
+        p = pause(t[x])
+        if p >= 0:
+            x2 = int(np.searchsorted(t, fin[p], side="left"))
+            if x2 >= len(t):
+                n_fin += 1
+                continue
+            r["exit_bar"], r["exit_price"], r["stop"], r["gap"] = x2, opn[x2], False, True
+            r["ret_gross_bps"] = float(r.side) * (opn[x2] / float(r.entry_price) - 1.0) * BPS
+            n_x += 1
+        prec_x, prec_stop = int(r.exit_bar), bool(r.stop)
+        rows.append(r)
+        garde.append(j)
+    out = pd.DataFrame(rows, columns=tr.columns).reset_index(drop=True) if rows else tr.iloc[:0].copy()
+    out = out.astype(tr.dtypes.to_dict())
+    return out, {"trades": len(tr), "gardes": len(out), "entrees_abandonnees": n_e, "sorties_a_la_reouverture": n_x,
+                 "chevauchements_abandonnes": n_c, "fin_de_donnees_abandonnes": n_fin}
