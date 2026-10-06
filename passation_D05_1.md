@@ -151,8 +151,8 @@ et `experiments/D05_6bis/rapport_D05_6bis.md`.*
 - **Hypothèses ouvertes :**
   - rollover à 17:00 New York ;
   - base de 360 jours des swaps en % ;
-  - **unité des swaps du pétrole** : 25 bps par nuit en short à la lettre, invraisemblable comme financement pur ; à
-    vérifier dans cTrader ou par une position d'essai tenue une nuit ;
+  - ~~unité des swaps du pétrole~~ : **confirmée** par la page FTMO le 2026-10-06 (−225,29 points pour un short
+    sur le WTI, soit environ 25 bps par nuit) ;
   - pauses du samedi absentes des séances officielles : maintenance, ou trous du serveur d'essai ;
   - écarts mesurés sur dix jours de 2026 et appliqués à toute la période (convention de D02.0) ;
   - swap imputé à la sortie, pas chaque nuit.
@@ -191,9 +191,10 @@ et `experiments/D05_6bis/rapport_D05_6bis.md`.*
 
 - **Avant le lancement, quatre décisions du porteur :**
   1. SAN et AVAX : relancer le cBot (§3.1), ou garder AVAX sur l'écart de SOL ;
-  2. levier de référence : fiche du compte d'essai (1:1 et 1:15) ou étalon de D05.4 (1:2 et 1:30) ;
+  2. levier de référence : la page FTMO confirme que le compte Swing est à 1:1 pour les cryptos et à 1:15 pour l'or,
+     comme le compte d'essai ; l'étalon de D05.4 (1:2 et 1:30) était faux pour Swing ;
   3. or : HistData ou barres FTMO (l'écart de brut de §4 est à lire d'abord) ;
-  4. unité des swaps du pétrole (étape 2 seulement).
+  4. ~~unité des swaps du pétrole~~ : confirmée (§4).
 - Puis : cadrage en 4 champs dans le journal, GO, `--baseline`, 8 métriques, rapport.
 - **Ce qui se lit :** réussite et délai du challenge de la piste 2, marche par marche.
 

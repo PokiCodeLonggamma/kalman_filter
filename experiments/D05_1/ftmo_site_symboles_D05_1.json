@@ -1,0 +1,110 @@
+{
+ "source": "https://ftmo.com/en/symbols/ (Symbol Specifications & Trading Hours), lu le 2026-10-06 dans le navigateur intégré, onglets Forex, Cash CFD, Metals CFD, Crypto CFD, Equities CFD",
+ "note_site": "Weekend trading hours on Cryptocurrencies may vary on each platform due to weekly scheduled maintenance times.",
+ "unites": "swaps en points MetaTrader (10^-digits) ou en % ; commissions aller-retour (USD par lot ou % du volume) ; horaires GMT+3",
+ "symboles": [
+  {
+   "sym": "GBPJPY",
+   "contrat": 100000,
+   "levier": "1:100",
+   "levier_swing": "1:30",
+   "swap_long": 3.17,
+   "swap_short": -21.79,
+   "type": "points",
+   "commission": "5 USD/lot"
+  },
+  {
+   "sym": "US100.cash",
+   "contrat": 1,
+   "levier": "1:50",
+   "levier_swing": "1:15",
+   "swap_long": -696.38,
+   "swap_short": 34.17,
+   "type": "points",
+   "commission": "0"
+  },
+  {
+   "sym": "US30.cash",
+   "contrat": 1,
+   "levier": "1:50",
+   "levier_swing": "1:15",
+   "swap_long": -176.55,
+   "swap_short": -923.92,
+   "type": "points",
+   "commission": "0"
+  },
+  {
+   "sym": "GER40.cash",
+   "contrat": 1,
+   "levier": "1:50",
+   "levier_swing": "1:15",
+   "swap_long": -451.78,
+   "swap_short": -4.56,
+   "type": "points",
+   "commission": "0"
+  },
+  {
+   "sym": "USOIL.cash",
+   "contrat": 100,
+   "levier": "1:50",
+   "levier_swing": "1:15",
+   "swap_long": 49.69,
+   "swap_short": -225.29,
+   "type": "points",
+   "commission": "0"
+  },
+  {
+   "sym": "UKOIL.cash",
+   "contrat": 100,
+   "levier": "1:50",
+   "levier_swing": "1:15",
+   "swap_long": 60.98,
+   "swap_short": -275.78,
+   "type": "points",
+   "commission": "0"
+  },
+  {
+   "sym": "XAUUSD",
+   "contrat": 100,
+   "levier": "1:50",
+   "levier_swing": "1:15",
+   "swap_long": -64.9,
+   "swap_short": -4.2,
+   "type": "points",
+   "commission": "0,0014 % du volume"
+  },
+  {
+   "sym": "BTCUSD, ETHUSD, SOLUSD, XRPUSD, AVAUSD, DOGEUSD, LNKUSD, AAVUSD, UNIUSD, XLMUSD",
+   "levier": "1:3.33",
+   "levier_swing": "1:1",
+   "swap_long": -30,
+   "swap_short": -30,
+   "type": "percentage",
+   "commission": "0,065 % du volume"
+  },
+  {
+   "sym": "META",
+   "desc": "Meta Platforms, Spot CFD",
+   "contrat": 1,
+   "levier": "1:3.33",
+   "levier_swing": "1:1",
+   "swap_long": -16.62,
+   "swap_short": -13.14,
+   "type": "points",
+   "commission": "0,004 % du volume",
+   "seance_gmt3": "16:35 - 23:00"
+  },
+  {
+   "sym": "SAN",
+   "desc": "Banco Santander, Spot CFD",
+   "contrat": 1,
+   "levier": "1:3.33",
+   "levier_swing": "1:1",
+   "swap_long": -20,
+   "swap_short": -15.08,
+   "type": "points",
+   "commission": "0,004 % du volume",
+   "seance_gmt3": "10:05 - 18:30"
+  }
+ ]
+}

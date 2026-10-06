@@ -173,3 +173,23 @@ Sources : `audit_ftmo_D05_1.md` (généré), `frictions_D05_1.csv`, `couts_actif
   - unité des swaps du pétrole ;
   - levier de référence (fiche du compte d'essai ou étalon de D05.4) ;
   - lecture de l'or (HistData ou barres FTMO).
+
+## 10. Recoupement avec la page FTMO des symboles (2026-10-06, `ftmo_site_symboles_D05_1.json`)
+
+- [OBS] **Les fiches cTrader concordent avec la page publique de FTMO** (points MetaTrader = 10^-digits) :
+  - US100 −696,38 / +34,17 points, soit −6,96 / +0,34 ;
+  - WTI +49,69 / −225,29 points, soit +0,050 / −0,225 $ par baril ;
+  - Brent +60,98 / −275,78 ;
+  - or −64,9 / −4,2 ;
+  - GBPJPY +3,17 / −21,79 ;
+  - cryptos −30 % / −30 %.
+- [OBS] **Unité des swaps du pétrole confirmée.** Un short paie environ 25 bps par nuit : ce n'est plus une [HYP].
+- [OBS] **Commissions données aller-retour sur la page :** cryptos 0,065 %, or 0,0014 %, GBPJPY 5 USD par lot. Celles de
+  cTrader (0,0325 %, 0,0007 %, 2,5 USD) sont donc bien par côté.
+- [OBS] **Levier « Swing » de FTMO :** cryptos et actions 1:1 ; indices, pétrole et or 1:15 ; FX 1:30. C'est celui du
+  compte d'essai. L'étalon de D05.4 (cryptos 1:2, or 1:30) ne correspond pas au compte Swing ; la marche
+  `levier_compte` est le compte réel.
+- [OBS] **Maintenances crypto confirmées :** la page annonce des maintenances programmées le week-end, ce qui confirme
+  les pauses du samedi.
+- [OBS] **SAN = Banco Santander.** Le porteur l'a remplacé par META : swap −16,62 / −13,14 points, commission 0,004 %
+  aller-retour, levier Swing 1:1, séance de 16:35 à 23:00 GMT+3.
