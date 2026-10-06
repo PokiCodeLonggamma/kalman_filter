@@ -249,7 +249,7 @@ et `experiments/D05_6bis/rapport_D05_6bis.md`.*
      - lecture : écart apparié contre RE-1 figée sur le même actif ;
      - [HYP] biais de sélection.
    - **Ensuite seulement :** le reste des paramètres du filtre (Q…), si le porteur l'ouvre.
-   - **Outil :** Optuna 4.8.0 est installé ; vérifier sa présence dans `pyproject.toml` avant le premier usage.
+   - **Outil :** Optuna 4.8.0 est installé, mais **absent de `pyproject.toml`** : l'ajouter sur GO, avec des tests.
 5. **Remplacement d'AVAX** (mis de côté par le porteur).
    - [OBS] AVAX devient nul net chez FTMO (−0,01 ATR par trade).
    - Données prêtes pour DOGE, LINK, AAVE, UNI et XLM : FTMO dans `export_2026-10-06_v3`. La série Coinbase est à
