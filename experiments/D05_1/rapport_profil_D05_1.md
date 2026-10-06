@@ -4,7 +4,7 @@
 catastrophe à 4 ATR), sur les barres M30 FTMO, de la première barre disponible au 2026-10-01. Frictions FTMO trade par
 trade : écart à l'heure du trade, commission, swaps. SAN absent : il n'a pas été exporté. Sorties :
 `profil_tradfi_D05_1.csv`, `anatomie_tradfi_D05_1.csv`, `annees_tradfi_D05_1.csv`, `correlations_tradfi_D05_1.csv`,
-`trades_tradfi_D05_1.csv.gz`.*
+`trades_tradfi_D05_1.csv.gz`. Repère crypto recalculé avec l'écart réel d'AVAX (export v3).*
 
 ## 1. Tableau des 8 métriques (frictions FTMO complètes)
 
@@ -48,7 +48,7 @@ trade : écart à l'heure du trade, commission, swaps. SAN absent : il n'a pas �
 | WTI | +0,054 | −0,311 | −1,71 | 11,6 | 20,4 | −199,2 | −282,9 | −511,3 | 21,2 | 11,4 | 1,9 | 23,8 |
 | Brent | −0,009 | −0,394 | −1,80 | 9,7 | 15,0 | −216,1 | −283,0 | −458,2 | 16,8 | 8,5 | 1,0 | 17,6 |
 | *BTC (repère, fenêtre D05)* | +0,399 | +0,135 | −0,87 | 14,0 | 32,5 | +112,5 | −32,8 | −392,2 | 30,4 | 17,8 | 5,8 | 27,0 |
-| *Panier crypto (repère)* | +0,317 | +0,076 | −0,98 | 12,3 | 246,7 | +303,8 | −697,8 | −2 117 | 135,6 | 72,4 | 16,4 | 126,8 |
+| *Panier crypto (repère)* | +0,318 | +0,035 | −1,01 | 12,3 | 246,7 | +139,4 | −860,2 | −2 285 | 135,0 | 72,0 | 16,4 | 131,2 |
 
 - [OBS] **La forme est celle de BTC, mais en plus petit.** Un corps perdant : médiane de −1,0 à −1,8 ATR, et 17 à 25
   trades par an sous −3 ATR. Une queue droite qui porte tout : sans les 1 % meilleurs trades, tous les actifs sont
@@ -81,14 +81,14 @@ trade : écart à l'heure du trade, commission, swaps. SAN absent : il n'a pas �
 | Actif | Corrélation mensuelle avec le panier crypto | Net des mois où le panier perd | Net des mois où il gagne | Part de mois positifs quand le panier perd |
 |---|---|---|---|---|
 | Or | −0,01 | −7,1 % | +9,7 % | 49 % |
-| US100 | +0,12 | −4,7 % | +2,3 % | 49 % |
+| US100 | +0,11 | −4,7 % | +2,3 % | 49 % |
 | US30 | −0,08 | +10,2 % | −24,2 % | 39 % |
 | GER40 | −0,15 | +8,1 % | −3,2 % | 52 % |
 | GBPJPY | +0,02 | +3,9 % | +6,0 % | 49 % |
-| WTI | −0,42 | +2,0 % | −30,0 % | 52 % |
+| WTI | −0,43 | +2,0 % | −30,0 % | 52 % |
 | Brent | +0,06 | −34,2 % | +2,4 % | 30 % |
 
-- [OBS] **Corrélation mensuelle avec le panier crypto :** proche de zéro partout (−0,15 à +0,12), sauf le WTI (−0,42).
+- [OBS] **Corrélation mensuelle avec le panier crypto :** proche de zéro partout (−0,15 à +0,11), sauf le WTI (−0,43).
 - [OBS] **Quand le panier crypto perd :** US30 et GER40 gagnent (+10,2 % et +8,1 %), mais US30 perd ensuite davantage
   quand il gagne (−24,2 %).
 - [HYP] Ce sont des pistes pour l'étape 3, pas des conclusions : 60 mois, gain total voisin de zéro hors pétrole.

@@ -2688,7 +2688,7 @@ reproduction de résultats publiés et parité du noyau, sans aucune performance
   - Trades de +5 ATR ou plus : 8,5 à 14,6 par an (BTC : 17,8) ; de +10 ATR ou plus : 1,0 à 3,6 par an (BTC : 5,8).
   - Sans les 1 % meilleurs trades, tout devient négatif, BTC compris.
   - Brut moyen : GBPJPY +0,20, GER40 +0,19, or +0,14 (BTC +0,40).
-- [OBS] **Corrélation mensuelle avec le panier crypto (2021-10 → 2026-09) :** de −0,15 à +0,12, sauf le WTI (−0,42).
+- [OBS] **Corrélation mensuelle avec le panier crypto (2021-10 → 2026-09) :** de −0,15 à +0,11, sauf le WTI (−0,43).
   Les mois où le panier perd, US30 et GER40 gagnent (+10,2 % et +8,1 % en ATR × 0,25 %).
 - [HYP] **Points non vérifiés :** swaps du pétrole pris à la lettre ; écarts mesurés sur dix jours de 2026 ; rollover à
   17:00 New York ; or plus faible sur FTMO que sur HistData.

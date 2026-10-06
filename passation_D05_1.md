@@ -185,7 +185,7 @@ et `experiments/D05_6bis/rapport_D05_6bis.md`.*
     - net médian de −1,0 à −1,8 ATR ;
     - trades à +5 ATR ou plus : 8,5 à 14,6 par an, contre 17,8 pour BTC ;
     - tout devient négatif sans les 1 % meilleurs trades.
-  - Corrélation mensuelle avec le panier crypto de −0,15 à +0,12, sauf le WTI (−0,42). Les mois où le panier perd,
+  - Corrélation mensuelle avec le panier crypto de −0,15 à +0,11, sauf le WTI (−0,43). Les mois où le panier perd,
     US30 et GER40 gagnent (+10,2 % et +8,1 %).
   - **META non mesuré** : historique FTMO depuis le 2025-01-27 seulement.
   - [OBS] **Or :** sur les barres FTMO, son brut est plus faible que sur HistData (fenêtre D05 : +0,14 contre +0,36 ATR,
