@@ -199,6 +199,14 @@ et `experiments/D05_6bis/rapport_D05_6bis.md`.*
 
 ### Étape 2 : profil TradFi (RE-1 pure, coûts FTMO)
 
+- **Fait le 2026-10-06, à la demande du porteur, sans SAN :** `experiments/D05_1/run_profil_D05_1.py` et
+  `rapport_profil_D05_1.md`.
+  - Espérance nette (ATR) : or +0,019, US100 −0,038, US30 −0,108, GER40 +0,086, GBPJPY +0,006, WTI −0,311,
+    Brent −0,394.
+  - Corrélation mensuelle avec le panier crypto proche de zéro, sauf le WTI (−0,42).
+- **Restent :** SAN (à exporter) ; swaps du pétrole (unité) ; or FTMO contre HistData.
+- **Le paragraphe ci-dessous est le plan d'origine, désormais réalisé :**
+
 - **Code à écrire :** pour chaque actif hors crypto,
   - `D04.prepare(clé, data/raw/ftmo/ftmo_<clé>_30m.csv, D04.END)` dans un bloc `levee` ;
   - puis `D04.final_series` ;

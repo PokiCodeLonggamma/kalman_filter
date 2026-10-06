@@ -2666,3 +2666,32 @@ reproduction de résultats publiés et parité du noyau, sans aucune performance
 
 #### Décision
 - [x] **Données et frictions faites ; passation pour la session suivante** (`passation_D05_1.md`). Commits locaux.
+
+
+### [EXP-D05.1, étape 2] — RE-1 sur les actifs hors crypto, barres et frictions FTMO (profil TradFi, 2026-10-06)
+- **GO du porteur :** plan validé le 2026-10-06, lancement demandé le même jour (« backtest notre stratégie sur tous les
+  nouveaux actifs avec les datas ctrader »).
+- **Code :** `experiments/D05_1/run_profil_D05_1.py`, avec le cadrage dans l'en-tête ; RE-1 version finale figée ;
+  frictions de `propfirm.frictions`. SAN absent (non exporté).
+- **Rapport :** `experiments/D05_1/rapport_profil_D05_1.md`.
+
+#### Résultats
+- [OBS] **Espérance nette par trade (ATR), frictions FTMO complètes :** or +0,019 ; US100 −0,038 ; US30 −0,108 ;
+  GER40 +0,086 ; GBPJPY +0,006 ; WTI −0,311 ; Brent −0,394.
+  - PnL composé à 0,25 %/ATR : +8,6 %, +2,3 %, −8,1 %, +3,2 %, +3,9 %, −40,2 %, −41,3 %.
+  - MDD : −18 %, −16 %, −13 %, −11 %, −7,5 %, −41 %, −45 %.
+  - Cadence : 7,7 à 9,9 trades par mois.
+- [OBS] **Sans les swaps :** or +0,061 ; US100 +0,005 ; US30 −0,072 ; GER40 +0,120 ; GBPJPY +0,025 ; WTI −0,204 ;
+  Brent −0,222. Le pétrole perd surtout par l'écart (0,21 à 0,26 ATR par trade).
+- [OBS] **Anatomie :** même forme que BTC, en plus petit.
+  - Net médian de −1,0 à −1,8 ATR.
+  - Trades de +5 ATR ou plus : 8,5 à 14,6 par an (BTC : 17,8) ; de +10 ATR ou plus : 1,0 à 3,6 par an (BTC : 5,8).
+  - Sans les 1 % meilleurs trades, tout devient négatif, BTC compris.
+  - Brut moyen : GBPJPY +0,20, GER40 +0,19, or +0,14 (BTC +0,40).
+- [OBS] **Corrélation mensuelle avec le panier crypto (2021-10 → 2026-09) :** de −0,15 à +0,12, sauf le WTI (−0,42).
+  Les mois où le panier perd, US30 et GER40 gagnent (+10,2 % et +8,1 % en ATR × 0,25 %).
+- [HYP] **Points non vérifiés :** swaps du pétrole pris à la lettre ; écarts mesurés sur dix jours de 2026 ; rollover à
+  17:00 New York ; or plus faible sur FTMO que sur HistData.
+
+#### Décision
+- [x] **Profil fait ; lecture au porteur ; étape 3 (inclusion) à cadrer.** Commit local.
