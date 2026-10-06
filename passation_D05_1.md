@@ -232,6 +232,37 @@ et `experiments/D05_6bis/rapport_D05_6bis.md`.*
   - limite d'exposition simultanée ;
   - lecture : réussite du challenge de la piste 2, délai, perte du jour, valeur en suite.
 
+### Décisions et piste du porteur (2026-10-06, après l'étape 2)
+
+- **Univers :**
+  - **SAN remplacé par META** (action US, CFD FTMO).
+  - **AVAX remplacé par une autre crypto de la liste FTMO**, au choix du porteur. Liste courte retenue sur des critères
+    structurels seulement : écart FTMO (relevé le 2026-10-06 sur la liste de cTrader), série USD chez Coinbase couvrant
+    la fenêtre D05, taille.
+
+    | Crypto | Écart FTMO relevé | Série Coinbase USD |
+    |---|---|---|
+    | AAVE (`AAVUSD`) | ≈ 0,5 bp | depuis 2020-12 |
+    | LINK (`LNKUSD`) | ≈ 2,2 bps | depuis 2019-06 |
+    | UNI (`UNIUSD`) | ≈ 3,8 bps | depuis 2020-09 |
+    | XLM (`XLMUSD`) | ≈ 9,2 bps | depuis 2019-03 |
+    | DOGE (`DOGEUSD`) | ≈ 9,4 bps | depuis 2021-06 |
+    | *AVAX, pour mémoire (`AVAUSD`)* | ≈ 17,9 bps | — |
+
+  - En D02.0, le porteur avait écarté LINK et LTC de l'univers.
+  - Pour la Baseline, le contrôle bloquant garde AVAX : il doit redonner D05.6bis. Le remplacement fait l'objet d'une
+    marche à part.
+  - L'écart d'AVAX vaut environ 18 bps, contre 2,5 pour SOL : l'hypothèse « écart de SOL » sous-estimait AVAX.
+- **Nouvelle piste (porteur) :** optimiser **uniquement les paramètres du filtre de Kalman** sur un seul actif hors
+  crypto, par exemple US100, pour voir si la stratégie demande un réglage par actif pour être portable hors crypto.
+  - Garde-fous à cadrer avant tout calcul :
+    - seuls les paramètres du filtre bougent (R0, et Q si le porteur l'ouvre), pas H ni les seuils ;
+    - walk-forward, IS puis OOS, avec la machinerie de D02 (`src/optimization`, `build_atlas(kalman=…)`) ;
+    - nombre de configurations compté ;
+    - lecture contre RE-1 figée sur le même actif, en écart apparié ;
+    - [HYP] biais de sélection : l'actif est choisi après lecture de l'étape 2.
+  - Le porteur décide de sa place dans la suite.
+
 ## 7. Message de reprise (à coller dans la nouvelle session)
 
 > Bonjour. Tu reprends la direction Prop Firm (D05) d'AKF-TSO, chantier D05.1, dans

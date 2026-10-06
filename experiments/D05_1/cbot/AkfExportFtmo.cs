@@ -4,6 +4,9 @@
 //           ftmo_<nom>_m30.csv (bougies M30, UTC, ouverture), ftmo_<nom>_ticks.csv (bid/ask des derniers jours).
 // Version 2 (2026-10-06) : fiche complète (type et jour triple du swap, commission, paliers de levier, séances) ;
 //           bougies et ticks seulement pour la liste « Bougies et ticks pour » (vide : aucune).
+// Version 3 (2026-10-06) : paramètres renommés (une instance garde la valeur d'un paramètre qui garde son nom de
+//           propriété) ; fiche aussi pour chaque symbole de la liste des bougies ; SAN remplacé par META (porteur) ;
+//           cryptos candidates au remplacement d'AVAX (porteur) ; AVAUSD gardé pour ses coûts.
 using System;
 using System.Globalization;
 using System.IO;
@@ -18,12 +21,12 @@ namespace cAlgo.Robots
     [Robot(TimeZone = TimeZones.UTC, AccessRights = AccessRights.None)]
     public class AkfExportFtmo : Robot
     {
-        [Parameter("Fiches pour (séparés par ;)",
-            DefaultValue = "US100.cash;US30.cash;GER40.cash;GBPJPY;USOIL.cash;UKOIL.cash;XAUUSD;SAN;BTCUSD;ETHUSD;SOLUSD;AVAUSD;XRPUSD")]
-        public string SymbolList { get; set; }
+        [Parameter("Fiches v3 (séparés par ;)",
+            DefaultValue = "US100.cash;US30.cash;GER40.cash;GBPJPY;USOIL.cash;UKOIL.cash;XAUUSD;META;BTCUSD;ETHUSD;SOLUSD;AVAUSD;XRPUSD")]
+        public string Fiches { get; set; }
 
-        [Parameter("Bougies et ticks pour (séparés par ;)", DefaultValue = "SAN;AVAUSD")]
-        public string DataList { get; set; }
+        [Parameter("Bougies et ticks v3 (séparés par ;)", DefaultValue = "META;AVAUSD;DOGEUSD;LNKUSD;AAVUSD;UNIUSD;XLMUSD")]
+        public string Donnees { get; set; }
 
         [Parameter("Début des bougies (AAAA-MM-JJ)", DefaultValue = "2020-01-01")]
         public string Start { get; set; }
@@ -38,11 +41,12 @@ namespace cAlgo.Robots
             var start = DateTime.SpecifyKind(DateTime.ParseExact(Start, "yyyy-MM-dd", Inv), DateTimeKind.Utc);
             File.WriteAllText("ftmo_symboles_liste.csv", "nom\n" + string.Join("\n", Symbols.OrderBy(s => s)) + "\n");
 
-            var data = DataList.Split(';').Select(s => s.Trim()).Where(s => s.Length > 0).ToList();
+            var data = Donnees.Split(';').Select(s => s.Trim()).Where(s => s.Length > 0).ToList();
+            var noms = Fiches.Split(';').Select(s => s.Trim()).Where(s => s.Length > 0).Concat(data).Distinct().ToList();
             var fiches = new StringBuilder("nom,description,base,cotation,digits,pip_size,tick_size,lot_size,volume_min_unites,pip_value,tick_value,"
                 + "swap_type,swap_long,swap_short,swap_triple,frais_admin,commission_type,commission,commission_min_type,commission_min,"
                 + "commission_min_devise,levier_paliers,seances,ecart_actuel\n");
-            foreach (var name in SymbolList.Split(';').Select(s => s.Trim()).Where(s => s.Length > 0))
+            foreach (var name in noms)
             {
                 if (!Symbols.Exists(name))
                 {

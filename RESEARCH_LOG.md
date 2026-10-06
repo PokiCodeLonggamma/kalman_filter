@@ -2695,3 +2695,18 @@ reproduction de résultats publiés et parité du noyau, sans aucune performance
 
 #### Décision
 - [x] **Profil fait ; lecture au porteur ; étape 3 (inclusion) à cadrer.** Commit local.
+
+
+### [DÉCISION] — Univers de D05.1 et nouvelle piste (2026-10-06)
+- **Porteur :** « remplaçons SAN par META et AVAX par une autre crypto de la liste » ; « Inclus dans la suite la
+  potentielle piste d'optimiser uniquement les paramètres du filtre sur un actif comme US100 (voir si la stratégie
+  nécessite une portabilité hors crypto) » ; régler les données dans cette session, pour que la suivante ne traite que
+  la stratégie.
+- **Fait :**
+  - cBot v3 : paramètres renommés (piège de l'instance qui garde l'ancienne valeur) ; META, AVAUSD et cinq cryptos
+    candidates exportés en une fois ;
+  - liste courte de cryptos sur critères structurels (`passation_D05_1.md` §6) ;
+  - [OBS] page FTMO des symboles : les cryptos ont des maintenances programmées le week-end, ce qui confirme les pauses
+    du samedi.
+- **À venir :** export v3, choix de la crypto, série Coinbase de la crypto retenue (sur GO de téléchargement),
+  `--import`, audit, `--frictions`.
