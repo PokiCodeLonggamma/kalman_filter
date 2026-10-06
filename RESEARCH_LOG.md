@@ -2735,3 +2735,13 @@ reproduction de résultats publiés et parité du noyau, sans aucune performance
   - levier Swing réel : 1:1 pour les cryptos et les actions, 1:15 pour l'or et les indices.
   - L'étalon de D05.4 (1:2 et 1:30) était faux pour Swing.
 - **Passation :** `passation_D05_1.md`, réécrite ; `passation.md` y renvoie. 456 tests. Commits locaux, non poussés.
+
+
+### [DÉCISION] — Piste « filtre par actif » : d'abord R0 seul, via Optuna (2026-10-06)
+- **Porteur :** « Simplifie au début par une adaptation de R0 pour chaque actif via Optuna. » La piste remplace, pour
+  sa première étape, l'optimisation de tous les paramètres du filtre sur US100.
+- **Repère déjà mesuré :** WFO-R0 de D02 (grille de 5 valeurs) ; aucune valeur ajoutée démontrée face à RE-1 figée
+  (BTC +0,074 ATR [−0,067 ; +0,225], or −0,150 [−0,294 ; −0,021]) ; piste jugée « à creuser » par le porteur le
+  2026-10-02.
+- **À cadrer dans la session suivante** (`passation_D05_1.md` §7) : actifs, espace de R0, objectif, walk-forward, nombre
+  d'essais, frictions FTMO, écart apparié contre RE-1 figée. Aucun calcul lancé.

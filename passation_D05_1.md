@@ -232,14 +232,24 @@ et `experiments/D05_6bis/rapport_D05_6bis.md`.*
      un dictionnaire), marge plafonnée, frais par trade, tailles par risque.
    - À cadrer : fenêtre commune (2021-10 avec AVAX), allocation (même risque ou modulé par la queue), limite d'exposition
      simultanée, lecture (réussite et délai du challenge de la piste 2, perte du jour, valeur en suite).
-4. **Nouvelle piste (porteur) :** optimiser **uniquement les paramètres du filtre de Kalman** sur un actif hors crypto,
-   par exemple US100, pour voir si la stratégie demande un réglage par actif.
-   - Garde-fous :
-     - seuls les paramètres du filtre bougent (R0, et Q si le porteur l'ouvre), pas H ni les seuils ;
-     - walk-forward avec la machinerie de D02 (`src/optimization`, `build_atlas(kalman=…)`) ;
-     - configurations comptées ;
-     - écart apparié contre RE-1 figée ;
-     - [HYP] biais de sélection : l'actif est choisi après l'étape 2.
+4. **Nouvelle piste (porteur) : adapter le filtre de Kalman à chaque actif.**
+   - **Première étape, simplifiée par le porteur le 2026-10-06 :** adapter **R0 seul pour chaque actif, avec Optuna**.
+     H, les seuils et la frontière restent ceux de RE-1 figée.
+   - **Ce qu'on sait déjà (D02) :** walk-forward de R0 sur une grille de 5 valeurs (10, 50, 100, 200, 500).
+     - BTC : +0,291 ATR, contre +0,218 pour RE-1 figée ; écart +0,074 [−0,067 ; +0,225], porté par 2015 et 2018.
+     - Or : −0,150 [−0,294 ; −0,021] face au contrôle.
+     - Le porteur avait jugé le WFO-R0 « à creuser » (2026-10-02).
+   - **À cadrer avant tout calcul :**
+     - actifs concernés : chaque actif hors crypto, et les cryptos du portefeuille si le porteur le veut ;
+     - espace de R0 : continu, en échelle log ;
+     - fonction objectif : D02 retenait le Calmar net sur plateau avec une espérance en ATR positive ;
+     - découpage IS/OOS : walk-forward ;
+     - nombre d'essais Optuna, compté et consigné ;
+     - frictions FTMO incluses ;
+     - lecture : écart apparié contre RE-1 figée sur le même actif ;
+     - [HYP] biais de sélection.
+   - **Ensuite seulement :** le reste des paramètres du filtre (Q…), si le porteur l'ouvre.
+   - **Outil :** Optuna 4.8.0 est installé ; vérifier sa présence dans `pyproject.toml` avant le premier usage.
 5. **Remplacement d'AVAX** (mis de côté par le porteur).
    - [OBS] AVAX devient nul net chez FTMO (−0,01 ATR par trade).
    - Données prêtes pour DOGE, LINK, AAVE, UNI et XLM : FTMO dans `export_2026-10-06_v3`. La série Coinbase est à
