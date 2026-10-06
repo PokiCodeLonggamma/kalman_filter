@@ -1,31 +1,39 @@
-"""EXP-D05.1, étape 1 — frictions FTMO et « Baseline cTrader » : référence, piste 1 et piste 2 recalculées avec les
-coûts réels du compte FTMO.
+"""EXP-D05.1, étape 1 — frictions FTMO (écart, commission, swaps, pauses de cotation) et « Baseline cTrader » :
+référence, piste 1 et piste 2 recalculées avec les conditions réelles du compte FTMO.
 
 GO du porteur du 2026-10-06 : « Étape 1 : Frictions & Baseline. Analyse les ticks et les swaps. Applique-les aux
-Cryptos pour générer notre "Baseline cTrader" de la P1 et P2 (sur 2020-2026). »
+Cryptos pour générer notre "Baseline cTrader" de la P1 et P2 (sur 2020-2026). » Décisions du même jour : les frictions
+(trous, écart, swaps, commission) sont traitées dans cette session ; données cTrader pour les actifs hors crypto, séries
+des courtiers de D05 pour les cryptos ; la Baseline (`--baseline`) se lance dans la session suivante.
 
 Cadrage (fixé avant le calcul ; lecture descriptive, sans seuil) :
 - QUESTION : que deviennent la référence (0,20 × 0,20), la piste 1 (0,20 × 0,25) et la piste 2 (0,25 × 0,25, « Burn &
-  Churn » : rachat de 540 € au minuit qui suit chaque échec) quand les frais conventionnels (5 bps, or 4 bps) sont
-  remplacés par les frictions du compte FTMO (écart à l'heure du trade, commission, swaps) ?
-- DONNÉES : trades de RE-1 version finale sur les six actifs de D05 (D04.1 : BTC, ETH, SOL, AVAX, XRP, or ; prix des
-  courtiers de D05), fenêtre commune 2021-10-01 → 2026-10-01 (AVAX coté depuis le 2021-09-30 : le portefeuille à six
-  actifs ne peut pas commencer en 2020) ; frictions : ticks FTMO du 2026-09-27 au 2026-10-05 et fiches des symboles
-  (cBot AkfExportFtmo, versions 1 et 2).
-- MÉTHODE : un seul facteur change, le modèle de frais : (a) convention de D05 ; (b) écart + commission FTMO ; (c) (b) +
-  swaps = Baseline cTrader. Moteur, tailles, règles FTMO Swing, marge 1:2 (or 1:30) plafonnée, lecture principale de
-  D05.4 et compte financé de D05.5 : inchangés. Contrôle bloquant : (a) redonne le roster de D05.6bis.
+  Churn » : rachat de 540 € au minuit qui suit chaque échec) dans les conditions du compte FTMO ?
+- DONNÉES : trades de RE-1 version finale sur les six actifs de D05 (D04.1), fenêtre commune 2021-10-01 → 2026-10-01
+  (AVAX coté depuis le 2021-09-30 : le portefeuille à six actifs ne peut pas commencer en 2020) ; cryptos sur les
+  séries des courtiers (Bitstamp, Coinbase) ; or sur HistData puis sur les barres FTMO ; frictions : ticks FTMO du
+  2026-09-25 au 2026-10-05, fiches des symboles (cBot AkfExportFtmo v2), calendrier des pauses tiré des barres FTMO.
+- MÉTHODE : une échelle de modèles, un facteur ajouté à chaque marche (écart apparié marche par marche) :
+  1. `convention` : 5 bps (or 4 bps), contrôle bloquant : redonne le roster de D05.6bis ;
+  2. `ecart_commission` : écart à l'heure de l'entrée et de la sortie + commission des deux côtés ;
+  3. `swaps` : + swap de chaque rollover traversé ;
+  4. `pauses` : + exécution des cryptos sur le calendrier FTMO (`propfirm.frictions.ajuster_pauses`) ;
+  5. `or_ftmo` : + or sur les barres FTMO (signaux, prix et frictions FTMO) = Baseline cTrader.
+  Moteur, tailles, règles FTMO Swing, marge 1:2 (or 1:30) plafonnée, lecture principale de D05.4 et compte financé de
+  D05.5 : inchangés.
 - CE QUE ÇA MESURE : réussite, délai médian et P90 du challenge ; valeur d'une tentative et d'une suite (12 et 24 mois,
-  sans 2026) ; écarts appariés (b − a, c − a) par départ ; 8 métriques du portefeuille ; frais par actif en bps et en
-  ATR ; part des trades qui traversent un rollover ; trades entrés ou sortis pendant une pause de cotation FTMO.
-- CE QUE ÇA NE PERMET PAS DE CONCLURE : écarts mesurés sur huit jours de 2026, appliqués à 2021-2026 (convention de
+  sans 2026, sans 2026 à 24 mois) ; écarts appariés par départ ; 8 métriques du portefeuille ; frictions par actif en
+  bps et en ATR ; trades touchés par les pauses.
+- CE QUE ÇA NE PERMET PAS DE CONCLURE : écarts mesurés sur dix jours de 2026, appliqués à 2021-2026 (convention de
   D02.0 : coûts actuels sur les années anciennes) ; rollover à 17:00 New York et base de 360 jours pour les swaps en %
-  ([HYP]) ; swap imputé à la sortie, pas chaque nuit ; prix des courtiers de D05, pas ceux de FTMO ; pauses de
-  maintenance FTMO des cryptos comptées, pas modélisées ; mêmes biais que D05 (données déjà lues, 2026 favorable,
-  départs chevauchants).
+  ([HYP]) ; swap imputé à la sortie ; calendrier des pauses de BTC pour SOL et AVAX avant leur historique FTMO ; un
+  stop franchi pendant une pause est exécuté à la réouverture même si le prix est revenu ([HYP]) ; mêmes biais que D05
+  (données déjà lues, 2026 favorable, départs chevauchants).
 
 Usage, depuis la racine du dépôt : python experiments/D05_1/run_frictions_D05_1.py --import | --frictions | --baseline
-`--import` : séries M30 du cBot → data/raw/ftmo/ftmo_<clé>_30m.csv (schéma de `load_ohlc`, .meta.json).
+- `--import` : bougies M30 du cBot → data/raw/ftmo/ftmo_<clé>_30m.csv (schéma de `load_ohlc`, .meta.json) ;
+- `--frictions` : écarts, fiches, pauses, frictions trade par trade des six actifs (descriptif, sans simulation) ;
+- `--baseline` : l'échelle des cinq modèles sur le roster (session suivante, sur GO).
 """
 from __future__ import annotations
 
@@ -50,14 +58,15 @@ D055, D054, D041, D04, D01 = D056B.D055, D056B.D054, D056B.D041, D056B.D04, D056
 
 from envelope import risk_weights  # noqa: E402
 from envelope.portfolio import Leg, portfolio_paths  # noqa: E402
-from marketdata.ftmo import ecarts_barres, ecrire_serie, lire_bougies, lire_fiches, lire_ticks, profil_ecarts  # noqa: E402
+from marketdata.ftmo import (ecarts_barres, ecrire_serie, lire_bougies, lire_fiches, lire_ticks,  # noqa: E402
+                             pauses_cotation, profil_ecarts)
 from propfirm import (FTMO_SWING, LEVIER_FTMO_SWING, challenge, departs_minuit, ic_blocs, resume, simuler,  # noqa: E402
                       suite, valeur)
-from propfirm.frictions import commission_bps, couts_trades, jours_swap, swap_bps  # noqa: E402
+from propfirm.frictions import ajuster_pauses, commission_bps, couts_trades, swap_bps  # noqa: E402
 from reserve import levee  # noqa: E402
 
 RAW = ROOT / "data" / "raw" / "ftmo"
-EXPORTS = {"export_2026-10-06": "2026-10-05T23:23:22Z", "export_2026-10-06_v2": None}   # heure de fin du cBot (journal)
+EXPORTS = {"export_2026-10-06": "2026-10-05T23:23:22Z", "export_2026-10-06_v2": None}   # fin du cBot (journal), UTC
 MOTIF = "EXP-D05.1, étape 1 : frictions FTMO et Baseline cTrader (porteur, 2026-10-06)"
 NOMS = {"BTC": "BTCUSD", "ETH": "ETHUSD", "SOL": "SOLUSD", "AVAX": "AVAUSD", "XRP": "XRPUSD", "XAU": "XAUUSD",
         "US100": "US100.cash", "US30": "US30.cash", "GER40": "GER40.cash", "GBPJPY": "GBPJPY", "WTI": "USOIL.cash",
@@ -65,10 +74,11 @@ NOMS = {"BTC": "BTCUSD", "ETH": "ETHUSD", "SOL": "SOLUSD", "AVAX": "AVAUSD", "XR
 CRYPTO = ("BTC", "ETH", "SOL", "AVAX", "XRP")
 FUSEAU = {k: ("Europe/Berlin" if k in ("GER40", "SAN") else "America/New_York") for k in NOMS}   # fixés avant calcul
 PRIX_D05 = {"BTC": "mid", "ETH": "mid", "SOL": "mid", "AVAX": "mid", "XRP": "mid", "XAU": "bid"}  # HistData : bid
-MODELES = ("convention", "ecart_commission", "baseline_ctrader")
+MODELES = ("convention", "ecart_commission", "swaps", "pauses", "or_ftmo")
 ROSTER = (("Référence", "fixe 0,20", "fixe 0,20"), ("Piste 1", "fixe 0,20", "fixe 0,25"),
           ("Piste 2", "fixe 0,25", "fixe 0,25"))
 A, B = D054.A, D054.B
+TOUT = pd.Timestamp("2100-01-01", tz="UTC")
 
 
 def stop(msg: str):
@@ -88,6 +98,10 @@ def propre(nom: str) -> str:
     return "".join(c.lower() if c.isalnum() else "_" for c in nom)
 
 
+def bougies(cle: str) -> pd.DataFrame:
+    return lire_bougies(fichier(f"ftmo_{propre(NOMS[cle])}_m30.csv"), fin=TOUT)
+
+
 def run_import() -> None:
     out = {}
     with levee(MOTIF):
@@ -100,10 +114,10 @@ def run_import() -> None:
             exp = src.parent.name
             if EXPORTS[exp] is None:
                 stop(f"heure de fin de {exp} inconnue (journal du cBot)")
-            b = lire_bougies(src, fin=pd.Timestamp("2100-01-01", tz="UTC"))
             meta = {"source": "FTMO, compte d'essai cTrader (cBot AkfExportFtmo)", "symbole": nom, "export": exp,
                     "fichier_source": src.name, "decision": "porteur, 2026-10-05 et 2026-10-06 (D05.1)"}
-            out[cle] = ecrire_serie(b, RAW / f"ftmo_{cle.lower()}_30m.csv", meta, extrait=EXPORTS[exp])
+            out[cle] = ecrire_serie(lire_bougies(src, fin=TOUT), RAW / f"ftmo_{cle.lower()}_30m.csv", meta,
+                                    extrait=EXPORTS[exp])
             print(f"{cle} : {out[cle]['n_rows']} barres, {out[cle]['first']} → {out[cle]['last']}", flush=True)
     (HERE / "import_ftmo_D05_1.json").write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
 
@@ -116,151 +130,176 @@ def fiches() -> pd.DataFrame:
     return f
 
 
-def mesurer_ecarts(cle: str) -> tuple[pd.Series, pd.DataFrame, dict]:
-    """Écarts à l'ouverture des barres FTMO couvertes par les ticks, profil par demi-heure locale, résumé."""
-    nom = NOMS[cle]
-    t = lire_ticks(fichier(f"ftmo_{propre(nom)}_ticks.csv"))
-    b = lire_bougies(fichier(f"ftmo_{propre(nom)}_m30.csv"), fin=pd.Timestamp("2100-01-01", tz="UTC"))
+def mesurer_ecarts(cle: str) -> tuple[pd.DataFrame, dict]:
+    """Profil par demi-heure locale des écarts à l'ouverture des barres FTMO couvertes par les ticks, et résumé."""
+    t = lire_ticks(fichier(f"ftmo_{propre(NOMS[cle])}_ticks.csv"))
+    b = bougies(cle)
     o = pd.DatetimeIndex(b.time[(b.time >= t.time.iat[0]) & (b.time <= t.time.iat[-1])])
     e = ecarts_barres(t, o).dropna()
     we = e.index.dayofweek >= 5
     p = profil_ecarts(e, FUSEAU[cle])
     top = p.mediane.nlargest(3)
-    res = {"cle": cle, "symbole": nom, "ticks": len(t), "barres_mesurees": len(e), "debut": str(t.time.iat[0]),
+    res = {"cle": cle, "symbole": NOMS[cle], "ticks": len(t), "barres_mesurees": len(e), "debut": str(t.time.iat[0]),
            "fin": str(t.time.iat[-1]), "ecart_median_bps": float(e.median()), "ecart_moyen_bps": float(e.mean()),
            "ecart_p90_bps": float(e.quantile(0.9)), "ecart_max_bps": float(e.max()),
            "ecart_median_semaine_bps": float(e[~we].median()),
            "ecart_median_weekend_bps": float(e[we].median()) if we.any() else np.nan,
-           "pires_demi_heures": "; ".join(f"{int(i) // 2:02d}:{30 * (int(i) % 2):02d} {v:.1f}" for i, v in top.items()),
+           "pires_demi_heures_locales": "; ".join(f"{int(i) // 2:02d}:{30 * (int(i) % 2):02d} {v:.1f}"
+                                                  for i, v in top.items()),
            "dernier_prix": float(b.close.iat[-1])}
-    return e, p, res
+    return p, res
 
 
-def pauses(cle: str) -> pd.DataFrame:
-    """Trous de cotation de la série FTMO (débuts et fins des barres manquantes, en ns)."""
-    b = lire_bougies(fichier(f"ftmo_{propre(NOMS[cle])}_m30.csv"), fin=pd.Timestamp("2100-01-01", tz="UTC"))
-    t = b.time.astype("int64").to_numpy()
-    d = np.diff(t)
-    k = np.flatnonzero(d > 30 * 60 * 10**9)
-    return pd.DataFrame({"debut": t[k] + 30 * 60 * 10**9, "fin": t[k + 1], "heures": d[k] / 3.6e12 - 0.5})
-
-
-def resume_fiche(cle: str, f: pd.Series, prix: float) -> dict:
+def resume_fiche(f: pd.Series, prix: float) -> dict:
     sl = float(swap_bps(f.swap_type, f.swap_long, prix, float(f.pip_size), int(f.digits)))
     ss = float(swap_bps(f.swap_type, f.swap_short, prix, float(f.pip_size), int(f.digits)))
     com = float(commission_bps(f.commission_type, float(f.commission), prix, float(f.lot_size)))
     return {"description": f.description, "swap_type": f.swap_type, "swap_long": f.swap_long, "swap_short": f.swap_short,
             "swap_triple": f.swap_triple if isinstance(f.swap_triple, str) else "",
-            "swap_long_bps_nuit": sl, "swap_short_bps_nuit": ss, "commission_type": f.commission_type,
+            "swap_cout_long_bps_nuit": sl, "swap_cout_short_bps_nuit": ss, "commission_type": f.commission_type,
             "commission": f.commission, "commission_bps_cote": com, "levier_paliers": f.levier_paliers,
             "seances": f.seances}
 
 
-def couts_d05(assets: dict, f: pd.DataFrame, profils: dict) -> dict[str, pd.DataFrame]:
-    """Frictions FTMO des trades de la fenêtre commune, par actif."""
-    out = {}
+def calendrier(cle: str) -> pd.DataFrame:
+    """Pauses de cotation FTMO d'une crypto : les siennes sur son historique FTMO, celles de BTC avant (pauses communes
+    à la plateforme : 357 des 368 pauses d'ETH sont aussi celles de BTC)."""
+    btc = pauses_cotation(bougies("BTC").time)
+    try:
+        b = bougies(cle)
+    except FileNotFoundError:
+        return btc.assign(source="BTC")
+    t0 = b.time.iat[0].value
+    propre_ = pauses_cotation(b.time).assign(source=cle)
+    avant = btc[btc.fin <= t0].assign(source="BTC")
+    return pd.concat([avant, propre_], ignore_index=True)
+
+
+def serie_xau_ftmo() -> dict:
+    """Or sur les barres FTMO, préparé comme les actifs de D04 (atlas, signaux, RE-1 version finale)."""
+    p = D04.prepare("XAU", RAW / "ftmo_xau_30m.csv", D04.END)
+    p["s"] = D04.final_series(p, None, None)
+    return p
+
+
+def trades_variantes(assets: dict, xau_ftmo: dict) -> tuple[dict, list]:
+    """Trades de la fenêtre commune : `continu` (séries de D05), `ftmo` (cryptos sur le calendrier FTMO ; or sur les
+    barres FTMO)."""
+    out, journal = {}, []
     for key in D041.KEYS:
         p = assets[key]
         tr = D041.window_trades(p, A, B)
-        c = couts_trades(tr, p["bars"], f.loc[NOMS[key]], profils[key].mediane, FUSEAU[key], prix=PRIX_D05[key],
+        out[(key, "continu")] = (p, tr)
+        if key in CRYPTO:
+            adj, r = ajuster_pauses(tr, p["bars"], calendrier(key))
+            out[(key, "ftmo")] = (p, adj)
+            journal.append({"cle": key, **r})
+        else:
+            out[(key, "ftmo")] = (xau_ftmo, D041.window_trades(xau_ftmo, A, B))
+    return out, journal
+
+
+def couts(variantes: dict, f: pd.DataFrame, profils: dict) -> pd.DataFrame:
+    rows = []
+    for (key, cal), (p, tr) in variantes.items():
+        prix = "bid" if (key == "XAU" or cal == "ftmo" and key not in CRYPTO) else PRIX_D05[key]
+        c = couts_trades(tr, p["bars"], f.loc[NOMS[key]], profils[key].mediane, FUSEAU[key], prix=prix,
                          sept_jours=key in CRYPTO)
+        t = p["bars"].time
         c.insert(0, "cle", key)
-        c.insert(1, "entree", p["bars"].time.iloc[tr.entry_bar.to_numpy()].to_numpy())
-        c.insert(2, "sens", tr.side.to_numpy())
+        c.insert(1, "calendrier", cal)
+        c.insert(2, "trade", np.arange(len(tr)))
+        c.insert(3, "entree", t.iloc[tr.entry_bar.to_numpy()].to_numpy())
+        c.insert(4, "sortie", t.iloc[tr.exit_bar.to_numpy()].to_numpy())
+        c.insert(5, "sens", tr.side.to_numpy())
         c["brut_bps"] = tr.ret_gross_bps.to_numpy(dtype=float)
         c["atr_bps"] = p["atr_bps"][tr.signal_bar.to_numpy()]
         c["convention"] = D04.FEES[key][0]
-        c["sortie"] = p["bars"].time.iloc[tr.exit_bar.to_numpy()].to_numpy()
-        out[key] = c
-    return out
+        rows.append(c)
+    return pd.concat(rows, ignore_index=True)
 
 
 def run_frictions() -> None:
     t0 = time.time()
     f = fiches()
-    rows, prof, pa = [], [], []
+    rows, prof = [], []
     with levee(MOTIF):
         for cle in NOMS:
             try:
-                _, p, res = mesurer_ecarts(cle)
+                p, res = mesurer_ecarts(cle)
             except FileNotFoundError:
                 print(f"{cle} : ticks absents", flush=True)
                 continue
             if NOMS[cle] not in f.index:
                 stop(f"{cle} : fiche absente")
-            res.update(resume_fiche(cle, f.loc[NOMS[cle]], res["dernier_prix"]))
-            q = pauses(cle)
-            an = pd.to_datetime(q.debut, utc=True).dt.year
-            res["pauses_par_an"] = json.dumps({int(y): int(n) for y, n in an.value_counts().sort_index().items()})
-            res["heures_manquantes_par_an"] = json.dumps(
-                {int(y): round(float(h), 1) for y, h in q.heures.groupby(an.to_numpy()).sum().items()})
+            res.update(resume_fiche(f.loc[NOMS[cle]], res["dernier_prix"]))
             rows.append(res)
             prof.append(p.assign(cle=cle).reset_index(names="demi_heure"))
-            pa.append(q.assign(cle=cle))
-            print(f"{cle} : écart médian {res['ecart_median_bps']:.2f} bps ; swap {res['swap_long_bps_nuit']:+.2f} / "
-                  f"{res['swap_short_bps_nuit']:+.2f} bps par nuit ; commission {res['commission_bps_cote']:.2f} bps "
+            print(f"{cle} : écart médian {res['ecart_median_bps']:.2f} bps ; swap {res['swap_cout_long_bps_nuit']:+.2f} / "
+                  f"{res['swap_cout_short_bps_nuit']:+.2f} bps par nuit ; commission {res['commission_bps_cote']:.2f} bps "
                   "par côté", flush=True)
         profils = {r["cle"]: prof[i].set_index("demi_heure") for i, r in enumerate(rows)}
         manquants = [k for k in D041.KEYS if k not in profils]
         if manquants:
             stop(f"écarts FTMO absents pour {manquants}")
         assets = D041.load_all()
-        couts = couts_d05(assets, f, profils)
+        variantes, journal = trades_variantes(assets, serie_xau_ftmo())
+        c = couts(variantes, f, profils)
     pd.DataFrame(rows).to_csv(HERE / "frictions_D05_1.csv", index=False, float_format="%.6g")
     pd.concat(prof, ignore_index=True).to_csv(HERE / "profils_ecarts_D05_1.csv", index=False, float_format="%.6g")
-    allc = pd.concat(couts.values(), ignore_index=True)
-    allc.to_csv(HERE / "couts_trades_D05_1.csv.gz", index=False, float_format="%.6g")
-    pauses_all = pd.concat(pa, ignore_index=True)
+    pd.DataFrame(journal).to_csv(HERE / "pauses_D05_1.csv", index=False)
+    c.to_csv(HERE / "couts_trades_D05_1.csv.gz", index=False, float_format="%.6g")
     synth = []
-    for key, c in couts.items():
-        q = pauses_all[pauses_all.cle == key]
-        e, x = c.entree.astype("int64").to_numpy(), c.sortie.astype("int64").to_numpy()
-        dans = lambda t: ((t[:, None] >= q.debut.to_numpy()[None, :]) & (t[:, None] < q.fin.to_numpy()[None, :])).any(1)  # noqa: E731
-        synth.append({"cle": key, "trades": len(c), "convention_bps": float(c.convention.iat[0]),
-                      "ecart_bps": float(c.ecart.mean()), "commission_bps": float(c.commission.mean()),
-                      "swap_bps": float(c.swap.mean()), "total_bps": float(c.total.mean()),
-                      "total_atr": float((c.total / c.atr_bps).mean()),
-                      "convention_atr": float((c.convention / c.atr_bps).mean()),
-                      "part_avec_rollover": float((c.nuits > 0).mean()), "nuits_moyennes": float(c.nuits.mean()),
-                      "brut_atr": float((c.brut_bps / c.atr_bps).mean()),
-                      "net_convention_atr": float(((c.brut_bps - c.convention) / c.atr_bps).mean()),
-                      "net_ftmo_atr": float(((c.brut_bps - c.total) / c.atr_bps).mean()),
-                      "entrees_en_pause": int(dans(e).sum()), "sorties_en_pause": int(dans(x).sum())})
+    for (key, cal), g in c.groupby(["cle", "calendrier"], sort=False):
+        a = g.atr_bps
+        synth.append({"cle": key, "calendrier": cal, "trades": len(g), "convention_bps": float(g.convention.iat[0]),
+                      "ecart_bps": float(g.ecart.mean()), "commission_bps": float(g.commission.mean()),
+                      "swap_bps": float(g.swap.mean()), "total_bps": float(g.total.mean()),
+                      "convention_atr": float((g.convention / a).mean()), "total_atr": float((g.total / a).mean()),
+                      "swap_atr": float((g.swap / a).mean()), "part_avec_rollover": float((g.nuits > 0).mean()),
+                      "nuits_moyennes": float(g.nuits.mean()), "brut_atr": float((g.brut_bps / a).mean()),
+                      "net_convention_atr": float(((g.brut_bps - g.convention) / a).mean()),
+                      "net_ftmo_atr": float(((g.brut_bps - g.total) / a).mean())})
     pd.DataFrame(synth).to_csv(HERE / "couts_actifs_D05_1.csv", index=False, float_format="%.6g")
-    print(f"frictions : fait en {time.time() - t0:.0f} s")
+    print(f"frictions : faites en {time.time() - t0:.0f} s")
 
 
-# ── Baseline cTrader ────────────────────────────────────────────────────────────
-def jambes(assets: dict, couts: pd.DataFrame, modele: str) -> list[Leg]:
-    out = []
+# ── Baseline cTrader (session suivante) ─────────────────────────────────────────
+def jambes(variantes: dict, c: pd.DataFrame, modele: str) -> tuple[list[Leg], dict]:
+    """Jambes d'un modèle de l'échelle ; et les actifs (barres, ATR) qu'elles utilisent."""
+    out, actifs = [], {}
     for key in D041.KEYS:
-        p = assets[key]
-        tr = D041.window_trades(p, A, B)
-        c = couts[couts.cle == key]
-        if len(c) != len(tr):
-            stop(f"{key} : {len(c)} frais pour {len(tr)} trades")
-        cost = {"convention": D04.FEES[key][0], "ecart_commission": (c.ecart + c.commission).to_numpy(),
-                "baseline_ctrader": c.total.to_numpy()}[modele]
+        cal = "continu" if modele in ("convention", "ecart_commission", "swaps") else "ftmo"
+        if modele == "pauses" and key == "XAU":
+            cal = "continu"
+        p, tr = variantes[(key, cal)]
+        g = c[(c.cle == key) & (c.calendrier == cal)].sort_values("trade")
+        if len(g) != len(tr):
+            stop(f"{key}, {modele} : {len(g)} frais pour {len(tr)} trades")
+        cost = {"convention": D04.FEES[key][0], "ecart_commission": (g.ecart + g.commission).to_numpy()}.get(
+            modele, g.total.to_numpy())
         out.append(Leg(key, p["bars"], tr, risk_weights(p["atr_bps"][tr.signal_bar.to_numpy()], 25.0), cost))
-    return out
+        actifs[key] = p
+    return out, actifs
 
 
 def run_baseline() -> None:
     t0 = time.time()
-    couts = pd.read_csv(HERE / "couts_trades_D05_1.csv.gz")
+    c = pd.read_csv(HERE / "couts_trades_D05_1.csv.gz")
     roster = pd.read_csv(ROOT / "experiments" / "D05_6bis" / "roster_D05_6bis.csv")
     tc, tf = dict(D056B.CHALLENGE), dict(D056B.FINANCE)
     rows, ch_rows, comps, m8, ctrl, per = [], [], [], [], {}, {}
     with levee(MOTIF):
         assets = D041.load_all()
+        variantes, _ = trades_variantes(assets, serie_xau_ftmo())
         departs = departs_minuit(A, B, FTMO_SWING.fuseau)
         for modele in MODELES:
-            lg = jambes(assets, couts, modele)
-            atr = [assets[leg.name]["atr_bps"][leg.trades.signal_bar.to_numpy()] for leg in lg]
+            lg, actifs = jambes(variantes, c, modele)
+            atr = [actifs[leg.name]["atr_bps"][leg.trades.signal_bar.to_numpy()] for leg in lg]
             opts = dict(levier=LEVIER_FTMO_SWING, plafonner=True, atr=atr)
-            sims_c = {n: simuler(lg, departs, taille=tc[n], **opts) for n in dict.fromkeys(c for _, c, _ in ROSTER)}
+            sims_c = {n: simuler(lg, departs, taille=tc[n], **opts) for n in dict.fromkeys(x for _, x, _ in ROSTER)}
             sims_f = {n: simuler(lg, departs, D055.FINANCE, taille=tf[n], retrait_jours=D055.RETRAIT_JOURS, **opts)
-                      for n in dict.fromkeys(f for _, _, f in ROSTER)}
+                      for n in dict.fromkeys(x for _, _, x in ROSTER)}
             for n, sim in sims_c.items():
                 for fen, coup in D056B.FENETRES:
                     ch_rows.append({"modele": modele, "challenge": n, "fenetre": fen,
@@ -268,8 +307,8 @@ def run_baseline() -> None:
             for piste, cn, fn in ROSTER:
                 for lect, h, coup in D056B.LECTURES_ROSTER:
                     kw = dict(frais=D055.FRAIS, part=D055.PART, horizon_jours=h, coupure=coup)
-                    for mes, fn_ in (("tentative", valeur), ("suite", suite)):
-                        df = D055.suivis(fn_(sims_c[cn], sims_f[fn], **kw), h, coup)
+                    for mes, f_ in (("tentative", valeur), ("suite", suite)):
+                        df = D055.suivis(f_(sims_c[cn], sims_f[fn], **kw), h, coup)
                         per[(modele, piste, lect, mes)] = df
                         x = df.valeur.to_numpy()
                         if modele == "convention":
@@ -288,21 +327,24 @@ def run_baseline() -> None:
                             row.update(tentatives=float(df.n_tentatives.mean()), finances=float(df.n_finances.mean()))
                         rows.append(row)
             lg1 = [Leg(leg.name, leg.bars, leg.trades, np.ones(len(leg.trades)), leg.cost) for leg in lg]
-            m8.append({"modele": modele, **D041.metrics8(lg, lg1, portfolio_paths(lg), portfolio_paths(lg1), assets,
+            m8.append({"modele": modele, **D041.metrics8(lg, lg1, portfolio_paths(lg), portfolio_paths(lg1), actifs,
                                                           A, B)})
             print(f"{modele} : simulé ({time.time() - t0:.0f} s)", flush=True)
-    for modele in MODELES[1:]:
+    for k in range(1, len(MODELES)):
         for piste, _, _ in ROSTER:
             for lect, _, _ in D056B.LECTURES_ROSTER:
                 for mes in ("tentative", "suite"):
-                    da, db = per[(modele, piste, lect, mes)], per[("convention", piste, lect, mes)]
-                    if not da.depart.equals(db.depart):
-                        stop(f"{modele}, {piste}, {lect} : départs différents")
-                    dx = da.valeur.to_numpy() - db.valeur.to_numpy()
-                    lo, hi = ic_blocs(dx, da.depart)
-                    comps.append({"modele": modele, "contre": "convention", "piste": piste, "lecture": lect,
-                                  "mesure": mes, "ecart": float(dx.mean()), "ic_bas": lo, "ic_haut": hi,
-                                  "p_mieux": float((dx > 1e-12).mean()), "p_moins": float((dx < -1e-12).mean())})
+                    for contre in (MODELES[k - 1], MODELES[0]):
+                        da, db = per[(MODELES[k], piste, lect, mes)], per[(contre, piste, lect, mes)]
+                        if not da.depart.equals(db.depart):
+                            stop(f"{MODELES[k]}, {piste}, {lect} : départs différents")
+                        dx = da.valeur.to_numpy() - db.valeur.to_numpy()
+                        lo, hi = ic_blocs(dx, da.depart)
+                        comps.append({"modele": MODELES[k], "contre": contre, "piste": piste, "lecture": lect,
+                                      "mesure": mes, "ecart": float(dx.mean()), "ic_bas": lo, "ic_haut": hi,
+                                      "p_mieux": float((dx > 1e-12).mean()), "p_moins": float((dx < -1e-12).mean())})
+                        if contre == MODELES[0] and k == 1:
+                            break
     pd.DataFrame(rows).to_csv(HERE / "baseline_D05_1.csv", index=False, float_format="%.6g")
     pd.DataFrame(ch_rows).to_csv(HERE / "baseline_challenges_D05_1.csv", index=False, float_format="%.6g")
     pd.DataFrame(comps).to_csv(HERE / "baseline_ecarts_D05_1.csv", index=False, float_format="%.6g")
