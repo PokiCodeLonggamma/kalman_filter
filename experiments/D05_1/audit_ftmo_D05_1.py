@@ -56,6 +56,7 @@ REFS = {"US100": ("Saxo CFD US Tech 100 (bid)", "saxo_us100_cfd_30m.csv"),
         "XRP": ("Bitstamp XRP/USD", "bitstamp_xrpusd_30m_2016_2026.csv"),
         "SOL": ("Coinbase SOL/USD", "coinbase_solusd_30m_2021_2026.csv"),
         "AVAX": ("Coinbase AVAX/USD", "coinbase_avaxusd_30m_2021_2026.csv")}
+USD_PAR_COTATION = {"GBPJPY": 1.0 / 156.8}          # USD par JPY : FRED DEXJPUS du 2025-12-31
 HALF = pd.Timedelta(minutes=30)
 TOUT = pd.Timestamp("2100-01-01", tz="UTC")
 
@@ -108,7 +109,8 @@ def audit_fiche(f: pd.Series, prix: float) -> dict:
         return out | {"version_fiche": 1, "swap_long": float(f.swap_long), "swap_short": float(f.swap_short)}
     sl = float(swap_bps(f.swap_type, f.swap_long, prix, float(f.pip_size), int(f.digits)))
     ss = float(swap_bps(f.swap_type, f.swap_short, prix, float(f.pip_size), int(f.digits)))
-    com = float(commission_bps(f.commission_type, float(f.commission), prix, float(f.lot_size)))
+    com = float(commission_bps(f.commission_type, float(f.commission), prix, float(f.lot_size),
+                               USD_PAR_COTATION.get(f.name, 1.0)))
     return out | {"version_fiche": 2, "base": f.base, "cotation": f.cotation, "swap_type": f.swap_type,
                   "swap_long": float(f.swap_long), "swap_short": float(f.swap_short),
                   "swap_cout_long_bps_nuit": sl, "swap_cout_short_bps_nuit": ss,

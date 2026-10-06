@@ -1,6 +1,6 @@
 # Vérification des données FTMO (D05.1)
 
-*Généré par `audit_ftmo_D05_1.py` le 2026-10-06 00:12 UTC ; fiches : `export_2026-10-06/ftmo_symboles_fiches.csv` ; 196 symboles actifs sur le compte.*
+*Généré par `audit_ftmo_D05_1.py` le 2026-10-06 00:27 UTC ; fiches : `export_2026-10-06_v2/ftmo_symboles_fiches.csv` ; 196 symboles actifs sur le compte.*
 
 ## 1. Bougies M30
 
@@ -40,17 +40,17 @@
 
 | Actif | Description | Swap (type) | Long / nuit | Short / nuit | Triple | Commission (type) | Commission / côté | Levier |
 |---|---|---|---|---|---|---|---|---|
-| US100 | NASDAQ 100 Index, Spot CFD | v1 : -6.9638 / 0.3417 (unité inconnue) | | | | | | |
-| US30 | Dow Jones Industrial Average Index, Spot CFD | v1 : -1.7655 / -9.2392 (unité inconnue) | | | | | | |
-| GER40 | German 40 Index, Spot CFD | v1 : -4.5178 / -0.0456 (unité inconnue) | | | | | | |
-| GBPJPY | Great Britain Pound vs Japanese Yen | v1 : 0.317 / -2.179 (unité inconnue) | | | | | | |
-| WTI | West Texas Intermediate Crude Oil, Spot CFD | v1 : 0.0497 / -0.2253 (unité inconnue) | | | | | | |
-| BRENT | Crude Oil Brent, Spot CFD | v1 : 0.061 / -0.2758 (unité inconnue) | | | | | | |
-| XAU | Gold vs US Dollar, Spot CFD | v1 : -0.649 / -0.042 (unité inconnue) | | | | | | |
-| BTC | Bitcoin vs US Dollar, Spot CFD | v1 : -30.0 / -30.0 (unité inconnue) | | | | | | |
-| ETH | Ethereum vs US Dollar, Spot CFD | v1 : -30.0 / -30.0 (unité inconnue) | | | | | | |
-| SOL | Solana vs US Dollar, Spot CFD | v1 : -30.0 / -30.0 (unité inconnue) | | | | | | |
-| XRP | Ripple vs US Dollar, Spot CFD | v1 : -30.0 / -30.0 (unité inconnue) | | | | | | |
+| US100 | NASDAQ 100 Index, Spot CFD | Pips (-6.9638 / 0.3417) | +2,24 | −0,11 | Friday | UsdPerOneLot (0.0) | 0,00 | 1000000:15 |
+| US30 | Dow Jones Industrial Average Index, Spot CFD | Pips (-1.7655 / -9.2392) | +0,34 | +1,80 | Friday | UsdPerOneLot (0.0) | 0,00 | 1000000:15 |
+| GER40 | German 40 Index, Spot CFD | Pips (-4.5178 / -0.0456) | +1,78 | +0,02 | Friday | UsdPerOneLot (0.0) | 0,00 | 1000000:15 |
+| GBPJPY | Great Britain Pound vs Japanese Yen | Pips (0.317 / -2.179) | −0,15 | +1,04 | Wednesday | UsdPerOneLot (2.5) | 0,19 | 1000000:30 |
+| WTI | West Texas Intermediate Crude Oil, Spot CFD | Pips (0.0497 / -0.2253) | −5,48 | +24,83 | Friday | UsdPerOneLot (0.0) | 0,00 | 1000000:15 |
+| BRENT | Crude Oil Brent, Spot CFD | Pips (0.061 / -0.2758) | −5,82 | +26,32 | Friday | UsdPerOneLot (0.0) | 0,00 | 1000000:15 |
+| XAU | Gold vs US Dollar, Spot CFD | Pips (-0.649 / -0.042) | +1,57 | +0,10 | Wednesday | PercentageOfTradingVolume (0.0007) | 0,07 | 1000000:15 |
+| BTC | Bitcoin vs US Dollar, Spot CFD | Percentage (-30.0 / -30.0) | +8,33 | +8,33 | Friday | PercentageOfTradingVolume (0.0325) | 3,25 | 1000000:1 |
+| ETH | Ethereum vs US Dollar, Spot CFD | Percentage (-30.0 / -30.0) | +8,33 | +8,33 | Friday | PercentageOfTradingVolume (0.0325) | 3,25 | 1000000:1 |
+| SOL | Solana vs US Dollar, Spot CFD | Percentage (-30.0 / -30.0) | +8,33 | +8,33 | Friday | PercentageOfTradingVolume (0.0325) | 3,25 | 1000000:1 |
+| XRP | Ripple vs US Dollar, Spot CFD | Percentage (-30.0 / -30.0) | +8,33 | +8,33 | Friday | PercentageOfTradingVolume (0.0325) | 3,25 | 1000000:1 |
 
 ## 4. Recoupement avec les séries du dépôt (barres communes)
 

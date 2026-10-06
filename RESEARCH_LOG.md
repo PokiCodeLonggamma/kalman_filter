@@ -2618,3 +2618,51 @@ reproduction de résultats publiés et parité du noyau, sans aucune performance
 - **État :** application Open API « Submitted » (ID 42882) ; aucun courriel de Spotware au 2026-10-06. Commits locaux
   non poussés : `2eb5e81` (correction), `94616c2` (enseignements I-M21 et K19) et celui-ci.
 - **Suite :** à l'accord de Spotware, --connexion (sur GO), puis --symboles et le téléchargement.
+
+
+### [EXP-D05.1, données FTMO et frictions] — Récupération par cBot, vérification, frictions trade par trade (2026-10-06)
+- **Décisions du porteur (2026-10-06) :**
+  - pas de mail de Spotware : export par un cBot cTrader (GO) ;
+  - GLE absent chez FTMO, remplacé par SAN ;
+  - « On finit la récupération des datas et leur vérification et on fait ensuite une passation » ; l'objectif
+    stratégique (sauver la piste 2 par le portefeuille) se fera dans une nouvelle session ;
+  - « gérer ici proprement les trous, écart, swaps, commission » ; données cTrader pour les actifs hors crypto.
+- **Code :**
+  - `experiments/D05_1/cbot/AkfExportFtmo.cs` (v1 puis v2) ;
+  - `marketdata.ftmo` (lecture, écriture, écarts, profil, pauses) ;
+  - `propfirm.frictions` (écart, commission, rollovers, swaps, pauses) ;
+  - frais par trade dans `envelope.portfolio` et `propfirm` ;
+  - `audit_ftmo_D05_1.py` ; `run_frictions_D05_1.py` (--import, --frictions faits ; --baseline préparé, non lancé) ;
+  - 456 tests.
+
+#### Résultats (`experiments/D05_1/narratif_frictions_D05_1.md`, `audit_ftmo_D05_1.md`)
+- [OBS] **11 symboles récupérés, SAN et AVAX non.** L'instance v2 a gardé l'ancienne liste ; AVAX se nomme `AVAUSD`.
+  Les indices et le pétrole commencent le 2020-11-08, l'or le 2020-05-06, GBPJPY le 2020-04-01, BTC et ETH le 2020-07-08,
+  SOL le 2025-04-17.
+- [OBS] **Recoupement avec Saxo, HistData, Bitstamp et Coinbase :**
+  - corrélation des rendements de 30 min de 0,98 à 0,998 (WTI : 0,93 face au continu raccordé de Saxo) ;
+  - décalage nul partout ;
+  - niveau à +0,5 à +2,3 bps hors crypto, −4 à −18 bps sur les cryptos (bid FTMO face à un prix de transaction).
+- [OBS] **Écarts médians (bps) :** indices 0,5 à 0,8 ; GBPJPY 1,0 ; or 1,0 ; WTI 8,6 ; Brent 7,1 ; BTC 0,1 ; ETH 2,2 ;
+  SOL 2,5 ; XRP 10,0.
+- [OBS] **Fiches :**
+  - cryptos : swap de −30 % par an (8,3 bps par nuit, triple le vendredi), commission de 3,25 bps par côté, levier 1:1 ;
+  - indices, pétrole et or : levier 1:15 ;
+  - GBPJPY : levier 1:30, 2,5 USD par lot.
+  - L'étalon de D05.4 retenait 1:2 et 1:30.
+- [OBS] **Pauses du samedi** dans les barres des cryptos, absentes des séances officielles. Leur traitement abandonne
+  47 à 49 entrées par actif et décale 28 à 42 sorties sur 2021-10 → 2026-10.
+- [OBS] **Frictions par trade, fenêtre D05 :** de 8,9 bps (BTC) à 19,1 bps (XRP), contre 5 bps.
+  - Net par trade, convention → FTMO : BTC +0,240 → +0,134 ATR ; ETH −0,063 → −0,193 ; SOL +0,177 → +0,091 ;
+    AVAX +0,308 → +0,215 ; XRP +0,391 → +0,117.
+  - Or : 1,9 bps contre 4.
+  - Or sur barres FTMO : brut +0,14 ATR contre +0,36 sur HistData, pour 447 entrées communes.
+- [HYP] **Points non vérifiés :**
+  - rollover à 17:00 New York ;
+  - base de 360 jours des swaps en % ;
+  - swaps du pétrole : 25 bps par nuit en short à la lettre, une unité à vérifier ;
+  - pauses du samedi : maintenance, ou trous du serveur d'essai ;
+  - AVAX sur l'écart de SOL.
+
+#### Décision
+- [x] **Données et frictions faites ; passation pour la session suivante** (`passation_D05_1.md`). Commits locaux.

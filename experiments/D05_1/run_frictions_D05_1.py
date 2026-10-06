@@ -18,7 +18,9 @@ Cadrage (fixé avant le calcul ; lecture descriptive, sans seuil) :
   2. `ecart_commission` : écart à l'heure de l'entrée et de la sortie + commission des deux côtés ;
   3. `swaps` : + swap de chaque rollover traversé ;
   4. `pauses` : + exécution des cryptos sur le calendrier FTMO (`propfirm.frictions.ajuster_pauses`) ;
-  5. `or_ftmo` : + or sur les barres FTMO (signaux, prix et frictions FTMO) = Baseline cTrader.
+  5. `or_ftmo` : + or sur les barres FTMO (signaux, prix et frictions FTMO) ;
+  6. `levier_compte` : + levier du compte d'essai (fiches : cryptos 1:1, or 1:15) au lieu de l'étalon de D05.4 (1:2 et
+     1:30) = Baseline cTrader.
   Moteur, tailles, règles FTMO Swing, marge 1:2 (or 1:30) plafonnée, lecture principale de D05.4 et compte financé de
   D05.5 : inchangés.
 - CE QUE ÇA MESURE : réussite, délai médian et P90 du challenge ; valeur d'une tentative et d'une suite (12 et 24 mois,
@@ -27,7 +29,9 @@ Cadrage (fixé avant le calcul ; lecture descriptive, sans seuil) :
 - CE QUE ÇA NE PERMET PAS DE CONCLURE : écarts mesurés sur dix jours de 2026, appliqués à 2021-2026 (convention de
   D02.0 : coûts actuels sur les années anciennes) ; rollover à 17:00 New York et base de 360 jours pour les swaps en %
   ([HYP]) ; swap imputé à la sortie ; calendrier des pauses de BTC pour SOL et AVAX avant leur historique FTMO ; un
-  stop franchi pendant une pause est exécuté à la réouverture même si le prix est revenu ([HYP]) ; mêmes biais que D05
+  stop franchi pendant une pause est exécuté à la réouverture même si le prix est revenu ([HYP]) ; pauses du samedi
+  absentes des séances officielles des fiches (maintenance ou trous du serveur d'essai : [HYP]) ; AVAX : écart et fiche
+  de SOLUSD (AVAUSD non exporté, [HYP]) ; commission de GBPJPY convertie au taux USD/JPY du 2025-12-31 ; mêmes biais que D05
   (données déjà lues, 2026 favorable, départs chevauchants).
 
 Usage, depuis la racine du dépôt : python experiments/D05_1/run_frictions_D05_1.py --import | --frictions | --baseline
@@ -66,7 +70,7 @@ from propfirm.frictions import ajuster_pauses, commission_bps, couts_trades, swa
 from reserve import levee  # noqa: E402
 
 RAW = ROOT / "data" / "raw" / "ftmo"
-EXPORTS = {"export_2026-10-06": "2026-10-05T23:23:22Z", "export_2026-10-06_v2": None}   # fin du cBot (journal), UTC
+EXPORTS = {"export_2026-10-06": "2026-10-05T23:23:22Z", "export_2026-10-06_v2": "2026-10-06T00:21:48Z"}  # fin (journal)
 MOTIF = "EXP-D05.1, étape 1 : frictions FTMO et Baseline cTrader (porteur, 2026-10-06)"
 NOMS = {"BTC": "BTCUSD", "ETH": "ETHUSD", "SOL": "SOLUSD", "AVAX": "AVAUSD", "XRP": "XRPUSD", "XAU": "XAUUSD",
         "US100": "US100.cash", "US30": "US30.cash", "GER40": "GER40.cash", "GBPJPY": "GBPJPY", "WTI": "USOIL.cash",
@@ -74,7 +78,9 @@ NOMS = {"BTC": "BTCUSD", "ETH": "ETHUSD", "SOL": "SOLUSD", "AVAX": "AVAUSD", "XR
 CRYPTO = ("BTC", "ETH", "SOL", "AVAX", "XRP")
 FUSEAU = {k: ("Europe/Berlin" if k in ("GER40", "SAN") else "America/New_York") for k in NOMS}   # fixés avant calcul
 PRIX_D05 = {"BTC": "mid", "ETH": "mid", "SOL": "mid", "AVAX": "mid", "XRP": "mid", "XAU": "bid"}  # HistData : bid
-MODELES = ("convention", "ecart_commission", "swaps", "pauses", "or_ftmo")
+MODELES = ("convention", "ecart_commission", "swaps", "pauses", "or_ftmo", "levier_compte")
+USD_PAR_COTATION = {"GBPJPY": 1.0 / 156.8}          # USD par JPY : FRED DEXJPUS du 2025-12-31 ([HYP] taux constant)
+SUBSTITUT = {"AVAX": "SOL"}                         # AVAUSD non exporté : écart et fiche de SOLUSD ([HYP])
 ROSTER = (("Référence", "fixe 0,20", "fixe 0,20"), ("Piste 1", "fixe 0,20", "fixe 0,25"),
           ("Piste 2", "fixe 0,25", "fixe 0,25"))
 A, B = D054.A, D054.B
@@ -150,15 +156,30 @@ def mesurer_ecarts(cle: str) -> tuple[pd.DataFrame, dict]:
     return p, res
 
 
-def resume_fiche(f: pd.Series, prix: float) -> dict:
+def resume_fiche(cle: str, f: pd.Series, prix: float) -> dict:
     sl = float(swap_bps(f.swap_type, f.swap_long, prix, float(f.pip_size), int(f.digits)))
     ss = float(swap_bps(f.swap_type, f.swap_short, prix, float(f.pip_size), int(f.digits)))
-    com = float(commission_bps(f.commission_type, float(f.commission), prix, float(f.lot_size)))
+    com = float(commission_bps(f.commission_type, float(f.commission), prix, float(f.lot_size),
+                               USD_PAR_COTATION.get(cle, 1.0)))
     return {"description": f.description, "swap_type": f.swap_type, "swap_long": f.swap_long, "swap_short": f.swap_short,
             "swap_triple": f.swap_triple if isinstance(f.swap_triple, str) else "",
             "swap_cout_long_bps_nuit": sl, "swap_cout_short_bps_nuit": ss, "commission_type": f.commission_type,
             "commission": f.commission, "commission_bps_cote": com, "levier_paliers": f.levier_paliers,
-            "seances": f.seances}
+            "levier": levier(f), "seances": f.seances}
+
+
+def levier(f: pd.Series) -> float:
+    """Levier du premier palier de la fiche (« volume:levier|… »)."""
+    return float(str(f.levier_paliers).split("|")[0].split(":")[1])
+
+
+def fiche(f: pd.DataFrame, cle: str) -> tuple[pd.Series, str]:
+    """Fiche du symbole, ou celle de son substitut ; et le nom de la source."""
+    if NOMS[cle] in f.index:
+        return f.loc[NOMS[cle]], NOMS[cle]
+    if cle in SUBSTITUT and NOMS[SUBSTITUT[cle]] in f.index:
+        return f.loc[NOMS[SUBSTITUT[cle]]], NOMS[SUBSTITUT[cle]]
+    stop(f"{cle} : fiche absente")
 
 
 def calendrier(cle: str) -> pd.DataFrame:
@@ -203,8 +224,8 @@ def couts(variantes: dict, f: pd.DataFrame, profils: dict) -> pd.DataFrame:
     rows = []
     for (key, cal), (p, tr) in variantes.items():
         prix = "bid" if (key == "XAU" or cal == "ftmo" and key not in CRYPTO) else PRIX_D05[key]
-        c = couts_trades(tr, p["bars"], f.loc[NOMS[key]], profils[key].mediane, FUSEAU[key], prix=prix,
-                         sept_jours=key in CRYPTO)
+        c = couts_trades(tr, p["bars"], fiche(f, key)[0], profils[key].mediane, FUSEAU[key], prix=prix,
+                         sept_jours=key in CRYPTO, usd_par_cotation=USD_PAR_COTATION.get(key, 1.0))
         t = p["bars"].time
         c.insert(0, "cle", key)
         c.insert(1, "calendrier", cal)
@@ -228,11 +249,15 @@ def run_frictions() -> None:
             try:
                 p, res = mesurer_ecarts(cle)
             except FileNotFoundError:
-                print(f"{cle} : ticks absents", flush=True)
-                continue
-            if NOMS[cle] not in f.index:
-                stop(f"{cle} : fiche absente")
-            res.update(resume_fiche(f.loc[NOMS[cle]], res["dernier_prix"]))
+                if cle in SUBSTITUT:
+                    p, res = mesurer_ecarts(SUBSTITUT[cle])
+                    res.update(cle=cle, substitut=NOMS[SUBSTITUT[cle]])
+                    print(f"{cle} : ticks absents, écart de {NOMS[SUBSTITUT[cle]]} ([HYP])", flush=True)
+                else:
+                    print(f"{cle} : ticks absents", flush=True)
+                    continue
+            fi, source = fiche(f, cle)
+            res.update(resume_fiche(cle, fi, res["dernier_prix"]), fiche_source=source)
             rows.append(res)
             prof.append(p.assign(cle=cle).reset_index(names="demi_heure"))
             print(f"{cle} : écart médian {res['ecart_median_bps']:.2f} bps ; swap {res['swap_cout_long_bps_nuit']:+.2f} / "
@@ -288,6 +313,7 @@ def run_baseline() -> None:
     c = pd.read_csv(HERE / "couts_trades_D05_1.csv.gz")
     roster = pd.read_csv(ROOT / "experiments" / "D05_6bis" / "roster_D05_6bis.csv")
     tc, tf = dict(D056B.CHALLENGE), dict(D056B.FINANCE)
+    fi = fiches()
     rows, ch_rows, comps, m8, ctrl, per = [], [], [], [], {}, {}
     with levee(MOTIF):
         assets = D041.load_all()
@@ -296,7 +322,8 @@ def run_baseline() -> None:
         for modele in MODELES:
             lg, actifs = jambes(variantes, c, modele)
             atr = [actifs[leg.name]["atr_bps"][leg.trades.signal_bar.to_numpy()] for leg in lg]
-            opts = dict(levier=LEVIER_FTMO_SWING, plafonner=True, atr=atr)
+            lev = LEVIER_FTMO_SWING if modele != "levier_compte" else {k: levier(fiche(fi, k)[0]) for k in D041.KEYS}
+            opts = dict(levier=lev, plafonner=True, atr=atr)
             sims_c = {n: simuler(lg, departs, taille=tc[n], **opts) for n in dict.fromkeys(x for _, x, _ in ROSTER)}
             sims_f = {n: simuler(lg, departs, D055.FINANCE, taille=tf[n], retrait_jours=D055.RETRAIT_JOURS, **opts)
                       for n in dict.fromkeys(x for _, _, x in ROSTER)}
