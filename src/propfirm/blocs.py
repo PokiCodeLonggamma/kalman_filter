@@ -79,6 +79,7 @@ def histoire(legs: list[Leg], atr: list[np.ndarray], bornes: np.ndarray,
             trades["entry_bar"] = debut
             trades["exit_bar"] = debut + longs - 1
             trades["signal_bar"] = debut - 1
-            out_legs.append(Leg(leg.name, bars, trades, np.asarray(leg.weight)[j], leg.cost))
+            cout = leg.cost if np.ndim(leg.cost) == 0 else np.asarray(leg.cost, dtype=float)[j]
+            out_legs.append(Leg(leg.name, bars, trades, np.asarray(leg.weight)[j], cout))
             out_atr.append(np.asarray(a, dtype=float)[j])
     return out_legs, out_atr

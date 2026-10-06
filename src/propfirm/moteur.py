@@ -33,7 +33,7 @@ from typing import ClassVar
 import numpy as np
 import pandas as pd
 
-from envelope.portfolio import Leg
+from envelope.portfolio import Leg, leg_costs
 from estimand.excursions import BPS
 
 INF = np.iinfo(np.int64).max
@@ -204,13 +204,14 @@ def simuler(legs: list[Leg], departs, regles: Regles = FTMO_SWING, levier: dict 
     retraits = []
     p_in = [tr.entry_price.to_numpy(dtype=float) for tr in trades]
     s_in = [tr.side.to_numpy(dtype=float) for tr in trades]
-    gain = [(tr.ret_gross_bps.to_numpy(dtype=float) - float(leg.cost)) / BPS for tr, leg in zip(trades, legs)]
+    gain = [(tr.ret_gross_bps.to_numpy(dtype=float) - leg_costs(leg)) / BPS for tr, leg in zip(trades, legs)]
     arret = [tr.stop.to_numpy(dtype=bool) for tr in trades]
     poids = [np.asarray(leg.weight, dtype=float) for leg in legs]
-    cout = [float(leg.cost) / BPS for leg in legs]
+    cout = [leg_costs(leg) / BPS for leg in legs]                  # frais de sortie de chaque trade
 
     notion, cap = np.zeros((nl, ns)), np.ones(ns)
     ouvert, sens, p0, last, adv = [False] * nl, [0.0] * nl, [1.0] * nl, [1.0] * nl, [1.0] * nl
+    courant = [0] * nl                                       # trade ouvert de chaque jambe
     n_jours, dernier = np.zeros(ns, dtype=np.int64), np.full(ns, -1, dtype=np.int64)
     val_prec = np.ones(ns)
     seuils = [1.0 + o for o in regles.objectifs]
@@ -293,7 +294,7 @@ def simuler(legs: list[Leg], departs, regles: Regles = FTMO_SWING, levier: dict 
             f = latents()
             gq = [sens[li] * ((adv[li] if li in vues else last[li]) / p0[li] - 1.0) if ouvert[li] else 0.0
                   for li in range(nl)]
-            fr = [cout[li] if ouvert[li] else 0.0 for li in range(nl)]
+            fr = [cout[li][courant[li]] if ouvert[li] else 0.0 for li in range(nl)]
             if correction_stop:
                 for i in sorties:
                     li, j = jam[i], trd[i]
@@ -342,7 +343,7 @@ def simuler(legs: list[Leg], departs, regles: Regles = FTMO_SWING, levier: dict 
                 for q, i in enumerate(entrees):
                     li, j = jam[i], trd[i]
                     notion[li] = obt[q]
-                    ouvert[li], sens[li] = True, s_in[li][j]
+                    ouvert[li], sens[li], courant[li] = True, s_in[li][j], j
                     p0[li] = last[li] = adv[li] = p_in[li][j]
                     engage |= obt[q] > 0.0
                     if suivi is not None:
@@ -352,7 +353,8 @@ def simuler(legs: list[Leg], departs, regles: Regles = FTMO_SWING, levier: dict 
                 n_jours[nouveau] += 1
                 dernier[nouveau] = jour_entree[g]
             val = somme(latents(), cap)
-            controler(tm, val, val, somme([cout[li] if ouvert[li] else 0.0 for li in range(nl)], np.zeros(ns)))
+            controler(tm, val, val, somme([cout[li][courant[li]] if ouvert[li] else 0.0 for li in range(nl)],
+                                          np.zeros(ns)))
             if taille is not None:
                 taille.basculer(val, mode)
             if suivi is not None:

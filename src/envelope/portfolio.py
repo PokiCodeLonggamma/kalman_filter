@@ -28,7 +28,18 @@ class Leg:
     bars: pd.DataFrame
     trades: pd.DataFrame
     weight: np.ndarray
-    cost: float
+    cost: float | np.ndarray            # frais aller-retour en bps : un pour tous, ou un par trade (EXP-D05.1)
+
+
+def leg_costs(leg: Leg) -> np.ndarray:
+    """Frais (bps, aller-retour, prélevés à la sortie sur le notionnel) de chaque trade de la jambe."""
+    n = len(leg.trades)
+    c = np.asarray(leg.cost, dtype=float)
+    if c.ndim == 0:
+        return np.full(n, float(c))
+    if c.shape != (n,):
+        raise ValueError(f"{leg.name} : un frais par trade exigé ({c.size} frais pour {n} trades)")
+    return c
 
 
 def _events(li: int, leg: Leg) -> list[tuple]:
@@ -57,7 +68,7 @@ def portfolio_equity(legs: list[Leg]) -> tuple[pd.Series, dict]:
     if not ev:
         return pd.Series(dtype=float), {"pnl": 0.0, "exposition_max": 0.0, "part_temps_en_position": 0.0,
                                         "part_temps_deux_positions": 0.0}
-    data = [(leg.trades.reset_index(drop=True), np.asarray(leg.weight, dtype=float), float(leg.cost)) for leg in legs]
+    data = [(leg.trades.reset_index(drop=True), np.asarray(leg.weight, dtype=float), leg_costs(leg)) for leg in legs]
     capital = 1.0
     pos: dict[tuple[int, int], list] = {}                    # (jambe, trade) → [notionnel, sens, prix d'entrée, dernier]
     times, values = np.empty(len(ev), np.int64), np.empty(len(ev))
@@ -77,7 +88,7 @@ def portfolio_equity(legs: list[Leg]) -> tuple[pd.Series, dict]:
         else:
             tr, _, cost = data[li]
             n, _, _, _ = pos.pop((li, j))
-            capital += n * (float(tr.ret_gross_bps.iat[j]) - cost) / BPS
+            capital += n * (float(tr.ret_gross_bps.iat[j]) - cost[j]) / BPS
         equity = capital + sum(n * s * (last / p0 - 1.0) for n, s, p0, last in pos.values())
         if pos:
             gross_max = max(gross_max, sum(n * last / p0 for n, _, p0, last in pos.values()) / equity)
@@ -121,7 +132,7 @@ def portfolio_paths(legs: list[Leg]) -> pd.DataFrame:
             + [f"pnl_{n}" for n in names])
     if not ev:
         return pd.DataFrame(columns=cols, dtype=float)
-    data = [(leg.trades.reset_index(drop=True), np.asarray(leg.weight, dtype=float), float(leg.cost)) for leg in legs]
+    data = [(leg.trades.reset_index(drop=True), np.asarray(leg.weight, dtype=float), leg_costs(leg)) for leg in legs]
     capital, realized = 1.0, np.zeros(len(legs))
     pos: dict[tuple[int, int], list] = {}            # (jambe, trade) → [notionnel, sens, entrée, dernière clôture, extrême]
     rows, i = [], 0
@@ -157,7 +168,7 @@ def portfolio_paths(legs: list[Leg]) -> pd.DataFrame:
             else:
                 tr, _, cost = data[li]
                 n = pos.pop((li, j))[0]
-                gain = n * (float(tr.ret_gross_bps.iat[j]) - cost) / BPS
+                gain = n * (float(tr.ret_gross_bps.iat[j]) - cost[j]) / BPS
                 capital += gain
                 realized[li] += gain
             acted = True
