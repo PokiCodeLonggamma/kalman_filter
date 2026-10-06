@@ -1,0 +1,864 @@
+{
+ "date": "2026-10-06 00:12 UTC",
+ "motif": "EXP-D05.1, vérification des données FTMO (porteur, 2026-10-06)",
+ "fichier_fiches": "export_2026-10-06/ftmo_symboles_fiches.csv",
+ "symboles": {
+  "US100": {
+   "symbole": "US100.cash",
+   "export": "export_2026-10-06",
+   "bougies": {
+    "barres": 69756,
+    "premiere": "2020-11-08 23:30:00+00:00",
+    "derniere": "2026-10-05 22:30:00+00:00",
+    "hors_grille_30min": 0,
+    "plates": 11,
+    "volume_nul": 0,
+    "trous": 1532,
+    "trous_par_an": {
+     "2020": 38,
+     "2021": 260,
+     "2022": 258,
+     "2023": 258,
+     "2024": 260,
+     "2025": 261,
+     "2026": 197
+    },
+    "heures_manquantes_par_an": {
+     "2020": 480.0,
+     "2021": 2814.0,
+     "2022": 2858.5,
+     "2023": 2844.5,
+     "2024": 2865.0,
+     "2025": 2880.0,
+     "2026": 2147.5
+    },
+    "plus_long_trou_h": 76.5,
+    "plus_long_trou_debut": "2020-12-24 18:30:00+00:00",
+    "motifs_recurrents": [
+     "Tue 21:00 UTC : 199 fois, médiane 1.0 h",
+     "Wed 21:00 UTC : 198 fois, médiane 1.0 h",
+     "Thu 21:00 UTC : 197 fois, médiane 1.0 h"
+    ]
+   },
+   "ticks": {
+    "ticks": 2642267,
+    "debut": "2026-09-27 22:05:00.013000+00:00",
+    "fin": "2026-10-05 23:21:03.751000+00:00",
+    "barres_mesurees": 271,
+    "ecart_median_bps": 0.5036091163791208,
+    "ecart_moyen_bps": 0.5304866650424784,
+    "ecart_p90_bps": 0.6376111098670083,
+    "ecart_max_bps": 0.7032208339575167,
+    "ecart_median_semaine_bps": 0.5042289355513353,
+    "ecart_median_weekend_bps": 0.4750500325132531
+   },
+   "fiche": {
+    "description": "NASDAQ 100 Index, Spot CFD",
+    "digits": 2,
+    "lot_size": 1.0,
+    "version_fiche": 1,
+    "swap_long": -6.9638,
+    "swap_short": 0.3417
+   },
+   "recoupement": {
+    "reference": "Saxo CFD US Tech 100 (bid)",
+    "barres_communes": 60169,
+    "horodatage_ref_arrondi": false,
+    "debut": "2020-11-08 23:30:00+00:00",
+    "fin": "2025-12-31 21:30:00+00:00",
+    "couverture_ftmo_dans_ref": 0.9903547033165995,
+    "couverture_ref_dans_ftmo": 0.9999002908184462,
+    "rendements_communs": 58836,
+    "correlation_30min": 0.9963470589264039,
+    "decalage_max_correlation": 0,
+    "correlations_decalees": {
+     "-2": 0.0057,
+     "-1": 0.0011,
+     "0": 0.9963,
+     "1": -0.0017,
+     "2": 0.0064
+    },
+    "niveau_median_bps": 1.1829127182472199,
+    "niveau_p1_bps": -3.5087679330657373,
+    "niveau_p99_bps": 9.811496568852183
+   }
+  },
+  "US30": {
+   "symbole": "US30.cash",
+   "export": "export_2026-10-06",
+   "bougies": {
+    "barres": 69756,
+    "premiere": "2020-11-08 23:00:00+00:00",
+    "derniere": "2026-10-05 22:30:00+00:00",
+    "hors_grille_30min": 0,
+    "plates": 15,
+    "volume_nul": 0,
+    "trous": 1529,
+    "trous_par_an": {
+     "2020": 38,
+     "2021": 259,
+     "2022": 258,
+     "2023": 258,
+     "2024": 260,
+     "2025": 259,
+     "2026": 197
+    },
+    "heures_manquantes_par_an": {
+     "2020": 477.0,
+     "2021": 2812.5,
+     "2022": 2861.5,
+     "2023": 2844.5,
+     "2024": 2865.0,
+     "2025": 2882.0,
+     "2026": 2147.5
+    },
+    "plus_long_trou_h": 76.5,
+    "plus_long_trou_debut": "2020-12-24 18:30:00+00:00",
+    "motifs_recurrents": [
+     "Tue 21:00 UTC : 199 fois, médiane 1.0 h",
+     "Wed 21:00 UTC : 198 fois, médiane 1.0 h",
+     "Thu 21:00 UTC : 197 fois, médiane 1.0 h"
+    ]
+   },
+   "ticks": {
+    "ticks": 1069020,
+    "debut": "2026-09-27 22:05:00.013000+00:00",
+    "fin": "2026-10-05 23:21:12.509000+00:00",
+    "barres_mesurees": 271,
+    "ecart_median_bps": 0.4812440936011856,
+    "ecart_moyen_bps": 0.466441946659281,
+    "ecart_p90_bps": 0.5188840894262441,
+    "ecart_max_bps": 0.5694783510278727,
+    "ecart_median_semaine_bps": 0.48119460441067735,
+    "ecart_median_weekend_bps": 0.501522010320015
+   },
+   "fiche": {
+    "description": "Dow Jones Industrial Average Index, Spot CFD",
+    "digits": 2,
+    "lot_size": 1.0,
+    "version_fiche": 1,
+    "swap_long": -1.7655,
+    "swap_short": -9.2392
+   },
+   "recoupement": {
+    "reference": "Saxo CFD US 30 (bid)",
+    "barres_communes": 60107,
+    "horodatage_ref_arrondi": false,
+    "debut": "2020-11-08 23:00:00+00:00",
+    "fin": "2025-12-31 21:30:00+00:00",
+    "couverture_ftmo_dans_ref": 0.9893342111760349,
+    "couverture_ref_dans_ftmo": 0.9998336577008168,
+    "rendements_communs": 58776,
+    "correlation_30min": 0.9980442194534903,
+    "decalage_max_correlation": 0,
+    "correlations_decalees": {
+     "-2": 0.0128,
+     "-1": -0.008,
+     "0": 0.998,
+     "1": -0.008,
+     "2": 0.0137
+    },
+    "niveau_median_bps": 1.069979554715328,
+    "niveau_p1_bps": -5.326605784280103,
+    "niveau_p99_bps": 8.978182154472599
+   }
+  },
+  "GER40": {
+   "symbole": "GER40.cash",
+   "export": "export_2026-10-06",
+   "bougies": {
+    "barres": 68683,
+    "premiere": "2020-11-08 23:00:00+00:00",
+    "derniere": "2026-10-05 22:30:00+00:00",
+    "hors_grille_30min": 0,
+    "plates": 18,
+    "volume_nul": 0,
+    "trous": 1507,
+    "trous_par_an": {
+     "2020": 36,
+     "2021": 257,
+     "2022": 257,
+     "2023": 255,
+     "2024": 254,
+     "2025": 254,
+     "2026": 194
+    },
+    "heures_manquantes_par_an": {
+     "2020": 515.0,
+     "2021": 2855.0,
+     "2022": 2847.5,
+     "2023": 2968.5,
+     "2024": 3007.0,
+     "2025": 3005.5,
+     "2026": 2228.0
+    },
+    "plus_long_trou_h": 122.0,
+    "plus_long_trou_debut": "2025-12-23 22:00:00+00:00",
+    "motifs_recurrents": [
+     "Tue 21:00 UTC : 199 fois, médiane 1.0 h",
+     "Thu 21:00 UTC : 199 fois, médiane 1.0 h",
+     "Wed 21:00 UTC : 197 fois, médiane 1.0 h"
+    ]
+   },
+   "ticks": {
+    "ticks": 795611,
+    "debut": "2026-09-27 22:05:15.098000+00:00",
+    "fin": "2026-10-05 23:21:26.305000+00:00",
+    "barres_mesurees": 269,
+    "ecart_median_bps": 0.8357118097676477,
+    "ecart_moyen_bps": 0.8866446117566577,
+    "ecart_p90_bps": 1.3847794397986695,
+    "ecart_max_bps": 1.516909842523895,
+    "ecart_median_semaine_bps": 0.8042421196648236,
+    "ecart_median_weekend_bps": 1.3312837789591279
+   },
+   "fiche": {
+    "description": "German 40 Index, Spot CFD",
+    "digits": 2,
+    "lot_size": 1.0,
+    "version_fiche": 1,
+    "swap_long": -4.5178,
+    "swap_short": -0.0456
+   },
+   "recoupement": {
+    "reference": "Saxo CFD Germany 40 (bid)",
+    "barres_communes": 53502,
+    "horodatage_ref_arrondi": false,
+    "debut": "2020-11-09 00:00:00+00:00",
+    "fin": "2025-12-30 20:30:00+00:00",
+    "couverture_ftmo_dans_ref": 0.8940692836015441,
+    "couverture_ref_dans_ftmo": 0.9991036414565826,
+    "rendements_communs": 52188,
+    "correlation_30min": 0.9975453120165341,
+    "decalage_max_correlation": 0,
+    "correlations_decalees": {
+     "-2": 0.01,
+     "-1": -0.0008,
+     "0": 0.9975,
+     "1": -0.0005,
+     "2": 0.0081
+    },
+    "niveau_median_bps": 0.8825740505602475,
+    "niveau_p1_bps": -6.734904438608347,
+    "niveau_p99_bps": 8.926231674210623
+   }
+  },
+  "GBPJPY": {
+   "symbole": "GBPJPY",
+   "export": "export_2026-10-06",
+   "bougies": {
+    "barres": 81041,
+    "premiere": "2020-04-01 18:00:00+00:00",
+    "derniere": "2026-10-05 22:30:00+00:00",
+    "hors_grille_30min": 0,
+    "plates": 2,
+    "volume_nul": 0,
+    "trous": 346,
+    "trous_par_an": {
+     "2020": 41,
+     "2021": 52,
+     "2022": 53,
+     "2023": 52,
+     "2024": 54,
+     "2025": 54,
+     "2026": 40
+    },
+    "heures_manquantes_par_an": {
+     "2020": 1986.5,
+     "2021": 2495.5,
+     "2022": 2521.5,
+     "2023": 2544.0,
+     "2024": 2545.0,
+     "2025": 2544.0,
+     "2026": 1920.0
+    },
+    "plus_long_trou_h": 72.0,
+    "plus_long_trou_debut": "2020-12-31 22:00:00+00:00",
+    "motifs_recurrents": [
+     "Fri 21:00 UTC : 214 fois, médiane 48.0 h",
+     "Fri 22:00 UTC : 105 fois, médiane 48.0 h",
+     "Fri 20:00 UTC : 16 fois, médiane 49.0 h"
+    ]
+   },
+   "ticks": {
+    "ticks": 1204265,
+    "debut": "2026-09-27 21:05:00.004000+00:00",
+    "fin": "2026-10-05 23:21:42.900000+00:00",
+    "barres_mesurees": 290,
+    "ecart_median_bps": 1.0078298930915195,
+    "ecart_moyen_bps": 1.2855252926054261,
+    "ecart_p90_bps": 1.388808444446628,
+    "ecart_max_bps": 14.59850520879485,
+    "ecart_median_semaine_bps": 1.0064340314555391,
+    "ecart_median_weekend_bps": 1.3176990850442287
+   },
+   "fiche": {
+    "description": "Great Britain Pound vs Japanese Yen",
+    "digits": 3,
+    "lot_size": 100000.0,
+    "version_fiche": 1,
+    "swap_long": 0.317,
+    "swap_short": -2.179
+   },
+   "recoupement": {
+    "reference": "Saxo GBPJPY (bid)",
+    "barres_communes": 71580,
+    "horodatage_ref_arrondi": false,
+    "debut": "2020-04-01 18:00:00+00:00",
+    "fin": "2025-12-31 21:30:00+00:00",
+    "couverture_ftmo_dans_ref": 0.9999580906081053,
+    "couverture_ref_dans_ftmo": 0.9753505293708866,
+    "rendements_communs": 71273,
+    "correlation_30min": 0.9935407981548829,
+    "decalage_max_correlation": 0,
+    "correlations_decalees": {
+     "-2": 0.0061,
+     "-1": -0.0059,
+     "0": 0.9935,
+     "1": -0.0051,
+     "2": 0.006
+    },
+    "niveau_median_bps": 0.8971318694217523,
+    "niveau_p1_bps": -1.1245730622330585,
+    "niveau_p99_bps": 3.6409537661168083
+   }
+  },
+  "WTI": {
+   "symbole": "USOIL.cash",
+   "export": "export_2026-10-06",
+   "bougies": {
+    "barres": 69796,
+    "premiere": "2020-11-08 23:00:00+00:00",
+    "derniere": "2026-10-05 22:30:00+00:00",
+    "hors_grille_30min": 0,
+    "plates": 20,
+    "volume_nul": 0,
+    "trous": 1529,
+    "trous_par_an": {
+     "2020": 38,
+     "2021": 261,
+     "2022": 258,
+     "2023": 257,
+     "2024": 259,
+     "2025": 260,
+     "2026": 196
+    },
+    "heures_manquantes_par_an": {
+     "2020": 473.0,
+     "2021": 2828.0,
+     "2022": 2858.0,
+     "2023": 2845.5,
+     "2024": 2849.5,
+     "2025": 2859.0,
+     "2026": 2157.0
+    },
+    "plus_long_trou_h": 76.0,
+    "plus_long_trou_debut": "2020-12-24 19:00:00+00:00",
+    "motifs_recurrents": [
+     "Tue 21:00 UTC : 199 fois, médiane 1.0 h",
+     "Wed 21:00 UTC : 199 fois, médiane 1.0 h",
+     "Thu 21:00 UTC : 198 fois, médiane 1.0 h"
+    ]
+   },
+   "ticks": {
+    "ticks": 647263,
+    "debut": "2026-09-27 22:05:00.013000+00:00",
+    "fin": "2026-10-05 23:21:30.004000+00:00",
+    "barres_mesurees": 271,
+    "ecart_median_bps": 8.613585005981983,
+    "ecart_moyen_bps": 8.578872122047033,
+    "ecart_p90_bps": 9.448041141925476,
+    "ecart_max_bps": 9.911612379712126,
+    "ecart_median_semaine_bps": 8.639214378278142,
+    "ecart_median_weekend_bps": 7.490123842202564
+   },
+   "fiche": {
+    "description": "West Texas Intermediate Crude Oil, Spot CFD",
+    "digits": 3,
+    "lot_size": 100.0,
+    "version_fiche": 1,
+    "swap_long": 0.0497,
+    "swap_short": -0.2253
+   },
+   "recoupement": {
+    "reference": "Saxo CFD OILUScont (bid, raccordé à l'échéance)",
+    "barres_communes": 60668,
+    "horodatage_ref_arrondi": true,
+    "debut": "2020-11-08 23:00:00+00:00",
+    "fin": "2025-12-31 21:30:00+00:00",
+    "couverture_ftmo_dans_ref": 0.997599237017792,
+    "couverture_ref_dans_ftmo": 0.9995551528132466,
+    "rendements_communs": 59315,
+    "correlation_30min": 0.9261727223643458,
+    "decalage_max_correlation": 0,
+    "correlations_decalees": {
+     "-2": 0.004,
+     "-1": -0.0009,
+     "0": 0.9262,
+     "1": 0.0608,
+     "2": 0.0114
+    },
+    "niveau_median_bps": 2.2840254235501067,
+    "niveau_p1_bps": -231.31515366909252,
+    "niveau_p99_bps": 134.93569166332279
+   }
+  },
+  "BRENT": {
+   "symbole": "UKOIL.cash",
+   "export": "export_2026-10-06",
+   "bougies": {
+    "barres": 63808,
+    "premiere": "2020-11-08 23:00:00+00:00",
+    "derniere": "2026-10-05 20:00:00+00:00",
+    "hors_grille_30min": 0,
+    "plates": 16,
+    "volume_nul": 0,
+    "trous": 1525,
+    "trous_par_an": {
+     "2020": 38,
+     "2021": 260,
+     "2022": 258,
+     "2023": 257,
+     "2024": 259,
+     "2025": 258,
+     "2026": 195
+    },
+    "heures_manquantes_par_an": {
+     "2020": 534.0,
+     "2021": 3307.0,
+     "2022": 3373.0,
+     "2023": 3366.0,
+     "2024": 3373.0,
+     "2025": 3366.5,
+     "2026": 2542.0
+    },
+    "plus_long_trou_h": 77.0,
+    "plus_long_trou_debut": "2022-12-23 20:00:00+00:00",
+    "motifs_recurrents": [
+     "Tue 21:00 UTC : 199 fois, médiane 3.0 h",
+     "Wed 21:00 UTC : 199 fois, médiane 3.0 h",
+     "Thu 21:00 UTC : 198 fois, médiane 3.0 h"
+    ]
+   },
+   "ticks": {
+    "ticks": 556520,
+    "debut": "2026-09-28 00:05:00.006000+00:00",
+    "fin": "2026-10-05 20:49:56.825000+00:00",
+    "barres_mesurees": 245,
+    "ecart_median_bps": 7.091994671420036,
+    "ecart_moyen_bps": 7.02203788870276,
+    "ecart_p90_bps": 7.662908918509807,
+    "ecart_max_bps": 7.892426230479811,
+    "ecart_median_semaine_bps": 7.091994671420036,
+    "ecart_median_weekend_bps": null
+   },
+   "fiche": {
+    "description": "Crude Oil Brent, Spot CFD",
+    "digits": 3,
+    "lot_size": 100.0,
+    "version_fiche": 1,
+    "swap_long": 0.061,
+    "swap_short": -0.2758
+   }
+  },
+  "XAU": {
+   "symbole": "XAUUSD",
+   "export": "export_2026-10-06",
+   "bougies": {
+    "barres": 75774,
+    "premiere": "2020-05-06 15:00:00+00:00",
+    "derniere": "2026-10-05 22:30:00+00:00",
+    "hors_grille_30min": 0,
+    "plates": 31,
+    "volume_nul": 0,
+    "trous": 1673,
+    "trous_par_an": {
+     "2020": 184,
+     "2021": 261,
+     "2022": 258,
+     "2023": 257,
+     "2024": 259,
+     "2025": 258,
+     "2026": 196
+    },
+    "heures_manquantes_par_an": {
+     "2020": 1978.5,
+     "2021": 2826.5,
+     "2022": 2847.5,
+     "2023": 2845.0,
+     "2024": 2849.0,
+     "2025": 2849.5,
+     "2026": 2157.0
+    },
+    "plus_long_trou_h": 77.0,
+    "plus_long_trou_debut": "2020-12-31 21:00:00+00:00",
+    "motifs_recurrents": [
+     "Wed 21:00 UTC : 213 fois, médiane 1.0 h",
+     "Tue 21:00 UTC : 213 fois, médiane 1.0 h",
+     "Thu 21:00 UTC : 213 fois, médiane 1.0 h"
+    ]
+   },
+   "ticks": {
+    "ticks": 1585124,
+    "debut": "2026-09-27 22:05:00.005000+00:00",
+    "fin": "2026-10-05 23:23:20.850000+00:00",
+    "barres_mesurees": 271,
+    "ecart_median_bps": 0.9882387536618572,
+    "ecart_moyen_bps": 1.0149277989273868,
+    "ecart_p90_bps": 1.1136073130108952,
+    "ecart_max_bps": 1.2422767886452932,
+    "ecart_median_semaine_bps": 0.9880910923584516,
+    "ecart_median_weekend_bps": 1.1731973910275575
+   },
+   "fiche": {
+    "description": "Gold vs US Dollar, Spot CFD",
+    "digits": 2,
+    "lot_size": 100.0,
+    "version_fiche": 1,
+    "swap_long": -0.649,
+    "swap_short": -0.042
+   },
+   "recoupement": {
+    "reference": "HistData XAUUSD (bid)",
+    "barres_communes": 73833,
+    "horodatage_ref_arrondi": false,
+    "debut": "2020-05-06 15:00:00+00:00",
+    "fin": "2026-09-24 23:30:00+00:00",
+    "couverture_ftmo_dans_ref": 0.9785167121690036,
+    "couverture_ref_dans_ftmo": 0.9980804325785738,
+    "rendements_communs": 71628,
+    "correlation_30min": 0.9977041401668922,
+    "decalage_max_correlation": 0,
+    "correlations_decalees": {
+     "-2": -0.0135,
+     "-1": -0.0028,
+     "0": 0.9977,
+     "1": -0.0016,
+     "2": -0.0126
+    },
+    "niveau_median_bps": 0.4634624525357012,
+    "niveau_p1_bps": -2.1342998737535535,
+    "niveau_p99_bps": 2.3030452478784444
+   }
+  },
+  "SAN": {
+   "symbole": "SAN",
+   "absent": "bougies non exportées"
+  },
+  "BTC": {
+   "symbole": "BTCUSD",
+   "export": "export_2026-10-06",
+   "bougies": {
+    "barres": 103486,
+    "premiere": "2020-07-08 07:30:00+00:00",
+    "derniere": "2026-10-05 22:30:00+00:00",
+    "hors_grille_30min": 0,
+    "plates": 37,
+    "volume_nul": 0,
+    "trous": 369,
+    "trous_par_an": {
+     "2020": 22,
+     "2021": 61,
+     "2022": 75,
+     "2023": 69,
+     "2024": 58,
+     "2025": 43,
+     "2026": 41
+    },
+    "heures_manquantes_par_an": {
+     "2020": 937.0,
+     "2021": 379.0,
+     "2022": 375.0,
+     "2023": 291.5,
+     "2024": 344.0,
+     "2025": 396.0,
+     "2026": 270.0
+    },
+    "plus_long_trou_h": 57.0,
+    "plus_long_trou_debut": "2020-07-10 20:00:00+00:00",
+    "motifs_recurrents": [
+     "Sat 17:00 UTC : 83 fois, médiane 4.0 h",
+     "Sat 05:00 UTC : 49 fois, médiane 8.5 h",
+     "Sat 18:00 UTC : 45 fois, médiane 4.0 h"
+    ]
+   },
+   "ticks": {
+    "ticks": 2850313,
+    "debut": "2026-09-25 23:22:09.855000+00:00",
+    "fin": "2026-10-05 23:22:34.350000+00:00",
+    "barres_mesurees": 435,
+    "ecart_median_bps": 0.1186085274549682,
+    "ecart_moyen_bps": 0.12027797383566806,
+    "ecart_p90_bps": 0.12032594168102748,
+    "ecart_max_bps": 0.3666358600300751,
+    "ecart_median_semaine_bps": 0.11924529651833546,
+    "ecart_median_weekend_bps": 0.11811285772564825
+   },
+   "fiche": {
+    "description": "Bitcoin vs US Dollar, Spot CFD",
+    "digits": 2,
+    "lot_size": 1.0,
+    "version_fiche": 1,
+    "swap_long": -30.0,
+    "swap_short": -30.0
+   },
+   "recoupement": {
+    "reference": "Bitstamp BTC/USD",
+    "barres_communes": 103276,
+    "horodatage_ref_arrondi": false,
+    "debut": "2020-07-08 07:30:00+00:00",
+    "fin": "2026-09-30 23:30:00+00:00",
+    "couverture_ftmo_dans_ref": 1.0,
+    "couverture_ref_dans_ftmo": 0.9454651982459513,
+    "rendements_communs": 102907,
+    "correlation_30min": 0.9921948150421762,
+    "decalage_max_correlation": 0,
+    "correlations_decalees": {
+     "-2": -0.0108,
+     "-1": -0.0153,
+     "0": 0.9922,
+     "1": -0.0128,
+     "2": -0.0127
+    },
+    "niveau_median_bps": -3.9705784967875024,
+    "niveau_p1_bps": -29.863605426993512,
+    "niveau_p99_bps": 14.399158481827046
+   }
+  },
+  "ETH": {
+   "symbole": "ETHUSD",
+   "export": "export_2026-10-06",
+   "bougies": {
+    "barres": 103410,
+    "premiere": "2020-07-08 07:30:00+00:00",
+    "derniere": "2026-10-05 22:30:00+00:00",
+    "hors_grille_30min": 0,
+    "plates": 60,
+    "volume_nul": 0,
+    "trous": 368,
+    "trous_par_an": {
+     "2020": 23,
+     "2021": 61,
+     "2022": 73,
+     "2023": 69,
+     "2024": 58,
+     "2025": 43,
+     "2026": 41
+    },
+    "heures_manquantes_par_an": {
+     "2020": 974.0,
+     "2021": 379.5,
+     "2022": 373.0,
+     "2023": 291.5,
+     "2024": 344.5,
+     "2025": 397.0,
+     "2026": 271.0
+    },
+    "plus_long_trou_h": 57.0,
+    "plus_long_trou_debut": "2020-07-10 20:00:00+00:00",
+    "motifs_recurrents": [
+     "Sat 17:00 UTC : 83 fois, médiane 4.0 h",
+     "Sat 05:00 UTC : 49 fois, médiane 8.5 h",
+     "Sat 18:00 UTC : 45 fois, médiane 4.0 h"
+    ]
+   },
+   "ticks": {
+    "ticks": 487264,
+    "debut": "2026-09-25 23:22:51.351000+00:00",
+    "fin": "2026-10-05 23:22:44.939000+00:00",
+    "barres_mesurees": 435,
+    "ecart_median_bps": 2.2304003568637185,
+    "ecart_moyen_bps": 2.2299339737966397,
+    "ecart_p90_bps": 2.250685054234337,
+    "ecart_max_bps": 2.485370626258025,
+    "ecart_median_semaine_bps": 2.2319684846063508,
+    "ecart_median_weekend_bps": 2.229407936221608
+   },
+   "fiche": {
+    "description": "Ethereum vs US Dollar, Spot CFD",
+    "digits": 2,
+    "lot_size": 10.0,
+    "version_fiche": 1,
+    "swap_long": -30.0,
+    "swap_short": -30.0
+   },
+   "recoupement": {
+    "reference": "Bitstamp ETH/USD",
+    "barres_communes": 103200,
+    "horodatage_ref_arrondi": false,
+    "debut": "2020-07-08 07:30:00+00:00",
+    "fin": "2026-09-30 23:30:00+00:00",
+    "couverture_ftmo_dans_ref": 1.0,
+    "couverture_ref_dans_ftmo": 0.9447694378072561,
+    "rendements_communs": 102832,
+    "correlation_30min": 0.9914077165439928,
+    "decalage_max_correlation": 0,
+    "correlations_decalees": {
+     "-2": -0.0069,
+     "-1": -0.0091,
+     "0": 0.9914,
+     "1": -0.0065,
+     "2": -0.0085
+    },
+    "niveau_median_bps": -7.056174633915391,
+    "niveau_p1_bps": -44.16834895307117,
+    "niveau_p99_bps": 13.495372500978501
+   }
+  },
+  "SOL": {
+   "symbole": "SOLUSD",
+   "export": "export_2026-10-06",
+   "bougies": {
+    "barres": 24595,
+    "premiere": "2025-04-17 09:00:00+00:00",
+    "derniere": "2026-10-05 22:30:00+00:00",
+    "hors_grille_30min": 0,
+    "plates": 1,
+    "volume_nul": 0,
+    "trous": 76,
+    "trous_par_an": {
+     "2025": 35,
+     "2026": 41
+    },
+    "heures_manquantes_par_an": {
+     "2025": 308.5,
+     "2026": 272.0
+    },
+    "plus_long_trou_h": 34.5,
+    "plus_long_trou_debut": "2025-07-26 10:30:00+00:00",
+    "motifs_recurrents": [
+     "Sat 05:00 UTC : 14 fois, médiane 14.0 h",
+     "Sat 06:00 UTC : 7 fois, médiane 14.0 h",
+     "Sat 10:00 UTC : 7 fois, médiane 5.0 h"
+    ]
+   },
+   "ticks": {
+    "ticks": 306456,
+    "debut": "2026-09-25 23:23:01.055000+00:00",
+    "fin": "2026-10-05 23:22:46.835000+00:00",
+    "barres_mesurees": 435,
+    "ecart_median_bps": 2.5021894157388664,
+    "ecart_moyen_bps": 2.5012083163188743,
+    "ecart_p90_bps": 2.5435584382540104,
+    "ecart_max_bps": 2.5747757799425943,
+    "ecart_median_semaine_bps": 2.518574486840544,
+    "ecart_median_weekend_bps": 2.4742268167450288
+   },
+   "fiche": {
+    "description": "Solana vs US Dollar, Spot CFD",
+    "digits": 2,
+    "lot_size": 100.0,
+    "version_fiche": 1,
+    "swap_long": -30.0,
+    "swap_short": -30.0
+   },
+   "recoupement": {
+    "reference": "Coinbase SOL/USD",
+    "barres_communes": 24362,
+    "horodatage_ref_arrondi": false,
+    "debut": "2025-04-17 09:00:00+00:00",
+    "fin": "2026-09-30 23:30:00+00:00",
+    "couverture_ftmo_dans_ref": 0.9990567972114005,
+    "couverture_ref_dans_ftmo": 0.9555599137085703,
+    "rendements_communs": 24284,
+    "correlation_30min": 0.9806141467896186,
+    "decalage_max_correlation": 0,
+    "correlations_decalees": {
+     "-2": -0.0071,
+     "-1": -0.019,
+     "0": 0.9806,
+     "1": 0.0004,
+     "2": -0.0183
+    },
+    "niveau_median_bps": -5.039814650033558,
+    "niveau_p1_bps": -16.342254744391695,
+    "niveau_p99_bps": 10.421452296604269
+   }
+  },
+  "AVAX": {
+   "symbole": "AVAUSD",
+   "absent": "bougies non exportées"
+  },
+  "XRP": {
+   "symbole": "XRPUSD",
+   "export": "export_2026-10-06",
+   "bougies": {
+    "barres": 103292,
+    "premiere": "2020-07-13 14:30:00+00:00",
+    "derniere": "2026-10-05 22:30:00+00:00",
+    "hors_grille_30min": 0,
+    "plates": 30,
+    "volume_nul": 0,
+    "trous": 367,
+    "trous_par_an": {
+     "2020": 23,
+     "2021": 60,
+     "2022": 73,
+     "2023": 69,
+     "2024": 58,
+     "2025": 43,
+     "2026": 41
+    },
+    "heures_manquantes_par_an": {
+     "2020": 917.5,
+     "2021": 367.5,
+     "2022": 373.5,
+     "2023": 291.0,
+     "2024": 344.0,
+     "2025": 397.0,
+     "2026": 272.0
+    },
+    "plus_long_trou_h": 50.0,
+    "plus_long_trou_debut": "2020-10-23 20:00:00+00:00",
+    "motifs_recurrents": [
+     "Sat 17:00 UTC : 83 fois, médiane 4.0 h",
+     "Sat 05:00 UTC : 49 fois, médiane 8.5 h",
+     "Sat 18:00 UTC : 45 fois, médiane 4.0 h"
+    ]
+   },
+   "ticks": {
+    "ticks": 607028,
+    "debut": "2026-09-25 23:23:00.922000+00:00",
+    "fin": "2026-10-05 23:22:57.346000+00:00",
+    "barres_mesurees": 435,
+    "ecart_median_bps": 9.987016878057425,
+    "ecart_moyen_bps": 9.962388339801265,
+    "ecart_p90_bps": 10.098092875593858,
+    "ecart_max_bps": 10.23157463933738,
+    "ecart_median_semaine_bps": 10.011012113325037,
+    "ecart_median_weekend_bps": 9.904586211895014
+   },
+   "fiche": {
+    "description": "Ripple vs US Dollar, Spot CFD",
+    "digits": 5,
+    "lot_size": 10000.0,
+    "version_fiche": 1,
+    "swap_long": -30.0,
+    "swap_short": -30.0
+   },
+   "recoupement": {
+    "reference": "Bitstamp XRP/USD",
+    "barres_communes": 103082,
+    "horodatage_ref_arrondi": false,
+    "debut": "2020-07-13 14:30:00+00:00",
+    "fin": "2026-09-30 23:30:00+00:00",
+    "couverture_ftmo_dans_ref": 1.0,
+    "couverture_ref_dans_ftmo": 0.9458886574477652,
+    "rendements_communs": 102715,
+    "correlation_30min": 0.983954331986717,
+    "decalage_max_correlation": 0,
+    "correlations_decalees": {
+     "-2": -0.0306,
+     "-1": -0.0271,
+     "0": 0.984,
+     "1": -0.0207,
+     "2": -0.0301
+    },
+    "niveau_median_bps": -17.65767173104116,
+    "niveau_p1_bps": -70.66545449701202,
+    "niveau_p99_bps": 9.001059810865433
+   }
+  }
+ },
+ "symboles_du_compte": 196
+}
