@@ -1,6 +1,6 @@
 # Vérification des données FTMO (D05.1)
 
-*Généré par `audit_ftmo_D05_1.py` le 2026-10-06 00:27 UTC ; fiches : `export_2026-10-06_v2/ftmo_symboles_fiches.csv` ; 196 symboles actifs sur le compte.*
+*Généré par `audit_ftmo_D05_1.py` le 2026-10-06 01:21 UTC ; fiches : `export_2026-10-06_v3/ftmo_symboles_fiches.csv` ; 196 symboles actifs sur le compte.*
 
 ## 1. Bougies M30
 
@@ -13,12 +13,17 @@
 | WTI | USOIL.cash | 69796 | 2020-11-08 23:00 | 2026-10-05 22:30 | 1529 | 76,0 | Tue 21:00 UTC : 199 fois, médiane 1.0 h | 20 |
 | BRENT | UKOIL.cash | 63808 | 2020-11-08 23:00 | 2026-10-05 20:00 | 1525 | 77,0 | Tue 21:00 UTC : 199 fois, médiane 3.0 h | 16 |
 | XAU | XAUUSD | 75774 | 2020-05-06 15:00 | 2026-10-05 22:30 | 1673 | 77,0 | Wed 21:00 UTC : 213 fois, médiane 1.0 h | 31 |
-| SAN | SAN | absent | | | | | | |
+| META | META | 5505 | 2025-01-27 14:30 | 2026-10-05 19:00 | 424 | 92,5 | Tue 20:00 UTC : 64 fois, médiane 17.5 h | 0 |
 | BTC | BTCUSD | 103486 | 2020-07-08 07:30 | 2026-10-05 22:30 | 369 | 57,0 | Sat 17:00 UTC : 83 fois, médiane 4.0 h | 37 |
 | ETH | ETHUSD | 103410 | 2020-07-08 07:30 | 2026-10-05 22:30 | 368 | 57,0 | Sat 17:00 UTC : 83 fois, médiane 4.0 h | 60 |
 | SOL | SOLUSD | 24595 | 2025-04-17 09:00 | 2026-10-05 22:30 | 76 | 34,5 | Sat 05:00 UTC : 14 fois, médiane 14.0 h | 1 |
-| AVAX | AVAUSD | absent | | | | | | |
+| AVAX | AVAUSD | 85199 | 2021-10-31 19:30 | 2026-10-06 00:30 | 96 | 34,5 | Sat 05:00 UTC : 14 fois, médiane 14.0 h | 7 |
 | XRP | XRPUSD | 103292 | 2020-07-13 14:30 | 2026-10-05 22:30 | 367 | 50,0 | Sat 17:00 UTC : 83 fois, médiane 4.0 h | 30 |
+| DOGE | DOGEUSD | 84937 | 2021-09-18 11:00 | 2026-10-06 00:30 | 303 | 39,5 | Sat 17:00 UTC : 83 fois, médiane 4.0 h | 16 |
+| LINK | LNKUSD | 87285 | 2021-09-18 10:30 | 2026-10-06 00:30 | 92 | 34,5 | Sat 05:00 UTC : 14 fois, médiane 14.0 h | 1 |
+| AAVE | AAVUSD | 47241 | 2024-01-01 00:00 | 2026-10-06 00:30 | 82 | 34,5 | Sat 05:00 UTC : 14 fois, médiane 14.0 h | 1 |
+| UNI | UNIUSD | 31138 | 2024-12-01 21:00 | 2026-10-06 00:30 | 78 | 34,5 | Sat 05:00 UTC : 14 fois, médiane 14.0 h | 2 |
+| XLM | XLMUSD | 31138 | 2024-12-01 21:00 | 2026-10-06 00:30 | 78 | 34,5 | Sat 05:00 UTC : 14 fois, médiane 14.0 h | 2 |
 
 ## 2. Écarts (ticks, ouverture des barres, bps du milieu)
 
@@ -31,10 +36,17 @@
 | WTI | 2026-09-27 → 2026-10-05 | 271 | 8,61 | 8,58 | 9,45 | 9,9 | 8,64 | 7,49 |
 | BRENT | 2026-09-28 → 2026-10-05 | 245 | 7,09 | 7,02 | 7,66 | 7,9 | 7,09 | — |
 | XAU | 2026-09-27 → 2026-10-05 | 271 | 0,99 | 1,01 | 1,11 | 1,2 | 0,99 | 1,17 |
+| META | 2026-09-28 → 2026-10-05 | 71 | 5,78 | 6,20 | 8,04 | 15,2 | 5,78 | — |
 | BTC | 2026-09-25 → 2026-10-05 | 435 | 0,12 | 0,12 | 0,12 | 0,4 | 0,12 | 0,12 |
 | ETH | 2026-09-25 → 2026-10-05 | 435 | 2,23 | 2,23 | 2,25 | 2,5 | 2,23 | 2,23 |
 | SOL | 2026-09-25 → 2026-10-05 | 435 | 2,50 | 2,50 | 2,54 | 2,6 | 2,52 | 2,47 |
+| AVAX | 2026-09-26 → 2026-10-06 | 437 | 18,26 | 18,69 | 19,29 | 27,4 | 18,26 | 18,32 |
 | XRP | 2026-09-25 → 2026-10-05 | 435 | 9,99 | 9,96 | 10,10 | 10,2 | 10,01 | 9,90 |
+| DOGE | 2026-09-26 → 2026-10-06 | 437 | 9,50 | 9,48 | 9,68 | 9,9 | 9,52 | 9,36 |
+| LINK | 2026-09-26 → 2026-10-06 | 437 | 3,49 | 3,46 | 4,22 | 6,3 | 3,51 | 2,87 |
+| AAVE | 2026-09-26 → 2026-10-06 | 437 | 0,61 | 0,65 | 0,68 | 1,6 | 0,61 | 0,64 |
+| UNI | 2026-09-26 → 2026-10-06 | 437 | 3,10 | 3,10 | 3,64 | 4,6 | 3,11 | 3,02 |
+| XLM | 2026-09-26 → 2026-10-06 | 437 | 9,09 | 9,06 | 9,32 | 9,6 | 8,97 | 9,24 |
 
 ## 3. Fiches : swaps et commission (bps du notionnel au dernier prix ; coût positif)
 
@@ -47,10 +59,17 @@
 | WTI | West Texas Intermediate Crude Oil, Spot CFD | Pips (0.0497 / -0.2253) | −5,48 | +24,83 | Friday | UsdPerOneLot (0.0) | 0,00 | 1000000:15 |
 | BRENT | Crude Oil Brent, Spot CFD | Pips (0.061 / -0.2758) | −5,82 | +26,32 | Friday | UsdPerOneLot (0.0) | 0,00 | 1000000:15 |
 | XAU | Gold vs US Dollar, Spot CFD | Pips (-0.649 / -0.042) | +1,57 | +0,10 | Wednesday | PercentageOfTradingVolume (0.0007) | 0,07 | 1000000:15 |
+| META | Meta Platforms, Spot CFD | Pips (-0.1662 / -0.1314) | +2,23 | +1,77 | Friday | PercentageOfTradingVolume (0.002) | 0,20 | 1000000:1 |
 | BTC | Bitcoin vs US Dollar, Spot CFD | Percentage (-30.0 / -30.0) | +8,33 | +8,33 | Friday | PercentageOfTradingVolume (0.0325) | 3,25 | 1000000:1 |
 | ETH | Ethereum vs US Dollar, Spot CFD | Percentage (-30.0 / -30.0) | +8,33 | +8,33 | Friday | PercentageOfTradingVolume (0.0325) | 3,25 | 1000000:1 |
 | SOL | Solana vs US Dollar, Spot CFD | Percentage (-30.0 / -30.0) | +8,33 | +8,33 | Friday | PercentageOfTradingVolume (0.0325) | 3,25 | 1000000:1 |
+| AVAX | Avalanche vs US Dollar, Spot CFD | Percentage (-30.0 / -30.0) | +8,33 | +8,33 | Friday | PercentageOfTradingVolume (0.0325) | 3,25 | 1000000:1 |
 | XRP | Ripple vs US Dollar, Spot CFD | Percentage (-30.0 / -30.0) | +8,33 | +8,33 | Friday | PercentageOfTradingVolume (0.0325) | 3,25 | 1000000:1 |
+| DOGE | Dogecoin vs US Dollar, Spot CFD | Percentage (-30.0 / -30.0) | +8,33 | +8,33 | Friday | PercentageOfTradingVolume (0.0325) | 3,25 | 1000000:1 |
+| LINK | Chainlink vs US Dollar, Spot CFD | Percentage (-30.0 / -30.0) | +8,33 | +8,33 | Friday | PercentageOfTradingVolume (0.0325) | 3,25 | 1000000:1 |
+| AAVE | AAVE vs US Dollar, Spot CFD | Percentage (-30.0 / -30.0) | +8,33 | +8,33 | Friday | PercentageOfTradingVolume (0.0325) | 3,25 | 1000000:1 |
+| UNI | Uniswap vs US Dollar, Spot CFD | Percentage (-30.0 / -30.0) | +8,33 | +8,33 | Friday | PercentageOfTradingVolume (0.0325) | 3,25 | 1000000:1 |
+| XLM | Stellar Lumens vs US Dollar, Spot CFD | Percentage (-30.0 / -30.0) | +8,33 | +8,33 | Friday | PercentageOfTradingVolume (0.0325) | 3,25 | 1000000:1 |
 
 ## 4. Recoupement avec les séries du dépôt (barres communes)
 
@@ -65,4 +84,5 @@
 | BTC | Bitstamp BTC/USD | 103276 | 0,9922 | 0 | −4,0 | −29,9 ; +14,4 |
 | ETH | Bitstamp ETH/USD | 103200 | 0,9914 | 0 | −7,1 | −44,2 ; +13,5 |
 | SOL | Coinbase SOL/USD | 24362 | 0,9806 | 0 | −5,0 | −16,3 ; +10,4 |
+| AVAX | Coinbase AVAX/USD | 84949 | 0,9814 | 0 | −10,7 | −68,3 ; +13,5 |
 | XRP | Bitstamp XRP/USD | 103082 | 0,9840 | 0 | −17,7 | −70,7 ; +9,0 |

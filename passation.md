@@ -1,5 +1,10 @@
 # PASSATION — AKF-TSO : clôture de D01 → Étape D02 (walk-forward, adaptation multi-actifs)
 
+> **Passation courante de la direction Prop Firm (2026-10-06) : [`passation_D05_1.md`](passation_D05_1.md).** Elle porte
+> l'objectif stratégique de D05.1 (sauver la piste 2 par le portefeuille), les données FTMO prêtes, les frictions et le
+> profil TradFi. Le texte ci-dessous est la passation de D01 vers D02. Il reste la référence pour la gouvernance, RE-1 et
+> la méthode.
+
 > **À lire en entier avant toute action.** Rédigée le 2026-10-01 par la session qui a mené D01 à D01.7. Elle remplace la
 > passation du 2026-09-29 (fin de l'Étape C), conservée dans l'historique git (`4831a1c`).
 >

@@ -14,7 +14,7 @@ Ce que l'audit vérifie, par symbole (fixé avant lecture) :
   UTC à l'ouverture), écart de niveau (médiane, P1, P99, en bps), couverture mutuelle.
 Limites : les séries de référence ont leurs propres conventions (Bitstamp et Coinbase : prix de transaction ; Saxo et
 HistData : bid) ; le WTI de Saxo est un CFD continu raccordé à l'échéance (rendements des jours de roulement faussés) ;
-aucune référence pour le Brent et SAN.
+aucune référence pour le Brent, META et les cryptos candidates.
 
 Usage : python experiments/D05_1/audit_ftmo_D05_1.py
 Sorties : audit_ftmo_D05_1.json et audit_ftmo_D05_1.md.
@@ -40,11 +40,12 @@ from utils.data_loader import load_ohlc  # noqa: E402
 
 RAW = ROOT / "data" / "raw"
 FTMO = RAW / "ftmo"
-EXPORTS = ("export_2026-10-06", "export_2026-10-06_v2")
+EXPORTS = ("export_2026-10-06", "export_2026-10-06_v2", "export_2026-10-06_v3")
 MOTIF = "EXP-D05.1, vérification des données FTMO (porteur, 2026-10-06)"
 NOMS = {"US100": "US100.cash", "US30": "US30.cash", "GER40": "GER40.cash", "GBPJPY": "GBPJPY", "WTI": "USOIL.cash",
-        "BRENT": "UKOIL.cash", "XAU": "XAUUSD", "SAN": "SAN", "BTC": "BTCUSD", "ETH": "ETHUSD", "SOL": "SOLUSD",
-        "AVAX": "AVAUSD", "XRP": "XRPUSD"}
+        "BRENT": "UKOIL.cash", "XAU": "XAUUSD", "META": "META", "BTC": "BTCUSD", "ETH": "ETHUSD", "SOL": "SOLUSD",
+        "AVAX": "AVAUSD", "XRP": "XRPUSD", "DOGE": "DOGEUSD", "LINK": "LNKUSD", "AAVE": "AAVUSD", "UNI": "UNIUSD",
+        "XLM": "XLMUSD"}                                     # SAN → META ; cinq cryptos candidates (v3)
 REFS = {"US100": ("Saxo CFD US Tech 100 (bid)", "saxo_us100_cfd_30m.csv"),
         "US30": ("Saxo CFD US 30 (bid)", "saxo_us30_30m.csv"),
         "GER40": ("Saxo CFD Germany 40 (bid)", "saxo_ger40_30m.csv"),

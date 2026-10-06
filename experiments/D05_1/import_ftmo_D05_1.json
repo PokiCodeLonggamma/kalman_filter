@@ -41,6 +41,20 @@
   "extracted_at_utc": "2026-10-05T23:23:22Z",
   "sha256": "fe54bed496dbf806a466e8aa137b0ae6708bf0ba282833190633fd64741b4bcc"
  },
+ "AVAX": {
+  "source": "FTMO, compte d'essai cTrader (cBot AkfExportFtmo)",
+  "symbole": "AVAUSD",
+  "export": "export_2026-10-06_v3",
+  "fichier_source": "ftmo_avausd_m30.csv",
+  "decision": "porteur, 2026-10-05 et 2026-10-06 (D05.1)",
+  "prix": "bid (bougies cTrader)",
+  "timezone": "UTC (ouverture de la barre)",
+  "n_rows": 85199,
+  "first": "2021-10-31T19:30:00Z",
+  "last": "2026-10-06T00:30:00Z",
+  "extracted_at_utc": "2026-10-06T01:18:23Z",
+  "sha256": "f8241d6fa395f17ba4def7fc33c8c68387cfee5d2a8a98787e4ca1777f3e62b6"
+ },
  "XRP": {
   "source": "FTMO, compte d'essai cTrader (cBot AkfExportFtmo)",
   "symbole": "XRPUSD",
@@ -152,5 +166,19 @@
   "last": "2026-10-05T20:00:00Z",
   "extracted_at_utc": "2026-10-05T23:23:22Z",
   "sha256": "86160d2467e38cbefcb6688e4e832e7b28f8e0bb3796a7ad37840e75b9e9f212"
+ },
+ "META": {
+  "source": "FTMO, compte d'essai cTrader (cBot AkfExportFtmo)",
+  "symbole": "META",
+  "export": "export_2026-10-06_v3",
+  "fichier_source": "ftmo_meta_m30.csv",
+  "decision": "porteur, 2026-10-05 et 2026-10-06 (D05.1)",
+  "prix": "bid (bougies cTrader)",
+  "timezone": "UTC (ouverture de la barre)",
+  "n_rows": 5505,
+  "first": "2025-01-27T14:30:00Z",
+  "last": "2026-10-05T19:00:00Z",
+  "extracted_at_utc": "2026-10-06T01:18:23Z",
+  "sha256": "eb1594960aa7826045a25e8d3e47ab2e42a7f29498589d791cd67d7ccc83b767"
  }
 }

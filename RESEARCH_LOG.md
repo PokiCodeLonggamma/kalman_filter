@@ -2710,3 +2710,28 @@ reproduction de résultats publiés et parité du noyau, sans aucune performance
     du samedi.
 - **À venir :** export v3, choix de la crypto, série Coinbase de la crypto retenue (sur GO de téléchargement),
   `--import`, audit, `--frictions`.
+
+
+### [EXP-D05.1, export v3 et clôture] — Données complètes, frictions d'AVAX réelles, passation (2026-10-06)
+- **Porteur :** « oublie le remplacement d'AVAX pour le moment » ; « clôture et rédige le passation.md ».
+- **Fait :**
+  - cBot v3 lancé par le porteur ; export copié dans `data/raw/ftmo/export_2026-10-06_v3/` ;
+  - `--import` (13 séries, META comprise), audit et `--frictions` relancés ;
+  - SAN remplacé par META dans les scripts ;
+  - page FTMO des symboles recoupée (`ftmo_site_symboles_D05_1.json`).
+- [OBS] **AVAX** :
+  - écart FTMO de 18,3 bps, contre 2,5 pour SOL ;
+  - frictions de 27,7 bps par trade ;
+  - net par trade de +0,308 (convention) à −0,009 ATR ;
+  - recoupement avec Coinbase : corrélation 0,981, décalage 0, niveau −10,7 bps.
+- [OBS] **META** :
+  - historique FTMO depuis le 2025-01-27 (5 505 barres) ;
+  - écart de 5,8 bps, commission de 0,2 bp par côté, swap de 2,2 et 1,8 bps par nuit, levier 1:1 ;
+  - séance de 13:35 à 20:00 UTC.
+- [OBS] **Cryptos candidates exportées :** DOGE et LINK depuis 2021-09, AAVE depuis 2024-01, UNI et XLM depuis 2024-12.
+- [OBS] **Page FTMO :**
+  - swaps du pétrole confirmés (environ 25 bps par nuit en short) ;
+  - commissions de cTrader par côté ;
+  - levier Swing réel : 1:1 pour les cryptos et les actions, 1:15 pour l'or et les indices.
+  - L'étalon de D05.4 (1:2 et 1:30) était faux pour Swing.
+- **Passation :** `passation_D05_1.md`, réécrite ; `passation.md` y renvoie. 456 tests. Commits locaux, non poussés.

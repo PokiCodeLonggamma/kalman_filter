@@ -70,17 +70,18 @@ from propfirm.frictions import ajuster_pauses, commission_bps, couts_trades, swa
 from reserve import levee  # noqa: E402
 
 RAW = ROOT / "data" / "raw" / "ftmo"
-EXPORTS = {"export_2026-10-06": "2026-10-05T23:23:22Z", "export_2026-10-06_v2": "2026-10-06T00:21:48Z"}  # fin (journal)
+EXPORTS = {"export_2026-10-06": "2026-10-05T23:23:22Z", "export_2026-10-06_v2": "2026-10-06T00:21:48Z",
+           "export_2026-10-06_v3": "2026-10-06T01:18:23Z"}                       # fin du cBot (journal, UTC)
 MOTIF = "EXP-D05.1, étape 1 : frictions FTMO et Baseline cTrader (porteur, 2026-10-06)"
 NOMS = {"BTC": "BTCUSD", "ETH": "ETHUSD", "SOL": "SOLUSD", "AVAX": "AVAUSD", "XRP": "XRPUSD", "XAU": "XAUUSD",
         "US100": "US100.cash", "US30": "US30.cash", "GER40": "GER40.cash", "GBPJPY": "GBPJPY", "WTI": "USOIL.cash",
-        "BRENT": "UKOIL.cash", "SAN": "SAN"}
+        "BRENT": "UKOIL.cash", "META": "META"}      # SAN remplacé par META (porteur, 2026-10-06)
 CRYPTO = ("BTC", "ETH", "SOL", "AVAX", "XRP")
-FUSEAU = {k: ("Europe/Berlin" if k in ("GER40", "SAN") else "America/New_York") for k in NOMS}   # fixés avant calcul
+FUSEAU = {k: ("Europe/Berlin" if k == "GER40" else "America/New_York") for k in NOMS}   # fixés avant calcul
 PRIX_D05 = {"BTC": "mid", "ETH": "mid", "SOL": "mid", "AVAX": "mid", "XRP": "mid", "XAU": "bid"}  # HistData : bid
 MODELES = ("convention", "ecart_commission", "swaps", "pauses", "or_ftmo", "levier_compte")
 USD_PAR_COTATION = {"GBPJPY": 1.0 / 156.8}          # USD par JPY : FRED DEXJPUS du 2025-12-31 ([HYP] taux constant)
-SUBSTITUT = {"AVAX": "SOL"}                         # AVAUSD non exporté : écart et fiche de SOLUSD ([HYP])
+SUBSTITUT = {"AVAX": "SOL"}                         # repli si AVAUSD manque (exporté en v3 : inutilisé)
 ROSTER = (("Référence", "fixe 0,20", "fixe 0,20"), ("Piste 1", "fixe 0,20", "fixe 0,25"),
           ("Piste 2", "fixe 0,25", "fixe 0,25"))
 A, B = D054.A, D054.B

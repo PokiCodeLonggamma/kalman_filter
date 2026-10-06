@@ -82,7 +82,7 @@ Sources : `audit_ftmo_D05_1.md` (généré), `frictions_D05_1.csv`, `couts_actif
   | BTC | 49 sur 885 | 37 | +0,134 → +0,135 |
   | ETH | 47 sur 839 | 42 | −0,193 → −0,207 |
   | SOL | 49 sur 862 | 28 | +0,091 → +0,108 |
-  | AVAX | 48 sur 792 | 30 | +0,215 → +0,190 |
+  | AVAX (calendrier propre, v3) | 17 sur 792 | 10 | −0,009 → −0,030 |
   | XRP | 47 sur 834 | 28 | +0,117 → +0,160 |
 
 ## 4. Écart (ticks du 2026-09-25 au 2026-10-05)
@@ -143,12 +143,12 @@ Sources : `audit_ftmo_D05_1.md` (généré), `frictions_D05_1.csv`, `couts_actif
 | BTC | 885 | 5 | 0,12 + 6,50 + 2,27 = 8,89 | 0,265 (0,159) | 20 % | +0,240 → +0,134 |
 | ETH | 839 | 5 | 2,23 + 6,50 + 2,39 = 11,12 | 0,245 (0,115) | 21 % | −0,063 → −0,193 |
 | SOL | 862 | 5 | 2,50 + 6,50 + 2,49 = 11,49 | 0,154 (0,068) | 23 % | +0,177 → +0,091 |
-| AVAX (écart de SOL) | 792 | 5 | 2,50 + 6,50 + 2,84 = 11,84 | 0,164 (0,071) | 25 % | +0,308 → +0,215 |
+| AVAX (écart réel, v3) | 792 | 5 | 18,32 + 6,50 + 2,84 = 27,66 | 0,388 (0,071) | 25 % | +0,308 → −0,009 |
 | XRP | 834 | 5 | 9,98 + 6,50 + 2,62 = 19,10 | 0,374 (0,100) | 23 % | +0,391 → +0,117 |
 | Or (HistData) | 532 | 4 | 1,02 + 0,14 + 0,77 = 1,92 | 0,117 (0,248) | 35 % | +0,112 → +0,243 |
 | Or (barres FTMO) | 564 | 4 | 1,02 + 0,14 + 0,74 = 1,90 | 0,119 (0,258) | 32 % | −0,121 → +0,019 |
 
-- [OBS] Sur les cryptos, les frictions FTMO valent 1,8 à 3,8 fois la convention. La commission (6,5 bps l'aller-retour)
+- [OBS] Sur les cryptos, les frictions FTMO valent 1,8 à 5,5 fois la convention (AVAX : 27,7 bps). La commission (6,5 bps l'aller-retour)
   en est la plus grande part. Le swap pèse 2,3 à 2,8 bps en moyenne (8,3 bps par nuit ; 4 % des trades paient le
   vendredi triple).
 - [OBS] Pour l'or, c'est l'inverse : FTMO coûte moins que la convention.
@@ -193,3 +193,33 @@ Sources : `audit_ftmo_D05_1.md` (généré), `frictions_D05_1.csv`, `couts_actif
   les pauses du samedi.
 - [OBS] **SAN = Banco Santander.** Le porteur l'a remplacé par META : swap −16,62 / −13,14 points, commission 0,004 %
   aller-retour, levier Swing 1:1, séance de 16:35 à 23:00 GMT+3.
+
+## 11. Export v3 (2026-10-06, journal du cBot à 01:18 UTC)
+
+- [OBS] **Récupéré :** META, AVAX (`AVAUSD`) et cinq cryptos candidates (DOGE, LINK, AAVE, UNI, XLM), avec bougies,
+  ticks et fiches.
+
+  | Symbole | Première barre FTMO | Écart médian | Recoupement |
+  |---|---|---|---|
+  | META | 2025-01-27 (5 505 barres) | 5,8 bps | — |
+  | AVAX | 2021-10-31 | 18,3 bps | Coinbase : corrélation 0,981, décalage 0, niveau −10,7 bps |
+  | DOGE | 2021-09-18 | 9,5 bps | — |
+  | LINK | 2021-09-18 | 3,5 bps | — |
+  | AAVE | 2024-01-01 | 0,6 bp | — |
+  | UNI | 2024-12-01 | 3,1 bps | — |
+  | XLM | 2024-12-01 | 9,1 bps | — |
+
+- [OBS] **AVAX, avec son vrai écart (18,3 bps contre 2,5 pour SOL) :** frictions de 27,7 bps par trade. Le net par trade
+  passe de +0,308 (convention) à −0,009 ATR.
+  - Sur son propre calendrier FTMO, 17 entrées sont abandonnées et 10 sorties décalées, contre 48 et 30 avec celui de
+    BTC.
+  - [HYP] Une partie des trous du samedi seraient des trous de données propres à chaque symbole, plutôt qu'une
+    maintenance commune.
+- [OBS] **META :**
+  - commission de 0,002 % par côté ;
+  - swap de 2,2 bps par nuit en long et 1,8 en short, triplé le vendredi ;
+  - levier 1:1 ;
+  - séance régulière US seulement, de 13:35 à 20:00 UTC ;
+  - **historique FTMO depuis le 2025-01-27 seulement.**
+- **Décision du porteur :** le remplacement d'AVAX est mis de côté, AVAX reste dans l'univers. Les données des cryptos
+  candidates sont gardées dans `data/raw/ftmo/export_2026-10-06_v3/`.

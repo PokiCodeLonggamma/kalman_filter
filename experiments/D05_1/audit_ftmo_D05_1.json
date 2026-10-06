@@ -1,7 +1,7 @@
 {
- "date": "2026-10-06 00:27 UTC",
+ "date": "2026-10-06 01:21 UTC",
  "motif": "EXP-D05.1, vérification des données FTMO (porteur, 2026-10-06)",
- "fichier_fiches": "export_2026-10-06_v2/ftmo_symboles_fiches.csv",
+ "fichier_fiches": "export_2026-10-06_v3/ftmo_symboles_fiches.csv",
  "symboles": {
   "US100": {
    "symbole": "US100.cash",
@@ -618,9 +618,64 @@
     "niveau_p99_bps": 2.3030452478784444
    }
   },
-  "SAN": {
-   "symbole": "SAN",
-   "absent": "bougies non exportées"
+  "META": {
+   "symbole": "META",
+   "export": "export_2026-10-06_v3",
+   "bougies": {
+    "barres": 5505,
+    "premiere": "2025-01-27 14:30:00+00:00",
+    "derniere": "2026-10-05 19:00:00+00:00",
+    "hors_grille_30min": 0,
+    "plates": 0,
+    "volume_nul": 0,
+    "trous": 424,
+    "trous_par_an": {
+     "2025": 235,
+     "2026": 189
+    },
+    "heures_manquantes_par_an": {
+     "2025": 6642.0,
+     "2026": 5394.5
+    },
+    "plus_long_trou_h": 92.5,
+    "plus_long_trou_debut": "2025-07-03 17:00:00+00:00",
+    "motifs_recurrents": [
+     "Tue 20:00 UTC : 64 fois, médiane 17.5 h",
+     "Wed 20:00 UTC : 63 fois, médiane 17.5 h",
+     "Thu 20:00 UTC : 62 fois, médiane 17.5 h"
+    ]
+   },
+   "ticks": {
+    "ticks": 126861,
+    "debut": "2026-09-28 13:35:00.010000+00:00",
+    "fin": "2026-10-05 20:00:00.003000+00:00",
+    "barres_mesurees": 71,
+    "ecart_median_bps": 5.777563793932995,
+    "ecart_moyen_bps": 6.198107371416176,
+    "ecart_p90_bps": 8.039699481578566,
+    "ecart_max_bps": 15.198993977417263,
+    "ecart_median_semaine_bps": 5.777563793932995,
+    "ecart_median_weekend_bps": null
+   },
+   "fiche": {
+    "description": "Meta Platforms, Spot CFD",
+    "digits": 2,
+    "lot_size": 1.0,
+    "version_fiche": 2,
+    "base": "META",
+    "cotation": "USD",
+    "swap_type": "Pips",
+    "swap_long": -0.1662,
+    "swap_short": -0.1314,
+    "swap_cout_long_bps_nuit": 2.2342913989191513,
+    "swap_cout_short_bps_nuit": 1.766461430914419,
+    "swap_triple": "Friday",
+    "commission_type": "PercentageOfTradingVolume",
+    "commission": 0.002,
+    "commission_bps_cote_usd": 0.2,
+    "levier_paliers": "1000000:1",
+    "seances": "Mon 13:35-Mon 20:00|Tue 13:35-Tue 20:00|Wed 13:35-Wed 20:00|Thu 13:35-Thu 20:00|Fri 13:35-Fri 20:00"
+   }
   },
   "BTC": {
    "symbole": "BTCUSD",
@@ -887,7 +942,92 @@
   },
   "AVAX": {
    "symbole": "AVAUSD",
-   "absent": "bougies non exportées"
+   "export": "export_2026-10-06_v3",
+   "bougies": {
+    "barres": 85199,
+    "premiere": "2021-10-31 19:30:00+00:00",
+    "derniere": "2026-10-06 00:30:00+00:00",
+    "hors_grille_30min": 0,
+    "plates": 7,
+    "volume_nul": 0,
+    "trous": 96,
+    "trous_par_an": {
+     "2021": 2,
+     "2022": 8,
+     "2023": 2,
+     "2024": 4,
+     "2025": 36,
+     "2026": 44
+    },
+    "heures_manquantes_par_an": {
+     "2021": 4.5,
+     "2022": 23.0,
+     "2023": 3.5,
+     "2024": 9.0,
+     "2025": 292.5,
+     "2026": 273.5
+    },
+    "plus_long_trou_h": 34.5,
+    "plus_long_trou_debut": "2025-07-26 10:30:00+00:00",
+    "motifs_recurrents": [
+     "Sat 05:00 UTC : 14 fois, médiane 14.0 h",
+     "Sat 10:00 UTC : 8 fois, médiane 5.0 h",
+     "Sat 06:00 UTC : 7 fois, médiane 14.0 h"
+    ]
+   },
+   "ticks": {
+    "ticks": 145521,
+    "debut": "2026-09-26 03:00:00.003000+00:00",
+    "fin": "2026-10-06 01:17:24.327000+00:00",
+    "barres_mesurees": 437,
+    "ecart_median_bps": 18.264840182649635,
+    "ecart_moyen_bps": 18.687753205531738,
+    "ecart_p90_bps": 19.286403085825793,
+    "ecart_max_bps": 27.35978112175206,
+    "ecart_median_semaine_bps": 18.264840182649635,
+    "ecart_median_weekend_bps": 18.315018315017923
+   },
+   "fiche": {
+    "description": "Avalanche vs US Dollar, Spot CFD",
+    "digits": 2,
+    "lot_size": 1000.0,
+    "version_fiche": 2,
+    "base": "AVAUSD",
+    "cotation": "USD",
+    "swap_type": "Percentage",
+    "swap_long": -30.0,
+    "swap_short": -30.0,
+    "swap_cout_long_bps_nuit": 8.333333333333332,
+    "swap_cout_short_bps_nuit": 8.333333333333332,
+    "swap_triple": "Friday",
+    "commission_type": "PercentageOfTradingVolume",
+    "commission": 0.0325,
+    "commission_bps_cote_usd": 3.25,
+    "levier_paliers": "1000000:1",
+    "seances": "Sun 00:00-Sun 20:55|Sun 21:05-Mon 20:55|Mon 21:05-Tue 20:55|Tue 21:05-Wed 20:55|Wed 21:05-Thu 20:55|Thu 21:05-Fri 20:55|Fri 21:05-Sat 20:55|Sat 21:05-Sun 00:00"
+   },
+   "recoupement": {
+    "reference": "Coinbase AVAX/USD",
+    "barres_communes": 84949,
+    "horodatage_ref_arrondi": false,
+    "debut": "2021-10-31 19:30:00+00:00",
+    "fin": "2026-09-30 23:30:00+00:00",
+    "couverture_ftmo_dans_ref": 0.999576395834559,
+    "couverture_ref_dans_ftmo": 0.9862538167717367,
+    "rendements_communs": 84847,
+    "correlation_30min": 0.9813839809460759,
+    "decalage_max_correlation": 0,
+    "correlations_decalees": {
+     "-2": 0.0003,
+     "-1": -0.0304,
+     "0": 0.9814,
+     "1": -0.0196,
+     "2": -0.0108
+    },
+    "niveau_median_bps": -10.672358591248265,
+    "niveau_p1_bps": -68.28969726292127,
+    "niveau_p99_bps": 13.507636004963086
+   }
   },
   "XRP": {
    "symbole": "XRPUSD",
@@ -978,6 +1118,319 @@
     "niveau_median_bps": -17.65767173104116,
     "niveau_p1_bps": -70.66545449701202,
     "niveau_p99_bps": 9.001059810865433
+   }
+  },
+  "DOGE": {
+   "symbole": "DOGEUSD",
+   "export": "export_2026-10-06_v3",
+   "bougies": {
+    "barres": 84937,
+    "premiere": "2021-09-18 11:00:00+00:00",
+    "derniere": "2026-10-06 00:30:00+00:00",
+    "hors_grille_30min": 0,
+    "plates": 16,
+    "volume_nul": 0,
+    "trous": 303,
+    "trous_par_an": {
+     "2021": 16,
+     "2022": 75,
+     "2023": 70,
+     "2024": 58,
+     "2025": 43,
+     "2026": 41
+    },
+    "heures_manquantes_par_an": {
+     "2021": 95.0,
+     "2022": 375.5,
+     "2023": 293.5,
+     "2024": 344.5,
+     "2025": 397.0,
+     "2026": 272.0
+    },
+    "plus_long_trou_h": 39.5,
+    "plus_long_trou_debut": "2024-07-06 06:00:00+00:00",
+    "motifs_recurrents": [
+     "Sat 17:00 UTC : 83 fois, médiane 4.0 h",
+     "Sat 18:00 UTC : 45 fois, médiane 4.0 h",
+     "Sat 06:00 UTC : 27 fois, médiane 7.5 h"
+    ]
+   },
+   "ticks": {
+    "ticks": 698930,
+    "debut": "2026-09-26 03:00:00.005000+00:00",
+    "fin": "2026-10-06 01:17:36.337000+00:00",
+    "barres_mesurees": 437,
+    "ecart_median_bps": 9.502190782874187,
+    "ecart_moyen_bps": 9.484127029804997,
+    "ecart_p90_bps": 9.684604733631307,
+    "ecart_max_bps": 9.874375994294022,
+    "ecart_median_semaine_bps": 9.522801846566407,
+    "ecart_median_weekend_bps": 9.357941252925057
+   },
+   "fiche": {
+    "description": "Dogecoin vs US Dollar, Spot CFD",
+    "digits": 5,
+    "lot_size": 100000.0,
+    "version_fiche": 2,
+    "base": "USD",
+    "cotation": "USD",
+    "swap_type": "Percentage",
+    "swap_long": -30.0,
+    "swap_short": -30.0,
+    "swap_cout_long_bps_nuit": 8.333333333333332,
+    "swap_cout_short_bps_nuit": 8.333333333333332,
+    "swap_triple": "Friday",
+    "commission_type": "PercentageOfTradingVolume",
+    "commission": 0.0325,
+    "commission_bps_cote_usd": 3.25,
+    "levier_paliers": "1000000:1",
+    "seances": "Sun 00:00-Sun 20:55|Sun 21:05-Mon 20:55|Mon 21:05-Tue 20:55|Tue 21:05-Wed 20:55|Wed 21:05-Thu 20:55|Thu 21:05-Fri 20:55|Fri 21:05-Sat 20:55|Sat 21:05-Sun 00:00"
+   }
+  },
+  "LINK": {
+   "symbole": "LNKUSD",
+   "export": "export_2026-10-06_v3",
+   "bougies": {
+    "barres": 87285,
+    "premiere": "2021-09-18 10:30:00+00:00",
+    "derniere": "2026-10-06 00:30:00+00:00",
+    "hors_grille_30min": 0,
+    "plates": 1,
+    "volume_nul": 0,
+    "trous": 92,
+    "trous_par_an": {
+     "2021": 2,
+     "2022": 7,
+     "2023": 2,
+     "2024": 4,
+     "2025": 36,
+     "2026": 41
+    },
+    "heures_manquantes_par_an": {
+     "2021": 4.5,
+     "2022": 22.5,
+     "2023": 3.5,
+     "2024": 9.0,
+     "2025": 292.5,
+     "2026": 272.0
+    },
+    "plus_long_trou_h": 34.5,
+    "plus_long_trou_debut": "2025-07-26 10:30:00+00:00",
+    "motifs_recurrents": [
+     "Sat 05:00 UTC : 14 fois, médiane 14.0 h",
+     "Sat 10:00 UTC : 8 fois, médiane 5.0 h",
+     "Sat 06:00 UTC : 7 fois, médiane 14.0 h"
+    ]
+   },
+   "ticks": {
+    "ticks": 1400676,
+    "debut": "2026-09-26 03:00:00.003000+00:00",
+    "fin": "2026-10-06 01:17:45.926000+00:00",
+    "barres_mesurees": 437,
+    "ecart_median_bps": 3.4944263899086434,
+    "ecart_moyen_bps": 3.45867205901018,
+    "ecart_p90_bps": 4.2165925749511,
+    "ecart_max_bps": 6.29524708844846,
+    "ecart_median_semaine_bps": 3.5143208748549695,
+    "ecart_median_weekend_bps": 2.868205937185974
+   },
+   "fiche": {
+    "description": "Chainlink vs US Dollar, Spot CFD",
+    "digits": 3,
+    "lot_size": 1000.0,
+    "version_fiche": 2,
+    "base": "LNKUSD",
+    "cotation": "USD",
+    "swap_type": "Percentage",
+    "swap_long": -30.0,
+    "swap_short": -30.0,
+    "swap_cout_long_bps_nuit": 8.333333333333332,
+    "swap_cout_short_bps_nuit": 8.333333333333332,
+    "swap_triple": "Friday",
+    "commission_type": "PercentageOfTradingVolume",
+    "commission": 0.0325,
+    "commission_bps_cote_usd": 3.25,
+    "levier_paliers": "1000000:1",
+    "seances": "Sun 00:00-Sun 20:55|Sun 21:05-Mon 20:55|Mon 21:05-Tue 20:55|Tue 21:05-Wed 20:55|Wed 21:05-Thu 20:55|Thu 21:05-Fri 20:55|Fri 21:05-Sat 20:55|Sat 21:05-Sun 00:00"
+   }
+  },
+  "AAVE": {
+   "symbole": "AAVUSD",
+   "export": "export_2026-10-06_v3",
+   "bougies": {
+    "barres": 47241,
+    "premiere": "2024-01-01 00:00:00+00:00",
+    "derniere": "2026-10-06 00:30:00+00:00",
+    "hors_grille_30min": 0,
+    "plates": 1,
+    "volume_nul": 0,
+    "trous": 82,
+    "trous_par_an": {
+     "2024": 4,
+     "2025": 37,
+     "2026": 41
+    },
+    "heures_manquantes_par_an": {
+     "2024": 9.0,
+     "2025": 315.5,
+     "2026": 272.0
+    },
+    "plus_long_trou_h": 34.5,
+    "plus_long_trou_debut": "2025-07-26 10:30:00+00:00",
+    "motifs_recurrents": [
+     "Sat 05:00 UTC : 14 fois, médiane 14.0 h",
+     "Sat 06:00 UTC : 7 fois, médiane 14.0 h",
+     "Sat 10:00 UTC : 7 fois, médiane 5.0 h"
+    ]
+   },
+   "ticks": {
+    "ticks": 921077,
+    "debut": "2026-09-26 03:00:00.002000+00:00",
+    "fin": "2026-10-06 01:17:59.556000+00:00",
+    "barres_mesurees": 437,
+    "ecart_median_bps": 0.6129892420382447,
+    "ecart_moyen_bps": 0.6492098492092347,
+    "ecart_p90_bps": 0.681222416037929,
+    "ecart_max_bps": 1.620089104900831,
+    "ecart_median_semaine_bps": 0.6094031304065619,
+    "ecart_median_weekend_bps": 0.6407997180475412
+   },
+   "fiche": {
+    "description": "AAVE vs US Dollar, Spot CFD",
+    "digits": 2,
+    "lot_size": 100.0,
+    "version_fiche": 2,
+    "base": "AAVUSD",
+    "cotation": "USD",
+    "swap_type": "Percentage",
+    "swap_long": -30.0,
+    "swap_short": -30.0,
+    "swap_cout_long_bps_nuit": 8.333333333333332,
+    "swap_cout_short_bps_nuit": 8.333333333333332,
+    "swap_triple": "Friday",
+    "commission_type": "PercentageOfTradingVolume",
+    "commission": 0.0325,
+    "commission_bps_cote_usd": 3.25,
+    "levier_paliers": "1000000:1",
+    "seances": "Sun 00:00-Sun 20:55|Sun 21:05-Mon 20:55|Mon 21:05-Tue 20:55|Tue 21:05-Wed 20:55|Wed 21:05-Thu 20:55|Thu 21:05-Fri 20:55|Fri 21:05-Sat 20:55|Sat 21:05-Sun 00:00"
+   }
+  },
+  "UNI": {
+   "symbole": "UNIUSD",
+   "export": "export_2026-10-06_v3",
+   "bougies": {
+    "barres": 31138,
+    "premiere": "2024-12-01 21:00:00+00:00",
+    "derniere": "2026-10-06 00:30:00+00:00",
+    "hors_grille_30min": 0,
+    "plates": 2,
+    "volume_nul": 0,
+    "trous": 78,
+    "trous_par_an": {
+     "2025": 37,
+     "2026": 41
+    },
+    "heures_manquantes_par_an": {
+     "2025": 315.0,
+     "2026": 272.0
+    },
+    "plus_long_trou_h": 34.5,
+    "plus_long_trou_debut": "2025-07-26 10:30:00+00:00",
+    "motifs_recurrents": [
+     "Sat 05:00 UTC : 14 fois, médiane 14.0 h",
+     "Sat 06:00 UTC : 7 fois, médiane 14.0 h",
+     "Sat 10:00 UTC : 7 fois, médiane 5.0 h"
+    ]
+   },
+   "ticks": {
+    "ticks": 2161111,
+    "debut": "2026-09-26 03:00:00.004000+00:00",
+    "fin": "2026-10-06 01:18:17.424000+00:00",
+    "barres_mesurees": 437,
+    "ecart_median_bps": 3.0998305782256645,
+    "ecart_moyen_bps": 3.1049860220505052,
+    "ecart_p90_bps": 3.6415387387141083,
+    "ecart_max_bps": 4.593362591170365,
+    "ecart_median_semaine_bps": 3.110680497723128,
+    "ecart_median_weekend_bps": 3.0163245565226426
+   },
+   "fiche": {
+    "description": "Uniswap vs US Dollar, Spot CFD",
+    "digits": 4,
+    "lot_size": 10000.0,
+    "version_fiche": 2,
+    "base": "UNIUSD",
+    "cotation": "USD",
+    "swap_type": "Percentage",
+    "swap_long": -30.0,
+    "swap_short": -30.0,
+    "swap_cout_long_bps_nuit": 8.333333333333332,
+    "swap_cout_short_bps_nuit": 8.333333333333332,
+    "swap_triple": "Friday",
+    "commission_type": "PercentageOfTradingVolume",
+    "commission": 0.0325,
+    "commission_bps_cote_usd": 3.25,
+    "levier_paliers": "1000000:1",
+    "seances": "Sun 00:00-Sun 20:55|Sun 21:05-Mon 20:55|Mon 21:05-Tue 20:55|Tue 21:05-Wed 20:55|Wed 21:05-Thu 20:55|Thu 21:05-Fri 20:55|Fri 21:05-Sat 20:55|Sat 21:05-Sun 00:00"
+   }
+  },
+  "XLM": {
+   "symbole": "XLMUSD",
+   "export": "export_2026-10-06_v3",
+   "bougies": {
+    "barres": 31138,
+    "premiere": "2024-12-01 21:00:00+00:00",
+    "derniere": "2026-10-06 00:30:00+00:00",
+    "hors_grille_30min": 0,
+    "plates": 2,
+    "volume_nul": 0,
+    "trous": 78,
+    "trous_par_an": {
+     "2025": 37,
+     "2026": 41
+    },
+    "heures_manquantes_par_an": {
+     "2025": 315.5,
+     "2026": 271.5
+    },
+    "plus_long_trou_h": 34.5,
+    "plus_long_trou_debut": "2025-07-26 10:30:00+00:00",
+    "motifs_recurrents": [
+     "Sat 05:00 UTC : 14 fois, médiane 14.0 h",
+     "Sat 06:00 UTC : 7 fois, médiane 14.0 h",
+     "Sat 10:00 UTC : 7 fois, médiane 5.0 h"
+    ]
+   },
+   "ticks": {
+    "ticks": 302696,
+    "debut": "2026-09-26 03:00:00.002000+00:00",
+    "fin": "2026-10-06 01:18:11.006000+00:00",
+    "barres_mesurees": 437,
+    "ecart_median_bps": 9.09297614618178,
+    "ecart_moyen_bps": 9.059239462137315,
+    "ecart_p90_bps": 9.323575651419457,
+    "ecart_max_bps": 9.62927298988954,
+    "ecart_median_semaine_bps": 8.970621666697102,
+    "ecart_median_weekend_bps": 9.237875288682586
+   },
+   "fiche": {
+    "description": "Stellar Lumens vs US Dollar, Spot CFD",
+    "digits": 4,
+    "lot_size": 100000.0,
+    "version_fiche": 2,
+    "base": "XLMUSD",
+    "cotation": "USD",
+    "swap_type": "Percentage",
+    "swap_long": -30.0,
+    "swap_short": -30.0,
+    "swap_cout_long_bps_nuit": 8.333333333333332,
+    "swap_cout_short_bps_nuit": 8.333333333333332,
+    "swap_triple": "Friday",
+    "commission_type": "PercentageOfTradingVolume",
+    "commission": 0.0325,
+    "commission_bps_cote_usd": 3.25,
+    "levier_paliers": "1000000:1",
+    "seances": "Sun 00:00-Sun 20:55|Sun 21:05-Mon 20:55|Mon 21:05-Tue 20:55|Tue 21:05-Wed 20:55|Wed 21:05-Thu 20:55|Thu 21:05-Fri 20:55|Fri 21:05-Sat 20:55|Sat 21:05-Sun 00:00"
    }
   }
  },
